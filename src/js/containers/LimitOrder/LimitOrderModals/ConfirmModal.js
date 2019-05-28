@@ -89,7 +89,8 @@ export default class ConfirmModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = "";
         this.setState({
-          isConfirm: true
+          isConfirm: true,
+          err: ""
         });
 
         try{
@@ -119,12 +120,12 @@ export default class ConfirmModal extends React.Component {
             var signature = await wallet.signSignature(signData, this.props.account)     
 
             
-            var pramameters = await ethereum.call("getSignatureParameters", signature)
+            // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
-            console.log(signature)
-            console.log(signData)
-            console.log(pramameters)
-            console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            // console.log(signature)
+            // console.log(signData)
+            // console.log(pramameters)
+            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             
             var newOrder = await submitOrder({  
@@ -147,7 +148,7 @@ export default class ConfirmModal extends React.Component {
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
             this.setState({
               isFinish: true,
-              isConfirm: false
+              isConfirm: false              
             });
         }catch(err){
             console.log(err.message);
@@ -163,6 +164,16 @@ export default class ConfirmModal extends React.Component {
     closeModal = () => {
         this.props.dispatch(limitOrderActions.resetOrderPath())
     }
+
+    msgHtml = () => {
+      if (this.state.isConfirm && this.props.account.type !== 'privateKey') {
+          return <div className="limit-order-modal__result--pending">
+          {this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}
+        </div>
+      } else {
+          return ""
+      }
+  }
 
     getFeeInfoTooltip = () => {
       let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
@@ -270,9 +281,7 @@ export default class ConfirmModal extends React.Component {
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                 </div>
 
-                {this.state.isConfirm && <div className="limit-order-modal__result--pending">
-                  {this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}
-                </div>}
+                  {this.msgHtml()}
                 {this.state.err && <div className="limit-order-modal__result--error">
                   {this.state.err}
                 </div>}

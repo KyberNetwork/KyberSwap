@@ -14,7 +14,7 @@
         border: none;
 
         .rt-thead {
-            overflow-y: scroll;
+            overflow-y: auto;
             font-size: 12px;
             font-weight: 600;
             box-shadow: none;
@@ -155,10 +155,12 @@
         }
 
         &__container {
-            display: flex;
-            justify-content: space-between;
-            >div:first-child {
-                margin-right: 8px;
+            position: relative;
+
+            .status-info-icon {
+                top: 0;
+                position: absolute;
+                right: -18px;
             }
         }
     }
@@ -549,7 +551,7 @@
 
     .accept-button {
         margin: 0 auto;
-        width: 244px;
+        width: 270px;
         height: 54px;
         line-height: 54px;
         border-radius: 27px;
@@ -570,6 +572,7 @@
             pointer-events: none;
             background: #bfbfbf;
             box-shadow: none;
+            opacity: 0.36;
         }
         &.waiting{
             pointer-events: none;
@@ -1421,7 +1424,7 @@
     &__order-container {
         margin-bottom: 15px;
         max-height: 100px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     &__order {

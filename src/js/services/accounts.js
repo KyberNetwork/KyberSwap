@@ -5,8 +5,8 @@ export function newAccountInstance(address, type, keystring, ethereum, walletTyp
   return account.sync(ethereum, account)
 }
 
-export function cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce  ) {
-  var account = new Account(address, type, keystring, walletType, info, balance, nonce, manualNonce )
+export function cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich  ) {
+  var account = new Account(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich )
   return account
 }
 

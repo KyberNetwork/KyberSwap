@@ -7,6 +7,7 @@ import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 import * as common from "../../utils/common";
 import * as converters from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
+import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 
 import PropTypes from "prop-types";
 
@@ -21,13 +22,15 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			statusFilter: ["open", "in_progress"],
+			statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
       pairFilter: [],
       dateSort: "desc",
       pairSort: "asc",
 			prioritySort: "date",    // date or pair,
 			currentOrder: null,
       cancelOrderModalVisible: false,
+      statusFilterVisible: false,
+      conditionFilterVisible: false,
       expanded: {},
     }
     
@@ -149,7 +152,7 @@ export default class LimitOrderTable extends Component {
     const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
     const { screen } = this.props;
 
-    const datetime = status === "open" ? created_time : cancel_time;
+    const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN ? created_time : cancel_time;
     const rate = converters.roundingNumber(min_rate);
 
     if (screen === "mobile") {
@@ -207,7 +210,7 @@ export default class LimitOrderTable extends Component {
         <div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
         {msg && msg.length > 0 && 
         <React.Fragment>
-          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true}>
+          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className="status-info-icon">
             <img src={require("../../../assets/img/warning-triangle.svg")}/>
           </div>
           <ReactTooltip globalEventOff="click" 
@@ -227,8 +230,8 @@ export default class LimitOrderTable extends Component {
     const status = props.value;
     return (
       <div className="cell-action">
-        {status === "open" && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status !== "open" && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
+        {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
+        {status !== LIMIT_ORDER_CONFIG.status.OPEN && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
     )
   }
@@ -267,7 +270,7 @@ export default class LimitOrderTable extends Component {
   getOrderDetail = (row) => {
     const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = row.original;
 
-    const datetime = status === "open" ? created_time : cancel_time;
+    const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN ? created_time : cancel_time;
     const rate = converters.roundingNumber(min_rate);
 
     const sourceAmount = converters.roundingNumber(src_amount);
@@ -328,7 +331,7 @@ export default class LimitOrderTable extends Component {
 
     const currentTime = new Date().getTime() / 1000;
     data = data.filter(item => {
-      if (item.status === "open") {
+      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
         return item.created_time >= currentTime - interval;
       } else {
         return item.cancel_time >= currentTime - interval; 
@@ -417,10 +420,10 @@ export default class LimitOrderTable extends Component {
 	// ------------------------------
 	getStatusFilter = () => {
     const { statusFilter } = this.state;
-    const status = ["open", "filled", "cancelled", "in_progress", "invalidated"];
+    const status = Object.keys(LIMIT_ORDER_CONFIG.status).map(key => LIMIT_ORDER_CONFIG.status[key]);
 
     const getTitle = (status) => {
-      if (status === "in_progress") {
+      if (status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
         return "In Progress";
       } else {
         return status.charAt(0).toUpperCase() + status.slice(1);
@@ -467,6 +470,21 @@ export default class LimitOrderTable extends Component {
     }
   }
 
+  // --------------------------------
+  // Toggling status filter dropdown
+  // --------------------------------
+  togglingStatusFilter = () => {
+    this.setState({
+      statusFilterVisible: !this.state.statusFilterVisible
+    });
+  }
+
+  togglingConditionFilter = () => {
+    this.setState({
+      conditionFilterVisible: !this.state.conditionFilterVisible
+    })
+  }
+
 	// --------------
 	// Render header
 	// --------------
@@ -481,7 +499,7 @@ export default class LimitOrderTable extends Component {
       )
     } else if (title === "condition") {
       return (
-        <Dropdown>
+        <Dropdown active={this.state.conditionFilterVisible} onHide={e => this.togglingConditionFilter()}>
           <DropdownTrigger>
             <span>{this.props.translate("limit_order.condition") || "Condition"}</span>
             <div className="drop-down">
@@ -495,7 +513,7 @@ export default class LimitOrderTable extends Component {
       )
     } else if (title === "status") {
       return (
-        <Dropdown>
+        <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
           <DropdownTrigger>
             <span>{this.props.translate("limit_order.status") || "Status"}</span>
             <div className="drop-down">
@@ -552,7 +570,7 @@ export default class LimitOrderTable extends Component {
 
     const currentTime = new Date().getTime() / 1000;
     results = results.filter(item => {
-      if (item.status === "open") {
+      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
         return item.created_time >= currentTime - interval;
       } else {
         return item.cancel_time >= currentTime - interval; 
@@ -563,7 +581,7 @@ export default class LimitOrderTable extends Component {
     // Date sort or pair sort
     if (prioritySort === "date" && dateSort) {
       results = _.orderBy(results, item => {
-        if (item.status === "open") {
+        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
           return item.created_time;
         } else {
           return item.cancel_time;
@@ -574,6 +592,17 @@ export default class LimitOrderTable extends Component {
         return `${item.source}-${item.dest}`;
       }, [pairSort]);
     }
+
+    // Status sort after all: Priority is In Progress
+    results = _.sortBy(results, item => {
+      if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+        return 0;
+      } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
+        return 1;
+      } else {
+        return 2;
+      }
+    }, ["asc"]);
     
     return results;
   }
@@ -581,7 +610,7 @@ export default class LimitOrderTable extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
       this.setState({
-        statusFilter: ["open", "in_progress"],
+        statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
         pairFilter: [],
         pairSort: "asc",
         expanded: {}
@@ -626,6 +655,24 @@ export default class LimitOrderTable extends Component {
                 style: this.state.expanded[rowInfo.index] ? {
                   display: "none",
                 } : {},
+              }
+            }
+            return {};
+          }}
+          getTheadThProps={(state, rowInfo, column) => {
+            if (column.id === "status") {
+              return {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  this.togglingStatusFilter();
+                }
+              }
+            } else if (column.id === "condition") {
+              return {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  this.togglingConditionFilter();
+                }
               }
             }
             return {};

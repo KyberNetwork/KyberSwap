@@ -368,6 +368,10 @@ export default class CachedServerProvider extends React.Component {
                     })
                     .catch((err) => {
                         console.log(err)
+                        // resolve({
+                        //     cap: 100000000000000000,
+                        //     rich: false
+                        // })         
                         rejected(err)
                     })
             })

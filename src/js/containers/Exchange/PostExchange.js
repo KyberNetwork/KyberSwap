@@ -58,11 +58,16 @@ export default class PostExchange extends React.Component {
       return
     }
     
-    if (this.props.exchange.maxCap == 0) {
+    if (this.props.account.maxCap == 0) {
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
       this.props.dispatch(utilActions.openInfoModal(titleModal, contentModal))
       return
+    }
+
+    if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
+      this.props.dispatch(exchangeActions.setCustomRateInputError(true));
+      return;
     }
 
     if  (this.validateExchange()) {
@@ -116,7 +121,7 @@ export default class PostExchange extends React.Component {
     var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var destDecimal = this.props.tokens[destTokenSymbol].decimals
-    var maxCap = this.props.exchange.maxCap
+    var maxCap = this.props.account.maxCap
 
     if (sourceAmount) {
       var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, sourceTokenSymbol,
@@ -132,27 +137,27 @@ export default class PostExchange extends React.Component {
     var sourceAmountErrorKey
     switch (validateAmount) {
       case "not a number":        
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))
         check = false
         break
       case "too high":
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high")))
         check = false        
         break
       case "too high cap":
-        var maxCap = this.props.exchange.maxCap
+        // var maxCap = converters.toEther(this.props.account.maxCap)
         if (this.props.exchange.sourceTokenSymbol !== "ETH"){
           maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
         }
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_cap", { cap: maxCap })))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_cap", { cap: maxCap })))
         check = false                
         break
       case "too small":        
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_small", { minAmount: converters.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_small", { minAmount: converters.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
         check = false        
         break
       case "too high for reserve":
-        this.props.dispatch(exchangeActions.thowErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_for_reserve")))
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_for_reserve")))
         check = false           
         break
     }

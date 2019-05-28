@@ -36,7 +36,8 @@ export default class ApproveZeroModal extends React.Component {
     this.state = {
       err: "",
       isFetchGas: true,
-      gasLimit: 0
+      gasLimit: 0, 
+      isConfirming: false
     }
   }
 
@@ -76,10 +77,10 @@ export default class ApproveZeroModal extends React.Component {
   }
 
   async onSubmit() {
-    if (this.state.isConfirmingTx || this.state.isFetchGas) return
+    if (this.state.isConfirming || this.state.isFetchGas) return
     this.setState({
       err: "",
-      isConfirmingTx: true
+      isConfirming: true
     })
 
     //reset        
@@ -96,12 +97,12 @@ export default class ApproveZeroModal extends React.Component {
       this.props.dispatch(exchangeActions.forwardExchangePath())
     } catch (err) {
       console.log(err)
-      this.setState({ err: err.toString(), isConfirmingTx: false })
+      this.setState({ err: err.toString(), isConfirming: false })
     }
   }
 
   msgHtml = () => {
-    if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
+    if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
       return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
       return ""
@@ -126,7 +127,7 @@ export default class ApproveZeroModal extends React.Component {
   }
 
   closeModal = () => {
-    if (this.state.isConfirmingTx) return
+    if (this.state.isConfirming) return
     this.props.dispatch(exchangeActions.resetExchangePath())
   }
 
@@ -166,7 +167,7 @@ export default class ApproveZeroModal extends React.Component {
           <div>{this.msgHtml()}</div>
           <div className="input-confirm grid-x input-confirm--approve">            
             <div className="cell medium-4 small-12">
-              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirmingTx ? "disabled-button" : "next")}
+              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
                 onClick={this.onSubmit.bind(this)}
               >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
 

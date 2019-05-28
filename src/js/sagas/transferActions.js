@@ -199,15 +199,16 @@ export function* verifyTransfer() {
   if (isNaN(amount) || amount === "") {
     amount = 0
   }
-  var account = state.account.account
-  var testBalanceWithFee = validators.verifyBalanceForTransaction(account.balance,
-    transfer.tokenSymbol, amount, transfer.gas, transfer.gasPrice)
-  if (testBalanceWithFee) {
 
-
-    yield put(actions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
-  } else {
-    yield put(actions.clearErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance))
+  if (state.account.isGetAllBalance){
+    var account = state.account.account
+    var testBalanceWithFee = validators.verifyBalanceForTransaction(account.balance,
+      transfer.tokenSymbol, amount, transfer.gas, transfer.gasPrice)
+    if (testBalanceWithFee) {
+      yield put(actions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
+    } else {
+      yield put(actions.clearErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance))
+    }
   }
 }
 

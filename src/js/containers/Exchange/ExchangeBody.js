@@ -199,11 +199,13 @@ class ExchangeBody extends React.Component {
     var destTokenSymbol = this.props.exchange.destTokenSymbol    
     var destDecimal = this.props.tokens[destTokenSymbol].decimals
 
-    return {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal}
+    var maxCap = this.props.account.maxCap
+
+    return {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal, maxCap}
   }
 
   validateSourceAmount = (value) => {
-    var {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal} = this.getFormParams()
+    var {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal, maxCap} = this.getFormParams()
     // var check = true
     var sourceAmount = value
     var validateAmount = validators.verifyAmount(sourceAmount,
@@ -213,7 +215,7 @@ class ExchangeBody extends React.Component {
       //this.props.exchange.expectedRate,      
       rateSourceToEth,
       destDecimal,
-      this.props.exchange.maxCap)
+      maxCap)
     var sourceAmountErrorKey = false
     switch (validateAmount) {
       case "not a number":
@@ -456,7 +458,7 @@ class ExchangeBody extends React.Component {
   }
 
   selectedGasHandler = (value, level, levelString) => {
-    this.props.dispatch(exchangeActions.seSelectedGas(level))
+    this.props.dispatch(exchangeActions.setSelectedGasPrice(value, level))
     this.specifyGasPrice(value)
     this.props.global.analytics.callTrack("trackChooseGas", "swap", value, levelString);
   }
@@ -676,10 +678,10 @@ class ExchangeBody extends React.Component {
       }
     }
 
-    var maxCap = this.props.exchange.maxCap
-    if (maxCap !== "infinity") {
-      maxCap = converters.toEther(this.props.exchange.maxCap)
-    }
+    // var maxCap = this.props.account.maxCap
+    // if (maxCap !== "infinity") {
+    //   maxCap = converters.toEther(maxCap)
+    // }
 
 
     var rateToken = (
@@ -689,7 +691,7 @@ class ExchangeBody extends React.Component {
     )
 
     var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
-      chooseToken={this.chooseToken}
+      chooseToken={this.selectSourceToken}
       activeSymbol={this.props.exchange.sourceTokenSymbol}
       screen="swap"
       selectTokenBalance={this.selectTokenBalance}
@@ -697,7 +699,7 @@ class ExchangeBody extends React.Component {
       changeFocus={exchangeActions.focusInput} />
     return (
       <ExchangeBodyLayout
-        chooseToken={this.chooseToken}
+        chooseToken={this.selectSourceToken}
         exchange={this.props.exchange}
         account={this.props.account.account}
         step={this.props.exchange.step}
@@ -711,7 +713,7 @@ class ExchangeBody extends React.Component {
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         swapToken={this.swapToken}
-        maxCap={maxCap}
+        // maxCap={maxCap}
         errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         advanceLayout={this.getAdvanceLayout()}
