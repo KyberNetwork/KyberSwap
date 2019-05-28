@@ -77,7 +77,9 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       
     } 
     case "ACCOUNT.CLOSE_ERROR_MODAL":{
-      return {...state, showError: false}
+      const newState = {...state};
+      newState.error.showError = false;
+      return {...newState};
     }
     case "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT":{
       var oldState = {...state}
