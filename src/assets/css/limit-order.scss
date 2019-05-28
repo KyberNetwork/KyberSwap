@@ -551,7 +551,7 @@
 
     .accept-button {
         margin: 0 auto;
-        width: 244px;
+        width: 270px;
         height: 54px;
         line-height: 54px;
         border-radius: 27px;
@@ -572,6 +572,7 @@
             pointer-events: none;
             background: #bfbfbf;
             box-shadow: none;
+            opacity: 0.36;
         }
         &.waiting{
             pointer-events: none;

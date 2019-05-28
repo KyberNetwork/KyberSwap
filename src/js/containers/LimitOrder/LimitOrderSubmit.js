@@ -304,6 +304,9 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   getRateWarningTooltip = () => {
+    if (!this.props.account) {
+      return null;
+    }
     // Filter active orders which have higher rate than current input rate
     const filterHigherRate = this.props.limitOrder.listOrder.filter(item => {
       return item.source === this.props.limitOrder.sourceTokenSymbol &&
@@ -367,7 +370,7 @@ export default class LimitOrderSubmit extends React.Component {
     var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        {this.props.account !== false && common.isUserLogin() && (
+        {(
           <Tooltip
             open={this.props.limitOrder.errors.rateWarning !== ""}
             position="right"
