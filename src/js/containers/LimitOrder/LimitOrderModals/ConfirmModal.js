@@ -89,7 +89,8 @@ export default class ConfirmModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = "";
         this.setState({
-          isConfirm: true
+          isConfirm: true,
+          err: ""
         });
 
         try{
@@ -147,7 +148,7 @@ export default class ConfirmModal extends React.Component {
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
             this.setState({
               isFinish: true,
-              isConfirm: false
+              isConfirm: false              
             });
         }catch(err){
             console.log(err.message);
