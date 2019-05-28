@@ -369,6 +369,10 @@
 
         &__item {
             width: 135px;
+
+            @include screen-max-width(medium) {
+                width: 100%;
+            }
         }
 
         &__name {
