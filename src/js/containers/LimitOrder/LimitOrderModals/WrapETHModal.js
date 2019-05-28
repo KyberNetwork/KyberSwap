@@ -13,6 +13,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 import {getAssetUrl} from "../../../utils/common"
 
 import {getWallet} from "../../../services/keys"
+import ReactTooltip from 'react-tooltip'
 
 @connect((store, props) => {
     const account = store.account.account
@@ -47,8 +48,8 @@ export default class WrapETHModal extends React.Component {
         }else{
             this.setState({isError: false})
             return
-        }    
-        var convertedEth = this.getAmountWrapETH() 
+        }
+        var convertedEth = this.getAmountWrapETH()
 
         if (converters.compareTwoNumber(convertedEth, maxCap) === 1){
             this.setState({err: `Converted amount is over your cap - ${maxCap} ETH`, isError: true})
@@ -72,7 +73,7 @@ export default class WrapETHModal extends React.Component {
         if (this.state.isConfirming) return
 
         this.setState({isConfirming: true, err: ""})
-        //reset        
+        //reset
         var wallet = getWallet(this.props.account.type)
         
         try{
@@ -151,9 +152,13 @@ export default class WrapETHModal extends React.Component {
               <div className="row">
                 <div>
 
-                    <div className="message">                 
-                        Your order can not be submited because your WETH is not enough, please convert ETH to WETH.
-                    </div>    
+                    <div className="message">
+                      <span>Your order can not be submited because your WETH is not enough, please convert ETH to WETH.</span>
+                      <span className="weth-modal-tooltip-icon" data-tip={'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
+                        <img src={require("../../../../assets/img/v3/info_grey.svg")}/>
+                      </span>
+                      <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark"/>
+                    </div>
                     <div className="address-info">
                         <div>
                             <label>Your address: </label>
@@ -161,10 +166,13 @@ export default class WrapETHModal extends React.Component {
                         </div>
                         <div>
                             <label>Your balance: </label>
-                            <span>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</span>
+                            <div className={"target-value balance-info"}>
+                                <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
+                                <div>{converters.roundingNumber(converters.toEther(this.props.tokens["WETH"].balance))} WETH</div>
+                            </div>
                         </div>
-                    </div>                                               
-                    
+                    </div>
+
                     <div className="illustration">
                          <div className="source-token token-item">
                             <div className="token-info">
@@ -173,7 +181,7 @@ export default class WrapETHModal extends React.Component {
                             </div>
                             <div className="token-value">{wrapAmount}</div>
                         </div>
-                        
+
                         <div className="token-connector">
                             <i className="k k-transfer k-3x"></i>
                         </div>
@@ -182,19 +190,19 @@ export default class WrapETHModal extends React.Component {
                             <div className="token-info">
                                 <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
                                 <span>{BLOCKCHAIN_INFO.wrapETHToken}</span>
-                            </div>                        
+                            </div>
                         </div>
                     </div>
-                    
+
                     {/* {this.state.err && (
                         <div className={'modal-error custom-scroll'}>
                             {this.state.err}
                         </div>
                     )} */}
                   {this.errorHtml()}
-    
+
                 </div>
-    
+
               </div>
             </div>
             <div className="overlap">

@@ -45,7 +45,7 @@ const TokenSelectorView = (props) => {
         props.hideTokens();
       }}>
         <div className="item-icon">
-          <img alt={constants.WETH_SUBSTITUTE_NAME} src={getAssetUrl(`tokens/eth.svg`)} />
+          <img alt={constants.WETH_SUBSTITUTE_NAME} src={getAssetUrl(`tokens/eth-weth.svg`)} />
         </div>
         <div className={"select-item__information"}>
           <div>
