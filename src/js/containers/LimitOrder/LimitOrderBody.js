@@ -154,7 +154,10 @@ export default class LimitOrderBody extends React.Component {
           </div>
         </div>
         <div>
-          <LimitOrderSubmit />
+          <LimitOrderSubmit
+            availableBalanceTokens={this.getModifiedTokenList()}
+            findTokenBySymbol={this.findTokenBySymbol}
+          />
         </div>
         {!this.props.global.isOnMobile &&
           <div className="limit-order-body--list">

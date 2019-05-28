@@ -44,11 +44,10 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   getUserBalance = () => {
-    if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-      return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance + this.props.tokens["ETH"].balance
-    } else {
-      return this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
-    }
+    const tokens = this.props.availableBalanceTokens;
+    const srcSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const token = this.props.findTokenBySymbol(tokens, srcSymbol);
+    return token.balance;
   }
 
   getSourceAmount = () => {
