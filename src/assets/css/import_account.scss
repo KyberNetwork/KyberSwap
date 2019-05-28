@@ -489,6 +489,19 @@
   .unlock-btn-wrapper{
     text-align: center;
   }
+
+  #keystore-pass {
+    text-align: left;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 23px;
+    color: #666666;
+    height: 45px;
+    padding-left: 55px;
+    outline: none;
+    box-shadow: none;
+  }
 }
 
 .reimport-modal, {
