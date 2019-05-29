@@ -217,3 +217,9 @@ export function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, max
         return {safeLowGas, standardGas, fastGas, defaultGas}
     }
 }
+
+export function findTokenBySymbol(tokens, symbol) {
+  return  tokens.find(token => {
+    return token.symbol === symbol;
+  });
+};
