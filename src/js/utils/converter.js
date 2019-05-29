@@ -415,8 +415,10 @@ export function roundingNumber(number) {
 
   let minDisplay = MAX_DIGIS - count_0 < 4 ? 4 : MAX_DIGIS - count_0
 
-  let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS),
-    arr = precision.split('.'),
+  let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS);
+  precision = (precision * 1).toString();
+
+  let arr = precision.split('.'),
     intPart = arr[0],
     i = intPart.length % SIZE || SIZE,
     result = intPart.substr(0, i);

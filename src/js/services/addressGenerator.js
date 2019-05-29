@@ -1,4 +1,4 @@
-import ethUtil from "ethereumjs-util";
+import * as ethUtil from "ethereumjs-util";
 import HDKey from "hdkey";
 
 export default class AddressGenerator {

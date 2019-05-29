@@ -246,7 +246,8 @@ export default class LimitOrderSubmit extends React.Component {
 
       if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
         var sourceToken = this.getSourceAmount()
-        var userBalance = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].balance
+        var userBalance = this.getAvailableWethBalance();
+
         if (converters.compareTwoNumber(userBalance, sourceToken) < 0) {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH)
         }
@@ -336,7 +337,7 @@ export default class LimitOrderSubmit extends React.Component {
 					</button>
 					<button
 						className="btn-confirm"
-						onClick={e => this.confirmAgreeSubmit()}
+						onClick={e => this.confirmAgreeSubmit(filterHigherRate)}
 					>
 						{this.props.translate("import.yes") || "Yes"}
 					</button>
@@ -349,9 +350,15 @@ export default class LimitOrderSubmit extends React.Component {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
   }
 
-  confirmAgreeSubmit = () => {
+  confirmAgreeSubmit = (listPendingCancelOrders) => {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+    this.props.dispatch(limitOrderActions.setPendingCancelOrders(listPendingCancelOrders));
     this.agreeSubmit();
+  }
+
+  getAvailableWethBalance = () => {
+    const wethOpenOrderAmount = this.props.getOpenOrderAmount(BLOCKCHAIN_INFO.wrapETHToken, 18);
+    return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
   }
 
   render() {
@@ -377,7 +384,7 @@ export default class LimitOrderSubmit extends React.Component {
         <div>
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveZero && <ApproveZeroModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.approveMax && <ApproveMaxModal getMaxGasApprove={this.getMaxGasApprove.bind(this)} />}
-          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH && <WrapETHModal getOpenOrderAmount={this.props.getOpenOrderAmount} />}
+          {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH && <WrapETHModal availableWethBalance={this.getAvailableWethBalance()} />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder && <ConfirmModal />}
           {this.props.limitOrder.orderPath[this.props.limitOrder.currentPathIndex] === constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder && <SubmitStatusModal />}
         </div>

@@ -22,6 +22,10 @@ import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 export default class CancelOrderModal extends Component {
 	constructor() {
 		super();
+		this.state = {
+			isConfirming: false,
+			isFinish: false
+		}
 	}
 
 	getColumns = () => {
@@ -30,7 +34,7 @@ export default class CancelOrderModal extends Component {
 				id: "date",
 				Header: this.getHeader("date"),
 				accessor: item => item,
-				Cell: props => this.getDateCell(props),
+				Cell: props => this.getDateCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start",
 				maxWidth: 120
@@ -39,31 +43,23 @@ export default class CancelOrderModal extends Component {
 				id: "condition",
 				Header: this.getHeader("condition"),
 				accessor: item => item,
-				Cell: props => this.getConditionCell(props),
+				Cell: props => this.getConditionCell(props.value),
 				headerClassName: "cell-flex-start-header cell-condition-header",
 				className: "cell-flex-start cell-condition",
 			},
 			{
 				id: "from",
 				Header: this.getHeader("from"),
-				accessor: item => ({
-					source: item.source,
-					sourceAmount: item.src_amount
-				}),
-				Cell: props => this.getFromCell(props),
+				accessor: item => item,
+				Cell: props => this.getFromCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start cell-from"
 			},
 			{
 				id: "to",
 				Header: this.getHeader("to"),
-				accessor: item => ({
-					dest: item.dest,
-					minRate: item.min_rate,
-					sourceAmount: item.src_amount,
-					fee: item.fee
-				}),
-				Cell: props => this.getToCell(props),
+				accessor: item => item,
+				Cell: props => this.getToCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start cell-to",
 			}
@@ -72,25 +68,14 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getDateCell = props => {
-		const { created_time, cancel_time, status } = props.value;
+		const { created_time, cancel_time, status } = props;
 		const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
 		const datetime = getFormattedDate(timestamp);
 		return <div>{datetime}</div>;
 	};
 
-	getPairCell = props => {
-		const { source, dest } = props.value;
-		return (
-			<div>
-				<span>{source.toUpperCase()}</span>
-				<span>&rarr;</span>
-				<span>{dest.toUpperCase()}</span>
-			</div>
-		);
-	};
-
 	getConditionCell = props => {
-		const { source, dest, min_rate } = props.value;
+		const { source, dest, min_rate } = props;
 		let rate = roundingNumber(min_rate);
 		return (
 			<div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
@@ -98,15 +83,15 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getStatusCell = (props) => {
-		const status = props.value;
+		const { status } = props;
 		return (
 			<div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
 		)
 	}
 
 	getFromCell = props => {
-		const { source, sourceAmount } = props.value;
-		let amount = roundingNumber(sourceAmount);
+		const { source, src_amount } = props;
+		let amount = roundingNumber(src_amount);
 		return (
 			<div>
 				<span class="from-number-cell">{amount}</span>{" "}
@@ -116,8 +101,8 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getToCell = props => {
-		const { dest, minRate, fee, sourceAmount } = props.value;
-		let destAmount = sourceAmount * (1 - fee / 100) * minRate;
+		const { dest, min_rate, fee, src_amount } = props;
+		let destAmount = src_amount * (1 - fee / 100) * min_rate;
 		destAmount = roundingNumber(destAmount);
 		return (
 			<div>
@@ -135,6 +120,9 @@ export default class CancelOrderModal extends Component {
 	};
 
 	async confirmCancel() {
+		this.setState({
+			isConfirming: true
+		});
 		if (this.props.order) {
 			try {
 				const results = await limitOrderServices.cancelOrder(
@@ -142,10 +130,17 @@ export default class CancelOrderModal extends Component {
 				);
 				if (results) {
 					this.props.dispatch(limitOrderActions.updateOrder(results));
-					this.props.closeModal();
+					this.setState({
+						isConfirming: false,
+						isFinish: true
+					});
 				}
 			} catch (err) {
 				console.log(err);
+				this.setState({
+					isConfirming: false,
+					isFinish: false
+				});
 			}
 		}
 	}
@@ -156,7 +151,6 @@ export default class CancelOrderModal extends Component {
 		}
 		const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = this.props.order;
 
-		const datetime = status === "active" ? created_time : cancel_time;
 		const rate = roundingNumber(min_rate);
 
 		const sourceAmount = roundingNumber(src_amount);
@@ -174,7 +168,7 @@ export default class CancelOrderModal extends Component {
 								<span>&rarr;</span>
 								<span>{dest.toUpperCase()}</span>
 							</div>
-							{this.getStatusCell({ value: status })}
+							{this.getStatusCell(this.props.order)}
 						</div>
 						<div className="limit-order-modal__detail-order__rate">
 							<div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
@@ -206,6 +200,15 @@ export default class CancelOrderModal extends Component {
 		);
 	};
 
+	closeModal = () => {
+		if (this.state.isConfirming) return;
+		this.setState({
+			isConfirming: false,
+			isFinish: false
+		});
+		this.props.closeModal();
+	}
+
 	contentModal = () => {
 		return (
 			<div className="limit-order-modal">
@@ -216,7 +219,7 @@ export default class CancelOrderModal extends Component {
 					</div>
 					<div
 						className="limit-order-modal__close"
-						onClick={e => this.props.closeModal()}
+						onClick={e => this.closeModal()}
 					>
 						<div className="limit-order-modal__close-wrapper" />
 					</div>
@@ -249,20 +252,29 @@ export default class CancelOrderModal extends Component {
 						{this.props.screen === "mobile" && this.contentModalMobile()}
 					</div>
 				</div>
-				<div className="limit-order-modal__footer">
-					<button
-						className="btn-cancel"
-						onClick={e => this.props.closeModal()}
-					>
-						{this.props.translate("modal.cancel") || "Cancel"}
-					</button>
-					<button
-						className="btn-confirm"
-						onClick={e => this.confirmCancel()}
-					>
-						{this.props.translate("modal.confirm") || "Confirm"}
-					</button>
-				</div>
+				{!this.state.isFinish && (
+					<div className="limit-order-modal__footer">
+						<button
+							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
+							onClick={e => this.closeModal()}
+						>
+							{this.props.translate("modal.cancel") || "Cancel"}
+						</button>
+						<button
+							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
+							onClick={e => this.confirmCancel()}
+						>
+							{this.props.translate("modal.confirm") || "Confirm"}
+						</button>	
+					</div>
+				)}
+				
+				{this.state.isFinish && (
+					<div className="limit-order-modal__success-msg">
+						<img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+						<span>Success</span>
+					</div>
+				)}
 			</div>
 		);
 	};
@@ -276,8 +288,8 @@ export default class CancelOrderModal extends Component {
 						"reveal medium confirm-modal confirm-modal__cancel-order"
 				}}
 				isOpen={this.props.isOpen}
-				onRequestClose={this.props.closeModal}
-				contentLabel="Cancel Order Modal"
+				onRequestClose={this.closeModal}
+				contentLabel="Cancel Orxder Modal"
 				content={this.contentModal()}
 				size="medium"
 			/>
