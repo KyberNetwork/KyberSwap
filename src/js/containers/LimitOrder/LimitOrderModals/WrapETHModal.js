@@ -59,15 +59,13 @@ export default class WrapETHModal extends React.Component {
     }
 
     getAmountWrapETH = () =>{
-        var srcToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol]
-        var balance = srcToken.balance
+        var srcToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol];
+        var balance = this.getAvailableWethBalance();
         var srcAmount = converters.toTWei(this.props.limitOrder.sourceAmount, srcToken.decimals)
-        var wrapAmount = converters.subOfTwoNumber(srcAmount,balance)
-        return wrapAmount  
+        var wrapAmount = converters.subOfTwoNumber(srcAmount, balance)
+        return wrapAmount
     }
 
-      
-    
     async onSubmit(){
         if (this.state.isError) return
         if (this.state.isConfirming) return
@@ -141,9 +139,16 @@ export default class WrapETHModal extends React.Component {
         }
       }
 
+      getAvailableWethBalance = () => {
+        const wethOpenOrderAmount = this.props.getOpenOrderAmount('ETH', 18);
+        return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
+      }
+
     contentModal = () => {
         var wrapAmount = this.getAmountWrapETH()
         wrapAmount = converters.roundingNumber(converters.toT(wrapAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals))
+        const availableWethBalance = converters.roundingNumber(converters.toEther(this.getAvailableWethBalance()));
+
         return (
             <div className="wrap-eth-modal">
             <div className="title">Convert ETH to WETH</div>
@@ -168,7 +173,7 @@ export default class WrapETHModal extends React.Component {
                             <label>Your balance: </label>
                             <div className={"target-value balance-info"}>
                                 <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
-                                <div>{converters.roundingNumber(converters.toEther(this.props.tokens["WETH"].balance))} WETH</div>
+                                <div>{availableWethBalance} WETH</div>
                             </div>
                         </div>
                     </div>
