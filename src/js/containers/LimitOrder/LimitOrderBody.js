@@ -22,12 +22,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 })
 
 export default class LimitOrderBody extends React.Component {
-  findTokenBySymbol = (tokens, symbol) => {
-    return  tokens.find(token => {
-      return token.symbol === symbol;
-    });
-  };
-
   getTokenListWithoutEthAndWeth = (tokens) => {
     return tokens.filter(token => {
       return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken;
@@ -35,8 +29,8 @@ export default class LimitOrderBody extends React.Component {
   }
 
   mergeEthIntoWeth = (tokens) => {
-    const eth = this.findTokenBySymbol(tokens, 'ETH');
-    let weth = this.findTokenBySymbol(tokens, BLOCKCHAIN_INFO.wrapETHToken);
+    const eth = common.findTokenBySymbol(tokens, 'ETH');
+    let weth = common.findTokenBySymbol(tokens, BLOCKCHAIN_INFO.wrapETHToken);
 
     if (weth) {
       weth = Object.create(weth);
@@ -58,7 +52,7 @@ export default class LimitOrderBody extends React.Component {
     return Object.keys(tokens).map(key => {
       let token = tokens[key];
       const openOrderTokens = orderList.filter(order => {
-        return order.source === token.symbol && order.status === 'open';
+        return order.source === token.symbol && order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN;
       });
 
       if (openOrderTokens.length > 0) {
@@ -156,7 +150,6 @@ export default class LimitOrderBody extends React.Component {
         <div>
           <LimitOrderSubmit
             availableBalanceTokens={this.getModifiedTokenList()}
-            findTokenBySymbol={this.findTokenBySymbol}
           />
         </div>
         {!this.props.global.isOnMobile &&

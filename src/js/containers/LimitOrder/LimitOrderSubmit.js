@@ -1,24 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
-
 import * as utilActions from "../../actions/utilActions"
-
 import * as common from "../../utils/common"
 import * as converters from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
-
-
 import BLOCKCHAIN_INFO from "../../../../env"
-
-
-
 import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal, WarningModal } from "./LimitOrderModals"
-
-
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
-
 import { Tooltip } from "react-tippy";
 
 @connect((store, props) => {
@@ -46,7 +36,7 @@ export default class LimitOrderSubmit extends React.Component {
   getUserBalance = () => {
     const tokens = this.props.availableBalanceTokens;
     const srcSymbol = this.props.limitOrder.sourceTokenSymbol;
-    const token = this.props.findTokenBySymbol(tokens, srcSymbol);
+    const token = common.findTokenBySymbol(tokens, srcSymbol);
     return token.balance;
   }
 

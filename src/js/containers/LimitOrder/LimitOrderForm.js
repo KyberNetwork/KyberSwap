@@ -107,7 +107,7 @@ export default class LimitOrderForm extends React.Component {
     });
     const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
 
-    let sourceAmountByPercentage = converters.stringToBigNumber(srcTokenBalance).multipliedBy(balancePercentage / 100).valueOf();
+    let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcTokenBalance, balancePercentage);
 
     if (!+sourceAmountByPercentage || sourceAmountByPercentage < 0) sourceAmountByPercentage = 0;
 
