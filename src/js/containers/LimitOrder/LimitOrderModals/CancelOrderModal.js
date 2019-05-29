@@ -8,6 +8,7 @@ import * as limitOrderActions from "../../../actions/limitOrderActions";
 import { getFormattedDate } from "../../../utils/common";
 import { roundingNumber } from "../../../utils/converter";
 import * as limitOrderServices from "../../../services/limit_order";
+import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 
 @connect((store, props) => {
 	const translate = getTranslate(store.locale);
@@ -28,10 +29,7 @@ export default class CancelOrderModal extends Component {
 			{
 				id: "date",
 				Header: this.getHeader("date"),
-				accessor: item =>
-					item.status === "active"
-						? item.created_time
-						: item.cancel_time,
+				accessor: item => item,
 				Cell: props => this.getDateCell(props),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start",
@@ -74,7 +72,9 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getDateCell = props => {
-		const datetime = getFormattedDate(props.value);
+		const { created_time, cancel_time, status } = props.value;
+		const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
+		const datetime = getFormattedDate(timestamp);
 		return <div>{datetime}</div>;
 	};
 
@@ -168,7 +168,7 @@ export default class CancelOrderModal extends Component {
 				<div className="limit-order-modal__detail-order--cancel">
 					<div>
 						<div className="cell-pair__mobile">
-							{this.getDateCell({ value: datetime })}
+							{this.getDateCell(this.props.order)}
 							<div className="cell-pair">
 								<span>{source.toUpperCase()}</span>
 								<span>&rarr;</span>

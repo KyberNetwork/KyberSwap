@@ -122,7 +122,7 @@
 
         padding: 2px 8px;
         border-radius: 3px;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 500;
         // width: 66px;
         margin: 0 auto;
@@ -369,6 +369,10 @@
 
         &__item {
             width: 135px;
+
+            @include screen-max-width(medium) {
+                width: 100%;
+            }
         }
 
         &__name {

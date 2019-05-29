@@ -26,3 +26,8 @@
         background-color: $color-swap-light;
     }
 }
+
+.btn--disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
