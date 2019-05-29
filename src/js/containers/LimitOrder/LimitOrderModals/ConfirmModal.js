@@ -89,7 +89,7 @@ export default class ConfirmModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = "";
         this.setState({
-          isConfirming: true
+          isConfirming: true,
           err: ""
         });
 
