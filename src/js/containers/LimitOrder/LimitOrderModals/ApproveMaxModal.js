@@ -31,7 +31,8 @@ export default class ApproveMaxModal extends React.Component {
     this.state = {
       err: "",
       isFetchGas: false,
-      gasLimit: 0      
+      gasLimit: 0,
+      isConfirming: false      
     }
   }
 
@@ -81,6 +82,12 @@ export default class ApproveMaxModal extends React.Component {
   }
 
   async onSubmit() {
+    if (this.state.isConfirming || this.state.isFetchGas) return
+    this.setState({
+      err: "",
+      isConfirming: true
+    })
+
     //reset        
     var wallet = getWallet(this.props.account.type)
     var password = ""
@@ -95,24 +102,38 @@ export default class ApproveMaxModal extends React.Component {
       this.props.dispatch(limitOrderActions.forwardOrderPath())
     } catch (err) {
       console.log(err)
-      this.setState({ err: err.toString() })
+      this.setState({ err: err.toString(), isConfirming: false  })
+    }
+  }
+  
+  msgHtml = () => {
+    if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
+      return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+    } else {
+      return ""
     }
   }
 
-  // errorHtml = () => {
-  //     if (this.state.err) {
-  //       let isMetaMaskAcc = this.props.account.walletType === 'metamask'
-  //       let metaMaskClass = isMetaMaskAcc ? 'metamask' : ''
-  //       return (
-  //         <React.Fragment>
-  //           <div className={'modal-error custom-scroll' + metaMaskClass + (this.state.isFullError ? ' full' : '')}>
-  //             {this.props.err}
-  //           </div>
-  //         </React.Fragment>
-  //       )
-  //     }
-  //   }
+
+
+  errorHtml = () => {
+    if (this.state.err) {
+      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
+      return (
+        <React.Fragment>
+          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+            {this.state.err}
+          </div>
+        </React.Fragment>
+      )
+    } else {
+      return ""
+    }
+  }
+
+
   closeModal = () => {
+    if (this.state.isConfirming) return
     this.props.dispatch(limitOrderActions.resetOrderPath())
   }
   contentModal = () => {
@@ -140,17 +161,14 @@ export default class ApproveMaxModal extends React.Component {
                       isFetchingGas={this.state.isFetchGas}                      
                     />
               </div>
-              {/* {this.errorHtml()} */}
-
-              <div className={'modal-error custom-scroll'}>
-                {this.state.err}
-              </div>
+              {this.errorHtml()}
 
             </div>
 
           </div>
         </div>
         <div className="overlap">
+          <div>{this.msgHtml()}</div>
           <div className="input-confirm grid-x input-confirm--approve">
             {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
             <div className="cell medium-4 small-12">

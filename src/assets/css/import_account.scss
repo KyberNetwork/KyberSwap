@@ -451,7 +451,7 @@
     }
   }
   .overlap {
-    justify-content: center;
+    justify-content: center !important;
     // background-color: #f5f5f5;
     margin-top: 10px;
     padding: 20px 45px 45px;
@@ -481,9 +481,17 @@
   }
 }
 
+.import-promocode {
+  @extend .import-privatekey;
+
+  .overlap {
+    justify-content: space-between !important;
+  }
+}
+
 .keystore-modal{
   .title{
-    font-size: 18px;
+    font-size: 18px !important;
     text-align: center;
   }
   .unlock-btn-wrapper{
@@ -504,7 +512,7 @@
   }
 }
 
-.reimport-modal, {
+.reimport-modal {
 
   &--tiny {
     @media print, screen and (max-width: 40em) {

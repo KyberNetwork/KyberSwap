@@ -1245,33 +1245,56 @@
 
 .wrap-eth-modal{
     .title{
-        margin-top: 20px;
-        margin-left: 45px;
+        font-size: 28px;
+        font-weight: 600;
+        text-align: left;
+        margin-top: 50px;
+        padding: 0 45px;
     }
     .message{
-        font-size: 13px;
+        font-size: 14px;
+        font-weight: 500;
         border-bottom: 1px solid #dFdFdf;
         padding-bottom: 20px;
     }
+    .weth-modal-tooltip-icon {
+        margin-left: 8px;
+        position: relative;
+        bottom: 2px;
+    }
+    .weth-modal-tooltip {
+        width: 350px;
+        padding: 15px 20px;
+    }
     .address-info{
         >div{
-            display: flex;        
+            display: flex;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
         label{
-            color: inherit;
             width: 100px;
-            display: inline-block;
-            margin-bottom: 10px;
+            margin: 0 10px 0 0;
+            color: #626b86;
         }
-        span{
-            font-size: 14px;
+        .target-value {
+            width: calc(100% - 100px);
+            color: #141927;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .balance-info {
+            font-size: 16px;
+            font-weight: 600;
         }
     }
     .illustration{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 20px;
+        margin-top: 35px;
         margin-bottom: 20px;
         .token-item{
             border: 1px solid #cfcfcf;
@@ -1280,15 +1303,19 @@
             align-items: center;
         }
         .token-info{
-            padding: 10px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
             span{
-                font-weight: 550;
-                margin-left: 15px;
-                padding-right: 25px;
+                font-weight: 500;
+                margin-left: 10px;
             }
         }
         .token-value{
-            padding: 10px 40px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #5a5e67;
+            padding: 10px 20px 10px 40px;
             background: white;
             border-radius: 0 25px 25px 0;
         }
@@ -1303,9 +1330,34 @@
     }
     .btn-wrapper{
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         .cancel-process{
             margin-right: 25px;
+        }
+    }
+
+    @include screen-max-width(xxsmall) {
+        .illustration {
+            display: block;
+
+            .token-item {
+                width: 100%;
+            }
+
+            .token-info {
+                width: 110px;
+            }
+
+            .token-value {
+                width: calc(100% - 110px);
+                text-align: right;
+            }
+
+            .token-connector {
+                margin: 15px 0;
+                text-align: center;
+                transform: rotate(90deg);
+            }
         }
     }
 }

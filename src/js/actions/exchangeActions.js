@@ -454,12 +454,12 @@ export function swapToken() {
   }
 }
 
-export function setCapExchange(maxCap) {
-  return {
-    type: "EXCHANGE.SET_CAP_EXCHANGE",
-    payload: { maxCap }
-  }
-}
+// export function setCapExchange(maxCap) {
+//   return {
+//     type: "EXCHANGE.SET_CAP_EXCHANGE",
+//     payload: { maxCap }
+//   }
+// }
 
 // export function thowErrorNotPossessKGt(message) {
 //   return {
@@ -583,12 +583,12 @@ export function verifyExchange() {
   }
 }
 
-export function fetchUserCap(ethereum) {
-  return {
-    type: "EXCHANGE.FETCH_USER_CAP",
-    payload: {ethereum}
-  }
-}
+// export function fetchUserCap(ethereum) {
+//   return {
+//     type: "EXCHANGE.FETCH_USER_CAP",
+//     payload: {ethereum}
+//   }
+// }
 
 // export function setExchangeEnable(enable) {
 //   return {
