@@ -140,7 +140,7 @@ export default class WrapETHModal extends React.Component {
       }
 
       getAvailableWethBalance = () => {
-        const wethOpenOrderAmount = this.props.getOpenOrderAmount('ETH', 18);
+        const wethOpenOrderAmount = this.props.getOpenOrderAmount(BLOCKCHAIN_INFO.wrapETHToken, 18);
         return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
       }
 
