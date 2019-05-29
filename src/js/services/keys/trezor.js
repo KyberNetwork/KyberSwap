@@ -52,6 +52,10 @@ export default class Trezor extends React.Component {
         message: message,
         hex: true
       });
+      if(signature.payload.error){
+        throw new Error(signature.payload.error)
+        return
+      }
       signature = "0x" + signature.payload.signature                  
 
       return signature

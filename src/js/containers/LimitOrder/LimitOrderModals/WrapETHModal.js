@@ -162,7 +162,7 @@ export default class WrapETHModal extends React.Component {
                     <div className="address-info">
                         <div>
                             <label>Your address: </label>
-                            <span>{this.props.account.address}</span>
+                            <span className={"target-value"}>{this.props.account.address}</span>
                         </div>
                         <div>
                             <label>Your balance: </label>

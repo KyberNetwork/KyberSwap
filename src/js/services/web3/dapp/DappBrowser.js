@@ -92,21 +92,30 @@ export default class DappBrowser {
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
 
-  sign(message) {
-    return new Promise((resolve, reject) => {
-      this.getCoinbase().then(account => {
-        this.web3.eth.sign(message, account, (error, result) => {
-          resolve(result)
-        }).catch(err => {
-          console.log(err)
-          reject(err)
-        })
-      }).catch(err => {
-        console.log(err)
-        reject(err)
-      })
+  async sign(message) {
+    try{
+      var account = await this.getCoinbase()
+      var signature = await this.web3.eth.sign(message, account)
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }
+
+    // return new Promise((resolve, reject) => {
+    //   this.getCoinbase().then(account => {
+    //     this.web3.eth.sign(message, account, (error, result) => {
+    //       resolve(result)
+    //     }).catch(err => {
+    //       console.log(err)
+    //       reject(err)
+    //     })
+    //   }).catch(err => {
+    //     console.log(err)
+    //     reject(err)
+    //   })
      
-    })
+    // })
   }
 
 }

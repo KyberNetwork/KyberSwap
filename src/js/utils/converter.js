@@ -382,6 +382,10 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
+export function getBigNumberValueByPercentage(number, percentage) {
+  return stringToBigNumber(number).multipliedBy(percentage / 100).valueOf();
+}
+
 export function stringToHex(number, decimal) {
   if (number === "" || isNaN(number)) return "0x0"
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
