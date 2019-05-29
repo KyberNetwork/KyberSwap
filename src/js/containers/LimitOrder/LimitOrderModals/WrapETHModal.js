@@ -60,7 +60,7 @@ export default class WrapETHModal extends React.Component {
 
     getAmountWrapETH = () =>{
         var srcToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol];
-        var balance = this.getAvailableWethBalance();
+        var balance = this.props.availableWethBalance;
         var srcAmount = converters.toTWei(this.props.limitOrder.sourceAmount, srcToken.decimals)
         var wrapAmount = converters.subOfTwoNumber(srcAmount, balance)
         return wrapAmount
@@ -139,15 +139,10 @@ export default class WrapETHModal extends React.Component {
         }
       }
 
-      getAvailableWethBalance = () => {
-        const wethOpenOrderAmount = this.props.getOpenOrderAmount(BLOCKCHAIN_INFO.wrapETHToken, 18);
-        return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
-      }
-
     contentModal = () => {
         var wrapAmount = this.getAmountWrapETH()
         wrapAmount = converters.roundingNumber(converters.toT(wrapAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals))
-        const availableWethBalance = converters.roundingNumber(converters.toEther(this.getAvailableWethBalance()));
+        const availableWethBalance = converters.roundingNumber(converters.toEther(this.props.availableWethBalance));
 
         return (
             <div className="wrap-eth-modal">
