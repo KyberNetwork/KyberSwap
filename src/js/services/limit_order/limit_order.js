@@ -105,11 +105,16 @@ export function getNonce(userAddr, source, dest) {
 
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/fee?addr=${userAddr}src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/fee?user_addr=${userAddr}&src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result.fee)
+                if(result.success){
+                    resolve(result.fee * 100)
+                }else{
+                    rejected(result.message)   
+                }
+                
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user fee"))
