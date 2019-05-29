@@ -58,7 +58,11 @@ export function submitOrder(order) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result)
+                if(result.success){
+                    resolve(result.order)
+                }else{
+                    rejected(new Error("Cannot submit order"))    
+                }
             })
             .catch((err) => {
                 rejected(new Error("Cannot submit order"))
