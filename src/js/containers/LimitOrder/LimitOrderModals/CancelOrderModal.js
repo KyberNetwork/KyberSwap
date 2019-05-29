@@ -34,7 +34,7 @@ export default class CancelOrderModal extends Component {
 				id: "date",
 				Header: this.getHeader("date"),
 				accessor: item => item,
-				Cell: props => this.getDateCell(props),
+				Cell: props => this.getDateCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start",
 				maxWidth: 120
@@ -43,31 +43,23 @@ export default class CancelOrderModal extends Component {
 				id: "condition",
 				Header: this.getHeader("condition"),
 				accessor: item => item,
-				Cell: props => this.getConditionCell(props),
+				Cell: props => this.getConditionCell(props.value),
 				headerClassName: "cell-flex-start-header cell-condition-header",
 				className: "cell-flex-start cell-condition",
 			},
 			{
 				id: "from",
 				Header: this.getHeader("from"),
-				accessor: item => ({
-					source: item.source,
-					sourceAmount: item.src_amount
-				}),
-				Cell: props => this.getFromCell(props),
+				accessor: item => item,
+				Cell: props => this.getFromCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start cell-from"
 			},
 			{
 				id: "to",
 				Header: this.getHeader("to"),
-				accessor: item => ({
-					dest: item.dest,
-					minRate: item.min_rate,
-					sourceAmount: item.src_amount,
-					fee: item.fee
-				}),
-				Cell: props => this.getToCell(props),
+				accessor: item => item,
+				Cell: props => this.getToCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start cell-to",
 			}
@@ -76,25 +68,14 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getDateCell = props => {
-		const { created_time, cancel_time, status } = props.value;
+		const { created_time, cancel_time, status } = props;
 		const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
 		const datetime = getFormattedDate(timestamp);
 		return <div>{datetime}</div>;
 	};
 
-	getPairCell = props => {
-		const { source, dest } = props.value;
-		return (
-			<div>
-				<span>{source.toUpperCase()}</span>
-				<span>&rarr;</span>
-				<span>{dest.toUpperCase()}</span>
-			</div>
-		);
-	};
-
 	getConditionCell = props => {
-		const { source, dest, min_rate } = props.value;
+		const { source, dest, min_rate } = props;
 		let rate = roundingNumber(min_rate);
 		return (
 			<div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
@@ -102,15 +83,15 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getStatusCell = (props) => {
-		const status = props.value;
+		const { status } = props;
 		return (
 			<div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
 		)
 	}
 
 	getFromCell = props => {
-		const { source, sourceAmount } = props.value;
-		let amount = roundingNumber(sourceAmount);
+		const { source, src_amount } = props;
+		let amount = roundingNumber(src_amount);
 		return (
 			<div>
 				<span class="from-number-cell">{amount}</span>{" "}
@@ -120,8 +101,8 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getToCell = props => {
-		const { dest, minRate, fee, sourceAmount } = props.value;
-		let destAmount = sourceAmount * (1 - fee / 100) * minRate;
+		const { dest, min_rate, fee, src_amount } = props;
+		let destAmount = src_amount * (1 - fee / 100) * min_rate;
 		destAmount = roundingNumber(destAmount);
 		return (
 			<div>
@@ -170,7 +151,6 @@ export default class CancelOrderModal extends Component {
 		}
 		const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = this.props.order;
 
-		const datetime = status === "active" ? created_time : cancel_time;
 		const rate = roundingNumber(min_rate);
 
 		const sourceAmount = roundingNumber(src_amount);
@@ -188,7 +168,7 @@ export default class CancelOrderModal extends Component {
 								<span>&rarr;</span>
 								<span>{dest.toUpperCase()}</span>
 							</div>
-							{this.getStatusCell({ value: status })}
+							{this.getStatusCell(this.props.order)}
 						</div>
 						<div className="limit-order-modal__detail-order__rate">
 							<div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
@@ -239,7 +219,7 @@ export default class CancelOrderModal extends Component {
 					</div>
 					<div
 						className="limit-order-modal__close"
-						onClick={e => this.props.closeModal()}
+						onClick={e => this.closeModal()}
 					>
 						<div className="limit-order-modal__close-wrapper" />
 					</div>
@@ -309,7 +289,7 @@ export default class CancelOrderModal extends Component {
 				}}
 				isOpen={this.props.isOpen}
 				onRequestClose={this.closeModal}
-				contentLabel="Cancel Order Modal"
+				contentLabel="Cancel Orxder Modal"
 				content={this.contentModal()}
 				size="medium"
 			/>
