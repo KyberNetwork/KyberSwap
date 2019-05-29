@@ -2,7 +2,7 @@ import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import EthereumService from "../ethereum/ethereum"
 
-import ethUtils from "ethereumjs-util"
+import * as ethUtils from "ethereumjs-util"
 
 
 

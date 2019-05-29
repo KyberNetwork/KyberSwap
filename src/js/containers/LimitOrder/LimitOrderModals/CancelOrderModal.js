@@ -22,6 +22,10 @@ import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 export default class CancelOrderModal extends Component {
 	constructor() {
 		super();
+		this.state = {
+			isConfirming: false,
+			isFinish: false
+		}
 	}
 
 	getColumns = () => {
@@ -135,6 +139,9 @@ export default class CancelOrderModal extends Component {
 	};
 
 	async confirmCancel() {
+		this.setState({
+			isConfirming: true
+		});
 		if (this.props.order) {
 			try {
 				const results = await limitOrderServices.cancelOrder(
@@ -142,10 +149,17 @@ export default class CancelOrderModal extends Component {
 				);
 				if (results) {
 					this.props.dispatch(limitOrderActions.updateOrder(results));
-					this.props.closeModal();
+					this.setState({
+						isConfirming: false,
+						isFinish: true
+					});
 				}
 			} catch (err) {
 				console.log(err);
+				this.setState({
+					isConfirming: false,
+					isFinish: false
+				});
 			}
 		}
 	}
@@ -206,6 +220,15 @@ export default class CancelOrderModal extends Component {
 		);
 	};
 
+	closeModal = () => {
+		if (this.state.isConfirming) return;
+		this.setState({
+			isConfirming: false,
+			isFinish: false
+		});
+		this.props.closeModal();
+	}
+
 	contentModal = () => {
 		return (
 			<div className="limit-order-modal">
@@ -249,20 +272,29 @@ export default class CancelOrderModal extends Component {
 						{this.props.screen === "mobile" && this.contentModalMobile()}
 					</div>
 				</div>
-				<div className="limit-order-modal__footer">
-					<button
-						className="btn-cancel"
-						onClick={e => this.props.closeModal()}
-					>
-						{this.props.translate("modal.cancel") || "Cancel"}
-					</button>
-					<button
-						className="btn-confirm"
-						onClick={e => this.confirmCancel()}
-					>
-						{this.props.translate("modal.confirm") || "Confirm"}
-					</button>
-				</div>
+				{!this.state.isFinish && (
+					<div className="limit-order-modal__footer">
+						<button
+							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
+							onClick={e => this.closeModal()}
+						>
+							{this.props.translate("modal.cancel") || "Cancel"}
+						</button>
+						<button
+							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
+							onClick={e => this.confirmCancel()}
+						>
+							{this.props.translate("modal.confirm") || "Confirm"}
+						</button>	
+					</div>
+				)}
+				
+				{this.state.isFinish && (
+					<div className="limit-order-modal__success-msg">
+						<img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+						<span>Success</span>
+					</div>
+				)}
 			</div>
 		);
 	};
@@ -276,7 +308,7 @@ export default class CancelOrderModal extends Component {
 						"reveal medium confirm-modal confirm-modal__cancel-order"
 				}}
 				isOpen={this.props.isOpen}
-				onRequestClose={this.props.closeModal}
+				onRequestClose={this.closeModal}
 				contentLabel="Cancel Order Modal"
 				content={this.contentModal()}
 				size="medium"

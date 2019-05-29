@@ -2,7 +2,7 @@ import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import {newWeb3Instance} from "../web3"
 
-import ethUtils from "ethereumjs-util"
+import * as ethUtils from "ethereumjs-util"
 export default class Metamask {
 
   async signSignature(message, account) {
