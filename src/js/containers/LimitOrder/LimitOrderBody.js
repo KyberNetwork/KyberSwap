@@ -45,23 +45,32 @@ export default class LimitOrderBody extends React.Component {
     return weth;
   }
 
+  getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
+    const orderList = this.props.limitOrder.listOrder;
+    const openOrders = orderList.filter(order => {
+      return order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
+    });
+
+    let openOrderAmount = 0;
+
+    if (openOrders.length > 0) {
+      openOrders.forEach(order => {
+        openOrderAmount += order.src_amount * (Math.pow(10, tokenDecimals));
+      });
+    }
+
+    return openOrderAmount;
+  }
+
   getAvailableBalanceTokenList = () => {
     const tokens = this.props.tokens;
     const orderList = this.props.limitOrder.listOrder;
 
     return Object.keys(tokens).map(key => {
       let token = tokens[key];
-      const openOrderTokens = orderList.filter(order => {
-        return order.source === token.symbol && order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN;
-      });
+      const openOrderAmount = this.getOpenOrderAmount(token.symbol, token.decimals)
 
-      if (openOrderTokens.length > 0) {
-        let openOrderAmount = 0;
-
-        openOrderTokens.forEach(order => {
-          openOrderAmount += order.src_amount * (Math.pow(10, token.decimals));
-        });
-
+      if (openOrderAmount) {
         token = Object.create(token);
         token.balance = +token.balance - openOrderAmount;
       }
@@ -150,6 +159,7 @@ export default class LimitOrderBody extends React.Component {
         <div>
           <LimitOrderSubmit
             availableBalanceTokens={this.getModifiedTokenList()}
+            getOpenOrderAmount={this.getOpenOrderAmount}
           />
         </div>
         {!this.props.global.isOnMobile &&

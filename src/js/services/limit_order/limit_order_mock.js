@@ -60,7 +60,7 @@ const data = [
         dest: "TUSD",
         address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
-        src_amount: 1000,
+        src_amount: 0.027,
         min_rate: 0.123,
         fee: 0.1,
         status: "in_progress",
