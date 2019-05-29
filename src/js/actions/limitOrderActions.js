@@ -128,3 +128,10 @@ export function setGasPriceLimitOrderComplete(safeLowGas, standardGas, fastGas, 
     payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
   }
 }
+
+export function setPendingCancelOrders(listOrders) {
+  return {
+    type: "LIMIT_ORDER.SET_PENDING_CANCEL_ORDERS",
+    payload: listOrders
+  }
+}

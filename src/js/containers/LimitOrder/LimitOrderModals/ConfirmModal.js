@@ -9,7 +9,7 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
-import {getNonce, submitOrder, getFee} from "../../../services/limit_order"
+import {getNonce, submitOrder, cancelOrder, getFee} from "../../../services/limit_order"
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
@@ -127,6 +127,21 @@ export default class ConfirmModal extends React.Component {
             // console.log(pramameters)
             // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
+            if (this.props.limitOrder.listPendingCancelOrders.length > 0) {
+              const queue = [];
+              this.props.limitOrder.listPendingCancelOrders.forEach(item => {
+                queue.push(cancelOrder(item));
+              });
+
+              const results = await Promise.all(queue);
+              // TODO: handling errors / failed cancelling orders
+              results.forEach(item => {
+                this.props.dispatch(limitOrderActions.updateOrder(item));
+              });
+
+              // On success, reset list pending cancel orders
+              this.props.dispatch(limitOrderActions.setPendingCancelOrders([]));
+            }
             
             var newOrder = await submitOrder({  
                 address: this.props.account.address,
@@ -163,6 +178,7 @@ export default class ConfirmModal extends React.Component {
   
     closeModal = () => {
       if (this.state.isConfirming) return;
+      this.props.dispatch(limitOrderActions.setPendingCancelOrders([]));
       this.props.dispatch(limitOrderActions.resetOrderPath())
     }
 
