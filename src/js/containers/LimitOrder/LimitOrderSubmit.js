@@ -29,7 +29,8 @@ export default class LimitOrderSubmit extends React.Component {
   constructor() {
     super()
     this.state = {
-      isAgree: false
+      isAgree: false,
+      higherRateOrders: []
     }
   }
 
@@ -46,7 +47,7 @@ export default class LimitOrderSubmit extends React.Component {
       return 0
     }
     this.props.limitOrder.listOrder.map(value => {
-      if (value.status === "open" && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
+      if (value.status === constants.LIMIT_ORDER_CONFIG.status.OPEN && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
         sourceAmount += parseFloat(value.src_amount);
       }
     })
@@ -150,19 +151,20 @@ export default class LimitOrderSubmit extends React.Component {
       return
     }
 
-    // check pair is ok
-    var isPedingOrder = false
-    for (var i = 0; i < this.props.limitOrder.listOrder.length; i++) {
-      var value = this.props.limitOrder.listOrder[i]
-      if (value.source === this.props.limitOrder.sourceTokenSymbol && value.dest === this.props.limitOrder.destTokenSymbol
-          && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
-        if (converters.compareTwoNumber(this.props.limitOrder.triggerRate, value.min_rate) < 1) {
-          isPedingOrder = true
-          break
-        }
-      }
-    }
-    if (isPedingOrder) {
+    // Filter active orders which have higher rate than current input rate
+    const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
+      return item.source === this.props.limitOrder.sourceTokenSymbol &&
+            item.dest === this.props.limitOrder.destTokenSymbol &&
+            item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
+            item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 1;
+    });
+
+    this.setState({
+      higherRateOrders: higherRateOrders
+    });
+
+    if (higherRateOrders.length > 0) {
       if (!this.props.limitOrder.errors.rateWarning) {
         this.props.dispatch(limitOrderActions.throwError("rateWarning", "Lower rate"));
       }
@@ -172,7 +174,6 @@ export default class LimitOrderSubmit extends React.Component {
       }
       this.findPathOrder()
     }
-
 
   }
 
@@ -296,17 +297,9 @@ export default class LimitOrderSubmit extends React.Component {
     if (!this.props.account) {
       return null;
     }
-    // Filter active orders which have higher rate than current input rate
-    const filterHigherRate = this.props.limitOrder.listOrder.filter(item => {
-      return item.source === this.props.limitOrder.sourceTokenSymbol &&
-            item.dest === this.props.limitOrder.destTokenSymbol &&
-            item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
-            item.status === "open" &&
-            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 1;
-    });
 
-    const tableComp = filterHigherRate.map(item => {
-      const datetime = common.getFormattedDate(item.status === "open" ? item.created_time : item.cancel_time);
+    const tableComp = this.state.higherRateOrders.map(item => {
+      const datetime = common.getFormattedDate(item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? item.created_time : item.cancel_time);
       const rate = converters.roundingNumber(item.min_rate);
       return (
         <div key={item.id} className="rate-warning-tooltip__order">
@@ -336,7 +329,7 @@ export default class LimitOrderSubmit extends React.Component {
 					</button>
 					<button
 						className="btn-confirm"
-						onClick={e => this.confirmAgreeSubmit(filterHigherRate)}
+						onClick={e => this.confirmAgreeSubmit()}
 					>
 						{this.props.translate("import.yes") || "Yes"}
 					</button>
@@ -349,9 +342,9 @@ export default class LimitOrderSubmit extends React.Component {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
   }
 
-  confirmAgreeSubmit = (listPendingCancelOrders) => {
+  confirmAgreeSubmit = () => {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-    this.props.dispatch(limitOrderActions.setPendingCancelOrders(listPendingCancelOrders));
+    this.props.dispatch(limitOrderActions.setPendingCancelOrders(this.state.higherRateOrders));
     this.agreeSubmit();
   }
 
