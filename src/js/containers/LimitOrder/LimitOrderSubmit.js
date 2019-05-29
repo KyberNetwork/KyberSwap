@@ -337,7 +337,7 @@ export default class LimitOrderSubmit extends React.Component {
 					</button>
 					<button
 						className="btn-confirm"
-						onClick={e => this.confirmAgreeSubmit()}
+						onClick={e => this.confirmAgreeSubmit(filterHigherRate)}
 					>
 						{this.props.translate("import.yes") || "Yes"}
 					</button>
@@ -350,8 +350,9 @@ export default class LimitOrderSubmit extends React.Component {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
   }
 
-  confirmAgreeSubmit = () => {
+  confirmAgreeSubmit = (listPendingCancelOrders) => {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+    this.props.dispatch(limitOrderActions.setPendingCancelOrders(listPendingCancelOrders));
     this.agreeSubmit();
   }
 

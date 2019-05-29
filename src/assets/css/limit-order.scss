@@ -698,6 +698,10 @@
                         padding: 2px 0;
                     }
 
+                    span {
+                        margin-right: 5px;
+                    }
+
                     >div:first-child {
                         font-size: 10px;
                         font-weight: 500;
@@ -904,7 +908,7 @@
     padding: 10px 12px;
 
     @include screen-max-width(medium) {
-        left: -46px;
+        left: -71px;
     }
 
     &__option {

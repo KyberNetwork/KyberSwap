@@ -45,7 +45,7 @@ export default class LimitOrderTable extends Component {
       id: "date",
       Header: this.getHeader("date"),
       accessor: item => item,
-      Cell: props => this.getDateCell(props),
+      Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start",
       maxWidth: 120,
@@ -60,7 +60,7 @@ export default class LimitOrderTable extends Component {
       id: "condition",
       Header: this.getHeader("condition"),
       accessor: item => item,
-      Cell: props => this.getConditionCell(props),
+      Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition",
       width: 180
@@ -68,14 +68,14 @@ export default class LimitOrderTable extends Component {
       id: "from",
       Header: this.getHeader("from"),
       accessor: item => ({ source: item.source, sourceAmount: item.src_amount }),
-      Cell: props => this.getFromCell(props),
+      Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from",
     }, {
       id: "to",
       Header: this.getHeader("to"),
       accessor: item => ({ dest: item.dest, minRate: item.min_rate, sourceAmount: item.src_amount, fee: item.fee }),
-      Cell: props => this.getToCell(props),
+      Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to",
     }, {
@@ -88,8 +88,8 @@ export default class LimitOrderTable extends Component {
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
-      accessor: item => item.status,
-      Cell: props => this.getActionCell(props),
+      accessor: item => item,
+      Cell: props => this.getActionCell(props.value),
       maxWidth: 100
 		}, {
       expander: true,
@@ -103,7 +103,7 @@ export default class LimitOrderTable extends Component {
       id: "condition",
       Header: this.getHeader("condition"),
       accessor: item => item,
-      Cell: props => this.getConditionCell(props),
+      Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition",
     }, {
@@ -142,7 +142,7 @@ export default class LimitOrderTable extends Component {
 	// Render cell
 	// --------------
 	getDateCell = (props) => {
-    const { created_time, cancel_time, status } = props.value;
+    const { created_time, cancel_time, status } = props;
     const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
     const datetime = common.getFormattedDate(timestamp);
     return (
@@ -151,7 +151,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest, status, created_time, cancel_time, min_rate } = props.value;
+    const { source, dest, status, created_time, cancel_time, min_rate } = props;
     const { screen } = this.props;
 
     const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
@@ -160,7 +160,7 @@ export default class LimitOrderTable extends Component {
     if (screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
-          {this.getDateCell({ value: datetime })}
+          {this.getDateCell(props)}
           <div>
             <span>{source.toUpperCase()}</span>
             <span>&rarr;</span>
@@ -176,7 +176,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getFromCell = (props) => {
-    const { source, sourceAmount } = props.value;
+    const { source, sourceAmount } = props;
     let amount = converters.roundingNumber(sourceAmount);
     return (
       <div>
@@ -187,7 +187,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getToCell = (props) => {
-    const { dest, minRate, fee, sourceAmount } = props.value;
+    const { dest, minRate, fee, sourceAmount } = props;
     let destAmount = sourceAmount * (1 - fee / 100) * minRate;
     destAmount = converters.roundingNumber(destAmount);
     return (
@@ -198,8 +198,8 @@ export default class LimitOrderTable extends Component {
     )
   }
 
-  getStatusCell = (order) => {
-    const { status, msg, id } = order;
+  getStatusCell = (props) => {
+    const { status, msg, id } = props;
 
     const getMsg = (msg) => {
       return msg.reduce((result, item) => {
@@ -229,10 +229,10 @@ export default class LimitOrderTable extends Component {
   }
 
   getActionCell = (props) => {
-    const status = props.value;
+    const { status } = props;
     return (
       <div className="cell-action">
-        {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props.original)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
+        {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
         {status !== LIMIT_ORDER_CONFIG.status.OPEN && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
     )
@@ -313,7 +313,7 @@ export default class LimitOrderTable extends Component {
         </div>
         {/* Button */}
         <div>
-          {this.getActionCell({ value: status, ...row })}
+          {this.getActionCell(row.original)}
         </div>
       </div>
       
@@ -501,12 +501,12 @@ export default class LimitOrderTable extends Component {
     } else if (title === "condition") {
       return (
         <Dropdown active={this.state.conditionFilterVisible} onHide={e => this.togglingConditionFilter()}>
-          <DropdownTrigger>
+          <div>
             <span>{this.props.translate("limit_order.condition") || "Condition"}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
-          </DropdownTrigger>
+          </div>
           <DropdownContent>
             {this.getPairFilter()}
           </DropdownContent>
@@ -515,12 +515,12 @@ export default class LimitOrderTable extends Component {
     } else if (title === "status") {
       return (
         <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
-          <DropdownTrigger>
+          <div>
             <span>{this.props.translate("limit_order.status") || "Status"}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
-          </DropdownTrigger>
+          </div>
           <DropdownContent>
             {this.getStatusFilter()}
           </DropdownContent>

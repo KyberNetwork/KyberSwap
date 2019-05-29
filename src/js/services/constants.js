@@ -318,6 +318,9 @@ const INIT_LIMIT_ORDER_STATE = {
 
   listOrder: [],
 
+  // List pending cancel orders
+  listPendingCancelOrders: [],
+
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 380000,
   max_gas: 380000,

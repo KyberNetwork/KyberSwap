@@ -3,7 +3,7 @@ import EthereumTx from "ethereumjs-tx"
 import { unlock } from "../../utils/keys"
 import EthereumService from "../ethereum/ethereum"
 import secp256k1 from "secp256k1"
-import ethUtils from "ethereumjs-util"
+import * as ethUtils from "ethereumjs-util"
 
 export default class KeyStore {
 
