@@ -91,6 +91,10 @@ export function caculateTriggerRate(sourceAmount, destAmount, precision) {
   var bigDest = new BigNumber(destAmount.toString())
 
   var result = bigDest.div(bigSource)
+  if (result == "NaN" || result == "Infinity") {
+    return 0;
+  }
+
   if (precision) {
     return result.toFixed(precision)
   } else {
