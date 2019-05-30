@@ -105,7 +105,7 @@ export default class ApproveZeroModal extends React.Component {
     if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
       return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
-      return ""
+      return this.props.translate("modal.press_approve") || "Press approve to continue";
     }
   }
 
@@ -164,8 +164,9 @@ export default class ApproveZeroModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
-          <div>{this.msgHtml()}</div>
-          <div className="input-confirm grid-x input-confirm--approve">            
+          {/* <div>{this.msgHtml()}</div> */}
+          <div className="input-confirm grid-x input-confirm--approve">           
+          <div className="cell medium-8 small-12">{this.msgHtml()}</div> 
             <div className="cell medium-4 small-12">
               <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
                 onClick={this.onSubmit.bind(this)}

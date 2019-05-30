@@ -611,7 +611,7 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    padding: 0 45px;
+    padding: 0;
     &.with-overlap {
       padding-bottom: 25px;
       @include screen-max-width(medium){
