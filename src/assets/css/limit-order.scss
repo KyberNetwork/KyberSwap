@@ -1186,6 +1186,8 @@
             font-size: 14px;
             color: #ff5d00;
             margin-top: 15px;
+            max-height: 100px;
+            overflow: auto;
         }
 
         @include screen-max-width(medium) {
