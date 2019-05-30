@@ -133,6 +133,7 @@ export function submitOrder(order) {
         newOrder.cancel_time = 0;
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
+        newOrder.id = Math.floor(Date.now() / 1000)
         resolve(newOrder);
         return;
     })
@@ -160,5 +161,21 @@ export function getNonce(userAddr, source, dest) {
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
         resolve(0.4)
+    })
+}
+
+
+export function getOrdersByIdArr(idArr){
+    return new Promise((resolve, rejected) => {
+        var returnData = []
+        for (var i = 0; i < idArr.length; i++){
+            for (var j = 0; j <data.length; j++){
+                if (data[j].id === idArr[i]){
+                    returnData.push(data[j])
+                    break
+                }
+            }
+        }
+        resolve(returnData)
     })
 }

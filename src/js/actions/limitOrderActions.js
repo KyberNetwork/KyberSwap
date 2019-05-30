@@ -135,3 +135,9 @@ export function setPendingCancelOrders(listOrders) {
     payload: listOrders
   }
 }
+
+export function updateOpenOrderStatus() {
+  return {
+    type: "LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS"
+  }
+}
