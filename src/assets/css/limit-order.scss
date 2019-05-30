@@ -1320,9 +1320,18 @@
             font-size: 18px;
             font-weight: 500;
             color: #5a5e67;
-            padding: 10px 20px 10px 40px;
+            padding: 2px 20px 2px 40px;
             background: white;
-            border-radius: 0 25px 25px 0;
+            border-radius: 0 40px 40px 0;
+
+            input{
+                margin: 0;
+                border: none;
+                box-shadow: none;
+                border-radius: 40px;
+                font-size: 16px;
+                max-width: 150px;
+            }
         }
         .dest-token{
             .token-info{
