@@ -1,18 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import { ImportAccount, ErrorModal } from "../ImportAccount";
-import { ImportAccountView } from '../../components/ImportAccount'
+import { ImportAccount } from "../ImportAccount";
 import { TopBalance, AccountBalance } from "../TransactionCommon";
 import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
-import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions";
 
-import BLOCKCHAIN_INFO from "../../../../env";
-import { isUserLogin, isMobile } from "../../utils/common";
+import { isUserLogin } from "../../utils/common";
 import * as converters from "../../utils/converter";
-import * as web3Package from "../../services/web3";
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -103,48 +99,15 @@ export default class LimitOrderAccount extends React.Component {
     return filteredTokens;
   }
 
-  componentDidMount() {
-    var swapPage = document.getElementById("swap-app");
-    swapPage.className = swapPage.className === "" ? "no-min-height" : swapPage.className + " no-min-height";
-
-    var web3Service = web3Package.newWeb3Instance();
-    if (web3Service !== false) {
-      const walletType = web3Service.getWalletType();
-      const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
-      if (isDapp) {
-        this.props.dispatch(setOnDAPP());
-
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
-      }
-    }
-    if (web3Service === false) {
-      if (isMobile.iOS()) {
-        this.props.dispatch(globalActions.setOnMobile(true, false));
-      } else if (isMobile.Android()) {
-        this.props.dispatch(globalActions.setOnMobile(false, true));
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.dispatch(globalActions.clearAcceptConnectWallet());
-  }
-
   render() {
     if (this.props.account === false) {
       return (
         <div className={"limit-order-account"}>
-          <ImportAccountView  
+          <ImportAccount 
+            tradeType="limit_order"
             isAgreedTermOfService={this.props.global.termOfServiceAccepted}
             isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-            errorModal={<ErrorModal />}
-            translate={this.props.translate}
-            onMobile={this.props.global.onMobile}
-            tradeType={"limit_order"}
-            isUserLogin={isUserLogin()}
-            />
+          />
         </div>
       );
     } else {
