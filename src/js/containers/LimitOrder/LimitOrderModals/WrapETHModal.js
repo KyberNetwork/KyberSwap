@@ -284,10 +284,8 @@ export default class WrapETHModal extends React.Component {
                             {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-                            <a className={"button process-submit cancel-process"} onClick={this.closeModal}>Cancel</a>
-                            <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Convert</a>
-                        </div>
-                    </div>
+                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
                 </div>
             </div>
         )

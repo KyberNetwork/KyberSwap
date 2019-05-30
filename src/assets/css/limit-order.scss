@@ -9,7 +9,6 @@
 
     .ReactTable {
         height: 310px;
-        overflow: auto;
         margin: 15px 30px 30px 30px;
         border: none;
 
@@ -817,7 +816,7 @@
 
  // Pair filter modal
  .pair-filter-modal {
-    width: 165px;
+    width: auto;
     border-radius: 6px;
     box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
     border: solid 0.9px #d3d7db;
@@ -1250,6 +1249,18 @@
 }
 
 .wrap-eth-modal{
+    @include screen-max-width(medium) {
+        padding: 0 20px;
+    }
+
+    .content {
+        padding: 0 45px;
+
+        @include screen-max-width(medium) {
+            padding: 0;
+        }
+    }
+
     .title{
         font-size: 28px;
         font-weight: 600;
@@ -1257,6 +1268,10 @@
         margin-top: 50px;
         padding: 0 45px;
         line-height: 1.3;
+
+        @include screen-max-width(medium) {
+            padding: 0;
+        }
     }
     .message{
         font-size: 14px;

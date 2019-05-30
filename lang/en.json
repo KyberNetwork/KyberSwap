@@ -143,6 +143,7 @@
   "modal": {
     "enter_password": "Enter Password",
     "confirm": "Confirm",
+    "convert": "Convert",
     "import": "Import",
     "enter_password_placeholder": "Enter wallet password to confirm",
     "select_hd_path": "Select HD derivation path",
@@ -381,7 +382,8 @@
     "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= ${rate}",
     "fee": "Fee",
     "change_rate": "Change Rate",
-    "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order."
+    "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.",
+    "wrap_eth_notify": "Your order can not be submited because your WETH is not enough, please convert ETH to WETH."
   },
   "home": "Home",
   "tracker": "Tracker",
