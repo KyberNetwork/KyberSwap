@@ -17,6 +17,7 @@ import * as converters from "../../utils/converter"
   const limitOrder = store.limitOrder;
   const ethereum = store.connection.ethereum;
   const global = store.global;
+  const { walletName } = store.account;
 
   return {
     translate,
@@ -24,7 +25,8 @@ import * as converters from "../../utils/converter"
     tokens,
     account,
     ethereum,
-    global
+    global,
+    walletName
   };
 })
 export default class LimitOrderAccount extends React.Component {
@@ -159,7 +161,7 @@ export default class LimitOrderAccount extends React.Component {
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isBalanceActive={this.state.isAdvanceTokenVisible}
               isOnDAPP={this.props.account.isOnDAPP}
-              walletName={this.props.account.walletName}
+              walletName={this.props.walletName}
               screen="limit_order"
               selectTokenBalance={this.selectTokenBalance}
               changeAmount={limitOrderActions.inputChange}

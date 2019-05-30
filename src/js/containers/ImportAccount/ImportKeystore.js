@@ -61,7 +61,7 @@ export default class ImportKeystore extends React.Component {
         "privateKey",
         privKey.toString("hex"),
         this.props.ethereum,
-        this.props.tokens, null, null, "PRIVATE KEY"))
+        this.props.tokens, null, null, "Keystore"))
         this.setState({ isOpen: false, error: "" })
     }catch(e){
       console.log(e)
@@ -71,7 +71,7 @@ export default class ImportKeystore extends React.Component {
 
   submit =(e) => {
     if (e.key === 'Enter') {
-      unLock(e)
+      this.unLock(e)
     }
   }
 
