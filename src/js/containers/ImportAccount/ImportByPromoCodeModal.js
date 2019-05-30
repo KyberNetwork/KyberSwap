@@ -171,7 +171,7 @@ export default class ImportByPromoCodeModal extends React.Component {
         "promo",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "PROMO CODE", info))
+        this.props.tokens, null, null, "Promo Code", info))
       this.setState({isLoading: false})
     }).catch(error => {
       this.setState({error: error, captchaV: (new Date).getTime()})

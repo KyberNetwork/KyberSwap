@@ -48,7 +48,7 @@ export default class ImportByPrivateKey extends React.Component {
         "privateKey",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "PRIVATE KEY"))
+        this.props.tokens, null, null, "Private Key"))
     }
     catch (e) {
       console.log(e)

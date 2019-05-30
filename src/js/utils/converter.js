@@ -80,10 +80,10 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
 }
 
 export function caculateTriggerRate(sourceAmount, destAmount, precision) {
-  if (isNaN(sourceAmount) || sourceAmount === "") {
+  if (isNaN(sourceAmount) || sourceAmount === "" || sourceAmount == "0") {
     return 0
   }
-  if (isNaN(destAmount) || destAmount === "") {
+  if (isNaN(destAmount) || destAmount === "" || destAmount == "0") {
     return 0
   }
 

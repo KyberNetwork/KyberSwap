@@ -159,7 +159,7 @@ export function* importNewAccount(action) {
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
+    yield put(actions.importNewAccountComplete(account, walletName))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
@@ -265,7 +265,8 @@ export function* importMetamask(action) {
       ethereum,
       tokens,
       walletType,
-      metamask
+      metamask,
+      "Metamask"
     ))
   } catch (e) {
     console.log(e)
