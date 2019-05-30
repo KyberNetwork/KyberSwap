@@ -158,7 +158,7 @@ export default class WrapETHModal extends React.Component {
                 <div>
 
                     <div className="message">
-                      <span>Your order can not be submited because your WETH is not enough, please convert ETH to WETH.</span>
+                      <span>{this.props.translate("limit_order.wrap_eth_notify") || "Your order can not be submited because your WETH is not enough, please convert ETH to WETH."}</span>
                       <span className="weth-modal-tooltip-icon" data-tip={'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
                         <img src={require("../../../../assets/img/v3/info_grey.svg")}/>
                       </span>
@@ -217,8 +217,8 @@ export default class WrapETHModal extends React.Component {
                     {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>Cancel</a>
-                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>Convert</a>
+                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
                 </div>
               </div>
             </div>
