@@ -19,7 +19,7 @@ const data = [
     },
     {
         id: 1,
-        source: "ETH",
+        source: "WETH",
         dest: "DAI",
         address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
@@ -56,7 +56,7 @@ const data = [
         cancel_time: 1556767045
     }, {
         id: 5,
-        source: "ETH",
+        source: "WETH",
         dest: "TUSD",
         address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
@@ -68,7 +68,7 @@ const data = [
         cancel_time: 1538299225
     }, {
         id: 6,
-        source: "ETH",
+        source: "WETH",
         dest: "TUSD",
         address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
@@ -133,6 +133,7 @@ export function submitOrder(order) {
         newOrder.cancel_time = 0;
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
+        newOrder.id = Math.floor(Date.now() / 1000)
         resolve(newOrder);
         return;
     })
@@ -160,5 +161,21 @@ export function getNonce(userAddr, source, dest) {
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
         resolve(0.4)
+    })
+}
+
+
+export function getOrdersByIdArr(idArr){
+    return new Promise((resolve, rejected) => {
+        var returnData = []
+        for (var i = 0; i < idArr.length; i++){
+            for (var j = 0; j <data.length; j++){
+                if (data[j].id === idArr[i]){
+                    returnData.push(data[j])
+                    break
+                }
+            }
+        }
+        resolve(returnData)
     })
 }

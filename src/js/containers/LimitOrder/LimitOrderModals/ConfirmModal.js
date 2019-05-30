@@ -120,12 +120,12 @@ export default class ConfirmModal extends React.Component {
             var signature = await wallet.signSignature(signData, this.props.account)     
 
             
-            // var pramameters = await ethereum.call("getSignatureParameters", signature)
+            var pramameters = await ethereum.call("getSignatureParameters", signature)
             
-            // console.log(signature)
-            // console.log(signData)
-            // console.log(pramameters)
-            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            console.log(signature)
+            console.log(signData)
+            console.log(pramameters)
+            console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             if (this.props.limitOrder.listPendingCancelOrders.length > 0) {
               const queue = [];
@@ -154,10 +154,15 @@ export default class ConfirmModal extends React.Component {
                 signature: signature
             });
 
-            newOrder.id = this.props.limitOrder.listOrder.length + 1;
+            //update status order
+            
+
+            // newOrder.id = this.props.limitOrder.listOrder.length + 1;
 
             //save new order
-            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))            
+            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))   
+            
+            this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
 
             //go to the next step
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
