@@ -220,7 +220,7 @@ export default class ConfirmModal extends React.Component {
           <span data-tip data-for="fee-info" data-scroll-hide="false">
             <img src={require("../../../../assets/img/v3/info_grey.svg")} />
           </span>
-          <ReactTooltip globalEventOff="click" event="click" html={true} place={`${this.props.global.isOnMobile ? "top" : "right"}`} type="light" id="fee-info" className="limit-order-modal__fee--info">
+          <ReactTooltip globalEventOff="click" event="click mouseenter mouseleave" html={true} place={`top`} type="light" id="fee-info" className="limit-order-modal__fee--info">
             {this.getFeeInfoTooltip()}
           </ReactTooltip>
         </React.Fragment>

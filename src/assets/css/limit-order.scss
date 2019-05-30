@@ -327,7 +327,7 @@
         grid-gap: 16px;
         padding: 0 1rem;
 
-        @include screen-max-width(medium) {
+        @include screen-max-width(xxmedium) {
             grid-template-columns: auto;
             grid-template-rows: auto auto;
             padding: 0;
@@ -1041,10 +1041,6 @@
         z-index: 2;
         padding: 10px;
         cursor: pointer;
-        @include screen-max-width(large) {
-            right: 0px;
-            top: -5px;
-        }
         &-wrapper {
             background-image: url("../img/v3/Close-3.svg");
             width: 16px;
@@ -1155,12 +1151,17 @@
         }
 
         &--info {
-            width: 300px;
+            width: auto;
+            max-width: 280px;
             border-radius: 5px;
             background-color: #3e5271 !important;
             color: #ffffff !important;
             font-weight: 500 !important;
             font-size: 12px !important;
+
+            &::after {
+                border-top-color: #3e5271 !important;
+            }
         }
     }
 
