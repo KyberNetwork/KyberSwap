@@ -51,20 +51,20 @@ export default class WrapETHModal extends React.Component {
 
         this.setState({ amountConvert: minAmountConvert, minAmountConvert: minAmountConvert })
 
-        //verify cap
-        var maxCap = this.props.account.maxCap
-        if (maxCap !== "infinity") {
-            maxCap = converters.toEther(maxCap)
-        } else {
-            this.setState({ isError: false })
-            return
-        }
+        //verify cap - remove because of new term
+        // var maxCap = this.props.account.maxCap
+        // if (maxCap !== "infinity") {
+        //     maxCap = converters.toEther(maxCap)
+        // } else {
+        //     this.setState({ isError: false })
+        //     return
+        // }
 
-        if (converters.compareTwoNumber(convertedEth, maxCap) === 1) {
-            this.setState({ err: `Converted amount is over your cap - ${maxCap} ETH`, isError: true })
-        } else {
-            this.setState({ isError: false })
-        }
+        // if (converters.compareTwoNumber(convertedEth, maxCap) === 1) {
+        //     this.setState({ err: `Converted amount is over your cap - ${maxCap} ETH`, isError: true })
+        // } else {
+        //     this.setState({ isError: false })
+        // }
     }
 
     handleChange = (e) => {
