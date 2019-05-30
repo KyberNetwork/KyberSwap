@@ -211,82 +211,84 @@ export default class WrapETHModal extends React.Component {
 
         return (
             <div className="wrap-eth-modal">
-                <div className="title">Convert ETH to WETH</div>
-                <a className="x" onClick={this.closeModal}>&times;</a>
-                <div className="content with-overlap">
-                    <div className="row">
-                        <div>
+              <div className="title">Convert ETH to WETH</div>
+              <a className="x" onClick={this.closeModal}>&times;</a>
+              <div className="content with-overlap">
+                  <div className="row">
+                      <div>
 
-                            <div className="message">
-                                <span>Your order can not be submited because your WETH is not enough, please convert ETH to WETH.</span>
-                                <span className="weth-modal-tooltip-icon" data-tip={'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
-                                    <img src={require("../../../../assets/img/v3/info_grey.svg")} />
-                                </span>
-                                <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" />
-                            </div>
-                            <div className="address-info">
-                                <div>
-                                    <label>Your address: </label>
-                                    <span className={"target-value"}>{this.props.account.address}</span>
-                                </div>
-                                <div>
-                                    <label>Your balance: </label>
-                                    <div className={"target-value balance-info"}>
-                                        <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
-                                        <div>{availableWethBalance} WETH</div>
-                                    </div>
-                                </div>
-                            </div>
+                          <div className="message">
+                              <span>Your order can not be submited because your WETH is not enough, please convert ETH to WETH.</span>
+                              <span className="weth-modal-tooltip-icon" data-tip={'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
+                                  <img src={require("../../../../assets/img/v3/info_grey.svg")} />
+                              </span>
+                              <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" />
+                          </div>
+                          <div className="address-info">
+                              <div>
+                                  <label>Your address: </label>
+                                  <span className={"target-value"}>{this.props.account.address}</span>
+                              </div>
+                              <div>
+                                  <label>Your balance: </label>
+                                  <div className={"target-value balance-info"}>
+                                      <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
+                                      <div>{availableWethBalance} WETH</div>
+                                  </div>
+                              </div>
+                          </div>
 
-                            <div className="illustration">
-                                <div className="source-token token-item">
-                                    <div className="token-info">
-                                        <img src={getAssetUrl(`tokens/eth.svg`)} />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div className="token-value">
-                                        <input value={this.state.amountConvert} id="wrap-input"
-                                            min="0"
-                                            step="0.000001"
-                                            placeholder="0" autoFocus
-                                            type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
-                                            onChange={(e) => this.handleChange(e)} />
-                                    </div>
-                                </div>
+                          <div className="illustration">
+                              <div className="source-token token-item">
+                                  <div className="token-info">
+                                      <img src={getAssetUrl(`tokens/eth.svg`)} />
+                                      <span>ETH</span>
+                                  </div>
+                                  <div className="token-value">
+                                      <input value={this.state.amountConvert} id="wrap-input"
+                                          min="0"
+                                          step="0.000001"
+                                          placeholder="0" autoFocus
+                                          type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
+                                          onChange={(e) => this.handleChange(e)} />
+                                  </div>
+                              </div>
 
-                                <div className="token-connector">
-                                    <i className="k k-transfer k-3x"></i>
-                                </div>
+                              <div className="token-connector">
+                                  <i className="k k-transfer k-3x"></i>
+                              </div>
 
-                                <div className="dest-token token-item">
-                                    <div className="token-info">
-                                        <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
-                                        <span>{BLOCKCHAIN_INFO.wrapETHToken}</span>
-                                    </div>
-                                </div>
-                            </div>
+                              <div className="dest-token token-item">
+                                  <div className="token-info">
+                                      <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
+                                      <span>{BLOCKCHAIN_INFO.wrapETHToken}</span>
+                                  </div>
+                              </div>
+                          </div>
 
-                            {/* {this.state.err && (
-                        <div className={'modal-error custom-scroll'}>
-                            {this.state.err}
-                        </div>
-                    )} */}
-                            {this.errorHtml()}
+                          {/* {this.state.err && (
+                      <div className={'modal-error custom-scroll'}>
+                          {this.state.err}
+                      </div>
+                  )} */}
+                          {this.errorHtml()}
 
-                        </div>
+                      </div>
 
-                    </div>
+                  </div>
+              </div>
+              <div className="overlap">
+                {this.msgHtml()}
+                <div className="input-confirm grid-x input-confirm--approve">
+                  <div className="cell btn-wrapper">
+                        {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
+                          onClick={this.props.onSubmit}
+                        >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
+                    <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
+                    <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
+                  </div>
                 </div>
-                <div className="overlap">
-                    {this.msgHtml()}
-                    <div className="input-confirm grid-x input-confirm--approve">
-                        <div className="cell btn-wrapper">
-                            {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
-                    onClick={this.props.onSubmit}
-                  >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
-                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
-                </div>
+              </div>
             </div>
         )
     }
