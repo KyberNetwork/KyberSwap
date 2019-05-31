@@ -38,7 +38,7 @@ export default class WrapETHModal extends React.Component {
         this.state = {
             err: "",
             isConfirming: false,
-            isError: true,
+            isError: false,
             amountConvert: 0,
             minAmountConvert: 0
         }
