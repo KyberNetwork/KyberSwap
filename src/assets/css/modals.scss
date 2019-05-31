@@ -611,11 +611,11 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    padding: 0;
+    padding: 0 45px;
     &.with-overlap {
       padding-bottom: 25px;
       @include screen-max-width(medium){
-        padding-bottom: 0;
+        padding: 0;
       }
     }
     .block-title {
