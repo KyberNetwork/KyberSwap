@@ -155,10 +155,15 @@ export default class ConfirmModal extends React.Component {
                 signature: signature
             });
 
-            newOrder.id = this.props.limitOrder.listOrder.length + 1;
+            //update status order
+            
+
+            // newOrder.id = this.props.limitOrder.listOrder.length + 1;
 
             //save new order
-            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))            
+            this.props.dispatch(limitOrderActions.addNewOrder(newOrder))   
+            
+            this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
 
             //go to the next step
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
@@ -216,7 +221,7 @@ export default class ConfirmModal extends React.Component {
           <span data-tip data-for="fee-info" data-scroll-hide="false">
             <img src={require("../../../../assets/img/v3/info_grey.svg")} />
           </span>
-          <ReactTooltip globalEventOff="click" event="click" html={true} place="right" type="light" id="fee-info" className="limit-order-modal__fee--info">
+          <ReactTooltip globalEventOff="click" event="click mouseenter mouseleave" html={true} place={`top`} type="light" id="fee-info" className="limit-order-modal__fee--info">
             {this.getFeeInfoTooltip()}
           </ReactTooltip>
         </React.Fragment>

@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import { ImportAccount, ErrorModal } from "../ImportAccount";
-import { ImportAccountView } from '../../components/ImportAccount'
+import { ImportAccount } from "../ImportAccount";
 import { TopBalance, AccountBalance } from "../TransactionCommon";
 import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
-import { isUserLogin } from "../../utils/common"
-import * as converters from "../../utils/converter"
+
+import { isUserLogin } from "../../utils/common";
+import * as converters from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -17,6 +17,7 @@ import * as converters from "../../utils/converter"
   const limitOrder = store.limitOrder;
   const ethereum = store.connection.ethereum;
   const global = store.global;
+  const { walletName } = store.account;
 
   return {
     translate,
@@ -24,7 +25,8 @@ import * as converters from "../../utils/converter"
     tokens,
     account,
     ethereum,
-    global
+    global,
+    walletName
   };
 })
 export default class LimitOrderAccount extends React.Component {
@@ -101,15 +103,11 @@ export default class LimitOrderAccount extends React.Component {
     if (this.props.account === false) {
       return (
         <div className={"limit-order-account"}>
-          <ImportAccountView  
+          <ImportAccount 
+            tradeType="limit_order"
             isAgreedTermOfService={this.props.global.termOfServiceAccepted}
             isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-            errorModal={<ErrorModal />}
-            translate={this.props.translate}
-            onMobile={this.props.global.onMobile}
-            tradeType={"limit_order"}
-            isUserLogin={isUserLogin()}
-            />
+          />
         </div>
       );
     } else {
@@ -159,7 +157,7 @@ export default class LimitOrderAccount extends React.Component {
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isBalanceActive={this.state.isAdvanceTokenVisible}
               isOnDAPP={this.props.account.isOnDAPP}
-              walletName={this.props.account.walletName}
+              walletName={this.props.walletName}
               screen="limit_order"
               selectTokenBalance={this.selectTokenBalance}
               changeAmount={limitOrderActions.inputChange}

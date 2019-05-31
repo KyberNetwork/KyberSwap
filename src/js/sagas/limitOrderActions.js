@@ -5,7 +5,7 @@ import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
-import {getFee} from "../services/limit_order"
+import {getFee, getOrdersByIdArr} from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 
@@ -107,6 +107,34 @@ function* triggerAfterAccountImport(action){
   }
 }
 
+function*  fetchOpenOrderStatus() {
+  const state = store.getState()
+  var listOrder = state.limitOrder.listOrder
+  var idArr = []
+  listOrder.map(value => {
+    if(value.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || value.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS){
+      idArr.push(value.id)
+    }
+  })
+  try{
+    var orders = yield call(getOrdersByIdArr, idArr)
+    //update order
+    for (var i = 0; i < listOrder.length; i++){
+        for (var j = 0; j <orders.length; j++){
+            if (listOrder[j].id === orders[i]){
+                listOrder[j] = orders[i]
+                break
+            }
+        }
+    }
+    yield put(limitOrderActions.addListOrder(listOrder))
+
+
+  }catch(err){
+    console.log(err)
+  }
+}
+
 export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
 
@@ -115,5 +143,7 @@ export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee)
 
     yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport)
+
+    yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus)
 
   }

@@ -125,3 +125,24 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
             })
     })
 }
+
+
+export function getOrdersByIdArr(idArr){
+    return new Promise((resolve, rejected) => {
+        getOrders().then(orders => {
+            var returnData = []
+            for (var i = 0; i < idArr.length; i++){
+                for (var j = 0; j <orders.length; j++){
+                    if (orders[j].id === idArr[i]){
+                        returnData.push(orders[j])
+                        break
+                    }
+                }
+            }
+            resolve(returnData)
+        }).catch(err => {
+            console.log(err)
+            rejected(err)
+        })
+    })
+}

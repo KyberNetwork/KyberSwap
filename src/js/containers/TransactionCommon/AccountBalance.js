@@ -89,6 +89,8 @@ export default class AccountBalance extends React.Component {
         amount = amount.replace(",", "")
     }
 
+    if (amount < 0) amount = 0;
+
     if (this.props.screen === "swap" || this.props.screen === "limit_order") {
         this.props.dispatch(this.props.changeAmount('source', amount))
         this.props.dispatch(this.props.changeFocus('source'));

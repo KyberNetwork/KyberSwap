@@ -110,7 +110,7 @@ export default class ApproveZeroModal extends React.Component {
     if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
       return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
-      return ""
+      return this.props.translate("modal.press_approve") || "Press approve to continue";
     }
   }
 
@@ -168,14 +168,14 @@ export default class ApproveZeroModal extends React.Component {
           </div>
         </div>
         <div className="overlap">
-          <div>{this.msgHtml()}</div>
+          {/* <div>{this.msgHtml()}</div> */}
           <div className="input-confirm grid-x input-confirm--approve">
-            {/* <div className="cell medium-8 small-12">{this.msgHtml()}</div> */}
+            <div className="cell medium-8 small-12">{this.msgHtml()}</div>
             <div className="cell medium-4 small-12">
               {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                     onClick={this.props.onSubmit}
                   >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-              <a className={"button process-submit next"}
+              <a className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`}
                 onClick={this.onSubmit.bind(this)}
               >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
             </div>

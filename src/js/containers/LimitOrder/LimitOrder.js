@@ -34,7 +34,7 @@ export default class LimitOrder extends React.Component {
   constructor(){
     super()
     this.state = {
-      invervalProcess: null
+      intervalGroup: []
     }
   }
 
@@ -66,16 +66,29 @@ export default class LimitOrder extends React.Component {
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
   }
 
+  setInterValGroup = (callback, intervalTime) => {    
+    var intevalProcess = setInterval(callback, intervalTime)
+    this.state.intervalGroup.push(intevalProcess)
+  }
+
   setInvervalProcess = () => {
-    var invervalFunc = () => {
-      this.fetchCurrentRate()
-    }
-    this.fetchCurrentRateInit()
-    this.invervalProcess =  setInterval(invervalFunc, 10000)
+   
+    this.setInterValGroup(this.fetchCurrentRate, 10000)
+
+    this.setInterValGroup(this.fethchOpenOrders.bind(this), 10000)
+
   }
 
   componentWillUnmount = () => {
-    clearInterval(this.invervalProcess)
+    for (var i= 0; i<this.state.intervalGroup.length; i++ ){
+      clearInterval(this.state.intervalGroup[i])  
+    }
+    this.setState({intervalGroup: []})    
+  }
+
+  async fethchOpenOrders() {   
+    // requuest update order
+    this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
 
   async getOrders() {
@@ -109,6 +122,8 @@ export default class LimitOrder extends React.Component {
       this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
 
     }
+
+    this.fetchCurrentRateInit()
 
     // Get list orders
     if (isUserLogin()) {
