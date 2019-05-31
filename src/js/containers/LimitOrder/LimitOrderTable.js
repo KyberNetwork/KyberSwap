@@ -630,10 +630,11 @@ export default class LimitOrderTable extends Component {
 					showPagination={false}
 					resizable={false}
 					sortable={false}
-          minRows={1}
+          minRows={0}
           expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
-					PadRowComponent={() => (<div className="line-indicator"></div>)}
-					NoDataComponent={() => null}
+          noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
+					// PadRowComponent={() => (<div className="line-indicator"></div>)}
+					// NoDataComponent={() => null}
 					getTheadProps={(state, rowInfo) => {
 						return {
 							style: { overflow: "visible"}
@@ -661,6 +662,13 @@ export default class LimitOrderTable extends Component {
             return {};
           }}
           getTheadThProps={(state, rowInfo, column) => {
+            if (data.length === 0) {
+              return {
+                style: {
+                  pointerEvents: "none"
+                }
+              }
+            }
             if (column.id === "status") {
               return {
                 onClick: (e) => {
