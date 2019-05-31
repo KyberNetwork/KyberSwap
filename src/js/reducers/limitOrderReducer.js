@@ -203,6 +203,11 @@ const limitOrder = (state = initState, action) => {
       }
       return newState;
     }
+
+    case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
+      newState.orderPath = [];
+      return newState;
+    }
   }
   return state
 }
