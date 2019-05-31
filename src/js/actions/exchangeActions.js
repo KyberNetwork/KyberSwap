@@ -697,6 +697,13 @@ export function setCustomRateInputValue(value) {
   }
 }
 
+export function setIsSelectCustomRate(value) {
+  return {
+    type: "EXCHANGE.SET_IS_SELECT_CUSTOM_RATE_INPUT",
+    payload: value
+  }
+}
+
 
 export function updateExchangePath(exchangePath, currentPathIndex){
   return {
