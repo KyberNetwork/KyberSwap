@@ -327,7 +327,7 @@
         grid-gap: 16px;
         padding: 0 1rem;
 
-        @include screen-max-width(xxmedium) {
+        @media screen and (max-width: 900px)  {
             grid-template-columns: auto;
             grid-template-rows: auto auto;
             padding: 0;
