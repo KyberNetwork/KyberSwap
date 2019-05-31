@@ -28,7 +28,6 @@ export default class TokenSelector extends React.Component {
     this.state = {
       open: false,
       searchWord: "",
-      isScroll: false,
       tokenNumberLimit: 20,
       isLoadAllTokens: false,
     }
