@@ -146,7 +146,7 @@ export default class ApproveMaxModal extends React.Component {
             <div>
               <div>
                 <div className="message">
-                  {`You need approve KyberSwap to use token ${this.props.limitOrder.sourceTokenSymbol}`}
+                  {`You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} in this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">

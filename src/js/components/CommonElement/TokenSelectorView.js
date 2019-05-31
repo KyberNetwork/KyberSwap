@@ -6,12 +6,18 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import * as constants from "../../services/constants";
 
 const TokenSelectorView = (props) => {
-  var focusItem = getTokenBySymbol(props.listToken, props.focusItem)
+  var focusItem = getTokenBySymbol(props.tokens, props.focusItem)
 
   var getListToken = () => {
     var banToken = props.banToken ? props.banToken : ""
-    return props.listShowToken.map((item, i) => {
+    const tokens = props.isLoadAllTokens ? props.tokens : props.tokens.slice(0, props.tokenNumberLimit)
+    const searchWord = props.searchWord;
+
+    return tokens.map((item, i) => {
       if (item.symbol === props.banToken) return
+
+      if(searchWord && !item.name.toLowerCase().includes(searchWord) && !item.symbol.toLowerCase().includes(searchWord)) return;
+
       if (item.symbol !== props.focusItem) {
         var balance = toT(item.balance, item.decimals)
         return (
@@ -38,7 +44,7 @@ const TokenSelectorView = (props) => {
   }
 
   const getWethTitle = () => {
-    const wethAddress = props.listToken.filter(item => item.symbol === "WETH")[0].address;
+    const wethAddress = props.tokens.filter(item => item.symbol === "WETH")[0].address;
     return (
       <div className="select-item__title" onClick={e => { 
         props.selectItem(e, BLOCKCHAIN_INFO.wrapETHToken, wethAddress);
@@ -58,7 +64,7 @@ const TokenSelectorView = (props) => {
   }
 
   const priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
-    var token = getTokenBySymbol(props.listToken, value)
+    var token = getTokenBySymbol(props.tokens, value)
     return <span key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
       <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
       {value}
