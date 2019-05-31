@@ -8,7 +8,7 @@ import * as common from "../../utils/common";
 import * as converters from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-
+import _ from "lodash";
 import PropTypes from "prop-types";
 
 
@@ -608,12 +608,30 @@ export default class LimitOrderTable extends Component {
     return results;
   }
 
+  focusSourceInput = () => {
+    if (this.props.screen === "mobile" && this.props.toggleLimitOrderListModal) {
+      this.props.toggleLimitOrderListModal();
+    }
+    this.props.srcInputElementRef.focus();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
+
+      // Filter common pair is state's pairFilter array and props' data
+      const filterArray = this.state.pairFilter.filter(item => {
+        const found = nextProps.data.filter(order => {
+          const key = `${order.source}-${order.dest}`;
+          return key === item;
+        });
+
+        return found.length > 0;
+      });
+
       this.setState({
-        statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
-        pairFilter: [],
-        pairSort: "asc",
+        // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+        pairFilter: filterArray,
+        // pairSort: "asc",
         expanded: {}
       })
     }
@@ -621,7 +639,7 @@ export default class LimitOrderTable extends Component {
 
   render() {
 		const columns = this.getColumns();
-		const data = this.renderData(this.props.data);
+    const data = this.renderData(this.props.data);
     return (
 			<div className="limit-order-list--table">
 				<ReactTable 
@@ -632,9 +650,18 @@ export default class LimitOrderTable extends Component {
 					sortable={false}
           minRows={0}
           expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
-          noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
+          className={this.props.data.length === 0 ? `ReactTable--empty` : ""}
+          // noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
 					// PadRowComponent={() => (<div className="line-indicator"></div>)}
-					// NoDataComponent={() => null}
+          // NoDataComponent={() => null}
+          NoDataComponent={(props) => {
+            return (
+              <div className="empty-order__message">
+                {this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one"}{' '}
+                <span className="place-order-trigger" onClick={e => this.focusSourceInput()}>here</span>
+              </div>
+            )
+          }}
 					getTheadProps={(state, rowInfo) => {
 						return {
 							style: { overflow: "visible"}
@@ -662,7 +689,7 @@ export default class LimitOrderTable extends Component {
             return {};
           }}
           getTheadThProps={(state, rowInfo, column) => {
-            if (data.length === 0) {
+            if (this.props.data.length === 0) {
               return {
                 style: {
                   pointerEvents: "none"

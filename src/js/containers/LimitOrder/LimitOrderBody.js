@@ -22,6 +22,15 @@ import BLOCKCHAIN_INFO from "../../../../env";
 })
 
 export default class LimitOrderBody extends React.Component {
+  constructor(props) {
+    super(props);
+    this.srcInputElementRef = null;
+  }
+
+  setSrcInputElementRef = (element) => {
+    this.srcInputElementRef = element;
+  }
+
   getTokenListWithoutEthAndWeth = (tokens) => {
     return tokens.filter(token => {
       return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken;
@@ -137,6 +146,7 @@ export default class LimitOrderBody extends React.Component {
         <div className="limit-order-body--form">
           <div>
             <LimitOrderForm
+              setSrcInputElementRef={this.setSrcInputElementRef}
               selectSourceToken={this.selectSourceToken}
               selectDestToken ={this.selectDestToken}
               availableBalanceTokens={this.getModifiedTokenList()}
@@ -164,10 +174,15 @@ export default class LimitOrderBody extends React.Component {
         </div>
         {!this.props.global.isOnMobile &&
           <div className="limit-order-body--list">
-            <LimitOrderList />
+            <LimitOrderList 
+              srcInputElementRef={this.srcInputElementRef}
+            />
           </div>
         }
-        {this.props.global.isOnMobile && <LimitOrderListModal />}
+        {this.props.global.isOnMobile &&
+          <LimitOrderListModal 
+            srcInputElementRef={this.srcInputElementRef}
+          />}
       </div>
     )
   }

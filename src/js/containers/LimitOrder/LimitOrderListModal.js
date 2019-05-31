@@ -118,7 +118,9 @@ export default class LimitOrderListModal extends Component {
 								data={this.props.limitOrder.listOrder}
 								screen="mobile"
               	selectedTimeFilter={this.state.selectedTimeFilter}
-              	openCancelOrderModal={this.openCancelOrderModal}
+								openCancelOrderModal={this.openCancelOrderModal}
+								srcInputElementRef={this.props.srcInputElementRef}
+								toggleLimitOrderListModal={this.toggleLimitOrderListModal}
 							/>
 							<CancelOrderModal order={this.state.currentOrder} 
 								isOpen={this.state.cancelOrderModalVisible}

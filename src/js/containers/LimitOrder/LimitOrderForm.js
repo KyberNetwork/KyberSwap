@@ -160,6 +160,7 @@ export default class LimitOrderForm extends React.Component {
                   <div id="limit-order-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorSourceAmount}</div>`} data-html={true} data-event='click focus' data-for="source-amount-error" data-scroll-hide="false">
                     <input
                       className={`exchange-content__input`}
+                      ref={el => this.props.setSrcInputElementRef(el)}
                       min="0"
                       step="0.000001"
                       placeholder="0" autoFocus
