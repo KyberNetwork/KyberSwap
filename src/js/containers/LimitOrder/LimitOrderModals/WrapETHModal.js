@@ -303,7 +303,7 @@ export default class WrapETHModal extends React.Component {
             }}
                 isOpen={true}
                 onRequestClose={this.closeModal}
-                contentLabel="approve modal"
+                contentLabel="approve token"
                 content={this.contentModal()}
                 size="medium"
             />
