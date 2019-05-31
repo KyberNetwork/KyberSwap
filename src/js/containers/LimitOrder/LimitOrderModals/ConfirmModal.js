@@ -127,21 +127,21 @@ export default class ConfirmModal extends React.Component {
             console.log(pramameters)
             console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
-            if (this.props.limitOrder.listPendingCancelOrders.length > 0) {
-              const queue = [];
-              this.props.limitOrder.listPendingCancelOrders.forEach(item => {
-                queue.push(cancelOrder(item));
-              });
+            // if (this.props.limitOrder.listPendingCancelOrders.length > 0) {
+            //   const queue = [];
+            //   this.props.limitOrder.listPendingCancelOrders.forEach(item => {
+            //     queue.push(cancelOrder(item));
+            //   });
 
-              const results = await Promise.all(queue);
-              // TODO: handling errors / failed cancelling orders
-              results.forEach(item => {
-                this.props.dispatch(limitOrderActions.updateOrder(item));
-              });
+            //   const results = await Promise.all(queue);
+            //   // TODO: handling errors / failed cancelling orders
+            //   results.forEach(item => {
+            //     this.props.dispatch(limitOrderActions.updateOrder(item));
+            //   });
 
-              // On success, reset list pending cancel orders
-              this.props.dispatch(limitOrderActions.setPendingCancelOrders([]));
-            }
+            //   // On success, reset list pending cancel orders
+            //   this.props.dispatch(limitOrderActions.setPendingCancelOrders([]));
+            // }
             
             var newOrder = await submitOrder({  
                 user_address: this.props.account.address,

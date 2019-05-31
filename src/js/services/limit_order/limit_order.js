@@ -5,8 +5,8 @@ const MAX_REQUEST_TIMEOUT = 3000
 
 const keyMapping = {
     "id": "id",
-    "src": "sourceAddr",
-    "dst": "destAddr",
+    "src": "source",
+    "dst": "dest",
     "src_amount": "src_amount",
     "min_rate": "min_rate",
     "addr": "address",
@@ -28,14 +28,15 @@ export function getOrders() {
             }).then((result) => {
                 var orderList = []
                 var fields = result.fields
-                result.orders.map(value => {
+                var orders = result.orders
+                for(var i = 0; i<orders.length; i++ ){
                     var order = {}
-                    for (var i = 0; i < order.length; i++) {
-                        var field = keyMapping[fields[i]] ? keyMapping[fields[i]] : fields[i]
-                        order[field] = value[index]
+                    for (var j = 0; j < fields.length; j++) {
+                        var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
+                        order[field] = orders[i][j]
                     }
                     orderList.push(order)
-                })
+                }               
                 resolve(orderList)
             })
             .catch((err) => {
@@ -59,7 +60,14 @@ export function submitOrder(order) {
                 return response.json()
             }).then((result) => {
                 if(result.success){
-                    resolve(result.order)
+                    var fields = result.fields
+                    var order = result.order
+                    var orderObj = {}
+                    for (var j = 0; j < fields.length; j++) {
+                        var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
+                        orderObj[field] = order[j]
+                    }
+                    resolve(orderObj)
                 }else{
                     rejected(new Error("Cannot submit order"))    
                 }
