@@ -12,7 +12,13 @@ function initState (tokens = BLOCKCHAIN_INFO.tokens) {
   var timeStampNew = Math.floor(new Date().getTime() /1000) - 604800
 
   Object.keys(tokens).forEach((key) => {
-    wrapperTokens[key] = {...tokens[key]}
+    wrapperTokens[key] = {
+      ...tokens[key],
+      exchange_tx_approve_zero: null,
+      exchange_tx_approve_max: null,
+      limit_order_tx_approve_zero: null,
+      limit_order_tx_approve_max: null
+    }
 
     if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
       wrapperTokens[key].isNew = true
@@ -203,6 +209,34 @@ const tokens = (state = {tokens: initState()}, action) => {
       var tokens = { ...state.tokens }
       delete tokens[symbol].approveTx
       return Object.assign({}, state, { tokens: tokens }) 
+    }
+
+    case "LIMIT_ORDER.SAVE_APPROVE_ZERO_TX": {
+      const { sourceTokenSymbol, txHash } = action.payload;
+      const tokens = JSON.parse(JSON.stringify(state.tokens));
+      tokens[sourceTokenSymbol.toUpperCase()].limit_order_tx_approve_zero = txHash;
+      return Object.assign({}, state, { tokens: tokens });
+    }
+
+    case "LIMIT_ORDER.SAVE_APPROVE_MAX_TX": {
+      const { sourceTokenSymbol, txHash } = action.payload;
+      const tokens = JSON.parse(JSON.stringify(state.tokens));
+      tokens[sourceTokenSymbol.toUpperCase()].limit_order_tx_approve_max = txHash;
+      return Object.assign({}, state, { tokens: tokens });
+    }
+
+    case "EXCHANGE.SAVE_APPROVE_ZERO_TX": {
+      const { sourceTokenSymbol, txHash } = action.payload;
+      const tokens = JSON.parse(JSON.stringify(state.tokens));
+      tokens[sourceTokenSymbol.toUpperCase()].exchange_tx_approve_zero = txHash;
+      return Object.assign({}, state, { tokens: tokens });
+    }
+
+    case "EXCHANGE.SAVE_APPROVE_MAX_TX": {
+      const { sourceTokenSymbol, txHash } = action.payload;
+      const tokens = JSON.parse(JSON.stringify(state.tokens));
+      tokens[sourceTokenSymbol.toUpperCase()].exchange_tx_approve_max = txHash;
+      return Object.assign({}, state, { tokens: tokens });
     }
   //   case 'GLOBAL.UPDATE_TOKEN_STATUS': {
   //     var timeNow = new Date()
