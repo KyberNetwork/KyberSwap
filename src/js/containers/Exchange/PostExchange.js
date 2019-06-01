@@ -88,7 +88,7 @@ export default class PostExchange extends React.Component {
           exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveMax]
         }
         if (allowance != 0 && allowance < Math.pow(10, 28)
-        && !this.props.tokens[this.props.exchange.sourceTokenSymbol.exchange_tx_approve_zero]) {
+        && !this.props.tokens[this.props.exchange.sourceTokenSymbol].exchange_tx_approve_zero) {
           exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveZero, constants.EXCHANGE_CONFIG.exchangePath.approveMax]         
         }
         exchangePath.push(constants.EXCHANGE_CONFIG.exchangePath.confirm)
