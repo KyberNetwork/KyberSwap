@@ -141,14 +141,14 @@ export default class ApproveMaxModal extends React.Component {
   contentModal = () => {
     return (
       <div className="approve-modal">
-        <div className="title">Approve modal</div>
+        <div className="title">Approve Token</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
                 <div className="message">
-                  {`You need approve KyberSwap to use token ${this.props.limitOrder.sourceTokenSymbol}`}
+                  {`You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} in this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
@@ -196,7 +196,7 @@ export default class ApproveMaxModal extends React.Component {
       }}
         isOpen={true}
         onRequestClose={this.closeModal}
-        contentLabel="approve modal"
+        contentLabel="approve token"
         content={this.contentModal()}
         size="medium"
       />

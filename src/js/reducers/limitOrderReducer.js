@@ -109,7 +109,7 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.FETCH_FEE": {
-      newState.isFetchingFee = true
+      newState.isFetchingFee = action.payload.shouldLoading;
       return newState
     }
     case "LIMIT_ORDER.FETCH_FEE_COMPLETE":{
@@ -201,6 +201,11 @@ const limitOrder = (state = initState, action) => {
       } else {
         newState.listPendingCancelOrders = [];
       }
+      return newState;
+    }
+
+    case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
+      newState.orderPath = [];
       return newState;
     }
   }

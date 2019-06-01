@@ -38,7 +38,7 @@ export default class WrapETHModal extends React.Component {
         this.state = {
             err: "",
             isConfirming: false,
-            isError: true,
+            isError: false,
             amountConvert: 0,
             minAmountConvert: 0
         }
@@ -147,8 +147,9 @@ export default class WrapETHModal extends React.Component {
             var sourceToken = this.props.tokens["ETH"].address
             var sourceAmount = converters.toHex(converters.toTWei(this.state.amountConvert, 18))
             var destToken = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].address
-            var destAddress = this.props.account.address
-            var maxDestAmount = converters.toHex(this.getAmountWrapETH())
+            var destAddress = this.props.account.address            
+            var maxDestAmount = converters.biggestNumber()
+
             var minConversionRate = converters.toHex(Math.pow(10, 18))
             var blockNo = constants.EXCHANGE_CONFIG.COMMISSION_ADDR
             var nonce = this.props.account.nonce
@@ -302,7 +303,7 @@ export default class WrapETHModal extends React.Component {
             }}
                 isOpen={true}
                 onRequestClose={this.closeModal}
-                contentLabel="approve modal"
+                contentLabel="approve token"
                 content={this.contentModal()}
                 size="medium"
             />

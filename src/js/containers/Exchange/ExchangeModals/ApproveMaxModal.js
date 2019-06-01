@@ -136,7 +136,7 @@ export default class ApproveMaxModal extends React.Component {
   contentModal = () => {
     return (
       <div className="approve-modal">
-        <div className="title">Approve modal</div>
+        <div className="title">Approve Token</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
@@ -190,7 +190,7 @@ export default class ApproveMaxModal extends React.Component {
       }}
         isOpen={true}
         onRequestClose={this.closeModal}
-        contentLabel="approve modal"
+        contentLabel="approve token"
         content={this.contentModal()}
         size="medium"
       />

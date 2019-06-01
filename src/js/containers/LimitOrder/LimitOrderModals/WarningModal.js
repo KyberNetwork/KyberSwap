@@ -53,7 +53,7 @@ export default class WarningModal extends React.Component {
             }}
                 isOpen={true}
                 onRequestClose={this.props.onCancel}
-                contentLabel="approve modal"
+                contentLabel="approve token"
                 content={this.contentModal()}
                 size="medium"
             />
