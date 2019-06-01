@@ -34,6 +34,7 @@
         "ETH"
     ],
     "promo_token": "PT",
+    "wrapETHToken": "WETH",
     "userdashboard_url": "https://kyberswap.com",
     "tokens": {
         "ETH": {

@@ -26,6 +26,7 @@
         "PT",
         "ETH"
     ],
+    "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
@@ -35,6 +36,13 @@
             "decimals": 18,
             "cg_id": "ethereum",
             "gasLimit": "0"
+        },
+        "WETH": {
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
+            "decimals": 18,
+            "cg_id": "weth"
         },
         "KNC": {
             "symbol": "KNC",
@@ -262,13 +270,6 @@
             "address": "0x4aefa5bded67f5842ade8f025a738cb3363b7499",
             "decimals": 8,
             "cg_id": "hacken"
-        },
-        "WETH": {
-            "symbol": "WETH",
-            "name": "Wrapped Ether",
-            "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
-            "decimals": 18,
-            "cg_id": "weth"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
@@ -276,6 +277,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
     "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
+    "kyberswapAddress": "0x7Fd3e50013E911e7c479A10B8525728f3F69a2bC",
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
     "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",

@@ -166,6 +166,13 @@ export function setGasPrice() {
   }
 }
 
+export function setGasPriceComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas) {
+  return {
+    type: "GLOBAL.SET_GAS_PRICE_COMPLETE",
+    payload: { safeLowGas, standardGas, fastGas, defaultGas, selectedGas }
+  }
+}
+
 export function visitExchange() {
   return {
     type: "GLOBAL.VISIT_EXCHANGE",
@@ -221,11 +228,11 @@ export function setNotiHandler(notiService) {
   }
 }
 
-export function setMaxGasPrice() {
-  return {
-    type: "GLOBAL.SET_MAX_GAS_PRICE",
-  }
-}
+// export function setMaxGasPrice() {
+//   return {
+//     type: "GLOBAL.SET_MAX_GAS_PRICE",
+//   }
+// }
 
 
 export function setNetworkError(error) {

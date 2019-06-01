@@ -2,7 +2,7 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
-import { fetchExchangeEnable } from "../actions/exchangeActions"
+import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
@@ -159,7 +159,7 @@ export function* importNewAccount(action) {
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
+    yield put(actions.importNewAccountComplete(account, walletName))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
@@ -169,29 +169,29 @@ export function* importNewAccount(action) {
     //   yield put(exchangeActions.fetchExchangeEnable())
     // }
 
-    if (screen === "exchange"){
-      yield put(closeImportAccountExchange())
-    }else{
-      yield put(closeImportAccountTransfer())
-    }
+    // if (screen === "exchange"){
+    //   yield put(closeImportAccountExchange())
+    // }else{
+    //   yield put(closeImportAccountTransfer())
+    // }
 
     // yield put(fetchExchangeEnable())
 
-    var maxCapOneExchange = "infinity"
-    try {
-      var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-      if (!result.error) {
-        maxCapOneExchange = result.cap
-      }
-    } catch(e) {
-      console.log(e)
-    }
-    yield put(setCapExchange(maxCapOneExchange))
+    // var maxCapOneExchange = "infinity"
+    // try {
+    //   var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+    //   if (!result.error) {
+    //     maxCapOneExchange = result.cap
+    //   }
+    // } catch(e) {
+    //   console.log(e)
+    // }
+    // yield put(setCapExchange(maxCapOneExchange))
 
-    if (+maxCapOneExchange == 0){
-      var linkReg = 'https://kybernetwork.zendesk.com'
-      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
-    }
+    // if (+maxCapOneExchange == 0){
+    //   var linkReg = 'https://kybernetwork.zendesk.com'
+    //   yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
+    // }
 
     //update token and token balance
     var newTokens = {}
@@ -200,7 +200,7 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    yield call(ethereum.fetchRateExchange)
+    // yield call(ethereum.fetchRateExchange)
 
     console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
@@ -261,11 +261,12 @@ export function* importMetamask(action) {
     yield put(actions.importNewAccount(
       address,
       "metamask",
-      web3Service,
+      web3Service.getWalletId(),
       ethereum,
       tokens,
       walletType,
-      metamask
+      metamask,
+      "Metamask"
     ))
   } catch (e) {
     console.log(e)

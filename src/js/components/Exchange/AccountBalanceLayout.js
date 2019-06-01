@@ -15,32 +15,51 @@ const AccountBalanceLayout = (props) => {
       : `${props.translate("address.my_balance") || "Balance"}: <strong>${balance}</strong>`
   }
 
-  function reorderToken(tokens) {
+  function reorderToken() {
+    let tokens = props.tokens;
+
+    if (props.isLimitOrderTab) {
+      tokens = props.getFilteredTokens(props.sortValue);
+    }
+
     if (props.sortType === "Price") {
-      if (props.sortValue) {
-        return converts.sortEthBalance(tokens)
+      if (props.isLimitOrderTab) {
+        return tokens;
       } else {
-        return converts.sortASCEthBalance(tokens)
+        if (props.sortValue) {
+          return converts.sortEthBalance(tokens)
+        } else {
+          return converts.sortASCEthBalance(tokens)
+        }
       }
     } else {
-      if (props.sortValue) {
-        var ordered = []
-        Object.keys(tokens).sort().forEach(function (key) {
-          ordered.push(tokens[key])
-        })
-        return ordered
+      if (props.isLimitOrderTab) {
+        return tokens.sort((firstToken, secondToken) => {
+          const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
+          const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
+
+          return props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
+        });
       } else {
-        var ordered = []
-        Object.keys(tokens).sort().reverse().forEach(function (key) {
-          ordered.push(tokens[key])
-        })
-        return ordered
+        if (props.sortValue) {
+          var ordered = []
+          Object.keys(tokens).sort().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          return ordered
+        } else {
+          var ordered = []
+          Object.keys(tokens).sort().reverse().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          return ordered
+        }
       }
     }
   }
 
   function getBalances() {
-    var tokens = reorderToken(props.tokens)
+    var tokens = reorderToken()
     var balances = tokens
       .map(token => {
         var balance = converts.toT(token.balance, token.decimals)
@@ -61,7 +80,7 @@ const AccountBalanceLayout = (props) => {
             onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
-            <div className="account-balance__token-symbol">{token.symbol}</div>
+            <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
             <div className="account-balance__token-balance">{converts.roundingNumber(balance)}</div>
           </div>
         )

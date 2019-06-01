@@ -12,7 +12,7 @@ export default class DappBrowser {
     this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider)
     //for older verions of web3
     console.log("web3_v5")
-    if (this.web3 && this.web3.net && !this.web3.eth.net){
+    if (this.web3 && this.web3.net && !this.web3.eth.net) {
       this.web3.eth.net = this.web3.net
     }
     //console.log(this.web3)
@@ -26,7 +26,7 @@ export default class DappBrowser {
     return new Promise((resolve, reject) => {
       this.web3.eth.net.getId((error, result) => {
         if (error || !result) {
-          console.log(error)  
+          console.log(error)
           var error = new Error("Cannot get network id")
           reject(error)
         } else {
@@ -55,7 +55,7 @@ export default class DappBrowser {
           var error = new Error("Cannot get coinbase")
           reject(error)
         })
-       
+
       })
     } else {
       return new Promise((resolve, reject) => {
@@ -80,8 +80,8 @@ export default class DappBrowser {
     this.web3.eth.defaultAccount = address
   }
 
-  
-  getWalletId(blockNo){
+
+  getWalletId() {
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
       return web3.kyberID
     }
@@ -89,7 +89,33 @@ export default class DappBrowser {
     if (!verifyAccount(refAddr)) {
       return refAddr
     }
-    return constants.COMMISSION_ADDR
+    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
+  }
+
+  async sign(message) {
+    try{
+      var account = await this.getCoinbase()
+      var signature = await this.web3.eth.sign(message, account)
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }
+
+    // return new Promise((resolve, reject) => {
+    //   this.getCoinbase().then(account => {
+    //     this.web3.eth.sign(message, account, (error, result) => {
+    //       resolve(result)
+    //     }).catch(err => {
+    //       console.log(err)
+    //       reject(err)
+    //     })
+    //   }).catch(err => {
+    //     console.log(err)
+    //     reject(err)
+    //   })
+     
+    // })
   }
 
 }

@@ -28,7 +28,8 @@ import * as converters from "../../utils/converter"
     isFixedSourceToken: isFixedSourceToken,
     global: store.global,
     walletName: props.walletName,
-    isOnDAPP: props.isOnDAPP
+    isOnDAPP: props.isOnDAPP,
+    limitOrder : store.limitOrder
   }
 })
 
@@ -46,9 +47,18 @@ export default class AccountBalance extends React.Component {
 
   selectBalance = (sourceSymbol) => {
 
-    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap"?"source":"transfer")
+    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" || this.props.screen === "limit_order" ?"source":"transfer")
     
     var sourceBalance = this.props.tokens[sourceSymbol].balance
+
+    if (this.props.isLimitOrderTab) {
+      const tokens = this.props.getFilteredTokens();
+      const srcToken = tokens.find(token => {
+        return token.symbol === sourceSymbol;
+      });
+      sourceBalance = srcToken.balance;
+    }
+
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
     var amount
 
@@ -64,6 +74,10 @@ export default class AccountBalance extends React.Component {
             gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
             totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
             // amount = (sourceBalance - totalGas) * percent / 100
+        } else if (this.props.screen === "limit_order") {
+            const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+            gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.limitOrder.max_gas;
+            totalGas = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit) * Math.pow(10, 18);
         } else {
             gasLimit = this.props.transfer.gas
             totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
@@ -75,7 +89,9 @@ export default class AccountBalance extends React.Component {
         amount = amount.replace(",", "")
     }
 
-    if (this.props.screen === "swap") {
+    if (amount < 0) amount = 0;
+
+    if (this.props.screen === "swap" || this.props.screen === "limit_order") {
         this.props.dispatch(this.props.changeAmount('source', amount))
         this.props.dispatch(this.props.changeFocus('source'));
     } else {
@@ -167,6 +183,8 @@ export default class AccountBalance extends React.Component {
         walletName={this.props.walletName}
         isOnDAPP = {this.props.isOnDAPP}
         selectBalance = {this.selectBalance}
+        isLimitOrderTab={this.props.isLimitOrderTab}
+        getFilteredTokens={this.props.getFilteredTokens}
       />
     )
   }

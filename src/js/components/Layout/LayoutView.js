@@ -31,9 +31,11 @@ const LayoutView = (props) => {
   var listToken = getAllPathToken(props.tokens)
   var defaultPathExchange = constansts.BASE_HOST + "/swap/eth-knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
+  var defaultPathLimitOrder = constansts.BASE_HOST + "/" + constansts.LIMIT_ORDER_CONFIG.path + "/knc-weth"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
   defaultPathTransfer = common.getPath(defaultPathTransfer, constansts.LIST_PARAMS_SUPPORTED)
+  
 
   return (
     <ConnectedRouter history={props.history}  store ={store}>
@@ -44,6 +46,10 @@ const LayoutView = (props) => {
             <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
             <Redirect from={constansts.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />
+
+            <Route exact path={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/:source${listToken}-:dest${listToken}`} component={props.LimitOrder} />       
+            <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}`} to={defaultPathLimitOrder} />
+            <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/*`} to={defaultPathLimitOrder} />
             
             <Redirect to={defaultPathExchange} />
           </Switch>

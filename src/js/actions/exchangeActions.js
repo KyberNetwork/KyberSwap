@@ -1,16 +1,16 @@
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
 
-export function selectTokenAsync(symbol, address, type, ethereum) {
-  return {
-    type: "EXCHANGE.SELECT_TOKEN_ASYNC",
-    payload: { symbol, address, type, ethereum }
-  }
-}
-export function selectToken(symbol, address, type) {
+// export function selectTokenAsync(symbol, address, type, ethereum) {
+//   return {
+//     type: "EXCHANGE.SELECT_TOKEN_ASYNC",
+//     payload: { symbol, address, type, ethereum }
+//   }
+// }
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
   return {
     type: "EXCHANGE.SELECT_TOKEN",
-    payload: { symbol, address, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type}
   }
 }
 export function checkSelectToken() {
@@ -45,47 +45,68 @@ export function focusInput(focus) {
   }
 }
 
-export function thowErrorSourceAmount(message) {
+// export function thowErrorSourceAmount(message) {
+//   return {
+//     type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+//     payload: message
+//   }
+// }
+
+export function throwErrorSourceAmount(key, message) {
   return {
-    type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
-    payload: message
+    type: "EXCHANGE.THROW_ERROR_SOURCE_AMOUNT",
+    payload: {key, message}
   }
 }
 
-export function thowErrorMaxCap() {
+export function clearErrorSourceAmount(key) {
   return {
-    type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
-    payload: message
+    type: "EXCHANGE.CLEAR_ERROR_SOURCE_AMOUNT",
+    payload: {key}
   }
 }
 
-export function thowErrorEthBalance(message) {
+// export function thowErrorMaxCap() {
+//   return {
+//     type: "EXCHANGE.THROW_SOURCE_AMOUNT_ERROR",
+//     payload: message
+//   }
+// }
+
+// export function thowErrorEthBalance(message) {
+//   return {
+//     type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
+//     payload: message
+//   }
+// }
+
+// export function thowErrorGasPrice(message) {
+//   return {
+//     type: "EXCHANGE.THROW_GAS_PRICE_ERROR",
+//     payload: message
+//   }
+// }
+
+export function throwErrorSlippageRate(key, message) {
   return {
-    type: "EXCHANGE.THROW_ETH_BALANCE_ERROR",
-    payload: message
+    type: "EXCHANGE.THROW_ERROR_SLIPPAGE_RATE",
+    payload: {key, message}
   }
 }
 
-export function thowErrorGasPrice(message) {
-  return {
-    type: "EXCHANGE.THROW_GAS_PRICE_ERROR",
-    payload: message
-  }
-}
+// export function thowErrorRate(message) {
+//   return {
+//     type: "EXCHANGE.THROW_RATE_ERROR",
+//     payload: message
+//   }
+// }
 
-export function thowErrorRate(message) {
-  return {
-    type: "EXCHANGE.THROW_RATE_ERROR",
-    payload: message
-  }
-}
-
-export function goToStep(step) {
-  return {
-    type: "EXCHANGE.GO_TO_STEP",
-    payload: step
-  }
-}
+// export function goToStep(step) {
+//   return {
+//     type: "EXCHANGE.GO_TO_STEP",
+//     payload: step
+//   }
+// }
 
 export function specifyGas(value) {
   return {
@@ -121,112 +142,111 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRateExchange(ethereum, source, dest,
-  sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type }
   }
 }
 
-export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+// export function updateRateExchangeAndValidateSource(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual = false, refetchSourceAmount = false) {
+//   return {
+//     type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
+//     payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
+//   }
+// }
+
+// export function updateRateSnapshot(ethereum) {
+//   return {
+//     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
+//     payload: ethereum
+//   }
+// }
+
+// export function updatePrevSource(value) {
+//   return {
+//     type: "EXCHANGE.SET_PREV_SOURCE",
+//     payload: { value }
+//   }
+// }
+
+export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange) {
   return {
-    type: "EXCHANGE.UPDATE_RATE_AND_VALIDATE_SOURCE",
-    payload: { ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount }
-  }
-}
-
-export function updateRateSnapshot(ethereum) {
-  return {
-    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT",
-    payload: ethereum
-  }
-}
-
-export function updatePrevSource(value) {
-  return {
-    type: "EXCHANGE.SET_PREV_SOURCE",
-    payload: { value }
-  }
-}
-
-export function updateRateExchangeComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange) {
-  return {
-    type: "EXCHANGE.UPDATE_RATE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, isSuccess, percentChange }
+    type: "EXCHANGE.UPDATE_RATE_COMPLETE",
+    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange }
   }
 
 }
 
-export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
-  return {
-    type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage: converter.toT(rateInit, 18) }
-  }
+// export function updateRateSnapshotComplete(rateInit, expectedPrice, slippagePrice) {
+//   return {
+//     type: "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE",
+//     payload: { rateInit, expectedPrice, slippagePrice: converter.toT(slippagePrice, 18), rateInitSlippage: converter.toT(rateInit, 18) }
+//   }
 
-}
+// }
 
-export function openPassphrase() {
-  return {
-    type: "EXCHANGE.OPEN_PASSPHRASE",
-  }
-}
+// export function openPassphrase() {
+//   return {
+//     type: "EXCHANGE.OPEN_PASSPHRASE",
+//   }
+// }
 
-export function hidePassphrase() {
-  return {
-    type: "EXCHANGE.HIDE_PASSPHRASE",
-  }
-}
+// export function hidePassphrase() {
+//   return {
+//     type: "EXCHANGE.HIDE_PASSPHRASE",
+//   }
+// }
 
-export function hideConfirm() {
-  return {
-    type: "EXCHANGE.HIDE_CONFIRM",
-  }
-}
+// export function hideConfirm() {
+//   return {
+//     type: "EXCHANGE.HIDE_CONFIRM",
+//   }
+// }
 
-export function showConfirm() {
-  return {
-    type: "EXCHANGE.SHOW_CONFIRM",
-  }
-}
+// export function showConfirm() {
+//   return {
+//     type: "EXCHANGE.SHOW_CONFIRM",
+//   }
+// }
 
-export function hideApprove() {
-  return {
-    type: "EXCHANGE.HIDE_APPROVE",
-  }
-}
+// export function hideApprove() {
+//   return {
+//     type: "EXCHANGE.HIDE_APPROVE",
+//   }
+// }
 
-export function hideApproveZero() {
-  return {
-    type: "EXCHANGE.HIDE_APPROVE_ZERO",
-  }
-}
+// export function hideApproveZero() {
+//   return {
+//     type: "EXCHANGE.HIDE_APPROVE_ZERO",
+//   }
+// }
 
-export function showApprove() {
-  return {
-    type: "EXCHANGE.SHOW_APPROVE",
-  }
-}
+// export function showApprove() {
+//   return {
+//     type: "EXCHANGE.SHOW_APPROVE",
+//   }
+// }
 
-export function showApproveZero() {
-  return {
-    type: "EXCHANGE.SHOW_APPROVE_ZERO",
-  }
-}
+// export function showApproveZero() {
+//   return {
+//     type: "EXCHANGE.SHOW_APPROVE_ZERO",
+//   }
+// }
 
-export function changePassword() {
-  return {
-    type: "EXCHANGE.CHANGE_PASSPHRASE",
-  }
-}
+// export function changePassword() {
+//   return {
+//     type: "EXCHANGE.CHANGE_PASSPHRASE",
+//   }
+// }
 
 
-export function prePareBroadcast(balanceData) {
-  return {
-    type: "EXCHANGE.PREPARE_BROADCAST",
-    payload: { balanceData }
-  }
-}
+// export function prePareBroadcast(balanceData) {
+//   return {
+//     type: "EXCHANGE.PREPARE_BROADCAST",
+//     payload: { balanceData }
+//   }
+// }
 
 export function finishExchange() {
   return {
@@ -234,139 +254,139 @@ export function finishExchange() {
   }
 }
 
-export function throwPassphraseError(message) {
-  return {
-    type: "EXCHANGE.THROW_ERROR_PASSPHRASE",
-    payload: message
-  }
-}
+// export function throwPassphraseError(message) {
+//   return {
+//     type: "EXCHANGE.THROW_ERROR_PASSPHRASE",
+//     payload: message
+//   }
+// }
 
-export function processExchange(formId, ethereum, address, sourceToken,
-  sourceAmount, destToken, destAddress,
-  maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo) {
-  return {
-    type: "EXCHANGE.PROCESS_EXCHANGE",
-    payload: {
-      formId, ethereum, address, sourceToken,
-      sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate,
-      throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo
-    }
-  }
-}
+// export function processExchange(formId, ethereum, address, sourceToken,
+//   sourceAmount, destToken, destAddress,
+//   maxDestAmount, minConversionRate,
+//   throwOnFailure, nonce, gas,
+//   gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo) {
+//   return {
+//     type: "EXCHANGE.PROCESS_EXCHANGE",
+//     payload: {
+//       formId, ethereum, address, sourceToken,
+//       sourceAmount, destToken, destAddress,
+//       maxDestAmount, minConversionRate,
+//       throwOnFailure, nonce, gas,
+//       gasPrice, keystring, type, password, account, data, keyService, balanceData, sourceTokenSymbol, blockNo
+//     }
+//   }
+// }
 
-export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceToken,
-  sourceAmount, destToken, destAddress,
-  maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas,
-  gasPrice, keystring, type, password, account, data, keyService) {
-  return {
-    type: "EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET",
-    payload: {
-      formId, ethereum, address, sourceToken,
-      sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate,
-      throwOnFailure, nonce, gas,
-      gasPrice, keystring, type, password, account, data, keyService
-    }
-  }
-}
+// export function checkTokenBalanceOfColdWallet(formId, ethereum, address, sourceToken,
+//   sourceAmount, destToken, destAddress,
+//   maxDestAmount, minConversionRate,
+//   throwOnFailure, nonce, gas,
+//   gasPrice, keystring, type, password, account, data, keyService) {
+//   return {
+//     type: "EXCHANGE.CHECK_TOKEN_BALANCE_COLD_WALLET",
+//     payload: {
+//       formId, ethereum, address, sourceToken,
+//       sourceAmount, destToken, destAddress,
+//       maxDestAmount, minConversionRate,
+//       throwOnFailure, nonce, gas,
+//       gasPrice, keystring, type, password, account, data, keyService
+//     }
+//   }
+// }
 
-export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
-  return {
-    type: "EXCHANGE.PROCESS_APPROVE",
-    payload: {
-      ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType, account, keyService, sourceTokenSymbol
-    }
-  }
-}
+// export function doApprove(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+//   keystring, password, accountType, account, keyService, sourceTokenSymbol) {
+//   return {
+//     type: "EXCHANGE.PROCESS_APPROVE",
+//     payload: {
+//       ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+//       keystring, password, accountType, account, keyService, sourceTokenSymbol
+//     }
+//   }
+// }
 
-export function doApproveZero(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-  keystring, password, accountType, account, keyService, sourceTokenSymbol) {
-  return {
-    type: "EXCHANGE.PROCESS_APPROVE_ZERO",
-    payload: {
-      ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
-      keystring, password, accountType, account, keyService, sourceTokenSymbol
-    }
-  }
-}
+// export function doApproveZero(ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+//   keystring, password, accountType, account, keyService, sourceTokenSymbol) {
+//   return {
+//     type: "EXCHANGE.PROCESS_APPROVE_ZERO",
+//     payload: {
+//       ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
+//       keystring, password, accountType, account, keyService, sourceTokenSymbol
+//     }
+//   }
+// }
 
-export function doTransaction(id, ethereum, tx, account, data) {
-  return {
-    type: "EXCHANGE.TX_BROADCAST_PENDING",
-    payload: { ethereum, tx, account, data },
-    meta: id,
-  }
-}
+// export function doTransaction(id, ethereum, tx, account, data) {
+//   return {
+//     type: "EXCHANGE.TX_BROADCAST_PENDING",
+//     payload: { ethereum, tx, account, data },
+//     meta: id,
+//   }
+// }
 
-export function doTransactionComplete(txHash) {
+export function doTransactionComplete(tx) {
   return {
     type: "EXCHANGE.TX_BROADCAST_FULFILLED",
-    payload: txHash,
+    payload: {tx},
   }
 }
 
-export function doTransactionFail(error) {
-  return {
-    type: "EXCHANGE.TX_BROADCAST_REJECTED",
-    payload: error
-  }
-}
+// export function doTransactionFail(error) {
+//   return {
+//     type: "EXCHANGE.TX_BROADCAST_REJECTED",
+//     payload: error
+//   }
+// }
 
-export function doApprovalTransaction(id, ethereum, tx, callback) {
-  return {
-    type: "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING",
-    payload: { ethereum, tx, callback },
-    meta: id,
-  }
-}
+// export function doApprovalTransaction(id, ethereum, tx, callback) {
+//   return {
+//     type: "EXCHANGE.APPROVAL_TX_BROADCAST_PENDING",
+//     payload: { ethereum, tx, callback },
+//     meta: id,
+//   }
+// }
 
-export function doApprovalTransactionComplete(txHash, id) {
-  return {
-    type: "EXCHANGE.APPROVAL_TX_BROADCAST_FULFILLED",
-    payload: txHash,
-    meta: id,
-  }
-}
+// export function doApprovalTransactionComplete(txHash, id) {
+//   return {
+//     type: "EXCHANGE.APPROVAL_TX_BROADCAST_FULFILLED",
+//     payload: txHash,
+//     meta: id,
+//   }
+// }
 
-export function doApprovalTransactionFail(error) {
-  return {
-    type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
-    payload: error,
-  }
-}
+// export function doApprovalTransactionFail(error) {
+//   return {
+//     type: "EXCHANGE.APPROVAL_TX_BROADCAST_REJECTED",
+//     payload: error,
+//   }
+// }
 
-export function resetSignError() {
-  return {
-    type: "EXCHANGE.RESET_SIGN_ERROR",
-  }
-}
+// export function resetSignError() {
+//   return {
+//     type: "EXCHANGE.RESET_SIGN_ERROR",
+//   }
+// }
 
-export function setSignError(error) {
-  return {
-    type: "EXCHANGE.SET_SIGN_ERROR",
-    payload: error,
-  }
-}
+// export function setSignError(error) {
+//   return {
+//     type: "EXCHANGE.SET_SIGN_ERROR",
+//     payload: error,
+//   }
+// }
 
-export function resetBroadcastError() {
-  return {
-    type: "EXCHANGE.RESET_BROADCAST_ERROR",
-  }
-}
+// export function resetBroadcastError() {
+//   return {
+//     type: "EXCHANGE.RESET_BROADCAST_ERROR",
+//   }
+// }
 
-export function setBroadcastError(error) {
-  return {
-    type: "EXCHANGE.SET_BROADCAST_ERROR",
-    payload: error,
-  }
-}
+// export function setBroadcastError(error) {
+//   return {
+//     type: "EXCHANGE.SET_BROADCAST_ERROR",
+//     payload: error,
+//   }
+// }
 
 export function makeNewExchange() {
   return {
@@ -374,12 +394,12 @@ export function makeNewExchange() {
   }
 }
 
-export function updateCurrentBalance(sourceBalance, destBalance, txHash) {
-  return {
-    type: "EXCHANGE.UPDATE_CURRENT_BALANCE",
-    payload: { sourceBalance, destBalance, txHash }
-  }
-}
+// export function updateCurrentBalance(sourceBalance, destBalance, txHash) {
+//   return {
+//     type: "EXCHANGE.UPDATE_CURRENT_BALANCE",
+//     payload: { sourceBalance, destBalance, txHash }
+//   }
+// }
 
 export function setTermAndServices(value) {
   return {
@@ -434,19 +454,19 @@ export function swapToken() {
   }
 }
 
-export function setCapExchange(maxCap) {
-  return {
-    type: "EXCHANGE.SET_CAP_EXCHANGE",
-    payload: { maxCap }
-  }
-}
+// export function setCapExchange(maxCap) {
+//   return {
+//     type: "EXCHANGE.SET_CAP_EXCHANGE",
+//     payload: { maxCap }
+//   }
+// }
 
-export function thowErrorNotPossessKGt(message) {
-  return {
-    type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
-    payload: message
-  }
-}
+// export function thowErrorNotPossessKGt(message) {
+//   return {
+//     type: "EXCHANGE.THROW_NOT_POSSESS_KGT_ERROR",
+//     payload: message
+//   }
+// }
 
 export function setMaxGasPrice(ethereum) {
   return {
@@ -476,19 +496,19 @@ export function setGasPriceSuggest(gasPriceSuggest) {
   }
 }
 
-export function analyzeError(ethereum, txHash) {
-  return {
-    type: "EXCHANGE.ANALYZE_ERROR",
-    payload: { ethereum, txHash }
-  }
-}
+// export function analyzeError(ethereum, txHash) {
+//   return {
+//     type: "EXCHANGE.ANALYZE_ERROR",
+//     payload: { ethereum, txHash }
+//   }
+// }
 
-export function setAnalyzeError(networkIssues, txHash) {
-  return {
-    type: "EXCHANGE.SET_ANALYZE_ERROR",
-    payload: { networkIssues, txHash }
-  }
-}
+// export function setAnalyzeError(networkIssues, txHash) {
+//   return {
+//     type: "EXCHANGE.SET_ANALYZE_ERROR",
+//     payload: { networkIssues, txHash }
+//   }
+// }
 
 
 export function fetchGas() {
@@ -496,11 +516,11 @@ export function fetchGas() {
     type: "EXCHANGE.FETCH_GAS"
   }
 }
-export function fetchGasSnapshot() {
-  return {
-    type: "EXCHANGE.FETCH_GAS_SNAPSHOT"
-  }
-}
+// export function fetchGasSnapshot() {
+//   return {
+//     type: "EXCHANGE.FETCH_GAS_SNAPSHOT"
+//   }
+// }
 
 export function fetchGasSuccess() {
   return {
@@ -508,45 +528,46 @@ export function fetchGasSuccess() {
   }
 }
 
-export function fetchGasSuccessSnapshot() {
+// export function fetchGasSuccessSnapshot() {
+//   return {
+//     type: "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT"
+//   }
+// }
+
+export function checkKyberEnable(ethereum) {
   return {
-    type: "EXCHANGE.FETCH_GAS_SUCCESS_SNAPSHOT"
+    type: "EXCHANGE.CHECK_KYBER_ENABLE",
+    payload: {ethereum}
   }
 }
 
-export function checkKyberEnable() {
-  return {
-    type: "EXCHANGE.CHECK_KYBER_ENABLE"
-  }
-}
+// export function setKyberEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_KYBER_ENABLE",
+//     payload: enable
+//   }
+// }
 
-export function setKyberEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_KYBER_ENABLE",
-    payload: enable
-  }
-}
+// export function setApproveTxZero(hash, symbol) {
+//   return {
+//     type: "EXCHANGE.SET_APPROVE_TX_ZERO",
+//     payload: { hash, symbol }
+//   }
+// }
 
-export function setApproveTxZero(hash, symbol) {
-  return {
-    type: "EXCHANGE.SET_APPROVE_TX_ZERO",
-    payload: { hash, symbol }
-  }
-}
+// export function setApproveTx(hash, symbol) {
+//   return {
+//     type: "EXCHANGE.SET_APPROVE_TX",
+//     payload: { hash, symbol }
+//   }
+// }
 
-export function setApproveTx(hash, symbol) {
-  return {
-    type: "EXCHANGE.SET_APPROVE_TX",
-    payload: { hash, symbol }
-  }
-}
-
-export function removeApproveTx(symbol) {
-  return {
-    type: "EXCHANGE.REMOVE_APPROVE_TX",
-    payload: { symbol }
-  }
-}
+// export function removeApproveTx(symbol) {
+//   return {
+//     type: "EXCHANGE.REMOVE_APPROVE_TX",
+//     payload: { symbol }
+//   }
+// }
 
 export function setSnapshot(data) {
   data.isFetchingRate = true
@@ -562,31 +583,32 @@ export function verifyExchange() {
   }
 }
 
-export function fetchExchangeEnable() {
-  return {
-    type: "EXCHANGE.FETCH_EXCHANGE_ENABLE",
-  }
-}
+// export function fetchUserCap(ethereum) {
+//   return {
+//     type: "EXCHANGE.FETCH_USER_CAP",
+//     payload: {ethereum}
+//   }
+// }
 
-export function setExchangeEnable(enable) {
-  return {
-    type: "EXCHANGE.SET_EXCHANGE_ENABLE",
-    payload: enable
-  }
-}
+// export function setExchangeEnable(enable) {
+//   return {
+//     type: "EXCHANGE.SET_EXCHANGE_ENABLE",
+//     payload: enable
+//   }
+// }
 
-export function updateBalanceData(balanceData, hash) {
-  return {
-    type: "EXCHANGE.UPDATE_BALANCE_DATA",
-    payload: { balanceData, hash }
-  }
-}
+// export function updateBalanceData(balanceData, hash) {
+//   return {
+//     type: "EXCHANGE.UPDATE_BALANCE_DATA",
+//     payload: { balanceData, hash }
+//   }
+// }
 
-export function throwErrorHandleAmount() {
-  return {
-    type: "EXCHANGE.HANDLE_AMOUNT"
-  }
-}
+// export function throwErrorHandleAmount() {
+//   return {
+//     type: "EXCHANGE.HANDLE_AMOUNT"
+//   }
+// }
 
 export function openImportAccount() {
   return {
@@ -639,12 +661,12 @@ export function setIsSelectTokenBalance(value) {
   }
 }
 
-export function setSwappingTime(time) {
-  return {
-    type: "EXCHANGE.SET_SWAPPING_TIME",
-    payload: time
-  }
-}
+// export function setSwappingTime(time) {
+//   return {
+//     type: "EXCHANGE.SET_SWAPPING_TIME",
+//     payload: time
+//   }
+// }
 
 
 export function changeAmount(input, value){
@@ -672,6 +694,33 @@ export function setCustomRateInputValue(value) {
   return {
     type: "EXCHANGE.SET_CUSTOM_RATE_INPUT_VALUE",
     payload: value
+  }
+}
+
+export function setIsSelectCustomRate(value) {
+  return {
+    type: "EXCHANGE.SET_IS_SELECT_CUSTOM_RATE_INPUT",
+    payload: value
+  }
+}
+
+
+export function updateExchangePath(exchangePath, currentPathIndex){
+  return {
+    type: "EXCHANGE.UPDATE_EXCHANGE_PATH",
+    payload: { exchangePath, currentPathIndex }
+  }
+}
+
+export function resetExchangePath() {
+  return {
+    type: "EXCHANGE.RESET_EXCHANGE_PATH"
+  }
+}
+
+export function  forwardExchangePath() {
+  return {
+    type: "EXCHANGE.FORWARD_EXCHANGE_PATH"
   }
 }
 

@@ -123,16 +123,16 @@ const tokens = (state = {tokens: initState()}, action) => {
       var newTokens = {}
       Object.keys(tokens).map(key => {
 
-        if (!mapToken[key]){
-          console.log(key)
-          return
-        }
+        // if (!mapToken[key]){
+        //   console.log(key)
+        //   return
+        // }
         var token = tokens[key]
 
         if (key === "ETH"){
           token.rateUSD = rateUSD
         }else{
-          token.rateUSD = mapToken[key].rateUSD
+          token.rateUSD = mapToken[key] ? mapToken[key].rateUSD: 0
         }
 
         if (mapToken[key] && mapToken[key].rate) {

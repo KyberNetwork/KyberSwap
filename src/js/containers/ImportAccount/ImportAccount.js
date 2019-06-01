@@ -14,6 +14,7 @@ import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
 import { TermAndServices } from "../../containers/CommonElements";
 import EthereumService from "../../services/ethereum/ethereum";
+import { isUserLogin } from "../../utils/common";
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -26,7 +27,6 @@ import EthereumService from "../../services/ethereum/ethereum";
     ...store.account,
     translate: getTranslate(store.locale),
     isVisitFirstTime: store.global.isVisitFirstTime,
-    translate: getTranslate(store.locale),
     termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
     tokens: supportTokens,
@@ -85,7 +85,7 @@ export default class ImportAccount extends React.Component {
   render() {
     return (
       <div>
-        {(!this.props.isAgreedTermOfService && this.props.account === false) &&
+        {(!this.props.isAgreedTermOfService && this.props.account === false && this.props.tradeType !== "limit_order") &&
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-buttom"} onClick={(e) => this.acceptTerm()}>
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
@@ -101,6 +101,7 @@ export default class ImportAccount extends React.Component {
           translate={this.props.translate}
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}
+          isUserLogin={isUserLogin()}
         />}
       </div>
     )

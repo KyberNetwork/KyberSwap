@@ -64,7 +64,7 @@ const TransactionLoadingView = (props) => {
   }
 
   var handleAnalyze = (e) => {
-    props.analyze.action(e)
+    props.debug.debugError()
     // props.toogleModal()
   }
 
@@ -81,7 +81,7 @@ const TransactionLoadingView = (props) => {
 
     var reason = ""
 
-    if (props.analyze.isAnalize && !props.analyze.isAnalizeComplete){
+    if (props.debug.isDebuging && !props.debug.isDebugComplete){
       reason = <div className="analyze-panel loading">
                 <div>
                   <div class="cssload-container">
@@ -90,8 +90,8 @@ const TransactionLoadingView = (props) => {
                 </div>
               </div>
     }
-    if (!props.analyze.isAnalize && props.analyze.isAnalizeComplete) {
-      if (Object.keys(props.analyze.analizeError).length === 0){
+    if (!props.debug.isDebuging && props.debug.isDebugComplete) {
+      if (Object.keys(props.debug.errorTx).length === 0){
         reason = <div className="analyze-panel">
                   <div className="empty-error">{props.translate("transaction.error_no_reason") 
                     || "Cannot find any reason for your failed transaction. Please try again in a while"}</div>
@@ -99,8 +99,8 @@ const TransactionLoadingView = (props) => {
       }else{
         reason = 
           <div className="analyze-panel">{
-            Object.keys(props.analyze.analizeError).map(key => {
-              return <div key={key}>{props.analyze.analizeError[key]}</div>
+            Object.keys(props.debug.errorTx).map(key => {
+              return <div key={key}>{props.debug.errorTx[key]}</div>
             })}
           </div>
       }
@@ -181,10 +181,10 @@ const TransactionLoadingView = (props) => {
                       <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
                         <span>
-                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceSymbol}</strong>
+                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</strong>
                         </span>
                         <span> {props.translate('transaction.to') || "to"} </span>
-                        <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destSymbol}</strong></span>
+                        <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</strong></span>
                       </div>
                     </div>
                   }
@@ -196,7 +196,7 @@ const TransactionLoadingView = (props) => {
                             <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
                             </span>
                             <span> {props.translate('transaction.to') || "to"} </span>
-                            <span><strong>{props.address}</strong></span>
+                            <span><strong>{props.balanceInfo.address}</strong></span>
                           </div>
                       </div>
                   }
