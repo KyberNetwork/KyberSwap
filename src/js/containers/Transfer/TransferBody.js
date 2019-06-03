@@ -221,7 +221,7 @@ class Transfer extends React.Component {
   }
 
   selectedGasHandler = (value, level, levelString) => {
-    this.props.dispatch(transferActions.setSelectedGasPrice(level))
+    this.props.dispatch(transferActions.setSelectedGasPrice(value, level))
     this.specifyGasPrice(value)
     this.props.global.analytics.callTrack("trackChooseGas", "transfer", value, levelString);
   }

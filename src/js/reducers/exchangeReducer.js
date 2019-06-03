@@ -236,12 +236,14 @@ const exchange = (state = initState, action) => {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
 
+        const gasExchange = common.getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, newState.maxGasPrice);
+
         var gasPriceSuggest = { ...newState.gasPriceSuggest }
 
-        gasPriceSuggest.superFastGas = Math.round(superFastGas * 10) / 10
-        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
-        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
-        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
+        gasPriceSuggest.superFastGas = Math.round(gasExchange.superFastGas * 10) / 10
+        gasPriceSuggest.fastGas = Math.round(gasExchange.fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(gasExchange.standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(gasExchange.safeLowGas * 10) / 10
 
         newState.gasPriceSuggest = { ...gasPriceSuggest }
         newState.gasPrice = Math.round(gasExchange.defaultGas * 10) / 10
