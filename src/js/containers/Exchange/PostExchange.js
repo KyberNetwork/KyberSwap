@@ -134,7 +134,7 @@ export default class PostExchange extends React.Component {
       }
     }
 
-    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rateSourceToEth, destDecimal, maxCap)
+    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rateSourceToEth, destTokenSymbol, destDecimal, maxCap)
     var sourceAmountErrorKey
     switch (validateAmount) {
       case "not a number":        
