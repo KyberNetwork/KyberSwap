@@ -260,10 +260,12 @@ export default class LimitOrderSubmit extends React.Component {
       if (this.validateBalance(orderPath)) {
         this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
       } else {
-        console.log("Your eth balance is not enough for transactions")
-        var title = this.props.translate("error.error_occurred") || "Error occurred"
-        var content = "Your eth balance is not enough for transactions"
-        this.props.dispatch(utilActions.openInfoModal(title, content))
+        // console.log("Your eth balance is not enough for transactions")
+        // var title = this.props.translate("error.error_occurred") || "Error occurred"
+        // var content = "Your eth balance is not enough for transactions"
+        // this.props.dispatch(utilActions.openInfoModal(title, content))
+
+        this.props.dispatch(limitOrderActions.throwError("sourceAmount", ["Your eth balance is not enough for transactions"]))
       }
 
     } catch (err) {
