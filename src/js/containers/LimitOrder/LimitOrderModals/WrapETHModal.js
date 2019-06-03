@@ -249,7 +249,7 @@ export default class WrapETHModal extends React.Component {
                                       <input value={this.state.amountConvert} id="wrap-input"
                                           min="0"
                                           step="0.000001"
-                                          placeholder="0" autoFocus
+                                          placeholder="0" 
                                           type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
                                           onChange={(e) => this.handleChange(e)} />
                                   </div>

@@ -90,6 +90,8 @@ export default class ApproveZeroModal extends React.Component {
       var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.exchange.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
       converter.toHex(converter.gweiToWei(this.props.exchange.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.network)
 
+      this.props.dispatch(exchangeActions.saveApproveZeroTx(this.props.exchange.sourceTokenSymbol, txHash));
+
       //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
 

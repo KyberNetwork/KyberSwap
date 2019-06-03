@@ -99,6 +99,7 @@ export default class LimitOrderList extends React.Component {
               screen="desktop"
               selectedTimeFilter={this.state.selectedTimeFilter}
               openCancelOrderModal={this.openCancelOrderModal}
+              srcInputElementRef={this.props.srcInputElementRef}
             />
             <CancelOrderModal order={this.state.currentOrder} 
               isOpen={this.state.cancelOrderModalVisible}

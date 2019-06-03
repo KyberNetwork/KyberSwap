@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
-import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdown";
-import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
-import * as common from "../../utils/common";
-import * as converters from "../../utils/converter";
+import Dropdown, { DropdownContent } from "react-simple-dropdown";
+import { getFormattedDate } from "../../utils/common";
+import { roundingNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-
 import PropTypes from "prop-types";
 
 
@@ -144,7 +142,7 @@ export default class LimitOrderTable extends Component {
 	getDateCell = (props) => {
     const { created_time, cancel_time, status } = props;
     const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
-    const datetime = common.getFormattedDate(timestamp);
+    const datetime = getFormattedDate(timestamp);
     return (
       <div>{datetime}</div>
     )
@@ -155,7 +153,7 @@ export default class LimitOrderTable extends Component {
     const { screen } = this.props;
 
     const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
-    const rate = converters.roundingNumber(min_rate);
+    const rate = roundingNumber(min_rate);
 
     if (screen === "mobile") {
       return (
@@ -177,7 +175,7 @@ export default class LimitOrderTable extends Component {
 
   getFromCell = (props) => {
     const { source, sourceAmount } = props;
-    let amount = converters.roundingNumber(sourceAmount);
+    let amount = roundingNumber(sourceAmount);
     return (
       <div>
         <span class="from-number-cell">{amount}</span>{' '}
@@ -189,7 +187,7 @@ export default class LimitOrderTable extends Component {
   getToCell = (props) => {
     const { dest, minRate, fee, sourceAmount } = props;
     let destAmount = sourceAmount * (1 - fee / 100) * minRate;
-    destAmount = converters.roundingNumber(destAmount);
+    destAmount = roundingNumber(destAmount);
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
@@ -272,11 +270,11 @@ export default class LimitOrderTable extends Component {
   getOrderDetail = (row) => {
     const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = row.original;
 
-    const rate = converters.roundingNumber(min_rate);
+    const rate = roundingNumber(min_rate);
 
-    const sourceAmount = converters.roundingNumber(src_amount);
+    const sourceAmount = roundingNumber(src_amount);
     let destAmount = src_amount * (1 - fee / 100) * min_rate;
-    destAmount = converters.roundingNumber(destAmount);
+    destAmount = roundingNumber(destAmount);
 
     return (
       <div className="limit-order-modal__detail-order">
@@ -608,12 +606,30 @@ export default class LimitOrderTable extends Component {
     return results;
   }
 
+  focusSourceInput = () => {
+    if (this.props.screen === "mobile" && this.props.toggleLimitOrderListModal) {
+      this.props.toggleLimitOrderListModal();
+    }
+    this.props.srcInputElementRef.focus();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
+
+      // Filter common pair is state's pairFilter array and props' data
+      const filterArray = this.state.pairFilter.filter(item => {
+        const found = nextProps.data.filter(order => {
+          const key = `${order.source}-${order.dest}`;
+          return key === item;
+        });
+
+        return found.length > 0;
+      });
+
       this.setState({
-        statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
-        pairFilter: [],
-        pairSort: "asc",
+        // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+        pairFilter: filterArray,
+        // pairSort: "asc",
         expanded: {}
       })
     }
@@ -621,7 +637,7 @@ export default class LimitOrderTable extends Component {
 
   render() {
 		const columns = this.getColumns();
-		const data = this.renderData(this.props.data);
+    const data = this.renderData(this.props.data);
     return (
 			<div className="limit-order-list--table">
 				<ReactTable 
@@ -632,9 +648,18 @@ export default class LimitOrderTable extends Component {
 					sortable={false}
           minRows={0}
           expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
-          noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
+          className={this.props.data.length === 0 ? `ReactTable--empty` : ""}
+          // noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
 					// PadRowComponent={() => (<div className="line-indicator"></div>)}
-					// NoDataComponent={() => null}
+          // NoDataComponent={() => null}
+          NoDataComponent={(props) => {
+            return (
+              <div className="empty-order__message">
+                {this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one"}{' '}
+                <span className="place-order-trigger" onClick={e => this.focusSourceInput()}>here</span>
+              </div>
+            )
+          }}
 					getTheadProps={(state, rowInfo) => {
 						return {
 							style: { overflow: "visible"}
@@ -662,7 +687,7 @@ export default class LimitOrderTable extends Component {
             return {};
           }}
           getTheadThProps={(state, rowInfo, column) => {
-            if (data.length === 0) {
+            if (this.props.data.length === 0) {
               return {
                 style: {
                   pointerEvents: "none"
