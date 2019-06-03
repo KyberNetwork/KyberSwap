@@ -197,29 +197,6 @@ export function* checkConnection(action) {
 // }
 
 
-function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
-  var safeLowGas = parseFloat(safeLowGas)
-  var standardGas = parseFloat(standardGas)
-  var fastGas = parseFloat(fastGas)
-  var superFastGas = parseFloat(superFastGas)
-  var defaultGas = parseFloat(defaultGas)
-  var maxGas = parseFloat(maxGas)
-  if (superFastGas > maxGas) {
-    superFastGas = maxGas;
-  }
-
-  if (fastGas > maxGas) {
-    var returnSuggest = {}
-    returnSuggest.fastGas = maxGas
-    returnSuggest.standardGas = maxGas
-    returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
-    returnSuggest.defaultGas = maxGas
-    return returnSuggest
-  } else {
-    return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
-  }
-}
-
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas, superFastGas
   var state = store.getState();
@@ -249,10 +226,12 @@ export function* setGasPrice(action) {
       superFastGas = 20;
     }
 
-    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas))
+    // yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas))
 
-    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.superFastGas, gasExchange.defaultGas, selectedGas))
+    // var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGasPrice)
+    // yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.superFastGas, gasExchange.defaultGas, selectedGas))
+
+    yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas));
 
     // yield put(actionsLimitOrder.setGasPriceLimitOrderComplete(safeLowGas, standardGas, fastGas, defaultGas, selectedGas));
   }catch (err) {
