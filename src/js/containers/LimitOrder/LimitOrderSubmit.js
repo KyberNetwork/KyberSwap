@@ -70,6 +70,9 @@ export default class LimitOrderSubmit extends React.Component {
     var isValidate = true
     var sourceAmountError = []
     var rateError = []
+    if (this.props.limitOrder.errors.rateSystem){
+      isValidate = false
+    }
     if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol) {
       sourceAmountError.push("Source token must be different from dest token")
       isValidate = false
