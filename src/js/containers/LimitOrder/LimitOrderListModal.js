@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "../../components/CommonElement";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import ReactTable from "react-table";
-import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdown";
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
-import * as common from "../../utils/common";
-
 import LimitOrderTable from "./LimitOrderTable";
 
 @connect((store, props) => {
