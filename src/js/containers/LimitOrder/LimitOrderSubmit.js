@@ -46,11 +46,6 @@ export default class LimitOrderSubmit extends React.Component {
     if (isNaN(sourceAmount)) {
       return 0
     }
-    this.props.limitOrder.listOrder.map(value => {
-      if (value.status === constants.LIMIT_ORDER_CONFIG.status.OPEN && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
-        sourceAmount += parseFloat(value.src_amount);
-      }
-    })
     var sourceAmountBig = converters.toTWei(sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
     return sourceAmountBig.toString()
   }
