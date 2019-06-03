@@ -236,11 +236,12 @@ export default class LimitOrderSubmit extends React.Component {
       var ethereum = this.props.ethereum
       // check wrapped eth
       var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
-      if (allowance == 0) {
+      if (allowance == 0 && !this.props.tokens[this.props.limitOrder.sourceTokenSymbol].limit_order_tx_approve_max) {
         orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
         // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveMax
       }
-      if (allowance != 0 && allowance < Math.pow(10, 28)) {
+      if (allowance != 0 && allowance < Math.pow(10, 28)
+      && !this.props.tokens[this.props.limitOrder.sourceTokenSymbol].limit_order_tx_approve_zero) {
         orderPath = [constants.LIMIT_ORDER_CONFIG.orderPath.approveZero, constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]
         // currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.approveZero
       }

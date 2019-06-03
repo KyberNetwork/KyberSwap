@@ -384,7 +384,7 @@
     "change_rate": "Change Rate",
     "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.",
     "wrap_eth_notify": "Your order can not be submited because your WETH is not enough, please convert ETH to WETH.",
-    "empty_order": "There is no order here yet. You can place one here."
+    "empty_order": "There is no order here yet. You can place one"
   },
   "home": "Home",
   "tracker": "Tracker",
