@@ -697,6 +697,13 @@ export function setCustomRateInputValue(value) {
   }
 }
 
+export function setIsSelectCustomRate(value) {
+  return {
+    type: "EXCHANGE.SET_IS_SELECT_CUSTOM_RATE_INPUT",
+    payload: value
+  }
+}
+
 
 export function updateExchangePath(exchangePath, currentPathIndex){
   return {
@@ -717,3 +724,16 @@ export function  forwardExchangePath() {
   }
 }
 
+export function saveApproveZeroTx(sourceTokenSymbol, txHash) {
+  return {
+    type: "EXCHANGE.SAVE_APPROVE_ZERO_TX",
+    payload: { sourceTokenSymbol, txHash }
+  }
+}
+
+export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
+  return {
+    type: "EXCHANGE.SAVE_APPROVE_MAX_TX",
+    payload: { sourceTokenSymbol, txHash }
+  }
+}

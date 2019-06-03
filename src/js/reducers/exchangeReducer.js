@@ -329,6 +329,10 @@ const exchange = (state = initState, action) => {
       newState.customRateInput.value = action.payload;
       return newState;
     }
+    case "EXCHANGE.SET_IS_SELECT_CUSTOM_RATE_INPUT": {
+      newState.customRateInput.isSelected = action.payload;
+      return newState;
+    }
 
     case "EXCHANGE.UPDATE_EXCHANGE_PATH": {
       const { exchangePath, currentPathIndex } = action.payload

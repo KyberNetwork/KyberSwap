@@ -68,22 +68,17 @@
       border-bottom-color: #FFCAD1 !important;
       right: 20px;
       left: auto;
+
+      border-left: 8px solid transparent !important;
+      border-right: 8px solid transparent !important;
+      top: -6px;
+      // left: 50%;
+      margin-left: -8px;
     }
 
-    @include screen-max-width(medium) {
+    @media only screen and (max-width: 1100px) {
       left: 10px !important;
       top: 32px !important;
-
-      &:after {
-        border-left: 8px solid transparent !important;
-        border-right: 8px solid transparent !important;
-        top: -6px;
-        // left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #FFCAD1 !important;
-        right: 20px;
-        left: auto;
-      }
     }
   }
   

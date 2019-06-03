@@ -9,8 +9,15 @@
 
     .ReactTable {
         height: 310px;
+        // max-height: 310px;
+        // height: auto;
+        min-height: 100px;
         margin: 15px 30px 30px 30px;
         border: none;
+
+        &--empty {
+            height: auto !important;
+        }
 
         .rt-thead {
             overflow-y: auto;
@@ -64,6 +71,29 @@
                 height: $row-height;
                 max-height: $row-height;
                 border: none;
+            }
+        }
+
+        .rt-noData {
+            background: transparent !important;
+            font-size: 14px;
+            font-weight: 500;
+            top: 80%;
+            padding: 0;
+        }
+
+        .empty-order__message {
+            position: absolute;
+            top: 70px;
+            // padding: 10px 0 0;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+
+            .place-order-trigger {
+                text-decoration: underline;
+                cursor: pointer;
             }
         }
     }
@@ -594,7 +624,7 @@
 
     &--empty {
         background-color: #e8eff6;
-        height: 185px;
+        height: auto;
     }
 
     &--title {

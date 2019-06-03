@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "../../components/CommonElement";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import ReactTable from "react-table";
-import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdown";
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
-import * as common from "../../utils/common";
-
 import LimitOrderTable from "./LimitOrderTable";
 
 @connect((store, props) => {
@@ -118,7 +114,9 @@ export default class LimitOrderListModal extends Component {
 								data={this.props.limitOrder.listOrder}
 								screen="mobile"
               	selectedTimeFilter={this.state.selectedTimeFilter}
-              	openCancelOrderModal={this.openCancelOrderModal}
+								openCancelOrderModal={this.openCancelOrderModal}
+								srcInputElementRef={this.props.srcInputElementRef}
+								toggleLimitOrderListModal={this.toggleLimitOrderListModal}
 							/>
 							<CancelOrderModal order={this.state.currentOrder} 
 								isOpen={this.state.cancelOrderModalVisible}

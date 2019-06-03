@@ -154,7 +154,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   customRateInput: {
     isError: false,
     isDirty: false,
-    value: ""
+    value: "",
+    isSelected: false
   },
   // isAnalize: false,
   // isAnalizeComplete: false,
