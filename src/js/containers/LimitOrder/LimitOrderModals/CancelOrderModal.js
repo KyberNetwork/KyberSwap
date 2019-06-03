@@ -129,7 +129,7 @@ export default class CancelOrderModal extends Component {
 					this.props.order
 				);
 				if (results) {
-					this.props.dispatch(limitOrderActions.updateOrder(results));
+					this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
 					this.setState({
 						isConfirming: false,
 						isFinish: true

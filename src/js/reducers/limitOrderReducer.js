@@ -191,23 +191,6 @@ const limitOrder = (state = initState, action) => {
       newState.selectedGas = selectedGas;
       return newState;
     }
-
-    case "LIMIT_ORDER.SET_PENDING_CANCEL_ORDERS": {
-      const listOrders = action.payload;
-      if (listOrders.length > 0) {
-        newState.listPendingCancelOrders = listOrders.map(item => {
-          return JSON.parse(JSON.stringify(item));
-        });
-      } else {
-        newState.listPendingCancelOrders = [];
-      }
-      return newState;
-    }
-
-    case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
-      newState.orderPath = [];
-      return newState;
-    }
   }
   return state
 }

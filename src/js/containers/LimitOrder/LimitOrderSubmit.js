@@ -341,7 +341,6 @@ export default class LimitOrderSubmit extends React.Component {
 
   confirmAgreeSubmit = () => {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-    this.props.dispatch(limitOrderActions.setPendingCancelOrders(this.state.higherRateOrders));
     this.agreeSubmit();
   }
 
