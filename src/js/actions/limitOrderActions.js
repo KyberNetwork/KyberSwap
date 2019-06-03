@@ -45,10 +45,10 @@ export function setIsSelectTokenBalance(value) {
   }
 }
 
-export function fetchFee(userAddr, src, dest, srcAmount, destAmount) {
+export function fetchFee(userAddr, src, dest, srcAmount, destAmount, shouldLoading) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE",
-    payload: { userAddr, src, dest, srcAmount, destAmount }
+    payload: { userAddr, src, dest, srcAmount, destAmount, shouldLoading }
   }
 }
 
@@ -139,5 +139,19 @@ export function setPendingCancelOrders(listOrders) {
 export function updateOpenOrderStatus() {
   return {
     type: "LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS"
+  }
+}
+
+export function saveApproveZeroTx(sourceTokenSymbol, txHash) {
+  return {
+    type: "LIMIT_ORDER.SAVE_APPROVE_ZERO_TX",
+    payload: { sourceTokenSymbol, txHash }
+  }
+}
+
+export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
+  return {
+    type: "LIMIT_ORDER.SAVE_APPROVE_MAX_TX",
+    payload: { sourceTokenSymbol, txHash }
   }
 }

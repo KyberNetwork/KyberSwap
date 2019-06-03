@@ -25,21 +25,23 @@ import * as constants from "../../services/constants"
 class LimitOrderFee extends React.Component {
   componentDidMount = () =>{
     this.fetchFee()
-    this.intervalFetchFee = setInterval(this.fetchFee, 10000)
+    this.intervalFetchFee = setInterval(() => {
+      this.fetchFee(false);
+    }, 10000)
   }
 
   componentWillUnmount = () => {
     clearInterval(this.intervalFetchFee)
   }
 
-  fetchFee = () => {
+  fetchFee = (shouldLoading = true) => {
     if (common.isUserLogin() && this.props.account !== false){
       var userAddr = this.props.account.address
       var src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address
       var dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
-      this.props.dispatch(limitOrderActions.fetchFee(userAddr, src, dest, srcAmount, destAmount))
+      this.props.dispatch(limitOrderActions.fetchFee(userAddr, src, dest, srcAmount, destAmount, shouldLoading))
     }
   }
 

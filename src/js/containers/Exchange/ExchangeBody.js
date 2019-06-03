@@ -419,19 +419,20 @@ class ExchangeBody extends React.Component {
   // }
 
   toggleAdvanceContent = () => {
-    if (this.props.global.isOnMobile){
+    // if (this.props.global.isOnMobile){
       // this.props.dispatch(exchangeActions.toggleBalanceContent())    
       if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
         this.props.dispatch(exchangeActions.setCustomRateInputError(true));
         return;
       }
-    }
+    // }
     
     if (this.props.exchange.isAdvanceActive) {
       this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Swap")
       const expectedRate = this.props.exchange.expectedRate;
 
-      const minRate = converters.caculatorRateToPercentage(97, expectedRate);  // Reset rate to 3%
+      // User basic rate 3% or custom rate
+      const minRate = converters.caculatorRateToPercentage(this.props.exchange.customRateInput.isSelected ? 100 - this.props.exchange.customRateInput.value : 97, expectedRate);  
   
       this.props.dispatch(exchangeActions.setMinRate(minRate.toString()));
       this.props.dispatch(exchangeActions.setCustomRateInputError(false));
@@ -476,6 +477,8 @@ class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.setCustomRateInputDirty(false));
       this.props.dispatch(exchangeActions.setCustomRateInputError(false));
     }
+
+    this.props.dispatch(exchangeActions.setIsSelectCustomRate(isInput));
 
     const expectedRate = this.props.exchange.expectedRate;
     let value = isInput ? 100 - e.currentTarget.value : e.currentTarget.value;

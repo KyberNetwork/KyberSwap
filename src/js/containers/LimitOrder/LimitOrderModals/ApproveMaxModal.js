@@ -95,6 +95,8 @@ export default class ApproveMaxModal extends React.Component {
       var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.limitOrder.sourceToken, 0, this.props.account.nonce, this.state.gasLimit,
         converter.toHex(converter.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
 
+      this.props.dispatch(limitOrderActions.saveApproveMaxTx(this.props.limitOrder.sourceTokenSymbol, txHash));
+
       //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
 
@@ -139,14 +141,14 @@ export default class ApproveMaxModal extends React.Component {
   contentModal = () => {
     return (
       <div className="approve-modal">
-        <div className="title">Approve modal</div>
+        <div className="title">Approve Token</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
                 <div className="message">
-                  {`You need approve KyberSwap to use token ${this.props.limitOrder.sourceTokenSymbol}`}
+                  {`You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} in this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
@@ -194,7 +196,7 @@ export default class ApproveMaxModal extends React.Component {
       }}
         isOpen={true}
         onRequestClose={this.closeModal}
-        contentLabel="approve modal"
+        contentLabel="approve token"
         content={this.contentModal()}
         size="medium"
       />
