@@ -174,7 +174,7 @@ export function getFormattedDate(value) {
 
 export function isUserLogin(){
     //dummy data
-    // return true
+    return true
 
     var loginCookies = getCookie("signed_in")
     return loginCookies === true || loginCookies === "true" ? true: false
@@ -200,12 +200,17 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, maxGas){
+export function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
     var safeLowGas = parseFloat(safeLowGas)
     var standardGas = parseFloat(standardGas)
     var fastGas = parseFloat(fastGas)
+    var superFastGas = parseFloat(superFastGas)
     var defaultGas = parseFloat(defaultGas)
     var maxGas = parseFloat(maxGas)
+    if (superFastGas > maxGas) {
+        superFastGas = maxGas;
+    }
+
     if (fastGas > maxGas) {
         var returnSuggest = {}
         returnSuggest.fastGas = maxGas
@@ -214,7 +219,7 @@ export function getGasExchange(safeLowGas, standardGas, fastGas, defaultGas, max
         returnSuggest.defaultGas = maxGas
         return returnSuggest
     } else {
-        return {safeLowGas, standardGas, fastGas, defaultGas}
+        return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
     }
 }
 

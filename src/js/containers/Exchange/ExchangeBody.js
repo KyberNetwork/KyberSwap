@@ -214,6 +214,7 @@ class ExchangeBody extends React.Component {
       sourceDecimal,
       //this.props.exchange.expectedRate,      
       rateSourceToEth,
+      destTokenSymbol,
       destDecimal,
       maxCap)
     var sourceAmountErrorKey = false

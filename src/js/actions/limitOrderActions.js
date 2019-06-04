@@ -87,31 +87,10 @@ export function  forwardOrderPath() {
   }
 }
 
-export function addNewOrder(order) {
-  return {
-    type: "LIMIT_ORDER.ADD_NEW_ORDER",
-    payload: {order}
-  }
-}
-
-export function removeOrder(order) {
-  return {
-    type: "LIMIT_ORDER.REMOVE_ORDER",
-    payload: { order }
-  }
-}
-
 export function addListOrder(listOrder) {
   return {
     type: "LIMIT_ORDER.ADD_LIST_ORDER",
     payload: listOrder
-  }
-}
-
-export function updateOrder(order) {
-  return {
-    type: "LIMIT_ORDER.UPDATE_ORDER",
-    payload: { order }
   }
 }
 
@@ -126,13 +105,6 @@ export function setGasPriceLimitOrderComplete(safeLowGas, standardGas, fastGas, 
   return {
     type: "LIMIT_ORDER.SET_GAS_PRICE_LIMIT_ORDER_COMPLETE",
     payload: { safeLowGas, standardGas, defaultGas, fastGas, selectedGas }
-  }
-}
-
-export function setPendingCancelOrders(listOrders) {
-  return {
-    type: "LIMIT_ORDER.SET_PENDING_CANCEL_ORDERS",
-    payload: listOrders
   }
 }
 
