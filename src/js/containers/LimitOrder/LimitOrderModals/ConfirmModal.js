@@ -138,6 +138,8 @@ export default class ConfirmModal extends React.Component {
                 signature: signature
             });
 
+            this.props.dispatch(limitOrderActions.addNewOrder(newOrder));
+
             // newOrder.id = this.props.limitOrder.listOrder.length + 1;
             this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
 
