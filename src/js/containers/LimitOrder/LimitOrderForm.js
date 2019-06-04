@@ -87,6 +87,10 @@ export default class LimitOrderForm extends React.Component {
 
   lazyFetchRate = _.debounce(this.fetchCurrentRate, 500)
 
+  handleFocus = (e, type) => {
+    this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);
+  }
+
   handleInputChange = (e, type, referValue) => {
     var value = e.target.value
     var check = filterInputNumber(e, value, referValue)
@@ -167,6 +171,7 @@ export default class LimitOrderForm extends React.Component {
                       type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
                       value={this.props.limitOrder.sourceAmount}                      
                       onChange={(e) => this.handleInputChange(e, "source", this.props.limitOrder.sourceAmount)}
+                      onFocus={e => this.handleFocus(e, "source")}
                     />
                   </div>
                 </div>
@@ -206,6 +211,7 @@ export default class LimitOrderForm extends React.Component {
                     autoComplete="off"
                     value={this.props.limitOrder.destAmount}
                     onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
+                    onFocus={e => this.handleFocus(e, "dest")}
                   />
                 </div>
               </div>
@@ -232,6 +238,7 @@ export default class LimitOrderForm extends React.Component {
                   autoComplete="off"
                   value={this.props.limitOrder.triggerRate}
                   onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
+                  onFocus={e => this.handleFocus(e, "rate")}
                 />
               </div>
             </div>

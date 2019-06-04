@@ -82,6 +82,7 @@ export default class ApproveMaxModal extends React.Component {
   }
 
   async onSubmit() {
+    this.props.global.analytics.callTrack("trackLimitOrderClickApprove", "Max", this.props.limitOrder.sourceTokenSymbol);
     if (this.state.isConfirming || this.state.isFetchGas) return
     this.setState({
       err: "",

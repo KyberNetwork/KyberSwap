@@ -670,4 +670,92 @@ export default class Mixpanel {
       }
     }
   }
+
+  /**
+   * Limit Order
+   */
+  trackClickSubmitOrder() {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Submit`);
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackClickConfirmSubmitOrder() {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Confirm_Submit`);
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackClickCancelOrder(orderId) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Cancel`, { orderId });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackClickConfirmCancelOrder(orderId) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Confirm_Cancel`, { orderId });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackClickConvertEth() {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Convert_Eth`);
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderFocusAmount(type) {
+    // Type: source, dest, rate
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        const capitalizeType = type.charAt(0).toUpperCase() + type.slice(1);
+        mixpanel.track(`LimitOrder_Focus_${capitalizeType}_Amount`);
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderSelectToken(type, token) {
+    // Type: source, dest
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        const capitalizeType = type.charAt(0).toUpperCase() + type.slice(1);
+        mixpanel.track(`LimitOrder_Select_${capitalizeType}_Amount`, { token });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickApprove(type, token) {
+    // Type: Zero, Max
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Approve_Token_${type}`, { token });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
 }

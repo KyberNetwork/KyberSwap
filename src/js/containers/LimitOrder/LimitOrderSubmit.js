@@ -275,6 +275,7 @@ export default class LimitOrderSubmit extends React.Component {
 
 
   submitOrder = () => {
+    this.props.global.analytics.callTrack("trackClickSubmitOrder");
     if (!isUserLogin()) {
       window.location.href = "/users/sign_in"
     }
