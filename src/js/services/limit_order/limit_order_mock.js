@@ -182,7 +182,7 @@ export function submitOrder(order) {
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
-        data.push(newOrder);
+        // data.push(newOrder);
         resolve(newOrder);
         return;
     })
