@@ -11,13 +11,15 @@ import LimitOrderTable from "./LimitOrderTable";
 	const tokens = store.tokens.tokens;
 	const limitOrder = store.limitOrder;
 	const ethereum = store.connection.ethereum;
+	const global = store.global;
 
 	return {
 		translate,
 		limitOrder,
 		tokens,
 		account,
-		ethereum
+		ethereum,
+		global
 	};
 })
 export default class LimitOrderListModal extends Component {
@@ -77,6 +79,7 @@ export default class LimitOrderListModal extends Component {
 	}
 
 	openCancelOrderModal = (order) => {
+		this.props.global.analytics.callTrack("trackClickCancelOrder", order.id);
 		if (order) {
 			this.setState({
 				cancelOrderModalVisible: true,

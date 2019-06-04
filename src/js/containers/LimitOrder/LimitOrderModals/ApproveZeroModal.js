@@ -81,6 +81,7 @@ export default class ApproveZeroModal extends React.Component {
   }
 
   async onSubmit() {
+    this.props.global.analytics.callTrack("trackLimitOrderClickApprove", "Zero", this.props.limitOrder.sourceTokenSymbol);
 
     if (this.state.isConfirming || this.state.isFetchGas) return
     this.setState({

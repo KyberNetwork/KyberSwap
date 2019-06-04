@@ -84,6 +84,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     async onSubmit(){
+        this.props.global.analytics.callTrack("trackClickConfirmSubmitOrder");
         if(this.state.isFetchFee) return
         //reset        
         var wallet = getWallet(this.props.account.type)
