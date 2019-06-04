@@ -55,9 +55,10 @@ export default class LimitOrderBody extends React.Component {
   }
 
   getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
+    if (!this.props.account) return 0
     const orderList = this.props.limitOrder.listOrder;
     const openOrders = orderList.filter(order => {
-      return order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
+      return order.address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
     });
 
     let openOrderAmount = 0;

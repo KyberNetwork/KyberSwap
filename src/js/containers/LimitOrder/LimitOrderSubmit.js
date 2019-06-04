@@ -70,6 +70,9 @@ export default class LimitOrderSubmit extends React.Component {
     var isValidate = true
     var sourceAmountError = []
     var rateError = []
+    if (this.props.limitOrder.errors.rateSystem){
+      isValidate = false
+    }
     if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol) {
       sourceAmountError.push("Source token must be different from dest token")
       isValidate = false
@@ -257,10 +260,12 @@ export default class LimitOrderSubmit extends React.Component {
       if (this.validateBalance(orderPath)) {
         this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
       } else {
-        console.log("Your eth balance is not enough for transactions")
-        var title = this.props.translate("error.error_occurred") || "Error occurred"
-        var content = "Your eth balance is not enough for transactions"
-        this.props.dispatch(utilActions.openInfoModal(title, content))
+        // console.log("Your eth balance is not enough for transactions")
+        // var title = this.props.translate("error.error_occurred") || "Error occurred"
+        // var content = "Your eth balance is not enough for transactions"
+        // this.props.dispatch(utilActions.openInfoModal(title, content))
+
+        this.props.dispatch(limitOrderActions.throwError("sourceAmount", ["Your eth balance is not enough for transactions"]))
       }
 
     } catch (err) {
