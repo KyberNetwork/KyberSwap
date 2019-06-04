@@ -94,6 +94,13 @@ export function addListOrder(listOrder) {
   }
 }
 
+export function addNewOrder(order) {
+  return {
+    type: "LIMIT_ORDER.ADD_NEW_ORDER",
+    payload: { order }
+  }
+}
+
 export function focusInput(focus) {
   return {
     type: "LIMIT_ORDER.FOCUS_INPUT",
