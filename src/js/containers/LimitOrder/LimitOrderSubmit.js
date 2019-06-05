@@ -6,7 +6,7 @@ import * as common from "../../utils/common"
 import * as converters from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import BLOCKCHAIN_INFO from "../../../../env"
-import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal, WarningModal } from "./LimitOrderModals"
+import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal } from "./LimitOrderModals"
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
 import { Tooltip } from "react-tippy";
@@ -370,7 +370,7 @@ export default class LimitOrderSubmit extends React.Component {
             html={this.getRateWarningTooltip()}
           >
             <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-              {isUserLogin() ? "Submit" : "Login to Submit Order"}
+              {isUserLogin() ? this.props.translate("limit_order.submit") || "Submit" : this.props.translate("limit_order.login_to_submit") || "Login to Submit Order"}
             </button>
           </Tooltip>
         )}

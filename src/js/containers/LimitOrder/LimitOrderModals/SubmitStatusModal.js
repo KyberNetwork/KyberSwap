@@ -30,12 +30,12 @@ export default class SubmitStatusModal extends React.Component {
     contentModal = () => {
         return (
             <div className="approve-modal">
-            <div className="title">Status</div>
+            <div className="title">{this.props.translate("limit_order.status") || "Status"}</div>
             <a className="x" onClick={this.closeModal}>&times;</a>
             <div className="content with-overlap">
               <div className="row">
-                
-                Your order have been submitted sucessfully to server. You can check the order in your order list.
+                {this.props.translate("limit_order.submit_successfully") 
+                || "Your order have been submitted sucessfully to server. You can check the order in your order list."}
               </div>
             </div>
             

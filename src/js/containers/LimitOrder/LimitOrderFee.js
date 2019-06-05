@@ -61,11 +61,11 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div>
-            Fee: <img src={require('../../../assets/img/waiting-white.svg')} />
+            {this.props.translate("limit_order.fee") || "Fee"}: <img src={require('../../../assets/img/waiting-white.svg')} />
           </div>
           <div>
-            <a onClick={e => this.redirectToSwap()}>Buy 3000KNC</a>{' '}
-            <span>to discount 50% for 20 orders</span>
+            <a onClick={e => this.redirectToSwap()}>{this.props.translate("trading_view.buy")} 3000KNC</a>{' '}
+            <span>{this.props.translate("limit_order.discount_message") || "to discount 50% for 20 orders"}</span>
           </div>
         </div>
       )
@@ -73,11 +73,11 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div className="limit-order-fee__text">
-            Fee: <span title={calculateFee}>{converter.displayNumberWithDot(calculateFee)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
+            {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{converter.displayNumberWithDot(calculateFee)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
           </div>
           <div>
-            <a onClick={e => this.redirectToSwap()}>Buy 3000KNC</a>{' '}
-            <span>to discount 50% for 20 orders</span>
+            <a onClick={e => this.redirectToSwap()}>{this.props.translate("trading_view.buy")} 3000KNC</a>{' '}
+            <span>{this.props.translate("limit_order.discount_message") || "to discount 50% for 20 orders"}</span>
           </div>
         </div>
       )

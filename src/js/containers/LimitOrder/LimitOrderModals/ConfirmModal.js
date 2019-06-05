@@ -185,7 +185,7 @@ export default class ConfirmModal extends React.Component {
       return `
       <div>
         <div className="title">
-          ${`Fee ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.props.limitOrder.orderFee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
+          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.props.limitOrder.orderFee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
         </div>
         <div className="description">
           ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
@@ -279,7 +279,7 @@ export default class ConfirmModal extends React.Component {
                   </div>
                 </div>
                 <div className="limit-order-modal__result">
-                  <span>You will receive</span>{' '}
+                  <span>{this.props.translate("limit_order.you_will_receive") || "You will receive"}</span>{' '}
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                 </div>
 
@@ -304,7 +304,7 @@ export default class ConfirmModal extends React.Component {
 
             {this.state.isFinish && <div className="limit-order-modal__success-msg">
               <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
-              <span>Success</span>
+              <span>{this.props.translate("modal.success") || "Success"}</span>
             </div>}
           </div>
       )

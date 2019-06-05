@@ -115,7 +115,7 @@ export default class LimitOrderAccount extends React.Component {
         <div className={"limit-order-account"}>
           <div className="limit-order-account__title">
             <div>
-              {this.props.translate("limit_order.your_balance") || "Your Available Balance"}
+              {this.props.translate("limit_order.your_available_balance") || "Your Available Balance"}
             </div>
             <div className="reimport-msg">
               <div onClick={this.openReImport}>

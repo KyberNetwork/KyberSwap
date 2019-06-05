@@ -656,7 +656,7 @@ export default class LimitOrderTable extends Component {
             return (
               <div className="empty-order__message">
                 {this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one"}{' '}
-                <span className="place-order-trigger" onClick={e => this.focusSourceInput()}>here</span>
+                <span className="place-order-trigger" onClick={e => this.focusSourceInput()}>{this.props.translate("info.here") || "here"}</span>
               </div>
             )
           }}

@@ -142,14 +142,15 @@ export default class ApproveMaxModal extends React.Component {
   contentModal = () => {
     return (
       <div className="approve-modal">
-        <div className="title">Approve Token</div>
+        <div className="title">{this.props.translate("modal.approve_token") || "Approve Token"}</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
                 <div className="message">
-                  {`You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} in this address`}
+                  {this.props.translate("modal.approve_exchange", { token: this.props.limitOrder.sourceTokenSymbol }) 
+                  || `You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} with this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">
