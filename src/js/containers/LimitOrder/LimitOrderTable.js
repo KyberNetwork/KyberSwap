@@ -22,6 +22,7 @@ export default class LimitOrderTable extends Component {
 		this.state = {
 			statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
       pairFilter: [],
+      addressFilter: [],
       dateSort: "desc",
       pairSort: "asc",
 			prioritySort: "date",    // date or pair,
@@ -29,6 +30,7 @@ export default class LimitOrderTable extends Component {
       cancelOrderModalVisible: false,
       statusFilterVisible: false,
       conditionFilterVisible: false,
+      addressFilterVisible: false,
       expanded: {},
     }
     
@@ -46,7 +48,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start",
-      maxWidth: 120,
+      maxWidth: 100,
       getHeaderProps: (state, rowInfo) => {
         return {
           onClick: (e) => {
@@ -54,6 +56,14 @@ export default class LimitOrderTable extends Component {
           }
         }
       }
+    }, {
+      id: "address",
+      Header: this.getHeader("address"),
+      accessor: item => item,
+      Cell: props => this.getAddressCell(props.value),
+      headerClassName: "cell-flex-start-header cell-condition-header",
+      className: "cell-flex-start",
+      width: 150,
     }, {
       id: "condition",
       Header: this.getHeader("condition"),
@@ -111,6 +121,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-end-header cell-status-header",
       className: "cell-flex-end",
+      maxWidth: 130 
     }, {
       expander: true,
       show: false
@@ -148,6 +159,13 @@ export default class LimitOrderTable extends Component {
     )
   }
 
+  getAddressCell = (props) => {
+    const { user_address } = props;
+    return (
+      <div>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
+    )
+  }
+
   getConditionCell = (props) => {
     const { source, dest, status, created_time, cancel_time, min_rate } = props;
     const { screen } = this.props;
@@ -159,12 +177,13 @@ export default class LimitOrderTable extends Component {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
-          <div>
+          {/* <div>
             <span>{source.toUpperCase()}</span>
             <span>&rarr;</span>
             <span>{dest.toUpperCase()}</span>
-          </div>
+          </div> */}
           <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
+          {this.getAddressCell(props)}
         </div>
       )
     } 
@@ -207,13 +226,15 @@ export default class LimitOrderTable extends Component {
 
     return (
       <div className="cell-status__container">
-        <div className={`cell-status cell-status--${status}`}>{status.toUpperCase()}</div>
+        <div className={`cell-status cell-status--${status} ${this.props.screen === "mobile" ? "cell-status__mobile" : ""}`}>{status.toUpperCase()}</div>
         {msg && msg.length > 0 && 
         <React.Fragment>
-          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className="status-info-icon">
+          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className={`status-info-icon ${this.props.screen === "mobile" ? "status-info-icon__mobile" : ""}`}>
             <img src={require("../../../assets/img/warning-triangle.svg")}/>
           </div>
-          <ReactTooltip globalEventOff="click" 
+          <ReactTooltip globalEventOff="click"
+            effect="solid"
+            event="click mouseenter mouseleave"
             html={true} 
             place="bottom" 
             type="dark" 
@@ -281,15 +302,16 @@ export default class LimitOrderTable extends Component {
         <div>
           <div className="cell-pair__mobile">
             {this.getDateCell(row.original)}
-            <div className="cell-pair">
+            {/* <div className="cell-pair">
               <span>{source.toUpperCase()}</span>
               <span>&rarr;</span>
               <span>{dest.toUpperCase()}</span>
-            </div>
-            {this.getStatusCell(row.original)}
+            </div> */}
+            <div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
+            {this.getAddressCell(row.original)}
           </div>
           <div className="limit-order-modal__detail-order__rate">
-            <div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
+            {this.getStatusCell(row.original)}
           </div>
         </div>
         {/* Amount */}
@@ -470,6 +492,55 @@ export default class LimitOrderTable extends Component {
   }
 
   // --------------------------------
+  // Render address filter dropdown
+  // --------------------------------
+  getAddressFilter = () => {
+    const { addressFilter } = this.state;
+    const filteredAddress = this.props.data.map(item => item.user_address).filter((item, index, self) => {
+      return self.indexOf(item) === index;
+    });
+    
+    const renderedComp = filteredAddress.map(item => {
+      const checked = addressFilter.indexOf(item) !== -1;
+
+      return (
+        <label key={item} className="status-filter-modal__option">
+          <span>{`${item.slice(0, 8)} ... ${item.slice(-6)}`}</span>
+          <input type="checkbox" value={item} name={item} 
+                checked={checked}
+                className="status-filter-modal__checkbox"
+                onChange={e => this.handleFilterAddress(e)}/>
+          <span className="status-filter-modal__checkmark--checkbox"></span>
+        </label>
+      )
+    });
+
+    return (
+      <div className="address-filter-modal">
+        {renderedComp}
+      </div>
+    )
+  }
+
+  handleFilterAddress = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      this.setState({
+        addressFilter: [...this.state.addressFilter, value]
+      });
+    } else {
+      const results = [...this.state.addressFilter];
+      const index = results.indexOf(value);
+      if (index !== -1) {
+        results.splice(index, 1);
+        this.setState({
+          addressFilter: results
+        });
+      }
+    }
+  }
+
+  // --------------------------------
   // Toggling status filter dropdown
   // --------------------------------
   togglingStatusFilter = () => {
@@ -484,6 +555,12 @@ export default class LimitOrderTable extends Component {
     })
   }
 
+  togglingAddressFilter = () => {
+    this.setState({
+      addressFilterVisible: !this.state.addressFilterVisible
+    });
+  }
+
 	// --------------
 	// Render header
 	// --------------
@@ -495,6 +572,20 @@ export default class LimitOrderTable extends Component {
           {this.state.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
           {this.state.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
+      )
+    } else if (title === "address") {
+      return (
+        <Dropdown active={this.state.addressFilterVisible} onHide={e => this.togglingAddressFilter()}>
+          <div>
+            <span>{this.props.translate("address.address") || "Address"}</span>
+            <div className="drop-down">
+              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+            </div>
+          </div>
+          <DropdownContent>
+            {this.getAddressFilter()}
+          </DropdownContent>
+        </Dropdown>
       )
     } else if (title === "condition") {
       return (
@@ -706,6 +797,13 @@ export default class LimitOrderTable extends Component {
                 onClick: (e) => {
                   e.stopPropagation();
                   this.togglingConditionFilter();
+                }
+              }
+            } else if (column.id === "address") {
+              return {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  this.togglingAddressFilter();
                 }
               }
             }

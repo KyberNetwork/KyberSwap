@@ -153,7 +153,7 @@ export default class LimitOrderSubmit extends React.Component {
     const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
       return item.source === this.props.limitOrder.sourceTokenSymbol &&
             item.dest === this.props.limitOrder.destTokenSymbol &&
-            item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
+            item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
             item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
             converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
     });

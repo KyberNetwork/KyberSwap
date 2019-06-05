@@ -190,7 +190,15 @@
                 top: 0;
                 position: absolute;
                 right: -18px;
+
+                &__mobile {
+                    right: 0 !important;
+                }
             }
+        }
+
+        &__mobile {
+            margin-right: 20px;
         }
     }
 
@@ -971,6 +979,16 @@
             @extend %checkmark-checkbox;
         }
     }
+}
+
+.address-filter-modal {
+    @extend .status-filter-modal;
+
+    height: auto;
+    max-height: 170px;
+    width: 180px;
+    overflow: scroll;
+
 }
 
 .limit-order-compare-rate {

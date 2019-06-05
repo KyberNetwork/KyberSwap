@@ -1,5 +1,6 @@
 import { timeout } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
+import BigNumber from "bignumber.js";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -8,7 +9,7 @@ const data = [
         id: 2,
         source: "KNC",
         dest: "WETH",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.1,
         min_rate: 0.002604,
@@ -21,7 +22,7 @@ const data = [
         id: 1,
         source: "WETH",
         dest: "DAI",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.123,
         min_rate: 0.123,
@@ -34,7 +35,7 @@ const data = [
         id: 3,
         source: "USDC",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 50,
         min_rate: 0.123,
@@ -46,7 +47,7 @@ const data = [
         id: 4,
         source: "KNC",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 5000,
         min_rate: 0.123,
@@ -58,7 +59,7 @@ const data = [
         id: 5,
         source: "WETH",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.027,
         min_rate: 0.123,
@@ -70,7 +71,7 @@ const data = [
         id: 6,
         source: "WETH",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 2.5678,
         min_rate: 0.123,
@@ -83,7 +84,7 @@ const data = [
         id: 7,
         source: "MKR",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 1.234,
         min_rate: 0.123,
@@ -95,7 +96,7 @@ const data = [
         id: 8,
         source: "MKR",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.001,
         min_rate: 0.123,
@@ -107,7 +108,7 @@ const data = [
         id: 9,
         source: "MKR",
         dest: "TUSD",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.02,
         min_rate: 0.123,
@@ -119,7 +120,7 @@ const data = [
         id: 10,
         source: "WETH",
         dest: "DAI",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.01,
         min_rate: 605.5266,
@@ -131,7 +132,7 @@ const data = [
         id: 11,
         source: "WETH",
         dest: "KNC",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.02,
         min_rate: 380.9035,
@@ -143,7 +144,7 @@ const data = [
         id: 12,
         source: "KNC",
         dest: "DAI",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 10,
         min_rate: 1.745748,
@@ -155,7 +156,7 @@ const data = [
         id: 13,
         source: "KNC",
         dest: "WETH",
-        address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+        user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 10,
         min_rate: 0.0029,
@@ -182,6 +183,9 @@ export function submitOrder(order) {
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
+        newOrder.src_amount = new BigNumber(order.src_amount).div(Math.pow(10, 18)).toString();
+        newOrder.fee = new BigNumber(order.fee).div(Math.pow(10, 4)).toString();
+        newOrder.min_rate = new BigNumber(order.min_rate).div(Math.pow(10, 18)).toString();
         // data.push(newOrder);
         resolve(newOrder);
         return;
