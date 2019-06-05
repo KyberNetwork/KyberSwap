@@ -195,6 +195,8 @@ export default class ConfirmModal extends React.Component {
             //console.log("gas ne: " + gas)
             if (gas < this.state.gasLimit) {
                 this.setState({ gasLimit: gas, isFetchGas: false })
+            }else{
+                this.setState({ isFetchGas: false })
             }
         } catch (err) {
             console.log(err)
@@ -477,6 +479,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
+        console.log(this.state.isFetchGas, this.state.isFetchRate, this.state.isConfirmingTx)
         return (
             <div>
                 <a className="x" onClick={this.closeModal}>&times;</a>

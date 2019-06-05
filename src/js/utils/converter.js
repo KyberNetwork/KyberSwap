@@ -54,7 +54,8 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
   var result = bigDest.div(bigOfferedRate)
 
   if (precision) {
-    return result.toFixed(precision)
+    // return result.toFixed(precision)
+    return result.toPrecision()
   } else {
     return result.toString()
   }
@@ -73,7 +74,7 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   var result = bigSource.times(bigOfferedRate)
 
   if (precision) {
-    return result.toFixed(precision)
+    return result.toPrecision()
   } else {
     return result.toString()
   }

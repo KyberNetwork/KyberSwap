@@ -256,16 +256,6 @@ class ExchangeBody extends React.Component {
     }
   }
 
-  // validateTxFee = (gasPrice) => {
-  //   var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-  //   this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
-
-  //   if (validateWithFee) {
-  //     this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-  //     return
-  //     // check = false
-  //   }
-  // }
 
   dispatchEstimateGasNormal = () => {
     this.props.dispatch(exchangeActions.estimateGasNormal())
@@ -332,17 +322,6 @@ class ExchangeBody extends React.Component {
     this.setState({ focus: "" })
   }
 
-  // makeNewExchange = (changeTransactionType = false) => {
-  //   this.props.dispatch(exchangeActions.makeNewExchange());
-
-  //   if (changeTransactionType) {
-  //     const transferLink = constants.BASE_HOST + "/transfer/" + this.props.transferTokenSymbol.toLowerCase();
-  //     this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
-  //     this.props.history.push(transferLink)
-  //   } else {
-  //     this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
-  //   }
-  // }
 
   setAmount = () => {
     var tokenSymbol = this.props.exchange.sourceTokenSymbol
@@ -392,41 +371,18 @@ class ExchangeBody extends React.Component {
 
     this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "swap"));
     this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
-    // this.props.ethereum.fetchRateExchange(true)
 
-    // var path = constants.BASE_HOST + "/swap/" + this.props.exchange.destTokenSymbol.toLowerCase() + "-" + this.props.exchange.sourceTokenSymbol.toLowerCase()
-    // path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    // this.props.dispatch(globalActions.goToRoute(path))
-    // this.props.dispatch(globalActions.updateTitleWithRate());
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
   }
 
-  // analyze = () => {
-  //   var ethereum = this.props.ethereum
-  //   var exchange = this.props.exchange
-  //   this.props.dispatch(exchangeActions.analyzeError(ethereum, exchange.txHash))
-  // }
-
-  // toggleBalanceContent = () => {
-  //   if (this.props.exchange.isBalanceActive) {
-  //     this.props.global.analytics.callTrack("trackClickHideAccountBalance", "Swap")
-  //   } else {
-  //     this.props.global.analytics.callTrack("trackClickShowAccountBalance", "Swap")
-  //   }
-  //   this.props.dispatch(exchangeActions.toggleBalanceContent())    
-  //   if(!this.props.global.isOnMobile){
-  //     this.props.dispatch(exchangeActions.toggleAdvanceContent())    
-  //   }
-  // }
 
   toggleAdvanceContent = () => {
-    // if (this.props.global.isOnMobile){
-      // this.props.dispatch(exchangeActions.toggleBalanceContent())    
+
       if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
         this.props.dispatch(exchangeActions.setCustomRateInputError(true));
         return;
       }
-    // }
+    
     
     if (this.props.exchange.isAdvanceActive) {
       this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Swap")
@@ -531,7 +487,7 @@ class ExchangeBody extends React.Component {
   getBalanceLayout = () => {
     return (
       <AccountBalance
-        chooseToken={this.selectSourceToken}
+        // chooseToken={this.selectSourceToken}
         sourceActive={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         // onToggleBalanceContent={this.toggleBalanceContent}
@@ -539,22 +495,12 @@ class ExchangeBody extends React.Component {
         walletName={this.props.account.walletName}
         screen="swap"
         isOnDAPP={this.props.account.isOnDAPP}
-        changeAmount={exchangeActions.inputChange}
-        changeFocus={exchangeActions.focusInput}
-        selectTokenBalance={this.selectTokenBalance}
+        // changeAmount={exchangeActions.inputChange}
+        // changeFocus={exchangeActions.focusInput}
+        selectToken={this.selectToken}
       />)
   }
 
-  // getSwapBalance = () => {
-  //   return (
-  //     <ChooseBalanceModal
-  //       changeAmount={exchangeActions.inputChange}
-  //       changeFocus={exchangeActions.focusInput}
-  //       sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-  //       typeTx={"swap"}
-  //     />
-  //   )
-  // }
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
@@ -579,35 +525,47 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
   }
 
-  render() {
-    // var balanceInfo = {
-    //   sourceAmount: converters.toT(this.props.exchange.balanceData.sourceAmount, this.props.exchange.balanceData.sourceDecimal),
-    //   sourceSymbol: this.props.exchange.balanceData.sourceSymbol,
-    //   sourceTokenName: this.props.exchange.balanceData.sourceName,
-    //   destAmount: converters.toT(this.props.exchange.balanceData.destAmount, this.props.exchange.balanceData.destDecimal),
-    //   destTokenName: this.props.exchange.balanceData.destName,
-    //   destSymbol: this.props.exchange.balanceData.destSymbol,
-    // }
+  reorderToken = () => {
+    var tokens = this.props.tokens
+    const orderedTokens = converters.sortEthBalance(tokens);
+    return orderedTokens.slice(0, 3)
+  }
 
-    // var analyze = {
-    //   action: this.analyze,
-    //   isAnalize: this.props.exchange.isAnalize,
-    //   isAnalizeComplete: this.props.exchange.isAnalizeComplete,
-    //   analizeError: this.props.exchange.analizeError
-    // }
-    // var transactionLoadingScreen = (
-    //   <TransactionLoading
-    //     tx={this.props.exchange.txHash}
-    //     tempTx={this.props.exchange.tempTx}
-    //     makeNewTransaction={this.makeNewExchange}
-    //     type="swap"
-    //     balanceInfo={balanceInfo}
-    //     broadcasting={this.props.exchange.broadcasting}
-    //     broadcastingError={this.props.exchange.broadcastError}
-    //     analyze={analyze}
-    //     isOpen={this.props.exchange.step === 3}
-    //   />
-    // )
+  selectToken = (sourceSymbol) => {
+        this.selectSourceToken(sourceSymbol)
+
+        var sourceBalance = this.props.tokens[sourceSymbol].balance
+      
+        var sourceDecimal = this.props.tokens[sourceSymbol].decimals
+        var amount
+
+        if (sourceSymbol !== "ETH") {
+            amount = sourceBalance
+            amount = converters.toT(amount, sourceDecimal)
+            amount = amount.replace(",", "")
+        } else {
+            var gasLimit
+            var totalGas
+
+            var destTokenSymbol = this.props.exchange.destTokenSymbol
+                gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
+                totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
+
+            amount = sourceBalance - totalGas * 120 / 100
+            amount = converters.toEther(amount)
+            amount = converters.roundingNumber(amount).toString(10)
+            amount = amount.replace(",", "")
+        }
+
+        if (amount < 0) amount = 0;
+
+        this.props.dispatch(exchangeActions.inputChange('source', amount))
+        this.props.dispatch(exchangeActions.focusInput('source'));
+        this.selectTokenBalance();
+        this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
+  }
+
+  render() {
 
     //--------For select token
     var tokenDest = {}
@@ -645,16 +603,6 @@ class ExchangeBody extends React.Component {
     )
     //--------End
 
-    // var errors = {
-    //   selectSameToken: this.props.exchange.errors.selectSameToken || '',
-    //   selectTokenToken: this.props.exchange.errors.selectTokenToken || '',
-    //   sourceAmount: this.props.exchange.errors.sourceAmountError || this.props.exchange.errors.ethBalanceError || '',
-    //   tokenSource: '',
-    //   rateSystem: this.props.exchange.errors.rateSystem,
-    //   rateAmount: this.props.exchange.errors.rateAmount,
-    //   notPossessKgt: this.props.exchange.errors.notPossessKgt,
-    //   exchange_enable: this.props.exchange.errors.exchange_enable
-    // }
 
     var input = {
       sourceAmount: {
@@ -682,11 +630,6 @@ class ExchangeBody extends React.Component {
       }
     }
 
-    // var maxCap = this.props.account.maxCap
-    // if (maxCap !== "infinity") {
-    //   maxCap = converters.toEther(maxCap)
-    // }
-
 
     var rateToken = (
       <RateBetweenToken
@@ -695,12 +638,16 @@ class ExchangeBody extends React.Component {
     )
 
     var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
-      chooseToken={this.selectSourceToken}
+      // chooseToken={this.selectSourceToken}
       activeSymbol={this.props.exchange.sourceTokenSymbol}
       screen="swap"
-      selectTokenBalance={this.selectTokenBalance}
-      changeAmount={exchangeActions.inputChange}
-      changeFocus={exchangeActions.focusInput} />
+      // selectTokenBalance={this.selectTokenBalance}
+      // changeAmount={exchangeActions.inputChange}
+      // changeFocus={exchangeActions.focusInput} 
+      orderedTokens = {this.reorderToken()}
+      selectToken = {this.selectToken}
+      />
+      
     return (
       <ExchangeBodyLayout
         chooseToken={this.selectSourceToken}

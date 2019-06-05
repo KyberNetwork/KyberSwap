@@ -14,7 +14,8 @@ import LimitOrderTable from "./LimitOrderTable";
 @connect((store, props) => {
   return {
     translate: getTranslate(store.locale),
-    limitOrder: store.limitOrder
+    limitOrder: store.limitOrder,
+    global: store.global
   }
 })
 export default class LimitOrderList extends React.Component {
@@ -36,6 +37,7 @@ export default class LimitOrderList extends React.Component {
   }
 
   openCancelOrderModal = (order) => {
+    this.props.global.analytics.callTrack("trackClickCancelOrder", order.id);
     const currentOrder = JSON.parse(JSON.stringify(order));
     this.setState({
       cancelOrderModalVisible: true,

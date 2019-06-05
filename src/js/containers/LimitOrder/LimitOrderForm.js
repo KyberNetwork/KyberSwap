@@ -87,6 +87,10 @@ export default class LimitOrderForm extends React.Component {
 
   lazyFetchRate = _.debounce(this.fetchCurrentRate, 500)
 
+  handleFocus = (e, type) => {
+    this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);
+  }
+
   handleInputChange = (e, type, referValue) => {
     var value = e.target.value
     var check = filterInputNumber(e, value, referValue)
@@ -100,6 +104,34 @@ export default class LimitOrderForm extends React.Component {
     }
   };
 
+  getMaxGasApprove = () => {
+    var tokens = this.props.tokens
+    var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
+    if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
+      return tokens[sourceSymbol].gasApprove
+    } else {
+      return this.props.limitOrder.max_gas_approve
+    }
+  }
+
+  getMaxGasExchange = () => {
+    const tokens = this.props.tokens
+    var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas
+
+    return destTokenLimit;
+
+  }
+
+  calcualteMaxFee = () => {
+    var gasApprove = this.getMaxGasApprove()
+    var gasExchange = this.getMaxGasExchange()
+    var totalGas = gasExchange + gasApprove * 2 
+
+    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, totalGas)    
+    return totalFee
+  }
+
   addSrcAmountByBalancePercentage = (balancePercentage) => {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
     const srcToken = this.props.availableBalanceTokens.find(token => {
@@ -107,7 +139,19 @@ export default class LimitOrderForm extends React.Component {
     });
     const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
 
+
     let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcTokenBalance, balancePercentage);
+
+    //if souce token is weth, we spend a small amount to make approve tx, swap tx
+    if (srcTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken && balancePercentage === 100){          
+      var ethBalance = this.props.tokens["ETH"].balance
+      var fee = this.calcualteMaxFee()
+      if(converters.compareTwoNumber(ethBalance, converters.toEther(fee)) === 1){
+        sourceAmountByPercentage -= fee
+      }else{
+        sourceAmountByPercentage -= converters.toEther(ethBalance)
+      }
+    }
 
     if (!+sourceAmountByPercentage || sourceAmountByPercentage < 0) sourceAmountByPercentage = 0;
 
@@ -167,6 +211,7 @@ export default class LimitOrderForm extends React.Component {
                       type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
                       value={this.props.limitOrder.sourceAmount}                      
                       onChange={(e) => this.handleInputChange(e, "source", this.props.limitOrder.sourceAmount)}
+                      onFocus={e => this.handleFocus(e, "source")}
                     />
                   </div>
                 </div>
@@ -206,6 +251,7 @@ export default class LimitOrderForm extends React.Component {
                     autoComplete="off"
                     value={this.props.limitOrder.destAmount}
                     onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
+                    onFocus={e => this.handleFocus(e, "dest")}
                   />
                 </div>
               </div>
@@ -232,6 +278,7 @@ export default class LimitOrderForm extends React.Component {
                   autoComplete="off"
                   value={this.props.limitOrder.triggerRate}
                   onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
+                  onFocus={e => this.handleFocus(e, "rate")}
                 />
               </div>
             </div>
