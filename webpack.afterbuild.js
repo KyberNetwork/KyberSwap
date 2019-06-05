@@ -28,21 +28,28 @@ let view = `
     link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
     #swap-app onClick="animateSwap()"
         div style="text-align:center"
-            = render "server_rendering"    
+          - if request.url.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.url.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.url.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering"    
+          - else
+              = render "swap/server_rendering/swap_rendering" 
     script src="https://www.google.com/recaptcha/api.js"
     script src="/swap/${chain}/app.min.js?v=${now}"
 - else 
     link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
     #swap-app
         div style="text-align:center" onClick="openSwap('${chain}', ${now})"
-        - if request.url.include? "swap"
-            = render "swap/server_rendering/swap_rendering"    
-        - elsif request.url.include? "transfer"
-            = render "swap/server_rendering/transfer_rendering"    
-        - elsif request.url.include? "limit_order"
-            = render "swap/server_rendering/limit_order_rendering"    
-        - else
-            = render "swap/server_rendering/swap_rendering"    
+          - if request.url.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.url.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.url.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering"    
+          - else
+              = render "swap/server_rendering/swap_rendering"    
 `
 
 // let view = `
