@@ -182,6 +182,7 @@ export function submitOrder(order) {
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
+        // data.push(newOrder);
         resolve(newOrder);
         return;
     })
@@ -190,10 +191,19 @@ export function submitOrder(order) {
 
 export function cancelOrder(order) {
     return new Promise((resolve, rejected) => {
-        const newOrder = { ...order };
-        newOrder.cancel_time = new Date().getTime() / 1000;
-        newOrder.status = "cancelled";
-        resolve(newOrder);
+        const target = data.filter(item => item.id === order.id);
+
+        if (target.length > 0) {
+            const newOrder = {...target[0]};
+            const index = data.indexOf(target[0]);
+            newOrder.cancel_time = new Date().getTime() / 1000;
+            newOrder.status = "cancelled";
+            data.splice(index, 1, newOrder);
+            resolve(newOrder);
+        } else {
+            reject("No order matches");
+        }
+        
         return;
     })
 }

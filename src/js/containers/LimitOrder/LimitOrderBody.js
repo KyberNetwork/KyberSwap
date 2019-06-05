@@ -55,9 +55,10 @@ export default class LimitOrderBody extends React.Component {
   }
 
   getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
+    if (!this.props.account) return 0
     const orderList = this.props.limitOrder.listOrder;
     const openOrders = orderList.filter(order => {
-      return order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
+      return order.address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
     });
 
     let openOrderAmount = 0;
@@ -126,7 +127,7 @@ export default class LimitOrderBody extends React.Component {
     this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
 
     this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
-    this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
+    this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "source", symbol);
   }
 
   selectDestToken = (symbol) => {
@@ -137,7 +138,7 @@ export default class LimitOrderBody extends React.Component {
     this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
 
     this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
-    this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
+    this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
   }
 
   render() {

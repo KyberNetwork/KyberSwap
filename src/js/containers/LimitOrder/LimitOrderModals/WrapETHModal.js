@@ -130,7 +130,7 @@ export default class WrapETHModal extends React.Component {
     }
 
     async onSubmit() {
-        if (this.state.isError) return
+        this.props.global.analytics.callTrack("trackClickConvertEth");
         if (this.state.isConfirming) return
 
         //validate

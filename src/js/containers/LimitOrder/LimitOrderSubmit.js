@@ -46,11 +46,6 @@ export default class LimitOrderSubmit extends React.Component {
     if (isNaN(sourceAmount)) {
       return 0
     }
-    this.props.limitOrder.listOrder.map(value => {
-      if (value.status === constants.LIMIT_ORDER_CONFIG.status.OPEN && value.source === this.props.limitOrder.sourceTokenSymbol && value.address.toLowerCase() === this.props.account.address.toLowerCase()) {
-        sourceAmount += parseFloat(value.src_amount);
-      }
-    })
     var sourceAmountBig = converters.toTWei(sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
     return sourceAmountBig.toString()
   }
@@ -75,6 +70,9 @@ export default class LimitOrderSubmit extends React.Component {
     var isValidate = true
     var sourceAmountError = []
     var rateError = []
+    if (this.props.limitOrder.errors.rateSystem){
+      isValidate = false
+    }
     if (this.props.limitOrder.sourceTokenSymbol === this.props.limitOrder.destTokenSymbol) {
       sourceAmountError.push("Source token must be different from dest token")
       isValidate = false
@@ -157,7 +155,7 @@ export default class LimitOrderSubmit extends React.Component {
             item.dest === this.props.limitOrder.destTokenSymbol &&
             item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
             item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 1;
+            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
     });
 
     this.setState({
@@ -262,10 +260,12 @@ export default class LimitOrderSubmit extends React.Component {
       if (this.validateBalance(orderPath)) {
         this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
       } else {
-        console.log("Your eth balance is not enough for transactions")
-        var title = this.props.translate("error.error_occurred") || "Error occurred"
-        var content = "Your eth balance is not enough for transactions"
-        this.props.dispatch(utilActions.openInfoModal(title, content))
+        // console.log("Your eth balance is not enough for transactions")
+        // var title = this.props.translate("error.error_occurred") || "Error occurred"
+        // var content = "Your eth balance is not enough for transactions"
+        // this.props.dispatch(utilActions.openInfoModal(title, content))
+
+        this.props.dispatch(limitOrderActions.throwError("sourceAmount", ["Your eth balance is not enough for transactions"]))
       }
 
     } catch (err) {
@@ -280,6 +280,7 @@ export default class LimitOrderSubmit extends React.Component {
 
 
   submitOrder = () => {
+    this.props.global.analytics.callTrack("trackClickSubmitOrder");
     if (!isUserLogin()) {
       window.location.href = "/users/sign_in"
     }
@@ -346,7 +347,6 @@ export default class LimitOrderSubmit extends React.Component {
 
   confirmAgreeSubmit = () => {
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-    this.props.dispatch(limitOrderActions.setPendingCancelOrders(this.state.higherRateOrders));
     this.agreeSubmit();
   }
 

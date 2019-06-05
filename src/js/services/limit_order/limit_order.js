@@ -5,8 +5,8 @@ const MAX_REQUEST_TIMEOUT = 3000
 
 const keyMapping = {
     "id": "id",
-    "src": "sourceAddr",
-    "dst": "destAddr",
+    "src": "source",
+    "dst": "dest",
     "src_amount": "src_amount",
     "min_rate": "min_rate",
     "addr": "address",
@@ -28,14 +28,15 @@ export function getOrders() {
             }).then((result) => {
                 var orderList = []
                 var fields = result.fields
-                result.orders.map(value => {
+                var orders = result.orders
+                for(var i = 0; i<orders.length; i++ ){
                     var order = {}
-                    for (var i = 0; i < order.length; i++) {
-                        var field = keyMapping[fields[i]] ? keyMapping[fields[i]] : fields[i]
-                        order[field] = value[index]
+                    for (var j = 0; j < fields.length; j++) {
+                        var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
+                        order[field] = orders[i][j]
                     }
                     orderList.push(order)
-                })
+                }               
                 resolve(orderList)
             })
             .catch((err) => {
@@ -58,7 +59,18 @@ export function submitOrder(order) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result)
+                if(result.success){
+                    var fields = result.fields
+                    var order = result.order
+                    var orderObj = {}
+                    for (var j = 0; j < fields.length; j++) {
+                        var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
+                        orderObj[field] = order[j]
+                    }
+                    resolve(orderObj)
+                }else{
+                    rejected(new Error("Cannot submit order"))    
+                }
             })
             .catch((err) => {
                 rejected(new Error("Cannot submit order"))
@@ -105,11 +117,16 @@ export function getNonce(userAddr, source, dest) {
 
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/fee?addr=${userAddr}src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`/api/orders/fee?user_addr=${userAddr}&src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result.fee)
+                if(result.success){
+                    resolve(result.fee * 100)
+                }else{
+                    rejected(result.message)   
+                }
+                
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user fee"))

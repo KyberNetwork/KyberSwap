@@ -13,10 +13,12 @@ import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 @connect((store, props) => {
 	const translate = getTranslate(store.locale);
 	const limitOrder = store.limitOrder;
+	const global = store.global;
 
 	return {
 		translate,
-		limitOrder
+		limitOrder,
+		global
 	};
 })
 export default class CancelOrderModal extends Component {
@@ -120,6 +122,7 @@ export default class CancelOrderModal extends Component {
 	};
 
 	async confirmCancel() {
+		this.props.global.analytics.callTrack("trackClickConfirmCancelOrder", this.props.order ? this.props.order.id : null);
 		this.setState({
 			isConfirming: true
 		});
@@ -129,7 +132,7 @@ export default class CancelOrderModal extends Component {
 					this.props.order
 				);
 				if (results) {
-					this.props.dispatch(limitOrderActions.updateOrder(results));
+					this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
 					this.setState({
 						isConfirming: false,
 						isFinish: true

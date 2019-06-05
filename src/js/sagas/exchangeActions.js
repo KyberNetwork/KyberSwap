@@ -465,6 +465,7 @@ function* verifyExchange() {
     sourceTokenSymbol,
     sourceDecimal,
     rate,
+    destTokenSymbol,
     destDecimal,
     maxCap)
 
