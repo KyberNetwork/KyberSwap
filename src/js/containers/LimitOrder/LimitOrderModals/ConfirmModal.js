@@ -137,7 +137,9 @@ export default class ConfirmModal extends React.Component {
                 min_rate: minConversionRate,
                 dest_address: this.props.account.address,
                 fee: feeInPrecision,
-                signature: signature
+                signature: signature,
+                source: this.props.limitOrder.sourceTokenSymbol,      // use only with mock service, remove in production !!!
+                dest: this.props.limitOrder.destTokenSymbol         // use only with mock service, remove in production !!!
             });
 
             this.props.dispatch(limitOrderActions.addNewOrder(newOrder));
