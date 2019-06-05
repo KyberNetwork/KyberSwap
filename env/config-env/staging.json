@@ -217,13 +217,6 @@
             "decimals": 8,
             "cg_id": "aion"
         },
-        "AE": {
-            "symbol": "AE",
-            "name": "Aeternity",
-            "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
-            "decimals": 18,
-            "cg_id": ""
-        },
         "BLZ": {
             "symbol": "BLZ",
             "name": "Bluezelle",
@@ -524,6 +517,13 @@
             "decimals": 8,
             "cg_id": "monaco",
             "listing_time": 1556097764
+        },
+        "GNO": {
+            "symbol": "GNO",
+            "name": "Gnosis",
+            "address": "0x6810e776880c02933d47db1b9fc05908e5386b96",
+            "decimals": 18,
+            "cg_id": "gnosis"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
