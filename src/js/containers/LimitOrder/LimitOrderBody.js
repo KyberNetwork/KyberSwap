@@ -25,10 +25,15 @@ export default class LimitOrderBody extends React.Component {
   constructor(props) {
     super(props);
     this.srcInputElementRef = null;
+    this.submitHandler = null;
   }
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
+  }
+
+  setSubmitHandler = (func) => {
+    this.submitHandler = func;
   }
 
   getTokenListWithoutEthAndWeth = (tokens) => {
@@ -58,7 +63,7 @@ export default class LimitOrderBody extends React.Component {
     if (!this.props.account) return 0
     const orderList = this.props.limitOrder.listOrder;
     const openOrders = orderList.filter(order => {
-      return order.address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
+      return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
     });
 
     let openOrderAmount = 0;
@@ -151,6 +156,7 @@ export default class LimitOrderBody extends React.Component {
               selectSourceToken={this.selectSourceToken}
               selectDestToken ={this.selectDestToken}
               availableBalanceTokens={this.getModifiedTokenList()}
+              submitHandler={this.submitHandler}
             />
           </div>
           <div>
@@ -171,6 +177,7 @@ export default class LimitOrderBody extends React.Component {
           <LimitOrderSubmit
             availableBalanceTokens={this.getModifiedTokenList()}
             getOpenOrderAmount={this.getOpenOrderAmount}
+            setSubmitHandler={this.setSubmitHandler}
           />
         </div>
         {!this.props.global.isOnMobile &&

@@ -25,6 +25,7 @@
     "search": "찾기",
     "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
+    "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
     "download": "Download",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
@@ -132,7 +133,9 @@
     "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
     "kyber_network_proxy": "Kyber Network Proxy",
     "please_swap_before": "Please swap before",
-    "please_swap_and_send_before": "Please swap and send to your personal wallet before"
+    "please_swap_and_send_before": "Please swap and send to your personal wallet before",
+    "limit_order": "Limit Order",
+    "rate_label":"율"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -162,7 +165,10 @@
     "approve": "승인",
     "address": "주소",
     "approve_token": "토큰 승인하기",
-    "cancel": "취소"
+    "cancel": "취소",
+    "cancel_order": "주문 취소",
+    "order_confirm": "주문 확인",
+    "success": "성공"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -352,6 +358,44 @@
     "mid": "중간",
     "mid_price": "중간 가격"
   },
+  "limit_order": {
+    "no_data_text": "거래 내역이 없습니다.",
+    "cancel": "취소",
+    "date": "날짜",
+    "pair": "쌍",
+    "condition": "조건", 
+    "from": "보내는 곳",
+    "to": "받는 곳",
+    "status": "상태",
+    "actions": "액션",
+    "order_list_title": "거래 내역",
+    "day": "일",
+    "week": "주",
+    "month": "달",
+    "your_address": "주소:",
+    "your_balance": "잔액:",
+    "submit_order": "주문 제출",
+    "your_available_balance": "사용 가능한 잔액",
+    "eth_not_support": "ETH* is the combination of ETH and WETH",
+    "canceling_order_message": "이 거래를 취소합니다.",
+    "fee_info_message": "걱정 마세요. \n 거래가 실행 된 경우에만 수수료를 지불합니다. (브로드 캐스트 및 채굴)",
+    "confirm_order_message": "${srcToken}/${destToken} >= ${rate} 인 경우에만 거래가 체결됩니다",
+    "fee": "수수료",
+    "change_rate": "변동률",
+    "current_rate": "Current Rate",
+    "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.",
+    "wrap_eth_notify": "WETH로 충분하지 않아 주문을 제출할 수 없습니다. ETH를 WETH로 변환하십시오",
+    "empty_order": "There is no order here yet. You can place one",
+    "you_will_receive": "를 받게됩니다",
+    "submit_successfully": "주문이 서버에 성공적으로 제출되었습니다. 거래내역에서 주문을 확인할 수 있습니다",
+    "weth_not_supported_tooltip": "Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.",
+    "wrap_eth_modal_title": "ETH를 WETH로 전환하기",
+    "login_to_submit": "거래하시 위해서는 로그인하십시오",
+    "submit": "제출",
+    "discount_message": "구매시 20개 거래에 50 % 할인이 진행됩니다",
+    "higher_rate": "Your price is ${percentChange}% higher than current Market",
+    "lower_rate": "Your price is ${percentChange}% lower than current Market"
+  },
   "home": "홈",
   "tracker": "트래커",
   "product_feedback": "제품 피드백하기",
@@ -359,6 +403,6 @@
   "low": "느리다",
   "standard": "보통",
   "fast": "빠르다",
-  "super_fast": "Super Fast",
+  "super_fast": "굉장히 빠른",
   "search": "찾기"
 }

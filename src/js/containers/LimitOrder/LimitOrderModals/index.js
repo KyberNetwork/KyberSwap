@@ -8,7 +8,5 @@ export { default as WrapETHModal } from './WrapETHModal.js'
 
 export { default as SubmitStatusModal } from './SubmitStatusModal.js'
 
-export { default as WarningModal } from './WarningModal.js'
-
 export { default as CancelOrderModal } from './CancelOrderModal.js'
 

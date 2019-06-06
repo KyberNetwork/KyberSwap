@@ -15,10 +15,10 @@ import * as converter from "../../../utils/converter"
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum
+  const global = store.global
 
   return {
-    translate, limitOrder, tokens, account, ethereum
+    translate, limitOrder, tokens, account, ethereum, global
 
   }
 })
@@ -142,14 +142,15 @@ export default class ApproveZeroModal extends React.Component {
   contentModal = () => {
     return (
       <div className="approve-modal">
-        <div className="title">Approve Token</div>
+        <div className="title">{this.props.translate("modal.approve_token") || "Approve Token"}</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
             <div>
               <div>
                 <div className="message">
-                  {`You need reset allowance ${this.props.limitOrder.sourceTokenSymbol} of Kyber Swap with this address`}
+                  {this.props.translate("modal.approve_zero", { token: this.props.limitOrder.sourceTokenSymbol }) 
+                  || `You need to reset allowance for ${this.props.limitOrder.sourceTokenSymbol} of Kyber Swap with this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">

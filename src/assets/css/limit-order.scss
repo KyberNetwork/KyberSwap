@@ -190,7 +190,15 @@
                 top: 0;
                 position: absolute;
                 right: -18px;
+
+                &__mobile {
+                    right: 0 !important;
+                }
             }
+        }
+
+        &__mobile {
+            margin-right: 20px;
         }
     }
 
@@ -973,6 +981,16 @@
     }
 }
 
+.address-filter-modal {
+    @extend .status-filter-modal;
+
+    height: auto;
+    max-height: 170px;
+    width: 185px;
+    overflow: scroll;
+
+}
+
 .limit-order-compare-rate {
     font-size: 12px;
     font-weight: 500;
@@ -1526,13 +1544,13 @@
 
 // Override React Tippy
 .tippy-popper {
-    left: -155px !important;
-    top: -150px !important;
+    // left: -155px !important;
+    // top: -150px !important;
 
-    @include screen-max-width(medium) {
-        left: 17px !important;
-        top: -220px !important;
-    }
+    // @include screen-max-width(medium) {
+    //     left: 17px !important;
+    //     top: -220px !important;
+    // }
 
     .tippy-tooltip {
         background-color: transparent;

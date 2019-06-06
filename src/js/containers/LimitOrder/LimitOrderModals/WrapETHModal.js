@@ -212,26 +212,26 @@ export default class WrapETHModal extends React.Component {
 
         return (
             <div className="wrap-eth-modal">
-              <div className="title">Convert ETH to WETH</div>
+              <div className="title">{this.props.translate("limit_order.wrap_eth_modal_title") || "Convert ETH to WETH"}</div>
               <a className="x" onClick={this.closeModal}>&times;</a>
               <div className="content with-overlap">
                   <div className="row">
                       <div>
 
                           <div className="message">
-                              <span>Your order can not be submited because your WETH is not enough, please convert ETH to WETH.</span>
-                              <span className="weth-modal-tooltip-icon" data-tip={'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
+                              <span>{this.props.translate("limit_order.wrap_eth_notify") || "Your order can not be submited because your WETH is not enough, please convert ETH to WETH."}</span>
+                              <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
                                   <img src={require("../../../../assets/img/v3/info_grey.svg")} />
                               </span>
                               <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" />
                           </div>
                           <div className="address-info">
                               <div>
-                                  <label>Your address: </label>
+                                  <label>{this.props.translate("limit_order.your_address") || "Your address:"}</label>{' '}
                                   <span className={"target-value"}>{this.props.account.address}</span>
                               </div>
                               <div>
-                                  <label>Your balance: </label>
+                                  <label>{this.props.translate("limit_order.your_balance") || "Your balance:"}</label>{' '}
                                   <div className={"target-value balance-info"}>
                                       <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
                                       <div>{availableWethBalance} WETH</div>

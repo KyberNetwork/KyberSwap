@@ -6,10 +6,9 @@ import * as common from "../../utils/common"
 import * as converters from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import BLOCKCHAIN_INFO from "../../../../env"
-import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal, WarningModal } from "./LimitOrderModals"
+import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitStatusModal } from "./LimitOrderModals"
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
-import { Tooltip } from "react-tippy";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -30,7 +29,6 @@ export default class LimitOrderSubmit extends React.Component {
     super()
     this.state = {
       isAgree: false,
-      higherRateOrders: []
     }
   }
 
@@ -153,13 +151,9 @@ export default class LimitOrderSubmit extends React.Component {
     const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
       return item.source === this.props.limitOrder.sourceTokenSymbol &&
             item.dest === this.props.limitOrder.destTokenSymbol &&
-            item.address.toLowerCase() === this.props.account.address.toLowerCase() &&
+            item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
             item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
             converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
-    });
-
-    this.setState({
-      higherRateOrders: higherRateOrders
     });
 
     if (higherRateOrders.length > 0) {
@@ -296,63 +290,13 @@ export default class LimitOrderSubmit extends React.Component {
     })
   }
 
-  getRateWarningTooltip = () => {
-    if (!this.props.account) {
-      return null;
-    }
-
-    const tableComp = this.state.higherRateOrders.map(item => {
-      const datetime = common.getFormattedDate(item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? item.created_time : item.cancel_time);
-      const rate = converters.roundingNumber(item.min_rate);
-      return (
-        <div key={item.id} className="rate-warning-tooltip__order">
-          <div>{datetime}</div>
-          <div>{`${item.source.toUpperCase()}/${item.dest.toUpperCase()} >= ${rate}`}</div>
-        </div>
-      );
-    });
-
-    return (
-      <div className="rate-warning-tooltip">
-        {/* Description */}
-        <div className="rate-warning-tooltip__description">
-          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.s"}
-        </div>
-        {/* Table */}
-        <div className="rate-warning-tooltip__order-container">
-          {tableComp}
-        </div>
-        {/* Buttons */}
-        <div className="rate-warning-tooltip__footer">
-          <button
-						className="btn-cancel"
-						onClick={e => this.closeRateWarningTooltip()}
-					>
-						{this.props.translate("limit_order.change_rate") || "Change Rate"}
-					</button>
-					<button
-						className="btn-confirm"
-						onClick={e => this.confirmAgreeSubmit()}
-					>
-						{this.props.translate("import.yes") || "Yes"}
-					</button>
-        </div>
-      </div>
-    );
-  }
-
-  closeRateWarningTooltip = () => {
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-  }
-
-  confirmAgreeSubmit = () => {
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-    this.agreeSubmit();
-  }
-
   getAvailableWethBalance = () => {
     const wethOpenOrderAmount = this.props.getOpenOrderAmount(BLOCKCHAIN_INFO.wrapETHToken, 18);
     return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
+  }
+
+  componentDidMount() {
+    this.props.setSubmitHandler(this.agreeSubmit);
   }
 
   render() {
@@ -361,18 +305,9 @@ export default class LimitOrderSubmit extends React.Component {
     return (
       <div className={"limit-order-submit"}>
         {(
-          <Tooltip
-            open={this.props.limitOrder.errors.rateWarning !== ""}
-            position="right"
-            interactive={true}
-            animateFill={false}
-            onRequestClose={() => this.closeRateWarningTooltip()}
-            html={this.getRateWarningTooltip()}
-          >
-            <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-              {isUserLogin() ? "Submit" : "Login to Submit Order"}
+            <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder} >
+              {isUserLogin() ? this.props.translate("limit_order.submit") || "Submit" : this.props.translate("limit_order.login_to_submit") || "Login to Submit Order"}
             </button>
-          </Tooltip>
         )}
        
         <div>
