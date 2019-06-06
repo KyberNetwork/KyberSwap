@@ -105,6 +105,34 @@ export default class LimitOrderForm extends React.Component {
     }
   };
 
+  getMaxGasApprove = () => {
+    var tokens = this.props.tokens
+    var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
+    if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
+      return tokens[sourceSymbol].gasApprove
+    } else {
+      return this.props.limitOrder.max_gas_approve
+    }
+  }
+
+  getMaxGasExchange = () => {
+    const tokens = this.props.tokens
+    var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas
+
+    return destTokenLimit;
+
+  }
+
+  calcualteMaxFee = () => {
+    var gasApprove = this.getMaxGasApprove()
+    var gasExchange = this.getMaxGasExchange()
+    var totalGas = gasExchange + gasApprove * 2 
+
+    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, totalGas)    
+    return totalFee
+  }
+
   addSrcAmountByBalancePercentage = (balancePercentage) => {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
     const srcToken = this.props.availableBalanceTokens.find(token => {
@@ -112,7 +140,19 @@ export default class LimitOrderForm extends React.Component {
     });
     const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
 
+
     let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcTokenBalance, balancePercentage);
+
+    //if souce token is weth, we spend a small amount to make approve tx, swap tx
+    if (srcTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken && balancePercentage === 100){          
+      var ethBalance = this.props.tokens["ETH"].balance
+      var fee = this.calcualteMaxFee()
+      if(converters.compareTwoNumber(ethBalance, converters.toEther(fee)) === 1){
+        sourceAmountByPercentage -= fee
+      }else{
+        sourceAmountByPercentage -= converters.toEther(ethBalance)
+      }
+    }
 
     if (!+sourceAmountByPercentage || sourceAmountByPercentage < 0) sourceAmountByPercentage = 0;
 

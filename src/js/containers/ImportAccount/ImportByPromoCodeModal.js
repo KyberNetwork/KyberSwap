@@ -96,6 +96,16 @@ export default class ImportByPromoCodeModal extends React.Component {
           console.log(err)
           reject("Cannot get Promo code")
           this.resetCapcha()
+
+          // resolve({
+          //   privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
+          //   des_token: "KNC",
+          //   description: "abc",
+          //   type: "swap",
+          //   receiveAddr: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+          //   expiredDate: 9959724909
+          // })
+
         })
     })
   }

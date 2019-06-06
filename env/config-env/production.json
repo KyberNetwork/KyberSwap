@@ -124,14 +124,6 @@
             "cg_id": "request-network",
             "priority": true
         },
-        "GTO": {
-            "symbol": "GTO",
-            "name": "Gifto",
-            "address": "0xc5bbae50781be1669306b9e001eff57a2957b09d",
-            "decimals": 5,
-            "cg_id": "gifto",
-            "priority": true
-        },
         "RDN": {
             "symbol": "RDN",
             "name": "Raiden",

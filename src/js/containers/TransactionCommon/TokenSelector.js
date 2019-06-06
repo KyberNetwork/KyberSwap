@@ -39,7 +39,7 @@ export default class TokenSelector extends React.Component {
 
   changeWord = (e) => {
     var value = e.target.value.toLowerCase()
-    this.setState({ searchWord: value })
+    this.setState({ isLoadAllTokens: true, searchWord: value })
   }
 
   showTokens = (e) => {

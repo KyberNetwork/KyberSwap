@@ -16,6 +16,8 @@ import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import bowser from 'bowser'
 
+import * as commonUtils from "../utils/common"
+
 
 function* selectToken(action) {
   const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
@@ -538,6 +540,60 @@ export function* fetchUserCap(action) {
   }
 }
 
+export function* doAfterAccountImported(action){
+  var {account, walletName} = action.payload
+  if (account.type === "promo"){
+    var state = store.getState()
+    var exchange = state.exchange
+    var tokens = state.tokens.tokens
+    var ethereum = state.connection.ethereum
+
+    var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
+    var promoToken = BLOCKCHAIN_INFO.promo_token
+
+    if (promoToken && tokens[promoToken]){
+      var promoAddr = tokens[promoToken].address
+      var promoDecimal = tokens[promoToken].decimals
+
+      var destTokenSymbol = exchange.destTokenSymbol
+      if (account.info.destToken && tokens[account.info.destToken.toUpperCase()]){
+        destTokenSymbol = account.info.destToken.toUpperCase()
+      }
+      var destAddress = tokens[destTokenSymbol].address
+      // sourceToken = promoToken.toLowerCase()
+      
+      
+
+      var path = constants.BASE_HOST + "/swap/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
+      path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+      yield put(globalActions.goToRoute(path))
+
+      yield put(actions.selectToken(promoToken, promoAddr,destTokenSymbol, destAddress, "promo"))
+
+      try{
+        var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
+        var balance = converter.toT(balance, promoDecimal)
+        yield put(actions.inputChange('source', balance))
+        yield put(actions.focusInput('source'));
+      }catch(e){
+        console.log(e)
+      }
+
+      yield put(actions.setGasPriceSuggest({
+        ...exchange.gasPriceSuggest,
+        fastGas: exchange.gasPriceSuggest.fastGas + 2
+      }));
+
+      if (!exchange.isEditGasPrice) {
+        yield put(actions.setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
+      }
+
+      
+    }
+
+  }
+}
+
 // export function* getExchangeEnable() {
 //   var state = store.getState()
 //   const ethereum = state.connection.ethereum
@@ -567,4 +623,6 @@ export function* watchExchange() {
   
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
+
+  yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

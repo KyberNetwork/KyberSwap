@@ -13,6 +13,8 @@ import {LimitOrderBody} from "../LimitOrder"
 import * as limitOrderServices from "../../services/limit_order";
 import { isUserLogin } from "../../utils/common";
 
+import BLOCKCHAIN_INFO from "../../../../env";
+
 @connect((store, props) => {
   const account = store.account.account
   const translate = getTranslate(store.locale)
@@ -102,9 +104,15 @@ export default class LimitOrder extends React.Component {
 
   getTokenInit = () => {
     var sourceTokenSymbol = this.props.params.source.toUpperCase()
+    if(sourceTokenSymbol === "ETH") {
+      sourceTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+    }
     var sourceToken = this.props.tokens[sourceTokenSymbol].address
 
     var destTokenSymbol = this.props.params.dest.toUpperCase()
+    if(destTokenSymbol === "ETH") {
+      destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+    }
     var destToken = this.props.tokens[destTokenSymbol].address
 
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}

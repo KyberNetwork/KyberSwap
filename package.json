@@ -130,7 +130,7 @@
     "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js",
     "build_ieo_rinkeby": "NODE_ENV=rinkeby node webpack-wrapper-dashboard.js",
     "build_ieo_staging": "NODE_ENV=staging node webpack-wrapper-dashboard.js",
-    "build_all_ieo": "npm run build_ieo_ropsten & npm run build_ieo_rinkeby & npm run build_ieo_production & npm run build_ieo_staging"
+    "build_all_ieo": "npm run build_ieo_ropsten & npm run build_ieo_production & npm run build_ieo_staging"
   },
   "jest": {
     "globals": {

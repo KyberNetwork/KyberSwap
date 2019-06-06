@@ -15,11 +15,10 @@ import * as converter from "../../../utils/converter"
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum
-  const global = store.global;
+  const global = store.global
 
   return {
-    translate, limitOrder, tokens, account, ethereum
+    translate, limitOrder, tokens, account, ethereum, global
 
   }
 })

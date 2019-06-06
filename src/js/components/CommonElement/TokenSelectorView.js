@@ -11,7 +11,7 @@ const TokenSelectorView = (props) => {
   var getListToken = () => {
     var banToken = props.banToken ? props.banToken : ""
     const tokens = props.isLoadAllTokens ? props.tokens : props.tokens.slice(0, props.tokenNumberLimit)
-    const searchWord = props.searchWord;
+    const searchWord = props.searchWord;    
 
     return tokens.map((item, i) => {
       if (item.symbol === props.banToken) return

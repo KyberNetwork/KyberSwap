@@ -31,7 +31,7 @@ const LayoutView = (props) => {
   var listToken = getAllPathToken(props.tokens)
   var defaultPathExchange = constansts.BASE_HOST + "/swap/eth-knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
-  var defaultPathLimitOrder = constansts.BASE_HOST + "/" + constansts.LIMIT_ORDER_CONFIG.path + "/knc-weth"
+  var defaultPathLimitOrder = constansts.BASE_HOST + "/" + constansts.LIMIT_ORDER_CONFIG.path + "/weth-knc"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
   defaultPathTransfer = common.getPath(defaultPathTransfer, constansts.LIST_PARAMS_SUPPORTED)
