@@ -16,9 +16,10 @@ import BLOCKCHAIN_INFO from "../../../../../env"
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
+  const global = store.global
 
   return {
-    translate, limitOrder, tokens, account, ethereum
+    translate, limitOrder, tokens, account, ethereum, global
 
   }
 })
