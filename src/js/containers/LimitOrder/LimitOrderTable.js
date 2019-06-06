@@ -48,7 +48,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start",
-      maxWidth: 100,
+      maxWidth: 95,
       getHeaderProps: (state, rowInfo) => {
         return {
           onClick: (e) => {
@@ -71,7 +71,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition",
-      width: 180
+      width: 185
     }, {
       id: "from",
       Header: this.getHeader("from"),
@@ -93,12 +93,13 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-center-header cell-status-header",
       className: "cell-flex-center",
+      width: 120
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
       accessor: item => item,
       Cell: props => this.getActionCell(props.value),
-      maxWidth: 100
+      maxWidth: 80
 		}, {
       expander: true,
       show: false
@@ -626,7 +627,7 @@ export default class LimitOrderTable extends Component {
 	// Render data
 	// -------------
   renderData = (data) => {
-		const { statusFilter, pairFilter, pairSort, dateSort, prioritySort } = this.state;
+		const { statusFilter, pairFilter, addressFilter, pairSort, dateSort, prioritySort } = this.state;
 		const { selectedTimeFilter } = this.props;
     let results = JSON.parse(JSON.stringify(data));
 
@@ -652,6 +653,13 @@ export default class LimitOrderTable extends Component {
         const key = `${item.source}-${item.dest}`;
         const index = pairFilter.indexOf(key);
         return index !== -1;
+      });
+    }
+
+    // Address filter
+    if (addressFilter.length > 0) {
+      results = results.filter(item => {
+        return addressFilter.indexOf(item.user_address) !== -1;
       });
     }
 

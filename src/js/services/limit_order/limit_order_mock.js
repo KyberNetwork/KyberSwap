@@ -1,6 +1,6 @@
 import { timeout } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
-import BigNumber from "bignumber.js";
+import { toT } from "../../utils/converter";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -179,13 +179,28 @@ export function getOrders() {
 export function submitOrder(order) {
     return new Promise((resolve, rejected) => {
         const newOrder = { ...order };
+
+        let sourceTokenSymbol, destTokenSymbol, sourceTokenDecimals;
+        Object.keys(BLOCKCHAIN_INFO.tokens).forEach(key => {
+            const token = BLOCKCHAIN_INFO.tokens[key];
+            if (token.address === order.src_token) {
+                sourceTokenSymbol = token.symbol;
+                sourceTokenDecimals = token.decimals;
+            }
+            if (token.address === order.dest_token) {
+                destTokenSymbol = token.symbol;
+            }
+        });
+
         newOrder.cancel_time = 0;
         newOrder.created_time = new Date().getTime() / 1000;
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
-        newOrder.src_amount = new BigNumber(order.src_amount).div(Math.pow(10, 18)).toString();
-        newOrder.fee = new BigNumber(order.fee).div(Math.pow(10, 4)).toString();
-        newOrder.min_rate = new BigNumber(order.min_rate).div(Math.pow(10, 18)).toString();
+        newOrder.src_amount = toT(order.src_amount, sourceTokenDecimals);
+        newOrder.fee = toT(order.fee, 4);
+        newOrder.min_rate = toT(order.min_rate, 18);
+        newOrder.source = sourceTokenSymbol;
+        newOrder.dest = destTokenSymbol;
         // data.push(newOrder);
         resolve(newOrder);
         return;

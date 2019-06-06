@@ -12,6 +12,7 @@ import { default as _ } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
+import { Tooltip } from "react-tippy";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -118,6 +119,68 @@ export default class LimitOrderForm extends React.Component {
     this.props.dispatch(limitOrderActions.inputChange('source', sourceAmountByPercentage));
   };
 
+  closeRateWarningTooltip = () => {
+    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+  }
+
+  confirmAgreeSubmit = () => {
+    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+    this.props.submitHandler();
+  }
+
+  getRateWarningTooltip = () => {
+    if (!this.props.account) {
+      return null;
+    }
+
+    const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
+      return item.source === this.props.limitOrder.sourceTokenSymbol &&
+            item.dest === this.props.limitOrder.destTokenSymbol &&
+            item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+            item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+    });
+
+    const tableComp = higherRateOrders.map(item => {
+      const datetime = common.getFormattedDate(item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? item.created_time : item.cancel_time);
+      const rate = converters.roundingNumber(item.min_rate);
+      return (
+        <div key={item.id} className="rate-warning-tooltip__order">
+          <div>{datetime}</div>
+          <div>{`${item.source.toUpperCase()}/${item.dest.toUpperCase()} >= ${rate}`}</div>
+        </div>
+      );
+    });
+
+    return (
+      <div className="rate-warning-tooltip">
+        {/* Description */}
+        <div className="rate-warning-tooltip__description">
+          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.s"}
+        </div>
+        {/* Table */}
+        <div className="rate-warning-tooltip__order-container">
+          {tableComp}
+        </div>
+        {/* Buttons */}
+        <div className="rate-warning-tooltip__footer">
+          <button
+						className="btn-cancel"
+						onClick={e => this.closeRateWarningTooltip()}
+					>
+						{this.props.translate("limit_order.change_rate") || "Change Rate"}
+					</button>
+					<button
+						className="btn-confirm"
+						onClick={e => this.confirmAgreeSubmit()}
+					>
+						{this.props.translate("import.yes") || "Yes"}
+					</button>
+        </div>
+      </div>
+    );
+  }
+
   render() {    
 
     var errorSourceAmount = ""
@@ -221,7 +284,16 @@ export default class LimitOrderForm extends React.Component {
 
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-          <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""} ${this.props.limitOrder.errors.rateWarning !== "" ? "rate-warning" : ""}`}>
+          
+          <Tooltip
+            open={this.props.limitOrder.errors.rateWarning !== ""}
+            position="right"
+            interactive={true}
+            animateFill={false}
+            onRequestClose={() => this.closeRateWarningTooltip()}
+            html={this.getRateWarningTooltip()}
+          >
+            <div className={`exchange-content__item exchange-content__item--left exchange-content__item--no-pd-left select-token ${errorTriggerRate != "" ? "error" : ""} ${this.props.limitOrder.errors.rateWarning !== "" ? "rate-warning" : ""}`}>
             <div className={`input-div-content`}>
               <div className={'exchange-content__label-content exchange-content__label-content--disabled'}>
                 {this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol} / {this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol}
@@ -245,9 +317,9 @@ export default class LimitOrderForm extends React.Component {
             {errorTriggerRate &&
               <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="trigger-rate-error" type="light" />
             }
-          </div>
+            </div>
+          </Tooltip>
         </div>
-
         <LimitOrderCompareRate />
       </div>
     )
