@@ -96,66 +96,70 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    if (type === "promo"){
-      //promo token
-      var state = store.getState()
-      var exchange = state.exchange
-      const transfer = state.transfer;
-      var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
-      var promoToken = BLOCKCHAIN_INFO.promo_token
+    // if (type === "promo"){
+    //   //promo token
+    //   var state = store.getState()
+    //   var exchange = state.exchange
+    //   const transfer = state.transfer;
+    //   var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
+    //   var promoToken = BLOCKCHAIN_INFO.promo_token
 
-      if (promoToken && newTokens[promoToken]){
-        var promoAddr = newTokens[promoToken].address
-        var promoDecimal = newTokens[promoToken].decimals
-        yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
-        sourceToken = promoToken.toLowerCase()
-      }
-      var destToken = exchange.destTokenSymbol.toLowerCase()
-      if (info.destToken && newTokens[info.destToken]){
-        yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
-        destToken = info.destToken.toLowerCase()
+    //   if (promoToken && newTokens[promoToken]){
+    //     var promoAddr = newTokens[promoToken].address
+    //     var promoDecimal = newTokens[promoToken].decimals
+    //     yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
+    //     sourceToken = promoToken.toLowerCase()
+    //   }
+    //   var destToken = exchange.destTokenSymbol.toLowerCase()
+      
+    //   if (info.destToken && newTokens[info.destToken]){
+    //     yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
+    //     destToken = info.destToken.toLowerCase()
 
-        //select in transfer
-        yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
-      }
-      var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
-      path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      yield put.resolve(goToRoute(path))
+    //     //select in transfer
+    //     yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
+    //   }
+
+    //   var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
+    //   path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+    //   yield put.resolve(goToRoute(path))
 
 
-      if (promoToken && newTokens[promoToken]){
-        var promoAddr = newTokens[promoToken].address
-        var promoDecimal = newTokens[promoToken].decimals
-        try{
-          var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
-          var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
-          yield put.resolve(exchangeActions.inputChange('source', balance))
-          yield put.resolve(exchangeActions.focusInput('source'));
-        }catch(e){
-          console.log(e)
-        }
-      }
+    //   if (promoToken && newTokens[promoToken]){
+    //     var promoAddr = newTokens[promoToken].address
+    //     var promoDecimal = newTokens[promoToken].decimals
+    //     try{
+    //       var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
+    //       var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
+    //       yield put.resolve(exchangeActions.inputChange('source', balance))
+    //       yield put.resolve(exchangeActions.focusInput('source'));
+    //     }catch(e){
+    //       console.log(e)
+    //     }
+    //   }
 
-      yield put(exchangeActions.setGasPriceSuggest({
-        ...exchange.gasPriceSuggest,
-        fastGas: exchange.gasPriceSuggest.fastGas + 2
-      }));
+    //   yield put(exchangeActions.setGasPriceSuggest({
+    //     ...exchange.gasPriceSuggest,
+    //     fastGas: exchange.gasPriceSuggest.fastGas + 2
+    //   }));
 
-      yield put(transferActions.setGasPriceSuggest({
-        ...transfer.gasPriceSuggest,
-        fastGas: transfer.gasPriceSuggest.fastGas + 2
-      }))
+    //   yield put(transferActions.setGasPriceSuggest({
+    //     ...transfer.gasPriceSuggest,
+    //     fastGas: transfer.gasPriceSuggest.fastGas + 2
+    //   }))
 
-      if (!transfer.isEditGasPrice) {
-        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
-      }
+    //   if (!transfer.isEditGasPrice) {
+    //     yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
+    //   }
 
-      if (!exchange.isEditGasPrice) {
-        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
-      }
-    } else {
-      yield put(setGasPrice());
-    }
+    //   if (!exchange.isEditGasPrice) {
+    //     yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
+    //   }
+    // } else {
+    //   yield put(setGasPrice());
+    // }
+
+    yield put(setGasPrice());
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())

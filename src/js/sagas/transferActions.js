@@ -212,6 +212,35 @@ export function* verifyTransfer() {
   }
 }
 
+export function* doAfterAccountImported(action){
+  var {account, walletName} = action.payload
+  if (account.type === "promo"){
+    var state = store.getState()
+    var transfer = state.transfer
+    var tokens = state.tokens.tokens
+    var ethereum = state.connection.ethereum
+
+    if (account.info.destToken && tokens[account.info.destToken.toUpperCase()]){
+      var destTokenSymbol = account.info.destToken.toUpperCase()
+      var destToken = tokens[destTokenSymbol].address
+
+      //select in transfer
+      yield put(actions.selectToken(destTokenSymbol, destToken))
+
+      yield put(actions.setGasPriceSuggest({
+        ...transfer.gasPriceSuggest,
+        fastGas: transfer.gasPriceSuggest.fastGas + 2
+      }))
+
+      if (!transfer.isEditGasPrice) {
+        yield put(actions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
+      }
+
+    }
+
+  }
+}
+
 export function* watchTransfer() {
 
   yield takeEvery("TRANSFER.ESTIMATE_GAS_USED", estimateGasUsed)
@@ -219,4 +248,6 @@ export function* watchTransfer() {
   yield takeEvery("TRANSFER.ESTIMATE_GAS_WHEN_AMOUNT_CHANGE", estimateGasUsedWhenChangeAmount)
   yield takeEvery("TRANSFER.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
   yield takeEvery("TRANSFER.VERIFY_TRANSFER", verifyTransfer)
+
+  yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

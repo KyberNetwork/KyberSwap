@@ -15,10 +15,23 @@ const keyMapping = {
     "status": "status",
     "created_at": "created_time",
     "updated_at": "cancel_time",
-    "msg": "msg"    
+    "msg": "msg"
 }
 
-
+function filterOrder(result) {
+    var orderList = []
+    var fields = result.fields
+    var orders = result.orders
+    for (var i = 0; i < orders.length; i++) {
+        var order = {}
+        for (var j = 0; j < fields.length; j++) {
+            var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
+            order[field] = orders[i][j]
+        }
+        orderList.push(order)
+    }
+    return orderList
+}
 
 export function getOrders() {
     return new Promise((resolve, rejected) => {
@@ -26,17 +39,7 @@ export function getOrders() {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                var orderList = []
-                var fields = result.fields
-                var orders = result.orders
-                for(var i = 0; i<orders.length; i++ ){
-                    var order = {}
-                    for (var j = 0; j < fields.length; j++) {
-                        var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
-                        order[field] = orders[i][j]
-                    }
-                    orderList.push(order)
-                }               
+                var orderList = filterOrder(result)
                 resolve(orderList)
             })
             .catch((err) => {
@@ -59,7 +62,7 @@ export function submitOrder(order) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if(result.success){
+                if (result.success) {
                     var fields = result.fields
                     var order = result.order
                     var orderObj = {}
@@ -68,8 +71,8 @@ export function submitOrder(order) {
                         orderObj[field] = order[j]
                     }
                     resolve(orderObj)
-                }else{
-                    rejected(new Error("Cannot submit order"))    
+                } else {
+                    rejected(new Error("Cannot submit order"))
                 }
             })
             .catch((err) => {
@@ -121,12 +124,12 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                if(result.success){
+                if (result.success) {
                     resolve(result.fee * 100)
-                }else{
-                    rejected(result.message)   
+                } else {
+                    rejected(result.message)
                 }
-                
+
             })
             .catch((err) => {
                 rejected(new Error("Cannot get user fee"))
@@ -135,22 +138,32 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
 }
 
 
-export function getOrdersByIdArr(idArr){
+export function getOrdersByIdArr(idArr) {
     return new Promise((resolve, rejected) => {
-        getOrders().then(orders => {
-            var returnData = []
-            for (var i = 0; i < idArr.length; i++){
-                for (var j = 0; j <orders.length; j++){
-                    if (orders[j].id === idArr[i]){
-                        returnData.push(orders[j])
-                        break
-                    }
-                }
+        if (idArr.length === 0) {
+            resolve([])
+            return
+        }
+        // get path
+        var path = "/api/orders?"
+        for (var i = 0; i < idArr.length; i++) {
+            if (i === 0) {
+                path += "ids[]=" + idArr[i]
+            } else {
+                path += "&ids[]=" + idArr[i]
             }
-            resolve(returnData)
-        }).catch(err => {
-            console.log(err)
-            rejected(err)
-        })
+
+        }
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+            .then((response) => {
+                return response.json()
+            }).then((result) => {
+                var orderList = filterOrder(result)
+                resolve(orderList)
+
+            })
+            .catch((err) => {
+                rejected(new Error("Cannot get user orders"))
+            })
     })
 }

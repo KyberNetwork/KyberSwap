@@ -119,10 +119,10 @@ function*  fetchOpenOrderStatus() {
   try{
     var orders = yield call(getOrdersByIdArr, idArr)
     //update order
-    for (var i = 0; i < listOrder.length; i++){
-        for (var j = 0; j <orders.length; j++){
-            if (listOrder[j].id === orders[i]){
-                listOrder[j] = orders[i]
+    for (var j = 0; j <orders.length; j++){
+      for (var i = 0; i < listOrder.length; i++){
+            if (listOrder[i].id === orders[j].id){
+                listOrder[i] = orders[j]
                 break
             }
         }

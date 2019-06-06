@@ -93,7 +93,8 @@ export function caculateTriggerRate(sourceAmount, destAmount, precision) {
 
   var result = bigDest.div(bigSource)
   if (precision) {
-    return result.toFixed(precision)
+    // return result.toFixed(precision)
+    return result.toPrecision()
   } else {
     return result.toString()
   }

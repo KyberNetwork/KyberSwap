@@ -26,7 +26,7 @@ export default class LimitOrderCompareRate extends React.Component {
       return (
         <div className={"limit-order-compare-rate"}>
           <div className="limit-order-compare-rate__text">
-            <span>Current Rate:</span>{' '}
+            <span>{this.props.translate("limit_order.current_rate") || "Current Rate"}:</span>{' '}
             <span className="rate">1 {srcTokenSymbol} = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {destTokenSymbol}</span>
           </div>
         </div>
@@ -36,7 +36,7 @@ export default class LimitOrderCompareRate extends React.Component {
     if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate == 0){
       return (
         <div className={"limit-order-compare-rate"}>
-          This pair is currently not supported by market
+          {this.props.translate("limit_order.pair_not_supproted") || "This pair is currently not supported by market"}
         </div>
       )
     }
@@ -49,19 +49,19 @@ export default class LimitOrderCompareRate extends React.Component {
       return (
         <div className={"limit-order-compare-rate"}>
           <div className={"limit-order-compare-rate__text"}>
-            <span>Current Rate:</span>{' '}
+            <span>{this.props.translate("limit_order.current_rate") || "Current Rate"}:</span>{' '}
             <span className="rate">1 {srcTokenSymbol} = {converters.roundingNumber(expectedRate)} {destTokenSymbol}</span>
           </div>
 
           {percentChange > 0 && (
             <div className={"limit-order-compare-rate__text"}>
-              Your price is {percentChange}% higher than current Market
+              {this.props.translate("limit_order.higher_rate", { percentChange: percentChange }) || `Your price is ${percentChange}% higher than current Market`}
             </div>
           )}
 
           {percentChange < 0 && percentChange > -100 && (
             <div className={"limit-order-compare-rate__text"}>
-              Your price is {Math.abs(percentChange)}% lower than current Market
+              {this.props.translate("limit_order.lower_rate", { percentChange: percentChange }) || `Your price is ${percentChange}% lower than current Market`}
             </div>
           )}
         </div>
