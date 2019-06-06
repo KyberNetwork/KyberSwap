@@ -572,7 +572,7 @@ export function* doAfterAccountImported(action){
 
       try{
         var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
-        var balance = converter.toT(balance, promoDecimal)
+        var balance = converter.toT(balanceSource, promoDecimal)
         yield put(actions.inputChange('source', balance))
         yield put(actions.focusInput('source'));
       }catch(e){

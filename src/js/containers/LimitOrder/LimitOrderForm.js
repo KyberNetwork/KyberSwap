@@ -236,6 +236,9 @@ export default class LimitOrderForm extends React.Component {
       errorTriggerRate += `<span class="error-text" key=${index}>${value}</span>`
     })
 
+    const isFixedSourceToken = !!(this.props.account && this.props.account.type === "promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token]);
+    const isFixedDestToken = !!(this.props.account && this.props.account.type === "promo" && this.props.account.info.destToken);
+
     return (
       <div className={"exchange-content exchange-content--limit-order limit-order-form container"}>
         {this.props.account !== false && (
@@ -258,7 +261,8 @@ export default class LimitOrderForm extends React.Component {
                       listItem={this.props.availableBalanceTokens}
                       chooseToken={this.props.selectSourceToken}
                       screen="limit_order"
-                      banToken="ETH"                 
+                      banToken="ETH"
+                      isFixToken={isFixedSourceToken}                 
                     />
                 </div>
               </div>
@@ -299,6 +303,7 @@ export default class LimitOrderForm extends React.Component {
                     chooseToken={this.props.selectDestToken}
                     screen="limit_order"
                     banToken="ETH"
+                    isFixToken={isFixedDestToken}
                   />
                 </div>
               </div>

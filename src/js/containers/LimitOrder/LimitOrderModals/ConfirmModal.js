@@ -129,7 +129,7 @@ export default class ConfirmModal extends React.Component {
             console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             var newOrder = await submitOrder({  
-                user_address: this.props.account.address,
+                user_address: this.props.account.address.toLowerCase(),
                 nonce: nonce,
                 src_token: this.props.limitOrder.sourceToken,
                 dest_token: this.props.limitOrder.destToken,

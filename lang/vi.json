@@ -393,7 +393,8 @@
     "submit": "Đặt lệnh",
     "discount_message": "để được giảm phí 50% cho 20 lệnh giao dịch tiếp theo",
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
-    "lower_rate": "Your price is ${percentChange}% lower than current Market"
+    "lower_rate": "Your price is ${percentChange}% lower than current Market",
+    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets."
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
