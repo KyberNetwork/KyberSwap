@@ -13,8 +13,8 @@ const keyMapping = {
     "nonce": "nonce",
     "fee": "fee",
     "status": "status",
-    "created_at": "created_time",
-    "updated_at": "cancel_time",
+    "created_at": "created_at",
+    "updated_at": "updated_at",
     "msg": "msg"
 }
 

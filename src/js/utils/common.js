@@ -156,7 +156,7 @@ export function getTokenBySymbol(tokens, symbol){
     document.body.appendChild(script);
   }
 
-export function getFormattedDate(value) {
+export function getFormattedDate(value, isNumberForm = false) {
     let date = value;
     if (typeof value === "number") {
       date = new Date(value*1000);
@@ -168,6 +168,9 @@ export function getFormattedDate(value) {
     }
     const month = months[date.getMonth()];
     const year = date.getFullYear();
+    if (isNumberForm) {
+        return `${year}${date.getMonth()}${day}`;
+    }
     return `${day} ${month} ${year}`;
 }
 
