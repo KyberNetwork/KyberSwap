@@ -23,7 +23,7 @@ export function verifyAmount(sourceAmount,
   balance,
   sourceSymbol,
   sourceDecimal,
-  rate, destDecimal, maxCap) {
+  rate, destSymbol, destDecimal, maxCap) {
 
     console.log("validate_amount")
     console.log(sourceAmount)
@@ -57,13 +57,16 @@ export function verifyAmount(sourceAmount,
 
   //verify max cap
   //estimate value based on eth
-  if (maxCap !== "infinity") {
-    var maxCap = new BigNumber(maxCap)
-    if (sourceSymbol !== "ETH") {
-      maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
-    }
-    if (estimateValue.isGreaterThan(maxCap)) {
-      return "too high cap"
+  console.log({sourceSymbol, destSymbol})
+  if ((sourceSymbol !== "ETH" || destSymbol !== "WETH") && (sourceSymbol !== "WETH" || destSymbol !== "ETH")){
+    if (maxCap !== "infinity") {
+      var maxCap = new BigNumber(maxCap)
+      if (sourceSymbol !== "ETH") {
+        maxCap = maxCap.multipliedBy(constants.MAX_CAP_PERCENT)
+      }
+      if (estimateValue.isGreaterThan(maxCap)) {
+        return "too high cap"
+      }
     }
   }
 
