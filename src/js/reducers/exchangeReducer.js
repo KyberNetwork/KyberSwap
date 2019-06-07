@@ -87,11 +87,11 @@ const exchange = (state = initState, action) => {
 
       //calculate source, dest
       if (newState.inputFocus === 'dest') {
-        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 4)
       }
 
       if (newState.inputFocus === 'source') {
-        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 6)
+        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 4)
       }
 
       if (!newState.isEditRate) {
@@ -132,18 +132,18 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken) return newState
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, 4)
       } else {
-        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, 6)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, 4)
       }
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
       if (newState.snapshot.errors.selectSameToken) return newState
       if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, 6)
+        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, 4)
       } else {
-        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, 6)
+        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, 4)
       }
       newState.snapshot.isFetchingRate = false
       //  console.log("***************")
@@ -167,14 +167,14 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken) return newState
-        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 6)
+        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 4)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken) return newState
-        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 6)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 4)
       }
       return newState
     }

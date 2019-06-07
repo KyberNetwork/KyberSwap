@@ -42,14 +42,14 @@ const limitOrder = (state = initState, action) => {
           errors.sourceAmount = []
           newState.errors = errors
           var bigRate = converter.roundingRate(state.triggerRate)
-          newState.destAmount = converter.caculateDestAmount(value, bigRate, 6)
+          newState.destAmount = converter.caculateDestAmount(value, bigRate)
           break
         case "dest":
           newState.destAmount = value
           var errors = newState.errors
           errors.triggerRate = []
           newState.errors = errors
-          newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value, 6)  
+          newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value)  
           break
         case "rate": 
           newState.triggerRate = value
@@ -57,7 +57,7 @@ const limitOrder = (state = initState, action) => {
           errors.triggerRate = []
           newState.errors = errors
           var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, 6)  
+          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate)  
           break
       }
       return newState
@@ -90,7 +90,7 @@ const limitOrder = (state = initState, action) => {
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
         newState.triggerRate = converter.roundingNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 6)  
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 4)  
       }
 
       newState.isSelectToken = false

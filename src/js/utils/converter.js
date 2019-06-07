@@ -32,9 +32,9 @@ export function calculateDest(source, rate, precision) {
   var dest = bigSource.times(bigRate).div(1000000000000000000)
 
   if (dest != 0 && precision) {
-    console.log("precision")
-    console.log(dest.toFixed(precision))
-    return dest.toFixed(precision)
+    // console.log("precision")
+    // console.log(dest.toFixed(precision))
+    return dest.toPrecision(precision,0)
   }
 
   return dest
@@ -57,7 +57,7 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
 
   if (precision) {
     // return result.toFixed(precision)
-    return result.toPrecision()
+    return result.toPrecision(precision, 0)
   } else {
     return result.toString()
   }
@@ -76,7 +76,7 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   var result = bigSource.times(bigOfferedRate)
 
   if (precision) {
-    return result.toPrecision()
+    return result.toPrecision(precision, 0)
   } else {
     return result.toString()
   }
@@ -96,7 +96,7 @@ export function caculateTriggerRate(sourceAmount, destAmount, precision) {
   var result = bigDest.div(bigSource)
   if (precision) {
     // return result.toFixed(precision)
-    return result.toPrecision()
+    return result.toPrecision(precision, 0)
   } else {
     return result.toString()
   }
