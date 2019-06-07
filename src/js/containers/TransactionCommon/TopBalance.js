@@ -101,8 +101,10 @@ export default class TopBalance extends React.Component {
 
         var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
         var tokenLayout = this.props.orderedTokens.map(token => {
-            const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") || (token.symbol === "PT" && this.props.screen === "transfer")
+            const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") 
+            || (token.symbol === "PT" && this.props.screen === "transfer")
              ? "top-token-item--deactivated" : "";
+             
             return <div className={`top-token-item ${classTokenItem} ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.props.selectToken(token.symbol) }}>
                 <div className="top-token-item__symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
