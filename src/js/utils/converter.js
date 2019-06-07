@@ -32,6 +32,8 @@ export function calculateDest(source, rate, precision) {
   var dest = bigSource.times(bigRate).div(1000000000000000000)
 
   if (dest != 0 && precision) {
+    console.log("precision")
+    console.log(dest.toFixed(precision))
     return dest.toFixed(precision)
   }
 

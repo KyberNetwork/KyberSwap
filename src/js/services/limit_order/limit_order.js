@@ -9,7 +9,7 @@ const keyMapping = {
     "dst": "dest",
     "src_amount": "src_amount",
     "min_rate": "min_rate",
-    "addr": "address",
+    "addr": "user_address",
     "nonce": "nonce",
     "fee": "fee",
     "status": "status",
