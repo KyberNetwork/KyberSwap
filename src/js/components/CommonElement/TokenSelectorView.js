@@ -31,7 +31,7 @@ const TokenSelectorView = (props) => {
               </div>
               {(props.type !== "des" && props.account != false) &&
               <div className="item-balance">
-                <div title={balance} className="item-balance-value">
+                <div className="item-balance-value">
                   {`${roundingNumber(balance)} ${item.substituteSymbol ? item.substituteSymbol : item.symbol}`}
                 </div>
               </div>

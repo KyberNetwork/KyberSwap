@@ -258,7 +258,7 @@ export default class LimitOrderForm extends React.Component {
                       listItem={this.props.availableBalanceTokens}
                       chooseToken={this.props.selectSourceToken}
                       screen="limit_order"
-                      banToken="ETH"                 
+                      banToken="ETH"
                     />
                 </div>
               </div>

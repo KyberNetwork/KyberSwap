@@ -566,13 +566,13 @@ export function* doAfterAccountImported(action){
 
       var path = constants.BASE_HOST + "/swap/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      yield put(globalActions.goToRoute(path))
+      // yield put(globalActions.goToRoute(path))
 
       yield put(actions.selectToken(promoToken, promoAddr,destTokenSymbol, destAddress, "promo"))
 
       try{
         var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
-        var balance = converter.toT(balance, promoDecimal)
+        var balance = converter.toT(balanceSource, promoDecimal)
         yield put(actions.inputChange('source', balance))
         yield put(actions.focusInput('source'));
       }catch(e){

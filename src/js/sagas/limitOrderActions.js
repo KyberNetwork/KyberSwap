@@ -101,6 +101,7 @@ function* triggerAfterAccountImport(action){
     const state = store.getState()
     var limitOrder = state.limitOrder
     var account = state.account.account
+
     if (isUserLogin()){
       yield put(limitOrderActions.fetchFee(account.address, limitOrder.sourceTokenSymbol, limitOrder.destTokenSymbol))    
     }

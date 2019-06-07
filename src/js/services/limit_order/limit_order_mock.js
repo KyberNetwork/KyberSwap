@@ -15,8 +15,8 @@ const data = [
         min_rate: 0.002604,
         fee: 0.1,
         status: "open",
-        created_time: 1557544645,
-        cancel_time: 1557307228
+        created_at: 1557544645,
+        updated_at: 1557307228
     },
     {
         id: 1,
@@ -29,8 +29,8 @@ const data = [
         fee: 0.1,
         status: "open",
         msg: ["Your balance is smaller than order amount", "Your allowance is smaller than source amount"],
-        created_time: 1556784881,
-        cancel_time: 1557371845
+        created_at: 1556784881,
+        updated_at: 1557371845
     }, {
         id: 3,
         source: "USDC",
@@ -41,8 +41,8 @@ const data = [
         min_rate: 0.123,
         fee: 0.1,
         status: "cancelled",
-        created_time: 1555298245,
-        cancel_time: 1556785883
+        created_at: 1555298245,
+        updated_at: 1556785883
     }, {
         id: 4,
         source: "KNC",
@@ -53,8 +53,8 @@ const data = [
         min_rate: 0.123,
         fee: 0.1,
         status: "filled",
-        created_time: 1546334424,
-        cancel_time: 1556767045
+        created_at: 1546334424,
+        updated_at: 1556767045
     }, {
         id: 5,
         source: "WETH",
@@ -65,8 +65,8 @@ const data = [
         min_rate: 0.123,
         fee: 0.1,
         status: "in_progress",
-        created_time: 1551496645,
-        cancel_time: 1538299225
+        created_at: 1551496645,
+        updated_at: 1538299225
     }, {
         id: 6,
         source: "WETH",
@@ -78,32 +78,32 @@ const data = [
         fee: 0.1,
         status: "invalidated",
         msg: ["Order nonce is smaller than your order in smartcontract"],
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 7,
         source: "MKR",
-        dest: "TUSD",
+        dest: "DAI",
         user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 1.234,
         min_rate: 0.123,
         fee: 0.1,
         status: "open",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 8,
-        source: "MKR",
-        dest: "TUSD",
+        source: "BNB",
+        dest: "KNC",
         user_address: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
         nonce: 1290,
         src_amount: 0.001,
         min_rate: 0.123,
         fee: 0.1,
         status: "open",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 9,
         source: "MKR",
@@ -114,8 +114,8 @@ const data = [
         min_rate: 0.123,
         fee: 0.1,
         status: "in_progress",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 10,
         source: "WETH",
@@ -126,8 +126,8 @@ const data = [
         min_rate: 605.5266,
         fee: 0.1,
         status: "filled",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 11,
         source: "WETH",
@@ -138,8 +138,8 @@ const data = [
         min_rate: 380.9035,
         fee: 0.1,
         status: "cancelled",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 12,
         source: "KNC",
@@ -150,8 +150,8 @@ const data = [
         min_rate: 1.745748,
         fee: 0.1,
         status: "invalidated",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }, {
         id: 13,
         source: "KNC",
@@ -162,8 +162,8 @@ const data = [
         min_rate: 0.0029,
         fee: 0.1,
         status: "in_progress",
-        created_time: 1569835224,
-        cancel_time: 1556785883
+        created_at: 1569835224,
+        updated_at: 1556785883
     }
 ];
 
@@ -192,8 +192,8 @@ export function submitOrder(order) {
             }
         });
 
-        newOrder.cancel_time = 0;
-        newOrder.created_time = new Date().getTime() / 1000;
+        newOrder.updated_at = 0;
+        newOrder.created_at = new Date().getTime() / 1000;
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
         newOrder.src_amount = toT(order.src_amount, sourceTokenDecimals);
@@ -215,7 +215,7 @@ export function cancelOrder(order) {
         if (target.length > 0) {
             const newOrder = {...target[0]};
             const index = data.indexOf(target[0]);
-            newOrder.cancel_time = new Date().getTime() / 1000;
+            newOrder.updated_at = new Date().getTime() / 1000;
             newOrder.status = "cancelled";
             data.splice(index, 1, newOrder);
             resolve(newOrder);

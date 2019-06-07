@@ -279,8 +279,12 @@ export default class LimitOrderSubmit extends React.Component {
       window.location.href = "/users/sign_in"
     }
 
-    if (this.props.account !== false) {
+    if (this.props.account !== false && this.props.account.type !== "promo") {
       this.validateOrder()
+    } else if (this.props.account && this.props.account.type === "promo") {
+      const title = this.props.translate("error.error_occurred") || "Error occurred";
+      const content = this.props.translate("limit_order.not_support_promo_code" || "You cannot submit order with promo code. Please use other wallets.");
+      this.props.dispatch(utilActions.openInfoModal(title, content));
     }
   }
 

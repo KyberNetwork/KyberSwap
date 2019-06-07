@@ -25,7 +25,6 @@ export default class LimitOrderTable extends Component {
       addressFilter: [],
       dateSort: "desc",
       pairSort: "asc",
-			prioritySort: "date",    // date or pair,
 			currentOrder: null,
       cancelOrderModalVisible: false,
       statusFilterVisible: false,
@@ -152,8 +151,8 @@ export default class LimitOrderTable extends Component {
 	// Render cell
 	// --------------
 	getDateCell = (props) => {
-    const { created_time, cancel_time, status } = props;
-    const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
+    const { created_at, updated_at, status } = props;
+    const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_at : updated_at;
     const datetime = getFormattedDate(timestamp);
     return (
       <div>{datetime}</div>
@@ -168,10 +167,10 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest, status, created_time, cancel_time, min_rate } = props;
+    const { source, dest, status, created_at, updated_at, min_rate } = props;
     const { screen } = this.props;
 
-    const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_time : cancel_time;
+    const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_at : updated_at;
     const rate = roundingNumber(min_rate);
 
     if (screen === "mobile") {
@@ -262,12 +261,10 @@ export default class LimitOrderTable extends Component {
     if (this.state.dateSort === "desc") {
       this.setState({
         dateSort: "asc",
-        prioritySort: "date"
       })
     } else {
       this.setState({
         dateSort: "desc",
-        prioritySort: "date"
       })
     }
   }
@@ -290,7 +287,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getOrderDetail = (row) => {
-    const { source, dest, min_rate, status, created_time, cancel_time, src_amount, fee } = row.original;
+    const { source, dest, min_rate, status, created_at, updated_at, src_amount, fee } = row.original;
 
     const rate = roundingNumber(min_rate);
 
@@ -354,9 +351,9 @@ export default class LimitOrderTable extends Component {
     const currentTime = new Date().getTime() / 1000;
     data = data.filter(item => {
       if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return item.created_time >= currentTime - interval;
+        return item.created_at >= currentTime - interval;
       } else {
-        return item.cancel_time >= currentTime - interval; 
+        return item.updated_at >= currentTime - interval; 
       }
     });
 
@@ -432,7 +429,6 @@ export default class LimitOrderTable extends Component {
     if (checked) {
       this.setState({
         pairSort: value,
-        prioritySort: "pair"
       });
     }
   }
@@ -546,18 +542,24 @@ export default class LimitOrderTable extends Component {
   // --------------------------------
   togglingStatusFilter = () => {
     this.setState({
+      conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
+      addressFilterVisible: this.state.addressFilterVisible ? false: this.state.addressFilterVisible,
       statusFilterVisible: !this.state.statusFilterVisible
     });
   }
 
   togglingConditionFilter = () => {
     this.setState({
+      statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
+      addressFilterVisible: this.state.addressFilterVisible ? false : this.state.addressFilterVisible,
       conditionFilterVisible: !this.state.conditionFilterVisible
     })
   }
 
   togglingAddressFilter = () => {
     this.setState({
+      conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
+      statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
       addressFilterVisible: !this.state.addressFilterVisible
     });
   }
@@ -627,7 +629,7 @@ export default class LimitOrderTable extends Component {
 	// Render data
 	// -------------
   renderData = (data) => {
-		const { statusFilter, pairFilter, addressFilter, pairSort, dateSort, prioritySort } = this.state;
+		const { statusFilter, pairFilter, addressFilter, pairSort, dateSort } = this.state;
 		const { selectedTimeFilter } = this.props;
     let results = JSON.parse(JSON.stringify(data));
 
@@ -669,27 +671,29 @@ export default class LimitOrderTable extends Component {
     const currentTime = new Date().getTime() / 1000;
     results = results.filter(item => {
       if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return item.created_time >= currentTime - interval;
+        return item.created_at >= currentTime - interval;
       } else {
-        return item.cancel_time >= currentTime - interval; 
+        return item.updated_at >= currentTime - interval; 
       }
     });
     
 
-    // Date sort or pair sort
-    if (prioritySort === "date" && dateSort) {
-      results = _.orderBy(results, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-          return item.created_time;
-        } else {
-          return item.cancel_time;
-        }
-      }, [dateSort]);
-    } else if (prioritySort === "pair" && pairSort) {
+    if (pairSort) {
       results = _.orderBy(results, item => {
         return `${item.source}-${item.dest}`;
       }, [pairSort]);
     }
+
+    if (dateSort) {
+      results = _.orderBy(results, item => {
+        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+          return getFormattedDate(item.created_at, true);
+        } else {
+          return getFormattedDate(item.updated_at, true);
+        }
+      }, [dateSort]);
+    }
+    
 
     // Status sort after all: Priority is In Progress
     results = _.sortBy(results, item => {
