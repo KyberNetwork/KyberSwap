@@ -227,61 +227,63 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
-                    rate: this.props.limitOrder.triggerRate
+                    rate: converters.roundingNumber(this.props.limitOrder.triggerRate)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${this.props.limitOrder.triggerRate}`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingNumber(this.props.limitOrder.triggerRate)}`
                   }
                 </div>
-                <div className="limit-order-modal__amount">
-                  <div className="limit-order-modal__pair">
-                    <div className="amount">
-                      <div className="amount-item amount-left">                         
-                        <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-                        <div className={"rc-info"}>
-                          <div title={this.props.limitOrder.sourceAmount}>
-                            {this.props.limitOrder.sourceAmount}
-                          </div>
-                          <div>
-                            {this.props.limitOrder.sourceTokenSymbol}
-                          </div>  
+                <div className="limit-order-modal__pair">
+                  <div className="amount">
+                    <div className="amount-item amount-left">                         
+                      <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
+                      <div className={"rc-info"}>
+                        <div title={this.props.limitOrder.sourceAmount}>
+                          {this.props.limitOrder.sourceAmount}
                         </div>
-                      </div>
-                      <div className="space space--padding"><img src={require("../../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
-                      <div className="amount-item amount-right">
-                        <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-                        <div className={"rc-info"}>
-                          <div title={this.props.limitOrder.destAmount}>
-                            {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : this.props.limitOrder.destAmount}
-                          </div>
-                          <div>
-                            {this.props.limitOrder.destTokenSymbol}
-                          </div>
-                        </div> 
+                        <div>
+                          {this.props.limitOrder.sourceTokenSymbol}
+                        </div>  
                       </div>
                     </div>
-                  </div>
-                  <div className="limit-order-modal__fee">
-                    <div className="limit-order-modal__fee--title">
-                      <div>
-                        {this.props.translate("limit_order.fee") || "Fee"}
+                    <div className="space space--padding"><img src={require("../../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
+                    <div className="amount-item amount-right">
+                      <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
+                      <div className={"rc-info"}>
+                        <div title={this.props.limitOrder.destAmount}>
+                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : this.props.limitOrder.destAmount}
+                        </div>
+                        <div>
+                          {this.props.limitOrder.destTokenSymbol}
+                        </div>
+                      </div> 
+                      <div className="amount--calc">
+                        <span title={receiveAmount}>{`(${converters.formatNumber(this.props.limitOrder.sourceAmount, 4)} - ${converters.formatNumber(calculateFee, 4)}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 4)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                       </div>
-                      {!this.props.global.isOnMobile && this.getFeeInfoComponent()}
-                    </div>
-                    <div className="limit-order-modal__fee--amount">
-                      <div title={calculateFee}>
-                        {converters.displayNumberWithDot(calculateFee)}
-                      </div>
-                      <div>
-                        {this.props.limitOrder.sourceTokenSymbol}
-                      </div>
-                      {this.props.global.isOnMobile && this.getFeeInfoComponent()}
                     </div>
                   </div>
                 </div>
-                <div className="limit-order-modal__result">
+                  
+                <div className="limit-order-modal__fee">
+                  <div className="limit-order-modal__fee--title">
+                    <div>
+                      {this.props.translate("limit_order.fee") || "Fee"}
+                    </div>
+                    {!this.props.global.isOnMobile && this.getFeeInfoComponent()}
+                  </div>
+                  <div className="limit-order-modal__fee--amount">
+                    <div title={calculateFee}>
+                      {converters.displayNumberWithDot(calculateFee)}
+                    </div>
+                    <div>
+                      {this.props.limitOrder.sourceTokenSymbol}
+                    </div>
+                    {this.props.global.isOnMobile && this.getFeeInfoComponent()}
+                  </div>
+                </div>
+                {/* <div className="limit-order-modal__result">
                   <span>{this.props.translate("limit_order.you_will_receive") || "You will receive"}</span>{' '}
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
-                </div>
+                </div> */}
 
                   {this.msgHtml()}
                 {this.state.err && <div className="limit-order-modal__result--error">
