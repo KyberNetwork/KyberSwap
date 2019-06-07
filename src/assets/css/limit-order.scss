@@ -1113,18 +1113,6 @@
         }
     }
 
-    &__amount {
-        // border-radius: 5px;
-        // background-color: #ecedf1;
-        display: grid;
-        grid-template-columns: auto 140px;
-
-        @include screen-max-width(medium) {
-            grid-template-columns: auto;
-            grid-template-rows: auto auto;
-        }
-    }
-
     &__pair {
         @extend .confirm-exchange-modal; 
         border-radius: 5px 0 0 5px;
@@ -1136,15 +1124,15 @@
 
         .amount {
             margin: 0;
-            padding: 15px 0 20px 15px;
+            padding: 15px 0 15px 10px;
             background-color: #ecedf1;
-            border-right: 1px solid #d6d9e0;
             border-radius: 5px 0 0 5px;
             grid-template-columns: auto 30px 1fr;
 
             @include screen-max-width(medium) {
                 border: 0;
                 padding: 15px 0;
+                grid-template-columns: 1fr 30px 1fr;
             }
         }
 
@@ -1155,16 +1143,17 @@
         .rc-info {
             font-weight: 500;
         }
+
+        .amount--calc {
+            font-size: 13px;
+            font-weight: 500;
+        }
     }
 
     &__fee {
-        padding: 25px 15px;
-        border-radius: 0 5px 5px 0;
-        background-color: #ecedf1;
+        padding: 15px 20px 0;
 
         @include screen-max-width(medium) {
-            border-radius: 0;
-            background-color: inherit;
             display: flex;
             padding: 20px 0 0;
         }
