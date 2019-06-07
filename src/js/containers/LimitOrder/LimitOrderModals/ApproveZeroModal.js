@@ -16,6 +16,7 @@ import * as converter from "../../../utils/converter"
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const global = store.global
+  const ethereum = store.connection.ethereum
 
   return {
     translate, limitOrder, tokens, account, ethereum, global

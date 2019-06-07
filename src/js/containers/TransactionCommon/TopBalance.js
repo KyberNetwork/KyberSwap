@@ -102,7 +102,6 @@ export default class TopBalance extends React.Component {
         var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
         var tokenLayout = this.props.orderedTokens.map(token => {
             const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") 
-            || (isFixedSourceToken && this.props.screen === "limit_order")
             || (token.symbol === "PT" && this.props.screen === "transfer")
              ? "top-token-item--deactivated" : "";
              

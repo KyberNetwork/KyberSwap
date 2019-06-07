@@ -2,15 +2,12 @@
 
 import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
-import * as globalActions from "../actions/globalActions"
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
-import * as commonUtils from "../utils/common"
 import {getFee, getOrdersByIdArr} from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
-import BLOCKCHAIN_INFO from "../../../env"
 
 import * as constants from "../services/constants"
 
@@ -104,38 +101,6 @@ function* triggerAfterAccountImport(action){
     const state = store.getState()
     var limitOrder = state.limitOrder
     var account = state.account.account
-    const ethereum = state.connection.ethereum;
-    const tokens = state.tokens.tokens;
-
-    if (account && account.type === "promo") {
-      const promoToken = BLOCKCHAIN_INFO.promo_token;
-
-      if (promoToken && tokens[promoToken]) {
-        const promoAddr = tokens[promoToken].address;
-        const promoDecimal = tokens[promoToken].decimals;
-
-        let destTokenSymbol = limitOrder.destTokenSymbol;
-        if (account.info.destToken && tokens[account.info.destToken.toUpperCase()]) {
-          destTokenSymbol = account.info.destToken.toUpperCase();
-        }
-        const destAddress = tokens[destTokenSymbol].address;
-
-        let path = constants.BASE_HOST + "/limit_order/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase();
-        path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED);
-        yield put(globalActions.goToRoute(path));
-
-        yield put(limitOrderActions.selectToken(promoToken, promoAddr, destTokenSymbol, destAddress, "promo"));
-
-        try{
-          var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
-          var balance = converter.toT(balanceSource, promoDecimal)
-          yield put(limitOrderActions.inputChange('source', balance))
-          yield put(limitOrderActions.focusInput('source'));
-        }catch(e){
-          console.log(e)
-        }
-      }
-    }
 
     if (isUserLogin()){
       yield put(limitOrderActions.fetchFee(account.address, limitOrder.sourceTokenSymbol, limitOrder.destTokenSymbol))    
