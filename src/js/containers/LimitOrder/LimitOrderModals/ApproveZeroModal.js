@@ -106,7 +106,7 @@ export default class ApproveZeroModal extends React.Component {
       this.props.dispatch(limitOrderActions.forwardOrderPath())
     } catch (err) {
       console.log(err)
-      this.setState({ err: err , isConfirming: false })
+      this.setState({ err: err.toString() , isConfirming: false })
     }
   }
 

@@ -238,7 +238,7 @@ export default class ConfirmModal extends React.Component {
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                       <div className={"rc-info"}>
                         <div title={this.props.limitOrder.sourceAmount}>
-                          {this.props.limitOrder.sourceAmount}
+                          {converters.formatNumber(this.props.limitOrder.sourceAmount, 4)}
                         </div>
                         <div>
                           {this.props.limitOrder.sourceTokenSymbol}
@@ -249,8 +249,8 @@ export default class ConfirmModal extends React.Component {
                     <div className="amount-item amount-right">
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                       <div className={"rc-info"}>
-                        <div title={this.props.limitOrder.destAmount}>
-                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : this.props.limitOrder.destAmount}
+                        <div title={receiveAmount}>
+                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : converters.formatNumber(receiveAmount, 4)}
                         </div>
                         <div>
                           {this.props.limitOrder.destTokenSymbol}
@@ -272,7 +272,7 @@ export default class ConfirmModal extends React.Component {
                   </div>
                   <div className="limit-order-modal__fee--amount">
                     <div title={calculateFee}>
-                      {converters.displayNumberWithDot(calculateFee)}
+                      {converters.formatNumber(calculateFee, 4)}
                     </div>
                     <div>
                       {this.props.limitOrder.sourceTokenSymbol}
