@@ -170,7 +170,14 @@ const data = [
 
 export function getOrders() {
     return new Promise((resolve, rejected) => {
-        resolve(data);
+        // resolve(data);
+        const results = data.map(item => {
+            return {
+                ...item,
+                user_address: item.user_address.toLowerCase()
+            }
+        });
+        resolve(results);
         return;
     })
 }

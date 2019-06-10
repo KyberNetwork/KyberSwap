@@ -96,13 +96,7 @@ export default class LimitOrder extends React.Component {
   async getOrders() {
     try {
       const results = await limitOrderServices.getOrders();
-      const transformedResults = results.map(item => {
-        return {
-          ...item,
-          user_address: item.user_address.toLowerCase()
-        }
-      });
-      this.props.dispatch(limitOrderActions.addListOrder(transformedResults));
+      this.props.dispatch(limitOrderActions.addListOrder(results));
     } catch (err) {
       console.log(err);
     }
