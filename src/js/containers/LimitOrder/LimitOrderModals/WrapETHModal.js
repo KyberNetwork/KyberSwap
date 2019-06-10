@@ -223,7 +223,7 @@ export default class WrapETHModal extends React.Component {
                               <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
                                   <img src={require("../../../../assets/img/v3/info_grey.svg")} />
                               </span>
-                              <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" />
+                              <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" place="left" />
                           </div>
                           <div className="address-info">
                               <div>

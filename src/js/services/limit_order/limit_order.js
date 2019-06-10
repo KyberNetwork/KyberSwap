@@ -30,7 +30,13 @@ function filterOrder(result) {
         }
         orderList.push(order)
     }
-    return orderList
+    const results = orderList.map(item => {
+        return {
+            ...item, 
+            user_address: item.user_address.toLowerCase()
+        }
+    });
+    return results;
 }
 
 export function getOrders() {
