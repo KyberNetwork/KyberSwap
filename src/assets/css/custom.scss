@@ -113,6 +113,13 @@ button:focus{
         transition: opacity .5s ease-in-out;
         background-image: url(../img/lock.svg);
     }
+
+    .qc-code-content {
+        position: absolute;
+        right: 17px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }
 a.disabled{
     opacity: 0.7;
