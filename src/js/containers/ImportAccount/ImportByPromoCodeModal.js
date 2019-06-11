@@ -54,7 +54,7 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   closeModal() {
-    this.onPromoCodeChange();
+    this.resetPromo();
     const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
     iframeEle.removeEventListener("load", () => {
       this.setState({
@@ -191,8 +191,20 @@ export default class ImportByPromoCodeModal extends React.Component {
     })
   }
 
-  onPromoCodeChange = () =>{
-    this.setState({errorPromoCode: "", error: ""})
+  resetPromo = () => {
+    this.setState({
+      errorPromoCode: "", 
+      error: "",
+      promoCodeValue: ""
+    });
+  }
+
+  onPromoCodeChange = (e) =>{
+    this.setState({
+      errorPromoCode: "", 
+      error: "",
+      promoCodeValue: e.target.value
+    });
   }
 
   nextToCapcha = (e) => {
@@ -248,7 +260,7 @@ export default class ImportByPromoCodeModal extends React.Component {
                           className="text-center" id="promo_code"
                           type="text"
                           value={this.state.promoCodeValue}
-                          onChange={this.onPromoCodeChange.bind(this)}
+                          onChange={e => this.onPromoCodeChange(e)}
                           onKeyPress={this.nextToCapcha.bind(this)}
                           autoFocus
                           autoComplete="off"
