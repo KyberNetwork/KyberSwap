@@ -30,10 +30,10 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type) {
+export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type }
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg }
   }
 
 }

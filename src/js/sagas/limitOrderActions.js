@@ -54,7 +54,7 @@ function* selectToken(action) {
 
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
-  
+  const translate = getTranslate(store.getState().locale)
 
   // const state = store.getState();
   // const translate = getTranslate(state.locale);
@@ -70,7 +70,16 @@ function* updateRatePending(action) {
     var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type))
+    const rateInit = rateZero.expectedPrice.toString();
+    
+    let errMsg = "";
+    if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+      errMsg = translate("error.kyber_maintain") || "This token pair is temporarily under maintenance";
+    } else {
+      errMsg = translate("error.handle_amount") || "Kyber cannot handle your amount at the moment, please reduce your amount"
+    }
+
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, errMsg))
 
   }catch(err){
     console.log(err)
