@@ -8,6 +8,7 @@ import * as common from "../../utils/common"
 import { verifyAccount } from "../../utils/validators";
 import { Modal } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
+import { QRCode } from "../CommonElements";
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -36,7 +37,8 @@ export default class ImportByPromoCodeModal extends React.Component {
       captchaV: "",
       tokenCaptcha: "" ,
       isPassCapcha: false,
-      isCaptchaLoaded: false
+      isCaptchaLoaded: false,
+      promoCodeValue: ""
     }
   }
 
@@ -208,6 +210,18 @@ export default class ImportByPromoCodeModal extends React.Component {
     this.props.analytics.callTrack("trackClickSubmitPromoCode");
   }
 
+  handleErrorQRCode = (err) => {
+    this.setState({
+      promoCodeValue: ""
+    });
+  }
+
+  handleScanQRCode = (data) => {
+    this.setState({
+      promoCodeValue: data
+    });
+  }
+
   render() {
     return (
       <div>
@@ -233,6 +247,7 @@ export default class ImportByPromoCodeModal extends React.Component {
                         <input
                           className="text-center" id="promo_code"
                           type="text"
+                          value={this.state.promoCodeValue}
                           onChange={this.onPromoCodeChange.bind(this)}
                           onKeyPress={this.nextToCapcha.bind(this)}
                           autoFocus
@@ -242,7 +257,15 @@ export default class ImportByPromoCodeModal extends React.Component {
                           required
                           placeholder={this.props.translate("import.enter_promo_code") || "Enter your promocode here"}
                         />
+                        {common.isMobile.any() &&
+                          <QRCode 
+                            onError={this.handleErrorQRCode}
+                            onScan={this.handleScanQRCode}
+                            onDAPP={this.props.account.isOnDAPP}
+                          />
+                        }
                       </div>
+                      
                       {!!this.state.errorPromoCode &&
                       <span className="error-text">{this.state.errorPromoCode}</span>
                       }
