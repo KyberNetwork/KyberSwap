@@ -73,7 +73,7 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div className="limit-order-fee__text">
-            {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{converter.displayNumberWithDot(calculateFee)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
+            {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{converter.formatNumber(calculateFee, 4)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
           </div>
           <div>
             <a onClick={e => this.redirectToSwap()}>{this.props.translate("trading_view.buy")} 3000KNC</a>{' '}

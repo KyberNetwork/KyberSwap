@@ -1216,13 +1216,13 @@
         &--pending {
             font-size: 14px;
             color: #222222;
-            margin-top: 15px;
+            margin: 15px 20px 0;
         }
 
         &--error {
             font-size: 14px;
             color: #ff5d00;
-            margin-top: 15px;
+            margin: 15px 20px 0;
             max-height: 100px;
             overflow: auto;
         }
