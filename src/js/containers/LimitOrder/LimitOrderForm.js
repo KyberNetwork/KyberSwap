@@ -196,7 +196,7 @@ export default class LimitOrderForm extends React.Component {
       <div className="rate-warning-tooltip">
         {/* Description */}
         <div className="rate-warning-tooltip__description">
-          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.s"}
+          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order."}
         </div>
         {/* Table */}
         <div className="rate-warning-tooltip__order-container">
