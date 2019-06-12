@@ -170,7 +170,9 @@
     "cancel": "취소",
     "cancel_order": "주문 취소",
     "order_confirm": "주문 확인",
-    "success": "성공"
+    "success": "성공",
+    "keystore_title": "Type password to unlock your keystore",
+    "unlock": "Unlock"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -247,7 +249,9 @@
     "rate_is_not_number": "Trigger rate is not a number",
     "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
     "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
-    "insufficient_balance": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order"
+    "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
+    "insufficient_balance": "Your balance is insufficient for transaction",
+    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
   },
   "import": {
     "from_metamask": "Metamask",
