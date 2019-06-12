@@ -116,7 +116,7 @@ export default class Ledger {
       var eth = await this.connectLedger()
       var signature = await eth.signPersonalMessage(account.keystring, message.substring(2))
 
-      var v = signature['v'] - 27;
+      var v = signature['v'];
       v = v.toString(16);
       if (v.length < 2) {
         v = "0" + v;
