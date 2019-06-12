@@ -133,7 +133,7 @@
     "kyber_network_proxy": "Kyber Network Proxy",
     "please_swap_before": "Vui lòng trao đổi token trước",
     "please_swap_and_send_before": "Vui lòng trao đổi token và chuyển về ví cá nhân của bạn trước",
-    "limit_order": "Limit Order",
+    "limit_order": "Lệnh giao dịch",
     "rate_label": "Tỉ lệ"
   },
   "modal": {
@@ -239,14 +239,14 @@
     "invalid_promo_code": "Mã khuyến mãi không hợp lệ",
     "promo_code_error": "Chưa nhập mã khuyến mãi",
     "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
-    "required_field": "This field is required",
-    "source_dest_token": "Source token must be different from dest token",
-    "amount_too_small": "Amount is too small. Limit order only support min ${minAmount} ETH equivalent order",
-    "amount_too_big": "Amount is too big. Limit order only support max ${maxAmount} ETH equivalent order",
-    "rate_is_not_number": "Trigger rate is not a number",
-    "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
-    "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
-    "insufficient_balance": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order"
+    "required_field": "Mục này cần được điền",
+    "source_dest_token": "Vui lòng chọn hai loại token khác nhau",
+    "amount_too_small": "Lượng giao dịch quá nhỏ. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối thiểu ${minAmount} ETH.",
+    "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
+    "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
+    "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% tỉ giá hiện tại",
+    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh. Tỉ giá tối thiểu là tỉ giá thấp hơn 20% tỉ giá hiện tại.",
+    "insufficient_balance": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt."
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -379,7 +379,7 @@
     "actions": "Hành động",
     "order_list_title": "Quản lý các lệnh",
     "day": "Ngày",
-    "week": "Tuấn",
+    "week": "Tuần",
     "month": "Tháng",
     "your_address": "Địa chỉ của bạn:",
     "your_balance": "Tài khoản của bạn:",
@@ -402,10 +402,10 @@
     "login_to_submit": "Đăng nhập để đặt lệnh",
     "submit": "Đặt lệnh",
     "discount_message": "để được giảm phí 50% cho 20 lệnh giao dịch tiếp theo",
-    "higher_rate": "Your price is ${percentChange}% higher than current Market",
-    "lower_rate": "Your price is ${percentChange}% lower than current Market",
-    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "pair_not_supported": "This pair is currently not supported by market"
+    "higher_rate": "Tỉ giá bạn đặt cao hơn ${percentChange}% so với tỉ giá thị trường",
+    "lower_rate": "Tỉ giá bạn đặt thấp hơn ${percentChange}% so với tỉ giá thị trường",
+    "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
+    "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
