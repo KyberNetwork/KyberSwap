@@ -67,15 +67,16 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
-      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg } = action.payload
 
   
       if (expectedPrice == "0") {
-        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        } else {
-          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        }
+        newState.errors.rateSystem = errMsg;
+        // if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+        //   newState.errors.rateSystem = "This token pair is temporarily under maintenance"
+        // } else {
+        //   newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
+        // }
       } else {
         newState.errors.rateSystem = ""
       }

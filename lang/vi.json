@@ -140,6 +140,7 @@
     "enter_password": "Nhập mật khẩu",
     "confirm": "Xác nhận",
     "import": "Nhập",
+    "convert": "Chuyển đổi",
     "enter_password_placeholder": "Nhập mật khẩu xác nhận",
     "select_hd_path": "Chọn HD derivation path",
     "select_trezor_address": "Chọn địa chỉ Trezor",
@@ -160,6 +161,7 @@
     "select_dest_token": "Chọn token bạn muốn nhận",
     "select_trasfer_from_token": "CHỌN TOKEN CHUYỂN KHOẢN",
     "approve_exchange": "Bạn cần cấp phép cho Kyber để có thể tương tác với <strong>${\ntoken }</strong> trên địa chỉ này",
+    "approve_zero": "Bạn cần đặt lại giá trị cho phép của <strong>${token}</strong> tại Kyber Swap trên địa chỉ ví này ",
     "eth_token_exchange": "Chuyển đổi eth token",
     "approve": "Đồng ý",
     "address": "Địa chỉ",
@@ -237,7 +239,14 @@
     "invalid_promo_code": "Mã khuyến mãi không hợp lệ",
     "promo_code_error": "Chưa nhập mã khuyến mãi",
     "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
-    "required_field": "This field is required"
+    "required_field": "This field is required",
+    "source_dest_token": "Source token must be different from dest token",
+    "amount_too_small": "Amount is too small. Limit order only support min ${minAmount} ETH equivalent order",
+    "amount_too_big": "Amount is too big. Limit order only support max ${maxAmount} ETH equivalent order",
+    "rate_is_not_number": "Trigger rate is not a number",
+    "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
+    "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
+    "insufficient_balance": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -310,7 +319,8 @@
     "terms_and_condition": " Điều khoản sử dụng ",
     "to_get_started": "để bắt đầu",
     "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ${term}",
-    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}"
+    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}",
+    "description_term_limit_order": "Bằng việc đặt lệnh, bạn đồng ý với ${term}"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",
@@ -384,7 +394,7 @@
     "current_rate": "Current Rate",
     "lower_rate_warning": "Lệnh giao dịch này có tỉ giá thấp hơn một số lệnh trước đó bạn đặt. Những lệnh giao dịch dưới đây sẽ bị hủy khi bạn đặt lệnh này.",
     "wrap_eth_notify": "Bạn không thể đặt lệnh này vì lượng WETH của bạn không đủ, vui lòng chuyển đổi thêm ETH sang WETH.",
-    "empty_order": "There is no order here yet. You can place one",
+    "empty_order": "Hiện chưa có lệnh đặt nào cả. Bạn có thể đặt lệnh",
     "you_will_receive": "Bạn sẽ nhận được",
     "submit_successfully": "Lệnh giao dịch của bạn đã được đặt thành công trên server. Bạn có thể kiểm tra lệnh này trên danh sách lệnh giao dịch.",
     "weth_not_supported_tooltip": "Lệnh giao dịch chỉ hỗ trợ những token có trên Kyber. ETH không được hỗ trợ, vui lòng sử dụng WETH.",
@@ -394,7 +404,8 @@
     "discount_message": "để được giảm phí 50% cho 20 lệnh giao dịch tiếp theo",
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
-    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets."
+    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
+    "pair_not_supported": "This pair is currently not supported by market"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

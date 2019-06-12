@@ -84,13 +84,21 @@ export default class PostExchange extends React.Component {
       }else{
         var ethereum = this.props.ethereum
         var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.exchange.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.network)
-        if (allowance == 0 && !this.props.tokens[this.props.exchange.sourceTokenSymbol].exchange_tx_approve_max) {
-          exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveMax]
+
+        const { exchange_tx_approve_zero, exchange_tx_approve_max } = this.props.tokens[this.props.exchange.sourceTokenSymbol];
+
+        if (allowance == 0) {
+          if (!exchange_tx_approve_max) {
+            exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveMax];
+          }
+        } else if (allowance != 0 && allowance < Math.pow(10, 28)) {
+          if (!exchange_tx_approve_zero) {
+            exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveZero, constants.EXCHANGE_CONFIG.exchangePath.approveMax];
+          } else if (exchange_tx_approve_zero && !exchange_tx_approve_max) {
+            exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveMax];
+          }
         }
-        if (allowance != 0 && allowance < Math.pow(10, 28)
-        && !this.props.tokens[this.props.exchange.sourceTokenSymbol].exchange_tx_approve_zero) {
-          exchangePath = [constants.EXCHANGE_CONFIG.exchangePath.approveZero, constants.EXCHANGE_CONFIG.exchangePath.approveMax]         
-        }
+
         exchangePath.push(constants.EXCHANGE_CONFIG.exchangePath.confirm)
         exchangePath.push(constants.EXCHANGE_CONFIG.exchangePath.broadcast)
       }
