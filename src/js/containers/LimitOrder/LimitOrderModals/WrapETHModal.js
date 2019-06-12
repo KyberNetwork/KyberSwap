@@ -94,7 +94,7 @@ export default class WrapETHModal extends React.Component {
         const tokens = this.props.tokens
       
         var sourceTokenLimit = tokens["ETH"] ? tokens["ETH"].gasLimit : 0
-        var destTokenLimit = tokens["WETH"] ? tokens["WETH"].gasLimit : 0
+        var destTokenLimit = tokens[BLOCKCHAIN_INFO.wrapETHToken] ? tokens[BLOCKCHAIN_INFO.wrapETHToken].gasLimit : 0
       
         var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : this.props.exchange.max_gas
         var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : this.props.exchange.max_gas
