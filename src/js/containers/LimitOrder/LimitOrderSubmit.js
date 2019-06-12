@@ -124,7 +124,7 @@ export default class LimitOrderSubmit extends React.Component {
     var userBalance = this.getUserBalance()
     var srcAmount = this.getSourceAmount()
     if (converters.compareTwoNumber(userBalance, srcAmount) < 0) {
-      sourceAmountError.push(this.props.translate("error.insufficient_balance", { tokenSymbol: this.props.limitOrder.sourceTokenSymbol }) ||`Your balance is insufficent for the order. Please check your ${this.props.limitOrder.sourceTokenSymbol} balance and your pending order`)
+      sourceAmountError.push(this.props.translate("error.insufficient_balance_order", { tokenSymbol: this.props.limitOrder.sourceTokenSymbol }) ||`Your balance is insufficent for the order. Please check your ${this.props.limitOrder.sourceTokenSymbol} balance and your pending order`)
       isValidate = false
     }
 
