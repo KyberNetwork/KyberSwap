@@ -42,11 +42,11 @@ const ImportByPKeyView = (props) => {
           <div className={"import-account__block-left"}>
             <div className="import-account__icon private-key"/>
             <div>
-              <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
-              <div className="import-account__desc">Access your Wallet</div>
+              <div className="import-account__name">{props.translate("landing_page.private_key") || "PRIVATE KEY"}</div>
+              <div className="import-account__desc">{props.translate("address.import_address") || "Access your Wallet"}</div>
             </div>
           </div>
-          <div className="import-account__block-right" onClick={(e) => props.modalOpen()}>Enter</div>
+          <div className="import-account__block-right" onClick={(e) => props.modalOpen()}>{props.translate("address.enter") || "Enter"}</div>
         </div>
       )}
 

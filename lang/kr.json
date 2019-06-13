@@ -29,7 +29,8 @@
     "download": "Download",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
-     "or_connect_with": "또는"
+    "or_connect_with": "또는",
+    "enter": "Enter"
   },
   "transaction": {
     "wallet": "지갑",
