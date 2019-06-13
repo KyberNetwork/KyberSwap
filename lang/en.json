@@ -413,7 +413,8 @@
     "discount_message": "to discount 50% for 20 orders",
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
-    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets."
+    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
+    "ineligible_address": "This address has been used by another account. Please place order with other address."
   },
   "home": "Home",
   "tracker": "Tracker",
