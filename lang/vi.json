@@ -28,7 +28,9 @@
     "connect_your_wallet_to_limit_order": "Nhập ví của bạn và tiến hành đặt lệnh",
     "your_wallet": "Ví của bạn",
     "register_beta": "Register Beta",
-    "or_connect_with": "Or Connect with"
+    "or_connect_with": "Or Connect with",
+    "download": "Tải về",
+    "enter": "Nhập"
   },
   "transaction": {
     "wallet": "Ví",
