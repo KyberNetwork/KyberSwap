@@ -26,10 +26,11 @@
     "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
-    "download": "Download",
+    "download": "다운로드",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
-     "or_connect_with": "또는"
+    "or_connect_with": "또는",
+    "enter": "Enter"
   },
   "transaction": {
     "wallet": "지갑",

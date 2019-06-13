@@ -30,7 +30,8 @@
     "download": "Download",
     "your_wallet": "Your Wallet",
     "register_beta": "Coming soon",
-    "or_connect_with": "Or Connect with"
+    "or_connect_with": "Or Connect with",
+    "enter": "Enter"
   },
   "transaction": {
     "wallet": "Wallet",
