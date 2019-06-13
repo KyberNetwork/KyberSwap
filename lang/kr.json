@@ -411,7 +411,8 @@
     "higher_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 높습니다.",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "pair_not_supported": "This pair is currently not supported by market"
+    "pair_not_supported": "This pair is currently not supported by market",
+    "ineligible_address": "This address has been used by another account. Please place order with other address."
   },
   "home": "홈",
   "tracker": "트래커",

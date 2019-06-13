@@ -409,7 +409,8 @@
     "higher_rate": "您的价格比当前市场价高${percentChange}%",
     "lower_rate": "您的价格比当前市场价低${percentChange}%",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
-    "pair_not_supported": "T该交易对目前市场并不支持"
+    "pair_not_supported": "T该交易对目前市场并不支持",
+    "ineligible_address": "This address has been used by another account. Please place order with other address."
   },
   "home": "主页",
   "tracker": "跟踪网站",

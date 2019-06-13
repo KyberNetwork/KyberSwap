@@ -10,6 +10,7 @@ import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitSt
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
 import { TermAndServices } from "../CommonElements";
+import * as limitOrderServices from "../../services/limit_order";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -63,7 +64,7 @@ export default class LimitOrderSubmit extends React.Component {
     return ethEquivalentValue
   }
 
-  validateOrder = () => {
+  async validateOrder() {
     // check source amount is zero
     var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
     var isValidate = true
@@ -136,6 +137,16 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (!isValidate) {
       return
+    }
+
+    // check address is eligible
+    const isEligible = await limitOrderServices.isEligibleAddress(this.props.account.address);
+
+    if (!isEligible) {
+      var title = this.props.translate("error.error_occurred") || "Error occurred"
+      var content = this.props.translate("limit_order.ineligible_address") || "This address has been used by another account. Please place order with other address.";
+      this.props.dispatch(utilActions.openInfoModal(title, content));
+      return;
     }
 
 

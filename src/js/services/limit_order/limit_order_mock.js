@@ -269,3 +269,9 @@ export function getOrdersByIdArr(idArr){
         resolve(results)
     })
 }
+
+export function isEligibleAddress(addr) {
+    return new Promise((resolve, reject) => {
+        resolve(true);
+    });
+}
