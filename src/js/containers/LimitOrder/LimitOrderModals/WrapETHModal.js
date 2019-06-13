@@ -74,7 +74,7 @@ export default class WrapETHModal extends React.Component {
             this.setState({ amountConvert: value })
             //validate amount
             if (converters.compareTwoNumber(value, this.state.minAmountConvert) < 0) {
-                this.setState({ err: "Please enter bigger number. Min converted amount is " + this.state.minAmountConvert })
+                this.setState({ err: this.props.translate("error.min_converted_amount", { minAmount: this.state.minAmountConvert }) || `Please enter bigger number. Min converted amount is ${this.state.minAmountConvert}` })
             } else {
                 this.setState({ err: "" })
             }
@@ -89,12 +89,12 @@ export default class WrapETHModal extends React.Component {
         return wrapAmount
     }
 
-    getMaxGasExchange = (sourceTokenSymbol, destTokenSymbol) => {
+    getMaxGasExchange = () => {
       
         const tokens = this.props.tokens
       
-        var sourceTokenLimit = tokens[sourceTokenSymbol] ? tokens[sourceTokenSymbol].gasLimit : 0
-        var destTokenLimit = tokens[destTokenSymbol] ? tokens[destTokenSymbol].gasLimit : 0
+        var sourceTokenLimit = tokens["ETH"] ? tokens["ETH"].gasLimit : 0
+        var destTokenLimit = tokens[BLOCKCHAIN_INFO.wrapETHToken] ? tokens[BLOCKCHAIN_INFO.wrapETHToken].gasLimit : 0
       
         var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : this.props.exchange.max_gas
         var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : this.props.exchange.max_gas
@@ -106,12 +106,12 @@ export default class WrapETHModal extends React.Component {
     validateAmount = () => {
         var err = ""
         if (this.state.amountConvert === "") {
-            this.setState({ err: "Your entered amount is invalid" })
+            this.setState({ err: this.props.translate("error.amount_must_be_number") || "The amount you entered is invalid" });
             return
         }
 
         if (converters.compareTwoNumber(this.state.amountConvert, this.state.minAmountConvert) < 0) {
-            err = "Please enter bigger number. Min converted amount is " + this.state.minAmountConvert
+            err = this.props.translate("error.min_converted_amount", { minAmount: this.state.minAmountConvert }) || `Please enter bigger number. Min converted amount is ${this.state.minAmountConvert}`;
         }
         
         var gasLimit = this.getMaxGasExchange(this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
@@ -120,7 +120,7 @@ export default class WrapETHModal extends React.Component {
         var txFee = converters.toTWei(converters.calculateGasFee(gasPrice, gasLimit))
         var totalAmount = converters.sumOfTwoNumber(converters.toTWei(this.state.amountConvert), txFee)
         if (converters.compareTwoNumber(totalAmount, this.props.tokens["ETH"].balance) > 0) {
-            err = "Your balance is insufficient for transaction."
+            err = this.props.translate("error.insufficient_balance") || "Your balance is insufficient for transaction";
         }
 
         this.setState({ err: err })

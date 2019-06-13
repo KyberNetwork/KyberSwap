@@ -79,7 +79,7 @@ export default class ImportKeystore extends React.Component {
   content = () => {
     return (
       <div className="keystore-modal">
-        <div className="title">Type password to unlock your keystore</div>
+        <div className="title">{this.props.translate("modal.keystore_title") || "Type password to unlock your keystore"}</div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="content with-overlap">
           <div className="row">
@@ -106,7 +106,7 @@ export default class ImportKeystore extends React.Component {
         <div className="overlap">
           <div className="input-confirm grid-x input-confirm--approve">
             <div className="cell unlock-btn-wrapper">
-              <a className={"button process-submit next"} onClick={this.unLock}>Unlock</a>
+              <a className={"button process-submit next"} onClick={this.unLock}>{this.props.translate("modal.unlock") || "Unlock"}</a>
             </div>
           </div>
         </div>
