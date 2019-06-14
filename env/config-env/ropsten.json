@@ -270,6 +270,27 @@
             "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
             "decimals": 18,
             "cg_id": "weth"
+        },
+        "BAM": {
+            "symbol": "BAM",
+            "name": "Bamboo",
+            "address": "0xe8e692f05ecdd531c4550a93d323939fb826f968",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0x013ae307648f529aa72c5767a334ddd37aab43c3",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "MYB": {
+            "symbol": "MYB",
+            "name": "MyBit",
+            "address": "0xc68d7c356e1b725f75cbaf1306a2603abd7157ca",
+            "decimals": 18,
+            "cg_id": ""
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

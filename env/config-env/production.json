@@ -311,7 +311,7 @@
             "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
             "decimals": 18,
             "cg_id": "true-usd",
-            "gasLimit": "550000",
+            "gasLimit": "600000",
             "priority": true
         },
         "LEND": {
@@ -566,6 +566,38 @@
             "decimals": 18,
             "cg_id": "paxos-standard",
             "listing_time": 1556542800
+        },
+        "GEN": {
+            "symbol": "GEN",
+            "name": "DAOStack",
+            "address": "0x543ff227f64aa17ea132bf9886cab5db55dcaddf",
+            "decimals": 18,
+            "cg_id": "daostack",
+            "listing_time": 1560258000
+        },
+        "LRC": {
+            "symbol": "LRC",
+            "name": "Loopring",
+            "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+            "decimals": 18,
+            "cg_id": "loopring",
+            "listing_time": 1560258000
+        },
+        "RLC": {
+            "symbol": "RLC",
+            "name": "iExec RLC",
+            "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+            "decimals": 9,
+            "cg_id": "iexec-rlc",
+            "listing_time": 1560258000
+        },
+        "NPXS": {
+            "symbol": "NPXS",
+            "name": "Pundi X",
+            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+            "decimals": 18,
+            "cg_id": "pundi-x",
+            "listing_time": 1560258000
         }
     },
     "ethScanUrl": "https://etherscan.io/",
