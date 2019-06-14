@@ -173,3 +173,19 @@ export function getOrdersByIdArr(idArr) {
             })
     })
 }
+
+export function isEligibleAddress(addr) {
+    return new Promise((resolve, reject) => {
+        var path = `/api/orders/eligible_address?user_addr=${addr}`;
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                const { eligible_address } = result;
+                resolve(eligible_address);
+            }).catch((err) => {
+                reject(new Error("Cannot check eligible address"));
+            });
+    });
+}

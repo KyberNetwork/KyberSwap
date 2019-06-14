@@ -28,7 +28,9 @@
     "connect_your_wallet_to_limit_order": "Nhập ví của bạn và tiến hành đặt lệnh",
     "your_wallet": "Ví của bạn",
     "register_beta": "Register Beta",
-    "or_connect_with": "Or Connect with"
+    "or_connect_with": "Or Connect with",
+    "download": "Tải về",
+    "enter": "Nhập"
   },
   "transaction": {
     "wallet": "Ví",
@@ -409,7 +411,8 @@
     "higher_rate": "Tỉ giá bạn đặt cao hơn ${percentChange}% so với tỉ giá thị trường",
     "lower_rate": "Tỉ giá bạn đặt thấp hơn ${percentChange}% so với tỉ giá thị trường",
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
-    "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ"
+    "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ",
+    "ineligible_address": "This address has been used by another account. Please place order with other address."
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

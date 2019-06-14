@@ -260,6 +260,18 @@ export function getOrdersByIdArr(idArr){
                 }
             }
         }
-        resolve(returnData)
+        const results = returnData.map(item => {
+            return {
+                ...item,
+                user_address: item.user_address.toLowerCase()
+            }
+        });
+        resolve(results)
     })
+}
+
+export function isEligibleAddress(addr) {
+    return new Promise((resolve, reject) => {
+        resolve(true);
+    });
 }

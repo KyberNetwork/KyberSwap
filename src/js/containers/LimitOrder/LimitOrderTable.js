@@ -379,7 +379,7 @@ export default class LimitOrderTable extends Component {
 
     return (
       <div className="pair-filter-modal">
-        <div className="pair-filter-modal__basic">
+        {/* <div className="pair-filter-modal__basic">
           <label className="pair-filter-modal__option">
             <span>A &rarr; Z</span>
             <input type="radio" name="basicFilter" value={'asc'}
@@ -398,7 +398,7 @@ export default class LimitOrderTable extends Component {
             <div className="pair-filter-modal__checkmark--radio"></div>
 
           </label>
-        </div>
+        </div> */}
         <div className="pair-filter-modal__advance">
           {renderedPair}
         </div>
