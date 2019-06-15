@@ -1698,6 +1698,7 @@ function* verifyExchange() {
     sourceTokenSymbol,
     sourceDecimal,
     rate,
+    destTokenSymbol,
     destDecimal,
     exchange.maxCap)
 

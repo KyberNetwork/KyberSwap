@@ -149,6 +149,7 @@ export default class PostExchange extends React.Component {
       this.props.form.sourceTokenSymbol,
       this.props.form.sourceDecimal,
       this.props.form.rateSourceToEth,
+      this.props.form.destTokenSymbol,
       this.props.form.destDecimal,
       this.props.form.maxCap)
     var sourceAmountErrorKey
