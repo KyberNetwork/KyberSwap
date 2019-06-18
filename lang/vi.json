@@ -172,8 +172,8 @@
     "cancel_order": "Hủy lệnh",
     "order_confirm": "Xác nhận lệnh",
     "success": "Thành công",
-    "keystore_title": "Type password to unlock your keystore",
-    "unlock": "Unlock"
+    "keystore_title": "Nhập mật khẩu để mở khóa keystore của bạn",
+    "unlock": "Mở khoá"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -249,10 +249,10 @@
     "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
     "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
     "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% tỉ giá hiện tại",
-    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh. Tỉ giá tối thiểu là tỉ giá thấp hơn 20% tỉ giá hiện tại.",
+    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh. Tỉ giá tối thiểu là tỉ giá thấp hơn ${minRate}% tỉ giá hiện tại.",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
-    "insufficient_balance": "Your balance is insufficient for transaction",
-    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
+    "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
+    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -412,7 +412,7 @@
     "lower_rate": "Tỉ giá bạn đặt thấp hơn ${percentChange}% so với tỉ giá thị trường",
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
     "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ",
-    "ineligible_address": "This address has been used by another account. Please place order with other address."
+    "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi tài khoản khác. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch."
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

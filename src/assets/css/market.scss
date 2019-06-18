@@ -3,9 +3,7 @@
 }
 .market {
   padding: 0px 20px;
-  @include screen-min-width(large){
-    padding-top: 35px;
-  }
+  padding-top: 35px;
 
   .for-mobile-only{
     // @include screen-max-width(large){
@@ -282,6 +280,10 @@
   &__title {
     text-align: center;
     font-size: 28px;
+    text-align: center;
+    font-family: Montserrat;
+    color: #222222;
+    font-weight: 600;
     margin-bottom: 30px;
     // font-weight: 600;
     @include screen-max-width(large) {
@@ -608,9 +610,13 @@
           top: 12px;
           right: 15px;
         }
+
+        @include screen-max-width(large) {
+          max-width: none;
+        }
       }
       @include screen-max-width(large) {
-        margin-top: 10px;
+        margin-top: 20px;
       }
     }
     .symbol-price{

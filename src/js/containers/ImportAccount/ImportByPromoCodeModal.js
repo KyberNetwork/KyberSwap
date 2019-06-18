@@ -249,7 +249,9 @@ export default class ImportByPromoCodeModal extends React.Component {
                   <div className="error">{this.state.error}</div>
                 )}
               </div>
-              <a className="x" onClick={this.closeModal.bind(this)}>&times;</a>
+              <a className="x" onClick={this.closeModal.bind(this)}>
+                <img src={require("../../../assets/img/v3/Close-3.svg")} />
+              </a>
               <div className="content with-overlap">
                 <div className="row">
                   <div className="column">
