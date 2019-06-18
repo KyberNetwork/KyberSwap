@@ -102,7 +102,7 @@
     "token_amount": "Token/Số lượng",
     "click_to_swap": "Kích để trao đổi",
     "transfer_tooltip": "Chuyển eth hoặc token đến một tài khoản khác",
-    "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất\n50 Gwei",
+    "transaction_gasprice_50": "Giá Gas càng cao, giao dịch càng nhanh. Giá Gas lớn nhất\n${gasPrice} Gwei",
     "transaction_gasprice": "Giá Gas càng cao, giao dịch càng nhanh",
     "max_gas_price": "Giá gas lớn nhất: ${maxGas} Gwei",
     "best_rate_tooltip": "Tỷ giá thấp hơn cho khả năng thành công cao hơn khi thị trường\nbiến động",
