@@ -508,7 +508,7 @@
     }
 
     .select-item {
-      width: 350px !important;
+      // width: 350px !important;
       padding: 0 !important;
 
       &__title {
@@ -900,9 +900,15 @@
       }
     }
 
-    @media screen and (max-width: 320px) {
+    // @media screen and (max-width: 320px) {
+    //   .dropdown.dropdown--active .select-item {
+    //     width: 285px;
+    //   }
+    // }
+
+    @include screen-max-width(medium) {
       .dropdown.dropdown--active .select-item {
-        width: 285px;
+        width: calc(100vw - 32px);
       }
     }
   }
