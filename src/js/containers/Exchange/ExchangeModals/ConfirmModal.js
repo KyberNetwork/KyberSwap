@@ -482,7 +482,9 @@ export default class ConfirmModal extends React.Component {
         console.log(this.state.isFetchGas, this.state.isFetchRate, this.state.isConfirmingTx)
         return (
             <div>
-                <a className="x" onClick={this.closeModal}>&times;</a>
+                <a className="x" onClick={this.closeModal}>
+                    <img src={require("../../../../assets/img/v3/Close-3.svg")} />
+                </a>
                 <div className="content with-overlap">
                     <div className="row">
                         <div>

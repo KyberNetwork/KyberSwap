@@ -30,7 +30,7 @@
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
     "or_connect_with": "또는",
-    "enter": "Enter"
+    "enter": "입력"
   },
   "transaction": {
     "wallet": "지갑",
@@ -172,8 +172,8 @@
     "cancel_order": "주문 취소",
     "order_confirm": "주문 확인",
     "success": "성공",
-    "keystore_title": "Type password to unlock your keystore",
-    "unlock": "Unlock"
+    "keystore_title": "키 저장소 잠금해제를 위해 비밀번호를 입력하세요.",
+    "unlock": "잠금해제"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -243,16 +243,16 @@
     "invalid_promo_code": "프로모션 코드가 잘못되었습니다.",
     "promo_code_error": "프로모션 코드가 비어 있습니다.",
     "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
-    "required_field": "This field is required",
-    "source_dest_token": "Source token must be different from dest token",
-    "amount_too_small": "Amount is too small. Limit order only support min ${minAmount} ETH equivalent order",
-    "amount_too_big": "Amount is too big. Limit order only support max ${maxAmount} ETH equivalent order",
-    "rate_is_not_number": "Trigger rate is not a number",
-    "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
-    "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
-    "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
-    "insufficient_balance": "Your balance is insufficient for transaction",
-    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
+    "required_field": "해당 칸 입력은 필수입니다.",
+    "source_dest_token": "공급 토큰은 대상 토큰과 달라야 합니다.",
+    "amount_too_small": "금액이 너무 적습니다. 리밋 오더는최소 ${minAmount}이더 상당의 금액만 지원합니다",
+    "amount_too_big": "금액이 너무 큽니다. 리밋 오더는 최대 ${maxAmount}이더 상당의 금액만 지원합니다",
+    "rate_is_not_number": "트리거 비율은 숫자가 아닙니다",
+    "rate_too_high": "트리거 배율이 너무 높습니다. 현재 배율보다 ${maxRate}%까지만 높게 설정할 수 있습니다.",
+    "rate_too_low": "트리거 배율이 너무 낮습니다. 배율을 올려주세요. 최소 비율은 현재 마켓 배율보다 최소 ${minRate}%이상 낮아야합니다",
+    "insufficient_balance_order": "주문을 위한 잔액이 부족합니다. KNC 잔액과 대기 중인 주문을 확인해주세요",
+    "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
+    "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다."
   },
   "import": {
     "from_metamask": "Metamask",
@@ -326,7 +326,7 @@
     "to_get_started": "에 동의하십시오!",
     "description_term_swap": "환전을 하면 ${term}에 동의하는 것입니다.",
     "description_term_transfer": "송금을 하면 ${term}에 동의하는 것입니다.",
-    "description_term_limit_order": "By Ordering, you agree to the ${term}"
+    "description_term_limit_order": "오더 시 ${term} 자동으로 동의하게 됩니다."
   },
   "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",
@@ -391,7 +391,7 @@
     "your_balance": "잔액:",
     "submit_order": "주문 제출",
     "your_available_balance": "사용 가능한 잔액",
-    "eth_not_support": "ETH* is the combination of ETH and WETH",
+    "eth_not_support": "*ETH는 ETH와 WETH의 조합입니다",
     "canceling_order_message": "이 거래를 취소합니다.",
     "fee_info_message": "걱정 마세요. \n 거래가 실행 된 경우에만 수수료를 지불합니다. (브로드 캐스트 및 채굴)",
     "confirm_order_message": "${srcToken}/${destToken} >= ${rate} 인 경우에만 거래가 체결됩니다",
@@ -403,16 +403,16 @@
     "empty_order": "제출된 리밋 오더가 없습니다. ",
     "you_will_receive": "를 받게됩니다",
     "submit_successfully": "주문이 서버에 성공적으로 제출되었습니다. 거래내역에서 주문을 확인할 수 있습니다",
-    "weth_not_supported_tooltip": "Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.",
+    "weth_not_supported_tooltip": "리밋 주문은 카이버에 상장된 토큰으로만 가능합니다. ETH는 지원되지 않아 WETH를 사용합니다.",
     "wrap_eth_modal_title": "ETH를 WETH로 전환하기",
     "login_to_submit": "거래하시 위해서는 로그인하십시오",
     "submit": "제출",
     "discount_message": "구매시 20개 거래에 50 % 할인이 진행됩니다",
     "higher_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 높습니다.",
-    "lower_rate": "Your price is ${percentChange}% lower than current Market",
-    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "pair_not_supported": "This pair is currently not supported by market",
-    "ineligible_address": "This address has been used by another account. Please place order with other address."
+    "lower_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 낮습니다.",
+    "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",
+    "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
+    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요."
   },
   "home": "홈",
   "tracker": "트래커",
