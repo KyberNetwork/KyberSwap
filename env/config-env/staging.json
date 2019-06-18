@@ -532,34 +532,6 @@
             "decimals": 6,
             "cg_id": "usd-coin",
             "priority": true
-        },
-        "GEN": {
-            "symbol": "GEN",
-            "name": "DAOStack",
-            "address": "0x543ff227f64aa17ea132bf9886cab5db55dcaddf",
-            "decimals": 18,
-            "cg_id": "daostack"
-        },
-        "LRC": {
-            "symbol": "LRC",
-            "name": "Loopring",
-            "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
-            "decimals": 18,
-            "cg_id": "loopring"
-        },
-        "RLC": {
-            "symbol": "RLC",
-            "name": "iExec RLC",
-            "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
-            "decimals": 9,
-            "cg_id": "iexec-rlc"
-        },
-        "NPXS": {
-            "symbol": "NPXS",
-            "name": "Pundi X",
-            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
-            "decimals": 18,
-            "cg_id": "pundi-x"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
