@@ -249,7 +249,7 @@
     "amount_too_big": "금액이 너무 큽니다. 리밋 오더는 최대 ${maxAmount}이더 상당의 금액만 지원합니다",
     "rate_is_not_number": "트리거 비율은 숫자가 아닙니다",
     "rate_too_high": "트리거 배율이 너무 높습니다. 현재 배율보다 ${maxRate}%까지만 높게 설정할 수 있습니다.",
-    "rate_too_low": "트리거 배율이 너무 낮습니다. 배율을 올려주세요. 최소 비율은 현재 마켓 배율보다 최소 20%이상 낮아야합니다",
+    "rate_too_low": "트리거 배율이 너무 낮습니다. 배율을 올려주세요. 최소 비율은 현재 마켓 배율보다 최소 ${minRate}%이상 낮아야합니다",
     "insufficient_balance_order": "주문을 위한 잔액이 부족합니다. KNC 잔액과 대기 중인 주문을 확인해주세요",
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다."

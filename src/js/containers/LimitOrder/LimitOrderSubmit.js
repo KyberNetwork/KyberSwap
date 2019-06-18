@@ -117,7 +117,7 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
     if (percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)) {
-      rateError.push(this.props.translate("error.rate_too_low") || `Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.`);
+      rateError.push(this.props.translate("error.rate_too_low", { minRate: constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate }) || `Trigger rate is too low, please increase trigger rate. Minimum rate is ${constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate}% lower than current market rate.`);
       isValidate = false
     }
 
