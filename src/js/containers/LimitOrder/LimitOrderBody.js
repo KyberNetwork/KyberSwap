@@ -116,7 +116,7 @@ export default class LimitOrderBody extends React.Component {
     var sourceAmount = this.props.limitOrder.sourceAmount
 
     if (sourceTokenSymbol === destTokenSymbol){
-      this.props.dispatch(limitOrderActions.throwError("sourceAmount", ["Source token must be different from dest token"]))
+      this.props.dispatch(limitOrderActions.throwError("sourceAmount", [this.props.translate("error.source_dest_token") || "Source token must be different from dest token"]))
       // this.props.dispatch(limitOrderActions.throwError)
     }else{
       this.props.dispatch(limitOrderActions.throwError("sourceAmount", []))
