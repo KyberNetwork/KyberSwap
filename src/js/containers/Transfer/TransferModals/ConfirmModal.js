@@ -157,7 +157,7 @@ export default class ConfirmModal extends React.Component {
 
             var txHash = await wallet.broadCastTx(callFunc, formId, ethereum, address,
                 tokenAddress, amount,
-                destAddress, nonce, gas,
+                destAddress.toLowerCase(), nonce, gas,
                 gasPrice, keystring, type, password)
 
 
