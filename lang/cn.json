@@ -249,7 +249,7 @@
     "amount_too_big": "数量太大。限价订单仅支持${maxAmount}ETH以下的订单",
     "rate_is_not_number": "触发汇率不是数字",
     "rate_too_high": "触发汇率太高，最高仅能高于现在汇率的${maxRate}%",
-    "rate_too_low": "触发汇率太低，请提高触发汇率，最低仅能低于现在汇率的20%",
+    "rate_too_low": "触发汇率太低，请提高触发汇率，最低仅能低于现在汇率的${minRate}%",
     "insufficient_balance_order": "您的余额不足。请检查您的${tokenSymbol}余额和正在缓冲的订单。",
     "insufficient_balance": "您的余额不足以支持这笔交易",
     "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}"
