@@ -386,6 +386,11 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
+export function floatMultiply(number, params) {
+  const bigNumber = new BigNumber(number).times(params);
+  return bigNumber.toNumber();
+}
+
 export function getBigNumberValueByPercentage(number, percentage) {
   return stringToBigNumber(number).multipliedBy(percentage / 100).valueOf();
 }
