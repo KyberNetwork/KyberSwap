@@ -104,7 +104,7 @@
     "token_amount": "Token & Amount To Send",
     "click_to_swap": "Click to swap",
     "transfer_tooltip": "Transfer ether or tokens to other addresses",
-    "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: 50\nGwei",
+    "transaction_gasprice_50": "Higher gas price, faster transaction. Max gas price: ${gasPrice}\nGwei",
     "transaction_gasprice": "Higher gas price, faster transaction.",
     "max_gas_price": "Max gas price: ${maxGas} Gwei",
     "best_rate_tooltip": "Lower rate typically results in better success rate when the\nmarket is volatile",

@@ -57,7 +57,7 @@ export function verifyAmount(sourceAmount,
 
   //verify max cap
   //estimate value based on eth
-  if ((sourceSymbol === "ETH" && destSymbol === "WETH") || (sourceSymbol === "WETH" && destSymbol === "ETH")){
+  if ((sourceSymbol !== "ETH" || destSymbol !== "WETH") && (sourceSymbol !== "WETH" || destSymbol !== "ETH")){
     if (maxCap !== "infinity") {
       var maxCap = new BigNumber(maxCap)
       if (sourceSymbol !== "ETH") {
