@@ -102,7 +102,7 @@
     "token_amount": "토큰/금액",
     "click_to_swap": "스왑하려면 클릭하십시오.",
     "transfer_tooltip": "이더 또는 토큰을 다른 주소로 전송하십시오",
-    "transaction_gasprice_50": "높은 Gas 가격, 더 빠른 거래 속도, 최대 Gas 비용: 50 Gwei",
+    "transaction_gasprice_50": "높은 Gas 가격, 더 빠른 거래 속도, 최대 Gas 비용: ${gasPrice} Gwei",
     "transaction_gasprice": "높은 Gas 가격, 더 빠른 거래 속도",
     "max_gas_price": "최대 가스 가격: ${maxGas} Gwei",
     "best_rate_tooltip": "시장이 변동될 때 가격을 낮추면 성공률이 높아질 수 있습니다",

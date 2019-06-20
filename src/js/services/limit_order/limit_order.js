@@ -1,5 +1,6 @@
 import { timeout } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
+import { floatMultiply } from "../../utils/converter"
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -131,7 +132,8 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
-                    resolve(result.fee * 100)
+                    const fee = floatMultiply(result.fee, 100);
+                    resolve(fee);
                 } else {
                     rejected(result.message)
                 }

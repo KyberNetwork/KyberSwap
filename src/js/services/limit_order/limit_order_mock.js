@@ -204,7 +204,7 @@ export function submitOrder(order) {
         newOrder.status = "open"
         newOrder.id = Math.floor(Date.now() / 1000)
         newOrder.src_amount = toT(order.src_amount, sourceTokenDecimals);
-        newOrder.fee = toT(order.fee, 4);
+        newOrder.fee = toT(order.fee, 2) / 100;
         newOrder.min_rate = toT(order.min_rate, 18);
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;
