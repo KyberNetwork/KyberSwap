@@ -118,6 +118,12 @@
       right: -10px
     }
   }
+
+  &__limit-order-beta {
+    position: absolute;
+    top: 2px;
+    right: 0;
+  }
 }
 #exchange {
   .exchange-extra-info{
