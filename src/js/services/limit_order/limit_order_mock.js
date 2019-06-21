@@ -208,7 +208,7 @@ export function submitOrder(order) {
         newOrder.min_rate = toT(order.min_rate, 18);
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;
-        // data.push(newOrder);
+        data.push(newOrder);
         resolve(newOrder);
         return;
     })
@@ -216,7 +216,7 @@ export function submitOrder(order) {
 
 
 export function cancelOrder(order) {
-    return new Promise((resolve, rejected) => {
+    return new Promise((resolve, reject) => {
         const target = data.filter(item => item.id === order.id);
 
         if (target.length > 0) {

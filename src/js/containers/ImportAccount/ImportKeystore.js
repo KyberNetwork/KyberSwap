@@ -54,7 +54,7 @@ export default class ImportKeystore extends React.Component {
   unLock = () => {
     var password = document.getElementById("keystore-pass").value
     try{
-      var privKey = unlock(this.state.keystring, password, true)
+      var privKey = unlock(this.state.keystring, password, true, this.props.translate)
        
       var address = addressFromKey(this.state.keystring)
       this.props.dispatch(importNewAccount(address,
