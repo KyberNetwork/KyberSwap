@@ -121,8 +121,15 @@
 
   &__limit-order-beta {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: 50%;
+    right: -35px;
+    transform: translateY(-50%);
+
+    @include screen-max-width(medium) {
+      top: 2px;
+      right: 0;
+      transform: translateY(0);
+    }
   }
 }
 #exchange {
