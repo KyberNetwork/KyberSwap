@@ -21,7 +21,7 @@ export function addressFromKey(keystring) {
   }
 }
 
-export function unlock(input, password, nonStrict) {
+export function unlock(input, password, nonStrict, translate = null) {
     var json = (typeof input === 'object') ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
     if (json.version !== 3) {
         throw new Error('Not a V3 wallet')
@@ -43,6 +43,9 @@ export function unlock(input, password, nonStrict) {
     var ciphertext = new Buffer(json.crypto.ciphertext, 'hex')
     var mac = ethUtil.keccak(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
     if (mac.toString('hex') !== json.crypto.mac) {
+        if (translate) {
+          throw new Error(translate("error.key_derivation_failed") || 'Key derivation failed - possibly wrong password');
+        }
         throw new Error('Key derivation failed - possibly wrong password')
     }
     var decipher = crypto.createDecipheriv(json.crypto.cipher, derivedKey.slice(0, 16), new Buffer(json.crypto.cipherparams.iv, 'hex'))

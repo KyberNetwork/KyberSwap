@@ -131,7 +131,10 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (sourceAmountError.length > 0) {
       this.props.dispatch(limitOrderActions.throwError("sourceAmount", sourceAmountError))
+    } else {
+      this.props.dispatch(limitOrderActions.throwError("sourceAmount", []));
     }
+
     if (rateError.length > 0) {
       this.props.dispatch(limitOrderActions.throwError("triggerRate", rateError))
     }
@@ -326,7 +329,7 @@ export default class LimitOrderSubmit extends React.Component {
 
   render() {
     var isDisable = isUserLogin() && this.props.account == false
-    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.sourceAmount.length > 0 || this.props.limitOrder.errors.triggerRate.length > 0
+    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
         <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder} >
