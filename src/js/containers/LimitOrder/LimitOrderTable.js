@@ -746,10 +746,11 @@ export default class LimitOrderTable extends Component {
 				<ReactTable 
 					data={data}
 					columns={columns}
-					showPagination={false}
+					showPagination={data.length > 100 ? true : false}
 					resizable={false}
 					sortable={false}
           minRows={0}
+          defaultPageSize={100}
           expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
           className={this.props.data.length === 0 ? `ReactTable--empty` : ""}
           // noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
