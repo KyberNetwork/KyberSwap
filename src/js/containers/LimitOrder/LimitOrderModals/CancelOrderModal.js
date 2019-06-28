@@ -14,11 +14,13 @@ import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 	const translate = getTranslate(store.locale);
 	const limitOrder = store.limitOrder;
 	const global = store.global;
+	const account = store.account.account;
 
 	return {
 		translate,
 		limitOrder,
-		global
+		global,
+		account
 	};
 })
 export default class CancelOrderModal extends Component {
@@ -132,7 +134,13 @@ export default class CancelOrderModal extends Component {
 					this.props.order
 				);
 				if (results) {
-					this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
+					if (this.props.limitOrder.filterMode === "client") {
+						this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
+					} else {
+						this.props.dispatch(limitOrderActions.getOrdersByFilter({}));
+						this.props.dispatch(limitOrderActions.getListFilter());
+						this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address));
+					}
 					this.setState({
 						isConfirming: false,
 						isFinish: true

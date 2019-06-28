@@ -1,13 +1,14 @@
 
 
-import { take, put, call, fork, select, takeEvery, all, apply } from 'redux-saga/effects'
+import { take, put, call, fork, select, takeEvery, takeLatest, all, apply } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
-import {getFee, getOrdersByIdArr} from "../services/limit_order"
+import * as limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
+import _ from "lodash";
 
 import * as constants from "../services/constants"
 
@@ -94,7 +95,7 @@ function* updateRatePending(action) {
 function* fetchFee(action){
   var { userAddr, src, dest, srcAmount, destAmount } = action.payload
   try{
-    var fee = yield call(getFee, userAddr, src, dest, srcAmount, destAmount)
+    var fee = yield call(limitOrderServices.getFee, userAddr, src, dest, srcAmount, destAmount)
     yield put(limitOrderActions.fetchFeeComplete(fee))
   }catch(err){
     console.log(err)
@@ -127,7 +128,7 @@ function*  fetchOpenOrderStatus() {
     }
   })
   try{
-    var orders = yield call(getOrdersByIdArr, idArr)
+    var orders = yield call(limitOrderServices.getOrdersByIdArr, idArr)
     //update order
     for (var j = 0; j <orders.length; j++){
       for (var i = 0; i < listOrder.length; i++){
@@ -145,6 +146,79 @@ function*  fetchOpenOrderStatus() {
   }
 }
 
+function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex }) {
+  if (addressFilter) {
+    yield put(limitOrderActions.setAddressFilter(addressFilter));
+  }
+  if (pairFilter) {
+    yield put(limitOrderActions.setPairFilter(pairFilter));
+  }
+  if (statusFilter) {
+    yield put(limitOrderActions.setStatusFilter(statusFilter));
+  }
+  if (timeFilter) {
+    yield put(limitOrderActions.setTimeFilter(timeFilter));
+  }
+  if (pageIndex) {
+    yield put(limitOrderActions.setOrderPageIndex(pageIndex));
+  }
+}
+
+/**
+ * If count < 50, do filter at client side. 
+ * Otherwise fetch orders by requesting to server.
+ * @param {} action 
+ */
+function* getOrdersByFilter(action) {
+  yield* updateFilter(action.payload);
+
+  const { limitOrder, tokens } = store.getState();
+
+  try {
+    if (limitOrder.filterMode === "client") {
+      return;
+    }
+
+    // Convert pair token to pair address in order to request
+    const pairAddressFilter = limitOrder.pairFilter.map(item => {
+      const [sourceTokenSymbol, destTokenSymbol] = item.split("-");
+      const sourceToken = tokens.tokens[sourceTokenSymbol].address;
+      const destToken = tokens.tokens[destTokenSymbol].address;
+
+      return `${sourceToken}_${destToken}`;
+    });
+
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.statusFilter, limitOrder.timeFilter, limitOrder.pageIndex);
+
+    yield put(limitOrderActions.setOrdersCount(itemsCount));
+    yield put(limitOrderActions.addListOrder(orders));
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+function* getListFilter() {
+  try {
+    const { pairs, addresses } = yield call(limitOrderServices.getUserStats);
+
+    yield put(limitOrderActions.getListFilterComplete(pairs, addresses)); 
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* fetchPendingBalances(action) {
+  const { address } = action.payload;
+  try {
+    const pendingBalances = yield call(limitOrderServices.getPendingBalances, address);
+
+    yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
 
@@ -156,4 +230,9 @@ export function* watchLimitOrder() {
 
     yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus)
 
+    yield takeEvery("LIMIT_ORDER.GET_ORDERS_BY_FILTER", getOrdersByFilter)
+
+    yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter)
+
+    yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances)
   }

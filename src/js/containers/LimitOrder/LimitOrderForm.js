@@ -8,6 +8,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import * as constants from "../../services/constants"
+import * as limitOrderServices from "../../services/limit_order";
 import { default as _ } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import * as converters from "../../utils/converter";
@@ -173,13 +174,18 @@ export default class LimitOrderForm extends React.Component {
       return null;
     }
 
-    const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-      return item.source === this.props.limitOrder.sourceTokenSymbol &&
-            item.dest === this.props.limitOrder.destTokenSymbol &&
-            item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-            item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
-    });
+    let higherRateOrders = [];
+    if (this.props.limitOrder.filterMode === "client") {
+      higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
+        return item.source === this.props.limitOrder.sourceTokenSymbol &&
+              item.dest === this.props.limitOrder.destTokenSymbol &&
+              item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+              item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+              converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+      });
+    } else {
+      higherRateOrders = this.props.limitOrder.relatedOrders;
+    }
 
     const tableComp = higherRateOrders.map(item => {
       const datetime = common.getFormattedDate(item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? item.created_at : item.updated_at);

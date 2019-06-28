@@ -231,3 +231,15 @@ export function findTokenBySymbol(tokens, symbol) {
     return token.symbol === symbol;
   });
 };
+
+export function calcInterval(selectedTimeFilter) {
+    let { interval, unit } = selectedTimeFilter;
+    if (unit === "day") {
+      interval = interval * 86400;
+    } else if (unit === "week") {
+      interval = interval * 604800;
+    } else if (unit === "month") {
+      interval = interval * 2629743;
+    }
+    return interval;
+}

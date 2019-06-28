@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 import LimitOrderTable from "./LimitOrderTable";
+import * as limitOrderActions from "../../actions/limitOrderActions";
 
 @connect((store, props) => {
 	const account = store.account.account;
@@ -48,6 +49,12 @@ export default class LimitOrderListModal extends Component {
         interval: item.interval,
         unit: item.unit
       }
+    }, () => {
+      const filter = {
+				timeFilter: this.state.selectedTimeFilter,
+				pageIndex: 1
+      };
+      this.props.dispatch(limitOrderActions.getOrdersByFilter(filter));
     });
 	}
 
