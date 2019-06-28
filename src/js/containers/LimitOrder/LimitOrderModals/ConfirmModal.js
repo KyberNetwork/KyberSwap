@@ -146,10 +146,10 @@ export default class ConfirmModal extends React.Component {
               this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
             } else {
               this.props.dispatch(limitOrderActions.getOrdersByFilter({}));
-              this.props.dispatch(limitOrderActions.getListFilter());
               this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address));
             }
 
+            this.props.dispatch(limitOrderActions.getListFilter());
 
             //go to the next step
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
