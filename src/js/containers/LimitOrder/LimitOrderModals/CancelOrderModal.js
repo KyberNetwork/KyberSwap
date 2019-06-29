@@ -138,7 +138,10 @@ export default class CancelOrderModal extends Component {
 						this.props.dispatch(limitOrderActions.updateOpenOrderStatus());
 					} else {
 						this.props.dispatch(limitOrderActions.getOrdersByFilter({}));
-						this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address));
+						
+						if (this.props.account) {
+							this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address));
+						}
 					}
 					this.props.dispatch(limitOrderActions.getListFilter());
 					
