@@ -22,8 +22,6 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      orderPairs: [],   // list of available pair filters
-      orderAddresses: [],   // list of available address filters
       dateSort: "desc",
 			currentOrder: null,
       cancelOrderModalVisible: false,
@@ -331,8 +329,7 @@ export default class LimitOrderTable extends Component {
 	// Render pair filter dropdown
 	// -------------------------------
 	getPairFilter = () => {
-    const { pairFilter } = this.props.limitOrder;
-    const { orderPairs } = this.state;
+    const { pairFilter, orderPairs } = this.props.limitOrder;
 
     const renderedPair = orderPairs.map(item => {
       const checked = pairFilter.indexOf(item) !== -1;
@@ -440,8 +437,7 @@ export default class LimitOrderTable extends Component {
   // Render address filter dropdown
   // --------------------------------
   getAddressFilter = () => {
-    const { addressFilter } = this.props.limitOrder;
-    const { orderAddresses } = this.state;
+    const { addressFilter, orderAddresses } = this.props.limitOrder;
     
     const renderedComp = orderAddresses.map(item => {
       const checked = addressFilter.indexOf(item) !== -1;
@@ -496,7 +492,7 @@ export default class LimitOrderTable extends Component {
   }
 
   togglingConditionFilter = () => {
-    if (this.state.orderPairs.length === 0) return;
+    if (this.props.limitOrder.orderPairs.length === 0) return;
     this.setState({
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
       addressFilterVisible: this.state.addressFilterVisible ? false : this.state.addressFilterVisible,
@@ -505,7 +501,7 @@ export default class LimitOrderTable extends Component {
   }
 
   togglingAddressFilter = () => {
-    if (this.state.orderAddresses.length === 0) return;
+    if (this.props.limitOrder.orderAddresses.length === 0) return;
     this.setState({
       conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
@@ -711,11 +707,11 @@ export default class LimitOrderTable extends Component {
     /**
      * Only show available filter options at specific datetime interval.
      */
-    const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
-    this.setState({
-      orderPairs,
-      orderAddresses
-    });
+    // const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
+    // this.setState({
+    //   orderPairs,
+    //   orderAddresses
+    // });
 
     if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
       this.setState({

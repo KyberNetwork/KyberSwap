@@ -13,13 +13,8 @@ import * as limitOrderActions from "../../actions/limitOrderActions";
   }
 })
 export default class Pagination extends React.Component {
-  listPage = () => {
-    const { filterMode, ordersCount } = this.props.limitOrder;
-
-    const totalPage = filterMode === "client" ? this.props.pages + 1 : Math.ceil(ordersCount / LIMIT_ORDER_CONFIG.pageSize) + 1;
-    const activePage = filterMode === "client" ? this.props.page + 1 : this.props.limitOrder.pageIndex;
-
-    const component = _.range(1, totalPage).map(item => {
+  generatePageRange = (start, end, activePage) => {
+    const component = _.range(start, end).map(item => {
       return <div className={`Pagination__page-item ${item == activePage ? "Pagination__page-item--selected" : ""}`}
         key={item} 
         onClick={(e) => this.validatePageIndex(item)}
@@ -29,6 +24,67 @@ export default class Pagination extends React.Component {
     });
 
     return component;
+  }
+
+  listPage = () => {
+    const { filterMode, ordersCount } = this.props.limitOrder;
+
+    const totalPage = filterMode === "client" ? this.props.pages : Math.ceil(ordersCount / LIMIT_ORDER_CONFIG.pageSize);
+    const activePage = filterMode === "client" ? this.props.page + 1 : this.props.limitOrder.pageIndex;
+
+    if (totalPage >= 10) {
+      if (1 <= activePage && activePage <= 3) {
+        const pageRange = this.generatePageRange(1, 4, activePage);
+
+        return (
+          <React.Fragment>
+            {pageRange}
+            <span>...</span>
+            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected" : ""}`}
+              key={totalPage} 
+              onClick={(e) => this.validatePageIndex(totalPage)}>
+              {totalPage}
+            </div>
+          </React.Fragment>
+        )
+      } else if (totalPage - 2 <= activePage && activePage <= totalPage) {
+        const pageRange = this.generatePageRange(totalPage - 2, totalPage + 1, activePage);
+
+        return (
+          <React.Fragment>
+            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected" : ""}`}
+              key={1} 
+              onClick={(e) => this.validatePageIndex(1)}>
+              {1}
+            </div>
+            <span>...</span>
+            {pageRange}
+          </React.Fragment>
+        )
+      } else {
+        const pageRange = this.generatePageRange(activePage - 1, activePage + 2, activePage);
+      
+        return (
+          <React.Fragment>
+            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected" : ""}`}
+              key={1} 
+              onClick={(e) => this.validatePageIndex(1)}>
+              {1}
+            </div>
+            <span>...</span>
+              {pageRange}
+            <span>...</span>
+            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected" : ""}`}
+              key={totalPage} 
+              onClick={(e) => this.validatePageIndex(totalPage)}>
+              {totalPage}
+            </div>
+          </React.Fragment>
+        )
+      }
+    } else {
+      return this.generatePageRange(1, totalPage + 1, activePage);
+    }
   }
 
   validatePageIndex = (page) => {

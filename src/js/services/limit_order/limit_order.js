@@ -303,8 +303,8 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
     if (pair) {
         const params = pair.reduce((sum, item) => {
             const pairParam = item.replace("-", "_");
-            return sum + `&pair[]=${pairParam}`;
-        });
+            return sum + `&pairs[]=${pairParam}`;
+        }, "");
         path += params;
     }
 
