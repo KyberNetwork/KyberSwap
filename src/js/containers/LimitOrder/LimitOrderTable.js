@@ -10,7 +10,7 @@ import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
-import { calcInterval } from "../../utils/common";
+import { calcInterval, isArrayEqual } from "../../utils/common";
 
 @connect((store, props) => {
   return {
@@ -683,7 +683,7 @@ export default class LimitOrderTable extends Component {
     });
 
     // Filter available pairs
-    const filterPairs = this.props.limitOrder.orderPairs.filter(item => {
+    const filterPairs = nextProps.limitOrder.orderPairs.filter(item => {
       const found = data.filter(order => {
         const key = `${order.source}-${order.dest}`;
         return key === item;
@@ -693,7 +693,7 @@ export default class LimitOrderTable extends Component {
     });
 
     // Filter available addresses
-    const filterAddresses = this.props.limitOrder.orderAddresses.filter(item => {
+    const filterAddresses = nextProps.limitOrder.orderAddresses.filter(item => {
       const found = data.filter(order => {
         return order.user_address === item;
       });
@@ -711,25 +711,15 @@ export default class LimitOrderTable extends Component {
     /**
      * Only show available filter options at specific datetime interval.
      */
-    if ((nextProps.limitOrder.orderPairs.length > 0 && nextProps.limitOrder.orderAddresses.length > 0
-      && this.state.orderPairs.length === 0 && this.state.orderAddresses.length === 0) ||
-        (this.props.data.length !== nextProps.length)
-      ) {
-      const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
-
-      this.setState({
-        orderPairs,
-        orderAddresses
-      });
-    }
+    const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
+    this.setState({
+      orderPairs,
+      orderAddresses
+    });
 
     if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
-      const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
-
       this.setState({
         // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
-        orderPairs,
-        orderAddresses,
         statusFilterVisible: false,
         addressFilterVisible: false,
         conditionFilterVisible: false,

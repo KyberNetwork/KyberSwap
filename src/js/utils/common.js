@@ -1,5 +1,6 @@
 import * as constants from '../services/constants';
 import * as bowser from 'bowser'
+import _ from "lodash";
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -177,7 +178,7 @@ export function getFormattedDate(value, isNumberForm = false) {
 
 export function isUserLogin(){
     //dummy data
-    return true
+    // return true
 
     var loginCookies = getCookie("signed_in")
     return loginCookies === true || loginCookies === "true" ? true: false
@@ -242,4 +243,21 @@ export function calcInterval(selectedTimeFilter) {
       interval = interval * 2629743;
     }
     return interval;
+}
+
+export function isArrayEqual(arrOne, arrTwo) {
+    const arrOneType = Object.prototype.toString.call(arrOne);
+    const arrTwoType = Object.prototype.toString.call(arrTwo);
+
+    // If not the same type
+    if (arrOneType !== arrTwoType) return false;
+
+    // If not an array
+    if (['[object Array]'].indexOf(arrOneType) < 0) return false;
+
+    if (arrOne.length !== arrTwo.length) return false;
+
+    const differences = _.difference(arrOne, arrTwo);
+
+    return differences.length === 0;
 }

@@ -58,6 +58,7 @@ export default class LimitOrderList extends React.Component {
       pageIndex: 1
     };
     this.props.dispatch(limitOrderActions.getOrdersByFilter(filter));
+    this.props.dispatch(limitOrderActions.getListFilter());
   }
   
   // Render time filter

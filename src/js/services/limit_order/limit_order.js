@@ -52,7 +52,7 @@ export function getOrders() {
                 resolve(orderList)
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user orders"))
+                rejected(new Error(`Cannot get user orders: ${err.toString}`))
             })
     })
 }
@@ -85,7 +85,7 @@ export function submitOrder(order) {
                 }
             })
             .catch((err) => {
-                rejected(new Error("Cannot submit order"))
+                rejected(new Error(`Cannot submit order: ${err.toString()}`))
             })
     })
 }
@@ -106,7 +106,7 @@ export function cancelOrder(order) {
                 resolve(result.cancelled)
             })
             .catch((err) => {
-                rejected(new Error("Cannot cancel order"))
+                rejected(new Error(`Cannot cancel order: ${err.toString()}`))
             })
     })
 }
@@ -121,7 +121,7 @@ export function getNonce(userAddr, source, dest) {
                 resolve(result.nonce)
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user nonce"))
+                rejected(new Error(`Cannot get user nonce: ${err.toString()}`))
             })
     })
 }
@@ -142,7 +142,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
 
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user fee"))
+                rejected(new Error(`Cannot get user fee: ${err.toString()}`))
             })
     })
 }
@@ -164,7 +164,7 @@ export function getOrdersByIdArr(idArr) {
                 resolve(filterArr)
             })
             .catch(err => {
-                rejected(new Error("Cannot get user orders"));
+                rejected(new Error(`Cannot get user orders: ${err.toString()}`));
             })
         } else {
             // get path
@@ -186,7 +186,7 @@ export function getOrdersByIdArr(idArr) {
 
                 })
                 .catch((err) => {
-                    rejected(new Error("Cannot get user orders"))
+                    rejected(new Error(`Cannot get user orders: ${err.toString()}`))
                 })
         }
     })
@@ -203,14 +203,14 @@ export function isEligibleAddress(addr) {
                 const { eligible_address } = result;
                 resolve(eligible_address);
             }).catch((err) => {
-                reject(new Error("Cannot check eligible address"));
+                reject(new Error(`Cannot check eligible address: ${err.toString()}`));
             });
     });
 }
 
 export function getUserStats() {
     return new Promise((resolve, reject) => {
-        const path = "/api/orders/user_stats";
+        const path = "http://localhost:3000/api/orders/user_stats";
         timeout(MAX_REQUEST_TIMEOUT, fetch(path))
             .then(response => {
                 return response.json();
@@ -220,14 +220,14 @@ export function getUserStats() {
                     
                     resolve({
                         pairs,
-                        addresses: results.addresses,
-                        orderStats: results.order_stats
+                        addresses: result.addresses,
+                        orderStats: result.order_stats
                     });
                 } else {
                     reject(new Error("Not authenticated"));
                 }
             }).catch(err => {
-                reject(new Error("Cannot get user stats"));
+                reject(new Error(`Cannot get user stats: ${err.toString()}`));
             });
     })
 }
@@ -245,7 +245,7 @@ export function getPendingBalances(address) {
                     reject(new Error("Cannot get pending balance"));
                 }
             }).catch(err => {
-                reject(new Error("Cannot get pending balance"));
+                reject(new Error(`Cannot get pending balance: ${err.toString()}`));
             });
     });
 }
@@ -263,7 +263,7 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
                 reject(new Error("Not authenticated"));
             }
         }).catch(err => {
-            reject(new Error("Cannot get related orders"));
+            reject(new Error(`Cannot get related orders: ${err.toString()}`));
         })
     })
 }
@@ -335,7 +335,7 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
                 });
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user orders"))
+                rejected(new Error(`Cannot get user orders: ${err.toString()}`))
             })
     })
 }
