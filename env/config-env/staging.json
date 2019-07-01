@@ -31,6 +31,7 @@
       "maxPercentTriggerRate": 100
     },
     "promo_token": "PT",
+    "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
