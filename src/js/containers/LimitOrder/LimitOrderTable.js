@@ -43,7 +43,7 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
-      headerClassName: "cell-flex-start-header",
+      headerClassName: "cell-flex-start-header cell-date-header",
       className: "cell-flex-start",
       maxWidth: 95,
       getHeaderProps: (state, rowInfo) => {
