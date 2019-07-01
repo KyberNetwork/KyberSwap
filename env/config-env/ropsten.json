@@ -26,6 +26,12 @@
         "PT",
         "ETH"
     ],
+    "limitOrder": {
+        "minSupportOrder": 0.1,
+        "maxSupportOrder": 10,
+        "minPercentTriggerRate": -10,
+        "maxPercentTriggerRate": 100
+    },
     "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
