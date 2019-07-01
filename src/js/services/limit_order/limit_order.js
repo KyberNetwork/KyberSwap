@@ -317,7 +317,7 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
 
     if (time) {
         const second = calcInterval(time);
-        path += `&time=${second}`;
+        path += `&from=${second}`;
     }
 
     return new Promise((resolve, rejected) => {

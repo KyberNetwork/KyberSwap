@@ -130,6 +130,12 @@
         @include cell-flex(center);
     }
 
+    .cell-date {
+        &-header {
+            cursor: pointer;
+        }
+    }
+
     .cell-condition {
         &-header {
             cursor: pointer;
