@@ -1,6 +1,8 @@
-import { timeout } from "../../utils/common"
+import { timeout, calcInterval, getFormattedDate } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { floatMultiply } from "../../utils/converter"
+import { LIMIT_ORDER_CONFIG } from "../../services/constants";
+import _ from "lodash";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -50,7 +52,7 @@ export function getOrders() {
                 resolve(orderList)
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user orders"))
+                rejected(new Error(`Cannot get user orders: ${err.toString}`))
             })
     })
 }
@@ -83,7 +85,7 @@ export function submitOrder(order) {
                 }
             })
             .catch((err) => {
-                rejected(new Error("Cannot submit order"))
+                rejected(new Error(`Cannot submit order: ${err.toString()}`))
             })
     })
 }
@@ -104,7 +106,7 @@ export function cancelOrder(order) {
                 resolve(result.cancelled)
             })
             .catch((err) => {
-                rejected(new Error("Cannot cancel order"))
+                rejected(new Error(`Cannot cancel order: ${err.toString()}`))
             })
     })
 }
@@ -119,7 +121,7 @@ export function getNonce(userAddr, source, dest) {
                 resolve(result.nonce)
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user nonce"))
+                rejected(new Error(`Cannot get user nonce: ${err.toString()}`))
             })
     })
 }
@@ -140,7 +142,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
 
             })
             .catch((err) => {
-                rejected(new Error("Cannot get user fee"))
+                rejected(new Error(`Cannot get user fee: ${err.toString()}`))
             })
     })
 }
@@ -152,27 +154,41 @@ export function getOrdersByIdArr(idArr) {
             resolve([])
             return
         }
-        // get path
-        var path = "/api/orders?"
-        for (var i = 0; i < idArr.length; i++) {
-            if (i === 0) {
-                path += "ids[]=" + idArr[i]
-            } else {
-                path += "&ids[]=" + idArr[i]
+
+        if (idArr.length > 50) {
+            getOrders()
+            .then(response => {
+                const filterArr = response.filter(item => {
+                    return idArr.indexOf(item) !== -1;
+                });
+                resolve(filterArr)
+            })
+            .catch(err => {
+                rejected(new Error(`Cannot get user orders: ${err.toString()}`));
+            })
+        } else {
+            // get path
+            var path = "/api/orders?"
+            for (var i = 0; i < idArr.length; i++) {
+                if (i === 0) {
+                    path += "ids[]=" + idArr[i]
+                } else {
+                    path += "&ids[]=" + idArr[i]
+                }
+
             }
+            timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+                .then((response) => {
+                    return response.json()
+                }).then((result) => {
+                    var orderList = filterOrder(result)
+                    resolve(orderList)
 
+                })
+                .catch((err) => {
+                    rejected(new Error(`Cannot get user orders: ${err.toString()}`))
+                })
         }
-        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
-            .then((response) => {
-                return response.json()
-            }).then((result) => {
-                var orderList = filterOrder(result)
-                resolve(orderList)
-
-            })
-            .catch((err) => {
-                rejected(new Error("Cannot get user orders"))
-            })
     })
 }
 
@@ -187,7 +203,139 @@ export function isEligibleAddress(addr) {
                 const { eligible_address } = result;
                 resolve(eligible_address);
             }).catch((err) => {
-                reject(new Error("Cannot check eligible address"));
+                reject(new Error(`Cannot check eligible address: ${err.toString()}`));
             });
     });
+}
+
+export function getUserStats() {
+    return new Promise((resolve, reject) => {
+        const path = "http://localhost:3000/api/orders/user_stats";
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+            .then(response => {
+                return response.json();
+            }).then(result => {
+                if (result.success) {
+                    const pairs = result.pairs.map(item => item.replace("/", "-"));  // pair array
+                    
+                    resolve({
+                        pairs,
+                        addresses: result.addresses,
+                        orderStats: result.order_stats
+                    });
+                } else {
+                    reject(new Error("Not authenticated"));
+                }
+            }).catch(err => {
+                reject(new Error(`Cannot get user stats: ${err.toString()}`));
+            });
+    })
+}
+
+export function getPendingBalances(address) {
+    return new Promise((resolve, reject) => {
+        const path = `/api/orders/pending_balances?user_addr=${address}`;
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+            .then(response => {
+                return response.json();
+            }).then(result => {
+                if (result.success) {
+                    resolve(result.data);
+                } else {
+                    reject(new Error("Cannot get pending balance"));
+                }
+            }).catch(err => {
+                reject(new Error(`Cannot get pending balance: ${err.toString()}`));
+            });
+    });
+}
+
+export function getRelatedOrders(sourceToken, destToken, minRate, address) {
+    return new Promise((resolve, reject) => {
+        const path = `/api/orders/related_orders?src=${sourceToken}&dst=${destToken}&min_rate=${minRate}&user_addr=${address}`;
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path)).then(response => {
+            return response.json();
+        }).then(result => {
+            if (result.success) {
+                const orders = filterOrder(result);
+                resolve(orders);
+            } else {
+                reject(new Error("Not authenticated"));
+            }
+        }).catch(err => {
+            reject(new Error(`Cannot get related orders: ${err.toString()}`));
+        })
+    })
+}
+
+function sortOrders(orders) {
+    let results = _.orderBy(orders, item => {
+        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+            return getFormattedDate(item.created_at, true);
+        } else {
+            return getFormattedDate(item.updated_at, true);
+        }
+    }, ["desc"]);
+
+    results = _.sortBy(results, item => {
+        if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+            return 0;
+        } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }, ["asc"]);
+
+    return results;
+}
+
+export function getOrdersByFilter(address = null, pair = null, status = null, time = null, pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
+    let path = `/api/orders?page_index=${pageIndex}&page_size=${pageSize}`;
+
+    if (address) {
+        const params = address.reduce((sum, item) => {
+            return sum + `&user_address[]=${item}`;
+        }, "");
+        path += params;
+    }
+
+    if (pair) {
+        const params = pair.reduce((sum, item) => {
+            const pairParam = item.replace("-", "_");
+            return sum + `&pairs[]=${pairParam}`;
+        }, "");
+        path += params;
+    }
+
+    if (status) {
+        const params = status.reduce((sum, item) => {
+            return sum + `&status[]=${item}`;
+        }, "");
+        path += params;
+    }
+
+    if (time) {
+        const second = calcInterval(time);
+        path += `&time=${second}`;
+    }
+
+    return new Promise((resolve, rejected) => {
+        timeout(MAX_REQUEST_TIMEOUT, fetch(path))
+            .then((response) => {
+                return response.json()
+            }).then((result) => {
+                const orderList = filterOrder(result);
+                resolve({
+                    orders: sortOrders(orderList),
+                    itemsCount: result.paging_info.items_count,
+                    pageCount: result.paging_info.page_count,
+                    pageIndex: result.paging_info.page_index,
+                    pageSize: result.paging_info.page_size
+                });
+            })
+            .catch((err) => {
+                rejected(new Error(`Cannot get user orders: ${err.toString()}`))
+            })
+    })
 }

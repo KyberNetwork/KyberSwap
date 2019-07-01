@@ -77,13 +77,25 @@ export default class LimitOrderBody extends React.Component {
     return openOrderAmount;
   }
 
+  getPendingBalance = (tokenSymbol, tokenDecimals) => {
+    if (!this.props.account) return 0
+    if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
+      const amount = this.props.limitOrder.pendingBalances[tokenSymbol] * (Math.pow(10, tokenDecimals));
+      return amount;
+    } else {
+      return 0;
+    }
+  }
+
   getAvailableBalanceTokenList = () => {
     const tokens = this.props.tokens;
     const orderList = this.props.limitOrder.listOrder;
 
     return Object.keys(tokens).map(key => {
       let token = tokens[key];
-      const openOrderAmount = this.getOpenOrderAmount(token.symbol, token.decimals)
+      const openOrderAmount = this.props.limitOrder.filterMode === "client" ?
+        this.getOpenOrderAmount(token.symbol, token.decimals) :
+        this.getPendingBalance(token.symbol, token.decimals);
 
       if (openOrderAmount) {
         token = Object.create(token);

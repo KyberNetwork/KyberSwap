@@ -176,7 +176,58 @@ const limitOrder = (state = initState, action) => {
       newState.listOrder = newListOrder;
       return newState;
     }
-    
+    case "LIMIT_ORDER.SET_ORDERS_COUNT": {
+      const count = action.payload;
+      newState.ordersCount = count;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_FILTER_MODE": {
+      const filterMode = action.payload;
+      newState.filterMode = filterMode;
+      return newState;
+    }
+    case "LIMIT_ORDER.GET_LIST_FILTER_COMPLETE": {
+      const { pairs, addresses } = action.payload;
+      newState.orderPairs = pairs;
+      newState.orderAddresses = addresses;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_ADDRESS_FILTER": {
+      const { addressFilter } = action.payload;
+      newState.addressFilter = addressFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_PAIR_FILTER": {
+      const { pairFilter } = action.payload;
+      newState.pairFilter = pairFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_STATUS_FILTER": {
+      const { statusFilter } = action.payload;
+      newState.statusFilter = statusFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_TIME_FILTER": {
+      const { timeFilter } = action.payload;
+      newState.timeFilter = timeFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_ORDER_PAGE_INDEX": {
+      const pageIndex = action.payload;
+      newState.pageIndex = pageIndex;
+      return newState;
+    }
+    case "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE": {
+      const { pendingBalances } = action.payload;
+      newState.pendingBalances = JSON.parse(JSON.stringify(pendingBalances));
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_RELATED_ORDERS": {
+      const { orders } = action.payload;
+      newState.relatedOrders = JSON.parse(JSON.stringify(orders));
+      return newState;
+    }
+
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       const { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload;
 

@@ -28,9 +28,6 @@ export default class LimitOrderList extends React.Component {
         { interval: 1, unit: 'month' },
         { interval: 3, unit: 'month'}
       ],
-      selectedTimeFilter: {
-        interval: 1, unit: 'month'
-      },
       cancelOrderModalVisible: false,
       currentOrder: null
     };
@@ -53,24 +50,27 @@ export default class LimitOrderList extends React.Component {
 
   // Handle filters
   onChangeTimeFilter = (item) => {
-    this.setState({
-      selectedTimeFilter: {
+    const filter = {
+      timeFilter: {
         interval: item.interval,
         unit: item.unit
-      }
-    });
+      },
+      pageIndex: 1
+    };
+    this.props.dispatch(limitOrderActions.getOrdersByFilter(filter));
+    this.props.dispatch(limitOrderActions.getListFilter());
   }
   
   // Render time filter
   getTimeFilter = () => {
-    const { timeFilter, selectedTimeFilter } = this.state;
+    const { timeFilter } = this.state;
 
     return timeFilter.map((item, index) => {
       // Translate date unit
       const convertedUnit = this.props.translate(`limit_order.${item.unit.toLowerCase()}`) || item.unit.charAt(0) + item.unit.slice(1);
 
       let className = "";
-      if (item.unit === selectedTimeFilter.unit && item.interval === selectedTimeFilter.interval) {
+      if (item.unit === this.props.limitOrder.timeFilter.unit && item.interval === this.props.limitOrder.timeFilter.interval) {
         className = "filter--active";
       }
 
@@ -99,7 +99,6 @@ export default class LimitOrderList extends React.Component {
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
               screen="desktop"
-              selectedTimeFilter={this.state.selectedTimeFilter}
               openCancelOrderModal={this.openCancelOrderModal}
               srcInputElementRef={this.props.srcInputElementRef}
             />

@@ -1,0 +1,38 @@
+.Pagination {
+  &__container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__count {
+    font-size: 13px;
+    color: #666666;
+    padding: 0 10px;
+  }
+
+  &__page-selection {
+    display: flex;
+  }
+
+  &__page-item {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    color: #222222;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 5px;
+
+    &--selected {
+      color: #ffffff;
+      border-radius: 3px;
+      background-color: #42526e;
+    }
+  }
+
+  &__button {
+    cursor: pointer;
+    margin: 0 10px;
+  }
+}
