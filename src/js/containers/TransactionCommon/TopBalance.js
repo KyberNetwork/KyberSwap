@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import * as converters from "../../utils/converter"
 import { getTranslate } from "react-localize-redux";
+import { getPendingBalances } from "../../actions/limitOrderActions";
 
 @connect((store, props) => {
     return {
@@ -88,6 +89,12 @@ export default class TopBalance extends React.Component {
     //     const orderedTokens = converters.sortEthBalance(tokens);
     //     return orderedTokens.slice(0, maxItemNumber)
     // }
+
+    componentDidMount() {
+        if (this.props.account && this.props.screen === "limit_order") {
+            this.props.dispatch(getPendingBalances(this.props.account.account.address));
+        }
+    }
 
     renderToken = (tokens) => {
         // let orderedTokens = [];

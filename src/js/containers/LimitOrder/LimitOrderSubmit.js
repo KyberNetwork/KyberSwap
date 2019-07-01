@@ -164,13 +164,26 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     // Filter active orders which have higher rate than current input rate
-    const higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-      return item.source === this.props.limitOrder.sourceTokenSymbol &&
-            item.dest === this.props.limitOrder.destTokenSymbol &&
-            item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-            item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-            converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
-    });
+    let higherRateOrders = [];
+
+    if (this.props.limitOrder.filterMode === "client") {
+      higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
+        return item.source === this.props.limitOrder.sourceTokenSymbol &&
+              item.dest === this.props.limitOrder.destTokenSymbol &&
+              item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+              item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+              converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+      });
+    } else {
+      higherRateOrders = await limitOrderServices.getRelatedOrders(
+        this.props.limitOrder.sourceToken,
+        this.props.limitOrder.destToken,
+        this.props.limitOrder.triggerRate,
+        this.props.account.address
+      );
+
+      this.props.dispatch(limitOrderActions.setRelatedOrders(higherRateOrders));
+    }
 
     if (higherRateOrders.length > 0) {
       if (!this.props.limitOrder.errors.rateWarning) {
@@ -305,6 +318,7 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (!isUserLogin()) {
       window.location.href = "/users/sign_in"
+      return;
     }
 
     if (this.props.account !== false && this.props.account.type !== "promo") {

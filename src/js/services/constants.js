@@ -258,6 +258,7 @@ const LIMIT_ORDER_CONFIG = {
   updateRateType : {
     selectToken: "select_token"
   },
+  pageSize: 50,
   orderPath: {
     approveZero: 1,
     approveMax: 2,
@@ -312,6 +313,35 @@ const INIT_LIMIT_ORDER_STATE = {
   orderPath: [],    
 
   listOrder: [],
+
+  // List filter properties
+  addressFilter: [],
+  pairFilter: [],
+  statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+  timeFilter: {
+    interval: 1,
+    unit: "month"
+  },
+  pageIndex: 1,
+
+  // Filter mode,
+  filterMode: "client",
+
+  // List available pairs and addresses, use for filtering
+  orderPairs: [],
+  orderAddresses: [],
+
+  // Date sort
+  dateSort: "desc",
+
+  // Orders count
+  ordersCount: 0,
+
+  // Pending balances
+  pendingBalances: {},
+
+  // Related orders
+  relatedOrders: [],
 
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 380000,

@@ -14,3 +14,4 @@ export { default as LimitOrderAccount } from './LimitOrderAccount.js'
 
 export { default as LimitOrderListModal } from "./LimitOrderListModal";
 export { default as LimitOrderTable } from "./LimitOrderTable";
+export { default as LimitOrderPagination } from "./LimitOrderPagination";

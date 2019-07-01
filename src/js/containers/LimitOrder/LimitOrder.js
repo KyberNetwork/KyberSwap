@@ -77,7 +77,7 @@ export default class LimitOrder extends React.Component {
    
     this.setInterValGroup(this.fetchCurrentRate, 10000)
 
-    this.setInterValGroup(this.fethchOpenOrders.bind(this), 10000)
+    this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
 
   }
 
@@ -88,15 +88,35 @@ export default class LimitOrder extends React.Component {
     this.setState({intervalGroup: []})    
   }
 
-  async fethchOpenOrders() {   
+  async fetchOpenOrders() {   
     // requuest update order
     this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
 
   async getOrders() {
     try {
-      const results = await limitOrderServices.getOrders();
-      this.props.dispatch(limitOrderActions.addListOrder(results));
+      const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
+
+      // Add list of available filter options
+      this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
+
+      if (orderStats.open + orderStats.in_progress <= 50) {
+        const orders = await limitOrderServices.getOrders();
+        this.props.dispatch(limitOrderActions.addListOrder(orders));
+        this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
+        this.props.dispatch(limitOrderActions.setFilterMode("client"));
+      } else {
+        const { itemsCount, orders } = await limitOrderServices.getOrdersByFilter(
+          this.props.limitOrder.addressFilter,
+          this.props.limitOrder.pairFilter,
+          this.props.limitOrder.statusFilter,
+          this.props.limitOrder.timeFilter
+        );
+        this.props.dispatch(limitOrderActions.addListOrder(orders));
+        this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));
+        this.props.dispatch(limitOrderActions.setFilterMode("server"));
+      }
+      
     } catch (err) {
       console.log(err);
     }
