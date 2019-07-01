@@ -33,6 +33,12 @@
         "PT",
         "ETH"
     ],
+    "limitOrder": {
+        "minSupportOrder": 0.5,
+        "maxSupportOrder": 10,
+        "minPercentTriggerRate": -10,
+        "maxPercentTriggerRate": 100
+    },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
     "userdashboard_url": "https://kyberswap.com",
