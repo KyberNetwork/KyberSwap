@@ -362,6 +362,7 @@ export default class LimitOrderTable extends Component {
     if (checked) {
       const pairFilter = [...this.props.limitOrder.pairFilter, value];
       this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
         pairFilter
       }));
     } else {
@@ -370,6 +371,7 @@ export default class LimitOrderTable extends Component {
       if (index !== -1) {
         pairFilter.splice(index, 1);
         this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
           pairFilter
         }));
       }
@@ -418,6 +420,7 @@ export default class LimitOrderTable extends Component {
     if (checked) {
       const statusFilter = [...this.props.limitOrder.statusFilter, value];
       this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
         statusFilter
       }));
     } else {
@@ -427,6 +430,7 @@ export default class LimitOrderTable extends Component {
         statusFilter.splice(index, 1);
 
         this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
           statusFilter
         }));
       }
@@ -466,6 +470,7 @@ export default class LimitOrderTable extends Component {
     if (checked) {
       const addressFilter = [...this.props.limitOrder.addressFilter, value];
       this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
         addressFilter
       }));
     } else {
@@ -474,6 +479,7 @@ export default class LimitOrderTable extends Component {
       if (index !== -1) {
         addressFilter.splice(index, 1);
         this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
           addressFilter
         }));
       }
@@ -724,6 +730,15 @@ export default class LimitOrderTable extends Component {
     }
   }
 
+  isShowPagination = () => {
+    if (this.props.limitOrder.filterMode === "client") {
+      return this.props.limitOrder.listOrder.length > 50 ? true : false;
+    } else {
+      return this.props.limitOrder.ordersCount > 50 ? true : false;
+    }
+  }
+
+
   render() {
 		const columns = this.getColumns();
     const data = this.renderData(this.props.data);
@@ -739,7 +754,7 @@ export default class LimitOrderTable extends Component {
 				<ReactTable 
 					data={data}
 					columns={columns}
-					showPagination={data.length === 0 ? false : true}
+					showPagination={this.isShowPagination()}
 					resizable={false}
 					sortable={false}
           minRows={0}

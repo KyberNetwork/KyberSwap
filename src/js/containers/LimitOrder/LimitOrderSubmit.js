@@ -318,6 +318,7 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (!isUserLogin()) {
       window.location.href = "/users/sign_in"
+      return;
     }
 
     if (this.props.account !== false && this.props.account.type !== "promo") {
