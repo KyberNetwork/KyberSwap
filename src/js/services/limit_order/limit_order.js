@@ -210,7 +210,7 @@ export function isEligibleAddress(addr) {
 
 export function getUserStats() {
     return new Promise((resolve, reject) => {
-        const path = "http://localhost:3000/api/orders/user_stats";
+        const path = "/api/orders/user_stats";
         timeout(MAX_REQUEST_TIMEOUT, fetch(path))
             .then(response => {
                 return response.json();
