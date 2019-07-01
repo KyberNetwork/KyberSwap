@@ -561,6 +561,20 @@
             "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
             "decimals": 18,
             "cg_id": "pundi-x"
+        },
+        "SPN": {
+            "symbol": "SPN",
+            "name": "Sapien Network",
+            "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
+            "decimals": 6,
+            "cg_id": "sapien"
+        },
+        "BAM": {
+            "symbol": "BAM",
+            "name": "Bamboo",
+            "address": "0x22b3faaa8df978f6bafe18aade18dc2e3dfa0e0c",
+            "decimals": 18,
+            "cg_id": "bamboo"
         }
     },
     "ethScanUrl": "https://etherscan.io/",

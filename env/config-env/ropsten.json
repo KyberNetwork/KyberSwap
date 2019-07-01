@@ -283,7 +283,8 @@
             "name": "Synthetix Network",
             "address": "0x013ae307648f529aa72c5767a334ddd37aab43c3",
             "decimals": 18,
-            "cg_id": ""
+            "cg_id": "",
+            "gasLimit": "500000"
         },
         "MYB": {
             "symbol": "MYB",
@@ -291,6 +292,14 @@
             "address": "0xc68d7c356e1b725f75cbaf1306a2603abd7157ca",
             "decimals": 18,
             "cg_id": ""
+        },
+        "SUSD": {
+            "symbol": "SUSD",
+            "name": "Synth sUSD",
+            "address": "0x9952e42ff92149f48b3b7dee3f921a6dd106f79f",
+            "decimals": 18,
+            "cg_id": "susd",
+            "gasLimit": "500000"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
