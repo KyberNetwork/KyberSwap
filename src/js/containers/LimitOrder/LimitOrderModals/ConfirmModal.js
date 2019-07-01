@@ -177,8 +177,7 @@ export default class ConfirmModal extends React.Component {
       }
   }
 
-    getFeeInfoTooltip = () => {
-      let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
+    getFeeInfoTooltip = (calculateFee) => {
       calculateFee = converters.roundingNumber(calculateFee);
       const sourceAmount = converters.roundingNumber(this.props.limitOrder.sourceAmount)
 
@@ -194,24 +193,25 @@ export default class ConfirmModal extends React.Component {
       `
     }
 
-    getFeeInfoComponent = () => {
+    getFeeInfoComponent = (calculateFee) => {
       return (
         <React.Fragment>
           <span data-tip data-for="fee-info" data-scroll-hide="false">
             <img src={require("../../../../assets/img/v3/info_grey.svg")} />
           </span>
           <ReactTooltip globalEventOff="click" event="click mouseenter mouseleave" html={true} place={`top`} type="light" id="fee-info" className="limit-order-modal__fee--info">
-            {this.getFeeInfoTooltip()}
+            {this.getFeeInfoTooltip(calculateFee)}
           </ReactTooltip>
         </React.Fragment>
       );
     }
 
     contentModal = () => {
-      let calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
-      // calculateFee = converters.displayNumberWithDot(calculateFee);
-
+      const calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
+      const formatedFee = converters.formatNumber(calculateFee, 5);
+      const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 4);
       const receiveAmount = (this.props.limitOrder.sourceAmount - (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100) * this.props.limitOrder.triggerRate
+
       return (
           <div className="limit-order-modal">
             <div className="limit-order-modal__body">
@@ -238,7 +238,7 @@ export default class ConfirmModal extends React.Component {
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                       <div className={"rc-info"}>
                         <div title={this.props.limitOrder.sourceAmount}>
-                          {converters.formatNumber(this.props.limitOrder.sourceAmount, 4)}
+                          {formatedSrcAmount}
                         </div>
                         <div>
                           {this.props.limitOrder.sourceTokenSymbol}
@@ -257,7 +257,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${converters.formatNumber(this.props.limitOrder.sourceAmount, 4)} - ${converters.formatNumber(calculateFee, 4)}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 4)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 4)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                       </div>
                     </div>
                   </div>
@@ -268,16 +268,16 @@ export default class ConfirmModal extends React.Component {
                     <div>
                       {this.props.translate("limit_order.fee") || "Fee"}
                     </div>
-                    {!this.props.global.isOnMobile && this.getFeeInfoComponent()}
+                    {!this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
                   </div>
                   <div className="limit-order-modal__fee--amount">
                     <div title={calculateFee}>
-                      {converters.formatNumber(calculateFee, 4)}
+                      {formatedFee}
                     </div>
                     <div>
                       {this.props.limitOrder.sourceTokenSymbol}
                     </div>
-                    {this.props.global.isOnMobile && this.getFeeInfoComponent()}
+                    {this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
                   </div>
                 </div>
                 {/* <div className="limit-order-modal__result">
@@ -325,7 +325,5 @@ export default class ConfirmModal extends React.Component {
             size="medium"
           />
         )
-
-
     }
 }
