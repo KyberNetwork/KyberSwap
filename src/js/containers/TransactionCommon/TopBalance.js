@@ -27,7 +27,7 @@ export default class TopBalance extends React.Component {
 
     selectBalance = (sourceSymbol) => {
 
-        this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" ? "source" : "transfer")
+        
 
         var sourceBalance = this.props.tokens[sourceSymbol].balance
         var sourceDecimal = this.props.tokens[sourceSymbol].decimals
@@ -65,6 +65,8 @@ export default class TopBalance extends React.Component {
         }
         this.props.selectTokenBalance();
         this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
+
+        this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" ? "source" : "transfer")
     }
 
     showMore = () => {
