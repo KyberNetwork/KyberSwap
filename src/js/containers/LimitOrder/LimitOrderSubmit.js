@@ -93,13 +93,13 @@ export default class LimitOrderSubmit extends React.Component {
     // var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
     var ethEquivalentValue = this.calculateETHequivalent()
 
-    if (ethEquivalentValue < constants.LIMIT_ORDER_CONFIG.minSupportOrder && !isNaN(sourceAmount)) {
-      sourceAmountError.push(this.props.translate("error.amount_too_small", { minAmount: constants.LIMIT_ORDER_CONFIG.minSupportOrder} ) ||`Amount is too small. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`);
+    if (ethEquivalentValue < BLOCKCHAIN_INFO.limitOrder.minSupportOrder && !isNaN(sourceAmount)) {
+      sourceAmountError.push(this.props.translate("error.amount_too_small", { minAmount: BLOCKCHAIN_INFO.limitOrder.minSupportOrder} ) ||`Amount is too small. Limit order only support min ${constants.LIMIT_ORDER_CONFIG.minSupportOrder} ETH equivalent order`);
       isValidate = false
     }
 
-    if (ethEquivalentValue > constants.LIMIT_ORDER_CONFIG.maxSupportOrder && !isNaN(sourceAmount)) {
-      sourceAmountError.push(this.props.translate("error.amount_too_big", { maxAmount: constants.LIMIT_ORDER_CONFIG.maxSupportOrder} ) || `Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.maxSupportOrder} ETH equivalent order`)
+    if (ethEquivalentValue > BLOCKCHAIN_INFO.limitOrder.maxSupportOrder && !isNaN(sourceAmount)) {
+      sourceAmountError.push(this.props.translate("error.amount_too_big", { maxAmount: BLOCKCHAIN_INFO.limitOrder.maxSupportOrder} ) || `Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.maxSupportOrder} ETH equivalent order`)
       isValidate = false
     }
 
@@ -112,12 +112,12 @@ export default class LimitOrderSubmit extends React.Component {
     // check rate is too big
     var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
     var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
-    if (percentChange > constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate && !isNaN(triggerRate)) {
-      rateError.push(this.props.translate("error.rate_too_high", { maxRate: constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
+    if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRate)) {
+      rateError.push(this.props.translate("error.rate_too_high", { maxRate: BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
       isValidate = false
     }
-    if (percentChange < constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate && !isNaN(triggerRate)) {
-      rateError.push(this.props.translate("error.rate_too_low", { minRate: constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate }) || `Trigger rate is too low, please increase trigger rate. Minimum rate is ${constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate}% lower than current market rate.`);
+    if (percentChange < BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate && !isNaN(triggerRate)) {
+      rateError.push(this.props.translate("error.rate_too_low", { minRate: BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate }) || `Trigger rate is too low, please increase trigger rate. Minimum rate is ${constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate}% lower than current market rate.`);
       isValidate = false
     }
 

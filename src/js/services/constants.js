@@ -252,15 +252,9 @@ const INIT_TRANSFER_FORM_STATE = {
   isSelectTokenBalance: false
 }
 
-
-
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
-  minSupportOrder: 0.0001,
-  maxSupportOrder: 10,
   maxFee: 0.5,
-  minPercentTriggerRate: -20,
-  maxPercentTriggerRate: 50,
   updateRateType : {
     selectToken: "select_token"
   },
