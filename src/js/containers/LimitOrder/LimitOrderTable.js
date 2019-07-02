@@ -718,9 +718,9 @@ export default class LimitOrderTable extends Component {
     }
   }
 
-  isShowPagination = () => {
+  isShowPagination = (data) => {
     if (this.props.limitOrder.filterMode === "client") {
-      return this.props.limitOrder.listOrder.length > LIMIT_ORDER_CONFIG.pageSize ? true : false;
+      return data.length > LIMIT_ORDER_CONFIG.pageSize ? true : false;
     } else {
       return this.props.limitOrder.ordersCount > LIMIT_ORDER_CONFIG.pageSize ? true : false;
     }
@@ -742,7 +742,7 @@ export default class LimitOrderTable extends Component {
 				<ReactTable 
 					data={data}
 					columns={columns}
-					showPagination={this.isShowPagination()}
+					showPagination={this.isShowPagination(data)}
 					resizable={false}
 					sortable={false}
           minRows={0}
