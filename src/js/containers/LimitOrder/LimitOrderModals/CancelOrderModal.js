@@ -72,8 +72,8 @@ export default class CancelOrderModal extends Component {
 	};
 
 	getDateCell = props => {
-		const { created_at, updated_at, status } = props;
-		const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_at : updated_at;
+		const { updated_at, status } = props;
+		const timestamp = updated_at;
 		const datetime = getFormattedDate(timestamp);
 		return <div>{datetime}</div>;
 	};
@@ -164,7 +164,7 @@ export default class CancelOrderModal extends Component {
 		if (!this.props.order) {
 			return null
 		}
-		const { source, dest, min_rate, status, created_at, updated_at, src_amount, fee } = this.props.order;
+		const { source, dest, min_rate, status, updated_at, src_amount, fee } = this.props.order;
 
 		const rate = roundingNumber(min_rate);
 

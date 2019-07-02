@@ -410,11 +410,12 @@
     "wrap_eth_modal_title": "Convert ETH to WETH",
     "login_to_submit": "Login to Submit Order",
     "submit": "Submit",
-    "discount_message": "to discount 50% for 20 orders",
+    "discount_message": "Hold from 2000KNC to get discount for your orders. More info <a href=\"${link}\"\ntarget=\"_blank\">here</a>",
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "ineligible_address": "This address has been used by another account. Please place order with other address."
+    "ineligible_address": "This address has been used by another account. Please place order with other address.",
+    "fetch_fee_err": "Cannot get fee."
   },
   "home": "Home",
   "tracker": "Tracker",

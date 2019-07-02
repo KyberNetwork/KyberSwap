@@ -21,6 +21,14 @@ const keyMapping = {
     "msg": "msg"
 }
 
+function validateOrder(order) {
+    if (typeof order.fee !== "number" || typeof order.src_amount !== "number" || typeof order.min_rate !== "number"
+    || typeof order.created_at !== "number" || typeof order.updated_at !== "number") return false;
+    if (order.fee < 0 || order.fee > 0.5) return false;
+
+    return true;
+}
+
 function filterOrder(result) {
     var orderList = []
     var fields = result.fields
@@ -31,7 +39,9 @@ function filterOrder(result) {
             var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
             order[field] = orders[i][j]
         }
-        orderList.push(order)
+        if (validateOrder(order)) {
+            orderList.push(order)
+        }
     }
     const results = orderList.map(item => {
         return {
@@ -270,11 +280,7 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
 
 function sortOrders(orders) {
     let results = _.orderBy(orders, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-            return getFormattedDate(item.created_at, true);
-        } else {
-            return getFormattedDate(item.updated_at, true);
-        }
+        return getFormattedDate(item.updated_at, true);
     }, ["desc"]);
 
     results = _.sortBy(results, item => {
