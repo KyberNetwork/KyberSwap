@@ -143,6 +143,7 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
  * statusFilter
  * timeFilter
  * pageIndex
+ * dateSort
  */
 export function getOrdersByFilter(filter) {
   return {
@@ -190,6 +191,13 @@ export function setOrderPageIndex(pageIndex) {
   return {
     type: "LIMIT_ORDER.SET_ORDER_PAGE_INDEX",
     payload: pageIndex
+  }
+}
+
+export function setOrderDateSort(dateSort) {
+  return {
+    type: "LIMIT_ORDER.SET_ORDER_DATE_SORT",
+    payload: dateSort
   }
 }
 
