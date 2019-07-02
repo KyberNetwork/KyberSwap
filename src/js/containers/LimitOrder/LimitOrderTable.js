@@ -137,8 +137,8 @@ export default class LimitOrderTable extends Component {
 	// Render cell
 	// --------------
 	getDateCell = (props) => {
-    const { created_at, updated_at, status } = props;
-    const timestamp = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_at : updated_at;
+    const { updated_at, status } = props;
+    const timestamp = updated_at;
     const datetime = getFormattedDate(timestamp);
     return (
       <div>{datetime}</div>
@@ -153,10 +153,10 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest, status, created_at, updated_at, min_rate } = props;
+    const { source, dest, status, updated_at, min_rate } = props;
     const { screen } = this.props;
 
-    const datetime = status === LIMIT_ORDER_CONFIG.status.OPEN || status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS ? created_at : updated_at;
+    const datetime = updated_at;
     const rate = roundingNumber(min_rate);
 
     if (screen === "mobile") {
@@ -274,7 +274,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getOrderDetail = (row) => {
-    const { source, dest, min_rate, status, created_at, updated_at, src_amount, fee } = row.original;
+    const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
 
     const rate = roundingNumber(min_rate);
 
@@ -610,11 +610,7 @@ export default class LimitOrderTable extends Component {
       const currentTime = new Date().getTime() / 1000;
 
       results = results.filter(item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-          return item.created_at >= currentTime - interval;
-        } else {
-          return item.updated_at >= currentTime - interval; 
-        }
+        return item.updated_at >= currentTime - interval;
       });
     }
 
@@ -642,11 +638,7 @@ export default class LimitOrderTable extends Component {
 
     if (dateSort) {
       results = _.orderBy(results, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-          return getFormattedDate(item.created_at, true);
-        } else {
-          return getFormattedDate(item.updated_at, true);
-        }
+        return getFormattedDate(item.updated_at, true);
       }, [dateSort]);
     }
     
@@ -677,11 +669,7 @@ export default class LimitOrderTable extends Component {
     const currentTime = new Date().getTime() / 1000;
 
     const data = nextProps.data.filter(item => {
-      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return item.created_at >= currentTime - interval;
-      } else {
-        return item.updated_at >= currentTime - interval; 
-      }
+      return item.updated_at >= currentTime - interval;
     });
 
     // Filter available pairs
