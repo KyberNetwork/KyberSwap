@@ -63,7 +63,7 @@ class LimitOrderFee extends React.Component {
           <div>
             {this.props.translate("limit_order.fee") || "Fee"}: <img src={require('../../../assets/img/waiting-white.svg')} />
           </div>
-          <div>{this.props.translate("limit_order.discount_message", { link: '/faq' }) || "Hold from 2000KNC to get discount for your orders. More info <a href='/faq' target='_blank' rel='noopener noreferrer'>here</a>"}</div>
+          <div>{this.props.translate("limit_order.discount_message", { link: '/faq' }) || "Hold from 2000 KNC to get discount for your orders. More info <a href='/faq' target='_blank' rel='noopener noreferrer'>here</a>"}</div>
         </div>
       )
     }else{
@@ -72,7 +72,7 @@ class LimitOrderFee extends React.Component {
           <div className="limit-order-fee__text">
             {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{converter.formatNumber(calculateFee, 4)}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
           </div>
-          <div>{this.props.translate("limit_order.discount_message", { link: '/faq' }) || "Hold from 2000KNC to get discount for your orders. More info <a href='/faq' target='_blank' rel='noopener noreferrer'>here</a>"}</div>
+          <div>{this.props.translate("limit_order.discount_message", { link: '/faq' }) || "Hold from 2000 KNC to get discount for your orders. More info <a href='/faq' target='_blank' rel='noopener noreferrer'>here</a>"}</div>
         </div>
       )
     }
