@@ -266,12 +266,8 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
         timeout(MAX_REQUEST_TIMEOUT, fetch(path)).then(response => {
             return response.json();
         }).then(result => {
-            if (result.success) {
-                const orders = filterOrder(result);
-                resolve(orders);
-            } else {
-                reject(new Error("Not authenticated"));
-            }
+            const orders = filterOrder(result);
+            resolve(orders);
         }).catch(err => {
             reject(new Error(`Cannot get related orders: ${err.toString()}`));
         })
