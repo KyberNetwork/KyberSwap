@@ -25,10 +25,10 @@
         "ETH"
     ],
     "limitOrder": {
-      "minSupportOrder": 0.01,
-      "maxSupportOrder": 1,
-      "minPercentTriggerRate": -10,
-      "maxPercentTriggerRate": 100
+        "minSupportOrder": 0.01,
+        "maxSupportOrder": 1,
+        "minPercentTriggerRate": -10,
+        "maxPercentTriggerRate": 100
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
@@ -582,6 +582,13 @@
             "address": "0x22b3faaa8df978f6bafe18aade18dc2e3dfa0e0c",
             "decimals": 18,
             "cg_id": "bamboo"
+        },
+        "MYB": {
+            "symbol": "MYB",
+            "name": "MyBit",
+            "address": "0x5d60d8d7ef6d37e16ebabc324de3be57f135e0bc",
+            "decimals": 18,
+            "cg_id": "mybit-token"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
