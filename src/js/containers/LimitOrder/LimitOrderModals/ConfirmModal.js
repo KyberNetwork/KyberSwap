@@ -35,7 +35,8 @@ export default class ConfirmModal extends React.Component {
             isConfirming: false,
             isFetchFee : true,
             isFinish: false,
-            fee : constants.LIMIT_ORDER_CONFIG.maxFee
+            fee : constants.LIMIT_ORDER_CONFIG.maxFee,
+            feeErr: ""
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -55,7 +56,10 @@ export default class ConfirmModal extends React.Component {
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
-        this.setState({isFetchFee : false})
+        this.setState({
+          isFetchFee : false,
+          feeErr: err.toString()
+        })
       }
     }
 
@@ -296,6 +300,10 @@ export default class ConfirmModal extends React.Component {
                   {this.state.err}
                 </div>}
 
+                {this.state.feeErr.length > 0 && <div className="limit-order-modal__result--error">
+                  {this.props.translate("limit_order.fetch_fee_err") || "Fetching fee error. Cannot submit order."}
+                </div>}
+
               </div>
             </div>
 
@@ -306,7 +314,7 @@ export default class ConfirmModal extends React.Component {
               >
                 {this.props.translate("modal.cancel") || "Cancel"}
               </button>
-              <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+              <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
                 onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
             </div>}
 

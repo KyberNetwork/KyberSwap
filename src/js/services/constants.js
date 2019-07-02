@@ -264,7 +264,7 @@ const LIMIT_ORDER_CONFIG = {
   updateRateType : {
     selectToken: "select_token"
   },
-  pageSize: 50,
+  pageSize: BLOCKCHAIN_INFO.page_size,
   orderPath: {
     approveZero: 1,
     approveMax: 2,

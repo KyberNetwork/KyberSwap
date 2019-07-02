@@ -412,7 +412,8 @@
     "lower_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 낮습니다.",
     "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",
     "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
-    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요."
+    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
+    "fetch_fee_err": "Cannot get fee."
   },
   "home": "홈",
   "tracker": "트래커",
