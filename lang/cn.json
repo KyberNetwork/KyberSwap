@@ -406,7 +406,7 @@
     "wrap_eth_modal_title": "兑换ETH至WETH",
     "login_to_submit": "登录并提交订单",
     "submit": "提交订单",
-    "discount_message": "能够为20个订单带来50%的折扣。",
+    "discount_message": "持有2000KNC以上可享受享受折扣。在<a href=\"${link}\"\ntarget=\"_blank\">这里</a>了解更多信息",
     "higher_rate": "您的价格比当前市场价高${percentChange}%",
     "lower_rate": "您的价格比当前市场价低${percentChange}%",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",

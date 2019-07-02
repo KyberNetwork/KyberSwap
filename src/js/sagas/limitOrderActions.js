@@ -55,35 +55,19 @@ function* selectToken(action) {
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
   const translate = getTranslate(store.getState().locale)
-
-  // const state = store.getState();
-  // const translate = getTranslate(state.locale);
-  // const { destTokenSymbol, destAmount } = state.limitOrder;
-
-
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol)
 
-  try{
+  try {
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
     var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
-
     const rateInit = rateZero.expectedPrice.toString();
-    
-    let errMsg = "";
-    if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-      errMsg = translate("error.kyber_maintain") || "This token pair is temporarily under maintenance";
-    } else {
-      errMsg = translate("error.handle_amount") || "Kyber cannot handle your amount at the moment, please reduce your amount"
-    }
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, errMsg))
-
-  }catch(err){
-    console.log(err)
-    if(isManual){
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, ""))
+  } catch(err) {
+    if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
       return
