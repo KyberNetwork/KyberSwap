@@ -296,7 +296,7 @@ function sortOrders(orders) {
     return results;
 }
 
-export function getOrdersByFilter(address = null, pair = null, status = null, time = null, pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize, dateSort = null) {
+export function getOrdersByFilter(address = null, pair = null, status = null, time = null, dateSort = "desc", pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
     let path = `/api/orders?page_index=${pageIndex}&page_size=${pageSize}`;
 
     if (address) {

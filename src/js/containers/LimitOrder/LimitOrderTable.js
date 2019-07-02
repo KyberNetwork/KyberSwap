@@ -663,49 +663,7 @@ export default class LimitOrderTable extends Component {
     this.props.srcInputElementRef.focus();
   }
 
-  filterAvailableOptions = (nextProps) => {
-    const interval = calcInterval(nextProps.limitOrder.timeFilter);
-    const currentTime = new Date().getTime() / 1000;
-
-    const data = nextProps.data.filter(item => {
-      return item.updated_at >= currentTime - interval;
-    });
-
-    // Filter available pairs
-    const filterPairs = nextProps.limitOrder.orderPairs.filter(item => {
-      const found = data.filter(order => {
-        const key = `${order.source}-${order.dest}`;
-        return key === item;
-      });
-
-      return found.length > 0;
-    });
-
-    // Filter available addresses
-    const filterAddresses = nextProps.limitOrder.orderAddresses.filter(item => {
-      const found = data.filter(order => {
-        return order.user_address === item;
-      });
-
-      return found.length > 0;
-    });
-
-    return {
-      orderPairs: filterPairs,
-      orderAddresses: filterAddresses
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
-    /**
-     * Only show available filter options at specific datetime interval.
-     */
-    // const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
-    // this.setState({
-    //   orderPairs,
-    //   orderAddresses
-    // });
-
     if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
       this.setState({
         // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
