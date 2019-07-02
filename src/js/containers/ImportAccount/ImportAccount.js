@@ -50,9 +50,13 @@ export default class ImportAccount extends React.Component {
       if (isDapp) {
         this.props.dispatch(setOnDAPP());
 
-        const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
-        this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          ethereumService, this.props.tokens, this.props.translate, walletType))
+        
+        setTimeout(()=>{
+          const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
+          this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
+            ethereumService, this.props.tokens, this.props.translate, walletType))
+        }, 1000)
+        
       }
     }
     if (web3Service === false) {
@@ -91,7 +95,7 @@ export default class ImportAccount extends React.Component {
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
                 : this.props.translate("transaction.transfer_now") || "Transfer Now"}
             </div>
-            {/* <TermAndServices tradeType={this.props.tradeType}/> */}
+            <TermAndServices tradeType={this.props.tradeType}/>
           </div>
         }
         {!this.props.isOnDAPP && <ImportAccountView

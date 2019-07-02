@@ -25,17 +25,18 @@ const initState = {
 }
 
 const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
-  switch (action.type) {  	
-    case REHYDRATE: {      
-      var newState = JSON.parse(JSON.stringify(initState))
+  switch (action.type) {
+    case REHYDRATE: {
       if (action.key === "account" && action.payload && action.payload.account != false) {
-        var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account         
-        var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich )
-        return {...newState, account: updatedAccount}
+        var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account
+        var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich)
+
+        return {...state, account: updatedAccount}
+      } else if (action.key === "account") {
+        action.payload.loading = false
       }
-      // console.log("rehydrate")
-      // console.log(JSON.parse(JSON.stringify(initState)))
-      return {...newState}
+
+      return {...state}
     }
     case "ACCOUNT.LOADING": {
       return {...state, loading: true}
