@@ -22,7 +22,6 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-      dateSort: "desc",
 			currentOrder: null,
       cancelOrderModalVisible: false,
       statusFilterVisible: false,
@@ -245,14 +244,14 @@ export default class LimitOrderTable extends Component {
   }
 
 	handleSortDate = () => {
-    if (this.state.dateSort === "desc") {
-      this.setState({
-        dateSort: "asc",
-      },)
+    if (this.props.limitOrder.dateSort === "desc") {
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        dateSort: "asc"
+      }));
     } else {
-      this.setState({
-        dateSort: "desc",
-      })
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        dateSort: "desc"
+      }));
     }
   }
 
@@ -523,8 +522,8 @@ export default class LimitOrderTable extends Component {
       return (
         <div>
           <span>{this.props.translate("limit_order.date") || "Date"}</span>
-          {this.state.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
-          {this.state.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
       )
     } else if (title === "address") {
@@ -621,7 +620,7 @@ export default class LimitOrderTable extends Component {
 	// Render data
 	// -------------
   renderData = (data) => {
-		const { dateSort } = this.state;
+		const { dateSort } = this.props.limitOrder;
     let results = JSON.parse(JSON.stringify(data));
 
     if (this.props.screen === "mobile") {

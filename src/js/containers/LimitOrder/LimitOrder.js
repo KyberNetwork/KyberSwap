@@ -100,7 +100,7 @@ export default class LimitOrder extends React.Component {
       // Add list of available filter options
       this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
 
-      if (orderStats.open + orderStats.in_progress <= 50) {
+      if (orderStats.open + orderStats.in_progress <= LIMIT_ORDER_CONFIG.pageSize) {
         const orders = await limitOrderServices.getOrders();
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
@@ -110,7 +110,8 @@ export default class LimitOrder extends React.Component {
           this.props.limitOrder.addressFilter,
           this.props.limitOrder.pairFilter,
           this.props.limitOrder.statusFilter,
-          this.props.limitOrder.timeFilter
+          this.props.limitOrder.timeFilter,
+          this.props.limitOrder.dateSort
         );
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));

@@ -146,7 +146,7 @@ function*  fetchOpenOrderStatus() {
   }
 }
 
-function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex }) {
+function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex, dateSort }) {
   if (addressFilter) {
     yield put(limitOrderActions.setAddressFilter(addressFilter));
   }
@@ -161,6 +161,10 @@ function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pa
   }
   if (pageIndex) {
     yield put(limitOrderActions.setOrderPageIndex(pageIndex));
+  }
+
+  if (dateSort) {
+    yield put(limitOrderActions.setOrderDateSort(dateSort));
   }
 }
 
@@ -188,7 +192,7 @@ function* getOrdersByFilter(action) {
       return `${sourceToken}_${destToken}`;
     });
 
-    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.statusFilter, limitOrder.timeFilter, limitOrder.pageIndex);
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.statusFilter, limitOrder.timeFilter, limitOrder.pageIndex, limitOrder.dateSort);
 
     yield put(limitOrderActions.setOrdersCount(itemsCount));
     yield put(limitOrderActions.addListOrder(orders));

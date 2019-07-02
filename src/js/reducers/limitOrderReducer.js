@@ -217,6 +217,11 @@ const limitOrder = (state = initState, action) => {
       newState.pageIndex = pageIndex;
       return newState;
     }
+    case "LIMIT_ORDER.SET_ORDER_DATE_SORT": {
+      const dateSort = action.payload;
+      newState.dateSort = dateSort;
+      return newState;
+    }
     case "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE": {
       const { pendingBalances } = action.payload;
       newState.pendingBalances = JSON.parse(JSON.stringify(pendingBalances));
