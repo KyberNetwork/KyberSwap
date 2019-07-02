@@ -720,9 +720,9 @@ export default class LimitOrderTable extends Component {
 
   isShowPagination = () => {
     if (this.props.limitOrder.filterMode === "client") {
-      return this.props.limitOrder.listOrder.length > 50 ? true : false;
+      return this.props.limitOrder.listOrder.length > LIMIT_ORDER_CONFIG.pageSize ? true : false;
     } else {
-      return this.props.limitOrder.ordersCount > 50 ? true : false;
+      return this.props.limitOrder.ordersCount > LIMIT_ORDER_CONFIG.pageSize ? true : false;
     }
   }
 
