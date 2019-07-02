@@ -3,12 +3,14 @@ import { connect } from "react-redux"
 import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
+import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
 import { roundingNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
-
+import * as limitOrderActions from "../../actions/limitOrderActions";
+import { calcInterval, isArrayEqual } from "../../utils/common";
 
 @connect((store, props) => {
   return {
@@ -20,11 +22,7 @@ export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
-      pairFilter: [],
-      addressFilter: [],
       dateSort: "desc",
-      pairSort: "asc",
 			currentOrder: null,
       cancelOrderModalVisible: false,
       statusFilterVisible: false,
@@ -45,7 +43,7 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
-      headerClassName: "cell-flex-start-header",
+      headerClassName: "cell-flex-start-header cell-date-header",
       className: "cell-flex-start",
       maxWidth: 95,
       getHeaderProps: (state, rowInfo) => {
@@ -134,18 +132,6 @@ export default class LimitOrderTable extends Component {
 			return desktopColumns;
 		}
   }
-  
-  calcInterval = (selectedTimeFilter) => {
-    let interval = selectedTimeFilter.interval;
-    if (selectedTimeFilter.unit === "day") {
-      interval = interval * 86400;
-    } else if (selectedTimeFilter.unit === "week") {
-      interval = interval * 604800;
-    } else if (selectedTimeFilter.unit === "month") {
-      interval = interval * 2629743;
-    }
-    return interval;
-  }
 
 	// --------------
 	// Render cell
@@ -219,9 +205,10 @@ export default class LimitOrderTable extends Component {
     const { status, msg, id } = props;
 
     const getMsg = (msg) => {
-      return msg.reduce((result, item) => {
-        return result += `<div>${item}</div>`;
-      }, "");
+      // return msg.reduce((result, item) => {
+      //   return result += `<div>${item}</div>`;
+      // }, "");
+      return `<div>${msg}</div>`
     }
 
     return (
@@ -261,7 +248,7 @@ export default class LimitOrderTable extends Component {
     if (this.state.dateSort === "desc") {
       this.setState({
         dateSort: "asc",
-      })
+      },)
     } else {
       this.setState({
         dateSort: "desc",
@@ -342,33 +329,17 @@ export default class LimitOrderTable extends Component {
 	// Render pair filter dropdown
 	// -------------------------------
 	getPairFilter = () => {
-    const { pairFilter, pairSort } = this.state;
-    const { selectedTimeFilter } = this.props;
-    let data = this.props.data;
+    const { pairFilter, orderPairs } = this.props.limitOrder;
 
-    let interval = this.calcInterval(selectedTimeFilter);
-
-    const currentTime = new Date().getTime() / 1000;
-    data = data.filter(item => {
-      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return item.created_at >= currentTime - interval;
-      } else {
-        return item.updated_at >= currentTime - interval; 
-      }
-    });
-
-    const renderedPair = data.filter((item, index, self) => {
-      return index === self.findIndex(t => t.source === item.source && t.dest === item.dest);
-    }).map(item => {
-      const key = `${item.source}-${item.dest}`;
-      const checked = pairFilter.indexOf(key) !== -1;
+    const renderedPair = orderPairs.map(item => {
+      const checked = pairFilter.indexOf(item) !== -1;
 
       return (
-        <label key={key} className="pair-filter-modal__option">
-          <span>{item.source.toUpperCase()}</span>{' '}
+        <label key={item} className="pair-filter-modal__option">
+          <span>{item.split("-")[0]}</span>{' '}
           <span>&rarr;</span>{' '}
-          <span>{item.dest.toUpperCase()}</span>
-          <input type="checkbox" value={key}
+          <span>{item.split("-")[1]}</span>
+          <input type="checkbox" value={item}
             checked={checked}
             className="pair-filter-modal__checkbox" 
             onChange={e => this.handleFilterPair(e)}/>
@@ -379,26 +350,6 @@ export default class LimitOrderTable extends Component {
 
     return (
       <div className="pair-filter-modal">
-        {/* <div className="pair-filter-modal__basic">
-          <label className="pair-filter-modal__option">
-            <span>A &rarr; Z</span>
-            <input type="radio" name="basicFilter" value={'asc'}
-                    checked={pairSort === "asc"}
-                    className="pair-filter-modal__radio" 
-                    onChange={e => this.handleSortPair(e)}/>
-            <div className="pair-filter-modal__checkmark--radio"></div>
-
-          </label>
-          <label className="pair-filter-modal__option">
-            <span>Z &rarr; A</span>
-            <input type="radio" name="basicFilter" value={'desc'} 
-                    checked={pairSort === "desc"}
-                    className="pair-filter-modal__radio" 
-                    onChange={e => this.handleSortPair(e)}/>
-            <div className="pair-filter-modal__checkmark--radio"></div>
-
-          </label>
-        </div> */}
         <div className="pair-filter-modal__advance">
           {renderedPair}
         </div>
@@ -409,35 +360,29 @@ export default class LimitOrderTable extends Component {
 	handleFilterPair = (event) => {
     const { value, checked } = event.target;
     if (checked) {
-      this.setState({
-        pairFilter: [...this.state.pairFilter, value]
-      });
+      const pairFilter = [...this.props.limitOrder.pairFilter, value];
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
+        pairFilter
+      }));
     } else {
-      const results = [...this.state.pairFilter];
-      const index = results.indexOf(value);
+      const pairFilter = [...this.props.limitOrder.pairFilter];
+      const index = pairFilter.indexOf(value);
       if (index !== -1) {
-        results.splice(index, 1);
-        this.setState({
-          pairFilter: results
-        });
+        pairFilter.splice(index, 1);
+        this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
+          pairFilter
+        }));
       }
     }
 	}
-	
-	handleSortPair = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      this.setState({
-        pairSort: value,
-      });
-    }
-  }
 	
 	// ------------------------------
 	// Render status filter dropdown
 	// ------------------------------
 	getStatusFilter = () => {
-    const { statusFilter } = this.state;
+    const { statusFilter } = this.props.limitOrder;
     const status = Object.keys(LIMIT_ORDER_CONFIG.status).map(key => LIMIT_ORDER_CONFIG.status[key]);
 
     const getTitle = (status) => {
@@ -473,17 +418,21 @@ export default class LimitOrderTable extends Component {
 	handleFilterStatus = (event) => {
     const { value, checked } = event.target;
     if (checked) {
-      this.setState({
-        statusFilter: [...this.state.statusFilter, value]
-      });
+      const statusFilter = [...this.props.limitOrder.statusFilter, value];
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
+        statusFilter
+      }));
     } else {
-      const results = [...this.state.statusFilter];
-      const index = results.indexOf(value);
+      const statusFilter = [...this.props.limitOrder.statusFilter];
+      const index = statusFilter.indexOf(value);
       if (index !== -1) {
-        results.splice(index, 1);
-        this.setState({
-          statusFilter: results
-        });
+        statusFilter.splice(index, 1);
+
+        this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
+          statusFilter
+        }));
       }
     }
   }
@@ -492,12 +441,9 @@ export default class LimitOrderTable extends Component {
   // Render address filter dropdown
   // --------------------------------
   getAddressFilter = () => {
-    const { addressFilter } = this.state;
-    const filteredAddress = this.props.data.map(item => item.user_address).filter((item, index, self) => {
-      return self.indexOf(item) === index;
-    });
+    const { addressFilter, orderAddresses } = this.props.limitOrder;
     
-    const renderedComp = filteredAddress.map(item => {
+    const renderedComp = orderAddresses.map(item => {
       const checked = addressFilter.indexOf(item) !== -1;
 
       return (
@@ -522,17 +468,20 @@ export default class LimitOrderTable extends Component {
   handleFilterAddress = (event) => {
     const { value, checked } = event.target;
     if (checked) {
-      this.setState({
-        addressFilter: [...this.state.addressFilter, value]
-      });
+      const addressFilter = [...this.props.limitOrder.addressFilter, value];
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
+        addressFilter
+      }));
     } else {
-      const results = [...this.state.addressFilter];
-      const index = results.indexOf(value);
+      const addressFilter = [...this.props.limitOrder.addressFilter];
+      const index = addressFilter.indexOf(value);
       if (index !== -1) {
-        results.splice(index, 1);
-        this.setState({
-          addressFilter: results
-        });
+        addressFilter.splice(index, 1);
+        this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
+          addressFilter
+        }));
       }
     }
   }
@@ -549,6 +498,7 @@ export default class LimitOrderTable extends Component {
   }
 
   togglingConditionFilter = () => {
+    if (this.props.limitOrder.orderPairs.length === 0) return;
     this.setState({
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
       addressFilterVisible: this.state.addressFilterVisible ? false : this.state.addressFilterVisible,
@@ -557,6 +507,7 @@ export default class LimitOrderTable extends Component {
   }
 
   togglingAddressFilter = () => {
+    if (this.props.limitOrder.orderAddresses.length === 0) return;
     this.setState({
       conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
@@ -623,14 +574,58 @@ export default class LimitOrderTable extends Component {
         <div>{this.props.translate(`limit_order.${title}`) || title.charAt(0).toUpperCase() + title.slice(1)}</div>
       )
     }
-	}
-	
+  }
+  
+  clientSideFilter = (orders) => {
+    const { addressFilter, pairFilter, timeFilter, statusFilter } = this.props.limitOrder;
+    let results = JSON.parse(JSON.stringify(orders));
+
+    // Address filter
+    if (addressFilter && addressFilter.length > 0) {
+      results = results.filter(item => {
+          return addressFilter.indexOf(item.user_address) !== -1;
+      });
+    }
+
+    // Pair filter
+    if (pairFilter && pairFilter.length > 0) {
+      results = results.filter(item => {
+        const key = `${item.source}-${item.dest}`;
+        const index = pairFilter.indexOf(key);
+        return index !== -1;
+      });
+    }
+
+    // Status filter
+    if (statusFilter && statusFilter.length > 0) {
+      results = results.filter(item => {
+        const index = statusFilter.indexOf(item.status);
+        return index !== -1;
+      });
+    }
+
+    // Time filter
+    if (timeFilter) {
+      const interval = calcInterval(timeFilter);
+      const currentTime = new Date().getTime() / 1000;
+
+      results = results.filter(item => {
+        if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+          return item.created_at >= currentTime - interval;
+        } else {
+          return item.updated_at >= currentTime - interval; 
+        }
+      });
+    }
+
+    return results;
+  }
+
 	// -------------
 	// Render data
 	// -------------
   renderData = (data) => {
-		const { statusFilter, pairFilter, addressFilter, pairSort, dateSort } = this.state;
-		const { selectedTimeFilter } = this.props;
+		const { dateSort } = this.state;
     let results = JSON.parse(JSON.stringify(data));
 
     if (this.props.screen === "mobile") {
@@ -641,47 +636,8 @@ export default class LimitOrderTable extends Component {
       }));
     }
 
-    // Status filter
-    if (statusFilter.length > 0) {
-      results = results.filter(item => {
-        const index = statusFilter.indexOf(item.status);
-        return index !== -1;
-      });
-    }
-
-    // Pair filter
-    if (pairFilter.length > 0) {
-      results = results.filter(item => {
-        const key = `${item.source}-${item.dest}`;
-        const index = pairFilter.indexOf(key);
-        return index !== -1;
-      });
-    }
-
-    // Address filter
-    if (addressFilter.length > 0) {
-      results = results.filter(item => {
-        return addressFilter.indexOf(item.user_address) !== -1;
-      });
-    }
-
-    // Time sort
-    let interval = this.calcInterval(selectedTimeFilter);
-
-    const currentTime = new Date().getTime() / 1000;
-    results = results.filter(item => {
-      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return item.created_at >= currentTime - interval;
-      } else {
-        return item.updated_at >= currentTime - interval; 
-      }
-    });
-    
-
-    if (pairSort) {
-      results = _.orderBy(results, item => {
-        return `${item.source}-${item.dest}`;
-      }, [pairSort]);
+    if (this.props.limitOrder.filterMode === "client") {
+      results = this.clientSideFilter(results);
     }
 
     if (dateSort) {
@@ -716,43 +672,97 @@ export default class LimitOrderTable extends Component {
     this.props.srcInputElementRef.focus();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectedTimeFilter !== nextProps.selectedTimeFilter) {
+  filterAvailableOptions = (nextProps) => {
+    const interval = calcInterval(nextProps.limitOrder.timeFilter);
+    const currentTime = new Date().getTime() / 1000;
 
-      // Filter common pair is state's pairFilter array and props' data
-      const filterArray = this.state.pairFilter.filter(item => {
-        const found = nextProps.data.filter(order => {
-          const key = `${order.source}-${order.dest}`;
-          return key === item;
-        });
+    const data = nextProps.data.filter(item => {
+      if (item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+        return item.created_at >= currentTime - interval;
+      } else {
+        return item.updated_at >= currentTime - interval; 
+      }
+    });
 
-        return found.length > 0;
+    // Filter available pairs
+    const filterPairs = nextProps.limitOrder.orderPairs.filter(item => {
+      const found = data.filter(order => {
+        const key = `${order.source}-${order.dest}`;
+        return key === item;
       });
 
+      return found.length > 0;
+    });
+
+    // Filter available addresses
+    const filterAddresses = nextProps.limitOrder.orderAddresses.filter(item => {
+      const found = data.filter(order => {
+        return order.user_address === item;
+      });
+
+      return found.length > 0;
+    });
+
+    return {
+      orderPairs: filterPairs,
+      orderAddresses: filterAddresses
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    /**
+     * Only show available filter options at specific datetime interval.
+     */
+    // const { orderPairs, orderAddresses } = this.filterAvailableOptions(nextProps);
+    // this.setState({
+    //   orderPairs,
+    //   orderAddresses
+    // });
+
+    if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
       this.setState({
         // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
-        pairFilter: filterArray,
-        // pairSort: "asc",
+        statusFilterVisible: false,
+        addressFilterVisible: false,
+        conditionFilterVisible: false,
         expanded: {}
       })
     }
   }
 
+  isShowPagination = () => {
+    if (this.props.limitOrder.filterMode === "client") {
+      return this.props.limitOrder.listOrder.length > 50 ? true : false;
+    } else {
+      return this.props.limitOrder.ordersCount > 50 ? true : false;
+    }
+  }
+
+
   render() {
 		const columns = this.getColumns();
     const data = this.renderData(this.props.data);
+
+    const PaginationComponent = (props) => (
+      <LimitOrderPagination totalCount={data.length}
+        {...props}
+      />
+    );
+
     return (
 			<div className="limit-order-list--table">
 				<ReactTable 
 					data={data}
 					columns={columns}
-					showPagination={data.length > 100 ? true : false}
+					showPagination={this.isShowPagination()}
 					resizable={false}
 					sortable={false}
           minRows={0}
-          defaultPageSize={100}
+          defaultPageSize={LIMIT_ORDER_CONFIG.pageSize}
+          pageSizeOptions={[LIMIT_ORDER_CONFIG.pageSize]}
+          PaginationComponent={PaginationComponent}
           expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
-          className={this.props.data.length === 0 ? `ReactTable--empty` : ""}
+          className={data.length === 0 ? `ReactTable--empty` : ""}
           // noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
 					// PadRowComponent={() => (<div className="line-indicator"></div>)}
           // NoDataComponent={() => null}
@@ -792,11 +802,11 @@ export default class LimitOrderTable extends Component {
           }}
           getTheadThProps={(state, rowInfo, column) => {
             if (this.props.data.length === 0) {
-              return {
-                style: {
-                  pointerEvents: "none"
-                }
-              }
+              // return {
+              //   style: {
+              //     pointerEvents: "none"
+              //   }
+              // }
             }
             if (column.id === "status") {
               return {
@@ -834,13 +844,5 @@ export default class LimitOrderTable extends Component {
 LimitOrderTable.propTypes = {
 	data: PropTypes.array,
 	screen: PropTypes.string,
-	selectedTimeFilter: PropTypes.object,
 	openCancelOrderModal: PropTypes.func
-}
-
-LimitOrderTable.defaultProps = {
-  selectedTimeFilter: { 
-    interval: 1,
-    unit: "month"
-  }
 }

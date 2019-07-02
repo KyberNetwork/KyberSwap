@@ -134,3 +134,102 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
     payload: { sourceTokenSymbol, txHash }
   }
 }
+
+/**
+ * 
+ * @param {*} filter Object contains fields
+ * addressFilter
+ * pairFilter
+ * statusFilter
+ * timeFilter
+ * pageIndex
+ */
+export function getOrdersByFilter(filter) {
+  return {
+    type: "LIMIT_ORDER.GET_ORDERS_BY_FILTER",
+    payload: filter
+  }
+}
+
+export function setFilterMode(mode) {
+  return {
+    type: "LIMIT_ORDER.SET_FILTER_MODE",
+    payload: mode
+  }
+}
+
+export function setAddressFilter(addressFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_ADDRESS_FILTER",
+    payload: { addressFilter }
+  }
+}
+
+export function setPairFilter(pairFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_PAIR_FILTER",
+    payload: { pairFilter }
+  }
+}
+
+export function setStatusFilter(statusFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_STATUS_FILTER",
+    payload: { statusFilter }
+  }
+}
+
+export function setTimeFilter(timeFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_TIME_FILTER",
+    payload: { timeFilter }
+  }
+}
+
+export function setOrderPageIndex(pageIndex) {
+  return {
+    type: "LIMIT_ORDER.SET_ORDER_PAGE_INDEX",
+    payload: pageIndex
+  }
+}
+
+export function setOrdersCount(count) {
+  return {
+    type: "LIMIT_ORDER.SET_ORDERS_COUNT",
+    payload: count
+  }
+}
+
+export function getListFilter() {
+  return {
+    type: "LIMIT_ORDER.GET_LIST_FILTER_PENDING"
+  }
+}
+
+export function getListFilterComplete(pairs, addresses) {
+  return {
+    type: "LIMIT_ORDER.GET_LIST_FILTER_COMPLETE",
+    payload: { pairs, addresses }
+  }
+}
+
+export function getPendingBalances(address) {
+  return {
+    type: "LIMIT_ORDER.GET_PENDING_BALANCES",
+    payload: { address }
+  }
+}
+
+export function getPendingBalancesComplete(pendingBalances) {
+  return {
+    type: "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE",
+    payload: { pendingBalances }
+  }
+}
+
+export function setRelatedOrders(orders) {
+  return {
+    type: "LIMIT_ORDER.SET_RELATED_ORDERS",
+    payload: { orders }
+  }
+}
