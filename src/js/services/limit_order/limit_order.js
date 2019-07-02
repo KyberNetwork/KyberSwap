@@ -58,8 +58,12 @@ export function getOrders() {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                var orderList = filterOrder(result)
-                resolve(orderList)
+                if (result.success) {
+                    var orderList = filterOrder(result)
+                    resolve(orderList)
+                } else {
+                    rejected(new Error("Cannot get orders"));
+                }
             })
             .catch((err) => {
                 rejected(new Error(`Cannot get user orders: ${err.toString}`))
@@ -113,7 +117,11 @@ export function cancelOrder(order) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result.cancelled)
+                if (result.success) {
+                    resolve(result.cancelled)
+                } else {
+                    rejected(new Error("Cannot cancel order"));
+                }
             })
             .catch((err) => {
                 rejected(new Error(`Cannot cancel order: ${err.toString()}`))
@@ -128,7 +136,11 @@ export function getNonce(userAddr, source, dest) {
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                resolve(result.nonce)
+                if (result.success) {
+                    resolve(result.nonce)
+                } else {
+                    rejected(new Error("Cannot get nonce"));
+                }
             })
             .catch((err) => {
                 rejected(new Error(`Cannot get user nonce: ${err.toString()}`))
@@ -191,9 +203,12 @@ export function getOrdersByIdArr(idArr) {
                 .then((response) => {
                     return response.json()
                 }).then((result) => {
-                    var orderList = filterOrder(result)
-                    resolve(orderList)
-
+                    if (result.success) {
+                        var orderList = filterOrder(result)
+                        resolve(orderList)
+                    } else {
+                        rejected(new Error("Cannot get orders by ids"));
+                    }
                 })
                 .catch((err) => {
                     rejected(new Error(`Cannot get user orders: ${err.toString()}`))
@@ -210,8 +225,12 @@ export function isEligibleAddress(addr) {
                 return response.json();
             })
             .then((result) => {
-                const { eligible_address } = result;
-                resolve(eligible_address);
+                if (result.success) {
+                    const { eligible_address } = result;
+                    resolve(eligible_address);
+                } else {
+                    reject(new Error("Cannot validate eligible address"));
+                }
             }).catch((err) => {
                 reject(new Error(`Cannot check eligible address: ${err.toString()}`));
             });
@@ -270,7 +289,7 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
                 const orders = filterOrder(result);
                 resolve(orders);
             } else {
-                reject(new Error("Not authenticated"));
+                reject(new Error("Cannot get related orders"));
             }
         }).catch(err => {
             reject(new Error(`Cannot get related orders: ${err.toString()}`));
@@ -335,14 +354,18 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
             .then((response) => {
                 return response.json()
             }).then((result) => {
-                const orderList = filterOrder(result);
-                resolve({
-                    orders: sortOrders(orderList),
-                    itemsCount: result.paging_info.items_count,
-                    pageCount: result.paging_info.page_count,
-                    pageIndex: result.paging_info.page_index,
-                    pageSize: result.paging_info.page_size
-                });
+                if (result.success) {
+                    const orderList = filterOrder(result);
+                    resolve({
+                        orders: sortOrders(orderList),
+                        itemsCount: result.paging_info.items_count,
+                        pageCount: result.paging_info.page_count,
+                        pageIndex: result.paging_info.page_index,
+                        pageSize: result.paging_info.page_size
+                    });
+                } else {
+                    rejected(new Error("Cannot get orders by filter"));
+                }
             })
             .catch((err) => {
                 rejected(new Error(`Cannot get user orders: ${err.toString()}`))
