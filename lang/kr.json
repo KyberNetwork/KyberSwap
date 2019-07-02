@@ -407,7 +407,7 @@
     "wrap_eth_modal_title": "ETH를 WETH로 전환하기",
     "login_to_submit": "거래하시 위해서는 로그인하십시오",
     "submit": "제출",
-    "discount_message": "구매시 20개 거래에 50 % 할인이 진행됩니다",
+    "discount_message": "2000KNC부터는 홀드하여 주문에 대한 할인을 받으세요. 더 자세한 정보는 <a href=\"${link}\"\ntarget=\"_blank\">여기서 확인<a>",
     "higher_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 높습니다.",
     "lower_rate": "제출 하신 가격이 현재 시장 가격보다 ${percentChange} % 낮습니다.",
     "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",

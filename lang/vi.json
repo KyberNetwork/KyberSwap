@@ -407,7 +407,7 @@
     "wrap_eth_modal_title": "Chuyển đổi ETH sang WETH",
     "login_to_submit": "Đăng nhập để đặt lệnh",
     "submit": "Đặt lệnh",
-    "discount_message": "để được giảm phí 50% cho 20 lệnh giao dịch tiếp theo",
+    "discount_message": "Giữ từ 2000 KNC trong ví để nhận được khuyến mại. Chi tiết tại <a href=\"${link}\"\ntarget=\"_blank\">đây</a>",
     "higher_rate": "Tỉ giá bạn đặt cao hơn ${percentChange}% so với tỉ giá thị trường",
     "lower_rate": "Tỉ giá bạn đặt thấp hơn ${percentChange}% so với tỉ giá thị trường",
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
