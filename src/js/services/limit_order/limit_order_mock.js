@@ -65,15 +65,15 @@ function sortOrders(orders, dateSort) {
         return getFormattedDate(item.updated_at, true);
     }, [dateSort]);
 
-    results = _.sortBy(results, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-            return 0;
-        } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }, ["asc"]);
+    // results = _.sortBy(results, item => {
+    //     if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+    //         return 0;
+    //     } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
+    //         return 1;
+    //     } else {
+    //         return 2;
+    //     }
+    // }, ["asc"]);
 
     return results;
 }

@@ -642,16 +642,16 @@ export default class LimitOrderTable extends Component {
     }
     
 
-    // Status sort after all: Priority is In Progress
-    results = _.sortBy(results, item => {
-      if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-        return 0;
-      } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-        return 1;
-      } else {
-        return 2;
-      }
-    }, ["asc"]);
+    // // Status sort after all: Priority is In Progress
+    // results = _.sortBy(results, item => {
+    //   if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
+    //     return 0;
+    //   } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
+    //     return 1;
+    //   } else {
+    //     return 2;
+    //   }
+    // }, ["asc"]);
     
     return results;
   }
