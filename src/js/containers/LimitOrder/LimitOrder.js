@@ -11,7 +11,7 @@ import constants from "../../services/constants"
 
 import {LimitOrderBody} from "../LimitOrder"
 import * as limitOrderServices from "../../services/limit_order";
-import { isUserLogin } from "../../utils/common";
+import { isUserLogin, getCookie } from "../../utils/common";
 
 import BLOCKCHAIN_INFO from "../../../../env";
 
@@ -95,13 +95,7 @@ export default class LimitOrder extends React.Component {
 
   async getOrders() {
     try {
-      const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
-
-      // Add list of available filter options
-      this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
-
-      const totalOrders = orderStats.open + orderStats.in_progress + orderStats.invalidated + orderStats.cancelled + orderStats.filled;
-
+      const totalOrders = getCookie("order_count");
       if (totalOrders <= constants.LIMIT_ORDER_CONFIG.pageSize) {
         const orders = await limitOrderServices.getOrders();
         this.props.dispatch(limitOrderActions.addListOrder(orders));
@@ -119,6 +113,14 @@ export default class LimitOrder extends React.Component {
         this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));
         this.props.dispatch(limitOrderActions.setFilterMode("server"));
       }
+
+      this.props.dispatch(limitOrderActions.getListFilter());
+
+      // const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
+
+      // this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
+
+      // const totalOrders = orderStats.open + orderStats.in_progress + orderStats.invalidated + orderStats.cancelled + orderStats.filled;
       
     } catch (err) {
       console.log(err);
