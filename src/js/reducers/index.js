@@ -26,7 +26,8 @@ import { localizeReducer } from 'react-localize-redux';
 const rootReducer = combineReducers({
   account: persistReducer({
     key: 'account',
-    storage: session    
+    storage: session,
+    blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error']    
   }, account),
 
   locale: localizeReducer,
