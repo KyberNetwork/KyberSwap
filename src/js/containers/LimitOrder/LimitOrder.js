@@ -95,12 +95,8 @@ export default class LimitOrder extends React.Component {
 
   async getOrders() {
     try {
-      const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
-
-      // Add list of available filter options
-      this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
-
-      if (orderStats.open + orderStats.in_progress <= constants.LIMIT_ORDER_CONFIG.pageSize) {
+      const limitOrderMode = limitOrderServices.getModeLimitOrder();
+      if (limitOrderMode === "client") {
         const orders = await limitOrderServices.getOrders();
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
@@ -117,6 +113,14 @@ export default class LimitOrder extends React.Component {
         this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));
         this.props.dispatch(limitOrderActions.setFilterMode("server"));
       }
+
+      this.props.dispatch(limitOrderActions.getListFilter());
+
+      // const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
+
+      // this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
+
+      // const totalOrders = orderStats.open + orderStats.in_progress + orderStats.invalidated + orderStats.cancelled + orderStats.filled;
       
     } catch (err) {
       console.log(err);
