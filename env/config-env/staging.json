@@ -25,11 +25,11 @@
         "ETH"
     ],
     "limitOrder": {
-      "minSupportOrder": 0.01,
-      "maxSupportOrder": 1,
-      "minPercentTriggerRate": -10,
-      "maxPercentTriggerRate": 100,
-      "page_size": 5
+        "minSupportOrder": 0.001,
+        "maxSupportOrder": 10,
+        "minPercentTriggerRate": -90,
+        "maxPercentTriggerRate": 100,
+        "page_size": 5
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
@@ -531,7 +531,8 @@
             "name": "Gnosis",
             "address": "0x6810e776880c02933d47db1b9fc05908e5386b96",
             "decimals": 18,
-            "cg_id": "gnosis"
+            "cg_id": "gnosis",
+            "gasLimit": "600000"
         },
         "USDC": {
             "symbol": "USDC",
@@ -540,6 +541,55 @@
             "decimals": 6,
             "cg_id": "usd-coin",
             "priority": true
+        },
+        "GEN": {
+            "symbol": "GEN",
+            "name": "DAOStack",
+            "address": "0x543ff227f64aa17ea132bf9886cab5db55dcaddf",
+            "decimals": 18,
+            "cg_id": "daostack"
+        },
+        "LRC": {
+            "symbol": "LRC",
+            "name": "Loopring",
+            "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+            "decimals": 18,
+            "cg_id": "loopring"
+        },
+        "RLC": {
+            "symbol": "RLC",
+            "name": "iExec RLC",
+            "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+            "decimals": 9,
+            "cg_id": "iexec-rlc"
+        },
+        "NPXS": {
+            "symbol": "NPXS",
+            "name": "Pundi X",
+            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+            "decimals": 18,
+            "cg_id": "pundi-x"
+        },
+        "SPN": {
+            "symbol": "SPN",
+            "name": "Sapien Network",
+            "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
+            "decimals": 6,
+            "cg_id": "sapien"
+        },
+        "BAM": {
+            "symbol": "BAM",
+            "name": "Bamboo",
+            "address": "0x22b3faaa8df978f6bafe18aade18dc2e3dfa0e0c",
+            "decimals": 18,
+            "cg_id": "bamboo"
+        },
+        "MYB": {
+            "symbol": "MYB",
+            "name": "MyBit",
+            "address": "0x5d60d8d7ef6d37e16ebabc324de3be57f135e0bc",
+            "decimals": 18,
+            "cg_id": "mybit-token"
         }
     },
     "ethScanUrl": "https://etherscan.io/",

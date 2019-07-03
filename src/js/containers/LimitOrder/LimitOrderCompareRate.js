@@ -34,11 +34,7 @@ export default class LimitOrderCompareRate extends React.Component {
     }
 
     if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate == 0){
-      return (
-        <div className={"limit-order-compare-rate"}>
-          {this.props.translate("limit_order.pair_not_supported") || "This pair is currently not supported by market"}
-        </div>
-      )
+      return ""
     }
 
     if (!this.props.limitOrder.isSelectToken && this.props.limitOrder.offeredRate != 0) {

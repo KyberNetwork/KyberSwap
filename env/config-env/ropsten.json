@@ -27,9 +27,9 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.1,
+        "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
-        "minPercentTriggerRate": -10,
+        "minPercentTriggerRate": -90,
         "maxPercentTriggerRate": 100,
         "page_size": 5
     },
@@ -277,6 +277,43 @@
             "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
             "decimals": 18,
             "cg_id": "weth"
+        },
+        "BAM": {
+            "symbol": "BAM",
+            "name": "Bamboo",
+            "address": "0xe8e692f05ecdd531c4550a93d323939fb826f968",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0x013ae307648f529aa72c5767a334ddd37aab43c3",
+            "decimals": 18,
+            "cg_id": "",
+            "gasLimit": "500000"
+        },
+        "MYB": {
+            "symbol": "MYB",
+            "name": "MyBit",
+            "address": "0xc68d7c356e1b725f75cbaf1306a2603abd7157ca",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "SUSD": {
+            "symbol": "SUSD",
+            "name": "Synth sUSD",
+            "address": "0x9952e42ff92149f48b3b7dee3f921a6dd106f79f",
+            "decimals": 18,
+            "cg_id": "susd",
+            "gasLimit": "500000"
+        },
+        "EQUAD": {
+            "symbol": "EQUAD",
+            "name": "Quadrant Protocol",
+            "address": "0x0e953389a6002a2017d686ff9f448a1eab890d7b",
+            "decimals": 18,
+            "cg_id": "quadrant-protocol"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

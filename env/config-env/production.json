@@ -34,11 +34,11 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.5,
+        "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
-        "minPercentTriggerRate": -10,
+        "minPercentTriggerRate": -90,
         "maxPercentTriggerRate": 100,
-        "page_size": 50
+        "page_size": 5
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
@@ -318,7 +318,7 @@
             "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
             "decimals": 18,
             "cg_id": "true-usd",
-            "gasLimit": "550000",
+            "gasLimit": "600000",
             "priority": true
         },
         "LEND": {
@@ -573,6 +573,47 @@
             "decimals": 18,
             "cg_id": "paxos-standard",
             "listing_time": 1556542800
+        },
+        "GEN": {
+            "symbol": "GEN",
+            "name": "DAOStack",
+            "address": "0x543ff227f64aa17ea132bf9886cab5db55dcaddf",
+            "decimals": 18,
+            "cg_id": "daostack",
+            "listing_time": 1560258000
+        },
+        "LRC": {
+            "symbol": "LRC",
+            "name": "Loopring",
+            "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+            "decimals": 18,
+            "cg_id": "loopring",
+            "listing_time": 1560258000
+        },
+        "RLC": {
+            "symbol": "RLC",
+            "name": "iExec RLC",
+            "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+            "decimals": 9,
+            "cg_id": "iexec-rlc",
+            "listing_time": 1560258000
+        },
+        "NPXS": {
+            "symbol": "NPXS",
+            "name": "Pundi X",
+            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+            "decimals": 18,
+            "cg_id": "pundi-x",
+            "listing_time": 1560258000
+        },
+        "GNO": {
+            "symbol": "GNO",
+            "name": "Gnosis",
+            "address": "0x6810e776880c02933d47db1b9fc05908e5386b96",
+            "decimals": 18,
+            "cg_id": "gnosis",
+            "listing_time": 1560862800,
+            "gasLimit": "600000"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
@@ -580,6 +621,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+    "kyberswapAddress": "0x4d54793dec1b0f2b5daf2b8e30c0742b9cac80cb",
     "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "endpoint": "wss://mainnet.infura.io/ws",

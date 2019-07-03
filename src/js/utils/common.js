@@ -178,7 +178,7 @@ export function getFormattedDate(value, isNumberForm = false) {
 
 export function isUserLogin(){
     //dummy data
-    return true
+    // return true
 
     var loginCookies = getCookie("signed_in")
     return loginCookies === true || loginCookies === "true" ? true: false
