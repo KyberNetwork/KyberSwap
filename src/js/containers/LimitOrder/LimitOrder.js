@@ -97,21 +97,33 @@ export default class LimitOrder extends React.Component {
     try {
       const limitOrderMode = limitOrderServices.getModeLimitOrder();
       if (limitOrderMode === "client") {
+        this.props.dispatch(limitOrderActions.setFilterMode("client"));
+
         const orders = await limitOrderServices.getOrders();
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
-        this.props.dispatch(limitOrderActions.setFilterMode("client"));
       } else {
+        this.props.dispatch(limitOrderActions.setFilterMode("server"));
+        
+        const pairAddressFilter = this.props.limitOrder.pairFilter.map(item => {
+          const [sourceTokenSymbol, destTokenSymbol] = item.split("-");
+          const sourceToken = this.props.tokens[sourceTokenSymbol].address;
+          const destToken = this.props.tokens[destTokenSymbol].address;
+
+          return `${sourceToken}_${destToken}`;
+        });
+
         const { itemsCount, orders } = await limitOrderServices.getOrdersByFilter(
           this.props.limitOrder.addressFilter,
-          this.props.limitOrder.pairFilter,
+          pairAddressFilter,
           this.props.limitOrder.statusFilter,
           this.props.limitOrder.timeFilter,
-          this.props.limitOrder.dateSort
+          this.props.limitOrder.dateSort,
+          this.props.limitOrder.pageIndex,
+          this.props.limitOrder.pageSize
         );
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));
-        this.props.dispatch(limitOrderActions.setFilterMode("server"));
       }
 
       this.props.dispatch(limitOrderActions.getListFilter());
