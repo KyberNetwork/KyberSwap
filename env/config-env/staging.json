@@ -27,8 +27,7 @@
     "limitOrder": {
         "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
-        "minPercentTriggerRate": -90,
-        "maxPercentTriggerRate": 100,
+        "maxPercentTriggerRate": 900,
         "page_size": 5
     },
     "promo_token": "PT",
