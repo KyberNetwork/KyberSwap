@@ -353,7 +353,7 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
                 if (result.success) {
                     const orderList = filterOrder(result);
                     resolve({
-                        orders: sortOrders(orderList),
+                        orders: orderList,
                         itemsCount: result.paging_info.items_count,
                         pageCount: result.paging_info.page_count,
                         pageIndex: result.paging_info.page_index,
