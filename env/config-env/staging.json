@@ -13,7 +13,6 @@
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.01,
-    "page_size": 5,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
     "priority_tokens": [
         "ETH",
@@ -29,7 +28,8 @@
       "minSupportOrder": 0.01,
       "maxSupportOrder": 1,
       "minPercentTriggerRate": -10,
-      "maxPercentTriggerRate": 100
+      "maxPercentTriggerRate": 100,
+      "page_size": 5
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
