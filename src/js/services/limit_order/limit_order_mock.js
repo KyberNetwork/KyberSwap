@@ -315,3 +315,8 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
         return;
     });
 }
+
+export function getModeLimitOrder() {
+    // const totalOrders = getCookie("order_count");
+    return "client"
+}

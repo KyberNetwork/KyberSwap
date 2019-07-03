@@ -1,4 +1,4 @@
-import { timeout, calcInterval, getFormattedDate } from "../../utils/common"
+import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { floatMultiply } from "../../utils/converter"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
@@ -298,11 +298,7 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
 }
 
 function sortOrders(orders) {
-    let results = _.orderBy(orders, item => {
-        return getFormattedDate(item.updated_at, true);
-    }, ["desc"]);
-
-    results = _.sortBy(results, item => {
+    const results = _.sortBy(orders, item => {
         if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
             return 0;
         } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
@@ -371,4 +367,9 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
                 rejected(new Error(`Cannot get user orders: ${err.toString()}`))
             })
     })
+}
+
+export function getModeLimitOrder() {
+    const totalOrders = getCookie("order_count");
+    return totalOrders <= LIMIT_ORDER_CONFIG.pageSize ? "client" : "server";    
 }
