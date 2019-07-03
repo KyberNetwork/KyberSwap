@@ -11,7 +11,7 @@ import constants from "../../services/constants"
 
 import {LimitOrderBody} from "../LimitOrder"
 import * as limitOrderServices from "../../services/limit_order";
-import { isUserLogin, getCookie } from "../../utils/common";
+import { isUserLogin } from "../../utils/common";
 
 import BLOCKCHAIN_INFO from "../../../../env";
 
@@ -95,8 +95,8 @@ export default class LimitOrder extends React.Component {
 
   async getOrders() {
     try {
-      const totalOrders = getCookie("order_count");
-      if (totalOrders <= constants.LIMIT_ORDER_CONFIG.pageSize) {
+      const limitOrderMode = limitOrderServices.getModeLimitOrder();
+      if (limitOrderMode === "client") {
         const orders = await limitOrderServices.getOrders();
         this.props.dispatch(limitOrderActions.addListOrder(orders));
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
