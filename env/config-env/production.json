@@ -21,7 +21,6 @@
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.5,
-    "page_size": 50,
     "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://api.kyber.network/internal/currencies",
     "priority_tokens": [
@@ -38,7 +37,8 @@
         "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "minPercentTriggerRate": -90,
-        "maxPercentTriggerRate": 100
+        "maxPercentTriggerRate": 100,
+        "page_size": 5
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
