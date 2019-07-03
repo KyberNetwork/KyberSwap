@@ -61,29 +61,28 @@ export default class LimitOrderBody extends React.Component {
 
   getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
     if (!this.props.account) return 0
-    const orderList = this.props.limitOrder.listOrder;
-    const openOrders = orderList.filter(order => {
-      return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
-    });
-
-    let openOrderAmount = 0;
-
-    if (openOrders.length > 0) {
-      openOrders.forEach(order => {
-        openOrderAmount += order.src_amount * (Math.pow(10, tokenDecimals));
+    if (this.props.limitOrder.filterMode === "client") {
+      const orderList = this.props.limitOrder.listOrder;
+      const openOrders = orderList.filter(order => {
+        return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
       });
-    }
-
-    return openOrderAmount;
-  }
-
-  getPendingBalance = (tokenSymbol, tokenDecimals) => {
-    if (!this.props.account) return 0
-    if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
-      const amount = this.props.limitOrder.pendingBalances[tokenSymbol] * (Math.pow(10, tokenDecimals));
-      return amount;
+  
+      let openOrderAmount = 0;
+  
+      if (openOrders.length > 0) {
+        openOrders.forEach(order => {
+          openOrderAmount += order.src_amount * (Math.pow(10, tokenDecimals));
+        });
+      }
+  
+      return openOrderAmount;
     } else {
-      return 0;
+      if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
+        const amount = this.props.limitOrder.pendingBalances[tokenSymbol] * (Math.pow(10, tokenDecimals));
+        return amount;
+      } else {
+        return 0;
+      }
     }
   }
 
@@ -93,9 +92,7 @@ export default class LimitOrderBody extends React.Component {
 
     return Object.keys(tokens).map(key => {
       let token = tokens[key];
-      const openOrderAmount = this.props.limitOrder.filterMode === "client" ?
-        this.getOpenOrderAmount(token.symbol, token.decimals) :
-        this.getPendingBalance(token.symbol, token.decimals);
+      const openOrderAmount = this.getOpenOrderAmount(token.symbol, token.decimals);
 
       if (openOrderAmount) {
         token = Object.create(token);
