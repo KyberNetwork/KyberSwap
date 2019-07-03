@@ -28,9 +28,9 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.1,
+        "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
-        "minPercentTriggerRate": -10,
+        "minPercentTriggerRate": -90,
         "maxPercentTriggerRate": 100
     },
     "wrapETHToken": "WETH",
@@ -307,6 +307,13 @@
             "decimals": 18,
             "cg_id": "susd",
             "gasLimit": "500000"
+        },
+        "EQUAD": {
+            "symbol": "EQUAD",
+            "name": "Quadrant Protocol",
+            "address": "0x0e953389a6002a2017d686ff9f448a1eab890d7b",
+            "decimals": 18,
+            "cg_id": "quadrant-protocol"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

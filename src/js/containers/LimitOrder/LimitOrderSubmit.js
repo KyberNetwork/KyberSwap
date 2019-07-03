@@ -110,17 +110,19 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
     // check rate is too big
-    var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
-    var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
-    if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRate)) {
-      rateError.push(this.props.translate("error.rate_too_high", { maxRate: BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
-      isValidate = false
+    if (this.props.limitOrder.offeredRate != 0) {
+      var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
+      var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
+      if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRate)) {
+        rateError.push(this.props.translate("error.rate_too_high", { maxRate: BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
+        isValidate = false
+      }
+      if (percentChange < BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate && !isNaN(triggerRate)) {
+        rateError.push(this.props.translate("error.rate_too_low", { minRate: BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate }) || `Trigger rate is too low, please increase trigger rate. Minimum rate is ${constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate}% lower than current market rate.`);
+        isValidate = false
+      }  
     }
-    if (percentChange < BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate && !isNaN(triggerRate)) {
-      rateError.push(this.props.translate("error.rate_too_low", { minRate: BLOCKCHAIN_INFO.limitOrder.minPercentTriggerRate }) || `Trigger rate is too low, please increase trigger rate. Minimum rate is ${constants.LIMIT_ORDER_CONFIG.minPercentTriggerRate}% lower than current market rate.`);
-      isValidate = false
-    }
-
+   
     //check balance
     var userBalance = this.getUserBalance()
     var srcAmount = this.getSourceAmount()
