@@ -31,10 +31,11 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich)
 
-        return {...state, account: updatedAccount}
-      } else if (action.key === "account" && action.payload) {
-        action.payload.loading = false
-      }
+        return {...state, account: updatedAccount, loading: false}
+      } 
+      // else if (action.key === "account" && action.payload) {
+      //   action.payload.loading = false
+      // }
 
       return {...state}
     }

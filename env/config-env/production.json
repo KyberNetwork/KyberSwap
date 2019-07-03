@@ -35,7 +35,7 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.5,
+        "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "minPercentTriggerRate": -90,
         "maxPercentTriggerRate": 100
@@ -621,6 +621,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+    "kyberswapAddress": "0x4d54793dec1b0f2b5daf2b8e30c0742b9cac80cb",
     "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "endpoint": "wss://mainnet.infura.io/ws",
