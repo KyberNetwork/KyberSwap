@@ -11,6 +11,7 @@ import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import { calcInterval, isArrayEqual } from "../../utils/common";
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 @connect((store, props) => {
   return {
@@ -28,6 +29,8 @@ export default class LimitOrderTable extends Component {
       conditionFilterVisible: false,
       addressFilterVisible: false,
       expanded: {},
+      addressCopied: false,
+      currentTooltipId: ''
     }
     
     this.btnCancelRef = null;
@@ -144,10 +147,25 @@ export default class LimitOrderTable extends Component {
     )
   }
 
+  setCopiedState = (copied, currentTooltipId = '') => {
+    this.setState({
+      addressCopied: copied,
+      currentTooltipId
+    })
+  }
+
+  getCopyTooltipContent = () => {
+    return this.state.addressCopied ? (this.props.translate("transaction.copied") || "Copied") : '';
+  }
+
   getAddressCell = (props) => {
-    const { user_address } = props;
+    const { user_address, id } = props;
     return (
-      <div>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
+      <div key={this.state.addressCopied}>
+        <CopyToClipboard text={user_address}>
+          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
+        </CopyToClipboard>
+      </div>
     )
   }
 
@@ -781,6 +799,15 @@ export default class LimitOrderTable extends Component {
             return this.getOrderDetail(rowInfo);
           }}
 				/>
+        {this.state.addressCopied && (
+          <ReactTooltip
+            getContent={() => this.getCopyTooltipContent()}
+            afterHide={() => this.setCopiedState(false)}
+            place="top"
+            id={this.state.currentTooltipId}
+            type="dark"
+          />
+        )}
 			</div>
     )
   }
