@@ -149,8 +149,8 @@ export default class ApproveZeroModal extends React.Component {
             <div>
               <div>
                 <div className="message">
-                  {this.props.translate("modal.approve_zero", { token: this.props.limitOrder.sourceTokenSymbol }) 
-                  || `You need to reset allowance for ${this.props.limitOrder.sourceTokenSymbol} of Kyber Swap with this address`}
+                  {this.props.translate("modal.approve_zero_limit_order", { token: this.props.limitOrder.sourceTokenSymbol })
+                  || `You need to reset allowance for ${this.props.limitOrder.sourceTokenSymbol} of KyberSwap Limit Order with this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">

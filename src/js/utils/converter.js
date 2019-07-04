@@ -567,10 +567,10 @@ export function percentChange(newPrice, oldPrice) {
   return roundPercent
 }
 
-export function formatNumber(number, round = false) {
+export function formatNumber(number, round = false, groupSeparator = ',') {
   var format = {
     decimalSeparator: '.',
-    groupSeparator: ',',
+    groupSeparator: groupSeparator,
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
