@@ -27,15 +27,37 @@ function getAllPathToken(listToken){
   return path
 }
 
+function getAllPathLimitOrderToken(listToken){
+  var tokens = []
+  Object.keys(listToken).map(key => {
+    if (listToken[key].sp_limit_order){
+      tokens.push(key)
+    }
+  })
+
+  var path = "("
+  for (var i = 0; i< tokens.length ; i++){
+    if (i === tokens.length -1){
+      path += tokens[i].toLowerCase() + "|" + tokens[i]
+    }else{
+      path += tokens[i].toLowerCase() + "|" + tokens[i] + "|"
+    }
+  }
+  path += ")"
+  return path
+}
+
 const LayoutView = (props) => {
   var listToken = getAllPathToken(props.tokens)
+  var listLimitOrderToken = getAllPathLimitOrderToken(props.tokens)
+
   var defaultPathExchange = constansts.BASE_HOST + "/swap/eth-knc"
   var defaultPathTransfer = constansts.BASE_HOST + "/transfer/eth"
   var defaultPathLimitOrder = constansts.BASE_HOST + "/" + constansts.LIMIT_ORDER_CONFIG.path + "/weth-knc"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constansts.LIST_PARAMS_SUPPORTED)
   defaultPathTransfer = common.getPath(defaultPathTransfer, constansts.LIST_PARAMS_SUPPORTED)
-  
+  defaultPathLimitOrder = common.getPath(defaultPathLimitOrder, constansts.LIST_PARAMS_SUPPORTED)
 
   return (
     <ConnectedRouter history={props.history}  store ={store}>
@@ -47,7 +69,7 @@ const LayoutView = (props) => {
             <Redirect from={constansts.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />
 
-            <Route exact path={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/:source${listToken}-:dest${listToken}`} component={props.LimitOrder} />       
+            <Route exact path={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/:source${listLimitOrderToken}-:dest${listLimitOrderToken}`} component={props.LimitOrder} />       
             <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}`} to={defaultPathLimitOrder} />
             <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/*`} to={defaultPathLimitOrder} />
             

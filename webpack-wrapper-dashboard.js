@@ -57,16 +57,16 @@ var getConfig = env => {
             //     chunks: 'all'
             // },
             minimizer: [
-                new TerserPlugin({
-                    parallel: true,
-                    terserOptions: {
-                        ecma: 6,
-                        compress: {
-                            drop_console: true,
-                            warnings: false
-                        }
-                    }
-                }),
+                // new TerserPlugin({
+                //     parallel: true,
+                //     terserOptions: {
+                //         ecma: 6,
+                //         compress: {
+                //             drop_console: true,
+                //             warnings: false
+                //         }
+                //     }
+                // }),
                 new OptimizeCSSAssetsPlugin({})
             ]
         },

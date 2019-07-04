@@ -41,154 +41,176 @@
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
             "cg_id": "ethereum",
-            "gasLimit": "0"
+            "gasLimit": "0",
+            "sp_limit_order": true
         },
         "KNC": {
             "symbol": "KNC",
             "name": "KyberNetwork",
             "address": "0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6",
             "decimals": 18,
-            "cg_id": "kyber-network"
+            "cg_id": "kyber-network",
+            "sp_limit_order": true
         },
         "OMG": {
             "symbol": "OMG",
             "name": "OmiseGO",
             "address": "0x4bfba4a8f28755cb2061c413459ee562c6b9c51b",
             "decimals": 18,
-            "cg_id": "omisego"
+            "cg_id": "omisego",
+            "sp_limit_order": true
         },
         "EOS": {
             "symbol": "EOS",
             "name": "Eos",
             "address": "0xd5b4218b950a53ff07985e2d88346925c335eae7",
             "decimals": 18,
-            "cg_id": "eos"
+            "cg_id": "eos",
+            "sp_limit_order": true
         },
         "SNT": {
             "symbol": "SNT",
             "name": "Status",
             "address": "0xbf5d8683b9be6c43fca607eb2a6f2626a18837a6",
             "decimals": 18,
-            "cg_id": "status"
+            "cg_id": "status",
+            "sp_limit_order": true
         },
         "ELF": {
             "symbol": "ELF",
             "name": "Aelf",
             "address": "0x9fcc27c7320703c43368cf1a4bf076402cd0d6b4",
             "decimals": 18,
-            "cg_id": "aelf"
+            "cg_id": "aelf",
+            "sp_limit_order": true
         },
         "POWR": {
             "symbol": "POWR",
             "name": "Power Ledger",
             "address": "0xa577731515303f0c0d00e236041855a5c4f114dc",
             "decimals": 6,
-            "cg_id": "power-ledger"
+            "cg_id": "power-ledger",
+            "sp_limit_order": true
         },
         "MANA": {
             "symbol": "MANA",
             "name": "Mana",
             "address": "0x72fd6c7c1397040a66f33c2ecc83a0f71ee46d5c",
             "decimals": 18,
-            "cg_id": "decentraland"
+            "cg_id": "decentraland",
+            "sp_limit_order": true
         },
         "BAT": {
             "symbol": "BAT",
             "name": "Basic Attention Token",
             "address": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
             "decimals": 18,
-            "cg_id": "basic-attention-token"
+            "cg_id": "basic-attention-token",
+            "sp_limit_order": true
         },
         "REQ": {
             "symbol": "REQ",
             "name": "Request",
             "address": "0xb43d10bbe7222519da899b72bf2c7f094b6f79d7",
             "decimals": 18,
-            "cg_id": "request-network"
+            "cg_id": "request-network",
+            "sp_limit_order": true
         },
         "GTO": {
             "symbol": "GTO",
             "name": "Gifto",
             "address": "0xe55c607d58c53b2b06a8e38f67f4c0fcaeed2c31",
             "decimals": 5,
-            "cg_id": "gifto"
+            "cg_id": "gifto",
+            "sp_limit_order": true
         },
         "RDN": {
             "symbol": "RDN",
             "name": "Raiden",
             "address": "0x5422ef695ed0b1213e2b953cfa877029637d9d26",
             "decimals": 18,
-            "cg_id": "raiden-network"
+            "cg_id": "raiden-network",
+            "sp_limit_order": true
         },
         "APPC": {
             "symbol": "APPC",
             "name": "AppCoins",
             "address": "0x2799f05b55d56be756ca01af40bf7350787f48d4",
             "decimals": 18,
-            "cg_id": "appcoins"
+            "cg_id": "appcoins",
+            "sp_limit_order": true
         },
         "ENG": {
             "symbol": "ENG",
             "name": "Enigma",
             "address": "0x95cc8d8f29d0f7fcc425e8708893e759d1599c97",
             "decimals": 8,
-            "cg_id": "enigma"
+            "cg_id": "enigma",
+            "sp_limit_order": true
         },
         "SALT": {
             "symbol": "SALT",
             "name": "Salt",
             "address": "0xb47f1a9b121ba114d5e98722a8948e274d0f4042",
             "decimals": 8,
-            "cg_id": "salt"
+            "cg_id": "salt",
+            "sp_limit_order": true
         },
         "BQX": {
             "symbol": "BQX",
             "name": "Ethos",
             "address": "0x9504a86a881f63da06302fb3639d4582022097db",
             "decimals": 8,
-            "cg_id": "ethos"
+            "cg_id": "ethos",
+            "sp_limit_order": true
         },
         "ADX": {
             "symbol": "ADX",
             "name": "AdEx",
             "address": "0x499990db50b34687cdafb2c8dabae4e99d6f38a7",
             "decimals": 4,
-            "cg_id": "adex"
+            "cg_id": "adex",
+            "sp_limit_order": true
         },
         "AST": {
             "symbol": "AST",
             "name": "AirSwap",
             "address": "0xef06f410c26a0ff87b3a43927459cce99268a2ef",
             "decimals": 4,
-            "cg_id": "airswap"
+            "cg_id": "airswap",
+            "sp_limit_order": true
         },
         "RCN": {
             "symbol": "RCN",
             "name": "Ripio Credit Network",
             "address": "0x99338aa9218c6c23aa9d8cc2f3efaf29954ea26b",
             "decimals": 18,
-            "cg_id": "ripio-credit-network"
+            "cg_id": "ripio-credit-network",
+            "sp_limit_order": true
         },
         "ZIL": {
             "symbol": "ZIL",
             "name": "Zilliqa",
             "address": "0xad78afbbe48ba7b670fbc54c65708cbc17450167",
             "decimals": 12,
-            "cg_id": "zilliqa"
+            "cg_id": "zilliqa",
+            "sp_limit_order": true
         },
         "DAI": {
             "symbol": "DAI",
             "name": "DAI",
             "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
             "decimals": 18,
-            "cg_id": "dai"
+            "cg_id": "dai",
+            "sp_limit_order": true
         },
         "LINK": {
             "symbol": "LINK",
             "name": "Chain Link",
             "address": "0xb4f7332ed719eb4839f091eddb2a3ba309739521",
             "decimals": 18,
-            "cg_id": "chainlink"
+            "cg_id": "chainlink",
+            "sp_limit_order": true
         },
         "IOST": {
             "symbol": "IOST",
@@ -196,7 +218,8 @@
             "address": "0x27db28a6c4ac3d82a08d490cfb746e6f02bc467c",
             "decimals": 18,
             "cg_id": "iostoken",
-            "delist_time": 1540430640
+            "delist_time": 1540430640,
+            "sp_limit_order": true
         },
         "STORM": {
             "symbol": "STORM",
@@ -204,7 +227,8 @@
             "address": "0x8fff7de21de8ad9c510704407337542073fdc44b",
             "decimals": 18,
             "cg_id": "storm",
-            "listing_time": 1539077021
+            "listing_time": 1539077021,
+            "sp_limit_order": true
         },
         "BBO": {
             "symbol": "BBO",
@@ -212,77 +236,88 @@
             "address": "0xa94758d328af7ef1815e73053e95b5f86588c16d",
             "decimals": 18,
             "cg_id": "bigbom-eco",
-            "listing_time": 9999999999
+            "listing_time": 9999999999,
+            "sp_limit_order": true
         },
         "COFI": {
             "symbol": "COFI",
             "name": "ConFi",
             "address": "0xb91786188f8d4e35d6d67799e9f162587bf4da03",
             "decimals": 18,
-            "cg_id": "coinfi"
+            "cg_id": "coinfi",
+            "sp_limit_order": true
         },
         "BITX": {
             "symbol": "BITX",
             "name": "BitScreenerToken",
             "address": "0x7a17267576318efb728bc4a0833e489a46ba138f",
             "decimals": 18,
-            "cg_id": "bitscreener"
+            "cg_id": "bitscreener",
+            "sp_limit_order": true
         },
         "MOC": {
             "symbol": "MOC",
             "name": "Moss Land",
             "address": "0x1742c81075031b8f173d2327e3479d1fc3feaa76",
             "decimals": 18,
-            "cg_id": "mossland"
+            "cg_id": "mossland",
+            "sp_limit_order": true
         },
         "MAS": {
             "symbol": "MAS",
             "name": "MidasProtocol Ropsten",
             "address": "0xc2c37d1a2cdd601ce665c4a785074670657f83ac",
             "decimals": 18,
-            "cg_id": "midas-protocol"
+            "cg_id": "midas-protocol",
+            "sp_limit_order": true
         },
         "KAT": {
             "symbol": "KAT",
             "name": "Kambria Token",
             "address": "0xef75e34c50c1b109fe65ee696f12225de508b9f2",
             "decimals": 18,
-            "cg_id": "kambria"
+            "cg_id": "kambria",
+            "sp_limit_order": true
         },
         "UPP": {
             "symbol": "UPP",
             "name": "Sentinel Protocol",
             "address": "0xade0e0ed3ec60c7124ddc88c410af671493dc949",
             "decimals": 18,
-            "cg_id": "sentinel-protocol"
+            "cg_id": "sentinel-protocol",
+            "sp_limit_order": true
         },
         "SPN": {
             "symbol": "SPN",
             "name": "Sapien Network",
             "address": "0x7f7992a21e333baeeab065d54829122173caceb7",
             "decimals": 6,
-            "cg_id": "sapien"
+            "cg_id": "sapien",
+            "sp_limit_order": true
         },
         "HKN": {
             "symbol": "HKN",
             "name": "Hacken",
             "address": "0x4aefa5bded67f5842ade8f025a738cb3363b7499",
             "decimals": 8,
-            "cg_id": "hacken"
+            "cg_id": "hacken",
+            "sp_limit_order": true
         },
         "WETH": {
             "symbol": "WETH",
             "name": "Wrapped Ether",
             "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
             "decimals": 18,
-            "cg_id": "weth"
+            "cg_id": "weth",
+            "sp_limit_order": true
         },
         "BAM": {
             "symbol": "BAM",
             "name": "Bamboo",
             "address": "0xe8e692f05ecdd531c4550a93d323939fb826f968",
             "decimals": 18,
-            "cg_id": ""
+            "cg_id": "",
+            "sp_limit_order": true
         },
         "SNX": {
             "symbol": "SNX",
@@ -290,7 +325,8 @@
             "address": "0x013ae307648f529aa72c5767a334ddd37aab43c3",
             "decimals": 18,
             "cg_id": "",
-            "gasLimit": "500000"
+            "gasLimit": "500000",
+            "sp_limit_order": true
         },
         "MYB": {
             "symbol": "MYB",
