@@ -150,8 +150,8 @@ export default class ApproveMaxModal extends React.Component {
             <div>
               <div>
                 <div className="message">
-                  {this.props.translate("modal.approve_exchange", { token: this.props.limitOrder.sourceTokenSymbol }) 
-                  || `You need to grant permission for KyberSwap to interact with ${this.props.limitOrder.sourceTokenSymbol} with this address`}
+                  {this.props.translate("modal.approve_exchange_limit_order", { token: this.props.limitOrder.sourceTokenSymbol })
+                  || `You need to grant permission for KyberSwap Limit Order to interact with ${this.props.limitOrder.sourceTokenSymbol} with this address`}
                 </div>
                 <div class="info tx-title">
                   <div className="address-info">

@@ -167,6 +167,8 @@
     "select_trasfer_from_token": "SELECT \"TRANSFER FROM\" TOKEN",
     "approve_exchange": "You need to grant permission for Kyber Swap to interact with <strong>${\ntoken }</strong> with this address",
     "approve_zero": "You need to reset allowance for <strong>${token}</strong> in Kyber Swap with this address",
+    "approve_exchange_limit_order": "You need to grant permission for KyberSwap Limit Order to interact with <strong>${\ntoken }</strong> with this address",
+    "approve_zero_limit_order": "You need to reset allowance for <strong>${token}</strong> in KyberSwap Limit Order with this address",
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve",
     "address": "Address",
