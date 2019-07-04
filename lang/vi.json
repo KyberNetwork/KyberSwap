@@ -249,7 +249,7 @@
     "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
     "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
     "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% tỉ giá hiện tại",
-    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh. Tỉ giá tối thiểu là tỉ giá thấp hơn ${minRate}% tỉ giá hiện tại.",
+    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh.",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
     "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}"
