@@ -317,7 +317,7 @@ const INIT_LIMIT_ORDER_STATE = {
   // List filter properties
   addressFilter: [],
   pairFilter: [],
-  statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+  statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS, LIMIT_ORDER_CONFIG.status.FILLED],
   timeFilter: {
     interval: 1,
     unit: "month"
