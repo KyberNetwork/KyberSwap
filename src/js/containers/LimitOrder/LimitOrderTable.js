@@ -162,13 +162,15 @@ export default class LimitOrderTable extends Component {
           <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true)}>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
         </CopyToClipboard>
 
-        <ReactTooltip
-          getContent={() => this.getCopyTooltipContent()}
-          afterHide={() => this.setCopiedState(false)}
-          place="top"
-          id={`copy-address-${id}`}
-          type="dark"
-        />
+        {this.state.addressCopied && (
+          <ReactTooltip
+            getContent={() => this.getCopyTooltipContent()}
+            afterHide={() => this.setCopiedState(false)}
+            place="top"
+            id={`copy-address-${id}`}
+            type="dark"
+          />
+        )}
       </div>
     )
   }
