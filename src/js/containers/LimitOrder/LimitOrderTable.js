@@ -30,6 +30,7 @@ export default class LimitOrderTable extends Component {
       addressFilterVisible: false,
       expanded: {},
       addressCopied: false,
+      currentTooltipId: ''
     }
     
     this.btnCancelRef = null;
@@ -146,8 +147,11 @@ export default class LimitOrderTable extends Component {
     )
   }
 
-  setCopiedState = (copied) => {
-    this.setState({ addressCopied: copied })
+  setCopiedState = (copied, currentTooltipId = '') => {
+    this.setState({
+      addressCopied: copied,
+      currentTooltipId
+    })
   }
 
   getCopyTooltipContent = () => {
@@ -159,18 +163,8 @@ export default class LimitOrderTable extends Component {
     return (
       <div key={this.state.addressCopied}>
         <CopyToClipboard text={user_address}>
-          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true)}>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
+          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
         </CopyToClipboard>
-
-        {this.state.addressCopied && (
-          <ReactTooltip
-            getContent={() => this.getCopyTooltipContent()}
-            afterHide={() => this.setCopiedState(false)}
-            place="top"
-            id={`copy-address-${id}`}
-            type="dark"
-          />
-        )}
       </div>
     )
   }
@@ -805,6 +799,15 @@ export default class LimitOrderTable extends Component {
             return this.getOrderDetail(rowInfo);
           }}
 				/>
+        {this.state.addressCopied && (
+          <ReactTooltip
+            getContent={() => this.getCopyTooltipContent()}
+            afterHide={() => this.setCopiedState(false)}
+            place="top"
+            id={this.state.currentTooltipId}
+            type="dark"
+          />
+        )}
 			</div>
     )
   }
