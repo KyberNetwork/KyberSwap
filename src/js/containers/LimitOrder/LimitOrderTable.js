@@ -89,7 +89,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-center-header cell-status-header",
       className: "cell-flex-center",
-      width: 120
+      width: 130
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
