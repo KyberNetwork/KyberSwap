@@ -4,6 +4,7 @@ import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
+import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
 import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount, LimitOrderListModal } from "../LimitOrder"
 import BLOCKCHAIN_INFO from "../../../../env";
@@ -38,7 +39,7 @@ export default class LimitOrderBody extends React.Component {
 
   getTokenListWithoutEthAndWeth = (tokens) => {
     return tokens.filter(token => {
-      return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken;
+      return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken && token.sp_limit_order;
     });
   }
 
@@ -52,7 +53,7 @@ export default class LimitOrderBody extends React.Component {
       weth.substituteImage = 'eth-weth';
 
       if (eth) {
-        weth.balance = +weth.balance + +eth.balance;
+        weth.balance = converts.sumOfTwoNumber(weth.balance, eth.balance);
       }
     }
 
@@ -71,14 +72,15 @@ export default class LimitOrderBody extends React.Component {
   
       if (openOrders.length > 0) {
         openOrders.forEach(order => {
-          openOrderAmount += order.src_amount * (Math.pow(10, tokenDecimals));
+          var srcAmount = converts.toTWei(order.src_amount, tokenDecimals)
+          openOrderAmount = converts.sumOfTwoNumber(openOrderAmount, srcAmount)          
         });
       }
   
       return openOrderAmount;
     } else {
       if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
-        const amount = this.props.limitOrder.pendingBalances[tokenSymbol] * (Math.pow(10, tokenDecimals));
+        const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
         return amount;
       } else {
         return 0;
@@ -96,7 +98,7 @@ export default class LimitOrderBody extends React.Component {
 
       if (openOrderAmount) {
         token = Object.create(token);
-        token.balance = +token.balance - openOrderAmount;
+        token.balance = converts.subOfTwoNumber(token.balance, openOrderAmount);
       }
 
       return token;

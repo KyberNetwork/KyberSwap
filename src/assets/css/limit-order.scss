@@ -235,6 +235,9 @@
             &:hover {
                 background-color: #666666;
                 color: #ffffff;
+                a{
+                    color: #ffffff;
+                }
             }
 
             @include screen-max-width(medium) {

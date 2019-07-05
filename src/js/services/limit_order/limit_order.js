@@ -18,6 +18,7 @@ const keyMapping = {
     "status": "status",
     "created_at": "created_at",
     "updated_at": "updated_at",
+    "tx_hash": "tx_hash",
     "msg": "msg"
 }
 

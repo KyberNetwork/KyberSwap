@@ -130,7 +130,7 @@ export default class LimitOrderForm extends React.Component {
     var gasExchange = this.getMaxGasExchange()
     var totalGas = gasExchange + gasApprove * 2 
 
-    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, totalGas)    
+    var totalFee = converters.totalFee(this.props.limitOrder.gasPrice, totalGas)    
     return totalFee
   }
 
@@ -139,7 +139,9 @@ export default class LimitOrderForm extends React.Component {
     const srcToken = this.props.availableBalanceTokens.find(token => {
       return token.symbol === srcTokenSymbol;
     });
-    const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
+    // const srcTokenBalance = converters.toT(srcToken.balance, srcToken.decimals);
+
+    var srcTokenBalance = srcToken.balance;
 
 
     let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcTokenBalance, balancePercentage);
@@ -148,16 +150,18 @@ export default class LimitOrderForm extends React.Component {
     if (srcTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken && balancePercentage === 100){          
       var ethBalance = this.props.tokens["ETH"].balance
       var fee = this.calcualteMaxFee()
-      if(converters.compareTwoNumber(ethBalance, converters.toEther(fee)) === 1){
-        sourceAmountByPercentage -= fee
+      if(converters.compareTwoNumber(ethBalance, fee) === 1){
+        sourceAmountByPercentage = converters.subOfTwoNumber(sourceAmountByPercentage, fee)
       }else{
-        sourceAmountByPercentage -= converters.toEther(ethBalance)
+        sourceAmountByPercentage = converters.subOfTwoNumber(sourceAmountByPercentage, ethBalance)
       }
     }
 
-    if (!+sourceAmountByPercentage || sourceAmountByPercentage < 0) sourceAmountByPercentage = 0;
+    if (converters.compareTwoNumber(sourceAmountByPercentage, 0) == -1) sourceAmountByPercentage = 0    
 
-    this.props.dispatch(limitOrderActions.inputChange('source', sourceAmountByPercentage));
+    // console.log("souirce_token")
+    // console.log(sourceAmountByPercentage)
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals)));
   };
 
   closeRateWarningTooltip = () => {

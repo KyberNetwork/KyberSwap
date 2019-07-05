@@ -28,7 +28,8 @@ export default class CancelOrderModal extends Component {
 		super();
 		this.state = {
 			isConfirming: false,
-			isFinish: false
+			isFinish: false,
+			err: ""
 		}
 	}
 
@@ -126,7 +127,8 @@ export default class CancelOrderModal extends Component {
 	async confirmCancel() {
 		this.props.global.analytics.callTrack("trackClickConfirmCancelOrder", this.props.order ? this.props.order.id : null);
 		this.setState({
-			isConfirming: true
+			isConfirming: true,
+			err: ""
 		});
 		if (this.props.order) {
 			try {
@@ -154,7 +156,8 @@ export default class CancelOrderModal extends Component {
 				console.log(err);
 				this.setState({
 					isConfirming: false,
-					isFinish: false
+					isFinish: false,
+					err: err.toString()
 				});
 			}
 		}
@@ -265,6 +268,10 @@ export default class CancelOrderModal extends Component {
 						)}
 						{/* Mobile */}
 						{this.props.screen === "mobile" && this.contentModalMobile()}
+
+						{this.state.err && <div className="limit-order-modal__result--error">
+							{this.state.err}
+						</div>}
 					</div>
 				</div>
 				{!this.state.isFinish && (

@@ -392,7 +392,8 @@ export function floatMultiply(number, params) {
 }
 
 export function getBigNumberValueByPercentage(number, percentage) {
-  return stringToBigNumber(number).multipliedBy(percentage / 100).valueOf();
+  if (percentage == 100) return number
+  return stringToBigNumber(number).multipliedBy(percentage / 100).toFixed(0);
 }
 
 export function stringToHex(number, decimal) {
@@ -518,6 +519,11 @@ export function calculatePercentRate(minRate, expectedRate) {
   return parseFloat(remainPercentStr)
 }
 
+export function totalFee(gasPrice, gasUsed) {
+  var gasPrice = stringToBigNumber(gweiToEth(gasPrice))
+  var fee = gasPrice.multipliedBy(gasUsed)
+  return fee.toString()
+}
 
 export function calculateGasFee(gasPrice, gasUsed) {
   var gasPrice = stringToBigNumber(gweiToEth(gasPrice))

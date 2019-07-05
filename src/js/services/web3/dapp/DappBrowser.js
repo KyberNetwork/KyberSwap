@@ -37,7 +37,7 @@ export default class DappBrowser {
   }
 
   getCoinbase(isManual = false) {
-    if (window.ethereum && isManual) {
+    if (window.ethereum) {
       return new Promise((resolve, reject) => {
         window.ethereum.enable().then(() => {
 

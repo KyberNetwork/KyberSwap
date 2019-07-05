@@ -127,7 +127,7 @@ export default class LimitOrderSubmit extends React.Component {
    
     //check balance
     var userBalance = this.getUserBalance()
-    var srcAmount = this.getSourceAmount()
+    var srcAmount = this.getSourceAmount()    
     if (converters.compareTwoNumber(userBalance, srcAmount) < 0) {
       sourceAmountError.push(this.props.translate("error.insufficient_balance_order", { tokenSymbol: this.props.limitOrder.sourceTokenSymbol }) ||`Your balance is insufficent for the order. Please check your ${this.props.limitOrder.sourceTokenSymbol} balance and your pending order`)
       isValidate = false
@@ -279,6 +279,9 @@ export default class LimitOrderSubmit extends React.Component {
       if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
         var sourceToken = this.getSourceAmount()
         var userBalance = this.getAvailableWethBalance();
+        console.log("user_balance")
+        console.log(sourceToken)
+        console.log(userBalance)
 
         if (converters.compareTwoNumber(userBalance, sourceToken) < 0) {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH)
@@ -338,7 +341,7 @@ export default class LimitOrderSubmit extends React.Component {
 
   getAvailableWethBalance = () => {
     const wethOpenOrderAmount = this.props.getOpenOrderAmount(BLOCKCHAIN_INFO.wrapETHToken, 18);
-    return this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance - wethOpenOrderAmount;
+    return converters.subOfTwoNumber(this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance, wethOpenOrderAmount);
   }
 
   componentDidMount() {

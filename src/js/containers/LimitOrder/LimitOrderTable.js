@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import { calcInterval, isArrayEqual } from "../../utils/common";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import BLOCKCHAIN_INFO from "../../../../env"
 
 @connect((store, props) => {
   return {
@@ -252,11 +253,14 @@ export default class LimitOrderTable extends Component {
   }
 
   getActionCell = (props) => {
-    const { status } = props;
+    const { status, tx_hash } = props;
     return (
       <div className="cell-action">
         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status !== LIMIT_ORDER_CONFIG.status.OPEN && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
+        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order">
+          <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a>
+        </button>}
+        {status !== LIMIT_ORDER_CONFIG.status.OPEN && status !== LIMIT_ORDER_CONFIG.status.FILLED && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
     )
   }
