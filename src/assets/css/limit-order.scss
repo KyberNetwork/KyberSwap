@@ -1003,7 +1003,7 @@
     height: auto;
     max-height: 170px;
     min-height: 30px;
-    min-width: 185px;
+    min-width: 190px;
     overflow: auto;
 
 }
@@ -1291,14 +1291,21 @@
         @extend %btn;
         color: #222222;
         background-color: #f5f6f8;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: darken(#f5f6f8, 5%);
+        }
     }
 
     .btn-confirm {
         @extend %btn;
         color: #ffffff;
         background-color: #ef8102;
+        transition: background-color .3s;
+
         &:hover {
-            background-color: $color-swap-light;
+            background-color: darken(#ef8102, 5%);
         }
      }
 }
@@ -1561,4 +1568,33 @@
     .tippy-tooltip {
         background-color: transparent;
     }
+}
+
+.limit-order {
+  &__switch-button {
+    width: 28px;
+    height: 28px;
+    background-image: url("../img/limit-order/switch.svg");
+    cursor: pointer;
+    margin: -5px auto -10px;
+    position: relative;
+    z-index: 1;
+    transition: all .3s;
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__percent {
+    font-weight: bold;
+
+    &--positive {
+      color: #36B37E;
+    }
+
+    &--negative {
+      color: $error-color;
+    }
+  }
 }

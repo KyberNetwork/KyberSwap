@@ -280,13 +280,13 @@ export default class CancelOrderModal extends Component {
 							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.closeModal()}
 						>
-							{this.props.translate("modal.cancel") || "Cancel"}
+							{this.props.translate("no_thank") || "No, Thank"}
 						</button>
 						<button
 							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.confirmCancel()}
 						>
-							{this.props.translate("modal.confirm") || "Confirm"}
+							{this.props.translate("yes_please") || "Yes, Please"}
 						</button>	
 					</div>
 				)}

@@ -118,13 +118,13 @@ export default class LimitOrderBody extends React.Component {
     return tokens;
   }
 
-  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
+  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, srcAmount = null) => {
     var path = constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/` + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
     this.props.dispatch(globalActions.goToRoute(path))
     this.props.dispatch(globalActions.updateTitleWithRate());
 
-    var sourceAmount = this.props.limitOrder.sourceAmount
+    var sourceAmount = srcAmount ? srcAmount : this.props.limitOrder.sourceAmount
 
     if (sourceTokenSymbol === destTokenSymbol){
       this.props.dispatch(limitOrderActions.throwError("sourceAmount", [this.props.translate("error.source_dest_token") || "Source token must be different from dest token"]))
@@ -157,6 +157,21 @@ export default class LimitOrderBody extends React.Component {
     this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
   }
 
+  switchToken = () => {
+    const srcToken = this.props.limitOrder.sourceToken;
+    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const destToken = this.props.limitOrder.destToken;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+    const destAmount = this.props.limitOrder.destAmount;
+
+    this.props.dispatch(limitOrderActions.selectToken(destTokenSymbol, destToken, srcTokenSymbol, srcToken, ''));
+
+    this.props.dispatch(limitOrderActions.inputChange('source', destAmount));
+    this.props.dispatch(limitOrderActions.inputChange('dest', ''));
+
+    this.updateGlobal(destTokenSymbol, destToken, srcTokenSymbol, srcToken, destAmount);
+  }
+
   render() {
     return (
       <div className={"limit-order-body"}>
@@ -168,6 +183,7 @@ export default class LimitOrderBody extends React.Component {
               selectDestToken ={this.selectDestToken}
               availableBalanceTokens={this.getModifiedTokenList()}
               submitHandler={this.submitHandler}
+              switchToken={this.switchToken}
             />
           </div>
           <div>

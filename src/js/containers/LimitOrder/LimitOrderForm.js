@@ -257,8 +257,7 @@ export default class LimitOrderForm extends React.Component {
         )}
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_from") || "From"}:</div>
-          <div className={`exchange-content__item exchange-content__item--left select-token ${errorSourceAmount != "" ? "error" : ""}`}
-          >
+          <div className={`exchange-content__item exchange-content__item--left select-token ${errorSourceAmount != "" ? "error" : ""}`}>
             <div className={`input-div-content`}>
               <div className={"exchange-content__label-content"}>
                 <div className="exchange-content__select select-token-panel">
@@ -295,6 +294,8 @@ export default class LimitOrderForm extends React.Component {
             }
           </div>
         </div>
+
+        <div className={"limit-order__switch-button"} onClick={() => this.props.switchToken()}/>
 
         <div className={"exchange-content__item--wrapper"}>
           <div className={"exchange-item-label"}>{this.props.translate("transaction.exchange_to") || "To"}:</div>

@@ -327,7 +327,7 @@
     "to_get_started": "以开始",
     "description_term_swap": "通过兑换，您同意${term}",
     "description_term_transfer": "通过转账，您同意${term}",
-    "description_term_limit_order": "通过下单，您同意${term}"
+    "description_term_limit_order": "提交即代表您同意${term}"
   },
   "landing_page": {
     "title": "以太坊代币的去中心化交易",
@@ -391,7 +391,7 @@
     "your_address": "您的余额:",
     "your_balance": "您的余额:",
     "submit_order": "提交订单",
-    "your_available_balance": "您的可用余额",
+    "your_available_balance": "可用于限价订单的代币",
     "eth_not_support": "ETH*是ETH和WETH的组合",
     "canceling_order_message": "您正在取消这个订单",
     "fee_info_message": "别担心。您还没有被收费。\n您只有在交易被执行后才会被收费（上链)。",
@@ -409,8 +409,8 @@
     "login_to_submit": "登录并提交订单",
     "submit": "提交订单",
     "discount_message": "持有2000KNC以上可享受享受折扣。在<a href=\"${link}\"\ntarget=\"_blank\">这里</a>了解更多信息",
-    "higher_rate": "您的价格比当前市场价高${percentChange}%",
-    "lower_rate": "您的价格比当前市场价低${percentChange}%",
+    "higher_rate": "您的汇率比目前的市场汇率高<span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span>",
+    "lower_rate": "您的汇率比目前的市场汇率低<span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span>",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
     "pair_not_supported": "该交易对目前市场并不支持",
     "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
@@ -424,5 +424,7 @@
   "standard": "标准",
   "fast": "快",
   "super_fast": "超级快",
-  "search": "搜索"
+  "search": "搜索",
+  "no_thank": "不，谢谢",
+  "yes_please": "好的，请"
 }
