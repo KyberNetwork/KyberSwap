@@ -51,13 +51,13 @@ export default class LimitOrderCompareRate extends React.Component {
 
           {percentChange > 0 && (
             <div className={"limit-order-compare-rate__text"}>
-              {this.props.translate("limit_order.higher_rate", { percentChange: percentChange }) || `Your price is ${percentChange}% higher than current Market`}
+              {this.props.translate("limit_order.higher_rate", { percentChange: percentChange }) || `Your rate is ${percentChange}% higher than current Market`}
             </div>
           )}
 
           {percentChange < 0 && percentChange > -100 && (
             <div className={"limit-order-compare-rate__text"}>
-              {this.props.translate("limit_order.lower_rate", { percentChange: percentChange }) || `Your price is ${percentChange}% lower than current Market`}
+              {this.props.translate("limit_order.lower_rate", { percentChange: percentChange }) || `Your rate is ${percentChange}% lower than current Market`}
             </div>
           )}
         </div>

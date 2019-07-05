@@ -155,6 +155,19 @@ export default class LimitOrderBody extends React.Component {
     this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
   }
 
+  switchToken = () => {
+    const srcToken = this.props.limitOrder.sourceToken;
+    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const destToken = this.props.limitOrder.destToken;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+
+    this.props.dispatch(limitOrderActions.selectToken(destTokenSymbol, destToken, srcTokenSymbol, srcToken, ''));
+    this.updateGlobal(destTokenSymbol, destToken, srcTokenSymbol, srcToken);
+
+    this.props.dispatch(limitOrderActions.inputChange('source', this.props.limitOrder.destAmount));
+    this.props.dispatch(limitOrderActions.inputChange('dest', ''));
+  }
+
   render() {
     return (
       <div className={"limit-order-body"}>
@@ -166,6 +179,7 @@ export default class LimitOrderBody extends React.Component {
               selectDestToken ={this.selectDestToken}
               availableBalanceTokens={this.getModifiedTokenList()}
               submitHandler={this.submitHandler}
+              switchToken={this.switchToken}
             />
           </div>
           <div>
