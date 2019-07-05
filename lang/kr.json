@@ -425,5 +425,7 @@
   "standard": "보통",
   "fast": "빠르다",
   "super_fast": "굉장히 빠른",
-  "search": "찾기"
+  "search": "찾기",
+  "no_thank": "No, Thank",
+  "yes_please": "Yes, Please"
 }
