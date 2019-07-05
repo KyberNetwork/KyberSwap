@@ -43,9 +43,10 @@ export default class LimitOrderBody extends React.Component {
     });
   }
 
-  mergeEthIntoWeth = (tokens) => {
-    const eth = common.findTokenBySymbol(tokens, 'ETH');
-    let weth = common.findTokenBySymbol(tokens, BLOCKCHAIN_INFO.wrapETHToken);
+  mergeEthIntoWeth = () => {
+    var tokens = this.props.tokens
+    const eth = tokens["ETH"];
+    let weth = tokens["WETH"];
 
     if (weth) {
       weth = Object.create(weth);
@@ -57,35 +58,50 @@ export default class LimitOrderBody extends React.Component {
       }
     }
 
+    var openOrderAmount = this.getOpenOrderAmount(weth.symbol, weth.decimals);
+    if (converts.compareTwoNumber(weth.balance, openOrderAmount) == 1){
+      weth.balance = converts.subOfTwoNumber(weth.balance, openOrderAmount)
+    }else{
+      weth.balance = 0
+    }
+    
     return weth;
   }
 
   getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
     if (!this.props.account) return 0
-    if (this.props.limitOrder.filterMode === "client") {
-      const orderList = this.props.limitOrder.listOrder;
-      const openOrders = orderList.filter(order => {
-        return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
-      });
-  
-      let openOrderAmount = 0;
-  
-      if (openOrders.length > 0) {
-        openOrders.forEach(order => {
-          var srcAmount = converts.toTWei(order.src_amount, tokenDecimals)
-          openOrderAmount = converts.sumOfTwoNumber(openOrderAmount, srcAmount)          
-        });
-      }
-  
-      return openOrderAmount;
+
+    if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
+      const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
+      return amount;
     } else {
-      if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
-        const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
-        return amount;
-      } else {
-        return 0;
-      }
+      return 0;
     }
+
+    // if (this.props.limitOrder.filterMode === "client") {
+    //   const orderList = this.props.limitOrder.listOrder;
+    //   const openOrders = orderList.filter(order => {
+    //     return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
+    //   });
+  
+    //   let openOrderAmount = 0;
+  
+    //   if (openOrders.length > 0) {
+    //     openOrders.forEach(order => {
+    //       var srcAmount = converts.toTWei(order.src_amount, tokenDecimals)
+    //       openOrderAmount = converts.sumOfTwoNumber(openOrderAmount, srcAmount)          
+    //     });
+    //   }
+  
+    //   return openOrderAmount;
+    // } else {
+    //   if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
+    //     const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
+    //     return amount;
+    //   } else {
+    //     return 0;
+    //   }
+    // }
   }
 
   getAvailableBalanceTokenList = () => {
@@ -98,7 +114,12 @@ export default class LimitOrderBody extends React.Component {
 
       if (openOrderAmount) {
         token = Object.create(token);
-        token.balance = converts.subOfTwoNumber(token.balance, openOrderAmount);
+        if (converts.compareTwoNumber(token.balance, openOrderAmount) == 1){
+          token.balance = converts.subOfTwoNumber(token.balance, openOrderAmount);
+        }else{
+          token.balance = 0
+        }
+        
       }
 
       return token;
@@ -107,14 +128,12 @@ export default class LimitOrderBody extends React.Component {
 
   getModifiedTokenList = () => {
     let tokens = this.getAvailableBalanceTokenList();
-    const weth = this.mergeEthIntoWeth(tokens);
-
     tokens = this.getTokenListWithoutEthAndWeth(tokens);
 
+    const weth = this.mergeEthIntoWeth();
     if (weth) {
       tokens.splice(0, 0, weth)
     }
-
     return tokens;
   }
 
@@ -174,9 +193,7 @@ export default class LimitOrderBody extends React.Component {
             <div>
               <LimitOrderAccount
                 chooseToken={this.selectSourceToken}
-                getTokenListWithoutEthAndWeth={this.getTokenListWithoutEthAndWeth}
-                mergeEthIntoWeth={this.mergeEthIntoWeth}
-                getAvailableBalanceTokenList={this.getAvailableBalanceTokenList}
+                modifiedTokenList = {this.getModifiedTokenList}
               />
             </div>
             <div>

@@ -68,6 +68,13 @@ export default class LimitOrder extends React.Component {
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
   }
 
+  fetchPendingBalance = () => {
+    if (!this.props.account) {
+      return
+    }
+    this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address))
+  }
+
   setInterValGroup = (callback, intervalTime) => {    
     var intevalProcess = setInterval(callback, intervalTime)
     this.state.intervalGroup.push(intevalProcess)
@@ -78,6 +85,8 @@ export default class LimitOrder extends React.Component {
     this.setInterValGroup(this.fetchCurrentRate, 10000)
 
     this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
+
+    this.setInterValGroup(this.fetchPendingBalance.bind(this), 10000)    
 
   }
 

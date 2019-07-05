@@ -158,21 +158,14 @@ export default class LimitOrderAccount extends React.Component {
   }
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
+    
     let filteredTokens = [];
-    const tokens = this.props.getAvailableBalanceTokenList();
-
+    var tokens = this.props.modifiedTokenList()
+  
     if (orderByDesc) {
-      filteredTokens = converters.sortEthBalance(tokens);
+      filteredTokens = converters.mergeSort(tokens, 1)
     } else {
-      filteredTokens = converters.sortASCEthBalance(tokens);
-    }
-
-    const weth = this.props.mergeEthIntoWeth(filteredTokens);
-
-    filteredTokens = this.props.getTokenListWithoutEthAndWeth(filteredTokens);
-
-    if (weth) {
-      filteredTokens.splice(0, 0, weth)
+      filteredTokens = converters.mergeSort(tokens, -1)
     }
 
     filteredTokens = itemNumber ? filteredTokens.slice(0, itemNumber) : filteredTokens;

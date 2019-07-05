@@ -136,7 +136,7 @@ export function caculateEthBalance(token) {
   }
 }
 
-function mergeSort(arr, type) {
+export function mergeSort(arr, type) {
   if (arr.length === 1) {
     return arr
   }
@@ -183,7 +183,7 @@ function merge(left, right, type) {
 export function sortEthBalance(tokens) {
   var sortedTokens = []
   let removedEth = { ...tokens }
-  delete removedEth[constants.ETH.symbol]
+  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
   if (tokens) {
     sortedTokens = mergeSort(Object.values(removedEth), 1)
   }
@@ -196,7 +196,7 @@ export function sortEthBalance(tokens) {
 export function sortASCEthBalance(tokens) {
   var sortedTokens = []
   let removedEth = { ...tokens }
-  delete removedEth[constants.ETH.symbol]
+  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
   if (tokens) {
     sortedTokens = mergeSort(Object.values(removedEth), -1)
   }
