@@ -67,7 +67,7 @@ export default class LimitOrderAccount extends React.Component {
     var gasExchange = this.getMaxGasExchange()
     var totalGas = gasExchange + gasApprove * 2
 
-    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, totalGas)
+    var totalFee = converters.totalFee(this.props.limitOrder.gasPrice, totalGas)
     return totalFee
   }
 
@@ -86,22 +86,27 @@ export default class LimitOrderAccount extends React.Component {
 
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
 
-    sourceBalance = converters.toT(sourceBalance, sourceDecimal)
+    // sourceBalance = converters.toT(sourceBalance, sourceDecimal)
+
+
+
     if (sourceSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
 
       //if souce token is weth, we spend a small amount to make approve tx, swap tx
 
       var ethBalance = this.props.tokens["ETH"].balance
       var fee = this.calcualteMaxFee()
-      if (converters.compareTwoNumber(ethBalance, converters.toEther(fee)) === 1) {
-        sourceBalance -= fee
+      if (converters.compareTwoNumber(ethBalance, fee) === 1) {
+        sourceBalance = converters.subOfTwoNumber(sourceBalance, fee)
       } else {
-        sourceBalance -= converters.toEther(ethBalance)
+        sourceBalance = converters.subOfTwoNumber(sourceBalance, ethBalance)
       }
 
     }
 
-    if (sourceBalance < 0) sourceBalance = 0;
+    if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
+
+    // if (sourceBalance < 0) sourceBalance = 0;
 
     // if (this.props.screen === "swap" || this.props.screen === "limit_order") {
     //     this.props.dispatch(this.props.changeAmount('source', amount))
@@ -110,7 +115,7 @@ export default class LimitOrderAccount extends React.Component {
     //     this.props.dispatch(this.props.changeAmount(amount))
     //     // this.props.changeFocus()
     // }
-    this.props.dispatch(limitOrderActions.inputChange('source', sourceBalance))
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal)))
     this.props.dispatch(limitOrderActions.focusInput('source'));
 
     this.selectTokenBalance();
