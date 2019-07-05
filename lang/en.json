@@ -330,7 +330,7 @@
     "to_get_started": "to get started",
     "description_term_swap": "By Swapping, you agree to the ${term}",
     "description_term_transfer": "By Transfering, you agree to the ${term}",
-    "description_term_limit_order": "By Ordering, you agree to the ${term}"
+    "description_term_limit_order": "By Submitting, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Decentralized Exchange for Ethereum tokens",
@@ -413,8 +413,8 @@
     "login_to_submit": "Login to Submit Order",
     "submit": "Submit",
     "discount_message": "Hold from 2000 KNC to get discount for your orders. More info <a href=\"${link}\"\ntarget=\"_blank\">here</a>",
-    "higher_rate": "Your price is ${percentChange}% higher than current Market",
-    "lower_rate": "Your price is ${percentChange}% lower than current Market",
+    "higher_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current Market",
+    "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current Market",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
     "ineligible_address": "This address has been used by another account. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee."

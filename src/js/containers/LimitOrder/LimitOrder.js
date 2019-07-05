@@ -113,7 +113,7 @@ export default class LimitOrder extends React.Component {
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
       } else {
         this.props.dispatch(limitOrderActions.setFilterMode("server"));
-        
+
         const pairAddressFilter = this.props.limitOrder.pairFilter.map(item => {
           const [sourceTokenSymbol, destTokenSymbol] = item.split("-");
           const sourceToken = this.props.tokens[sourceTokenSymbol].address;
@@ -181,7 +181,7 @@ export default class LimitOrder extends React.Component {
 
     // Get list orders
     if (isUserLogin()) {
-      this.getOrders();
+      this.setInterValGroup(this.getOrders, 10000)
     }
   }
 
