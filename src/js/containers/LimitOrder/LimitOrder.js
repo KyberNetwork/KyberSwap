@@ -74,11 +74,13 @@ export default class LimitOrder extends React.Component {
   }
 
   setInvervalProcess = () => {
-   
     this.setInterValGroup(this.fetchCurrentRate, 10000)
-
     this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
 
+    if (isUserLogin()) {
+      this.getOrders();
+      this.setInterValGroup(this.getOrders.bind(this), 10000)
+    }
   }
 
   componentWillUnmount = () => {
@@ -169,12 +171,6 @@ export default class LimitOrder extends React.Component {
     }
 
     this.fetchCurrentRateInit()
-
-    // Get list orders
-    if (isUserLogin()) {
-      this.getOrders();
-      this.setInterValGroup(this.getOrders.bind(this), 10000)
-    }
   }
 
 
