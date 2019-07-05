@@ -55,7 +55,9 @@ export function getOrders() {
                 ...item,
                 user_address: item.user_address.toLowerCase()
             }
-        });
+        });  
+        console.log("reuslsasdasd")      
+        console.log(results)      
         resolve(results);
         return;
     })

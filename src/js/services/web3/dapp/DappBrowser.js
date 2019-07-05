@@ -37,7 +37,7 @@ export default class DappBrowser {
   }
 
   getCoinbase(isManual = false) {
-    if (window.ethereum) {
+    if (window.ethereum && isManual) {
       return new Promise((resolve, reject) => {
         window.ethereum.enable().then(() => {
 
@@ -94,7 +94,7 @@ export default class DappBrowser {
 
   async sign(message) {
     try{
-      var account = await this.getCoinbase()
+      var account = await this.getCoinbase(true)
       var signature = await this.web3.eth.sign(message, account)
       return signature
     }catch(err){
