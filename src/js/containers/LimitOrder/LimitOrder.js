@@ -181,10 +181,6 @@ export default class LimitOrder extends React.Component {
 
     // Get list orders
     if (isUserLogin()) {
-<<<<<<< HEAD
-=======
-      this.getOrders();
->>>>>>> 7aad0c0757ac04a42bd36c8202df3a107ddf940d
       this.setInterValGroup(this.getOrders.bind(this), 10000)
     }
   }
