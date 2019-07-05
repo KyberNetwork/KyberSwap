@@ -1288,14 +1288,21 @@
         @extend %btn;
         color: #222222;
         background-color: #f5f6f8;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: darken(#f5f6f8, 5%);
+        }
     }
 
     .btn-confirm {
         @extend %btn;
         color: #ffffff;
         background-color: #ef8102;
+        transition: background-color .3s;
+
         &:hover {
-            background-color: $color-swap-light;
+            background-color: darken(#ef8102, 5%);
         }
      }
 }

@@ -395,7 +395,7 @@
     "your_address": "Your address:",
     "your_balance": "Your balance:",
     "submit_order": "Submit Order",
-    "your_available_balance": "Your Available Balance",
+    "your_available_balance": "Tokens available for Limit Order",
     "eth_not_support": "ETH* is the combination of ETH and WETH",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
@@ -427,5 +427,7 @@
   "standard": "Standard",
   "fast": "Fast",
   "super_fast": "Super Fast",
-  "search": "Search"
+  "search": "Search",
+  "no_thank": "No, Thank",
+  "yes_please": "Yes, Please"
 }

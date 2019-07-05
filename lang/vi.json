@@ -392,7 +392,7 @@
     "your_address": "Địa chỉ của bạn:",
     "your_balance": "Tài khoản của bạn:",
     "submit_order": "Đặt lệnh",
-    "your_available_balance": "Tài khoản khả dụng",
+    "your_available_balance": "Tài khoản khả dụng cho Limit Order",
     "eth_not_support": "ETH* được tính bằng cả ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
@@ -425,5 +425,7 @@
   "standard": "Thường",
   "fast": "Nhanh",
   "super_fast": "Rất Nhanh",
-  "search": "Tìm kiếm"
+  "search": "Tìm kiếm",
+  "no_thank": "Không, cảm ơn",
+  "yes_please": "Đồng ý"
 }
