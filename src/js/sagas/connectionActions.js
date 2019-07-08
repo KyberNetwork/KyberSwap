@@ -106,7 +106,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
       const account = state.account.account
       if (account !== false) {
         const coinbase = yield call([web3Service, web3Service.getCoinbase])
-        if (coinbase.toLowerCase() !== account.address.toLowerCase()) {
+        if (coinbase.toLowerCase() !== account.address.toLowerCase() && account.type === "metamask") {
           yield put(globalActions.clearSession())
           return
         }
