@@ -81,13 +81,10 @@ export default class LimitOrder extends React.Component {
   }
 
   setInvervalProcess = () => {
-   
     this.setInterValGroup(this.fetchCurrentRate, 10000)
-
     this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
-
+    this.setInterValGroup(this.fetchListOrders.bind(this), 10000)    
     this.setInterValGroup(this.fetchPendingBalance.bind(this), 10000)    
-
   }
 
   componentWillUnmount = () => {
@@ -102,7 +99,10 @@ export default class LimitOrder extends React.Component {
     this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
 
-  async getOrders() {
+  async fetchListOrders() {
+    if (!isUserLogin()) {
+      return
+    }
     try {
       const limitOrderMode = limitOrderServices.getModeLimitOrder();
       if (limitOrderMode === "client") {
@@ -178,11 +178,8 @@ export default class LimitOrder extends React.Component {
     }
 
     this.fetchCurrentRateInit()
-
-    // Get list orders
-    if (isUserLogin()) {
-      this.setInterValGroup(this.getOrders.bind(this), 10000)
-    }
+    this.fetchListOrders()
+    this.fetchPendingBalance()
   }
 
 
