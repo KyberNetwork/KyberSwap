@@ -170,7 +170,7 @@ export default class ConfirmModal extends React.Component {
             var showErr = "Cannot submit order"
             if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
               && this.props.account.type === "metamask" && !this.props.isOnDAPP){
-                showErr = "Signature is invalid. A possible reason is by your sign message with Hardware wallet plugged in Metamask. Please try to import Hardware Wallet and submit order again."
+                showErr = "Signature is invalid. There is a possibility that you have signed the message with a Hardware wallet plugged in Metamask. Please try to import a Hardware Wallet to KyberSwap and resubmit the order."
             }
 
             this.setState({
