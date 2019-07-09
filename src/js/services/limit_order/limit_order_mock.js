@@ -259,7 +259,7 @@ export function getUserStats() {
 
 export function getPendingBalances(address) {
     return new Promise((resolve, reject) => {
-        const balances = {};
+        /*const balances = {};
         data.forEach(item => {
             if ((item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) && (item.user_address.toLowerCase() === address.toLowerCase())) {
                 if (balances.hasOwnProperty(item.source)) {
@@ -269,9 +269,35 @@ export function getPendingBalances(address) {
                 }
             }
         });
-        console.log("balance__")
-        console.log(balances)
-        resolve(balances);
+        resolve(balances);*/
+
+      const pendingBalanceResponse = {
+        success: true,
+        data: {
+          "OMG": 1,
+          "KNC": 1,
+          "WETH": 0.5,
+        },
+        pending_txs: [
+          {
+            "tx_hash": "0xe99fb258f82565f1849005e850017d1a9d25a68817f2b10827108f249b256892",
+            "src_token": "OMG",
+            "src_amount": 1
+          },
+          {
+            "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
+            "src_token": "KNC",
+            "src_amount": 1
+          },
+          {
+            "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
+            "src_token": "WETH",
+            "src_amount": 0.5
+          }
+        ]
+      };
+
+      resolve(pendingBalanceResponse);
     });
 }
 

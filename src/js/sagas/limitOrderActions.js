@@ -1,5 +1,3 @@
-
-
 import { take, put, call, fork, select, takeEvery, takeLatest, all, apply } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
@@ -9,7 +7,6 @@ import * as limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
-
 import * as constants from "../services/constants"
 
 function* selectToken(action) {
@@ -197,13 +194,46 @@ function* getListFilter() {
 
 function* fetchPendingBalances(action) {
   const { address } = action.payload;
+  const state = store.getState();
+  const ethereum = state.connection.ethereum;
+
   try {
-    const pendingBalances = yield call(limitOrderServices.getPendingBalances, address);
+    const result = yield call(limitOrderServices.getPendingBalances, address);
+
+    let pendingBalances = result.data;
+    const pendingTxs = result.pending_txs;
+
+    if (ethereum) {
+      for (var i = 0; i < pendingTxs.length; ++i) {
+        const isTxMined = yield call(checkTxMined, ethereum, pendingTxs[i].tx_hash);
+        if (isTxMined) delete pendingBalances[pendingTxs[i].src_token];
+      }
+    }
 
     yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances));
   } catch (err) {
     console.log(err);
   }
+}
+
+function* checkTxMined(ethereum, txHash) {
+  const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
+
+  if (!receipt) return false;
+
+  let isTopicValid = false;
+  const logs = receipt.logs;
+
+  if (!logs.length) return false;
+
+  for (var i = 0; i < logs.length; ++i) {
+    if (logs[i].topics[0].toLowerCase() === constants.TRADE_TOPIC.toLowerCase()) {
+      isTopicValid = true;
+      break;
+    }
+  }
+
+  return isTopicValid;
 }
 
 export function* watchLimitOrder() {
