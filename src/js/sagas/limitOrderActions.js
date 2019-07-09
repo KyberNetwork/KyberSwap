@@ -203,7 +203,7 @@ function* fetchPendingBalances(action) {
     let pendingBalances = result.data;
     const pendingTxs = result.pending_txs;
 
-    if (ethereum) {
+    if (ethereum && pendingTxs.length > 0 && pendingTxs.length <= 3) {
       for (var i = 0; i < pendingTxs.length; ++i) {
         const isTxMined = yield call(checkTxMined, ethereum, pendingTxs[i].tx_hash);
         if (isTxMined) delete pendingBalances[pendingTxs[i].src_token];
@@ -227,7 +227,7 @@ function* checkTxMined(ethereum, txHash) {
   if (!logs.length) return false;
 
   for (var i = 0; i < logs.length; ++i) {
-    if (logs[i].topics[0].toLowerCase() === constants.TRADE_TOPIC.toLowerCase()) {
+    if (logs[i].topics[0].toLowerCase() === constants.LIMIT_ORDER_TOPIC.toLowerCase()) {
       isTopicValid = true;
       break;
     }
