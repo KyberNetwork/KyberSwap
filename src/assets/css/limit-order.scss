@@ -796,7 +796,7 @@
 
                 >div:nth-child(2) {
                     display: grid;
-                    grid-template-columns: 1fr 1fr;
+                    grid-template-columns: 1fr 1fr 1fr;
                     grid-gap: 10px;
                 }
 
@@ -818,18 +818,18 @@
                     // padding: 0 15px;
                     
                     &--from {
-                        border-right: 1px solid #cccccc;
+                        // border-right: 1px solid #cccccc;
                     }
 
                     >div:first-child {
-                        font-size: 12px;
+                        font-size: 11px;
                         font-weight: 600;
                         color: #999999;
                     }
 
                     >div:nth-child(2) {
-                        font-size: 16px;
-                        font-weight: 500;
+                        font-size: 11px;
+                        font-weight: bold;
                         color: #222222;
                     }
                 }
