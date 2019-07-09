@@ -5,7 +5,7 @@ import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
-import * as limitOrderServices from "../services/limit_order"
+import limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
