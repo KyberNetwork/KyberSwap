@@ -61,7 +61,7 @@ export default class HeaderTransaction extends React.Component {
             </Link>
 
             {/* Beta icon */}
-            <img className="exchange-tab__limit-order-beta" src={require("../../../assets/img/limit-order/beta.svg")}/>
+            <img className="exchange-tab__limit-order-beta" src={require("../../../assets/img/limit-order/beta.png")}/>
             {/* Info icon */}
             {/* <img className="exchange-tab__limit-order-info" src={require("../../../assets/img/v3/info_grey.svg")} /> */}
           </div>

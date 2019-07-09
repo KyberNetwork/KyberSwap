@@ -280,7 +280,7 @@ export default class CancelOrderModal extends Component {
 							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.closeModal()}
 						>
-							{this.props.translate("no_thank") || "No, Thank"}
+							{this.props.translate("no_thank") || "No, Thanks"}
 						</button>
 						<button
 							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
