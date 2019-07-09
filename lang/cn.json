@@ -414,7 +414,9 @@
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
     "pair_not_supported": "该交易对目前市场并不支持",
     "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
-    "fetch_fee_err": "无法获取费用"
+    "fetch_fee_err": "无法获取费用",
+    "view_tx": "View tx",
+    "rate_warning_title": "Do you want to <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> them?"
   },
   "home": "主页",
   "tracker": "跟踪网站",
