@@ -95,7 +95,7 @@ export default class LimitOrderAccount extends React.Component {
       //if souce token is weth, we spend a small amount to make approve tx, swap tx
 
       var ethBalance = this.props.tokens["ETH"].balance
-      var fee = this.calcualteMaxFee()
+      var fee = this.calcualteMaxFee()      
       if (converters.compareTwoNumber(ethBalance, fee) === 1) {
         sourceBalance = converters.subOfTwoNumber(sourceBalance, fee)
       } else {
@@ -106,15 +106,6 @@ export default class LimitOrderAccount extends React.Component {
 
     if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
 
-    // if (sourceBalance < 0) sourceBalance = 0;
-
-    // if (this.props.screen === "swap" || this.props.screen === "limit_order") {
-    //     this.props.dispatch(this.props.changeAmount('source', amount))
-    //     this.props.dispatch(this.props.changeFocus('source'));
-    // } else {
-    //     this.props.dispatch(this.props.changeAmount(amount))
-    //     // this.props.changeFocus()
-    // }
     this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal)))
     this.props.dispatch(limitOrderActions.focusInput('source'));
 

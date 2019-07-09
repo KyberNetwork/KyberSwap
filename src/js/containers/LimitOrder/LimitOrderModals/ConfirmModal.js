@@ -103,7 +103,8 @@ export default class ConfirmModal extends React.Component {
             var ethereum = this.props.ethereum
             var user = this.props.account.address.toLowerCase()
             var nonce = await this.getUserNonce()
-            nonce = converters.toHex(nonce)
+            // nonce = converters.toHex(nonce)
+
             var srcToken = this.props.limitOrder.sourceToken.toLowerCase()
 
             var srcQty = converters.toTWei(this.props.limitOrder.sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
@@ -120,17 +121,19 @@ export default class ConfirmModal extends React.Component {
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
-            console.log(signData)
+            // console.log("limit_order_sg")
+            // console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
-
+            // console.log(signature)
             
-            var pramameters = await ethereum.call("getSignatureParameters", signature)
+            // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
-            console.log(signature)
-            console.log(signData)
-            console.log(pramameters)
-            console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
+            // console.log("limit_order")
+            // console.log(signature)
+            // console.log(signData)
+            // console.log(pramameters)
+            // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
             var newOrder = await submitOrder({  
                 user_address: this.props.account.address.toLowerCase(),

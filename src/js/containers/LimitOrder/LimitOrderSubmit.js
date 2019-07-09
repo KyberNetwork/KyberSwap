@@ -239,8 +239,12 @@ export default class LimitOrderSubmit extends React.Component {
 
   validateBalance = (orderPath) => {
     var gasLimit = this.getMaxGasLimit(orderPath)
-    var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
-    var totalFeeBig = converters.toTWei(totalFee, 18)
+    // var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
+    // var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
+
+    var totalFeeBig = converters.totalFee(this.props.limitOrder.gasPrice, gasLimit)
+
+
     var ethBalance = this.props.tokens["ETH"].balance
 
     var compareValue

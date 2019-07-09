@@ -247,7 +247,7 @@ export function gweiToWei(number) {
   } else if (acceptableTyping(number)) {
     return number
   } else {
-    return bigNumber.times(1000000000).toString()
+    return bigNumber.times(1000000000).toFixed(0)
   }
 }
 
@@ -520,7 +520,7 @@ export function calculatePercentRate(minRate, expectedRate) {
 }
 
 export function totalFee(gasPrice, gasUsed) {
-  var gasPrice = stringToBigNumber(gweiToEth(gasPrice))
+  var gasPrice = stringToBigNumber(gweiToWei(gasPrice))
   var fee = gasPrice.multipliedBy(gasUsed)
   return fee.toString()
 }

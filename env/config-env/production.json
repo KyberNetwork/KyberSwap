@@ -138,14 +138,16 @@
             "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
             "decimals": 18,
             "cg_id": "request-network",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "RDN": {
             "symbol": "RDN",
             "name": "Raiden",
             "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
             "decimals": 18,
-            "cg_id": "raiden-network"
+            "cg_id": "raiden-network",
+            "sp_limit_order": true
         },
         "APPC": {
             "symbol": "APPC",
@@ -159,7 +161,8 @@
             "name": "Enigma",
             "address": "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4",
             "decimals": 8,
-            "cg_id": "enigma"
+            "cg_id": "enigma",
+            "sp_limit_order": true
         },
         "BQX": {
             "symbol": "BQX",
@@ -180,7 +183,8 @@
             "name": "AirSwap",
             "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
             "decimals": 4,
-            "cg_id": "airswap"
+            "cg_id": "airswap",
+            "sp_limit_order": true
         },
         "RCN": {
             "symbol": "RCN",
@@ -194,7 +198,8 @@
             "name": "Chain Link",
             "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
             "decimals": 18,
-            "cg_id": "chainlink"
+            "cg_id": "chainlink",
+            "sp_limit_order": true
         },
         "DGX": {
             "symbol": "DGX",
@@ -240,7 +245,8 @@
             "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
             "decimals": 18,
             "cg_id": "enjincoin",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "BLZ": {
             "symbol": "BLZ",
@@ -298,14 +304,16 @@
             "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
             "decimals": 8,
             "cg_id": "poet",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "PAY": {
             "symbol": "PAY",
             "name": "TenX",
             "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
             "decimals": 18,
-            "cg_id": "tenx"
+            "cg_id": "tenx",
+            "sp_limit_order": true
         },
         "DTA": {
             "symbol": "DTA",
@@ -319,7 +327,8 @@
             "name": "Bancor",
             "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
             "decimals": 18,
-            "cg_id": "bancor"
+            "cg_id": "bancor",
+            "sp_limit_order": true
         },
         "TUSD": {
             "symbol": "TUSD",
@@ -328,7 +337,8 @@
             "decimals": 18,
             "cg_id": "true-usd",
             "gasLimit": "600000",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "LEND": {
             "symbol": "LEND",
@@ -378,7 +388,8 @@
             "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
             "decimals": 18,
             "cg_id": "augur",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "ZRX": {
             "symbol": "ZRX",
@@ -386,7 +397,8 @@
             "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
             "decimals": 18,
             "cg_id": "0x",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "MAS": {
             "symbol": "MAS",
@@ -407,7 +419,8 @@
             "name": "Republic",
             "address": "0x408e41876cccdc0f92210600ef50372656052a38",
             "decimals": 18,
-            "cg_id": "republic-protocol"
+            "cg_id": "republic-protocol",
+            "sp_limit_order": true
         },
         "QKC": {
             "symbol": "QKC",
@@ -423,7 +436,8 @@
             "decimals": 18,
             "cg_id": "maker",
             "gasLimit": "400000",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "DCC": {
             "symbol": "DCC",
@@ -497,7 +511,8 @@
             "decimals": 18,
             "cg_id": "infinitus-token",
             "listing_time": 1545048000,
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "TTC": {
             "symbol": "TTC",
@@ -513,7 +528,8 @@
             "address": "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6",
             "decimals": 18,
             "cg_id": "the-abyss",
-            "listing_time": 1547560800
+            "listing_time": 1547560800,
+            "sp_limit_order": true
         },
         "WBTC": {
             "symbol": "WBTC",
@@ -522,7 +538,8 @@
             "decimals": 8,
             "cg_id": "wrapped-bitcoin",
             "listing_time": 1548853200,
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "MLN": {
             "symbol": "MLN",
@@ -531,7 +548,8 @@
             "decimals": 18,
             "cg_id": "melon",
             "listing_time": 1549321200,
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "USDC": {
             "symbol": "USDC",
@@ -605,7 +623,8 @@
             "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
             "decimals": 9,
             "cg_id": "iexec-rlc",
-            "listing_time": 1560258000
+            "listing_time": 1560258000,
+            "sp_limit_order": true
         },
         "NPXS": {
             "symbol": "NPXS",
@@ -613,7 +632,8 @@
             "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
             "decimals": 18,
             "cg_id": "pundi-x",
-            "listing_time": 1560258000
+            "listing_time": 1560258000,
+            "sp_limit_order": true
         },
         "GNO": {
             "symbol": "GNO",
@@ -646,7 +666,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-    "kyberswapAddress": "0x4d54793dec1b0f2b5daf2b8e30c0742b9cac80cb",
+    "kyberswapAddress": "0x0f01b5ea43719683c546868bfadeaccde14ab79e",
     "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "endpoint": "wss://mainnet.infura.io/ws",
