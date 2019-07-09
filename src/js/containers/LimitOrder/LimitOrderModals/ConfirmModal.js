@@ -22,7 +22,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
     const global = store.global;
 
     return {
-        translate, limitOrder, tokens, account, ethereum, global
+        translate, limitOrder, tokens, account, ethereum, global, isOnDAPP: store.account.isOnDAPP
     }
 })
 
@@ -165,9 +165,16 @@ export default class ConfirmModal extends React.Component {
               isConfirming: false
             });
         }catch(err){
-            console.log(err.message);
+            // console.log(err.message);
+            console.log(err)
+            var showErr = "Cannot submit order"
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+              && this.props.account.type === "metamask" && !this.props.isOnDAPP){
+                showErr = "Signature is invalid. A possible reason is by your sign message with Hardware wallet plugged in Metamask. Please try to import Hardware Wallet and submit order again."
+            }
+
             this.setState({
-              err: err.toString(),
+              err: showErr,
               isConfirming: false,
               isFinish: false
             })

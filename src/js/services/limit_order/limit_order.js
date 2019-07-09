@@ -96,7 +96,7 @@ export function submitOrder(order) {
                     }
                     resolve(orderObj)
                 } else {
-                    rejected(new Error("Cannot submit order"))
+                    rejected(result.message)
                 }
             })
             .catch((err) => {
