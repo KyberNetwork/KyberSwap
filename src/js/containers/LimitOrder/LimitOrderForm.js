@@ -8,7 +8,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import * as constants from "../../services/constants"
-import * as limitOrderServices from "../../services/limit_order";
+import limitOrderServices from "../../services/limit_order";
 import { default as _ } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import * as converters from "../../utils/converter";

@@ -7,7 +7,7 @@ import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import { getFormattedDate } from "../../../utils/common";
 import { roundingNumber } from "../../../utils/converter";
-import * as limitOrderServices from "../../../services/limit_order";
+import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 
 @connect((store, props) => {

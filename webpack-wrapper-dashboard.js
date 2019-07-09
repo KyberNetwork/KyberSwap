@@ -36,7 +36,8 @@ var getConfig = env => {
             'env': JSON.stringify(env),
             'process.env': {
                 'logger': env === 'production'?'false': 'true',
-                'env': JSON.stringify(env)
+                'env': JSON.stringify(env),
+                'integrate': true
             }
         }),
         new WebpackShellPlugin(

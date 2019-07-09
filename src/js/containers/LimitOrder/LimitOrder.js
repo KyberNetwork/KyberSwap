@@ -10,7 +10,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import constants from "../../services/constants"
 
 import {LimitOrderBody} from "../LimitOrder"
-import * as limitOrderServices from "../../services/limit_order";
+import limitOrderServices from "../../services/limit_order";
 import { isUserLogin } from "../../utils/common";
 
 import BLOCKCHAIN_INFO from "../../../../env";

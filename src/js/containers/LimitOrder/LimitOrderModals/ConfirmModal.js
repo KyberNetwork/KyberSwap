@@ -9,7 +9,7 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
-import {getNonce, submitOrder, cancelOrder, getFee} from "../../../services/limit_order"
+import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
@@ -52,7 +52,7 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var fee = await getFee(userAddr, src, dest, srcAmount, destAmount)        
+        var fee = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
@@ -68,7 +68,7 @@ export default class ConfirmModal extends React.Component {
         try{
             var ethereum = this.props.ethereum
             //nonce from server
-            var nonceServer = await getNonce(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
+            var nonceServer = await limitOrderServices.getNonce(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
 
             // nonce from contract
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
@@ -135,7 +135,7 @@ export default class ConfirmModal extends React.Component {
             // console.log(pramameters)
             // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
-            var newOrder = await submitOrder({  
+            var newOrder = await limitOrderServices.submitOrder({  
                 user_address: this.props.account.address.toLowerCase(),
                 nonce: nonce,
                 src_token: this.props.limitOrder.sourceToken,
@@ -304,7 +304,7 @@ export default class ConfirmModal extends React.Component {
                 </div>}
 
                 {this.state.feeErr.length > 0 && <div className="limit-order-modal__result--error">
-                  {this.props.translate("limit_order.fetch_fee_err") || "Fetching fee error. Cannot submit order."}
+                  {this.props.translate("limit_order.fetch_fee_err") || "Cannot get fee."}
                 </div>}
 
               </div>
