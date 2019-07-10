@@ -41,24 +41,24 @@ export function* updateAccount(action) {
 
 export function* updateTokenBalance(action) {
   try {
-    const { ethereum, address, tokens } = action.payload
-    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
+    const { ethereum, address, tokens } = action.payload;
+    const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens, latestBlock)
+
     yield put(setBalanceToken(balanceTokens))
 
     const limitOrder = store.getState().limitOrder;
-    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.unconfirmedPendingBalances, limitOrder.pendingTxs);
+    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.unconfirmedPendingBalances, limitOrder.pendingTxs, latestBlock);
   }
   catch (err) {
     console.log(err)
   }
 }
 
-function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs) {
+function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
   if (ethereum && pendingTxs.length <= 3) {
-    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
-
     for (var i = 0; i < pendingTxs.length; ++i) {
-      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, lastestBlock);
+      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock);
       const txAmount  = pendingTxs[i].src_amount;
       const pendingAmount = pendingBalances[pendingTxs[i].src_token];
 

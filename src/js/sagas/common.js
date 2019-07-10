@@ -72,24 +72,28 @@ export function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
     return sourceAmountHex
   }
 
-export function* checkTxMined(ethereum, txHash, lastestBlock, tradeTopic = constants.LIMIT_ORDER_TOPIC) {
-  const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
-  const logs = receipt.logs;
-  const blockNumber = receipt.blockNumber;
-  let isTopicValid = false;
+export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic = constants.LIMIT_ORDER_TOPIC) {
+  try {
+    const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
+    const logs = receipt.logs;
+    const blockNumber = receipt.blockNumber;
+    let isTopicValid = false;
 
-  if (!receipt) return false;
+    if (!receipt) return false;
 
-  if (blockNumber > lastestBlock) return false;
+    if (blockNumber > latestBlock) return false;
 
-  if (!logs.length) return false;
+    if (!logs.length) return false;
 
-  for (var i = 0; i < logs.length; ++i) {
-    if (logs[i].topics[0].toLowerCase() === tradeTopic.toLowerCase()) {
-      isTopicValid = true;
-      break;
+    for (var i = 0; i < logs.length; ++i) {
+      if (logs[i].topics[0].toLowerCase() === tradeTopic.toLowerCase()) {
+        isTopicValid = true;
+        break;
+      }
     }
-  }
 
-  return isTopicValid;
+    return isTopicValid;
+  } catch (e) {
+    return false;
+  }
 }

@@ -95,7 +95,7 @@ export default class BaseProvider {
         })
     }
 
-    getAllBalancesTokenAtLatestBlock(address, tokens) {
+    getAllBalancesTokenAtLatestBlock(address, tokens, latestBlock = null) {
         var listToken = []
         var listSymbol = []
         Object.keys(tokens).map(index => {
@@ -105,10 +105,10 @@ export default class BaseProvider {
         })
 
         return new Promise((resolve, reject) => {
-            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
-                //console.log(result)
-                //  console.log("balance_tokens")
-                //  console.log(result)
+            var data = this.wrapperContract.methods.getBalances(address, listToken).call(
+              {},
+              latestBlock
+            ).then(result => {
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
