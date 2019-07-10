@@ -37,8 +37,11 @@ export default class Tx {
         newTx.gas = receipt.gasUsed
         newTx.blockNumber = receipt.blockNumber
         var logs = receipt.logs
-        console.log("log_tx")
-        console.log(logs)
+
+        if (!receipt.blockNumber) {
+          resolve(newTx)          
+          return
+        }
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
             newTx.threw = true
@@ -59,8 +62,8 @@ export default class Tx {
                 break
               }
             }
-            newTx.status = receipt.blockNumber && theLog ? "success" : "failed"
-            newTx.error = receipt.blockNumber && theLog ? "" : "transaction.error_tx_contract"
+            newTx.status = theLog ? "success" : "failed"
+            newTx.error = theLog ? "" : "transaction.error_tx_contract"
           }
         }
         if (newTx.type === "transfer"){
@@ -80,8 +83,8 @@ export default class Tx {
                   break
                 }
               }
-              newTx.status = receipt.blockNumber && theLog ? "success" : "failed"
-              newTx.error = receipt.blockNumber && theLog ? "" : "transaction.error_tx_contract"
+              newTx.status = theLog ? "success" : "failed"
+              newTx.error = theLog ? "" : "transaction.error_tx_contract"
             }
           }
         }         

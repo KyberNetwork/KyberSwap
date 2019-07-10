@@ -63,14 +63,20 @@ export default class BroadCastModal extends React.Component {
       var newTx = await tx.sync(ethereum, tx)      
       this.setState({txStatus: newTx.status})
 
-      console.log("notify_s")
-
-      try{
-        var notiService = this.props.global.notiService
-        notiService.callFunc("changeStatusTx",newTx)
-      }catch(e){
-        console.log(e)
+      if (newTx.status === "success") {
+        try{
+          var notiService = this.props.global.notiService
+          notiService.callFunc("changeStatusTx",newTx)
+        }catch(e){
+          console.log(e)
+        }
+      }else{
+        await sleep(5000)
+        this.checkTxStatus(ethereum, tx)
       }
+      // console.log("notify_s")
+
+     
     }catch(err){
       console.log(err)
       await sleep(2000)

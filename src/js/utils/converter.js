@@ -577,8 +577,8 @@ export function formatNumber(number, round = false, groupSeparator = ',') {
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
-  var numberFormat = new BigNumber(number.toString())
-
+  var numberStr = number.toString()
+  var numberFormat = new BigNumber(numberStr.replace(",",""))
   if (numberFormat == 'NaN' || numberFormat == 'Infinity') {
     return "0";
   }
@@ -587,7 +587,7 @@ export function formatNumber(number, round = false, groupSeparator = ',') {
     return numberFormat.toFormat(round)
   }
 
-  return numberFormat.toFormat()
+  return numberFormat.toString()
 }
 
 export function caculatorPercentageToRate(number, total) {

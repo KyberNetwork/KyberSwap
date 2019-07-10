@@ -60,6 +60,8 @@ export default class BroadCastModal extends React.Component {
   async checkTxStatus(ethereum, tx) {
     try {
       var newTx = await tx.sync(ethereum, tx)
+      this.setState({ txStatus: newTx.status })
+      
       if (newTx.status === "success") {
         const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
 
@@ -70,19 +72,20 @@ export default class BroadCastModal extends React.Component {
           sourceAmount: converter.toT(srcAmount, sourceDecimal),
           destAmount: converter.toT(destAmount, destDecimal)
         })
-      }
-
-      try{
-        var notiService = this.props.global.notiService
-        notiService.callFunc("changeStatusTx",newTx)
-      }catch(e){
-        console.log(e)
+        try{
+          var notiService = this.props.global.notiService
+          notiService.callFunc("changeStatusTx",newTx)
+        }catch(e){
+          console.log(e)
+        }
+      }else{
+        await sleep(5000)
+        this.checkTxStatus(ethereum, tx)
       }
       
-      this.setState({ txStatus: newTx.status })
     } catch (err) {
       console.log(err)
-      await sleep(2000)
+      await sleep(5000)
       this.checkTxStatus(ethereum, tx)
     }
 
