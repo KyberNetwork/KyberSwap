@@ -378,7 +378,7 @@ export function errorName(message) {
 
 export function stringEtherToBigNumber(number, decimal) {
   var param = new BigNumber(10).pow(decimal ? decimal : 18)
-  var bigNumber = new BigNumber(number).times(param)
+  var bigNumber = new BigNumber(number.toString()).times(param)
   return bigNumber
 }
 export function stringToBigNumber(number) {
@@ -387,13 +387,13 @@ export function stringToBigNumber(number) {
 }
 
 export function floatMultiply(number, params) {
-  const bigNumber = new BigNumber(number).times(params);
+  const bigNumber = new BigNumber(number.toString()).times(params);
   return bigNumber.toNumber();
 }
 
 export function getBigNumberValueByPercentage(number, percentage) {
   if (percentage == 100) return number
-  return stringToBigNumber(number).multipliedBy(percentage / 100).toFixed(0);
+  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100).toFixed(0);
 }
 
 export function stringToHex(number, decimal) {
