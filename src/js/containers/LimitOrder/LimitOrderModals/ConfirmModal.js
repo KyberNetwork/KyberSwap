@@ -125,7 +125,7 @@ export default class ConfirmModal extends React.Component {
             // console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
-            // console.log(signature)
+            console.log(signature)
             
             // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
@@ -204,7 +204,7 @@ export default class ConfirmModal extends React.Component {
       return `
       <div>
         <div className="title">
-          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.props.limitOrder.orderFee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
+          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.state.fee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
         </div>
         <div className="description">
           ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
@@ -227,10 +227,10 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-      const calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
-      const formatedFee = +converters.formatNumber(calculateFee, 5, '');
-      const formatedSrcAmount = +converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
-      const receiveAmount = (this.props.limitOrder.sourceAmount - (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100) * this.props.limitOrder.triggerRate
+      const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
+      const formatedFee = converters.formatNumber(calculateFee, 5, '');
+      const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
+      const receiveAmount = converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, converters.multiplyOfTwoNumber(calculateFee, this.props.limitOrder.triggerRate));
 
       return (
           <div className="limit-order-modal">

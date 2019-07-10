@@ -386,10 +386,7 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
-export function floatMultiply(number, params) {
-  const bigNumber = new BigNumber(number.toString()).times(params);
-  return bigNumber.toNumber();
-}
+
 
 export function getBigNumberValueByPercentage(number, percentage) {
   if (percentage == 100) return number
@@ -582,6 +579,10 @@ export function formatNumber(number, round = false, groupSeparator = ',') {
   BigNumber.config({ FORMAT: format })
   var numberFormat = new BigNumber(number.toString())
 
+  if (numberFormat == 'NaN' || numberFormat == 'Infinity') {
+    return "0";
+  }
+
   if (round !== false) {
     return numberFormat.toFormat(round)
   }
@@ -691,6 +692,30 @@ export function sumOfTwoNumber(num1, num2) {
   var num2 = new BigNumber(num2.toString())
   var sum = num1.plus(num2)
   return sum.toString()
+}
+
+export function multiplyOfTwoNumber(first, second) {
+  const firstBig = new BigNumber(first.toString());
+  const secondBig = new BigNumber(second.toString());
+
+  if (firstBig == 'NaN' || firstBig == 'Infinity' || secondBig == 'NaN' || secondBig == 'Infinity') {
+    return "0";
+  }
+
+  const result = firstBig.times(secondBig);
+  return result.toString();
+}
+
+export function divOfTwoNumber(first, second) {
+  const firstBig = new BigNumber(first.toString());
+  const secondBig = new BigNumber(second.toString());
+
+  if (firstBig == 'NaN' || firstBig == 'Infinity' || secondBig == 'NaN' || secondBig == 'Infinity') {
+    return "0";
+  }
+
+  const result = firstBig.div(secondBig);
+  return result.toString();
 }
 
 export function bigPow(n, m) {
