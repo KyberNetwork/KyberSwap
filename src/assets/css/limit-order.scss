@@ -676,6 +676,19 @@
         .setting {
             cursor: pointer;
         }
+
+        &-faq {
+            padding: 5px 20px;
+            border-radius: 3px;
+            background-color: #f5f6f8;
+
+            a {
+                font-size: 10px;
+                font-weight: 500;
+                color: #666666;
+                text-decoration: none;
+            }
+        }
     }
     
     // For mobile
