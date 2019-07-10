@@ -56,16 +56,23 @@ export function* updateTokenBalance(action) {
 
 function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
   if (ethereum && pendingTxs.length <= 3) {
+    let isModified = false;
+
     for (var i = 0; i < pendingTxs.length; ++i) {
       if (pendingTxs.status === 1) continue;
 
       const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
 
-      pendingTxs[i].status = isTxMined ? 1 : 0;
+      if (isTxMined) {
+        pendingTxs[i].status = 1;
+        isModified = true;
+      }
+    }
+
+    if (isModified) {
+      yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
     }
   }
-
-  yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
 }
 
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
