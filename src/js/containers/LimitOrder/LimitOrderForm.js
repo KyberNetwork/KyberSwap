@@ -165,12 +165,26 @@ export default class LimitOrderForm extends React.Component {
   };
 
   closeRateWarningTooltip = () => {
+    const { isAgreeForceSubmit } = this.props.limitOrder;
+
+    if (!isAgreeForceSubmit) {
+      this.props.dispatch(limitOrderActions.setIsDisableSubmit(false));
+    }
+
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
   }
 
-  confirmAgreeSubmit = () => {
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-    this.props.submitHandler();
+  toggleAgreeSubmit = () => {
+    // this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+    // this.props.submitHandler();
+    const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
+
+    if (!isAgreeForceSubmit) {
+      this.props.dispatch(limitOrderActions.setForceSubmitRate(this.props.limitOrder.triggerRate));
+    }
+
+    this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
+    this.props.dispatch(limitOrderActions.setAgreeForceSubmit(!isAgreeForceSubmit));
   }
 
   getRateWarningTooltip = () => {
@@ -206,30 +220,32 @@ export default class LimitOrderForm extends React.Component {
       <div className="rate-warning-tooltip">
         {/* Title */}
         <div className="rate-warning-tooltip__title">
-          {this.props.translate("limit_order.rate_warning_title") || `Do you want to CANCEL them?`}
+          <div className="rate-warning-tooltip__description">
+            {this.props.translate("limit_order.rate_warning_title") || `By submitting this order, you also CANCEL the following orders:`}
+          </div>
+          <span className="rate-warning-tooltip__faq">
+            <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+              {this.props.translate("why") || "Why?"}
+            </a>
+          </span>
         </div>
-        {/* Description */}
-        <div className="rate-warning-tooltip__description">
-          {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order."}
-        </div>
+        
         {/* Table */}
         <div className="rate-warning-tooltip__order-container">
           {tableComp}
         </div>
         {/* Buttons */}
         <div className="rate-warning-tooltip__footer">
-          <button
-						className="btn-cancel"
-						onClick={e => this.closeRateWarningTooltip()}
-					>
-						{this.props.translate("limit_order.change_rate") || "Change Rate"}
-					</button>
-					<button
-						className="btn-confirm"
-						onClick={e => this.confirmAgreeSubmit()}
-					>
-						{this.props.translate("yes_please") || "Yes, Please"}
-					</button>
+          <label className="rate-warning-tooltip__confirm">
+            <span className="rate-warning-tooltip__confirm--text">
+              {this.props.translate("i_understand") || "I understand"}
+            </span>
+            <input type="checkbox" 
+              checked={this.props.limitOrder.isAgreeForceSubmit}
+              className="rate-warning-tooltip__confirm--checkbox"
+              onChange={e => this.toggleAgreeSubmit()}/>
+            <span className="rate-warning-tooltip__confirm--checkmark"></span>
+          </label>
         </div>
       </div>
     );
@@ -341,10 +357,11 @@ export default class LimitOrderForm extends React.Component {
           <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
           
           <Tooltip
-            open={this.props.limitOrder.errors.rateWarning !== ""}
+            open={this.props.limitOrder.errors.rateWarning !== "" && this.props.global.isOnMobile == false}
             position="right"
             interactive={true}
             animateFill={false}
+            delay={1000}
             onRequestClose={() => this.closeRateWarningTooltip()}
             html={this.getRateWarningTooltip()}
           >

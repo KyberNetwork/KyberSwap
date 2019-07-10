@@ -1466,7 +1466,7 @@
     box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
     border: solid 1px #1e87f0;
     background-color: #ffffff;
-    padding: 15px 20px;
+    padding: 20px;
     font-size: 12px;
     position: relative;
     
@@ -1516,30 +1516,38 @@
     }
 
     &__title {
-        font-size: 13px;
-        font-weight: 600;
-        color: #222222;
-        margin-bottom: 5px;
         text-align: left;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 20px;
 
         &--highlight {
             // color: #EF8102;
-            font-weight: 700;
+            font-weight: 600;
         }
     }
 
     &__description {
-        font-size: 11px;
+        font-size: 13px;
         font-weight: 500;
         color: #222222;
-        margin-bottom: 15px;
-        text-align: left;
+    }
+
+    &__faq {
+        >a {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666666;
+            text-decoration: underline;
+        }
     }
 
     &__order-container {
-        margin-bottom: 15px;
+        margin: 20px 0px;
         max-height: 100px;
         overflow-y: auto;
+        background-color: #f5f6f8;
+        padding: 15px 10px;
     }
 
     &__order {
@@ -1553,7 +1561,43 @@
 
     &__footer {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
+    }
+
+    &__confirm {
+        position: relative;
+        margin: 0;
+
+        &--text {
+            font-size: 13px;
+            font-weight: 500;
+            color: #222222;
+            padding-left: 20px;
+        }
+
+        &--checkbox {
+            visibility: hidden;
+            pointer-events: none;
+            margin: 0;
+            width: 0;
+            height: 0;
+
+            &:checked {
+                ~.rate-warning-tooltip__confirm--checkmark {
+                    @extend %checkmark-checkbox--checked;
+                    border-radius: 2px;
+                    border: solid 2px #007bde;
+                    background-color: #007bde;
+                }
+            }
+        }
+
+        &--checkmark {
+            @extend %checkmark-checkbox;
+            border-radius: 1px;
+            border: solid 2px #007bde;
+            background-color: #f4f5f7;
+        }
     }
 
     .btn-cancel {

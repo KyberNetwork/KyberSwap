@@ -167,6 +167,15 @@ export default class LimitOrderSubmit extends React.Component {
       return
     }
 
+    // If user agree force submit order
+    if (this.props.limitOrder.isAgreeForceSubmit && this.props.limitOrder.triggerRate >= this.props.limitOrder.forceSubmitRate) {
+      if (this.props.limitOrder.errors.rateWarning) {
+        this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
+      }
+      this.findPathOrder()
+      return;
+    }
+
     // Filter active orders which have higher rate than current input rate
     let higherRateOrders = [];
 
@@ -192,6 +201,23 @@ export default class LimitOrderSubmit extends React.Component {
     if (higherRateOrders.length > 0) {
       if (!this.props.limitOrder.errors.rateWarning) {
         this.props.dispatch(limitOrderActions.throwError("rateWarning", "Lower rate"));
+        
+        /**
+         * Check if user agree to force submit order
+         * If not, disable submit button
+         */
+        if (!this.props.limitOrder.isAgreeForceSubmit) {
+          this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
+        }
+    
+        /**
+         * Check if current user input rate is smaller than previous saved force submit rate
+         * If smaller, user have to confirm force submit again.
+         */
+        if (this.props.limitOrder.triggerRate < this.props.limitOrder.forceSubmitRate) {
+          this.props.dispatch(limitOrderActions.setAgreeForceSubmit(false));
+          this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
+        }
       }
     } else {
       if (this.props.limitOrder.errors.rateWarning) {
@@ -353,7 +379,10 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   render() {
-    var isDisable = isUserLogin() && this.props.account == false
+    const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
+
+    var isDisable = (isUserLogin() && this.props.account == false) || (isDisableSubmit && !isAgreeForceSubmit);
+
     var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>

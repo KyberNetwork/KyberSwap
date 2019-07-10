@@ -158,6 +158,9 @@ export default class ConfirmModal extends React.Component {
 
             this.props.dispatch(limitOrderActions.getListFilter());
 
+            // Reset user agreement
+            this.props.dispatch(limitOrderActions.setAgreeForceSubmit(false));
+
             //go to the next step
             // this.props.dispatch(limitOrderActions.forwardOrderPath())
             this.setState({
