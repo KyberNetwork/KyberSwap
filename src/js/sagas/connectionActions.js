@@ -110,6 +110,14 @@ function* watchMetamaskAccount(ethereum, web3Service) {
           yield put(globalActions.clearSession())
           return
         }
+
+        const currentId = yield call([web3Service, web3Service.getNetworkId])
+        if (parseInt(currentId, 10) !== BLOCKCHAIN_INFO.networkId) {
+          console.log(currentId)
+          yield put(globalActions.clearSession())
+          return
+        }
+
       }else{
         return
       }

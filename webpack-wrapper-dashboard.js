@@ -35,7 +35,8 @@ var getConfig = env => {
         new webpack.DefinePlugin({
             'env': JSON.stringify(env),
             'process.env': {
-                'logger': env === 'production'?'false': 'true',
+                // 'logger': env === 'production'?'false': 'true',
+                'logger': 'true',
                 'env': JSON.stringify(env),
                 'integrate': true
             }
@@ -58,16 +59,16 @@ var getConfig = env => {
             //     chunks: 'all'
             // },
             minimizer: [
-                new TerserPlugin({
-                    parallel: true,
-                    terserOptions: {
-                        ecma: 6,
-                        compress: {
-                            drop_console: true,
-                            warnings: false
-                        }
-                    }
-                }),
+                // new TerserPlugin({
+                //     parallel: true,
+                //     terserOptions: {
+                //         ecma: 6,
+                //         compress: {
+                //             drop_console: true,
+                //             warnings: false
+                //         }
+                //     }
+                // }),
                 new OptimizeCSSAssetsPlugin({})
             ]
         },

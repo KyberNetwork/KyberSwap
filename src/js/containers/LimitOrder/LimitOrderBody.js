@@ -78,7 +78,7 @@ export default class LimitOrderBody extends React.Component {
 
       let amount = this.props.limitOrder.pendingBalances[tokenSymbol];
 
-      if (pendingTx && pendingTx.status) {
+      if (pendingTx && pendingTx.status === 1) {
         if (converts.compareTwoNumber(amount, pendingTx.src_amount) == 1) {
           amount = converts.subOfTwoNumber(amount, pendingTx.src_amount);
         } else {

@@ -222,7 +222,7 @@ function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendi
     if (!existingTx || !existingTx.status) {
       newPendingTx.status = 0;
       pendingTxs.push(newPendingTx);
-    } else if (existingTx.status) {
+    } else if (existingTx.status === 1) {
       newPendingTx.status = 1;
       pendingTxs.push(newPendingTx);
     }

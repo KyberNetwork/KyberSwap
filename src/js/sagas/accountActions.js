@@ -58,17 +58,21 @@ function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs,
   if (ethereum && pendingTxs.length <= 3) {
     let isModified = false;
 
-    for (var i = 0; i < pendingTxs.length; ++i) {
+    for (var i = 0; i < pendingTxs.length; i++) {
       if (pendingTxs.status === 1) continue;
 
       const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
-
+      console.log("tx_mined")
+      console.log(isTxMined)
+      console.log(latestBlock)
       if (isTxMined) {
         pendingTxs[i].status = 1;
         isModified = true;
       }
     }
 
+    console.log(pendingTxs)
+      
     if (isModified) {
       yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
     }

@@ -59,8 +59,8 @@ export default class Tx {
                 break
               }
             }
-            newTx.status = theLog ? "success" : "failed"
-            newTx.error = theLog ? "" : "transaction.error_tx_contract"
+            newTx.status = receipt.blockNumber && theLog ? "success" : "failed"
+            newTx.error = receipt.blockNumber && theLog ? "" : "transaction.error_tx_contract"
           }
         }
         if (newTx.type === "transfer"){
@@ -80,8 +80,8 @@ export default class Tx {
                   break
                 }
               }
-              newTx.status = theLog ? "success" : "failed"
-              newTx.error = theLog ? "" : "transaction.error_tx_contract"
+              newTx.status = receipt.blockNumber && theLog ? "success" : "failed"
+              newTx.error = receipt.blockNumber && theLog ? "" : "transaction.error_tx_contract"
             }
           }
         }         

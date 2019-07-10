@@ -275,25 +275,13 @@ export function getPendingBalances(address) {
       const pendingBalanceResponse = {
         success: true,
         data: {
-          "OMG": 1,
-          "KNC": 1,
-          "WETH": 0.7,
+          "DAI": 3
         },
         pending_txs: [
           {
-            "tx_hash": "0xe99fb258f82565f1849005e850017d1a9d25a68817f2b10827108f249b256892",
-            "src_token": "OMG",
-            "src_amount": 1
-          },
-          {
-            "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
-            "src_token": "KNC",
-            "src_amount": 0.5
-          },
-          {
-            "tx_hash": "0xafdeac1bb2b2693828edb24fb723d6b65e51bd11ef855b4abbe5ff4c77b4c6d5",
-            "src_token": "WETH",
-            "src_amount": 0.6
+            "tx_hash": "0xcbeb1dace640a1bf857a8fce4e211806b686436e44f1d2331c7ccf3bbe6138e7",
+            "src_token": "DAI",
+            "src_amount": 2
           }
         ]
       };

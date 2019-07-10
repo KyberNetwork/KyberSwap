@@ -75,13 +75,13 @@ export function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
 export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
   try {
     const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
+    if (!receipt) return false;
+
     const logs = receipt.logs;
     const blockNumber = receipt.blockNumber;
     let isTopicValid = false;
 
-    if (!receipt) return false;
-
-    if (blockNumber > latestBlock) return false;
+    if (!blockNumber || blockNumber > latestBlock) return false;
 
     if (!logs.length) return false;
 
@@ -91,7 +91,8 @@ export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
         break;
       }
     }
-
+    console.log(receipt)
+    console.log(isTopicValid)
     return isTopicValid;
   } catch (e) {
     console.log(e);
