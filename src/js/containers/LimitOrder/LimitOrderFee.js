@@ -51,7 +51,7 @@ class LimitOrderFee extends React.Component {
 
 
   render() {
-    var calculateFee = converter.floatDiv(converter.floatMultiply(this.props.limitOrder.orderFee, this.props.limitOrder.sourceAmount), 100);
+    var calculateFee = converter.divOfTwoNumber(converter.multiplyOfTwoNumber(this.props.limitOrder.orderFee, this.props.limitOrder.sourceAmount), 100);
     // calculateFee = Math.round(calculateFee * 10000)/ 10000
 
 

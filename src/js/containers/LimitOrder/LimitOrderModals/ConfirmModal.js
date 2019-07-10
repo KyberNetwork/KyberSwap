@@ -227,10 +227,10 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-      const calculateFee = converters.floatDiv(converters.floatMultiply(this.state.fee, this.props.limitOrder.sourceAmount), 100);
+      const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
       const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
-      const receiveAmount = converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, converters.floatMultiply(calculateFee, this.props.limitOrder.triggerRate));
+      const receiveAmount = converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, converters.multiplyOfTwoNumber(calculateFee, this.props.limitOrder.triggerRate));
 
       return (
           <div className="limit-order-modal">

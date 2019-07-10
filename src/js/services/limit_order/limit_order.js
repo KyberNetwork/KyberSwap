@@ -1,6 +1,6 @@
 import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
 import BLOCKCHAIN_INFO from "../../../../env"
-import { floatMultiply } from "../../utils/converter"
+import { multiplyOfTwoNumber } from "../../utils/converter"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import _ from "lodash";
 
@@ -157,7 +157,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
-                    const fee = floatMultiply(result.fee, 100);
+                    const fee = multiplyOfTwoNumber(result.fee, 100);
                     resolve(fee);
                 } else {
                     rejected(result.message)
