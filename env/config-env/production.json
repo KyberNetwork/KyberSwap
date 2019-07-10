@@ -558,6 +558,7 @@
             "decimals": 6,
             "cg_id": "usd-coin",
             "listing_time": 1549976400,
+            "gasLimit": "550000",
             "priority": true
         },
         "EURS": {
@@ -659,6 +660,14 @@
             "decimals": 18,
             "cg_id": "bamboo",
             "listing_time": 1562311800
+        },
+        "SPN": {
+            "symbol": "SPN",
+            "name": "Sapien Network",
+            "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
+            "decimals": 6,
+            "cg_id": "sapien",
+            "listing_time": 1562677200
         }
     },
     "ethScanUrl": "https://etherscan.io/",

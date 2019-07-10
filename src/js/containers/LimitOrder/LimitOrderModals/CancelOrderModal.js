@@ -7,7 +7,7 @@ import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import { getFormattedDate } from "../../../utils/common";
 import { roundingNumber } from "../../../utils/converter";
-import * as limitOrderServices from "../../../services/limit_order";
+import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 
 @connect((store, props) => {
@@ -280,7 +280,7 @@ export default class CancelOrderModal extends Component {
 							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.closeModal()}
 						>
-							{this.props.translate("no_thank") || "No, Thank"}
+							{this.props.translate("no_thank") || "No, Thanks"}
 						</button>
 						<button
 							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}

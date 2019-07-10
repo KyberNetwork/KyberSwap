@@ -415,7 +415,9 @@
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
     "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ",
     "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi tài khoản khác. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch.",
-    "fetch_fee_err": "Không lấy được phí giao dịch."
+    "fetch_fee_err": "Không lấy được phí giao dịch.",
+    "view_tx": "View tx",
+    "rate_warning_title": "Do you want to <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> them?"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

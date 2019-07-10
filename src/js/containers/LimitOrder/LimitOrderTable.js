@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingNumber } from "../../utils/converter";
+import { roundingNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -47,8 +47,8 @@ export default class LimitOrderTable extends Component {
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header",
-      className: "cell-flex-start",
-      maxWidth: 95,
+      className: "cell-flex-start cell-text-small",
+      maxWidth: 85,
       getHeaderProps: (state, rowInfo) => {
         return {
           onClick: (e) => {
@@ -62,8 +62,8 @@ export default class LimitOrderTable extends Component {
       accessor: item => item,
       Cell: props => this.getAddressCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
-      className: "cell-flex-start",
-      width: 150,
+      className: "cell-flex-start cell-text-small",
+      width: 110,
     }, {
       id: "condition",
       Header: this.getHeader("condition"),
@@ -71,7 +71,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition",
-      width: 185
+      width: 165
     }, {
       id: "from",
       Header: this.getHeader("from"),
@@ -79,6 +79,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from",
+      width: 100
     }, {
       id: "to",
       Header: this.getHeader("to"),
@@ -86,6 +87,14 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to",
+    }, {
+      id: "fee",
+      Header: this.getHeader("fee"),
+      accessor: item => item,
+      Cell: props => this.getFeeCell(props.value),
+      headerClassName: "cell-flex-start-header",
+      className: "cell-flex-start cell-to cell-text-small",
+      width: 100
     }, {
       id: "status",
       Header: this.getHeader("status"),
@@ -164,7 +173,7 @@ export default class LimitOrderTable extends Component {
     return (
       <div key={this.state.addressCopied}>
         <CopyToClipboard text={user_address}>
-          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 8)} ... ${user_address.slice(-6)}`}</div>
+          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 6)} ... ${user_address.slice(-4)}`}</div>
         </CopyToClipboard>
       </div>
     )
@@ -219,6 +228,18 @@ export default class LimitOrderTable extends Component {
     )
   }
 
+  getFeeCell = (props) => {
+    const { fee, source, src_amount } = props;
+    const calcFee = multiplyOfTwoNumber(fee, src_amount);
+    const formatedFee = formatNumber(calcFee, 5, '');
+    return (
+      <div>
+        <span className="to-number-cell">{formatedFee}</span>{' '}
+        <span>{source.toUpperCase()}</span>
+      </div>
+    )
+  }
+
   getStatusCell = (props) => {
     const { status, msg, id } = props;
 
@@ -254,11 +275,16 @@ export default class LimitOrderTable extends Component {
 
   getActionCell = (props) => {
     const { status, tx_hash } = props;
+    const openTx = (url) => {
+      window.open(url);
+    }
+
     return (
       <div className="cell-action">
         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order">
-          <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a>
+        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
+          {/* <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a> */}
+          {this.props.translate("limit_order.view_tx") || "View tx"}
         </button>}
         {status !== LIMIT_ORDER_CONFIG.status.OPEN && status !== LIMIT_ORDER_CONFIG.status.FILLED && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
@@ -298,6 +324,8 @@ export default class LimitOrderTable extends Component {
     const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
 
     const rate = roundingNumber(min_rate);
+    const calcFee = multiplyOfTwoNumber(fee, src_amount);
+    const formatedFee = formatNumber(calcFee, 5, '');
 
     const sourceAmount = roundingNumber(src_amount);
     let destAmount = src_amount * (1 - fee / 100) * min_rate;
@@ -334,6 +362,13 @@ export default class LimitOrderTable extends Component {
             <div className="cell-to">
               <span class="to-number-cell">{destAmount}</span>{' '}
               <span>{dest.toUpperCase()}</span>
+            </div>
+          </div>
+          <div className="limit-order-modal__detail-order__amount">
+            <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
+            <div className="cell-to">
+              <span class="to-number-cell">{formatedFee}</span>{' '}
+              <span>{source.toUpperCase()}</span>
             </div>
           </div>
         </div>
@@ -659,7 +694,8 @@ export default class LimitOrderTable extends Component {
 
     if (dateSort) {
       results = _.orderBy(results, item => {
-        return getFormattedDate(item.updated_at, true);
+        // return getFormattedDate(item.updated_at, true);
+        return item.updated_at;
       }, [dateSort]);
     }
     

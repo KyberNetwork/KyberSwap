@@ -9,7 +9,7 @@ import constants from "../../../services/constants"
 
 import {getWallet} from "../../../services/keys"
 
-import {getNonce, submitOrder, cancelOrder, getFee} from "../../../services/limit_order"
+import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
@@ -22,7 +22,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
     const global = store.global;
 
     return {
-        translate, limitOrder, tokens, account, ethereum, global
+        translate, limitOrder, tokens, account, ethereum, global, isOnDAPP: store.account.isOnDAPP
     }
 })
 
@@ -52,7 +52,7 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var fee = await getFee(userAddr, src, dest, srcAmount, destAmount)        
+        var fee = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
@@ -68,7 +68,7 @@ export default class ConfirmModal extends React.Component {
         try{
             var ethereum = this.props.ethereum
             //nonce from server
-            var nonceServer = await getNonce(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
+            var nonceServer = await limitOrderServices.getNonce(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
 
             // nonce from contract
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
@@ -125,7 +125,7 @@ export default class ConfirmModal extends React.Component {
             // console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
-            // console.log(signature)
+            console.log(signature)
             
             // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
@@ -135,7 +135,7 @@ export default class ConfirmModal extends React.Component {
             // console.log(pramameters)
             // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
             
-            var newOrder = await submitOrder({  
+            var newOrder = await limitOrderServices.submitOrder({  
                 user_address: this.props.account.address.toLowerCase(),
                 nonce: nonce,
                 src_token: this.props.limitOrder.sourceToken,
@@ -165,9 +165,16 @@ export default class ConfirmModal extends React.Component {
               isConfirming: false
             });
         }catch(err){
-            console.log(err.message);
+            // console.log(err.message);
+            console.log(err)
+            var showErr = "Cannot submit order"
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+              && this.props.account.type === "metamask" && !this.props.isOnDAPP){
+                showErr = "Signature is invalid. There is a possibility that you have signed the message with a Hardware wallet plugged in Metamask. Please try to import a Hardware Wallet to KyberSwap and resubmit the order."
+            }
+
             this.setState({
-              err: err.toString(),
+              err: showErr,
               isConfirming: false,
               isFinish: false
             })
@@ -197,7 +204,7 @@ export default class ConfirmModal extends React.Component {
       return `
       <div>
         <div className="title">
-          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.props.limitOrder.orderFee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
+          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.state.fee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
         </div>
         <div className="description">
           ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
@@ -220,10 +227,10 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-      const calculateFee = (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100;
-      const formatedFee = +converters.formatNumber(calculateFee, 5, '');
-      const formatedSrcAmount = +converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
-      const receiveAmount = (this.props.limitOrder.sourceAmount - (this.props.limitOrder.orderFee * this.props.limitOrder.sourceAmount) / 100) * this.props.limitOrder.triggerRate
+      const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
+      const formatedFee = converters.formatNumber(calculateFee, 5, '');
+      const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
+      const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);
 
       return (
           <div className="limit-order-modal">
@@ -304,7 +311,7 @@ export default class ConfirmModal extends React.Component {
                 </div>}
 
                 {this.state.feeErr.length > 0 && <div className="limit-order-modal__result--error">
-                  {this.props.translate("limit_order.fetch_fee_err") || "Fetching fee error. Cannot submit order."}
+                  {this.props.translate("limit_order.fetch_fee_err") || "Cannot get fee."}
                 </div>}
 
               </div>

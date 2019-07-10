@@ -178,10 +178,11 @@ export function getFormattedDate(value, isNumberForm = false) {
 
 export function isUserLogin(){
     //dummy data
-    // return true
-
-    var loginCookies = getCookie("signed_in")
-    return loginCookies === true || loginCookies === "true" ? true: false
+    if (process.env && process.env.integrate) {
+        var loginCookies = getCookie("signed_in")
+        return loginCookies === true || loginCookies === "true" ? true: false
+    }
+    return true
 }
 
 export function formatFractionalValue(input, decimal) {

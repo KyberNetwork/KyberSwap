@@ -8,7 +8,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import * as constants from "../../services/constants"
-import * as limitOrderServices from "../../services/limit_order";
+import limitOrderServices from "../../services/limit_order";
 import { default as _ } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import * as converters from "../../utils/converter";
@@ -98,7 +98,7 @@ export default class LimitOrderForm extends React.Component {
     var check = filterInputNumber(e, value, referValue)
     if (check) {     
       if (value < 0) return
-      this.props.dispatch(limitOrderActions.inputChange(type, value));
+      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value));
       
       if (type === "source"){
         this.lazyFetchRate(value)
@@ -204,6 +204,10 @@ export default class LimitOrderForm extends React.Component {
 
     return (
       <div className="rate-warning-tooltip">
+        {/* Title */}
+        <div className="rate-warning-tooltip__title">
+          {this.props.translate("limit_order.rate_warning_title") || `Do you want to CANCEL them?`}
+        </div>
         {/* Description */}
         <div className="rate-warning-tooltip__description">
           {this.props.translate("limit_order.lower_rate_warning") || "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order."}
@@ -224,7 +228,7 @@ export default class LimitOrderForm extends React.Component {
 						className="btn-confirm"
 						onClick={e => this.confirmAgreeSubmit()}
 					>
-						{this.props.translate("import.yes") || "Yes"}
+						{this.props.translate("yes_please") || "Yes, Please"}
 					</button>
         </div>
       </div>

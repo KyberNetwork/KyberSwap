@@ -10,6 +10,9 @@ export default class Metamask {
       var web3Service = newWeb3Instance()
       var prefixHash = ethUtils.hashPersonalMessage(ethUtils.toBuffer(message))
       prefixHash = ethUtils.addHexPrefix(prefixHash.toString('hex'))      
+
+      console.log("prefix_hash")
+      console.log(prefixHash)
       
       var signature = await web3Service.sign(prefixHash)      
       return signature

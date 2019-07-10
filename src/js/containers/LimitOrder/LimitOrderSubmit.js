@@ -10,7 +10,7 @@ import { ApproveZeroModal, ApproveMaxModal, WrapETHModal, ConfirmModal, SubmitSt
 import { isUserLogin } from "../../utils/common"
 import constants from "../../services/constants"
 import { TermAndServices } from "../CommonElements";
-import * as limitOrderServices from "../../services/limit_order";
+import limitOrderServices from "../../services/limit_order";
 
 @connect((store, props) => {
   const account = store.account.account
