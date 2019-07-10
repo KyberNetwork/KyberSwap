@@ -419,7 +419,8 @@
     "ineligible_address": "This address has been used by another account. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee.",
     "view_tx": "View tx",
-    "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:"
+    "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:",
+    "wonder_why_order_not_filled": "Wonder why your orders are not filled?"
   },
   "home": "Home",
   "tracker": "Tracker",

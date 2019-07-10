@@ -416,7 +416,8 @@
     "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
     "fetch_fee_err": "无法获取费用",
     "view_tx": "查看交易",
-    "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单："
+    "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单：",
+    "wonder_why_order_not_filled": "Wonder why your orders are not filled?"
   },
   "home": "主页",
   "tracker": "跟踪网站",

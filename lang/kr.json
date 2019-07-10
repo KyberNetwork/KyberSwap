@@ -417,7 +417,8 @@
     "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
     "view_tx": "트랜잭션 보기",
-    "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:"
+    "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",
+    "wonder_why_order_not_filled": "왜 주문이 실행되지 않았나요?"
   },
   "home": "홈",
   "tracker": "트래커",
