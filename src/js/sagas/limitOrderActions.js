@@ -212,22 +212,24 @@ function* fetchPendingBalances(action) {
 }
 
 function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
-  for (let i = 0; i < newPendingTxs.length; i++) {
-    const existingTx = _.find(currentPendingTxs, { tx_hash: newPendingTxs[i].tx_hash });
+  if (currentPendingTxs.length) {
+    for (let i = 0; i < newPendingTxs.length; i++) {
+      const existingTx = _.find(currentPendingTxs, { tx_hash: newPendingTxs[i].tx_hash });
 
-    if (!existingTx || !existingTx.status) {
-      continue;
-    }
+      if (!existingTx || !existingTx.status) {
+        continue;
+      }
 
-    if (existingTx.status === 1) {
-      const pendingAmount = newPendingBalances[newPendingTxs[i].src_token];
-      const txAmount  = newPendingTxs[i].src_amount;
+      if (existingTx.status === 1) {
+        const pendingAmount = newPendingBalances[newPendingTxs[i].src_token];
+        const txAmount  = newPendingTxs[i].src_amount;
 
-      let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
-      if (remainingBalance < 0) remainingBalance = 0;
+        let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
+        if (remainingBalance < 0) remainingBalance = 0;
 
-      newPendingBalances[newPendingTxs[i].src_token] = remainingBalance;
-      newPendingTxs[i].status = 1;
+        newPendingBalances[newPendingTxs[i].src_token] = remainingBalance;
+        newPendingTxs[i].status = 1;
+      }
     }
   }
 
