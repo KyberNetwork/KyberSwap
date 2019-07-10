@@ -194,6 +194,8 @@ function* getListFilter() {
 
 function* fetchPendingBalances(action) {
   const { address } = action.payload;
+  const state = store.getState();
+  const limitOrder = state.limitOrder;
 
   try {
     const result = yield call(limitOrderServices.getPendingBalances, address);
@@ -202,6 +204,10 @@ function* fetchPendingBalances(action) {
     const pendingTxs = result.pending_txs;
 
     yield put(limitOrderActions.getPendingBalancesComplete(unconfirmedPendingBalances, pendingTxs));
+
+    if (!Object.keys(limitOrder.pendingBalances).length) {
+      yield put(limitOrderActions.setPendingBalances(unconfirmedPendingBalances));
+    }
   } catch (err) {
     console.log(err);
   }
