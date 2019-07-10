@@ -231,8 +231,8 @@ export default class ConfirmModal extends React.Component {
 
     contentModal = () => {
       const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
-      const formatedFee = +converters.formatNumber(calculateFee, 5, '');
-      const formatedSrcAmount = +converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
+      const formatedFee = converters.formatNumber(calculateFee, 5, '');
+      const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 4, '');
       const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);
 
       return (
@@ -273,14 +273,14 @@ export default class ConfirmModal extends React.Component {
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
                       <div className={"rc-info"}>
                         <div title={receiveAmount}>
-                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : +converters.formatNumber(receiveAmount, 4)}
+                          {this.props.limitOrder.snapshot.isFetchingRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : converters.formatNumber(receiveAmount, 4)}
                         </div>
                         <div>
                           {this.props.limitOrder.destTokenSymbol}
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${+converters.formatNumber(receiveAmount, 4)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 4)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                       </div>
                     </div>
                   </div>
