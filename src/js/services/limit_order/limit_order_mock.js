@@ -276,7 +276,7 @@ export function getPendingBalances(address) {
         data: {
           "OMG": 1,
           "KNC": 1,
-          "WETH": 0.5,
+          "WETH": 0.7,
         },
         pending_txs: [
           {

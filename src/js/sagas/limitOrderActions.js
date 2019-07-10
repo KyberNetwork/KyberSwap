@@ -5,6 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
 import * as limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
+import { subOfTwoNumber } from "../utils/converter"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
 import * as constants from "../services/constants"
@@ -206,7 +207,10 @@ function* fetchPendingBalances(action) {
     if (ethereum && pendingTxs.length > 0 && pendingTxs.length <= 3) {
       for (var i = 0; i < pendingTxs.length; ++i) {
         const isTxMined = yield call(checkTxMined, ethereum, pendingTxs[i].tx_hash);
-        if (isTxMined) delete pendingBalances[pendingTxs[i].src_token];
+        const txAmount  = pendingTxs[i].src_amount;
+        const pendingAmount = pendingBalances[pendingTxs[i].src_token];
+
+        if (isTxMined) pendingBalances[pendingTxs[i].src_token] = +subOfTwoNumber(pendingAmount, txAmount);
       }
     }
 
