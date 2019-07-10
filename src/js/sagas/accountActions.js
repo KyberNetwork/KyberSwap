@@ -4,10 +4,11 @@ import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
+import { getPendingBalancesComplete } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-
+import { subOfTwoNumber } from "../utils/converter"
 import {
   setRandomTransferSelectedToken,
   closeImportAccountTransfer
@@ -39,15 +40,40 @@ export function* updateAccount(action) {
 
 export function* updateTokenBalance(action) {
   try {
-    const { ethereum, address, tokens } = action.payload
-    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
+    const { ethereum, address, tokens } = action.payload;
+    const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtSpecificBlock", address, tokens, latestBlock)
+
     yield put(setBalanceToken(balanceTokens))
+
+    const limitOrder = store.getState().limitOrder;
+    yield call(processLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
   }
   catch (err) {
     console.log(err)
   }
 }
 
+function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
+  if (ethereum && pendingTxs.length <= 3) {
+    let isModified = false;
+
+    for (var i = 0; i < pendingTxs.length; ++i) {
+      if (pendingTxs.status === 1) continue;
+
+      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
+
+      if (isTxMined) {
+        pendingTxs[i].status = 1;
+        isModified = true;
+      }
+    }
+
+    if (isModified) {
+      yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
+    }
+  }
+}
 
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
   try{

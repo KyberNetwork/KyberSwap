@@ -270,7 +270,7 @@ export function getPendingBalances(address) {
                 return response.json();
             }).then(result => {
                 if (result.success) {
-                    resolve(result.data);
+                    resolve(result);
                 } else {
                     reject(new Error("Cannot get pending balance"));
                 }

@@ -72,36 +72,24 @@ export default class LimitOrderBody extends React.Component {
     if (!this.props.account) return 0
 
     if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
-      const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
-      return amount;
+      const pendingTx = this.props.limitOrder.pendingTxs.find(pendingTx => {
+        return pendingTx.src_token === tokenSymbol;
+      });
+
+      let amount = this.props.limitOrder.pendingBalances[tokenSymbol];
+
+      if (pendingTx && pendingTx.status) {
+        if (converts.compareTwoNumber(amount, pendingTx.src_amount) == 1) {
+          amount = converts.subOfTwoNumber(amount, pendingTx.src_amount);
+        } else {
+          amount = 0
+        }
+      }
+
+      return converts.toTWei(amount, tokenDecimals);
     } else {
       return 0;
     }
-
-    // if (this.props.limitOrder.filterMode === "client") {
-    //   const orderList = this.props.limitOrder.listOrder;
-    //   const openOrders = orderList.filter(order => {
-    //     return order.user_address.toLowerCase() === this.props.account.address.toLowerCase() && order.source === tokenSymbol && (order.status === constants.LIMIT_ORDER_CONFIG.status.OPEN || order.status === constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS);
-    //   });
-  
-    //   let openOrderAmount = 0;
-  
-    //   if (openOrders.length > 0) {
-    //     openOrders.forEach(order => {
-    //       var srcAmount = converts.toTWei(order.src_amount, tokenDecimals)
-    //       openOrderAmount = converts.sumOfTwoNumber(openOrderAmount, srcAmount)          
-    //     });
-    //   }
-  
-    //   return openOrderAmount;
-    // } else {
-    //   if (this.props.limitOrder.pendingBalances[tokenSymbol]) {
-    //     const amount = converts.toTWei(this.props.limitOrder.pendingBalances[tokenSymbol], tokenDecimals)
-    //     return amount;
-    //   } else {
-    //     return 0;
-    //   }
-    // }
   }
 
   getAvailableBalanceTokenList = () => {
@@ -114,12 +102,12 @@ export default class LimitOrderBody extends React.Component {
 
       if (openOrderAmount) {
         token = Object.create(token);
-        if (converts.compareTwoNumber(token.balance, openOrderAmount) == 1){
+
+        if (converts.compareTwoNumber(token.balance, openOrderAmount) == 1) {
           token.balance = converts.subOfTwoNumber(token.balance, openOrderAmount);
-        }else{
+        } else {
           token.balance = 0
         }
-        
       }
 
       return token;

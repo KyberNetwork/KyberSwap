@@ -1,5 +1,3 @@
-
-
 import { take, put, call, fork, select, takeEvery, takeLatest, all, apply } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
@@ -9,8 +7,8 @@ import limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
-
 import * as constants from "../services/constants"
+import { subOfTwoNumber } from "../utils/converter"
 
 function* selectToken(action) {
     const { symbol, address, type } = action.payload
@@ -197,13 +195,40 @@ function* getListFilter() {
 
 function* fetchPendingBalances(action) {
   const { address } = action.payload;
-  try {
-    const pendingBalances = yield call(limitOrderServices.getPendingBalances, address);
+  const state = store.getState();
+  const currentPendingTxs = state.limitOrder.pendingTxs;
 
-    yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances));
+  try {
+    const result = yield call(limitOrderServices.getPendingBalances, address);
+
+    const newPendingBalances = result.data;
+    const newPendingTxs = result.pending_txs;
+    const { pendingBalances, pendingTxs } = validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs);
+
+    yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances, pendingTxs));
   } catch (err) {
     console.log(err);
   }
+}
+
+function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
+  let pendingTxs = [];
+
+  newPendingTxs.forEach(newPendingTx => {
+    const existingTx = currentPendingTxs.find((currentPendingTx) => {
+      return currentPendingTx.tx_hash === newPendingTx.tx_hash;
+    });
+
+    if (!existingTx || !existingTx.status) {
+      newPendingTx.status = 0;
+      pendingTxs.push(newPendingTx);
+    } else if (existingTx.status) {
+      newPendingTx.status = 1;
+      pendingTxs.push(newPendingTx);
+    }
+  });
+
+  return { pendingBalances: newPendingBalances, pendingTxs };
 }
 
 export function* watchLimitOrder() {
