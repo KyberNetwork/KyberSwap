@@ -386,39 +386,28 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
-function convertFloat(number) {
-  const floatNumber = number === "" ? 0 : parseFloat(number);
-  const bigNumber = new BigNumber(floatNumber);
+export function floatMultiply(first, second) {
+  const firstBig = new BigNumber(first.toString());
+  const secondBig = new BigNumber(second.toString());
 
-  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
-    return new BigNumber(0)
+  if (firstBig == 'NaN' || firstBig == 'Infinity' || secondBig == 'NaN' || secondBig == 'Infinity') {
+    return "0";
   }
 
-  return bigNumber;
-}
-
-export function floatMultiply(first, second) {
-  const firstBig = convertFloat(first);
-  const secondBig = convertFloat(second);
-
   const result = firstBig.times(secondBig);
-  return result.toNumber();
+  return result.toString();
 }
 
 export function floatDiv(first, second) {
-  const firstBig = convertFloat(first);
-  const secondBig = convertFloat(second);
+  const firstBig = new BigNumber(first.toString());
+  const secondBig = new BigNumber(second.toString());
+
+  if (firstBig == 'NaN' || firstBig == 'Infinity' || secondBig == 'NaN' || secondBig == 'Infinity') {
+    return "0";
+  }
 
   const result = firstBig.div(secondBig);
-  return result.toNumber();
-}
-
-export function floatMinus(first, second) {
-  const firstBig = convertFloat(first);
-  const secondBig = convertFloat(second);
-  
-  const result = firstBig.minus(secondBig);
-  return result.toNumber();
+  return result.toString();
 }
 
 export function getBigNumberValueByPercentage(number, percentage) {
@@ -611,6 +600,10 @@ export function formatNumber(number, round = false, groupSeparator = ',') {
   }
   BigNumber.config({ FORMAT: format })
   var numberFormat = new BigNumber(number.toString())
+
+  if (numberFormat == 'NaN' || numberFormat == 'Infinity') {
+    return "0";
+  }
 
   if (round !== false) {
     return numberFormat.toFormat(round)
