@@ -231,7 +231,7 @@ export default class LimitOrderTable extends Component {
   getFeeCell = (props) => {
     const { fee, source, src_amount } = props;
     const calcFee = floatMultiply(fee, src_amount);
-    const formatedFee = +formatNumber(calcFee, 5, '');
+    const formatedFee = formatNumber(calcFee, 5, '');
     return (
       <div>
         <span className="to-number-cell">{formatedFee}</span>{' '}
@@ -325,7 +325,7 @@ export default class LimitOrderTable extends Component {
 
     const rate = roundingNumber(min_rate);
     const calcFee = floatMultiply(fee, src_amount);
-    const formatedFee = +formatNumber(calcFee, 5, '');
+    const formatedFee = formatNumber(calcFee, 5, '');
 
     const sourceAmount = roundingNumber(src_amount);
     let destAmount = src_amount * (1 - fee / 100) * min_rate;

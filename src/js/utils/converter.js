@@ -386,9 +386,39 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
-export function floatMultiply(number, params) {
-  const bigNumber = new BigNumber(number.toString()).times(params);
-  return bigNumber.toNumber();
+function convertFloat(number) {
+  const floatNumber = number === "" ? 0 : parseFloat(number);
+  const bigNumber = new BigNumber(floatNumber);
+
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return new BigNumber(0)
+  }
+
+  return bigNumber;
+}
+
+export function floatMultiply(first, second) {
+  const firstBig = convertFloat(first);
+  const secondBig = convertFloat(second);
+
+  const result = firstBig.times(secondBig);
+  return result.toNumber();
+}
+
+export function floatDiv(first, second) {
+  const firstBig = convertFloat(first);
+  const secondBig = convertFloat(second);
+
+  const result = firstBig.div(secondBig);
+  return result.toNumber();
+}
+
+export function floatMinus(first, second) {
+  const firstBig = convertFloat(first);
+  const secondBig = convertFloat(second);
+  
+  const result = firstBig.minus(secondBig);
+  return result.toNumber();
 }
 
 export function getBigNumberValueByPercentage(number, percentage) {
