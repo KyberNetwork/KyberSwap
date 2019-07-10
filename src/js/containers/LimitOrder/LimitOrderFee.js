@@ -70,7 +70,7 @@ class LimitOrderFee extends React.Component {
       return (
         <div className={"limit-order-fee"}>
           <div className="limit-order-fee__text">
-            {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{+converter.formatNumber(calculateFee, 5, '.')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
+            {this.props.translate("limit_order.fee") || "Fee"}: <span title={calculateFee}>{converter.formatNumber(calculateFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})
           </div>
           <div>{this.props.translate("limit_order.discount_message", { link: '/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees' }) || "Hold from 2000 KNC to get discount for your orders. More info <a href='/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees' target='_blank' rel='noopener noreferrer'>here</a>"}</div>
         </div>

@@ -573,7 +573,7 @@ export function percentChange(newPrice, oldPrice) {
 export function formatNumber(number, round = false, groupSeparator = ',') {
   var format = {
     decimalSeparator: '.',
-    groupSeparator: groupSeparator,
+    // groupSeparator: groupSeparator,
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
@@ -584,10 +584,10 @@ export function formatNumber(number, round = false, groupSeparator = ',') {
   }
 
   if (round !== false) {
-    return numberFormat.toFormat(round)
+    return +numberFormat.toFormat(round)
   }
 
-  return numberFormat.toString()
+  return +numberFormat.toFormat();
 }
 
 export function caculatorPercentageToRate(number, total) {
