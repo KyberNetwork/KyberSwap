@@ -131,7 +131,6 @@ export default class LimitOrderAccount extends React.Component {
     this.closeReImport();
     this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
     this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, {}));
-    this.props.dispatch(limitOrderActions.setPendingBalances({}));
     this.props.global.analytics.callTrack("trackClickChangeWallet");
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }
