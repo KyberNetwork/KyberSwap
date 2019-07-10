@@ -54,19 +54,19 @@ export function* updateTokenBalance(action) {
 }
 
 function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs) {
-  if (!ethereum && pendingTxs.length > 3) {
-    return;
-  }
+  if (ethereum && pendingTxs.length <= 3) {
+    const lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
 
-  for (var i = 0; i < pendingTxs.length; ++i) {
-    const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash);
-    const txAmount  = pendingTxs[i].src_amount;
-    const pendingAmount = pendingBalances[pendingTxs[i].src_token];
+    for (var i = 0; i < pendingTxs.length; ++i) {
+      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, lastestBlock);
+      const txAmount  = pendingTxs[i].src_amount;
+      const pendingAmount = pendingBalances[pendingTxs[i].src_token];
 
-    if (isTxMined) {
-      let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
-      if (remainingBalance < 0) remainingBalance = 0;
-      pendingBalances[pendingTxs[i].src_token] = remainingBalance;
+      if (isTxMined) {
+        let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
+        if (remainingBalance < 0) remainingBalance = 0;
+        pendingBalances[pendingTxs[i].src_token] = remainingBalance;
+      }
     }
   }
 
