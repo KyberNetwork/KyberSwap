@@ -10,3 +10,4 @@ export { default as SubmitStatusModal } from './SubmitStatusModal.js'
 
 export { default as CancelOrderModal } from './CancelOrderModal.js'
 
+export { default as RateWarningModal } from "./RateWarningModal.js";

@@ -203,6 +203,8 @@ export default class LimitOrderBody extends React.Component {
               availableBalanceTokens={this.getModifiedTokenList()}
               submitHandler={this.submitHandler}
               switchToken={this.switchToken}
+              getOpenOrderAmount={this.getOpenOrderAmount}
+              setSubmitHandler={this.setSubmitHandler}
             />
           </div>
           <div>

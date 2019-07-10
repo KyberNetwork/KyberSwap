@@ -168,7 +168,7 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     // If user agree force submit order
-    if (this.props.limitOrder.isAgreeForceSubmit && this.props.limitOrder.triggerRate >= this.props.limitOrder.forceSubmitRate) {
+    if (this.props.limitOrder.isAgreeForceSubmit && this.props.limitOrder.triggerRate === this.props.limitOrder.forceSubmitRate) {
       if (this.props.limitOrder.errors.rateWarning) {
         this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
       }
@@ -214,7 +214,7 @@ export default class LimitOrderSubmit extends React.Component {
          * Check if current user input rate is smaller than previous saved force submit rate
          * If smaller, user have to confirm force submit again.
          */
-        if (this.props.limitOrder.triggerRate < this.props.limitOrder.forceSubmitRate) {
+        if (this.props.limitOrder.triggerRate !== this.props.limitOrder.forceSubmitRate) {
           this.props.dispatch(limitOrderActions.setAgreeForceSubmit(false));
           this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
         }
@@ -389,7 +389,7 @@ export default class LimitOrderSubmit extends React.Component {
         <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder} >
           {isUserLogin() ? this.props.translate("limit_order.submit") || "Submit" : this.props.translate("limit_order.login_to_submit") || "Login to Submit Order"}
         </button>
-        {this.props.account !== false &&
+        {(this.props.account !== false && !this.props.hideTermAndCondition) &&
           <TermAndServices tradeType="limit_order"/>
         }
        

@@ -11,6 +11,7 @@ import * as constants from "../../services/constants"
 import limitOrderServices from "../../services/limit_order";
 import { default as _ } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
+import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { Tooltip } from "react-tippy";
@@ -187,7 +188,7 @@ export default class LimitOrderForm extends React.Component {
     this.props.dispatch(limitOrderActions.setAgreeForceSubmit(!isAgreeForceSubmit));
   }
 
-  getRateWarningTooltip = () => {
+  getListWarningOrdersComp = () => {
     if (!this.props.account) {
       return null;
     }
@@ -216,6 +217,14 @@ export default class LimitOrderForm extends React.Component {
       );
     });
 
+    return tableComp;
+  }
+
+  getRateWarningTooltip = () => {
+    if (!this.props.account) {
+      return null;
+    }
+
     return (
       <div className="rate-warning-tooltip">
         {/* Title */}
@@ -232,7 +241,7 @@ export default class LimitOrderForm extends React.Component {
         
         {/* Table */}
         <div className="rate-warning-tooltip__order-container">
-          {tableComp}
+          {this.getListWarningOrdersComp()}
         </div>
         {/* Buttons */}
         <div className="rate-warning-tooltip__footer">
@@ -391,6 +400,13 @@ export default class LimitOrderForm extends React.Component {
             }
             </div>
           </Tooltip>
+          {this.props.global.isOnMobile == true && <RateWarningModal 
+            isOpen={this.props.limitOrder.errors.rateWarning !== ""}
+            getListWarningOrdersComp={this.getListWarningOrdersComp}
+            toggleAgreeSubmit={this.toggleAgreeSubmit}
+            closeRateWarningTooltip={this.closeRateWarningTooltip}
+            {...this.props}
+          />}
         </div>
         <LimitOrderCompareRate />
       </div>

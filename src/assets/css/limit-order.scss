@@ -1548,6 +1548,10 @@
         overflow-y: auto;
         background-color: #f5f6f8;
         padding: 15px 10px;
+
+        @include screen-max-width(medium) {
+            background-color: #ffffff;
+        }
     }
 
     &__order {
