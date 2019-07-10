@@ -5,7 +5,6 @@ import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
 import * as limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
-import { subOfTwoNumber } from "../utils/converter"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
 import * as constants from "../services/constants"
@@ -195,49 +194,17 @@ function* getListFilter() {
 
 function* fetchPendingBalances(action) {
   const { address } = action.payload;
-  const state = store.getState();
-  const ethereum = state.connection.ethereum;
 
   try {
     const result = yield call(limitOrderServices.getPendingBalances, address);
 
-    let pendingBalances = result.data;
+    const unconfirmedPendingBalances = result.data;
     const pendingTxs = result.pending_txs;
 
-    if (ethereum && pendingTxs.length > 0 && pendingTxs.length <= 3) {
-      for (var i = 0; i < pendingTxs.length; ++i) {
-        const isTxMined = yield call(checkTxMined, ethereum, pendingTxs[i].tx_hash);
-        const txAmount  = pendingTxs[i].src_amount;
-        const pendingAmount = pendingBalances[pendingTxs[i].src_token];
-
-        if (isTxMined) pendingBalances[pendingTxs[i].src_token] = +subOfTwoNumber(pendingAmount, txAmount);
-      }
-    }
-
-    yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances));
+    yield put(limitOrderActions.getPendingBalancesComplete(unconfirmedPendingBalances, pendingTxs));
   } catch (err) {
     console.log(err);
   }
-}
-
-function* checkTxMined(ethereum, txHash) {
-  const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
-
-  if (!receipt) return false;
-
-  let isTopicValid = false;
-  const logs = receipt.logs;
-
-  if (!logs.length) return false;
-
-  for (var i = 0; i < logs.length; ++i) {
-    if (logs[i].topics[0].toLowerCase() === constants.LIMIT_ORDER_TOPIC.toLowerCase()) {
-      isTopicValid = true;
-      break;
-    }
-  }
-
-  return isTopicValid;
 }
 
 export function* watchLimitOrder() {

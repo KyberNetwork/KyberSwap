@@ -223,7 +223,13 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE": {
-      const { pendingBalances } = action.payload;
+      const { unconfirmedPendingBalances, pendingTxs } = action.payload;
+      newState.unconfirmedPendingBalances = JSON.parse(JSON.stringify(unconfirmedPendingBalances));
+      newState.pendingTxs = JSON.parse(JSON.stringify(pendingTxs));
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_PENDING_BALANCES": {
+      const pendingBalances = action.payload;
       newState.pendingBalances = JSON.parse(JSON.stringify(pendingBalances));
       return newState;
     }

@@ -4,9 +4,11 @@ import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
+import { setPendingBalances } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
+import { subOfTwoNumber, stringToBigNumber } from "../utils/converter"
 
 import {
   setRandomTransferSelectedToken,
@@ -42,12 +44,34 @@ export function* updateTokenBalance(action) {
     const { ethereum, address, tokens } = action.payload
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
     yield put(setBalanceToken(balanceTokens))
+
+    const limitOrder = store.getState().limitOrder;
+    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.unconfirmedPendingBalances, limitOrder.pendingTxs);
   }
   catch (err) {
     console.log(err)
   }
 }
 
+function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs) {
+  if (!ethereum && pendingTxs.length > 3) {
+    return;
+  }
+
+  for (var i = 0; i < pendingTxs.length; ++i) {
+    const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash);
+    const txAmount  = pendingTxs[i].src_amount;
+    const pendingAmount = pendingBalances[pendingTxs[i].src_token];
+
+    if (isTxMined) {
+      let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
+      if (remainingBalance < 0) remainingBalance = 0;
+      pendingBalances[pendingTxs[i].src_token] = remainingBalance;
+    }
+  }
+
+  yield put(setPendingBalances(pendingBalances));
+}
 
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
   try{

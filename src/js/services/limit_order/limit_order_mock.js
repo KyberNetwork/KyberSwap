@@ -287,12 +287,12 @@ export function getPendingBalances(address) {
           {
             "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
             "src_token": "KNC",
-            "src_amount": 1
+            "src_amount": 0.5
           },
           {
             "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
             "src_token": "WETH",
-            "src_amount": 0.5
+            "src_amount": 0.6
           }
         ]
       };
