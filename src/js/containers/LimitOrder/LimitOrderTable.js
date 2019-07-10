@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingNumber } from "../../utils/converter";
+import { roundingNumber, floatMultiply, formatNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -229,10 +229,12 @@ export default class LimitOrderTable extends Component {
   }
 
   getFeeCell = (props) => {
-    const { fee, source } = props;
+    const { fee, source, src_amount } = props;
+    const calcFee = floatMultiply(fee, src_amount);
+    const formatedFee = +formatNumber(calcFee, 5, '');
     return (
       <div>
-        <span className="to-number-cell">{fee}</span>{' '}
+        <span className="to-number-cell">{formatedFee}</span>{' '}
         <span>{source.toUpperCase()}</span>
       </div>
     )
@@ -322,6 +324,8 @@ export default class LimitOrderTable extends Component {
     const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
 
     const rate = roundingNumber(min_rate);
+    const calcFee = floatMultiply(fee, src_amount);
+    const formatedFee = +formatNumber(calcFee, 5, '');
 
     const sourceAmount = roundingNumber(src_amount);
     let destAmount = src_amount * (1 - fee / 100) * min_rate;
@@ -358,6 +362,13 @@ export default class LimitOrderTable extends Component {
             <div className="cell-to">
               <span class="to-number-cell">{destAmount}</span>{' '}
               <span>{dest.toUpperCase()}</span>
+            </div>
+          </div>
+          <div className="limit-order-modal__detail-order__amount">
+            <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
+            <div className="cell-to">
+              <span class="to-number-cell">{formatedFee}</span>{' '}
+              <span>{source.toUpperCase()}</span>
             </div>
           </div>
         </div>
