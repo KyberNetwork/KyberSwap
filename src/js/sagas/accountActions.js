@@ -42,37 +42,26 @@ export function* updateTokenBalance(action) {
   try {
     const { ethereum, address, tokens } = action.payload;
     const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
-    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens, latestBlock)
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtSpecificBlock", address, tokens, latestBlock)
 
     yield put(setBalanceToken(balanceTokens))
 
     const limitOrder = store.getState().limitOrder;
-    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
+    yield call(processLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
   }
   catch (err) {
     console.log(err)
   }
 }
 
-function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
+function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
   if (ethereum && pendingTxs.length <= 3) {
     for (var i = 0; i < pendingTxs.length; ++i) {
       if (pendingTxs.status === 1) continue;
 
-      let txStatus = 0;
-      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock);
-      const txAmount  = pendingTxs[i].src_amount;
-      const pendingAmount = pendingBalances[pendingTxs[i].src_token];
+      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
 
-      if (isTxMined) {
-        let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
-        if (remainingBalance < 0) remainingBalance = 0;
-
-        txStatus = 1;
-        pendingBalances[pendingTxs[i].src_token] = remainingBalance;
-      }
-
-      pendingTxs[i].status = txStatus;
+      pendingTxs[i].status = isTxMined ? 1 : 0;
     }
   }
 

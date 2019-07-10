@@ -212,28 +212,23 @@ function* fetchPendingBalances(action) {
 }
 
 function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
-  if (currentPendingTxs.length) {
-    for (let i = 0; i < newPendingTxs.length; i++) {
-      const existingTx = _.find(currentPendingTxs, { tx_hash: newPendingTxs[i].tx_hash });
+  let pendingTxs = [];
 
-      if (!existingTx || !existingTx.status) {
-        continue;
-      }
+  newPendingTxs.forEach(newPendingTx => {
+    const existingTx = currentPendingTxs.find((currentPendingTx) => {
+      return currentPendingTx.tx_hash === newPendingTx.tx_hash;
+    });
 
-      if (existingTx.status === 1) {
-        const pendingAmount = newPendingBalances[newPendingTxs[i].src_token];
-        const txAmount  = newPendingTxs[i].src_amount;
-
-        let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
-        if (remainingBalance < 0) remainingBalance = 0;
-
-        newPendingBalances[newPendingTxs[i].src_token] = remainingBalance;
-        newPendingTxs[i].status = 1;
-      }
+    if (!existingTx || !existingTx.status) {
+      newPendingTx.status = 0;
+      pendingTxs.push(newPendingTx);
+    } else if (existingTx.status) {
+      newPendingTx.status = 1;
+      pendingTxs.push(newPendingTx);
     }
-  }
+  });
 
-  return { pendingBalances: newPendingBalances, pendingTxs: newPendingTxs };
+  return { pendingBalances: newPendingBalances, pendingTxs };
 }
 
 export function* watchLimitOrder() {

@@ -339,7 +339,7 @@ const INIT_LIMIT_ORDER_STATE = {
 
   // Pending balances
   pendingBalances: {},
-  pendingTxs: {},
+  pendingTxs: [],
 
   // Related orders
   relatedOrders: [],

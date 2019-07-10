@@ -95,7 +95,7 @@ export default class BaseProvider {
         })
     }
 
-    getAllBalancesTokenAtLatestBlock(address, tokens, latestBlock = null) {
+    getAllBalancesTokenAtLatestBlock(address, tokens) {
         var listToken = []
         var listSymbol = []
         Object.keys(tokens).map(index => {
@@ -105,10 +105,7 @@ export default class BaseProvider {
         })
 
         return new Promise((resolve, reject) => {
-            var data = this.wrapperContract.methods.getBalances(address, listToken).call(
-              {},
-              latestBlock
-            ).then(result => {
+            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
@@ -130,35 +127,37 @@ export default class BaseProvider {
 
     
 
-    getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
-        var promises = Object.keys(tokens).map(index => {
-            var token = tokens[index]
-            if (token.symbol === 'ETH') {
-                return new Promise((resolve, reject) => {
-                    this.getBalanceAtSpecificBlock(address, blockno).then(result => {
-                        resolve({
-                            symbol: 'ETH',
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of ETH"))
-                    })
-                })
+    getAllBalancesTokenAtSpecificBlock(address, tokens, blockNumber) {
+      var listToken = []
+      var listSymbol = []
+      Object.keys(tokens).map(index => {
+        var token = tokens[index]
+        listToken.push(token.address)
+        listSymbol.push(token.symbol)
+      })
 
-            } else {
-                return new Promise((resolve, reject) => {
-                    this.getTokenBalanceAtSpecificBlock(token.address, address, blockno).then(result => {
-                        resolve({
-                            symbol: token.symbol,
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of " + token.symbol))
-                    })
-                })
-            }
+      return new Promise((resolve, reject) => {
+        var data = this.wrapperContract.methods.getBalances(address, listToken).call(
+          {},
+          blockNumber
+        ).then(result => {
+          if (result.length !== listToken.length){
+            console.log("Cannot get balances from node")
+            reject("Cannot get balances from node")
+          }
+          var listTokenBalances = []
+          listSymbol.map((symbol, index) => {
+            listTokenBalances.push({
+              symbol: symbol,
+              balance: result[index] ? result[index]: "0"
+            })
+          })
+          resolve(listTokenBalances)
+        }).catch(err => {
+          console.log(err)
+          reject(err)
         })
-        return Promise.all(promises)
+      })
     }
 
     getMaxCapAtLatestBlock(address) {
