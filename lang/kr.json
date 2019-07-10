@@ -416,8 +416,8 @@
     "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
     "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
-    "view_tx": "View tx",
-    "rate_warning_title": "Do you want to <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> them?"
+    "view_tx": "트랜잭션 보기",
+    "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -429,5 +429,7 @@
   "super_fast": "굉장히 빠른",
   "search": "찾기",
   "no_thank": "No, Thanks",
-  "yes_please": "Yes, Please"
+  "yes_please": "Yes, Please",
+  "why": "왜 인가요?",
+  "i_understand": "이해했습니다."
 }

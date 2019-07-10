@@ -413,7 +413,12 @@ const INIT_LIMIT_ORDER_STATE = {
   isAdvanceActive: false,
   isOpenAdvance: false,
   isSelectTokenBalance: false,
-  swappingTime: 0
+  swappingTime: 0,
+
+  // Disable submit button state
+  isDisableSubmit: false,
+  isAgreeForceSubmit: false,
+  forceSubmitRate: 0
 }
 
 

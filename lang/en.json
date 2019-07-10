@@ -419,7 +419,7 @@
     "ineligible_address": "This address has been used by another account. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee.",
     "view_tx": "View tx",
-    "rate_warning_title": "Do you want to <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> these orders?"
+    "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:"
   },
   "home": "Home",
   "tracker": "Tracker",
@@ -431,5 +431,7 @@
   "super_fast": "Super Fast",
   "search": "Search",
   "no_thank": "No, Thanks",
-  "yes_please": "Yes, Please"
+  "yes_please": "Yes, Please",
+  "why": "Why?",
+  "i_understand": "I understand"
 }

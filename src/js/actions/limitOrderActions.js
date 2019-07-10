@@ -241,3 +241,24 @@ export function setRelatedOrders(orders) {
     payload: { orders }
   }
 }
+
+export function setIsDisableSubmit(isDisable) {
+  return { 
+    type: "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT",
+    payload: { isDisable }
+  }
+}
+
+export function setAgreeForceSubmit(isAgree) {
+  return {
+    type: "LIMIT_ORDER.SET_AGREE_FORCE_SUBMIT",
+    payload: { isAgree }
+  }
+}
+
+export function setForceSubmitRate(rate) {
+  return {
+    type: "LIMIT_ORDER.SET_FORCE_SUBMIT_RATE",
+    payload: { rate }
+  }
+}

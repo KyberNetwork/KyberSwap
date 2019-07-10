@@ -415,8 +415,8 @@
     "pair_not_supported": "该交易对目前市场并不支持",
     "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
     "fetch_fee_err": "无法获取费用",
-    "view_tx": "View tx",
-    "rate_warning_title": "Do you want to <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> them?"
+    "view_tx": "查看交易",
+    "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单："
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -428,5 +428,7 @@
   "super_fast": "超级快",
   "search": "搜索",
   "no_thank": "不，谢谢",
-  "yes_please": "好的，请"
+  "yes_please": "好的，请",
+  "why": "为什么?",
+  "i_understand": "我明白了"
 }

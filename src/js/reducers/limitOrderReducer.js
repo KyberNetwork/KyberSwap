@@ -235,6 +235,21 @@ const limitOrder = (state = initState, action) => {
       newState.relatedOrders = JSON.parse(JSON.stringify(orders));
       return newState;
     }
+    case "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT": {
+      const { isDisable } = action.payload;
+      newState.isDisableSubmit = isDisable;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_AGREE_FORCE_SUBMIT": {
+      const { isAgree } = action.payload;
+      newState.isAgreeForceSubmit = isAgree;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_FORCE_SUBMIT_RATE": {
+      const { rate } = action.payload;
+      newState.forceSubmitRate = rate;
+      return newState;
+    }
 
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       const { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload;

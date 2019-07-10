@@ -6,7 +6,7 @@ import ReactTable from "react-table";
 import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import { getFormattedDate } from "../../../utils/common";
-import { roundingNumber } from "../../../utils/converter";
+import { roundingNumber, multiplyOfTwoNumber, formatNumber } from "../../../utils/converter";
 import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 
@@ -42,7 +42,7 @@ export default class CancelOrderModal extends Component {
 				Cell: props => this.getDateCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start",
-				maxWidth: 120
+				width: 90
 			},
 			{
 				id: "condition",
@@ -51,6 +51,7 @@ export default class CancelOrderModal extends Component {
 				Cell: props => this.getConditionCell(props.value),
 				headerClassName: "cell-flex-start-header cell-condition-header",
 				className: "cell-flex-start cell-condition",
+				width: 170
 			},
 			{
 				id: "from",
@@ -67,6 +68,13 @@ export default class CancelOrderModal extends Component {
 				Cell: props => this.getToCell(props.value),
 				headerClassName: "cell-flex-start-header",
 				className: "cell-flex-start cell-to",
+			}, {
+				id: "fee",
+				Header: this.getHeader("fee"),
+				accessor: item => item,
+				Cell: props => this.getFeeCell(props.value),
+				headerClassName: "cell-flex-start-header",
+				className: "cell-flex-start cell-to"
 			}
 		];
 		return columns;
@@ -107,7 +115,7 @@ export default class CancelOrderModal extends Component {
 
 	getToCell = props => {
 		const { dest, min_rate, fee, src_amount } = props;
-		let destAmount = src_amount * (1 - fee / 100) * min_rate;
+		let destAmount = src_amount * (1 - fee) * min_rate;
 		destAmount = roundingNumber(destAmount);
 		return (
 			<div>
@@ -116,6 +124,18 @@ export default class CancelOrderModal extends Component {
 			</div>
 		);
 	};
+
+	getFeeCell = (props) => {
+    const { fee, source, src_amount } = props;
+    const calcFee = multiplyOfTwoNumber(fee, src_amount);
+    const formatedFee = formatNumber(calcFee, 5, '');
+    return (
+      <div>
+        <span className="to-number-cell">{formatedFee}</span>{' '}
+        <span>{source.toUpperCase()}</span>
+      </div>
+    )
+  }
 
 	// Render header
 	getHeader = title => {
@@ -170,9 +190,11 @@ export default class CancelOrderModal extends Component {
 		const { source, dest, min_rate, status, updated_at, src_amount, fee } = this.props.order;
 
 		const rate = roundingNumber(min_rate);
+		const calcFee = multiplyOfTwoNumber(fee, src_amount);
+    const formatedFee = formatNumber(calcFee, 5, '');
 
 		const sourceAmount = roundingNumber(src_amount);
-		let destAmount = src_amount * (1 - fee / 100) * min_rate;
+		let destAmount = src_amount * (1 - fee) * min_rate;
 		destAmount = roundingNumber(destAmount);
 	
 		return (
@@ -210,6 +232,15 @@ export default class CancelOrderModal extends Component {
 							<div className="cell-to">
 								<span class="to-number-cell">{destAmount}</span>{" "}
 								<span>{dest.toUpperCase()}</span>
+							</div>
+						</div>
+						<div className="limit-order-modal__detail-order__amount">
+							<div>
+								{this.props.translate("limit_order.fee") || "Fee"}
+							</div>
+							<div className="cell-to">
+								<span class="to-number-cell">{calcFee}</span>{" "}
+								<span>{source.toUpperCase()}</span>
 							</div>
 						</div>
 					</div>

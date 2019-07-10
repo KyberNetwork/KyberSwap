@@ -328,7 +328,7 @@ export default class LimitOrderTable extends Component {
     const formatedFee = formatNumber(calcFee, 5, '');
 
     const sourceAmount = roundingNumber(src_amount);
-    let destAmount = src_amount * (1 - fee / 100) * min_rate;
+    let destAmount = src_amount * (1 - fee) * min_rate;
     destAmount = roundingNumber(destAmount);
 
     return (
