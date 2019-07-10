@@ -4,12 +4,11 @@ import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
-import { setPendingBalances } from "../actions/limitOrderActions"
+import { getPendingBalancesComplete } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { subOfTwoNumber, stringToBigNumber } from "../utils/converter"
-
+import { subOfTwoNumber } from "../utils/converter"
 import {
   setRandomTransferSelectedToken,
   closeImportAccountTransfer
@@ -48,7 +47,7 @@ export function* updateTokenBalance(action) {
     yield put(setBalanceToken(balanceTokens))
 
     const limitOrder = store.getState().limitOrder;
-    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.unconfirmedPendingBalances, limitOrder.pendingTxs, latestBlock);
+    yield call(calculateLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
   }
   catch (err) {
     console.log(err)
@@ -58,6 +57,9 @@ export function* updateTokenBalance(action) {
 function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
   if (ethereum && pendingTxs.length <= 3) {
     for (var i = 0; i < pendingTxs.length; ++i) {
+      if (pendingTxs.status === 1) continue;
+
+      let txStatus = 0;
       const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock);
       const txAmount  = pendingTxs[i].src_amount;
       const pendingAmount = pendingBalances[pendingTxs[i].src_token];
@@ -65,12 +67,16 @@ function* calculateLimitOrderPendingBalance(ethereum, pendingBalances, pendingTx
       if (isTxMined) {
         let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
         if (remainingBalance < 0) remainingBalance = 0;
+
+        txStatus = 1;
         pendingBalances[pendingTxs[i].src_token] = remainingBalance;
       }
+
+      pendingTxs[i].status = txStatus;
     }
   }
 
-  yield put(setPendingBalances(pendingBalances));
+  yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
 }
 
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){

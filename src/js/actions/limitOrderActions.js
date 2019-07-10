@@ -228,17 +228,10 @@ export function getPendingBalances(address) {
   }
 }
 
-export function getPendingBalancesComplete(unconfirmedPendingBalances, pendingTxs) {
+export function getPendingBalancesComplete(pendingBalances, pendingTxs) {
   return {
     type: "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE",
-    payload: { unconfirmedPendingBalances, pendingTxs }
-  }
-}
-
-export function setPendingBalances(pendingBalances) {
-  return {
-    type: "LIMIT_ORDER.SET_PENDING_BALANCES",
-    payload: pendingBalances
+    payload: { pendingBalances, pendingTxs }
   }
 }
 

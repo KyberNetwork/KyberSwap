@@ -290,15 +290,15 @@ export function getPendingBalances(address) {
             "src_amount": 0.5
           },
           {
-            "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
+            "tx_hash": "0xafdeac1bb2b2693828edb24fb723d6b65e51bd11ef855b4abbe5ff4c77b4c6d5",
             "src_token": "WETH",
             "src_amount": 0.6
           },
           {
-            "tx_hash": "0x050e13873ece96b7d1dd879611ea90d89ab8812b27d22c4ac0c818c33038604f",
-            "src_token": "KNC",
-            "src_amount": 0.1
-          },
+            "tx_hash": "0xad62fa8682adbd7b22116f032cf6c43855d9f34f3da9e1632f942edef9b21fbf",
+            "src_token": "WETH",
+            "src_amount": 0.01
+          }
         ]
       };
 

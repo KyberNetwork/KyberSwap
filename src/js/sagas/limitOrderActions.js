@@ -8,6 +8,7 @@ import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
 import * as constants from "../services/constants"
+import { subOfTwoNumber } from "../utils/converter"
 
 function* selectToken(action) {
     const { symbol, address, type } = action.payload
@@ -195,22 +196,42 @@ function* getListFilter() {
 function* fetchPendingBalances(action) {
   const { address } = action.payload;
   const state = store.getState();
-  const limitOrder = state.limitOrder;
+  const currentPendingTxs = state.limitOrder.pendingTxs;
 
   try {
     const result = yield call(limitOrderServices.getPendingBalances, address);
 
-    const unconfirmedPendingBalances = result.data;
-    const pendingTxs = result.pending_txs;
+    const newPendingBalances = result.data;
+    const newPendingTxs = result.pending_txs;
+    const { pendingBalances, pendingTxs } = validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs);
 
-    yield put(limitOrderActions.getPendingBalancesComplete(unconfirmedPendingBalances, pendingTxs));
-
-    if (!Object.keys(limitOrder.pendingBalances).length) {
-      yield put(limitOrderActions.setPendingBalances(unconfirmedPendingBalances));
-    }
+    yield put(limitOrderActions.getPendingBalancesComplete(pendingBalances, pendingTxs));
   } catch (err) {
     console.log(err);
   }
+}
+
+function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
+  for (let i = 0; i < newPendingTxs.length; i++) {
+    const existingTx = _.find(currentPendingTxs, { tx_hash: newPendingTxs[i].tx_hash });
+
+    if (!existingTx || !existingTx.status) {
+      continue;
+    }
+
+    if (existingTx.status === 1) {
+      const pendingAmount = newPendingBalances[newPendingTxs[i].src_token];
+      const txAmount  = newPendingTxs[i].src_amount;
+
+      let remainingBalance = subOfTwoNumber(pendingAmount, txAmount);
+      if (remainingBalance < 0) remainingBalance = 0;
+
+      newPendingBalances[newPendingTxs[i].src_token] = remainingBalance;
+      newPendingTxs[i].status = 1;
+    }
+  }
+
+  return { pendingBalances: newPendingBalances, pendingTxs: newPendingTxs };
 }
 
 export function* watchLimitOrder() {
