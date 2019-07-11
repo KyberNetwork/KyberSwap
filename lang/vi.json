@@ -418,7 +418,7 @@
     "fetch_fee_err": "Không lấy được phí giao dịch.",
     "view_tx": "Xem giao dịch",
     "rate_warning_title": "Bằng việc tạo lệnh này, bạn sẽ <span class=\"rate-warning-tooltip__title--highlight\">HUỶ</span> những lệnh sau:",
-    "wonder_why_order_not_filled": "Wonder why your orders are not filled?"
+    "wonder_why_order_not_filled": "Tìm hiểu lí do các lệnh của bạn không được thực hiện?"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
