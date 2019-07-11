@@ -1120,6 +1120,17 @@
         }
     }
 
+    &__faq {
+        margin-bottom: 15px;
+        
+        >a {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666666;
+            text-decoration: underline;
+        }
+    }
+
     &__close {
         position: absolute;
         right: 15px;
@@ -1566,7 +1577,7 @@
         >a {
             font-size: 12px;
             font-weight: 500;
-            color: #666666;
+            color: #1a0a0a;
             text-decoration: underline;
         }
     }
