@@ -104,7 +104,7 @@ export default class CancelOrderModal extends Component {
 
 	getFromCell = props => {
 		const { source, src_amount } = props;
-		let amount = roundingNumber(src_amount);
+		let amount = formatNumber(src_amount, 5);
 		return (
 			<div>
 				<span class="from-number-cell">{amount}</span>{" "}
@@ -116,7 +116,7 @@ export default class CancelOrderModal extends Component {
 	getToCell = props => {
 		const { dest, min_rate, fee, src_amount } = props;
 		let destAmount = src_amount * (1 - fee) * min_rate;
-		destAmount = roundingNumber(destAmount);
+		destAmount = formatNumber(destAmount, 5);
 		return (
 			<div>
 				<span className="to-number-cell">{destAmount}</span>{" "}
@@ -193,9 +193,9 @@ export default class CancelOrderModal extends Component {
 		const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
 
-		const sourceAmount = roundingNumber(src_amount);
+		const sourceAmount = formatNumber(src_amount, 5);
 		let destAmount = src_amount * (1 - fee) * min_rate;
-		destAmount = roundingNumber(destAmount);
+		destAmount = formatNumber(destAmount, 5);
 	
 		return (
 			<div className="limit-order-list--table-mobile">

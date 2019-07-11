@@ -207,7 +207,7 @@ export default class LimitOrderTable extends Component {
 
   getFromCell = (props) => {
     const { source, sourceAmount } = props;
-    let amount = roundingNumber(sourceAmount);
+    let amount = formatNumber(sourceAmount, 5);
     return (
       <div>
         <span class="from-number-cell">{amount}</span>{' '}
@@ -219,7 +219,7 @@ export default class LimitOrderTable extends Component {
   getToCell = (props) => {
     const { dest, minRate, fee, sourceAmount } = props;
     let destAmount = sourceAmount * (1 - fee) * minRate;  // fee already in percentage format
-    destAmount = roundingNumber(destAmount);
+    destAmount = formatNumber(destAmount, 5);
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
@@ -327,9 +327,9 @@ export default class LimitOrderTable extends Component {
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
 
-    const sourceAmount = roundingNumber(src_amount);
+    const sourceAmount = formatNumber(src_amount, 5);
     let destAmount = src_amount * (1 - fee) * min_rate;
-    destAmount = roundingNumber(destAmount);
+    destAmount = formatNumber(destAmount, 5);
 
     return (
       <div className="limit-order-modal__detail-order">
