@@ -62,26 +62,57 @@ export default class BroadCastModal extends React.Component {
       var newTx = await tx.sync(ethereum, tx)
       this.setState({ txStatus: newTx.status })
       
-      if (newTx.status === "success") {
-        const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
+      switch(newTx.status){
+        case "success": 
+          const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
 
-        const tokens = this.props.tokens
-        const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
-        const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
-        this.setState({
-          sourceAmount: converter.toT(srcAmount, sourceDecimal),
-          destAmount: converter.toT(destAmount, destDecimal)
-        })
-        try{
-          var notiService = this.props.global.notiService
-          notiService.callFunc("changeStatusTx",newTx)
-        }catch(e){
-          console.log(e)
-        }
-      }else{
-        await sleep(5000)
-        this.checkTxStatus(ethereum, tx)
+          const tokens = this.props.tokens
+          const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
+          const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
+          this.setState({
+            sourceAmount: converter.toT(srcAmount, sourceDecimal),
+            destAmount: converter.toT(destAmount, destDecimal)
+          })
+          try{
+            var notiService = this.props.global.notiService
+            notiService.callFunc("changeStatusTx",newTx)
+          }catch(e){
+            console.log(e)
+          }
+          break
+        case "failed":          
+          try{
+            var notiService = this.props.global.notiService
+            notiService.callFunc("changeStatusTx",newTx)
+          }catch(e){
+            console.log(e)
+          }
+          break
+        default:
+          await sleep(5000)
+          this.checkTxStatus(ethereum, tx)
+          break
       }
+      // if (newTx.status === "success") {
+      //   const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
+
+      //   const tokens = this.props.tokens
+      //   const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
+      //   const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
+      //   this.setState({
+      //     sourceAmount: converter.toT(srcAmount, sourceDecimal),
+      //     destAmount: converter.toT(destAmount, destDecimal)
+      //   })
+      //   try{
+      //     var notiService = this.props.global.notiService
+      //     notiService.callFunc("changeStatusTx",newTx)
+      //   }catch(e){
+      //     console.log(e)
+      //   }
+      // }else{
+      //   await sleep(5000)
+      //   this.checkTxStatus(ethereum, tx)
+      // }
       
     } catch (err) {
       console.log(err)

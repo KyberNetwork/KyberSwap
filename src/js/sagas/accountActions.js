@@ -44,10 +44,10 @@ export function* updateTokenBalance(action) {
     const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtSpecificBlock", address, tokens, latestBlock)
 
-    yield put(setBalanceToken(balanceTokens))
-
     const limitOrder = store.getState().limitOrder;
     yield call(processLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
+
+    yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
     console.log(err)

@@ -160,6 +160,13 @@ export default class ConfirmModal extends React.Component {
                 destAddress.toLowerCase(), nonce, gas,
                 gasPrice, keystring, type, password)
 
+            //notify server
+            try {
+                var notiService = this.props.global.notiService
+                notiService.callFunc("setNewTx", { hash: txHash })
+            } catch (e) {
+                console.log(e)
+            }
 
             this.props.global.analytics.callTrack("trackCoinTransfer", tokenSymbol);
             this.props.global.analytics.callTrack("completeTrade", txHash, "kyber", "transfer");
