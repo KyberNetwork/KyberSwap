@@ -12,7 +12,26 @@ var fs = require('fs');
 var sass = require('node-sass');
 
 var getConfig = env => {
-    const outputPath = `../public/swap/${env}`
+    var buildFolder = env
+    var chain 
+    switch(env){
+        case "staging_limit_order":
+            chain = "production"
+            break
+        case "production":
+            chain = "production"
+            break
+        case "staging":
+            chain = "staging"
+            break
+        case "ropsten":
+            chain = "ropsten"
+            break
+        default:
+            chain = "ropsten"
+            break
+    }
+    const outputPath = `../public/swap/${buildFolder}`
 
     const timestamp = Date.now();
 
@@ -35,8 +54,7 @@ var getConfig = env => {
         new webpack.DefinePlugin({
             'env': JSON.stringify(env),
             'process.env': {
-                // 'logger': env === 'production'?'false': 'true',
-                'logger': 'true',
+                'logger': chain === 'production'?'false': 'true',
                 'env': JSON.stringify(env),
                 'integrate': true
             }
@@ -45,7 +63,7 @@ var getConfig = env => {
             {
                 // hash: hash,
                // onBuildStart:['node webpack.beforebuild.js'],
-                onBuildEnd:[`BUNDLE_NAME=[hash] chain=${env} node webpack.afterbuild.js`]
+                onBuildEnd:[`BUNDLE_NAME=[hash] chain=${chain} folder=${buildFolder} node webpack.afterbuild.js`]
             }
         )
     ];
@@ -59,16 +77,16 @@ var getConfig = env => {
             //     chunks: 'all'
             // },
             minimizer: [
-                // new TerserPlugin({
-                //     parallel: true,
-                //     terserOptions: {
-                //         ecma: 6,
-                //         compress: {
-                //             drop_console: true,
-                //             warnings: false
-                //         }
-                //     }
-                // }),
+                new TerserPlugin({
+                    parallel: true,
+                    terserOptions: {
+                        ecma: 6,
+                        compress: {
+                            drop_console: true,
+                            warnings: false
+                        }
+                    }
+                }),
                 new OptimizeCSSAssetsPlugin({})
             ]
         },
