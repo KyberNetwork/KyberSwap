@@ -213,7 +213,7 @@ function* fetchPendingBalances(action) {
 
 function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
   let pendingTxs = [];
-
+console.log(currentPendingTxs)
   newPendingTxs.forEach(newPendingTx => {
     const existingTx = currentPendingTxs.find((currentPendingTx) => {
       return currentPendingTx.tx_hash === newPendingTx.tx_hash;

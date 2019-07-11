@@ -386,6 +386,14 @@ export function stringToBigNumber(number) {
   return bigNumber
 }
 
+export function stringToNumber(str) {
+  var bigNumber = new BigNumber(str)
+  if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
+    return 0
+  }
+  return bigNumber.toNumber()
+}
+
 
 
 export function getBigNumberValueByPercentage(number, percentage) {
