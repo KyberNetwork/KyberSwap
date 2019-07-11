@@ -389,7 +389,7 @@ export default class LimitOrderSubmit extends React.Component {
         <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder} >
           {isUserLogin() ? this.props.translate("limit_order.submit") || "Submit" : this.props.translate("limit_order.login_to_submit") || "Login to Submit Order"}
         </button>
-        {(this.props.account !== false && !this.props.hideTermAndCondition) &&
+        {!this.props.hideTermAndCondition &&
           <TermAndServices tradeType="limit_order"/>
         }
        
