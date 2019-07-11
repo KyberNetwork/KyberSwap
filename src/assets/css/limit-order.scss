@@ -622,6 +622,7 @@
         color: #ffffff;
         margin-bottom: 17px;
         transition: all 0.3s;
+
         &:hover {
             cursor: pointer;
             background-position: 0 0;
@@ -635,6 +636,9 @@
         &.waiting{
             pointer-events: none;
             cursor: initial;
+        }
+        &:active {
+            transform: translateY(2px);
         }
     }
 }
@@ -1251,6 +1255,7 @@
             font-size: 14px;
             color: #222222;
             margin: 15px 20px 0;
+            animation: slideUp 0.3s forwards;
         }
 
         &--error {
@@ -1259,6 +1264,7 @@
             margin: 15px 20px 0;
             max-height: 100px;
             overflow: auto;
+            animation: slideUp 0.3s forwards;
         }
 
         @include screen-max-width(medium) {
@@ -1274,8 +1280,18 @@
         padding: 30px 30px;
         font-weight: 500;
         border-radius: 0 0 10px 10px;
+        animation: fadeIn 0.3s forwards;
+    }
 
-        >span {
+    &__success-text {
+        animation: slideUp 0.3s forwards;
+
+        img {
+            position: relative;
+            bottom: 1px;
+        }
+
+        span {
             margin-left: 15px;
         }
     }
