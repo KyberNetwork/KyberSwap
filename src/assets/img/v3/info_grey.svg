@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon 24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Limit-Order-14May" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1---LimitOrder---home" transform="translate(-870.000000, -148.000000)">
+            <g id="Icon-24px" transform="translate(869.000000, 147.000000)">
+                <polygon id="Shape" points="0 0 14 0 14 14 0 14"></polygon>
+                <path d="M7,1.16666667 C3.78,1.16666667 1.16666667,3.78 1.16666667,7 C1.16666667,10.22 3.78,12.8333333 7,12.8333333 C10.22,12.8333333 12.8333333,10.22 12.8333333,7 C12.8333333,3.78 10.22,1.16666667 7,1.16666667 L7,1.16666667 Z M7.58333333,9.91666667 L6.41666667,9.91666667 L6.41666667,6.41666667 L7.58333333,6.41666667 L7.58333333,9.91666667 L7.58333333,9.91666667 Z M7.58333333,5.25 L6.41666667,5.25 L6.41666667,4.08333333 L7.58333333,4.08333333 L7.58333333,5.25 L7.58333333,5.25 Z" id="Shape" fill="#3E5271"></path>
+            </g>
+        </g>
+    </g>
+</svg>

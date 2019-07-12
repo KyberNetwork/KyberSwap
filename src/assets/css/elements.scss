@@ -1,6 +1,6 @@
 .unlock input {
   height: 50px;
-  color: $white;
+  // color: $white;
 }
 input {
   &[type=password],
@@ -138,6 +138,10 @@ input.error {
     font-weight: bold;
     color: #3D4B9C;
     box-shadow: 0 0 2px #555;
+    &.disabled-button{
+      pointer-events: none;
+      opacity: 0.6;
+    }
     &.next{
       cursor: pointer;
       color: #3D4B9C;
@@ -329,4 +333,8 @@ input.search-input {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.clickable {
+  cursor: pointer;
 }

@@ -39,6 +39,8 @@ $alert-color: #ff5d00;
 @import '~react-linechart/dist/styles.css';
 @import "slider";
 @import "top-token";
+@import "pagination";
+@import "limit-order";
 // @import "~slick-carousel/slick/slick.css";
 
 @import "swap_en";
@@ -424,12 +426,17 @@ html body{
 //   margin-top: 50px;
 // }
 
+.security{
+  font-family: 'text-security-disc';
+  font-size: 25px;
+}
+
 #private_key{
   background-color: #ACD0C6;
   color: white;
   width: 250px;
-  &.security{
-    font-family: 'text-security-disc';
-    font-size: 25px;
-  }
+  // &.security{
+  //   font-family: 'text-security-disc';
+  //   font-size: 25px;
+  // }
 }

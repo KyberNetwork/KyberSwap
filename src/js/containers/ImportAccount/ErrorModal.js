@@ -5,7 +5,7 @@ import { closeErrorModal } from "../../actions/accountActions"
 import { getTranslate } from 'react-localize-redux';
 
 @connect((store) => {
-  return { ...store.account,
+  return { account: store.account,
     translate: getTranslate(store.locale),
     analytics: store.global.analytics
   }
@@ -20,10 +20,10 @@ export default class ErrorModal extends React.Component {
   render() {
     return (
       <ErrorModalView
-        isOpen={this.props.showError}
+        isOpen={this.props.account.error.showError}
         onRequestClose={this.closeModal}
         title={this.props.title}
-        error={this.props.error}
+        error={this.props.account.error.error}
         translate={this.props.translate}
       />
     )

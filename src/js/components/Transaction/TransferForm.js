@@ -3,14 +3,8 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber, restrictInputNumber, anyErrors } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-// import { AccountBalance } from "../../containers/TransactionCommon";
-import { PostTransferWithKey } from "../../containers/Transfer";
-// import BLOCKCHAIN_INFO from "../../../../env";
+import { PostTransfer } from "../../containers/Transfer";
 import * as analytics from "../../utils/analytics";
-// import { RateBetweenToken } from "../../containers/Exchange";
-// import { getAssetUrl } from "../../utils/common";
-// import { TermAndServices } from "../../containers/CommonElements";
-// import {AdvanceAccount} from "../TransactionCommon"
 
 import { AdvanceAccount } from "../../containers/TransactionCommon"
 import { CSSTransition } from "react-transition-group";
@@ -46,37 +40,36 @@ const TransferForm = (props) => {
     }
   }
 
-  if (props.errors.amountTransfer && props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-amount-error-trigger"))
-      props.setDefaulAmountErrorTooltip(false)
-    }, 300)
-  }
 
-  if (!props.errors.amountTransfer && !props.defaultShowAmountErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAmountErrorTooltip(true)
-    }, 300)
-  }
+  var errorSource = []
+  var isErrorSource = false  
+  Object.values(props.transfer.errors.sourceAmount).map(value => {
+    isErrorSource = true
+    errorSource.push(value)
+  })
 
-  if (props.errors.destAddress && props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
-      props.setDefaulAddrErrorTooltip(false)
-    }, 300)
-  }
+  var errorDestAddr = []
+  var isErrorDestAddr = false  
+  Object.values(props.transfer.errors.destAddress).map(value => {
+    isErrorDestAddr = true
+    errorDestAddr.push(value)
+  })
 
-  if (!props.errors.destAddress && !props.defaultShowAddrErrorTooltip) {
-    setTimeout(() => {
-      props.setDefaulAddrErrorTooltip(true)
-    }, 300)
-  }
+  var errorSourceTooltip = ""
+  errorSource.map((value, index) => {
+    errorSourceTooltip += `<span class="error-text" key=${index}>${value}</span>`
+  })
+  var errorSourceSelector = document.getElementById("transfer-amount-error")
+  if (errorSourceSelector) errorSourceSelector.innerHTML = `<div>${errorSourceTooltip}</div>`
 
-  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
-  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
 
-  // var transferErrorTooltip = document.getElementById("transfer-amount-error")
-  // if(transferErrorTooltip) transferErrorTooltip.innerHTML = `<div>${props.translate(props.errors.amountTransfer)}</div>`
+  var errorDestAddrTooltip = ""
+  errorDestAddr.map((value, index) => {
+    errorDestAddrTooltip += `<span class="error-text" key=${index}>${value}</span>`
+  })
+  var errorDestSelector = document.getElementById("transfer-address-error")
+  if (errorDestSelector) errorDestSelector.innerHTML = `<div>${errorDestAddrTooltip}</div>`
+
 
   function getWalletIconName(type, walletName) {
     if (walletName === "PROMO CODE") {
@@ -116,7 +109,7 @@ const TransferForm = (props) => {
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
                 <div className={`exchange-content__item exchange-content__item--left exchange-content__item--transfer 
-                  select-token ${props.account !== false ? 'has-account' : ''} ${props.errors.amountTransfer ? "error" : ""}`}>
+                  select-token ${props.account !== false ? 'has-account' : ''} ${isErrorSource ? "error" : ""}`}>
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
@@ -129,7 +122,7 @@ const TransferForm = (props) => {
                           timeout={{ enter: 500, exit: 500 }}>
                             <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
                         </CSSTransition>
-                        <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.amountTransfer)}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
+                        <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorSourceTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
                         >
                           <input
                             className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
@@ -146,13 +139,10 @@ const TransferForm = (props) => {
                             autoComplete="off"
                           />
                         </div>
-                        {/* {props.account !== false && (
-                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal`}>{props.transferBalance}</div>
-                        )} */}
                       </div>
                     </div>
                   </div>
-                  {props.errors.amountTransfer &&
+                  {isErrorSource &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
                   }
                 </div>
@@ -167,10 +157,10 @@ const TransferForm = (props) => {
 
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.address") || "To Address"}:</div>
-                <div className={`exchange-content__item exchange-content__item--right select-token ${props.errors.destAddress ? "error" : ""}`}>
+                <div className={`exchange-content__item exchange-content__item--right select-token ${isErrorDestAddr ? "error" : ""}`}>
                   <div className={`input-div-content`}>
                     <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
-                      <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${props.translate(props.errors.destAddress)}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
+                      <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorDestAddrTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
                       >
                         <input
                           className={`exchange-content__input exchange-content__input-address`}
@@ -185,7 +175,7 @@ const TransferForm = (props) => {
                       {props.qcCode}
                     </div>
                   </div>
-                  {props.errors.destAddress &&
+                  {isErrorDestAddr &&
                     <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-address-error" type="light" />
                   }
                 </div>
@@ -207,19 +197,6 @@ const TransferForm = (props) => {
           {props.account === false && importAccount()}
         </div>
 
-        {/* {props.account !== false && (
-          <div className="exchange-account">
-            <div className="exchange-account__container container">
-              <div className="exchange-account__content">
-                <div className="exchange-account__balance">{props.balanceLayout}</div>
-                <div className="exchange-account__adv-config">{props.advanceLayout}</div>
-              </div>
-
-              <PostTransferWithKey isChangingWallet={props.isChangingWallet} />
-            </div>
-          </div>
-        )} */}
-
         {props.account !== false && (
 
           <AdvanceAccount
@@ -230,13 +207,11 @@ const TransferForm = (props) => {
             advanceLayout={props.advanceLayout}
             isOpenAdvance={props.isOpenAdvance}
             clearIsOpenAdvance={props.clearIsOpenAdvance}
-            postWithKey={<PostTransferWithKey isChangingWallet={props.isChangingWallet} />}
+            postWithKey={<PostTransfer />}
             screen={"transfer"}
           />
         )}
       </div>
-
-      {props.transactionLoadingScreen}
     </div>
   )
 }

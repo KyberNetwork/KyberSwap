@@ -13,10 +13,23 @@ export default class BaseProvider {
         this.erc20Contract = new this.rpc.eth.Contract(constants.ERC20)
         this.networkAddress = BLOCKCHAIN_INFO.network
         this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
+        this.kyberswapAddress = BLOCKCHAIN_INFO.kyberswapAddress
         // console.log(BLOCKCHAIN_INFO)
         // console.log(this.wrapperAddress)
         this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
         this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
+
+        this.kyberswapContract = new this.rpc.eth.Contract(constants.KYBER_SWAP_ABI, this.kyberswapAddress)
+
+        // this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
+        // this.getSignatureParameters("0x112b82204e41184696fe6e83e2637870f7922672ecf1dc603815a4c25098bfde1cf6ed4ddc6a76b77cc103f844eddc2e1e39a6062e3e09da4f2b53cfab620c5c1c")
+        // this.getMessageHashTest("hello")
+        
+        // console.log(Buffer.from("test").toString("hex"))
+        // var message = "0x6d1ffaf4dc86fa4249bc6a81620bfa187114044dd961cfe6cf8193737a16598a"
+        // console.log(message)
+        // console.log(Buffer.from(message.substring(2)).toString("hex"))
+        // console.log(Buffer.from(message).toString("hex"))
     }
 
     version() {
@@ -93,9 +106,6 @@ export default class BaseProvider {
 
         return new Promise((resolve, reject) => {
             var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
-                //console.log(result)
-                //  console.log("balance_tokens")
-                //  console.log(result)
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
@@ -117,35 +127,37 @@ export default class BaseProvider {
 
     
 
-    getAllBalancesTokenAtSpecificBlock(address, tokens, blockno) {
-        var promises = Object.keys(tokens).map(index => {
-            var token = tokens[index]
-            if (token.symbol === 'ETH') {
-                return new Promise((resolve, reject) => {
-                    this.getBalanceAtSpecificBlock(address, blockno).then(result => {
-                        resolve({
-                            symbol: 'ETH',
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of ETH"))
-                    })
-                })
+    getAllBalancesTokenAtSpecificBlock(address, tokens, blockNumber) {
+      var listToken = []
+      var listSymbol = []
+      Object.keys(tokens).map(index => {
+        var token = tokens[index]
+        listToken.push(token.address)
+        listSymbol.push(token.symbol)
+      })
 
-            } else {
-                return new Promise((resolve, reject) => {
-                    this.getTokenBalanceAtSpecificBlock(token.address, address, blockno).then(result => {
-                        resolve({
-                            symbol: token.symbol,
-                            balance: result
-                        })
-                    }).catch(err => {
-                        reject(new Error("Cannot get balance of " + token.symbol))
-                    })
-                })
-            }
+      return new Promise((resolve, reject) => {
+        var data = this.wrapperContract.methods.getBalances(address, listToken).call(
+          {},
+          blockNumber
+        ).then(result => {
+          if (result.length !== listToken.length){
+            console.log("Cannot get balances from node")
+            reject("Cannot get balances from node")
+          }
+          var listTokenBalances = []
+          listSymbol.map((symbol, index) => {
+            listTokenBalances.push({
+              symbol: symbol,
+              balance: result[index] ? result[index]: "0"
+            })
+          })
+          resolve(listTokenBalances)
+        }).catch(err => {
+          console.log(err)
+          reject(err)
         })
-        return Promise.all(promises)
+      })
     }
 
     getMaxCapAtLatestBlock(address) {
@@ -231,11 +243,11 @@ export default class BaseProvider {
         })
     }
 
-    approveTokenData(sourceToken, sourceAmount) {
+    approveTokenData(sourceToken, sourceAmount, delegator = this.networkAddress) {
         var tokenContract = this.erc20Contract
         tokenContract.options.address = sourceToken
 
-        var data = tokenContract.methods.approve(this.networkAddress, sourceAmount).encodeABI()
+        var data = tokenContract.methods.approve(delegator, sourceAmount).encodeABI()
         return new Promise((resolve, reject) => {
             resolve(data)
         })
@@ -250,11 +262,11 @@ export default class BaseProvider {
         })
     }
 
-    getAllowanceAtLatestBlock(sourceToken, owner) {
+    getAllowanceAtLatestBlock(sourceToken, owner, delegator = this.networkAddress) {
         var tokenContract = this.erc20Contract
         tokenContract.options.address = sourceToken
 
-        var data = tokenContract.methods.allowance(owner, this.networkAddress).encodeABI()
+        var data = tokenContract.methods.allowance(owner, delegator).encodeABI()
 
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
@@ -642,6 +654,8 @@ export default class BaseProvider {
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
         srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
+        // console.log("srcAmountEnableFistBit")
+        // console.log(srcAmountEnableFistBit)
 
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
 
@@ -693,6 +707,44 @@ export default class BaseProvider {
     wrapperGetChosenReserve(input, blockno) {
         return new Promise((resolve) => {
             resolve(BLOCKCHAIN_INFO.reserve)
+        })
+    }
+
+    getLimitOrderNonce(address, pair){
+        return new Promise((resolve, reject) => {
+            this.kyberswapContract.methods.nonces(address, pair).call().then(result => {
+                resolve(result)
+            }).catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
+    }
+
+    getMessageHashTest(message){        
+        return new Promise((resolve) => {
+            var signature = this.rpc.utils.soliditySha3(message);     
+            console.log(signature)       
+            resolve(signature)
+        })
+    }
+
+    getMessageHash(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision){        
+        return new Promise((resolve) => {
+            var signature = this.rpc.utils.soliditySha3({t: 'address', v: user}, {t: 'uint256', v: nonce}, {t: 'address', v: srcToken}, {t: 'uint256', v: srcQty}, {t: 'address', v: destToken},
+            {t: 'address', v: destAddress}, {t: 'uint256', v: minConversionRate}, {t: 'uint256', v: feeInPrecision});            
+            resolve(signature)
+        })
+    }
+
+    getSignatureParameters(signature){
+        return new Promise((resolve) => {       
+            var {v, r, s} = ethUtil.fromRpcSig(signature)
+            r = ethUtil.bufferToHex(r)    
+            s = ethUtil.bufferToHex(s)    
+
+            console.log({v, s, r})
+            resolve({v, r,s})
         })
     }
 }

@@ -53,19 +53,19 @@ export default class AdvanceConfigLayout extends React.Component {
                 <span>{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</span>
                 {this.props.type==="exchange" && (
                   <span className="advance-config__title-info">
-                    <span data-tip={`Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
+                    <span data-tip={this.props.translate("transaction.transaction_gasprice_50", { gasPrice: this.props.maxGasPrice }) || `Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
                       <img src={require("../../../assets/img/v3/info_blue.svg")} />
                     </span>
-                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
+                    <ReactTooltip html={true}  place="right" effect="solid" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
                   </span>  
                 )}
 
                 {this.props.type==="transfer" && (
                   <span className="advance-config__title-info">
-                    <span data-tip={`Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
+                    <span data-tip={this.props.translate("transaction.transaction_gasprice") || `Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
                       <img src={require("../../../assets/img/v3/info_blue.svg")} />
                     </span>
-                    <ReactTooltip html={true}  place="right" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
+                    <ReactTooltip html={true}  place="right" effect="solid" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
                   </span>  
                 )}
                 

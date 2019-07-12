@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
+import { LimitOrder } from "../../containers/LimitOrder"
 // import { Header } from "../../containers/Header"
 import { ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
@@ -139,6 +140,7 @@ export default class Layout extends React.Component {
         history={history}        
         Exchange={Exchange}
         Transfer={Transfer}
+        LimitOrder = {LimitOrder}
         market={market}
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}      
