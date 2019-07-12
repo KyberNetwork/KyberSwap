@@ -228,7 +228,7 @@ export function isEligibleAddress(addr) {
             .then((result) => {
                 if (result.success) {
                     const { eligible_address } = result;
-                    resolve(eligible_address);
+                    resolve(eligible_address ? true : false);
                 } else {
                     reject(new Error("Cannot validate eligible address"));
                 }
