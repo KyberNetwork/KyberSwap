@@ -774,8 +774,7 @@ export function calculateContractNonce(contractNonce, address) {
   const compare = minNonceBig.comparedTo(contractNonceBig);
   switch(compare) {
     case 0: 
-      const result = minNonceBig.plus(1);
-      return "0x" + result.toString(16);
+      return minNonce.substring(0, minNonce.length - 1) + "1";
     case 1: {
       return minNonce;
     }

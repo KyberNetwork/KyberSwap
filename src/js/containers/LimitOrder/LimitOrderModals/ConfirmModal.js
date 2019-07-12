@@ -77,7 +77,7 @@ export default class ConfirmModal extends React.Component {
             // nonceContract = converters.sumOfTwoNumber(nonceContract, 1)
             // nonceContract = converters.toHex(nonceContract)
 
-            const biggerContractNonce = converters.calculateContractNonce(nonceContract, this.props.account.address);
+            const biggerContractNonce = converters.calculateContractNonce(nonceContract, BLOCKCHAIN_INFO.kyberswapAddress);
 
             //get minimum nonce
             var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
