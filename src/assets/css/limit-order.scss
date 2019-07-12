@@ -695,9 +695,10 @@
         font-size: 10px;
         color: #EF8102;
         font-weight: bold;
+        transition: color .3s;
 
         &:hover {
-            color: #EF8102;
+            color: darken(#EF8102, 10%);
         }
 
         &::before {
