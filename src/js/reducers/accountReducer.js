@@ -81,13 +81,12 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       return {...newState};
     }
     case "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT":{
-      var oldState = {...state}
+      var newState = {...state}
       var address = action.payload
-      if ((oldState.account) && (oldState.account.address === address)){
-        var account = oldState.account.incManualNonce()
-        return {...state,
-          account: account}
+      if ((newState.account) && (newState.account.address.toLowerCase() === address.toLowerCase())){
+        newState.account = newState.account.incManualNonce()
       }
+      return newState
     }
     case "ACCOUNT.PKEY_CHANGE": {
       let newState = {...state}

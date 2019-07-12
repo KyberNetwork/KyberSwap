@@ -152,7 +152,9 @@ export default class WrapETHModal extends React.Component {
 
             var minConversionRate = converters.toHex(Math.pow(10, 18))
             var blockNo = constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-            var nonce = this.props.account.nonce
+            // var nonce = this.props.account.nonce
+            var nonce = this.props.account.getUsableNonce()
+
             var gas = this.props.limitOrder.max_gas
             var gasPrice =  converters.toHex(converters.gweiToWei(this.props.limitOrder.gasPrice))
             var keystring = this.props.account.keystring
@@ -222,7 +224,7 @@ export default class WrapETHModal extends React.Component {
 
                           <div className="message">
                               <span>{this.props.translate("limit_order.wrap_eth_notify") || "Your order can not be submited because your WETH is not enough, please convert ETH to WETH."}</span>
-                              <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.'} data-for="weth-tooltip" currentitem="false">
+                              <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.'} data-for="weth-tooltip" currentitem="false">
                                   <img src={require("../../../../assets/img/v3/info_grey.svg")} />
                               </span>
                               <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" place="left" />

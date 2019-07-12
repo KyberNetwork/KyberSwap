@@ -408,7 +408,7 @@
     "empty_order": "There is no order here yet. You can place one",
     "you_will_receive": "You will receive",
     "submit_successfully": "Your order have been submitted sucessfully to server. You can check the order in your order list.",
-    "weth_not_supported_tooltip": "Limit orders are supported only for token listed on Kyber. ETH is not supported, Please use WETH instead.",
+    "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
     "wrap_eth_modal_title": "Convert ETH to WETH",
     "login_to_submit": "Login to Submit Order",
     "submit": "Submit",

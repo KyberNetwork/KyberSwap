@@ -34,10 +34,10 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.5,
+        "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
-        "page_size": 50
+        "page_size": 5
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
@@ -675,7 +675,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "bank": "0x0",
     "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-    "kyberswapAddress": "0x52d35e8f0ffa18337b093aec3dfff40445d8f4f4",
+    "kyberswapAddress": "0xfdb8bfda2783563b1c24373270d3f2fe6bc18be5",
     "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "endpoint": "wss://mainnet.infura.io/ws",

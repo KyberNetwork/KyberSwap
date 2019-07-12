@@ -260,7 +260,7 @@ export function getUserStats() {
 
 export function getPendingBalances(address) {
     return new Promise((resolve, reject) => {
-        const balances = {};
+        /*const balances = {};
         data.forEach(item => {
             if ((item.status === LIMIT_ORDER_CONFIG.status.OPEN || item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) && (item.user_address.toLowerCase() === address.toLowerCase())) {
                 if (balances.hasOwnProperty(item.source)) {
@@ -270,9 +270,23 @@ export function getPendingBalances(address) {
                 }
             }
         });
-        console.log("balance__")
-        console.log(balances)
-        resolve(balances);
+        resolve(balances);*/
+
+      const pendingBalanceResponse = {
+        success: true,
+        data: {
+          "DAI": 3
+        },
+        pending_txs: [
+          {
+            "tx_hash": "0xcbeb1dace640a1bf857a8fce4e211806b686436e44f1d2331c7ccf3bbe6138e7",
+            "src_token": "DAI",
+            "src_amount": 2
+          }
+        ]
+      };
+
+      resolve(pendingBalanceResponse);
     });
 }
 
@@ -335,11 +349,11 @@ function changeState() {
             order.status = "in_progress";
             order.updated_at = new Date().getTime() / 1000;
         }, 10 * 1000);
-    
+
         setTimeout(() => {
             order.status = "filled";
             order.updated_at = new Date().getTime() / 1000;
         }, 20 * 1000);
     }
-    
+
 }

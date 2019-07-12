@@ -349,6 +349,13 @@
             "address": "0x0e953389a6002a2017d686ff9f448a1eab890d7b",
             "decimals": 18,
             "cg_id": "quadrant-protocol"
+        },
+        "BTU": {
+            "symbol": "BTU",
+            "name": "BTU Protocol",
+            "address": "0xfcd404ec70c662128d3a6bd508dfb3e598d79a0c",
+            "decimals": 18,
+            "cg_id": "btu-protocol"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

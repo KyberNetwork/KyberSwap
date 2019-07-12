@@ -117,7 +117,7 @@ export default class ConfirmModal extends React.Component {
 
             
             var feeInPrecision = this.state.fee
-            feeInPrecision = converters.toTWei(feeInPrecision, 2)
+            feeInPrecision = converters.toTWei(feeInPrecision, 4)
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
@@ -333,8 +333,10 @@ export default class ConfirmModal extends React.Component {
             </div>}
 
             {this.state.isFinish && <div className="limit-order-modal__success-msg">
-              <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
-              <span>{this.props.translate("modal.success") || "Success"}</span>
+              <div className={"limit-order-modal__success-text"}>
+                <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+                <span>{this.props.translate("modal.success") || "Success"}</span>
+              </div>
             </div>}
           </div>
       )

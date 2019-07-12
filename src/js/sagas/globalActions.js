@@ -208,25 +208,30 @@ export function* setGasPrice(action) {
   try {
     const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
 
-    safeLowGas = gasPrice.low
-    standardGas = gasPrice.standard
-    defaultGas = gasPrice.default
-    fastGas = gasPrice.fast
-    superFastGas = 2 * fastGas;
+    safeLowGas = converter.stringToNumber(gasPrice.low)
+    standardGas = converter.stringToNumber(gasPrice.standard)
+    defaultGas = converter.stringToNumber(gasPrice.default)
+    fastGas = converter.stringToNumber(gasPrice.fast)
+   
     
     var selectedGas = 's'
-    var fastGasFloat = parseFloat(fastGas)
 
-    if (fastGasFloat <= 20){
-      defaultGas = gasPrice.fast
+    superFastGas = 2 * fastGas;
+
+    if (fastGas <= 20){
+      defaultGas = fastGas
       selectedGas = 'f'
     }
 
-    if (fastGasFloat <= 10) {
+    if (fastGas <= 10) {
       superFastGas = 20;
     }
 
     if (superFastGas > maxGasPrice) superFastGas = maxGasPrice;
+    if (safeLowGas > maxGasPrice) safeLowGas = maxGasPrice;
+    if (standardGas > maxGasPrice) standardGas = maxGasPrice;
+    if (defaultGas > maxGasPrice) defaultGas = maxGasPrice;
+    if (fastGas > maxGasPrice) fastGas = maxGasPrice;
 
     yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas));
   }catch (err) {
