@@ -105,7 +105,7 @@ export default class LimitOrderList extends React.Component {
             </div>
             
           </div>
-          <div className="limit-order-list--table">
+          <div>
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
               screen="desktop"
