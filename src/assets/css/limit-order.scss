@@ -682,16 +682,33 @@
         }
 
         &-faq {
-            padding: 5px 20px;
-            border-radius: 3px;
-            background-color: #f5f6f8;
-
             a {
                 font-size: 10px;
                 font-weight: 500;
                 color: #666666;
-                text-decoration: none;
+                text-decoration: underline;
             }
+        }
+    }
+
+    &__leaderboard {
+        font-size: 10px;
+        color: #EF8102;
+        font-weight: bold;
+
+        &:hover {
+            color: #EF8102;
+        }
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 17px;
+            height: 16px;
+            background-image: url('../img/limit-order/leaderboard-crown.svg');
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
         }
     }
     
@@ -1107,6 +1124,11 @@
         @include screen-max-width(medium) {
             font-size: 20px;
         }
+    }
+
+    &__leaderboard {
+        margin: 5px 0 -20px;
+        display: block;
     }
 
     &__message {
