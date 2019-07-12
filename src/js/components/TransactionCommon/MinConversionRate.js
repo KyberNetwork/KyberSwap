@@ -18,21 +18,15 @@ export default class MinConversionRate extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      customSlippageRate: ''
-    }
   }
 
   onCustomSlippageRateChanged = (event) => {
     if (event.target.value > 100) event.target.value = 100;
 
-    const isNumberValid = filterInputNumber(event, event.target.value, this.state.customSlippageRate);
+    const isNumberValid = filterInputNumber(event, event.target.value, this.props.customRateInput.value);
 
     if (!isNumberValid) return;
 
-    this.setState({
-      customSlippageRate: event.target.value
-    });
 
     this.props.onSlippageRateChanged(event, true);
   }
@@ -48,11 +42,11 @@ export default class MinConversionRate extends React.Component {
   }
 
   render = () => {
-    const percent = Math.round(parseFloat(converter.caculatorPercentageToRate(this.props.minConversionRate, this.props.offeredRate)));
+    const percent = Math.round(parseFloat(converter.caculatorPercentageToRate(this.props.minConversionRate, this.props.expectedRate)));
     const displayMinRate = this.props.isSelectToken
       ? <img src={require('../../../assets/img/waiting.svg')} />
       : converter.roundingNumber(this.props.minConversionRate);
-    const exchangeRate = converter.toT(this.props.offeredRate);
+    const exchangeRate = converter.toT(this.props.expectedRate);
     const roundExchangeRate = converter.roundingNumber(exchangeRate);
     const slippageExchangeRate = converter.roundingNumber(exchangeRate * (percent / 100));
 
@@ -71,8 +65,8 @@ export default class MinConversionRate extends React.Component {
           <label className="advance-config__option">
             <span>3%</span>
             <input className="advance-config__radio" type="radio" name="slippageRate" value="97" 
-              defaultChecked
-              // checked={this.props.customRateInput.isDirty === false} 
+              // defaultChecked
+              checked={this.props.customRateInput.isSelected === false} 
               onChange={e => this.onChangeRateOption(e, false)}/>
             <span className="advance-config__checkmark"></span>
           </label>
@@ -83,11 +77,11 @@ export default class MinConversionRate extends React.Component {
           </label> */}
             <label className="advance-config__option advance-config__option--with-input">
               <span>{this.props.translate("transaction.custom") || "Custom"}: </span>
-              <input className="advance-config__radio" type="radio" name="slippageRate" value={this.state.customSlippageRate} 
-                // checked={this.props.customRateInput.isDirty}
+              <input className="advance-config__radio" type="radio" name="slippageRate" value={this.props.customRateInput.value} 
+                checked={this.props.customRateInput.isSelected === true} 
                 onChange={e => this.onChangeRateOption(e, true)}/>
               <span className="advance-config__checkmark"></span>
-              <input type="number" className={`advance-config__input ${isError ? "advance-config__input-error" : ""}`} value={this.state.customSlippageRate} min={0} max={100} onChange={this.onCustomSlippageRateChanged}/>
+              <input type="number" className={`advance-config__input ${isError ? "advance-config__input-error" : ""}`} value={this.props.customRateInput.value} min={0} max={100} onChange={this.onCustomSlippageRateChanged}/>
               <span className="advance-config__input--suffix">%</span>
               
               <div id="rate-input-error-trigger" className="advance-config__rate-input-error-trigger" data-tip data-event='click focus' data-for="rate-input-error" data-scroll-hide="false"></div>

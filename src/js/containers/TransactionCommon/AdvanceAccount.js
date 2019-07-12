@@ -61,7 +61,7 @@ export default class AdvanceAccount extends React.Component {
     }
 
     getWalletIconName = (type, walletName) => {
-        if (walletName === "PROMO CODE") {
+        if (walletName === "Promo Code") {
             return "promo_code";
         }
         return type;

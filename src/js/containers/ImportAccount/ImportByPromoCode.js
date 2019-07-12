@@ -31,10 +31,10 @@ export default class ImportByPromoCode extends React.Component {
               <div className="import-account__icon promo-code"/>
               <div>
                 <div className="import-account__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
-                <div className="import-account__desc">Access your Wallet</div>
+                <div className="import-account__desc">{this.props.translate("address.import_address") || "Access your Wallet"}</div>
               </div>
             </div>
-            <div className="import-account__block-right" onClick={this.openModal.bind(this)}>Enter</div>
+            <div className="import-account__block-right" onClick={this.openModal.bind(this)}>{this.props.translate("address.enter") || "Enter"}</div>
           </div>
         )}
       </div>

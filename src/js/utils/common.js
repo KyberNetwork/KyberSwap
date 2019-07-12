@@ -1,5 +1,6 @@
 import * as constants from '../services/constants';
 import * as bowser from 'bowser'
+import _ from "lodash";
 
 export function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -83,6 +84,7 @@ export function isAtSwapPage(path) {
     return regex.test(path);
 }
 
+
 export function getTokenPairFromRoute(path) {
     const regex = /^\/swap\/(\w+)-(\w+)/;
     const match = regex.exec(path);
@@ -155,15 +157,108 @@ export function getTokenBySymbol(tokens, symbol){
     document.body.appendChild(script);
   }
 
-export function getFormattedDate(date) {
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const day = date.getDate();
+export function getFormattedDate(value, isNumberForm = false) {
+    let date = value;
+    if (typeof value === "number") {
+      date = new Date(value*1000);
+    }
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let day = date.getDate();
+    if (day < 10) {
+        day = "0" + day;
+    }
     const month = months[date.getMonth()];
     const year = date.getFullYear();
+    if (isNumberForm) {
+        return `${year}${date.getMonth()}${day}`;
+    }
     return `${day} ${month} ${year}`;
 }
 
-export function isUserIsLogin() {    
-    var loginCookies = getCookie("signed_in")
-    return loginCookies === true || loginCookies === "true" ? true: false
+
+export function isUserLogin(){
+    //dummy data
+    if (process.env && process.env.integrate) {
+        var loginCookies = getCookie("signed_in")
+        return loginCookies === true || loginCookies === "true" ? true: false
+    }
+    return true
+}
+
+export function formatFractionalValue(input, decimal) {
+    let value = input;
+    if (typeof value === "number") {
+        value = value + "";
+    }
+    if (decimal <= 0) return value;
+
+    const arr = value.split(".");
+    if (arr.length > 1) {
+      if (arr[1].length > decimal) {
+        return `${arr[0]}.${arr[1].slice(0, decimal)}`
+      }
+    }
+    return value;
+}
+
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
+    var safeLowGas = parseFloat(safeLowGas)
+    var standardGas = parseFloat(standardGas)
+    var fastGas = parseFloat(fastGas)
+    var superFastGas = parseFloat(superFastGas)
+    var defaultGas = parseFloat(defaultGas)
+    var maxGas = parseFloat(maxGas)
+    if (superFastGas > maxGas) {
+        superFastGas = maxGas;
+    }
+
+    if (fastGas > maxGas) {
+        var returnSuggest = {}
+        returnSuggest.fastGas = maxGas
+        returnSuggest.standardGas = maxGas
+        returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
+        returnSuggest.defaultGas = maxGas
+        return returnSuggest
+    } else {
+        return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
+    }
+}
+
+export function findTokenBySymbol(tokens, symbol) {
+  return  tokens.find(token => {
+    return token.symbol === symbol;
+  });
+};
+
+export function calcInterval(selectedTimeFilter) {
+    let { interval, unit } = selectedTimeFilter;
+    if (unit === "day") {
+      interval = interval * 86400;
+    } else if (unit === "week") {
+      interval = interval * 604800;
+    } else if (unit === "month") {
+      interval = interval * 2629743;
+    }
+    return interval;
+}
+
+export function isArrayEqual(arrOne, arrTwo) {
+    const arrOneType = Object.prototype.toString.call(arrOne);
+    const arrTwoType = Object.prototype.toString.call(arrTwo);
+
+    // If not the same type
+    if (arrOneType !== arrTwoType) return false;
+
+    // If not an array
+    if (['[object Array]'].indexOf(arrOneType) < 0) return false;
+
+    if (arrOne.length !== arrTwo.length) return false;
+
+    const differences = _.difference(arrOne, arrTwo);
+
+    return differences.length === 0;
 }

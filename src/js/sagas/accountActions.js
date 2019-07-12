@@ -2,12 +2,13 @@ import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-sag
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
-import { fetchExchangeEnable } from "../actions/exchangeActions"
+import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
 import * as exchangeActions from "../actions/exchangeActions"
+import { getPendingBalancesComplete } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-
+import { subOfTwoNumber } from "../utils/converter"
 import {
   setRandomTransferSelectedToken,
   closeImportAccountTransfer
@@ -39,8 +40,13 @@ export function* updateAccount(action) {
 
 export function* updateTokenBalance(action) {
   try {
-    const { ethereum, address, tokens } = action.payload
-    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
+    const { ethereum, address, tokens } = action.payload;
+    const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
+    const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtSpecificBlock", address, tokens, latestBlock)
+
+    const limitOrder = store.getState().limitOrder;
+    yield call(processLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
+
     yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
@@ -48,6 +54,30 @@ export function* updateTokenBalance(action) {
   }
 }
 
+function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs, latestBlock) {
+  if (ethereum && pendingTxs.length <= 3) {
+    let isModified = false;
+
+    for (var i = 0; i < pendingTxs.length; i++) {
+      if (pendingTxs.status === 1) continue;
+
+      const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
+      console.log("tx_mined")
+      console.log(isTxMined)
+      console.log(latestBlock)
+      if (isTxMined) {
+        pendingTxs[i].status = 1;
+        isModified = true;
+      }
+    }
+
+    console.log(pendingTxs)
+      
+    if (isModified) {
+      yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
+    }
+  }
+}
 
 function* createNewAccount(address, type, keystring, ethereum, walletType, info){
   try{
@@ -96,70 +126,74 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    if (type === "promo"){
-      //promo token
-      var state = store.getState()
-      var exchange = state.exchange
-      const transfer = state.transfer;
-      var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
-      var promoToken = BLOCKCHAIN_INFO.promo_token
+    // if (type === "promo"){
+    //   //promo token
+    //   var state = store.getState()
+    //   var exchange = state.exchange
+    //   const transfer = state.transfer;
+    //   var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
+    //   var promoToken = BLOCKCHAIN_INFO.promo_token
 
-      if (promoToken && newTokens[promoToken]){
-        var promoAddr = newTokens[promoToken].address
-        var promoDecimal = newTokens[promoToken].decimals
-        yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
-        sourceToken = promoToken.toLowerCase()
-      }
-      var destToken = exchange.destTokenSymbol.toLowerCase()
-      if (info.destToken && newTokens[info.destToken]){
-        yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
-        destToken = info.destToken.toLowerCase()
+    //   if (promoToken && newTokens[promoToken]){
+    //     var promoAddr = newTokens[promoToken].address
+    //     var promoDecimal = newTokens[promoToken].decimals
+    //     yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
+    //     sourceToken = promoToken.toLowerCase()
+    //   }
+    //   var destToken = exchange.destTokenSymbol.toLowerCase()
+      
+    //   if (info.destToken && newTokens[info.destToken]){
+    //     yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
+    //     destToken = info.destToken.toLowerCase()
 
-        //select in transfer
-        yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
-      }
-      var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
-      path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      yield put.resolve(goToRoute(path))
+    //     //select in transfer
+    //     yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
+    //   }
+
+    //   var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
+    //   path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
+    //   yield put.resolve(goToRoute(path))
 
 
-      if (promoToken && newTokens[promoToken]){
-        var promoAddr = newTokens[promoToken].address
-        var promoDecimal = newTokens[promoToken].decimals
-        try{
-          var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
-          var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
-          yield put.resolve(exchangeActions.inputChange('source', balance))
-          yield put.resolve(exchangeActions.focusInput('source'));
-        }catch(e){
-          console.log(e)
-        }
-      }
+    //   if (promoToken && newTokens[promoToken]){
+    //     var promoAddr = newTokens[promoToken].address
+    //     var promoDecimal = newTokens[promoToken].decimals
+    //     try{
+    //       var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
+    //       var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
+    //       yield put.resolve(exchangeActions.inputChange('source', balance))
+    //       yield put.resolve(exchangeActions.focusInput('source'));
+    //     }catch(e){
+    //       console.log(e)
+    //     }
+    //   }
 
-      yield put(exchangeActions.setGasPriceSuggest({
-        ...exchange.gasPriceSuggest,
-        fastGas: exchange.gasPriceSuggest.fastGas + 2
-      }));
+    //   yield put(exchangeActions.setGasPriceSuggest({
+    //     ...exchange.gasPriceSuggest,
+    //     fastGas: exchange.gasPriceSuggest.fastGas + 2
+    //   }));
 
-      yield put(transferActions.setGasPriceSuggest({
-        ...transfer.gasPriceSuggest,
-        fastGas: transfer.gasPriceSuggest.fastGas + 2
-      }))
+    //   yield put(transferActions.setGasPriceSuggest({
+    //     ...transfer.gasPriceSuggest,
+    //     fastGas: transfer.gasPriceSuggest.fastGas + 2
+    //   }))
 
-      if (!transfer.isEditGasPrice) {
-        yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
-      }
+    //   if (!transfer.isEditGasPrice) {
+    //     yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
+    //   }
 
-      if (!exchange.isEditGasPrice) {
-        yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
-      }
-    } else {
-      yield put(setGasPrice());
-    }
+    //   if (!exchange.isEditGasPrice) {
+    //     yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
+    //   }
+    // } else {
+    //   yield put(setGasPrice());
+    // }
+
+    yield put(setGasPrice());
 
    // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account))
+    yield put(actions.importNewAccountComplete(account, walletName))
     if (isChangingWallet) yield put(closeChangeWallet())
 
     //track login wallet
@@ -169,29 +203,29 @@ export function* importNewAccount(action) {
     //   yield put(exchangeActions.fetchExchangeEnable())
     // }
 
-    if (screen === "exchange"){
-      yield put(closeImportAccountExchange())
-    }else{
-      yield put(closeImportAccountTransfer())
-    }
+    // if (screen === "exchange"){
+    //   yield put(closeImportAccountExchange())
+    // }else{
+    //   yield put(closeImportAccountTransfer())
+    // }
 
     // yield put(fetchExchangeEnable())
 
-    var maxCapOneExchange = "infinity"
-    try {
-      var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-      if (!result.error) {
-        maxCapOneExchange = result.cap
-      }
-    } catch(e) {
-      console.log(e)
-    }
-    yield put(setCapExchange(maxCapOneExchange))
+    // var maxCapOneExchange = "infinity"
+    // try {
+    //   var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+    //   if (!result.error) {
+    //     maxCapOneExchange = result.cap
+    //   }
+    // } catch(e) {
+    //   console.log(e)
+    // }
+    // yield put(setCapExchange(maxCapOneExchange))
 
-    if (+maxCapOneExchange == 0){
-      var linkReg = 'https://kybernetwork.zendesk.com'
-      yield put(thowErrorNotPossessKGt(translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
-    }
+    // if (+maxCapOneExchange == 0){
+    //   var linkReg = 'https://kybernetwork.zendesk.com'
+    //   yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
+    // }
 
     //update token and token balance
     var newTokens = {}
@@ -200,7 +234,7 @@ export function* importNewAccount(action) {
       newTokens[token.symbol] = token
     })
 
-    yield call(ethereum.fetchRateExchange)
+    // yield call(ethereum.fetchRateExchange)
 
     console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
@@ -261,11 +295,12 @@ export function* importMetamask(action) {
     yield put(actions.importNewAccount(
       address,
       "metamask",
-      web3Service,
+      web3Service.getWalletId(),
       ethereum,
       tokens,
       walletType,
-      metamask
+      metamask,
+      "Metamask"
     ))
   } catch (e) {
     console.log(e)

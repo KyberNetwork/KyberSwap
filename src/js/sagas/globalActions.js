@@ -2,6 +2,7 @@ import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effect
 import * as actions from '../actions/globalActions'
 import * as actionsExchange from '../actions/exchangeActions'
 import * as actionsTransfer from '../actions/transferActions'
+import * as actionsLimitOrder from "../actions/limitOrderActions";
 import * as actionsUtils from '../actions/utilActions'
 import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
@@ -170,54 +171,31 @@ export function* checkConnection(action) {
 }
 
 
-export function* setMaxGasPrice(action) {
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  try {
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-    yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
-  } catch (err) {
-    console.log(err)
-  }
-}
+// export function* setMaxGasPrice(action) {
+//   var state = store.getState()
+//   var ethereum = state.connection.ethereum
+//   try {
+//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+//     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
-export function* getMaxGasPrice(action){
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  try {
-    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-    var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-    return maxGasPriceGwei
-  } catch (err) {
-    console.log(err)
-    return 50
-  }
-}
+// export function* getMaxGasPrice(action){
+//   var state = store.getState()
+//   var ethereum = state.connection.ethereum
+//   try {
+//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
+//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
+//     return maxGasPriceGwei
+//   } catch (err) {
+//     console.log(err)
+//     return 50
+//   }
+// }
 
-
-function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
-  var safeLowGas = parseFloat(safeLowGas)
-  var standardGas = parseFloat(standardGas)
-  var fastGas = parseFloat(fastGas)
-  var superFastGas = parseFloat(superFastGas)
-  var defaultGas = parseFloat(defaultGas)
-  var maxGas = parseFloat(maxGas)
-  if (superFastGas > maxGas) {
-    superFastGas = maxGas;
-  }
-
-  if (fastGas > maxGas) {
-    var returnSuggest = {}
-    returnSuggest.fastGas = maxGas
-    returnSuggest.standardGas = maxGas
-    returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
-    returnSuggest.defaultGas = maxGas
-    return returnSuggest
-  } else {
-    return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
-  }
-}
 
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas, superFastGas
@@ -225,34 +203,37 @@ export function* setGasPrice(action) {
   var ethereum = state.connection.ethereum;
   var accountType = state.account.account.type;
 
-  var maxGasPrice = yield call(getMaxGasPrice)
+  var maxGasPrice = state.exchange.maxGasPrice
 
   try {
     const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
 
-    safeLowGas = gasPrice.low
-    standardGas = gasPrice.standard
-    defaultGas = gasPrice.default
-    fastGas = gasPrice.fast
-    superFastGas = 2 * fastGas;
+    safeLowGas = converter.stringToNumber(gasPrice.low)
+    standardGas = converter.stringToNumber(gasPrice.standard)
+    defaultGas = converter.stringToNumber(gasPrice.default)
+    fastGas = converter.stringToNumber(gasPrice.fast)
+   
     
     var selectedGas = 's'
-    var fastGasFloat = parseFloat(fastGas)
 
-    if (fastGasFloat <= 20){
-      defaultGas = gasPrice.fast
+    superFastGas = 2 * fastGas;
+
+    if (fastGas <= 20){
+      defaultGas = fastGas
       selectedGas = 'f'
     }
 
-    if (fastGasFloat <= 10) {
+    if (fastGas <= 10) {
       superFastGas = 20;
     }
 
-    yield put(actionsTransfer.setGasPriceTransferComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas))
+    if (superFastGas > maxGasPrice) superFastGas = maxGasPrice;
+    if (safeLowGas > maxGasPrice) safeLowGas = maxGasPrice;
+    if (standardGas > maxGasPrice) standardGas = maxGasPrice;
+    if (defaultGas > maxGasPrice) defaultGas = maxGasPrice;
+    if (fastGas > maxGasPrice) fastGas = maxGasPrice;
 
-    var gasExchange = getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGasPrice)
-    yield put(actionsExchange.setGasPriceSwapComplete(gasExchange.safeLowGas, gasExchange.standardGas, gasExchange.fastGas, gasExchange.superFastGas, gasExchange.defaultGas, selectedGas))
-
+    yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas));
   }catch (err) {
     console.log(err.message)
   }
@@ -296,6 +277,6 @@ export function* watchGlobal() {
   yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
 
 
-  yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
+  // yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
   yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)
 }
