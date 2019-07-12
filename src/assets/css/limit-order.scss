@@ -686,6 +686,10 @@
             border-radius: 3px;
             background-color: #f5f6f8;
 
+            &__no-bg {
+                background-color: transparent;
+            }
+
             a {
                 font-size: 10px;
                 font-weight: 500;
@@ -1122,7 +1126,7 @@
 
     &__faq {
         margin-bottom: 15px;
-        
+
         >a {
             font-size: 12px;
             font-weight: 500;
