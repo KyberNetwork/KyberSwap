@@ -113,11 +113,6 @@ export default class LimitOrderListModal extends Component {
 						<div className="limit-order-modal__close-wrapper"></div>
 					</div>
 					<div className="limit-order-modal__content">
-						<div className="limit-order-modal__faq">
-              <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
-                {this.props.translate("limit_order.wonder_why_order_not_filled")}
-              </a>
-            </div>
 						<div className="limit-order-list__filter-container">
 							<div className="limit-order-list__filter-container">
 								<ul className="filter">

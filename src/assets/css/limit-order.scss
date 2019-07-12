@@ -693,11 +693,13 @@
 
     &__leaderboard {
         font-size: 10px;
-        color: #EF8102;
+        color: #EF8102 !important;
         font-weight: bold;
+        transition: color .3s;
 
-        &:hover {
-            color: #EF8102;
+        &:hover,
+        &:active {
+            color: darken(#EF8102, 10%) !important;
         }
 
         &::before {
