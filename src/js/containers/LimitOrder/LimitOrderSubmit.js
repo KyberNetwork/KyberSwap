@@ -148,7 +148,16 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     // check address is eligible
-    const isEligible = await limitOrderServices.isEligibleAddress(this.props.account.address);
+    let isEligible = false;
+    try {
+      isEligible = await limitOrderServices.isEligibleAddress(this.props.account.address);
+    } catch (err) {
+      console.log(err);
+      var title = this.props.translate("error.error_occurred") || "Error occurred"
+      var content = err.toString();
+      this.props.dispatch(utilActions.openInfoModal(title, content));
+      return;
+    }
 
     if (!isEligible) {
       var title = this.props.translate("error.error_occurred") || "Error occurred"
