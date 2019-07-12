@@ -778,6 +778,11 @@ export function formatNumberByPrecision(number, precision = 4) {
   if (number === undefined) return;
 
   const amountBigNumber = new BigNumber(number);
+
+  if (amountBigNumber == 'NaN' || amountBigNumber == 'Infinity') {
+    return "0";
+  }
+
   const amountString = amountBigNumber.toFixed().toString();
   const indexOfDecimal = amountString.indexOf('.');
 
