@@ -32,9 +32,7 @@ export function calculateDest(source, rate, precision) {
   var dest = bigSource.times(bigRate).div(1000000000000000000)
 
   if (dest != 0 && precision) {
-    // console.log("precision")
-    // console.log(dest.toFixed(precision))
-    return dest.toPrecision(precision,0)
+    return formatNumberByPrecision(dest, precision);
   }
 
   return dest
@@ -56,8 +54,7 @@ export function caculateSourceAmount(destAmount, offeredRate, precision) {
   var result = bigDest.div(bigOfferedRate)
 
   if (precision) {
-    // return result.toFixed(precision)
-    return result.toPrecision(precision, 0)
+    return formatNumberByPrecision(result, precision);
   } else {
     return result.toString()
   }
@@ -76,7 +73,7 @@ export function caculateDestAmount(sourceAmount, offeredRate, precision) {
   var result = bigSource.times(bigOfferedRate)
 
   if (precision) {
-    return result.toPrecision(precision, 0)
+    return formatNumberByPrecision(result, precision);
   } else {
     return result.toString()
   }
@@ -775,4 +772,14 @@ export function displayNumberWithDot(num) {
     numDisplay = numDisplay.substring(0, NUM_DIGIT) + "..."
   }
   return numDisplay
+}
+
+export function formatNumberByPrecision(number, precision = 4) {
+  if (number === undefined) return;
+
+  const amountBigNumber = new BigNumber(number);
+  const amountString = amountBigNumber.toFixed().toString();
+  const indexOfDecimal = amountString.indexOf('.');
+
+  return indexOfDecimal !== -1 ? parseFloat(amountString.slice(0, indexOfDecimal + (precision + 1))) : parseFloat(amountString);
 }
