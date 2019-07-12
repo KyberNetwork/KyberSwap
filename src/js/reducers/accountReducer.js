@@ -1,13 +1,17 @@
 import {REHYDRATE} from 'redux-persist/lib/constants'
 import { clearInterval } from 'timers';
+import {cloneAccount} from "../services/accounts"
+
 
 const initState = {
   isStoreReady: false,
   account: false,
   loading: false,
   checkTimeImportLedger: false,
-  error: "",
-  showError: false,
+  error: {
+    error: "",
+    showError: false,
+  },
   pKey: {
     error: '',
     modalOpen: false
@@ -20,10 +24,17 @@ const initState = {
   isOnDAPP: false
 }
 
-const account = (state=initState, action) => {
-  switch (action.type) {  	
-    case REHYDRATE: {      
-      return {...state, isStoreReady: true}      
+const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
+  switch (action.type) {
+    case REHYDRATE: {
+      if (action.key === "account" && action.payload && action.payload.account != false) {
+        var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account
+        var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich)
+
+        return {...state, account: updatedAccount}
+      }
+
+      return {...state}
     }
     case "ACCOUNT.LOADING": {
       return {...state, loading: true}
@@ -35,7 +46,8 @@ const account = (state=initState, action) => {
       return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      return {...state, account: action.payload.account, loading: false, isStoreReady: true, walletName: action.payload.walletName}
+      const {account, walletName} = action.payload      
+      return {...state, account: account, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
       return {...state, loading: false}
@@ -43,11 +55,14 @@ const account = (state=initState, action) => {
     case "ACCOUNT.CLOSE_LOADING_IMPORT": {
       return {...state, loading: false}
     }
-    case "ACCOUNT.THROW_ERROR": {            
-      return {...state, error: action.payload, showError: true}
+    case "ACCOUNT.THROW_ERROR": { 
+      var error =    {
+        error: action.payload, showError: true
+      }
+      return {...state, error}
     }
     case "ACCOUNT.END_SESSION": {
-      return {...initState}
+      return JSON.parse(JSON.stringify(initState))
     }
     case "ACCOUNT.UPDATE_ACCOUNT_FULFILLED":{
       var oldState = {...state}
@@ -61,16 +76,17 @@ const account = (state=initState, action) => {
       
     } 
     case "ACCOUNT.CLOSE_ERROR_MODAL":{
-      return {...state, showError: false}
+      const newState = {...state};
+      newState.error.showError = false;
+      return {...newState};
     }
     case "ACCOUNT.INC_MANUAL_NONCE_ACCOUNT":{
-      var oldState = {...state}
+      var newState = {...state}
       var address = action.payload
-      if ((oldState.account) && (oldState.account.address === address)){
-        var account = oldState.account.incManualNonce()
-        return {...state,
-          account: account}
+      if ((newState.account) && (newState.account.address.toLowerCase() === address.toLowerCase())){
+        newState.account = newState.account.incManualNonce()
       }
+      return newState
     }
     case "ACCOUNT.PKEY_CHANGE": {
       let newState = {...state}
@@ -124,9 +140,9 @@ const account = (state=initState, action) => {
       newState.isGetAllBalance = true
       return newState
     }  
-    case "GLOBAL.CLEAR_SESSION_FULFILLED":{
-      let newState = {...initState}
-      return newState
+    case "GLOBAL.CLEAR_SESSION_FULFILLED":{      
+      var newState = JSON.parse(JSON.stringify(initState))    
+      return {...newState}      
     }
     case "ACCOUNT.SET_ON_DAPP": {
       let newState = {...state}

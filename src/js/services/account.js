@@ -1,5 +1,5 @@
 export default class Account {
-  constructor(address, type, keystring, walletType, info, balance = 0, nonce = 0, manualNonce = 0) {
+  constructor(address, type, keystring, walletType, info, balance = 0, nonce = 0, manualNonce = 0, maxCap = "infinity", rich= false) {
     this.address = address
     this.type = type
     this.keystring = keystring
@@ -8,12 +8,14 @@ export default class Account {
     this.manualNonce = manualNonce
     this.walletType = walletType
     this.info = info
+    this.maxCap = maxCap
+    this.rich = rich
   }
 
   shallowClone() {
     return new Account(
       this.address, this.type, this.keystring, this.walletType, this.info,
-      this.balance, this.nonce, this.manualNonce, this.event)
+      this.balance, this.nonce, this.manualNonce, this.maxCap, this.rich)
   }
 
   getUsableNonce() {
@@ -27,15 +29,15 @@ export default class Account {
     const _this = account ? account : this
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
-      resolve(acc)
-      // ethereum.call("getBalance", acc.address)
-      // .then((balance) => {
-      //   acc.balance = balance
-      //   resolve(acc)
-      // })
-      // .catch((err) => {
-      //   reject(err)
-      // })
+      // resolve(acc)
+      ethereum.call("getBalanceAtLatestBlock", acc.address)
+      .then((balance) => {
+        acc.balance = balance
+        resolve(acc)
+      })
+      .catch((err) => {
+        reject(err)
+      })
     })
 
     promise = promise.then((acc) => {
@@ -53,6 +55,24 @@ export default class Account {
         })
       })
     })
+
+    promise = promise.then((acc) => {
+      return new Promise((resolve, reject) => {
+        ethereum.call("getUserMaxCap", acc.address)
+        .then((result) => {
+          acc.maxCap = result.cap
+          acc.rich = result.rich
+          resolve(acc)
+        })
+        .catch((err) => {
+          console.log(err)
+          acc.maxCap = "infinity"
+          acc.rich = false          
+          resolve(acc)
+        })
+      })
+    })
+
     return promise
   }
 

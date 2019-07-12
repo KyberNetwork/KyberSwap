@@ -4,7 +4,7 @@ import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
 
-import {isUserIsLogin} from "../../../utils/common"
+import {isUserLogin} from "../../../utils/common"
 
 export default class CachedServerProvider extends React.Component {
     constructor(props) {
@@ -192,7 +192,7 @@ export default class CachedServerProvider extends React.Component {
 
 
     getInfo(infoObj) {
-        if(isUserIsLogin()){
+        if(isUserLogin()){
             var params = {tx_hash: infoObj.hash}
             fetch("/api/transactions", {
                 method: 'POST',
@@ -219,37 +219,37 @@ export default class CachedServerProvider extends React.Component {
 
 
 
-    getExchangeEnable(address) {
-        if (isUserIsLogin()){
-            return new Promise((resolve, rejected) => {
-                this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((result) => {
-                        resolve(result)                    
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        rejected(err)
-                    })
-            })
-        }else{
-            return new Promise((resolve, rejected) => {
-                this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((result) => {
-                        resolve(result)                    
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        rejected(err)
-                    })
-            })
-        }
-    }
+    // getExchangeEnable(address) {
+    //     if (isUserLogin()){
+    //         return new Promise((resolve, rejected) => {
+    //             this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+    //                 .then((response) => {
+    //                     return response.json()
+    //                 })
+    //                 .then((result) => {
+    //                     resolve(result)                    
+    //                 })
+    //                 .catch((err) => {
+    //                     console.log(err)
+    //                     rejected(err)
+    //                 })
+    //         })
+    //     }else{
+    //         return new Promise((resolve, rejected) => {
+    //             this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
+    //                 .then((response) => {
+    //                     return response.json()
+    //                 })
+    //                 .then((result) => {
+    //                     resolve(result)                    
+    //                 })
+    //                 .catch((err) => {
+    //                     console.log(err)
+    //                     rejected(err)
+    //                 })
+    //         })
+    //     }
+    // }
 
     getMarketData() {
         return new Promise((resolve, rejected) => {
@@ -357,7 +357,7 @@ export default class CachedServerProvider extends React.Component {
     }
 
     getUserMaxCap(address) {
-        if (isUserIsLogin()){
+        if (isUserLogin()){
             return new Promise((resolve, rejected) => {
                 this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
                     .then((response) => {
@@ -368,6 +368,10 @@ export default class CachedServerProvider extends React.Component {
                     })
                     .catch((err) => {
                         console.log(err)
+                        // resolve({
+                        //     cap: 100000000000000000,
+                        //     rich: false
+                        // })         
                         rejected(err)
                     })
             })

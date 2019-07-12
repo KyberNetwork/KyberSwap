@@ -1,5 +1,6 @@
 
 import Web3 from "web3"
+import * as ethUtil from 'ethereumjs-util'
 
 //import DappBrowser from "DappBrowser.js"
 import * as common from "../../../utils/common"
@@ -12,7 +13,7 @@ export default class DappBrowser {
     this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider)
     //for older verions of web3
     console.log("web3_v5")
-    if (this.web3 && this.web3.net && !this.web3.eth.net){
+    if (this.web3 && this.web3.net && !this.web3.eth.net) {
       this.web3.eth.net = this.web3.net
     }
     //console.log(this.web3)
@@ -26,7 +27,7 @@ export default class DappBrowser {
     return new Promise((resolve, reject) => {
       this.web3.eth.net.getId((error, result) => {
         if (error || !result) {
-          console.log(error)  
+          console.log(error)
           var error = new Error("Cannot get network id")
           reject(error)
         } else {
@@ -55,7 +56,7 @@ export default class DappBrowser {
           var error = new Error("Cannot get coinbase")
           reject(error)
         })
-       
+
       })
     } else {
       return new Promise((resolve, reject) => {
@@ -80,8 +81,8 @@ export default class DappBrowser {
     this.web3.eth.defaultAccount = address
   }
 
-  
-  getWalletId(blockNo){
+
+  getWalletId() {
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
       return web3.kyberID
     }
@@ -89,7 +90,25 @@ export default class DappBrowser {
     if (!verifyAccount(refAddr)) {
       return refAddr
     }
-    return constants.COMMISSION_ADDR
+    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
+  }
+
+  async sign(message) {
+    try{
+      var account = await this.getCoinbase(true)
+      var signature = await this.web3.eth.sign(message, account)
+
+      var {v, r, s} = ethUtil.fromRpcSig(signature)
+      r = ethUtil.bufferToHex(r)    
+      s = ethUtil.bufferToHex(s)    
+
+      signature = ethUtil.toRpcSig(v, r, s)
+
+      return signature
+    }catch(err){
+      console.log(err)
+      throw err
+    }
   }
 
 }

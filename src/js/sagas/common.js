@@ -1,6 +1,8 @@
 import { fork, call, put, join, race, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as constants from "../services/constants"
+
+import * as converters from "../utils/converter"
 import { store } from '../store'
 
 export function* handleRequest(sendRequest, ...args) {
@@ -41,3 +43,59 @@ export function* handleRequest(sendRequest, ...args) {
 	// }
 }
 
+
+
+export function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
+    var state = store.getState()
+    var tokens = state.tokens.tokens
+  
+    var sourceAmountHex = "0x0"
+    if (tokens[sourceTokenSymbol]) {
+      var decimals = tokens[sourceTokenSymbol].decimals
+      var rateSell = tokens[sourceTokenSymbol].rate
+      sourceAmountHex = converters.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
+    } else {
+      sourceAmountHex = converters.stringToHex(sourceAmount, 18)
+    }
+    return sourceAmountHex
+  }
+  
+  export function getSourceAmountZero(sourceTokenSymbol) {
+    var state = store.getState()
+    var tokens = state.tokens.tokens
+    var sourceAmountHex = "0x0"
+    if (tokens[sourceTokenSymbol]) {
+      var decimals = tokens[sourceTokenSymbol].decimals
+      var rateSell = tokens[sourceTokenSymbol].rate
+      sourceAmountHex = converters.toHex(converters.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
+    }
+    return sourceAmountHex
+  }
+
+export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
+  try {
+    const receipt = yield call([ethereum, ethereum.call], 'txMined', txHash);
+    if (!receipt) return false;
+
+    const logs = receipt.logs;
+    const blockNumber = receipt.blockNumber;
+    let isTopicValid = false;
+
+    if (!blockNumber || blockNumber > latestBlock) return false;
+
+    if (!logs.length) return false;
+
+    for (var i = 0; i < logs.length; ++i) {
+      if (logs[i].topics[0].toLowerCase() === tradeTopic.toLowerCase()) {
+        isTopicValid = true;
+        break;
+      }
+    }
+    console.log(receipt)
+    console.log(isTopicValid)
+    return isTopicValid;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}

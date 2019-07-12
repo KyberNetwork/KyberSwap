@@ -13,6 +13,7 @@
   },
   "address": {
     "address": "Адрес",
+    "add": "Add",
     "import_address": "Получите доступ к вашему кошельку",
     "exchange_from": "Обмен с",
     "my_balance": "Мой баланс",
@@ -26,9 +27,11 @@
     "download": "Download",
     "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
+    "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
     "your_wallet": "Your Wallet",
     "register_beta": "Скоро",
-    "or_connect_with": "Or Connect with"
+    "or_connect_with": "Or Connect with",
+    "enter": "Enter"
   },
   "transaction": {
     "wallet": "Wallet",
@@ -133,11 +136,14 @@
     "promo_expired_notification": "After swapping please transfer your token to your personal wallet before",
     "kyber_network_proxy": "Kyber Network Proxy",
     "please_swap_before": "Please swap before",
-    "please_swap_and_send_before": "Please swap and send to your personal wallet before"
+    "please_swap_and_send_before": "Please swap and send to your personal wallet before",
+    "limit_order": "Limit Order",
+    "rate_label":"Rate"
   },
   "modal": {
     "enter_password": "Введите пароль",
     "confirm": "Подтвердить",
+    "convert": "Convert",
     "import": "Импорт",
     "enter_password_placeholder": "Введите пароль кошелька для подтверждения",
     "select_hd_path": "Выберите путь установления HD",
@@ -163,7 +169,12 @@
     "approve": "Одобрить",
     "address": "Адрес",
     "approve_token": "Подтвердить токен",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "cancel_order": "Cancel Order",
+    "order_confirm": "Order Confirm",
+    "success": "Success",
+    "keystore_title": "Type password to unlock your keystore",
+    "unlock": "Unlock"
   },
   "error": {
     "metamask_not_installed": "Metamask не установлен",
@@ -233,7 +244,16 @@
     "invalid_promo_code": "Invalid promo code",
     "promo_code_error": "Promo code is empty",
     "percent_change_error": "There is a ${percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.",
-    "required_field": "This field is required"
+    "required_field": "This field is required",
+    "source_dest_token": "Source token must be different from dest token",
+    "amount_too_small": "Amount is too small. Limit order only support min ${minAmount} ETH equivalent order",
+    "amount_too_big": "Amount is too big. Limit order only support max ${maxAmount} ETH equivalent order",
+    "rate_is_not_number": "Trigger rate is not a number",
+    "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
+    "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
+    "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
+    "insufficient_balance": "Your balance is insufficient for transaction",
+    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -305,7 +325,8 @@
     "terms_and_condition": " Условия и положения ",
     "to_get_started": "чтобы начать",
     "description_term_swap": "By Swapping, you agree to the ${term}",
-    "description_term_transfer": "By Transfering, you agree to the ${term}"
+    "description_term_transfer": "By Transfering, you agree to the ${term}",
+    "description_term_limit_order": "By Ordering, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Децентрализованный обмен ETH",
@@ -351,6 +372,47 @@
     "sell_price": "Цена продажи",
     "mid": "Среднее",
     "mid_price": "Средняя цена"
+  },
+  "limit_order": {
+    "no_data_text": "You have no orders yet",
+    "cancel": "Cancel",
+    "date": "Date",
+    "pair": "Pair",
+    "pair_not_supported": "This pair is currently not supported by market",
+    "condition": "Condition", 
+    "from": "From",
+    "to": "To",
+    "status": "Status",
+    "actions": "Actions",
+    "order_list_title": "Manage Your Orders",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "your_address": "Your address:",
+    "your_balance": "Your balance:",
+    "submit_order": "Submit Order",
+    "your_available_balance": "Your Available Balance",
+    "eth_not_support": "ETH* is the combination of ETH and WETH",
+    "canceling_order_message": "You are canceling this order",
+    "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
+    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= ${rate}",
+    "fee": "Fee",
+    "change_rate": "Change Rate",
+    "current_rate": "Current Rate",
+    "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.",
+    "wrap_eth_notify": "Your order can not be submited because your WETH is not enough, please convert ETH to WETH.",
+    "empty_order": "There is no order here yet. You can place one",
+    "you_will_receive": "You will receive",
+    "submit_successfully": "Your order have been submitted sucessfully to server. You can check the order in your order list.",
+    "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
+    "wrap_eth_modal_title": "Convert ETH to WETH",
+    "login_to_submit": "Login to Submit Order",
+    "submit": "Submit",
+    "discount_message": "to discount 50% for 20 orders",
+    "higher_rate": "Your price is ${percentChange}% higher than current Market",
+    "lower_rate": "Your price is ${percentChange}% lower than current Market",
+    "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
+    "ineligible_address": "This address has been used by another account. Please place order with other address."
   },
   "home": "Домой",
   "tracker": "Трекер",

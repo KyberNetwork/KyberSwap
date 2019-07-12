@@ -8,6 +8,7 @@ import * as common from "../../utils/common"
 import { verifyAccount } from "../../utils/validators";
 import { Modal } from '../../components/CommonElement'
 import BLOCKCHAIN_INFO from "../../../../env"
+import { QRCode } from "../CommonElements";
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -36,7 +37,8 @@ export default class ImportByPromoCodeModal extends React.Component {
       captchaV: "",
       tokenCaptcha: "" ,
       isPassCapcha: false,
-      isCaptchaLoaded: false
+      isCaptchaLoaded: false,
+      promoCodeValue: ""
     }
   }
 
@@ -52,7 +54,7 @@ export default class ImportByPromoCodeModal extends React.Component {
   }
 
   closeModal() {
-    this.onPromoCodeChange();
+    this.resetPromo();
     const iframeEle = document.getElementById("g-recaptcha").querySelector("iframe");
     iframeEle.removeEventListener("load", () => {
       this.setState({
@@ -96,6 +98,16 @@ export default class ImportByPromoCodeModal extends React.Component {
           console.log(err)
           reject("Cannot get Promo code")
           this.resetCapcha()
+
+          // resolve({
+          //   privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
+          //   des_token: "KNC",
+          //   description: "abc",
+          //   type: "swap",
+          //   receiveAddr: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
+          //   expiredDate: 9959724909
+          // })
+
         })
     })
   }
@@ -171,7 +183,7 @@ export default class ImportByPromoCodeModal extends React.Component {
         "promo",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "PROMO CODE", info))
+        this.props.tokens, null, null, "Promo Code", info))
       this.setState({isLoading: false})
     }).catch(error => {
       this.setState({error: error, captchaV: (new Date).getTime()})
@@ -179,8 +191,20 @@ export default class ImportByPromoCodeModal extends React.Component {
     })
   }
 
-  onPromoCodeChange = () =>{
-    this.setState({errorPromoCode: "", error: ""})
+  resetPromo = () => {
+    this.setState({
+      errorPromoCode: "", 
+      error: "",
+      promoCodeValue: ""
+    });
+  }
+
+  onPromoCodeChange = (e) =>{
+    this.setState({
+      errorPromoCode: "", 
+      error: "",
+      promoCodeValue: e.target.value
+    });
   }
 
   nextToCapcha = (e) => {
@@ -198,11 +222,23 @@ export default class ImportByPromoCodeModal extends React.Component {
     this.props.analytics.callTrack("trackClickSubmitPromoCode");
   }
 
+  handleErrorQRCode = (err) => {
+    this.setState({
+      promoCodeValue: ""
+    });
+  }
+
+  handleScanQRCode = (data) => {
+    this.setState({
+      promoCodeValue: data
+    });
+  }
+
   render() {
     return (
       <div>
         <Modal
-          className={{ base: 'reveal medium promocode', afterOpen: 'reveal medium import-privatekey' }}
+          className={{ base: 'reveal medium promocode', afterOpen: 'reveal medium import-promocode' }}
           isOpen={this.props.account.promoCode.modalOpen}
           onRequestClose={this.closeModal.bind(this)}
           content={
@@ -213,7 +249,9 @@ export default class ImportByPromoCodeModal extends React.Component {
                   <div className="error">{this.state.error}</div>
                 )}
               </div>
-              <a className="x" onClick={this.closeModal.bind(this)}>&times;</a>
+              <a className="x" onClick={this.closeModal.bind(this)}>
+                <img src={require("../../../assets/img/v3/Close-3.svg")} />
+              </a>
               <div className="content with-overlap">
                 <div className="row">
                   <div className="column">
@@ -223,7 +261,8 @@ export default class ImportByPromoCodeModal extends React.Component {
                         <input
                           className="text-center" id="promo_code"
                           type="text"
-                          onChange={this.onPromoCodeChange.bind(this)}
+                          value={this.state.promoCodeValue}
+                          onChange={e => this.onPromoCodeChange(e)}
                           onKeyPress={this.nextToCapcha.bind(this)}
                           autoFocus
                           autoComplete="off"
@@ -232,7 +271,15 @@ export default class ImportByPromoCodeModal extends React.Component {
                           required
                           placeholder={this.props.translate("import.enter_promo_code") || "Enter your promocode here"}
                         />
+                        {common.isMobile.any() &&
+                          <QRCode 
+                            onError={this.handleErrorQRCode}
+                            onScan={this.handleScanQRCode}
+                            onDAPP={this.props.account.isOnDAPP}
+                          />
+                        }
                       </div>
+                      
                       {!!this.state.errorPromoCode &&
                       <span className="error-text">{this.state.errorPromoCode}</span>
                       }

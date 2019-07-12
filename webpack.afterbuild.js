@@ -5,12 +5,13 @@ console.log("+++++++++++++++++++++++")
 const fs = require('fs');
 const BUNDLE_NAME = process.env.BUNDLE_NAME || 'bundle'
 const chain = process.env.chain
+const buildFolder = process.env.folder
 
 var chain_folder = ""
-if (chain === 'production'){
+if (buildFolder === 'production'){
   chain_folder = ""
 }else{
-  chain_folder = "_" + chain
+  chain_folder = "_" + buildFolder
 }
 
 const file = `../app/views/swap/_index${chain_folder}.html.slim`
@@ -25,17 +26,31 @@ var now = new Date().getTime()
 
 let view = `
 - if browser.device.mobile? || cookies[:is_visited] == 'true'
-    link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
+    link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
     #swap-app onClick="animateSwap()"
         div style="text-align:center"
-            = render "server_rendering"    
+          - if request.path.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.path.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.path.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering"    
+          - else
+              = render "swap/server_rendering/swap_rendering" 
     script src="https://www.google.com/recaptcha/api.js"
-    script src="/swap/${chain}/app.min.js?v=${now}"
+    script src="/swap/${buildFolder}/app.min.js?v=${now}"
 - else 
-    link rel="stylesheet" href="/swap/${chain}/app.css?v=${now}" type="text/css"
+    link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
     #swap-app
-        div style="text-align:center" onClick="openSwap('${chain}', ${now})"
-            = render "server_rendering"    
+        div style="text-align:center" onClick="openSwap('${buildFolder}', ${now})"
+          - if request.path.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.path.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.path.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering"    
+          - else
+              = render "swap/server_rendering/swap_rendering"    
 `
 
 // let view = `

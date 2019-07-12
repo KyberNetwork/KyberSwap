@@ -37,8 +37,11 @@ export default class Tx {
         newTx.gas = receipt.gasUsed
         newTx.blockNumber = receipt.blockNumber
         var logs = receipt.logs
-        console.log("log_tx")
-        console.log(logs)
+
+        if (!receipt.blockNumber) {
+          resolve(newTx)          
+          return
+        }
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
             newTx.threw = true
