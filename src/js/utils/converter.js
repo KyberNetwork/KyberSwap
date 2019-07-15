@@ -785,14 +785,9 @@ export function calculateContractNonce(contractNonce, address) {
 
       if (diff.comparedTo(maxSuffixBig) < 0) {
         const suffix = diff.plus(1).toString(16);
-
-        if (suffix.length > 32) {
-          return minNonce.substring(0, 34) + suffix.substring(0, 32);
-        } else {
-          return minNonce.substring(0, 34) + "0".repeat(32).substring(0, 32 - suffix.length) + suffix;
-        }
+        return minNonce.substring(0, 34) + "0".repeat(32).substring(0, 32 - suffix.length) + suffix;
       } else {
-        throw new Error("Invalid nonce");
+        throw new Error("Cannot find a nonce, that is greater than nonce from the smartcontract.");
       }
     }
     default: {
