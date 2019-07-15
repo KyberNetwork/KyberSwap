@@ -1,16 +1,5 @@
-
-
-
-//import {DappBrowser} from "./DappBrowser"
-// import {ModernMetamaskBrowser} from "./ModernMetamaskBrowser"
-// import {MetamaskBrowser} from "MetamaskBrowser.js"
-// import {TrustBrowser} from "./TrustBrowser"
-// import {CipherBrowser} from "./CipherBrowser"
-
-
 import * as common from "../../utils/common"
 import * as dapp from "./dapp"
-
 
 export function newWeb3Instance(){
     var type = getWeb3Type()
@@ -28,6 +17,12 @@ export function newWeb3Instance(){
         case "metamask":
             web3Instance = new dapp.MetamaskBrowser()
             break
+        case "im_token":
+            web3Instance = new dapp.ImTokenBrowser()
+            break
+        case "alpha_wallet":
+            web3Instance = new dapp.AlphaWalletBrowser()
+            break
         case "dapp":
         case "unknown":
             web3Instance = new dapp.DappBrowser()
@@ -39,14 +34,9 @@ export function newWeb3Instance(){
             web3Instance = false
             break
     }
-    // alert(type)
-    // console.log("web3_type")
-    // console.log(type)
+
     return web3Instance
-}   
-
-
-
+}
 
 function getWeb3Type(){
     if (window.web3){
@@ -61,6 +51,12 @@ function getWeb3Type(){
         }
         if ((!!window.__CIPHER__) && (window.web3.currentProvider && window.web3.currentProvider.constructor && window.web3.currentProvider.constructor.name === "CipherProvider")) {
             return "cipher"
+        }
+        if (!!window.imToken || window.ethereum.isImToken) {
+            return "im_token"
+        }
+        if (window.web3.currentProvider && window.web3.currentProvider.isAlphaWallet === true) {
+            return "alpha_wallet"
         }
         if (window.web3.isDAppBrowser && window.web3.isDAppBrowser()) {
             return "dapp"
