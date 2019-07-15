@@ -208,7 +208,7 @@ export default class LimitOrderForm extends React.Component {
 
     const tableComp = higherRateOrders.map(item => {
       const datetime = common.getFormattedDate(item.updated_at);
-      const rate = converters.roundingNumber(item.min_rate);
+      const rate = converters.roundingRateNumber(item.min_rate);
       return (
         <div key={item.id} className="rate-warning-tooltip__order">
           <div>{datetime}</div>
