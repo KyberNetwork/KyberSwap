@@ -758,6 +758,44 @@ export function calculateMinNonce(address) {
   return addrFactor.toLowerCase() + "00000000000000000000000000000000"
 }
 
+/**
+ * Find nonce in format which bigger than contract nonce, even though contract nonce is in correct format or not.
+ * @param String contractNonce: Nonce in number format
+ * @param String address: 
+ * 
+ * Return Nonce in hex format
+ */
+export function calculateContractNonce(contractNonce, address) {
+  const minNonce = calculateMinNonce(address);
+  const minNonceBig = new BigNumber(minNonce);
+
+  const contractNonceBig = new BigNumber(contractNonce);
+
+  const compare = minNonceBig.comparedTo(contractNonceBig);
+  switch(compare) {
+    case 0: 
+      return minNonce.substring(0, minNonce.length - 1) + "1";
+    case 1: {
+      return minNonce;
+    }
+    case -1: {
+      const diff = contractNonceBig.minus(minNonceBig);
+      const maxSuffix = "0x" + "f".repeat(32);
+      const maxSuffixBig = new BigNumber(maxSuffix);
+
+      if (diff.comparedTo(maxSuffixBig) < 0) {
+        const suffix = diff.plus(1).toString(16);
+        return minNonce.substring(0, 34) + "0".repeat(32).substring(0, 32 - suffix.length) + suffix;
+      } else {
+        throw new Error("Cannot find a nonce, that is greater than nonce from the smartcontract.");
+      }
+    }
+    default: {
+      throw new Error("Invalid nonce");
+    }
+  }
+}
+
 export function findMaxNumber(arr) {
   console.log(arr)
   if (arr.length === 0) return false

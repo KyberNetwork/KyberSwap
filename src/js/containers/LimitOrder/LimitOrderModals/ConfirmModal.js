@@ -74,12 +74,15 @@ export default class ConfirmModal extends React.Component {
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
             console.log(concatTokenAddresses)
             var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
-            nonceContract  = converters.sumOfTwoNumber(nonceContract, 1)
-            nonceContract = converters.toHex(nonceContract)
+            // nonceContract = converters.sumOfTwoNumber(nonceContract, 1)
+            // nonceContract = converters.toHex(nonceContract)
+
+            const biggerContractNonce = converters.calculateContractNonce(nonceContract, BLOCKCHAIN_INFO.kyberswapAddress);
+
             //get minimum nonce
             var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
             
-            var validNonce = converters.findMaxNumber([nonceServer, nonceContract, minNonce])
+            var validNonce = converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
             return validNonce
         }catch(err){
             console.log(err)
