@@ -274,6 +274,7 @@ export function weiToGwei(number) {
 }
 
 export function toT(number, decimal, round) {
+  BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
   var bigNumber = new BigNumber(number.toString())
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -411,7 +412,7 @@ export function roundingNumber(number) {
   number = +number;
   let numberStr = number.toString();
   if (isNaN(number) || number <= 0) number = 0;
-  if (number < 1e-7) number = 0;
+  if (number < 1e-9) number = 0;
   if (('' + Math.floor(number)).length >= MAX_DIGIS) {
     return Math.floor(number).toLocaleString();
   }
@@ -427,8 +428,19 @@ export function roundingNumber(number) {
 
   let minDisplay = MAX_DIGIS - count_0 < 4 ? 4 : MAX_DIGIS - count_0
 
-  let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS);
-  precision = (precision * 1).toString();
+  // let precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS);
+  // precision = (precision * 1).toString();
+
+  let precision
+
+  const numBig = new BigNumber(number);
+
+  if (numBig.comparedTo(0) > 0 && numBig.comparedTo(0.0001) < 0) {
+    precision = new BigNumber(number).toPrecision(4)
+  } else {
+    precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS);
+    precision = (precision * 1).toString();
+  }
 
   let arr = precision.split('.'),
     intPart = arr[0],
