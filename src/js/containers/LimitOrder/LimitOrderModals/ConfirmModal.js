@@ -177,6 +177,11 @@ export default class ConfirmModal extends React.Component {
                 showErr = "Signature is invalid. There is a possibility that you have signed the message with a Hardware wallet plugged in Metamask. Please try to import a Hardware Wallet to KyberSwap and resubmit the order."
             }
 
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+              && this.props.account.type === "metamask" && this.props.isOnDAPP){
+                showErr = "Couldn't validate your signature. Your wallet might not be supported yet."
+            }
+
             this.setState({
               err: showErr,
               isConfirming: false,
