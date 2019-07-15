@@ -450,7 +450,7 @@ export function roundingRateNumber(number) {
   number = +number;
   let numberStr = number.toString();
   if (isNaN(number) || number <= 0) number = 0;
-  if (number < 1e-9) number = 0;
+  if (number < 1e-18) number = 0;
   if (('' + Math.floor(number)).length >= MAX_DIGIS) {
     return Math.floor(number).toLocaleString();
   }
