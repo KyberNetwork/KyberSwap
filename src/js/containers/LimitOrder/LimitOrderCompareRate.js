@@ -46,7 +46,7 @@ export default class LimitOrderCompareRate extends React.Component {
         <div className={"limit-order-compare-rate"}>
           <div className={"limit-order-compare-rate__text"}>
             <span>{this.props.translate("limit_order.current_rate") || "Current Rate"}:</span>{' '}
-            <span className="rate">1 {srcTokenSymbol} = {converters.roundingNumber(expectedRate)} {destTokenSymbol}</span>
+            <span className="rate">1 {srcTokenSymbol} = {converters.roundingRateNumber(expectedRate)} {destTokenSymbol}</span>
           </div>
 
           {percentChange > 0 && (

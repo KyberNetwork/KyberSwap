@@ -125,10 +125,12 @@ export default class ConfirmModal extends React.Component {
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
             // console.log("limit_order_sg")
+            // console.log("---Sign Data---")
             // console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
-            console.log(signature)
+            // console.log("---SIGNATURE---")
+            // console.log(signature)
             
             // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
@@ -259,9 +261,9 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
-                    rate: converters.roundingNumber(this.props.limitOrder.triggerRate)
+                    rate: converters.roundingRateNumber(this.props.limitOrder.triggerRate)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingNumber(this.props.limitOrder.triggerRate)}`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)}`
                   }
                 </div>
                 <div className="limit-order-modal__pair">
@@ -289,7 +291,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                       </div>
                     </div>
                   </div>

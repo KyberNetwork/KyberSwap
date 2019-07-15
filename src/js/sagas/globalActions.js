@@ -99,7 +99,7 @@ function updateTitleWithRate() {
         // 1 token = 1 / rateEth (Eth)
         const rateEth = converter.convertBuyRate(state.tokens.tokens[destTokenSymbol].rateEth);
         if (rateEth != 0) {
-          title = `${converter.roundingNumber(rateEth)} ${title}`;
+          title = `${converter.roundingRateNumber(rateEth)} ${title}`;
         }
       } else {
         // 1 src token = rate src token * rateEth dest token
@@ -107,7 +107,7 @@ function updateTitleWithRate() {
         const rateEthToDest = converter.toT(state.tokens.tokens[destTokenSymbol].rateEth);
         const rate = rateSourceToEth * rateEthToDest;
         if (rate != 0) {
-          title = `${converter.roundingNumber(rate)} ${title}`;
+          title = `${converter.roundingRateNumber(rate)} ${title}`;
         }
       }
     } 

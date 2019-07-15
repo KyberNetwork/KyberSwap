@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
+import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -184,7 +184,7 @@ export default class LimitOrderTable extends Component {
     const { screen } = this.props;
 
     const datetime = updated_at;
-    const rate = roundingNumber(min_rate);
+    const rate = roundingRateNumber(min_rate);
 
     if (screen === "mobile") {
       return (
@@ -323,7 +323,7 @@ export default class LimitOrderTable extends Component {
   getOrderDetail = (row) => {
     const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
 
-    const rate = roundingNumber(min_rate);
+    const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
 
