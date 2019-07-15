@@ -1,8 +1,5 @@
-
 import Web3 from "web3"
 import * as ethUtil from 'ethereumjs-util'
-
-//import DappBrowser from "DappBrowser.js"
 import * as common from "../../../utils/common"
 import { verifyAccount } from "../../../utils/validators"
 import * as converters from "../../../utils/converter"
@@ -16,7 +13,6 @@ export default class DappBrowser {
     if (this.web3 && this.web3.net && !this.web3.eth.net) {
       this.web3.eth.net = this.web3.net
     }
-    //console.log(this.web3)
   }
 
   getWalletType = () => {
@@ -70,8 +66,6 @@ export default class DappBrowser {
             resolve(result[0])
           }
         })
-
-
       })
     }
   }
@@ -94,9 +88,13 @@ export default class DappBrowser {
   }
 
   async sign(message) {
-    try{
+    try {
       var account = await this.getCoinbase(true)
-      var signature = await this.web3.eth.sign(message, account)
+
+      let messageWithPrefix = ethUtil.hashPersonalMessage(ethUtil.toBuffer(message))
+      messageWithPrefix = ethUtil.addHexPrefix(messageWithPrefix.toString('hex'))
+
+      var signature = await this.web3.eth.sign(messageWithPrefix, account)
 
       var {v, r, s} = ethUtil.fromRpcSig(signature)
       r = ethUtil.bufferToHex(r)    
@@ -105,10 +103,9 @@ export default class DappBrowser {
       signature = ethUtil.toRpcSig(v, r, s)
 
       return signature
-    }catch(err){
+    } catch(err) {
       console.log(err)
       throw err
     }
   }
-
 }

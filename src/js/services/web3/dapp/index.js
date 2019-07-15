@@ -1,11 +1,7 @@
-
-
 export { default as DappBrowser } from './DappBrowser.js'
-
 export { default as CipherBrowser } from './CipherBrowser.js'
-
 export { default as MetamaskBrowser } from './MetamaskBrowser.js'
-
 export { default as ModernMetamaskBrowser } from './ModernMetamaskBrowser.js'
-
 export { default as TrustBrowser } from './TrustBrowser.js'
+export { default as ImTokenBrowser } from './ImTokenBrowser.js'
+export { default as AlphaWalletBrowser } from './AlphaWalletBrowser.js'

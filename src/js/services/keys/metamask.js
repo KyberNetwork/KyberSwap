@@ -1,20 +1,15 @@
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import {newWeb3Instance} from "../web3"
-
 import * as ethUtils from "ethereumjs-util"
+
 export default class Metamask {
 
   async signSignature(message, account) {
     try {      
       var web3Service = newWeb3Instance()
-      var prefixHash = ethUtils.hashPersonalMessage(ethUtils.toBuffer(message))
-      prefixHash = ethUtils.addHexPrefix(prefixHash.toString('hex'))      
+      var signature = await web3Service.sign(message)
 
-      console.log("prefix_hash")
-      console.log(prefixHash)
-      
-      var signature = await web3Service.sign(prefixHash)      
       return signature
     }catch(err){
       console.log(err)
