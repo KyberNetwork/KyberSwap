@@ -6,7 +6,7 @@ import ReactTable from "react-table";
 import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import { getFormattedDate } from "../../../utils/common";
-import { roundingNumber, multiplyOfTwoNumber, formatNumber } from "../../../utils/converter";
+import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../../utils/converter";
 import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 
@@ -89,7 +89,7 @@ export default class CancelOrderModal extends Component {
 
 	getConditionCell = props => {
 		const { source, dest, min_rate } = props;
-		let rate = roundingNumber(min_rate);
+		let rate = roundingRateNumber(min_rate);
 		return (
 			<div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
 		);
@@ -189,7 +189,7 @@ export default class CancelOrderModal extends Component {
 		}
 		const { source, dest, min_rate, status, updated_at, src_amount, fee } = this.props.order;
 
-		const rate = roundingNumber(min_rate);
+		const rate = roundingRateNumber(min_rate);
 		const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
 

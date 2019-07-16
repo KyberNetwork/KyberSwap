@@ -90,7 +90,7 @@ const limitOrder = (state = initState, action) => {
       newState.blockNo = blockNo
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
-        newState.triggerRate = converter.roundingNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
+        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
         newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 4)  
       }
 
