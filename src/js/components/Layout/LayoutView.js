@@ -29,7 +29,7 @@ function getAllPathToken(listToken){
 
 function getAllPathLimitOrderToken(listToken){
   var tokens = []
-  const now = Math.round(new Date().getTime() / 1000);
+  const now = common.getNowTimeStamp();
 
   Object.keys(listToken).map(key => {
     const lodListingTime = listToken[key].lod_listing_time;

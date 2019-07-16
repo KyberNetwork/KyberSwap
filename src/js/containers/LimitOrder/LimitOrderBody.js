@@ -38,7 +38,7 @@ export default class LimitOrderBody extends React.Component {
   }
 
   getTokenListWithoutEthAndWeth = (tokens) => {
-    const now = Math.round(new Date().getTime() / 1000);
+    const now = common.getNowTimeStamp();
 
     return tokens.filter(token => {
       return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken &&
