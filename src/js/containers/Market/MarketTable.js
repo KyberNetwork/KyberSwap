@@ -182,17 +182,17 @@ export default class MarketTable extends React.Component {
       )
     }     
   }
-  formatNumber = (number) => {
+  formatNumber = (number, groupSeparator = '') => {
     if (number > 1000) {
-      return converters.formatNumber(number, 0)
+      return converters.formatNumber(number, 0, groupSeparator)
     }
     return number
   }
 
-  addUnit = (input, currency) => {
+  addUnit = (input, currency, groupSeparator = '') => {
     return (
       <div className="symbol-price">
-        <span className="value">{input === 0 ? "---" : this.formatNumber(input)}</span>
+        <span className="value">{input === 0 ? "---" : this.formatNumber(input, groupSeparator)}</span>
         <span className="unit">{input === 0 ? '' : currency}</span>
       </div>
     )
@@ -472,7 +472,7 @@ export default class MarketTable extends React.Component {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  Cell: props => this.addUnit(props.value, this.props.currency),
+                  Cell: props => this.addUnit(props.value, this.props.currency, ','),
                   minWidth: 150,
                   getHeaderProps: () => {
                     return {
