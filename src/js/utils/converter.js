@@ -622,24 +622,25 @@ export function percentChange(newPrice, oldPrice) {
   return roundPercent
 }
 
-export function formatNumber(number, round = false, groupSeparator = ',') {
+export function formatNumber(number, round = null, groupSeparator = '') {
   var format = {
     decimalSeparator: '.',
-    // groupSeparator: groupSeparator,
+    groupSeparator: groupSeparator,
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
   var numberStr = number.toString()
   var numberFormat = new BigNumber(numberStr.replace(",",""))
+
   if (numberFormat == 'NaN' || numberFormat == 'Infinity') {
     return "0";
   }
 
-  if (round !== false) {
-    return +numberFormat.toFormat(round)
+  if (groupSeparator !== '' && isNaN(numberFormat.toFormat())) {
+    return numberFormat.toFormat(round);
+  } else {
+    return +numberFormat.toFormat(round);
   }
-
-  return +numberFormat.toFormat();
 }
 
 export function caculatorPercentageToRate(number, total) {
