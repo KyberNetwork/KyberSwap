@@ -29,8 +29,12 @@ function getAllPathToken(listToken){
 
 function getAllPathLimitOrderToken(listToken){
   var tokens = []
+  const now = Math.round(new Date().getTime() / 1000);
+
   Object.keys(listToken).map(key => {
-    if (listToken[key].sp_limit_order){
+    const lodListingTime = listToken[key].lod_listing_time;
+
+    if (listToken[key].sp_limit_order && (!lodListingTime || now >= lodListingTime)) {
       tokens.push(key)
     }
   })
