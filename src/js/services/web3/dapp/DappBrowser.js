@@ -102,10 +102,6 @@ export default class DappBrowser {
   async sign(message) {
     try {
       var account = await this.getCoinbase(true)
-      // let messageWithPrefix = ethUtil.hashPersonalMessage(ethUtil.toBuffer(message))
-      // messageWithPrefix = ethUtil.addHexPrefix(messageWithPrefix.toString('hex'))
-
-      // signature = await this.web3.eth.sign(messageWithPrefix, account)
       
       let signature = await this.personalSign(message, account);
       
