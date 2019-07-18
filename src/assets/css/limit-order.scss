@@ -667,8 +667,7 @@
             font-weight: 600;
 
             @include screen-max-width(medium) {
-                font-size: 14px;
-                text-decoration: underline;
+                font-size: 20px;
                 cursor: pointer;
             }
         }
@@ -762,6 +761,12 @@
         grid-gap: 10px;
         position: relative;
 
+        @include screen-max-width(medium) {
+            margin-top: 15px;
+            width: 100%;
+            grid-template-columns: 85px 85px;
+        }
+
         &::after {
             content: "";
             height: 1px;
@@ -780,6 +785,10 @@
         cursor: pointer;
         position: relative;
         text-align: center;
+
+        @include screen-max-width(medium) {
+            text-align: left;
+        }
 
         &--active {
             font-weight: 600 !important;
@@ -1173,8 +1182,8 @@
     }
 
     &__leaderboard {
-        margin: 5px 0 -20px;
-        display: block;
+        position: relative;
+        top: -8px;
     }
 
     &__message {
