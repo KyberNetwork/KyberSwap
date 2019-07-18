@@ -77,14 +77,14 @@ export default class LimitOrderCompareRate extends React.Component {
             </div>
           )}
 
-          {triggerRate > 0 &&
+          {/*{triggerRate > 0 &&
             <div>
               {this.props.translate("limit_order.execute_rate", {
                 tokenPair: `${srcTokenSymbol}/${destTokenSymbol}`,
                 executeRate: executeRate,
               }) || `Your order will be executed when ${tokenPair} hits ${executeRate} (1% higher)`}
             </div>
-          }
+          }*/}
         </div>
       )
     }
