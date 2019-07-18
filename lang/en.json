@@ -420,7 +420,9 @@
     "fetch_fee_err": "Cannot get fee.",
     "view_tx": "View tx",
     "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:",
-    "wonder_why_order_not_filled": "Wonder why your orders are not filled?"
+    "wonder_why_order_not_filled": "Wonder why your orders are not filled?",
+    "open_orders": "Open Orders",
+    "order_history": "Order History"
   },
   "home": "Home",
   "tracker": "Tracker",

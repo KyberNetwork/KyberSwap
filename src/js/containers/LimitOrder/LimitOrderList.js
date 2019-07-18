@@ -82,6 +82,28 @@ export default class LimitOrderList extends React.Component {
     })
   }
 
+  onChangeOrderTab = (activeOrderTab) => {
+    this.props.dispatch(limitOrderActions.changeOrderTab(activeOrderTab));
+  }
+
+  getOrderTabs = () => {
+    const { activeOrderTab } = this.props.limitOrder;
+    const tab = ["open", "history"];
+
+    return tab.map((item, index) => {
+      let className = item === activeOrderTab ? "limit-order-list__tab--active" : "";
+
+      return (
+        <div key={item} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
+          {item === "open" && 
+            (this.props.translate("limit_order.open_orders") || "Open Orders")}
+          {item === "history" && 
+            (this.props.translate("limit_order.order_history") || "Order History")}
+        </div>
+      )
+    });
+  }
+
   render() {
     return (
       <div className={`limit-order-list ${this.props.limitOrder.listOrder.length === 0 ? "limit-order-list--empty" : ""}`}>
@@ -98,10 +120,13 @@ export default class LimitOrderList extends React.Component {
             <a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
               Limit Order LeaderBoard
             </a>
-            <div className="limit-order-list__filter-container">
+            {/* <div className="limit-order-list__filter-container">
               <ul className="filter">
                 {this.getTimeFilter()}
               </ul>
+            </div> */}
+            <div className="limit-order-list__tab-container">
+              {this.getOrderTabs()}
             </div>
             
           </div>

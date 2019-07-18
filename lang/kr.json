@@ -418,7 +418,9 @@
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
     "view_tx": "트랜잭션 보기",
     "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",
-    "wonder_why_order_not_filled": "왜 주문이 실행되지 않았나요?"
+    "wonder_why_order_not_filled": "왜 주문이 실행되지 않았나요?",
+    "open_orders": "오픈 상태의 오더",
+    "order_history": "오더 내역"
   },
   "home": "홈",
   "tracker": "트래커",
