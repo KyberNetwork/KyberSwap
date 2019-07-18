@@ -52,10 +52,10 @@ export function fetchFee(userAddr, src, dest, srcAmount, destAmount, shouldLoadi
   }
 }
 
-export function fetchFeeComplete(fee, err = null) {
+export function fetchFeeComplete(fee, feeAfterDiscount, discountPercentage, err = null) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE_COMPLETE",
-    payload: { fee, err }
+    payload: { fee, feeAfterDiscount, discountPercentage, err }
   }
 }
 

@@ -157,8 +157,11 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
-                    const fee = multiplyOfTwoNumber(result.fee, 100);
-                    resolve(fee);
+                  if (validateGetFeeResult(result)) {
+                    resolve(result);
+                  } else {
+                    rejected("There is something wrong with rate API")
+                  }
                 } else {
                     rejected(result.message)
                 }
@@ -170,6 +173,17 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     })
 }
 
+function validateGetFeeResult(result) {
+  let nonDiscountFee = result.non_discounted_fee;
+  let fee = result.fee;
+  let discountPercent = result.discount_percent;
+
+  if (!nonDiscountFee || typeof nonDiscountFee !== 'number' || !fee || typeof fee !== 'number' || !discountPercent || typeof discountPercent !== 'number' || fee > nonDiscountFee) {
+    return false
+  }
+
+  return true
+}
 
 export function getOrdersByIdArr(idArr) {
     return new Promise((resolve, rejected) => {

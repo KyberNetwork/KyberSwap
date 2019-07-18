@@ -114,10 +114,14 @@ const limitOrder = (state = initState, action) => {
       return newState
     }
     case "LIMIT_ORDER.FETCH_FEE_COMPLETE":{
-      const {fee, err} = action.payload
+      const {fee, feeAfterDiscount, discountPercentage, err} = action.payload
+
       newState.orderFee = fee
+      newState.orderFeeAfterDiscount = feeAfterDiscount
+      newState.orderFeeDiscountPercentage = discountPercentage
       newState.orderFeeErr = err ? err : ""
       newState.isFetchingFee = false
+
       return newState
     }
 

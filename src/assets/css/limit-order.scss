@@ -592,14 +592,40 @@
     color: #666666;
     font-weight: 500;
 
-    &__text {
-        font-weight: 600;
-        color: #666666;
-        margin-bottom: 9px;
+    &__item {
+        display: flex;
+        position: relative;
+        margin-bottom: 3px;
+        align-items: center;
+
+        &-title {
+            width: 100px;
+        }
+
+        &-value {
+            width: calc(100% - 170px);
+        }
+
+        &-link {
+            font-size: 11px;
+            font-weight: 500;
+            color: #666666 !important;
+            text-decoration: underline;
+            width: 70px;
+            position: absolute;
+            top: -2px;
+            right: 0;
+            text-align: right;
+            transition: color .3s;
+
+            &:hover {
+                color: $swap-color !important;
+            }
+        }
     }
 
-    a {
-        text-decoration: underline;
+    &__info {
+        margin-top: 15px;
     }
 }
 
@@ -1108,13 +1134,22 @@
     padding-left: 20px;
     text-align: start;
 
-    &__text {
-        margin-bottom: 2px;
+    &__content {
+        margin-bottom: 5px;
+        display: flex;
 
         .rate {
             font-size: 14px;
             font-weight: 600;
         }
+    }
+
+    &__text {
+        margin: 1px 10px 0 0;
+    }
+
+    &__execute-rate {
+        margin-bottom: 2px;
     }
 }
 
@@ -1778,5 +1813,9 @@
     &--negative {
       color: $error-color;
     }
+  }
+
+  &__bold-text {
+    font-weight: 600;
   }
 }

@@ -454,7 +454,7 @@ export default class MarketTable extends React.Component {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  Cell: props => this.addUnit(props.value, this.props.currency),
+                  Cell: props => this.addUnit(props.value, this.props.currency, ','),
                   minWidth: this.props.isRussia ? 200 : 150,
                   getHeaderProps: () => {
                     return {
