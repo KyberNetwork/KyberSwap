@@ -113,26 +113,7 @@ export default class LimitOrder extends React.Component {
         this.props.dispatch(limitOrderActions.setOrdersCount(orders.length));
       } else {
         this.props.dispatch(limitOrderActions.setFilterMode("server"));
-
-        const pairAddressFilter = this.props.limitOrder.pairFilter.map(item => {
-          const [sourceTokenSymbol, destTokenSymbol] = item.split("-");
-          const sourceToken = this.props.tokens[sourceTokenSymbol].address;
-          const destToken = this.props.tokens[destTokenSymbol].address;
-
-          return `${sourceToken}_${destToken}`;
-        });
-
-        const { itemsCount, orders } = await limitOrderServices.getOrdersByFilter(
-          this.props.limitOrder.addressFilter,
-          pairAddressFilter,
-          this.props.limitOrder.statusFilter,
-          this.props.limitOrder.timeFilter,
-          this.props.limitOrder.dateSort,
-          this.props.limitOrder.pageIndex,
-          this.props.limitOrder.pageSize
-        );
-        this.props.dispatch(limitOrderActions.addListOrder(orders));
-        this.props.dispatch(limitOrderActions.setOrdersCount(itemsCount));
+        this.props.dispatch(limitOrderActions.getOrdersByFilter({}));
       }
 
       this.props.dispatch(limitOrderActions.getListFilter());

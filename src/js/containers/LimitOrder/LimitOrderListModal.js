@@ -98,28 +98,34 @@ export default class LimitOrderListModal extends Component {
 		return (
 			<div className="limit-order-modal">
 				<div className="limit-order-modal__body">
+					<div>
+						<a className="limit-order-list__leaderboard limit-order-modal__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
+							Limit Order LeaderBoard
+						</a>
+					</div>
+					
 					<div className="limit-order-modal__title">
 						{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"} 
 					</div>
-          {<div className="limit-order-list--title-faq">
+          <div className="limit-order-list--title-faq">
             <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
               {this.props.translate("limit_order.wonder_why_order_not_filled")}
             </a>
-          </div>}
-          <a className="limit-order-list__leaderboard limit-order-modal__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
-            Limit Order LeaderBoard
-          </a>
+          </div>
 					<div className="limit-order-modal__close" onClick={e => this.toggleLimitOrderListModal()}>
 						<div className="limit-order-modal__close-wrapper"></div>
 					</div>
+					<div className="limit-order-list__tab-container">
+						{this.getOrderTabs()}
+					</div>
 					<div className="limit-order-modal__content">
-						<div className="limit-order-list__filter-container">
+						{/* <div className="limit-order-list__filter-container">
 							<div className="limit-order-list__filter-container">
 								<ul className="filter">
 									{this.getTimeFilter()}
 								</ul>
 							</div>
-						</div>
+						</div> */}
 						<div className="limit-order-list--table-mobile">
 							<LimitOrderTable
 								data={this.props.limitOrder.listOrder}
@@ -140,9 +146,34 @@ export default class LimitOrderListModal extends Component {
 		)
 	}
 
+	onChangeOrderTab = (activeOrderTab) => {
+    this.props.dispatch(limitOrderActions.changeOrderTab(activeOrderTab));
+  }
+
+  getOrderTabs = () => {
+    const { activeOrderTab } = this.props.limitOrder;
+    const tab = ["open", "history"];
+
+    return tab.map((item, index) => {
+      let className = item === activeOrderTab ? "limit-order-list__tab--active" : "";
+
+      return (
+        <div key={item} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
+          {item === "open" && 
+            (this.props.translate("limit_order.open_orders") || "Open Orders")}
+          {item === "history" && 
+            (this.props.translate("limit_order.order_history") || "Order History")}
+        </div>
+      )
+    });
+  }
+
 	render() {
 		return (
 			<div className="limit-order-list__wrapper">
+				<a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
+					Limit Order LeaderBoard
+				</a>
 				<div className="limit-order-list--title">
 					<a className="title" onClick={e => this.toggleLimitOrderListModal()}>
 						{this.props.translate(
@@ -150,11 +181,16 @@ export default class LimitOrderListModal extends Component {
 						) || "Manage Your Orders"}
 					</a>
 				</div>
-				<div className="limit-order-list__filter-container">
+				<div className="limit-order-list--title-faq">
+					<a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
+						{this.props.translate("limit_order.wonder_why_order_not_filled")}
+					</a>
+				</div>
+				{/* <div className="limit-order-list__filter-container">
 					<ul className="filter">
 						{this.getTimeFilter()}
 					</ul>
-				</div>
+				</div> */}
 				<Modal className={{
 						base: 'reveal large confirm-modal',
 						afterOpen: 'reveal large confirm-modal'

@@ -52,10 +52,10 @@ export function fetchFee(userAddr, src, dest, srcAmount, destAmount, shouldLoadi
   }
 }
 
-export function fetchFeeComplete(fee, err = null) {
+export function fetchFeeComplete(fee, feeAfterDiscount, discountPercentage, err = null) {
   return {
     type: "LIMIT_ORDER.FETCH_FEE_COMPLETE",
-    payload: { fee, err }
+    payload: { fee, feeAfterDiscount, discountPercentage, err }
   }
 }
 
@@ -260,5 +260,19 @@ export function setForceSubmitRate(rate) {
   return {
     type: "LIMIT_ORDER.SET_FORCE_SUBMIT_RATE",
     payload: { rate }
+  }
+}
+
+export function changeOrderTab(tab) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_ORDER_TAB",
+    payload: { tab }
+  }
+}
+
+export function changeOrderTabComplete(tab) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_ORDER_TAB_COMPLETE",
+    payload: { tab }
   }
 }

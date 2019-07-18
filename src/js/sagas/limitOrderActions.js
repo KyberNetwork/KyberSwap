@@ -8,7 +8,7 @@ import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
 import * as constants from "../services/constants"
-import { subOfTwoNumber } from "../utils/converter"
+import { subOfTwoNumber, multiplyOfTwoNumber } from "../utils/converter"
 
 function* selectToken(action) {
     const { symbol, address, type } = action.payload
@@ -77,11 +77,16 @@ function* updateRatePending(action) {
 function* fetchFee(action){
   var { userAddr, src, dest, srcAmount, destAmount } = action.payload
   try{
-    var fee = yield call(limitOrderServices.getFee, userAddr, src, dest, srcAmount, destAmount)
-    yield put(limitOrderActions.fetchFeeComplete(fee))
+    var result = yield call(limitOrderServices.getFee, userAddr, src, dest, srcAmount, destAmount);
+
+    const fee = multiplyOfTwoNumber(result.non_discounted_fee, 100);
+    const feeAfterDiscount = multiplyOfTwoNumber(result.fee, 100);
+    const discountPercentage = result.discount_percent;
+
+    yield put(limitOrderActions.fetchFeeComplete(fee, feeAfterDiscount, discountPercentage))
   }catch(err){
     console.log(err)
-    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, err))
+    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0, err))
   }
 
 }
@@ -173,7 +178,20 @@ function* getOrdersByFilter(action) {
       return `${sourceToken}_${destToken}`;
     });
 
-    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
+    // Only get open + in_progress orders in open tab,
+    // And only get invalidated + filled + cancelled orders in history tab
+    const listStatus = limitOrder.activeOrderTab === "open" ?
+      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
+    : [constants.LIMIT_ORDER_CONFIG.status.FILLED, constants.LIMIT_ORDER_CONFIG.status.CANCELLED, constants.LIMIT_ORDER_CONFIG.status.INVALIDATED];
+
+    let statusFilter = listStatus;
+    if (limitOrder.statusFilter.length !== 0) {
+      statusFilter = listStatus.filter(item => {
+        return limitOrder.statusFilter.indexOf(item) !== -1;
+      });
+    }
+
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
 
     yield put(limitOrderActions.setOrdersCount(itemsCount));
     yield put(limitOrderActions.addListOrder(orders));
@@ -231,6 +249,18 @@ console.log(currentPendingTxs)
   return { pendingBalances: newPendingBalances, pendingTxs };
 }
 
+function* changeOrderTab(action) {
+  const { tab } = action.payload;
+
+  yield put(limitOrderActions.changeOrderTabComplete(tab));
+
+  
+  yield put(limitOrderActions.getOrdersByFilter({
+    statusFilter: [],
+    pageIndex: 1
+  }));
+}
+
 export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
 
@@ -247,4 +277,6 @@ export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter)
 
     yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances)
+  
+    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab)
   }

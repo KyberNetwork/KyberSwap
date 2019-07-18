@@ -670,6 +670,13 @@
             "address": "0xc28e931814725bbeb9e670676fabbcb694fe7df2",
             "decimals": 18,
             "cg_id": "quadrant-protocol"
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0xc011a72400e58ecd99ee497cf89e3775d4bd732f",
+            "decimals": 18,
+            "cg_id": "havven"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
