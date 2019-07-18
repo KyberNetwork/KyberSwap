@@ -173,7 +173,20 @@ function* getOrdersByFilter(action) {
       return `${sourceToken}_${destToken}`;
     });
 
-    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
+    // Only get open + in_progress orders in open tab,
+    // And only get invalidated + filled + cancelled orders in history tab
+    const listStatus = limitOrder.activeOrderTab === "open" ?
+      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
+    : [constants.LIMIT_ORDER_CONFIG.status.FILLED, constants.LIMIT_ORDER_CONFIG.status.CANCELLED, constants.LIMIT_ORDER_CONFIG.status.INVALIDATED];
+
+    let statusFilter = listStatus;
+    if (listStatus.length !== 0) {
+      statusFilter = listStatus.filter(item => {
+        return limitOrder.statusFilter.indexOf(item) !== -1;
+      });
+    }
+
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
 
     yield put(limitOrderActions.setOrdersCount(itemsCount));
     yield put(limitOrderActions.addListOrder(orders));
@@ -231,6 +244,16 @@ console.log(currentPendingTxs)
   return { pendingBalances: newPendingBalances, pendingTxs };
 }
 
+function* changeOrderTab(action) {
+  const { tab } = action.payload;
+
+  yield put(limitOrderActions.changeOrderTabComplete(tab));
+
+  
+
+  yield put(limitOrderActions.setStatusFilter([]));
+}
+
 export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
 
@@ -247,4 +270,6 @@ export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter)
 
     yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances)
+  
+    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab)
   }

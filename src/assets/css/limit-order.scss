@@ -754,6 +754,49 @@
         }
     }
 
+    &__tab-container {
+        height: 20px;
+        width: 180px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        position: relative;
+
+        &::after {
+            content: "";
+            height: 1px;
+            width: 100%;
+            position: absolute;
+            bottom: -9px;
+            left: 0;
+            border: solid 1px #f0f0f0;
+            z-index: 0;
+        }
+    }
+
+    &__tab {
+        font-size: 11px;
+        font-weight: 500;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+
+        &--active {
+            font-weight: 600 !important;
+
+            &::after {
+                content: "";
+                height: 1px;
+                width: 100%;
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                border: solid 2px #ef8102;
+                z-index: 1;
+            }
+        }
+    }
+
     &--table {
         @extend %react-table-layout;
     }
@@ -987,7 +1030,8 @@
 
 .status-filter-modal {
     width: 130px;
-    height: 170px;
+    height: auto;
+    min-height: 85px;
     border-radius: 6px;
     box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
     border: solid 0.9px #d3d7db;
