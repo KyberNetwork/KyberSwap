@@ -207,8 +207,8 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
         resolve({
           success: true,
-          fee: 0.003,
-          discount_percent: 10.9312,
+          fee: 0.0036,
+          discount_percent: 10,
           non_discounted_fee: 0.004
         })
     })
