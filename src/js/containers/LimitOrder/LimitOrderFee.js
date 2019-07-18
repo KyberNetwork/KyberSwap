@@ -68,7 +68,7 @@ class LimitOrderFee extends React.Component {
       orderNetFeeText = <span className={"limit-order__bold-text"}>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
 
       if (this.props.limitOrder.sourceAmount && orderFeeDiscountPercentage) {
-        orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> ({orderFeeDiscountPercentage}% of Fee)</span>
+        orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> (~{orderFeeDiscountPercentage.toFixed(0)}% of Fee)</span>
       }
     }
 
