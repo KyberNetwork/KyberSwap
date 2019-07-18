@@ -319,7 +319,8 @@ const INIT_LIMIT_ORDER_STATE = {
   // List filter properties
   addressFilter: [],
   pairFilter: [],
-  statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS, LIMIT_ORDER_CONFIG.status.FILLED],
+  // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+  statusFilter: [],
   timeFilter: {
     interval: 1,
     unit: "month"
@@ -342,6 +343,9 @@ const INIT_LIMIT_ORDER_STATE = {
   // Pending balances
   pendingBalances: {},
   pendingTxs: [],
+
+  // Active order tab
+  activeOrderTab: "open",
 
   // Related orders
   relatedOrders: [],

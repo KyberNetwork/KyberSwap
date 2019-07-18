@@ -17,12 +17,6 @@ export function newWeb3Instance(){
         case "metamask":
             web3Instance = new dapp.MetamaskBrowser()
             break
-        case "im_token":
-            web3Instance = new dapp.ImTokenBrowser()
-            break
-        case "alpha_wallet":
-            web3Instance = new dapp.AlphaWalletBrowser()
-            break
         case "dapp":
         case "unknown":
             web3Instance = new dapp.DappBrowser()
@@ -51,12 +45,6 @@ function getWeb3Type(){
         }
         if ((!!window.__CIPHER__) && (window.web3.currentProvider && window.web3.currentProvider.constructor && window.web3.currentProvider.constructor.name === "CipherProvider")) {
             return "cipher"
-        }
-        if (!!window.imToken || window.ethereum.isImToken) {
-            return "im_token"
-        }
-        if (window.web3.currentProvider && window.web3.currentProvider.isAlphaWallet === true) {
-            return "alpha_wallet"
         }
         if (window.web3.isDAppBrowser && window.web3.isDAppBrowser()) {
             return "dapp"

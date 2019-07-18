@@ -87,15 +87,28 @@ export default class DappBrowser {
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
 
+  personalSign = (message, account) => {
+    return new Promise((resolve, reject)=>{
+      web3.personal.sign(message, account, (error, result)=>{
+        if(!error){
+          resolve(result)
+        }else{
+          reject(error)
+        }
+      })
+    })
+  }
+
   async sign(message) {
     try {
       var account = await this.getCoinbase(true)
+      // let messageWithPrefix = ethUtil.hashPersonalMessage(ethUtil.toBuffer(message))
+      // messageWithPrefix = ethUtil.addHexPrefix(messageWithPrefix.toString('hex'))
 
-      let messageWithPrefix = ethUtil.hashPersonalMessage(ethUtil.toBuffer(message))
-      messageWithPrefix = ethUtil.addHexPrefix(messageWithPrefix.toString('hex'))
-
-      var signature = await this.web3.eth.sign(messageWithPrefix, account)
-
+      // signature = await this.web3.eth.sign(messageWithPrefix, account)
+      
+      let signature = await this.personalSign(message, account);
+      
       var {v, r, s} = ethUtil.fromRpcSig(signature)
       r = ethUtil.bufferToHex(r)    
       s = ethUtil.bufferToHex(s)    

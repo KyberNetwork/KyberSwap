@@ -254,6 +254,11 @@ const limitOrder = (state = initState, action) => {
       newState.forceSubmitRate = rate;
       return newState;
     }
+    case "LIMIT_ORDER.CHANGE_ORDER_TAB_COMPLETE": {
+      const { tab } = action.payload;
+      newState.activeOrderTab = tab;
+      return newState;
+    }
 
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       const { safeLowGas, standardGas, fastGas, defaultGas, selectedGas } = action.payload;

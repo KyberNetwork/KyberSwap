@@ -35,7 +35,7 @@ class LimitOrderFee extends React.Component {
   }
 
   fetchFee = (shouldLoading = true) => {
-    if (common.isUserLogin() && this.props.account !== false){
+    if (this.props.account !== false){
       var userAddr = this.props.account.address
       var src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address
       var dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address

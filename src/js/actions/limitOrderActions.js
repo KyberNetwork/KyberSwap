@@ -262,3 +262,17 @@ export function setForceSubmitRate(rate) {
     payload: { rate }
   }
 }
+
+export function changeOrderTab(tab) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_ORDER_TAB",
+    payload: { tab }
+  }
+}
+
+export function changeOrderTabComplete(tab) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_ORDER_TAB_COMPLETE",
+    payload: { tab }
+  }
+}

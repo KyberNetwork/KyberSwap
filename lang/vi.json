@@ -420,7 +420,9 @@
     "rate_warning_title": "Bằng việc tạo lệnh này, bạn sẽ <span class=\"rate-warning-tooltip__title--highlight\">HUỶ</span> những lệnh sau:",
     "wonder_why_order_not_filled": "Tìm hiểu lí do các lệnh của bạn không được thực hiện?",
     "execute_rate": "Lệnh giao dịch của bạn sẽ được thực hiện khi tỉ giá ${tokenPair} đạt ${executeRate} (cao hơn <span class=\"limit-order__percent limit-order__percent--positive\">1%</span>).",
-    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}"
+    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
+    "open_orders": "Các lệnh đang mở",
+    "order_history": "Lịch sử giao dịch"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
