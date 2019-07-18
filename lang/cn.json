@@ -418,7 +418,8 @@
     "view_tx": "查看交易",
     "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单：",
     "wonder_why_order_not_filled": "想知道为什么您的订单没有成交吗?",
-    "execute_rate": "您的订单当${tokenPair}汇率达到${executeRate}(高<span class=\"limit-order__percent limit-order__percent--positive\">1%</span>)时会执行。"
+    "execute_rate": "您的订单当${tokenPair}汇率达到${executeRate}(高<span class=\"limit-order__percent limit-order__percent--positive\">1%</span>)时会执行。",
+    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -432,5 +433,8 @@
   "no_thank": "不，谢谢",
   "yes_please": "好的，请",
   "why": "为什么?",
-  "i_understand": "我明白了"
+  "i_understand": "我明白了",
+  "discount": "Discount",
+  "net_fee": "Net Fee",
+  "more_info": "More Info"
 }

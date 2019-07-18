@@ -304,7 +304,9 @@ const INIT_LIMIT_ORDER_STATE = {
   slippageRate: 0,
   blockNo: 0,
   
-  orderFee: LIMIT_ORDER_CONFIG.maxFee, 
+  orderFee: LIMIT_ORDER_CONFIG.maxFee,
+  orderFeeAfterDiscount: LIMIT_ORDER_CONFIG.maxFee,
+  orderFeeDiscountPercentage: 0,
   isFetchingFee: false,
   orderFeeErr: "",
 

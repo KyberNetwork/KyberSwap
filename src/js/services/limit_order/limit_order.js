@@ -157,8 +157,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
                 return response.json()
             }).then((result) => {
                 if (result.success) {
-                    const fee = multiplyOfTwoNumber(result.fee, 100);
-                    resolve(fee);
+                    resolve(result);
                 } else {
                     rejected(result.message)
                 }

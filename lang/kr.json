@@ -419,7 +419,8 @@
     "view_tx": "트랜잭션 보기",
     "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",
     "wonder_why_order_not_filled": "왜 주문이 실행되지 않았나요?",
-    "execute_rate": "오더는 ${tokenPair}가 ${executeRate}에 도달하면 실행됩니다.  (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> 높은 비율)."
+    "execute_rate": "오더는 ${tokenPair}가 ${executeRate}에 도달하면 실행됩니다.  (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> 높은 비율).",
+    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -433,5 +434,8 @@
   "no_thank": "아니오, 괜찮습니다.",
   "yes_please": "네",
   "why": "왜 인가요?",
-  "i_understand": "이해했습니다."
+  "i_understand": "이해했습니다.",
+  "discount": "Discount",
+  "net_fee": "Net Fee",
+  "more_info": "More Info"
 }

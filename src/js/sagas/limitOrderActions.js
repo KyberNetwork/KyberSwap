@@ -8,7 +8,7 @@ import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
 import _ from "lodash";
 import * as constants from "../services/constants"
-import { subOfTwoNumber } from "../utils/converter"
+import { subOfTwoNumber, multiplyOfTwoNumber } from "../utils/converter"
 
 function* selectToken(action) {
     const { symbol, address, type } = action.payload
@@ -77,11 +77,16 @@ function* updateRatePending(action) {
 function* fetchFee(action){
   var { userAddr, src, dest, srcAmount, destAmount } = action.payload
   try{
-    var fee = yield call(limitOrderServices.getFee, userAddr, src, dest, srcAmount, destAmount)
-    yield put(limitOrderActions.fetchFeeComplete(fee))
+    var result = yield call(limitOrderServices.getFee, userAddr, src, dest, srcAmount, destAmount);
+
+    const fee = multiplyOfTwoNumber(result.non_discounted_fee, 100);
+    const feeAfterDiscount = multiplyOfTwoNumber(result.fee, 100);
+    const discountPercentage = result.discount_percent;
+
+    yield put(limitOrderActions.fetchFeeComplete(fee, feeAfterDiscount, discountPercentage))
   }catch(err){
     console.log(err)
-    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, err))
+    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0, err))
   }
 
 }
