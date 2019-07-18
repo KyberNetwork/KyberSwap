@@ -1055,13 +1055,22 @@
     padding-left: 20px;
     text-align: start;
 
-    &__text {
-        margin-bottom: 2px;
+    &__content {
+        margin-bottom: 5px;
+        display: flex;
 
         .rate {
             font-size: 14px;
             font-weight: 600;
         }
+    }
+
+    &__text {
+        margin: 1px 10px 0 0;
+    }
+
+    &__execute-rate {
+        margin-bottom: 2px;
     }
 }
 

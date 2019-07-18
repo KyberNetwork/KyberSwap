@@ -413,14 +413,15 @@
     "login_to_submit": "Login to Submit Order",
     "submit": "Submit",
     "discount_message": "Hold from 2000 KNC to get discount for your orders. More info <a href=\"${link}\"\ntarget=\"_blank\">here</a>",
-    "higher_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current Market",
-    "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current Market",
+    "higher_rate": "Your preferred rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current rate.",
+    "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current rate.",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
     "ineligible_address": "This address has been used by another account. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee.",
     "view_tx": "View tx",
     "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:",
-    "wonder_why_order_not_filled": "Wonder why your orders are not filled?"
+    "wonder_why_order_not_filled": "Wonder why your orders are not filled?",
+    "execute_rate": "Your order will execute when ${tokenPair} hits ${executeRate} (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> higher)."
   },
   "home": "Home",
   "tracker": "Tracker",
