@@ -180,7 +180,7 @@ function* getOrdersByFilter(action) {
     : [constants.LIMIT_ORDER_CONFIG.status.FILLED, constants.LIMIT_ORDER_CONFIG.status.CANCELLED, constants.LIMIT_ORDER_CONFIG.status.INVALIDATED];
 
     let statusFilter = listStatus;
-    if (listStatus.length !== 0) {
+    if (limitOrder.statusFilter.length !== 0) {
       statusFilter = listStatus.filter(item => {
         return limitOrder.statusFilter.indexOf(item) !== -1;
       });
@@ -250,8 +250,10 @@ function* changeOrderTab(action) {
   yield put(limitOrderActions.changeOrderTabComplete(tab));
 
   
-
-  yield put(limitOrderActions.setStatusFilter([]));
+  yield put(limitOrderActions.getOrdersByFilter({
+    statusFilter: [],
+    pageIndex: 1
+  }));
 }
 
 export function* watchLimitOrder() {
