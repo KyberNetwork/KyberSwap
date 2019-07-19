@@ -60,14 +60,14 @@ class LimitOrderFee extends React.Component {
     const sourceAmountAfterFee = converter.subOfTwoNumber(this.props.limitOrder.sourceAmount, orderFeeAfterDiscount);
 
     let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
-    let orderDiscountFeeText = `0 ${sourceTokenSymbol}`;
+    let orderDiscountFeeText = `0 ${sourceTokenSymbol} (~${orderFeeDiscountPercentage.toFixed(0)}% of Fee)`;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
 
     if (!this.props.limitOrder.isFetchingFee) {
       orderFeeText = <span><span title={orderFee}>{converter.formatNumber(orderFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})</span>
       orderNetFeeText = <span className={"limit-order__bold-text"}>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
 
-      if (this.props.limitOrder.sourceAmount && orderFeeDiscountPercentage) {
+      if (this.props.limitOrder.sourceAmount > 0 && orderFeeDiscountPercentage) {
         orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> (~{orderFeeDiscountPercentage.toFixed(0)}% of Fee)</span>
       }
     }
@@ -90,7 +90,7 @@ class LimitOrderFee extends React.Component {
           <div className={"limit-order-fee__item-value"}>{orderNetFeeText}</div>
         </div>
 
-        {this.props.limitOrder.sourceAmount &&
+        {this.props.limitOrder.sourceAmount > 0 &&
           <div className={"limit-order-fee__info"}>
             {this.props.translate("limit_order.fee_info", {
               sourceTokenSymbol: this.props.limitOrder.sourceTokenSymbol,
