@@ -206,7 +206,9 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
             <div>
-              <LimitOrderFee />
+              {this.props.account !== false &&
+                <LimitOrderFee/>
+              }
             </div>
           </div>
         </div>
