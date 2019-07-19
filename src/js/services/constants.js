@@ -254,7 +254,7 @@ const INIT_TRANSFER_FORM_STATE = {
 
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
-  maxFee: 0.5,
+  maxFee: 0.005,
   updateRateType : {
     selectToken: "select_token"
   },
