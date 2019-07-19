@@ -149,7 +149,11 @@ export default class ConfirmModal extends React.Component {
         var destAmount = this.props.exchange.snapshot.destAmount
         var destTokenSymbol = this.props.exchange.destTokenSymbol
         var destToken = this.props.exchange.destToken
-        var destAddress = this.props.account.address
+        // var destAddress = this.props.account.address
+
+        var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
+        ? this.props.account.info.receiveAddr : this.props.account.address;
+
         var maxDestAmount = converter.biggestNumber()
         var slippageRate = this.state.slippageRate
         var waletId = this.getReferAddr()
