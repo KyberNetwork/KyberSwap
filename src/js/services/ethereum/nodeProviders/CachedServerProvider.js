@@ -193,7 +193,7 @@ export default class CachedServerProvider extends React.Component {
 
     getInfo(infoObj) {
         if(isUserLogin()){
-            var params = {tx_hash: infoObj.hash}
+            var params = {tx_hash: infoObj.txHash}
             fetch("/api/transactions", {
                 method: 'POST',
                 headers: {
@@ -203,7 +203,7 @@ export default class CachedServerProvider extends React.Component {
                 body: JSON.stringify(params)
             })
         }else{
-            fetch(BLOCKCHAIN_INFO.broadcastTx + 'broadcast/' + infoObj.hash, {
+            fetch(BLOCKCHAIN_INFO.broadcastTx + 'broadcast/' + infoObj.txHash, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',

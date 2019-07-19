@@ -61,7 +61,7 @@ class LimitOrderFee extends React.Component {
     const orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);
 
     let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
-    let orderDiscountFeeText = `0 ${sourceTokenSymbol}`;
+    let orderDiscountFeeText = `0 ${sourceTokenSymbol} (~${orderFeeDiscountPercentage.toFixed(0)}% of Fee)`;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
 
     if (!this.props.limitOrder.isFetchingFee) {
@@ -91,7 +91,7 @@ class LimitOrderFee extends React.Component {
           <div className={"limit-order-fee__item-value"}>{orderNetFeeText}</div>
         </div>
 
-        {this.props.limitOrder.sourceAmount &&
+        {this.props.limitOrder.sourceAmount > 0 &&
           <div className={"limit-order-fee__info"}>
             {this.props.translate("limit_order.fee_info", {
               sourceTokenSymbol: this.props.limitOrder.sourceTokenSymbol,

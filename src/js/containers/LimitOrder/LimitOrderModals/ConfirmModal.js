@@ -120,7 +120,7 @@ export default class ConfirmModal extends React.Component {
 
             
             var feeInPrecision = this.state.fee
-            feeInPrecision = converters.toTWei(feeInPrecision, 4)
+            feeInPrecision = converters.toTWei(feeInPrecision, 6)
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
