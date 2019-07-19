@@ -178,7 +178,7 @@ function validateGetFeeResult(result) {
   let fee = result.fee;
   let discountPercent = result.discount_percent;
 
-  if (!nonDiscountFee || typeof nonDiscountFee !== 'number' || !fee || typeof fee !== 'number' || !discountPercent || typeof discountPercent !== 'number' || fee > nonDiscountFee) {
+  if (typeof nonDiscountFee !== 'number' || typeof fee !== 'number' || typeof discountPercent !== 'number' || fee > nonDiscountFee) {
     return false
   }
 
