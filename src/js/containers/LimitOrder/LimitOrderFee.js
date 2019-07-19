@@ -58,17 +58,18 @@ class LimitOrderFee extends React.Component {
     const orderFeeAfterDiscount = converter.multiplyOfTwoNumber(this.props.limitOrder.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFeeAfterDiscount, 100));
     const sourceAmountAfterFee = converter.subOfTwoNumber(this.props.limitOrder.sourceAmount, orderFeeAfterDiscount);
     const discountFee = converter.subOfTwoNumber(orderFee, orderFeeAfterDiscount);
-    var orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);    
+    const orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);
+    const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
 
     let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
-    let orderDiscountFeeText = `0 ${sourceTokenSymbol} (${converter.compareTwoNumber(orderFeeDiscountPercentage, 0) == 1 ? '~' : ''}${converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)`;
+    let orderDiscountFeeText = `0 ${sourceTokenSymbol} (${isDiscount ? '~' : ''}${converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)`;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
 
     if (!this.props.limitOrder.isFetchingFee) {
       orderFeeText = <span><span title={orderFee}>{converter.formatNumber(orderFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})</span>
       orderNetFeeText = <span className={"limit-order__bold-text"}>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
 
-      if (this.props.limitOrder.sourceAmount && orderFeeDiscountPercentage) {
+      if (this.props.limitOrder.sourceAmount && isDiscount) {
         orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> (~{converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)</span>
       }
     }
