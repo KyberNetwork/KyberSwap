@@ -53,11 +53,13 @@ class LimitOrderFee extends React.Component {
 
   render() {
     var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol
-    const orderFee = converter.divOfTwoNumber(converter.multiplyOfTwoNumber(this.props.limitOrder.orderFee, this.props.limitOrder.sourceAmount), 100);
-    const orderFeeDiscountPercentage = this.props.limitOrder.orderFeeDiscountPercentage;
-    const discountFee = converter.multiplyOfTwoNumber(orderFee, converter.divOfTwoNumber(orderFeeDiscountPercentage, 100));
-    const orderFeeAfterDiscount = converter.subOfTwoNumber(orderFee, converter.multiplyOfTwoNumber(orderFee, converter.divOfTwoNumber(orderFeeDiscountPercentage, 100)));
+
+    const { orderFeeDiscountPercentage } = this.props.limitOrder;
+    const orderFeeAfterDiscount = converter.multiplyOfTwoNumber(this.props.limitOrder.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFeeAfterDiscount, 100));
     const sourceAmountAfterFee = converter.subOfTwoNumber(this.props.limitOrder.sourceAmount, orderFeeAfterDiscount);
+    const netFeePercentage = converter.subOfTwoNumber(100, orderFeeDiscountPercentage);
+    const orderFee = converter.divOfTwoNumber(converter.multiplyOfTwoNumber(orderFeeAfterDiscount, 100), netFeePercentage);
+    const discountFee = converter.multiplyOfTwoNumber(orderFee, converter.divOfTwoNumber(orderFeeDiscountPercentage, 100));
 
     let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
     let orderDiscountFeeText = `0 ${sourceTokenSymbol}`;
