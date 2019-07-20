@@ -205,7 +205,12 @@ export function getNonce(userAddr, source, dest) {
 
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
-        resolve(0.4)
+        resolve({
+          success: true,
+          fee: 0.0036,
+          discount_percent: 10,
+          non_discounted_fee: 0.004
+        })
     })
 }
 

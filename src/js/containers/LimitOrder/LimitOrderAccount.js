@@ -7,9 +7,9 @@ import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import BLOCKCHAIN_INFO from "../../../../env";
-
 import { isUserLogin } from "../../utils/common";
 import * as converters from "../../utils/converter";
+import * as constants from "../../services/constants"
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -130,7 +130,8 @@ export default class LimitOrderAccount extends React.Component {
   clearSession = () => {
     this.closeReImport();
     this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
-    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, {}));
+    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
+    this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
     this.props.global.analytics.callTrack("trackClickChangeWallet");
     // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
   }

@@ -45,10 +45,10 @@ export default class MinConversionRate extends React.Component {
     const percent = Math.round(parseFloat(converter.caculatorPercentageToRate(this.props.minConversionRate, this.props.expectedRate)));
     const displayMinRate = this.props.isSelectToken
       ? <img src={require('../../../assets/img/waiting.svg')} />
-      : converter.roundingNumber(this.props.minConversionRate);
+      : converter.roundingRateNumber(this.props.minConversionRate);
     const exchangeRate = converter.toT(this.props.expectedRate);
-    const roundExchangeRate = converter.roundingNumber(exchangeRate);
-    const slippageExchangeRate = converter.roundingNumber(exchangeRate * (percent / 100));
+    const roundExchangeRate = converter.roundingRateNumber(exchangeRate);
+    const slippageExchangeRate = converter.roundingRateNumber(exchangeRate * (percent / 100));
 
     const isError = this.props.customRateInput.isError;
     if (isError) {

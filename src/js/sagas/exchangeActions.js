@@ -566,7 +566,7 @@ export function* doAfterAccountImported(action){
 
       var path = constants.BASE_HOST + "/swap/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      // yield put(globalActions.goToRoute(path))
+      yield put(globalActions.goToRoute(path))
 
       yield put(actions.selectToken(promoToken, promoAddr,destTokenSymbol, destAddress, "promo"))
 

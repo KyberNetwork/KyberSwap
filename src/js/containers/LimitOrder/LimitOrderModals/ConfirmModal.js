@@ -52,7 +52,7 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var fee = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
+        var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
@@ -74,12 +74,15 @@ export default class ConfirmModal extends React.Component {
             var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
             console.log(concatTokenAddresses)
             var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
-            nonceContract  = converters.sumOfTwoNumber(nonceContract, 1)
-            nonceContract = converters.toHex(nonceContract)
+            // nonceContract = converters.sumOfTwoNumber(nonceContract, 1)
+            // nonceContract = converters.toHex(nonceContract)
+
+            const biggerContractNonce = converters.calculateContractNonce(nonceContract, BLOCKCHAIN_INFO.kyberswapAddress);
+
             //get minimum nonce
             var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
             
-            var validNonce = converters.findMaxNumber([nonceServer, nonceContract, minNonce])
+            var validNonce = converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
             return validNonce
         }catch(err){
             console.log(err)
@@ -117,15 +120,17 @@ export default class ConfirmModal extends React.Component {
 
             
             var feeInPrecision = this.state.fee
-            feeInPrecision = converters.toTWei(feeInPrecision, 4)
+            feeInPrecision = converters.toTWei(feeInPrecision, 6)
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
             // console.log("limit_order_sg")
+            // console.log("---Sign Data---")
             // console.log(signData)
             
             var signature = await wallet.signSignature(signData, this.props.account)     
-            console.log(signature)
+            // console.log("---SIGNATURE---")
+            // console.log(signature)
             
             // var pramameters = await ethereum.call("getSignatureParameters", signature)
             
@@ -175,6 +180,11 @@ export default class ConfirmModal extends React.Component {
             if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
               && this.props.account.type === "metamask" && !this.props.isOnDAPP){
                 showErr = "Signature is invalid. There is a possibility that you have signed the message with a Hardware wallet plugged in Metamask. Please try to import a Hardware Wallet to KyberSwap and resubmit the order."
+            }
+
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+              && this.props.account.type === "metamask" && this.props.isOnDAPP){
+                showErr = "Couldn't validate your signature. Your wallet might not be supported yet."
             }
 
             this.setState({
@@ -231,7 +241,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-      const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
+      const calculateFee = converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount);
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
       const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 5, '');
       const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);
@@ -251,9 +261,9 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
-                    rate: converters.roundingNumber(this.props.limitOrder.triggerRate)
+                    rate: converters.roundingRateNumber(this.props.limitOrder.triggerRate)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingNumber(this.props.limitOrder.triggerRate)}`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)}`
                   }
                 </div>
                 <div className="limit-order-modal__pair">
@@ -281,7 +291,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                       </div>
                     </div>
                   </div>

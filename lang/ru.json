@@ -412,7 +412,15 @@
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "ineligible_address": "This address has been used by another account. Please place order with other address."
+    "ineligible_address": "This address has been used by another account. Please place order with other address.",
+    "fetch_fee_err": "Cannot get fee.",
+    "view_tx": "View tx",
+    "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:",
+    "wonder_why_order_not_filled": "Wonder why your orders are not filled?",
+    "execute_rate": "Your order will execute when ${tokenPair} hits ${executeRate} (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> higher).",
+    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
+    "open_orders": "Open Orders",
+    "order_history": "Order History"
   },
   "home": "Домой",
   "tracker": "Трекер",
@@ -422,5 +430,12 @@
   "standard": "Стандарт",
   "fast": "Быстро",
   "super_fast": "действительно быстро",
-  "search": "Поиск"
+  "no_thank": "Нет, спасибо",
+  "yes_please": "Да, пожалуйста",
+  "search": "Поиск",
+  "why": "Зачем?",
+  "i_understand": "я понимаю",
+  "discount": "Discount",
+  "net_fee": "Net Fee",
+  "more_info": "More Info"
 }

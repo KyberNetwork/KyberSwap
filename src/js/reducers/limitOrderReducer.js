@@ -90,7 +90,7 @@ const limitOrder = (state = initState, action) => {
       newState.blockNo = blockNo
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
-        newState.triggerRate = converter.roundingNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
+        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
         newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 4)  
       }
 
@@ -114,10 +114,14 @@ const limitOrder = (state = initState, action) => {
       return newState
     }
     case "LIMIT_ORDER.FETCH_FEE_COMPLETE":{
-      const {fee, err} = action.payload
+      const {fee, feeAfterDiscount, discountPercentage, err} = action.payload
+
       newState.orderFee = fee
+      newState.orderFeeAfterDiscount = feeAfterDiscount
+      newState.orderFeeDiscountPercentage = discountPercentage
       newState.orderFeeErr = err ? err : ""
       newState.isFetchingFee = false
+
       return newState
     }
 
@@ -248,6 +252,11 @@ const limitOrder = (state = initState, action) => {
     case "LIMIT_ORDER.SET_FORCE_SUBMIT_RATE": {
       const { rate } = action.payload;
       newState.forceSubmitRate = rate;
+      return newState;
+    }
+    case "LIMIT_ORDER.CHANGE_ORDER_TAB_COMPLETE": {
+      const { tab } = action.payload;
+      newState.activeOrderTab = tab;
       return newState;
     }
 

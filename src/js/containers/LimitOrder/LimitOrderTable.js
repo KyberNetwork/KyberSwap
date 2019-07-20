@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
+import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -184,7 +184,7 @@ export default class LimitOrderTable extends Component {
     const { screen } = this.props;
 
     const datetime = updated_at;
-    const rate = roundingNumber(min_rate);
+    const rate = roundingRateNumber(min_rate);
 
     if (screen === "mobile") {
       return (
@@ -323,7 +323,7 @@ export default class LimitOrderTable extends Component {
   getOrderDetail = (row) => {
     const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
 
-    const rate = roundingNumber(min_rate);
+    const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
 
@@ -438,9 +438,11 @@ export default class LimitOrderTable extends Component {
 	// Render status filter dropdown
 	// ------------------------------
 	getStatusFilter = () => {
-    const { statusFilter } = this.props.limitOrder;
-    const status = Object.keys(LIMIT_ORDER_CONFIG.status).map(key => LIMIT_ORDER_CONFIG.status[key]);
-
+    const { statusFilter, activeOrderTab } = this.props.limitOrder;
+    const filteredStatus = activeOrderTab === "open" ?
+      [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
+    : [LIMIT_ORDER_CONFIG.status.FILLED, LIMIT_ORDER_CONFIG.status.CANCELLED, LIMIT_ORDER_CONFIG.status.INVALIDATED];
+    
     const getTitle = (status) => {
       if (status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
         return "In Progress";
@@ -449,7 +451,7 @@ export default class LimitOrderTable extends Component {
       }
     }
 
-    const renderedStatus = status.map((item) => {
+    const renderedStatus = filteredStatus.map((item) => {
       const checked = statusFilter.indexOf(item) !== -1;
 
       return (
@@ -633,8 +635,20 @@ export default class LimitOrderTable extends Component {
   }
   
   clientSideFilter = (orders) => {
-    const { addressFilter, pairFilter, timeFilter, statusFilter } = this.props.limitOrder;
+    const { addressFilter, pairFilter, timeFilter, statusFilter, activeOrderTab } = this.props.limitOrder;
     let results = JSON.parse(JSON.stringify(orders));
+
+    if (activeOrderTab === "open") {
+      results = results.filter(item => {
+        const index = [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS].indexOf(item.status);
+        return index !== -1;
+      });
+    } else {
+      results = results.filter(item => {
+        const index = [LIMIT_ORDER_CONFIG.status.CANCELLED, LIMIT_ORDER_CONFIG.status.FILLED, LIMIT_ORDER_CONFIG.status.INVALIDATED].indexOf(item.status);
+        return index !== -1;
+      });
+    }
 
     // Address filter
     if (addressFilter && addressFilter.length > 0) {

@@ -409,15 +409,19 @@
     "login_to_submit": "登录并提交订单",
     "submit": "提交订单",
     "discount_message": "持有2000KNC以上可享受享受折扣。在<a href=\"${link}\"\ntarget=\"_blank\">这里</a>了解更多信息",
-    "higher_rate": "您的汇率比目前的市场汇率高<span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span>",
-    "lower_rate": "您的汇率比目前的市场汇率低<span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span>",
+    "higher_rate": "您期望的汇率比当前汇率高<span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span>。",
+    "lower_rate": "您期望的汇率比当前汇率低<span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span>。",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
     "pair_not_supported": "该交易对目前市场并不支持",
     "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
     "fetch_fee_err": "无法获取费用",
     "view_tx": "查看交易",
     "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单：",
-    "wonder_why_order_not_filled": "想知道为什么您的订单没有成交吗?"
+    "wonder_why_order_not_filled": "想知道为什么您的订单没有成交吗?",
+    "execute_rate": "您的订单当${tokenPair}汇率达到${executeRate}(高<span class=\"limit-order__percent limit-order__percent--positive\">1%</span>)时会执行。",
+    "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
+    "open_orders": "有效订单",
+    "order_history": "订单历史"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -431,5 +435,8 @@
   "no_thank": "不，谢谢",
   "yes_please": "好的，请",
   "why": "为什么?",
-  "i_understand": "我明白了"
+  "i_understand": "我明白了",
+  "discount": "Discount",
+  "net_fee": "Net Fee",
+  "more_info": "More Info"
 }

@@ -262,3 +262,7 @@ export function isArrayEqual(arrOne, arrTwo) {
 
     return differences.length === 0;
 }
+
+export function getNowTimeStamp() {
+    return Math.round(new Date().getTime() / 1000);
+}

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { roundingNumber, convertBuyRate } from "../../utils/converter"
+import { roundingRateNumber, convertBuyRate } from "../../utils/converter"
 import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
@@ -60,7 +60,7 @@ export default class RateBetweenToken extends React.Component {
       const tokenETHBuyRate = this.props.exchange.expectedRate ? convertBuyRate(this.props.exchange.expectedRate) : 0;
       const tokenUSDBuyRate = tokenETHBuyRate * this.props.rateEthUsd;
 
-      tokenRateText = <span>1 {destToken} = {roundingNumber(tokenETHBuyRate)} ETH {tokenUSDBuyRate ? `= ${tokenUSDBuyRate.toFixed(3)} USD` : ""}</span>
+      tokenRateText = <span>1 {destToken} = {roundingRateNumber(tokenETHBuyRate)} ETH {tokenUSDBuyRate ? `= ${tokenUSDBuyRate.toFixed(3)} USD` : ""}</span>
     } else {
       
       if(rateUSD != 0 && expectedRate != 0){
@@ -68,7 +68,7 @@ export default class RateBetweenToken extends React.Component {
       }else{
         rateUSD = 0
       }
-      tokenRateText = <span>1 {sourceToken} = {roundingNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}</span>
+      tokenRateText = <span>1 {sourceToken} = {roundingRateNumber(expectedRate)} {this.props.exchange.destTokenSymbol} {rateUSD != 0 ? `= ${rateUSD.toFixed(3)} USD` : ""}</span>
     }
 
     if (change == 0) {

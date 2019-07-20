@@ -254,7 +254,7 @@ const INIT_TRANSFER_FORM_STATE = {
 
 const LIMIT_ORDER_CONFIG = {
   path: "limit_order",
-  maxFee: 0.5,
+  maxFee: 0.005,
   updateRateType : {
     selectToken: "select_token"
   },
@@ -304,7 +304,9 @@ const INIT_LIMIT_ORDER_STATE = {
   slippageRate: 0,
   blockNo: 0,
   
-  orderFee: LIMIT_ORDER_CONFIG.maxFee, 
+  orderFee: LIMIT_ORDER_CONFIG.maxFee,
+  orderFeeAfterDiscount: LIMIT_ORDER_CONFIG.maxFee,
+  orderFeeDiscountPercentage: 0,
   isFetchingFee: false,
   orderFeeErr: "",
 
@@ -317,7 +319,8 @@ const INIT_LIMIT_ORDER_STATE = {
   // List filter properties
   addressFilter: [],
   pairFilter: [],
-  statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS, LIMIT_ORDER_CONFIG.status.FILLED],
+  // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
+  statusFilter: [],
   timeFilter: {
     interval: 1,
     unit: "month"
@@ -340,6 +343,9 @@ const INIT_LIMIT_ORDER_STATE = {
   // Pending balances
   pendingBalances: {},
   pendingTxs: [],
+
+  // Active order tab
+  activeOrderTab: "open",
 
   // Related orders
   relatedOrders: [],

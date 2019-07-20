@@ -1,16 +1,5 @@
-
-
-
-//import {DappBrowser} from "./DappBrowser"
-// import {ModernMetamaskBrowser} from "./ModernMetamaskBrowser"
-// import {MetamaskBrowser} from "MetamaskBrowser.js"
-// import {TrustBrowser} from "./TrustBrowser"
-// import {CipherBrowser} from "./CipherBrowser"
-
-
 import * as common from "../../utils/common"
 import * as dapp from "./dapp"
-
 
 export function newWeb3Instance(){
     var type = getWeb3Type()
@@ -29,6 +18,7 @@ export function newWeb3Instance(){
             web3Instance = new dapp.MetamaskBrowser()
             break
         case "dapp":
+        case "alpha_wallet":
         case "unknown":
             web3Instance = new dapp.DappBrowser()
             break
@@ -39,14 +29,9 @@ export function newWeb3Instance(){
             web3Instance = false
             break
     }
-    // alert(type)
-    // console.log("web3_type")
-    // console.log(type)
+
     return web3Instance
-}   
-
-
-
+}
 
 function getWeb3Type(){
     if (window.web3){

@@ -38,8 +38,11 @@ export default class LimitOrderBody extends React.Component {
   }
 
   getTokenListWithoutEthAndWeth = (tokens) => {
+    const now = common.getNowTimeStamp();
+
     return tokens.filter(token => {
-      return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken && token.sp_limit_order;
+      return token.symbol !== 'ETH' && token.symbol !== BLOCKCHAIN_INFO.wrapETHToken &&
+        token.sp_limit_order && (!token.lod_listing_time || now >= token.lod_listing_time);
     });
   }
 
@@ -203,7 +206,9 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
             <div>
-              <LimitOrderFee />
+              {this.props.account !== false &&
+                <LimitOrderFee/>
+              }
             </div>
           </div>
         </div>

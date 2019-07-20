@@ -274,6 +274,7 @@ export function weiToGwei(number) {
 }
 
 export function toT(number, decimal, round) {
+  BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
   var bigNumber = new BigNumber(number.toString())
   var result
   if (bigNumber == 'NaN' || bigNumber == 'Infinity') {
@@ -444,6 +445,52 @@ export function roundingNumber(number) {
   return result;
 }
 
+export function roundingRateNumber(number) {
+  var MAX_DIGIS = 7, SIZE = 3;
+  number = +number;
+  let numberStr = number.toString();
+  if (isNaN(number) || number <= 0) number = 0;
+  if (number < 1e-18) number = 0;
+  if (('' + Math.floor(number)).length >= MAX_DIGIS) {
+    return Math.floor(number).toLocaleString();
+  }
+
+  let count_0 = 0
+  for (let j of numberStr) {
+    if (j == '.') continue
+    if (j == 0)
+      count_0++
+    else
+      break
+  }
+
+  let minDisplay = MAX_DIGIS - count_0 < 4 ? 4 : MAX_DIGIS - count_0
+
+  let precision
+
+  const numBig = new BigNumber(number);
+
+  if (numBig.comparedTo(0) > 0 && numBig.comparedTo(0.0001) < 0) {
+    precision = new BigNumber(number).toPrecision(4)
+  } else {
+    precision = number.toPrecision((number < 1 && number > 0) ? minDisplay : MAX_DIGIS);
+    precision = (precision * 1).toString();
+  }
+
+  let arr = precision.split('.'),
+    intPart = arr[0],
+    i = intPart.length % SIZE || SIZE,
+    result = intPart.substr(0, i);
+
+  for (; i < intPart.length; i += SIZE) {
+    result += ',' + intPart.substr(i, SIZE);
+  }
+  if (arr[1]) {
+    result += '.' + arr[1];
+  }
+  return result;
+}
+
 // export function displayRate(number){
 //   return roundingNumber(number
 // }
@@ -575,24 +622,25 @@ export function percentChange(newPrice, oldPrice) {
   return roundPercent
 }
 
-export function formatNumber(number, round = false, groupSeparator = ',') {
+export function formatNumber(number, round = null, groupSeparator = '') {
   var format = {
     decimalSeparator: '.',
-    // groupSeparator: groupSeparator,
+    groupSeparator: groupSeparator,
     groupSize: 3,
   }
   BigNumber.config({ FORMAT: format })
   var numberStr = number.toString()
   var numberFormat = new BigNumber(numberStr.replace(",",""))
+
   if (numberFormat == 'NaN' || numberFormat == 'Infinity') {
     return "0";
   }
 
-  if (round !== false) {
-    return +numberFormat.toFormat(round)
+  if (groupSeparator !== '' && isNaN(numberFormat.toFormat())) {
+    return numberFormat.toFormat(round);
+  } else {
+    return +numberFormat.toFormat(round);
   }
-
-  return +numberFormat.toFormat();
 }
 
 export function caculatorPercentageToRate(number, total) {
@@ -756,6 +804,44 @@ export function base64toHEX(base64) {
 export function calculateMinNonce(address) {
   var addrFactor = address.substring(0, address.length - 8)
   return addrFactor.toLowerCase() + "00000000000000000000000000000000"
+}
+
+/**
+ * Find nonce in format which bigger than contract nonce, even though contract nonce is in correct format or not.
+ * @param String contractNonce: Nonce in number format
+ * @param String address: 
+ * 
+ * Return Nonce in hex format
+ */
+export function calculateContractNonce(contractNonce, address) {
+  const minNonce = calculateMinNonce(address);
+  const minNonceBig = new BigNumber(minNonce);
+
+  const contractNonceBig = new BigNumber(contractNonce);
+
+  const compare = minNonceBig.comparedTo(contractNonceBig);
+  switch(compare) {
+    case 0: 
+      return minNonce.substring(0, minNonce.length - 1) + "1";
+    case 1: {
+      return minNonce;
+    }
+    case -1: {
+      const diff = contractNonceBig.minus(minNonceBig);
+      const maxSuffix = "0x" + "f".repeat(32);
+      const maxSuffixBig = new BigNumber(maxSuffix);
+
+      if (diff.comparedTo(maxSuffixBig) < 0) {
+        const suffix = diff.plus(1).toString(16);
+        return minNonce.substring(0, 34) + "0".repeat(32).substring(0, 32 - suffix.length) + suffix;
+      } else {
+        throw new Error("Cannot find a nonce, that is greater than nonce from the smartcontract.");
+      }
+    }
+    default: {
+      throw new Error("Invalid nonce");
+    }
+  }
 }
 
 export function findMaxNumber(arr) {

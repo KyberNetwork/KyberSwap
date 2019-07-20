@@ -34,7 +34,7 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.5,
+        "minSupportOrder": 0.1,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
         "page_size": 50
@@ -559,7 +559,8 @@
             "cg_id": "usd-coin",
             "listing_time": 1549976400,
             "gasLimit": "550000",
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "EURS": {
             "symbol": "EURS",
@@ -668,6 +669,14 @@
             "decimals": 6,
             "cg_id": "sapien",
             "listing_time": 1562677200
+        },
+        "EQUAD": {
+            "symbol": "EQUAD",
+            "name": "Quadrant Protocol",
+            "address": "0xc28e931814725bbeb9e670676fabbcb694fe7df2",
+            "decimals": 18,
+            "cg_id": "quadrant-protocol",
+            "listing_time": 1563195600
         }
     },
     "ethScanUrl": "https://etherscan.io/",
