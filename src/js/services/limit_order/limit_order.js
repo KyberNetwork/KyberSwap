@@ -1,8 +1,5 @@
 import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
-import BLOCKCHAIN_INFO from "../../../../env"
-import { multiplyOfTwoNumber } from "../../utils/converter"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-import _ from "lodash";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -310,20 +307,6 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
             reject(new Error(`Cannot get related orders: ${err.toString()}`));
         })
     })
-}
-
-function sortOrders(orders) {
-    const results = _.sortBy(orders, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-            return 0;
-        } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }, ["asc"]);
-
-    return results;
 }
 
 export function getOrdersByFilter(address = null, pair = null, status = null, time = null, dateSort = "desc", pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
