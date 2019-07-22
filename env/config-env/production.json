@@ -34,7 +34,7 @@
         "ETH"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.5,
+        "minSupportOrder": 0.1,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
         "page_size": 50

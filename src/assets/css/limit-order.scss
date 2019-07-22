@@ -781,16 +781,19 @@
 
     &__tab-container {
         height: 20px;
-        width: 180px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 10px;
+        width: auto;
+        display: flex;
+        justify-content: space-between;
         position: relative;
 
         @include screen-max-width(medium) {
             margin-top: 15px;
-            width: 100%;
-            grid-template-columns: 85px 85px;
+            width: auto;
+            max-width: 225px;
+        }
+
+        >div:first-child {
+            margin-right: 20px;
         }
 
         &::after {
@@ -814,6 +817,7 @@
 
         @include screen-max-width(medium) {
             text-align: left;
+            min-width: 85px;
         }
 
         &--active {

@@ -18,9 +18,10 @@ import * as constants from "../../services/constants"
 })
 
 export default class LimitOrderCompareRate extends React.Component {
-  renderCurrentRate(srcTokenSymbol, destTokenSymbol, expectedRate = 0) {
-    const isSourceTokenETH = srcTokenSymbol === constants.WETH_SUBSTITUTE_NAME;
-    const tokenETHBuyRate = this.props.limitOrder.offeredRate ? converters.convertBuyRate(this.props.limitOrder.offeredRate) : 0;
+
+  renderCurrentRate (srcTokenSymbol, destTokenSymbol, expectedRate = 0) {
+    const sourceToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol];
+    const tokenBuyRate = this.props.limitOrder.offeredRate ? converters.convertBuyRate(this.props.limitOrder.offeredRate) : 0;
     const rateLoadingHtml = <span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')}/></span>;
 
     return (
@@ -30,8 +31,8 @@ export default class LimitOrderCompareRate extends React.Component {
         <div>
           <div className="rate">1 {srcTokenSymbol} = {this.props.limitOrder.isSelectToken ? rateLoadingHtml : converters.roundingRateNumber(expectedRate)} {destTokenSymbol}</div>
 
-          {isSourceTokenETH &&
-            <div className="rate">1 {destTokenSymbol} = {this.props.limitOrder.isSelectToken ? rateLoadingHtml : converters.roundingRateNumber(tokenETHBuyRate)} {constants.WETH_SUBSTITUTE_NAME}</div>
+          {(sourceToken && sourceToken.is_quote) &&
+            <div className="rate">1 {destTokenSymbol} = {this.props.limitOrder.isSelectToken ? rateLoadingHtml : converters.roundingRateNumber(tokenBuyRate)} {srcTokenSymbol}</div>
           }
         </div>
       </div>
@@ -77,14 +78,14 @@ export default class LimitOrderCompareRate extends React.Component {
             </div>
           )}
 
-          {triggerRate > 0 &&
+          {/*{triggerRate > 0 &&
             <div>
               {this.props.translate("limit_order.execute_rate", {
                 tokenPair: `${srcTokenSymbol}/${destTokenSymbol}`,
                 executeRate: executeRate,
               }) || `Your order will be executed when ${tokenPair} hits ${executeRate} (1% higher)`}
             </div>
-          }
+          }*/}
         </div>
       )
     }

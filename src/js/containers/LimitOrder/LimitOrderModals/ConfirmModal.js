@@ -52,7 +52,7 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var fee = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
+        var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
@@ -120,7 +120,7 @@ export default class ConfirmModal extends React.Component {
 
             
             var feeInPrecision = this.state.fee
-            feeInPrecision = converters.toTWei(feeInPrecision, 4)
+            feeInPrecision = converters.toTWei(feeInPrecision, 6)
             feeInPrecision = converters.toHex(feeInPrecision)
 
             var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
@@ -241,7 +241,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-      const calculateFee = converters.divOfTwoNumber(converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount), 100);
+      const calculateFee = converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount);
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
       const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 5, '');
       const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);

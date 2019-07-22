@@ -16,6 +16,7 @@ import { FeeDetail } from "../../../components/CommonElement"
 
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
+import * as web3Package from "../../../services/web3";
 
 import * as accountActions from '../../../actions/accountActions'
 
@@ -80,9 +81,15 @@ export default class ConfirmModal extends React.Component {
     }
 
     getReferAddr = () => {
-        if (window.web3 && window.web3.kyberID && !validators.verifyAccount(window.web3.kyberID)) {
-            return window.web3.kyberID
+        if (this.props.account.type === "metamask") {
+            const web3Service = web3Package.newWeb3Instance();
+            const walletId = web3Service.getWalletId();
+            return walletId;
         }
+        
+        // if (window.web3 && window.web3.kyberID && !validators.verifyAccount(window.web3.kyberID)) {
+        //     return window.web3.kyberID
+        // }
         var refAddr = getParameterByName("ref")
         if (!validators.verifyAccount(refAddr)) {
             return refAddr
@@ -142,7 +149,11 @@ export default class ConfirmModal extends React.Component {
         var destAmount = this.props.exchange.snapshot.destAmount
         var destTokenSymbol = this.props.exchange.destTokenSymbol
         var destToken = this.props.exchange.destToken
-        var destAddress = this.props.account.address
+        // var destAddress = this.props.account.address
+
+        var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
+        ? this.props.account.info.receiveAddr : this.props.account.address;
+
         var maxDestAmount = converter.biggestNumber()
         var slippageRate = this.state.slippageRate
         var waletId = this.getReferAddr()
