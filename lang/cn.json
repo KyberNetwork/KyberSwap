@@ -438,5 +438,8 @@
   "i_understand": "我明白了",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "完成",
+  "error_text": "错误"
 }

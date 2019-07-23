@@ -299,13 +299,10 @@ export default class CancelOrderModal extends Component {
 						)}
 						{/* Mobile */}
 						{this.props.screen === "mobile" && this.contentModalMobile()}
-
-						{this.state.err && <div className="limit-order-modal__result--error">
-							{this.state.err}
-						</div>}
 					</div>
 				</div>
-				{!this.state.isFinish && (
+
+				{(!this.state.isFinish && !this.state.err) &&
 					<div className="limit-order-modal__footer">
 						<button
 							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
@@ -320,16 +317,38 @@ export default class CancelOrderModal extends Component {
 							{this.props.translate("yes_please") || "Yes, Please"}
 						</button>	
 					</div>
-				)}
-				
+				}
+
 				{this.state.isFinish && (
-					<div className="limit-order-modal__success-msg">
-						<div className={"limit-order-modal__success-text"}>
-							<img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
-							<span>{this.props.translate("modal.success") || "Success"}</span>
+					<div className="limit-order-modal__msg limit-order-modal__msg--success">
+						<div className={"limit-order-modal__text"}>
+							<div>
+								<img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+                <span>{this.props.translate("modal.success") || "Success"}</span>
+							</div>
+              <div className={"limit-order-modal__button limit-order-modal__button--success"} onClick={this.closeModal}>
+								{this.props.translate("done") || "Done"}
+							</div>
 						</div>
 					</div>
 				)}
+
+        {this.state.err &&
+          <div className="limit-order-modal__msg limit-order-modal__msg--failed">
+            <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
+              <div className={"limit-order-modal__left-content"}>
+                <img src={require("../../../../assets/img/limit-order/error.svg")}/>
+                <div>
+                  <div>{this.props.translate("error_text") || "Error"}</div>
+                  <div>{this.state.err}</div>
+                </div>
+              </div>
+              <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
+                {this.props.translate("ok") || "OK"}
+              </div>
+            </div>
+          </div>
+        }
 			</div>
 		);
 	};

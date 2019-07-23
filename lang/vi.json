@@ -439,5 +439,8 @@
   "i_understand": "Tôi hiểu",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "Hoàn Thành",
+  "error_text": "Lỗi Xảy Ra"
 }

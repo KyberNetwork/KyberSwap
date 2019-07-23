@@ -439,5 +439,8 @@
   "i_understand": "이해했습니다.",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "완료",
+  "error_text": "오류"
 }
