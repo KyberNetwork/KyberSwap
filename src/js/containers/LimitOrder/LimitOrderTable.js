@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../utils/converter";
+import { roundingRateNumber, multiplyOfTwoNumber, formatNumber, displayNumberWithDot } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -184,24 +184,19 @@ export default class LimitOrderTable extends Component {
     const { screen } = this.props;
 
     const datetime = updated_at;
-    const rate = roundingRateNumber(min_rate);
+    const rate = displayNumberWithDot(min_rate, 9);
 
     if (screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
-          {/* <div>
-            <span>{source.toUpperCase()}</span>
-            <span>&rarr;</span>
-            <span>{dest.toUpperCase()}</span>
-          </div> */}
           <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
           {this.getAddressCell(props)}
         </div>
       )
-    } 
+    }
     return (
-      <div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
+      <div>{source.toUpperCase()}/{dest.toUpperCase()} >= <span title={min_rate}>{rate}</span></div>
     )
   }
 

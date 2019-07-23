@@ -261,9 +261,10 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
-                    rate: converters.roundingRateNumber(this.props.limitOrder.triggerRate)
+                    rawRate: this.props.limitOrder.triggerRate,
+                    rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)}`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
                 <div className="limit-order-modal__pair">
@@ -291,7 +292,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span>({formatedSrcAmount} - {formatedFee}) {this.props.limitOrder.sourceTokenSymbol} * <span title={this.props.limitOrder.triggerRate}>{converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span> = {converters.formatNumber(receiveAmount, 5)} {this.props.limitOrder.destTokenSymbol}</span>
                       </div>
                     </div>
                   </div>

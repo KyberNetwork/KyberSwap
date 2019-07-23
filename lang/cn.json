@@ -395,7 +395,7 @@
     "eth_not_support": "ETH*是ETH和WETH的组合",
     "canceling_order_message": "您正在取消这个订单",
     "fee_info_message": "别担心。您还没有被收费。\n您只有在交易被执行后才会被收费（上链)。",
-    "confirm_order_message": "当 ${srcToken}/${destToken} >= ${rate} 时，您的交易会被广播上链",
+    "confirm_order_message": "当 ${srcToken}/${destToken} >= <span title=\"${rawRate}\">${rate}</span> 时，您的交易会被广播上链",
     "fee": "费用",
     "change_rate": "改变汇率",
     "current_rate": "当前汇率",

@@ -87,11 +87,11 @@ const exchange = (state = initState, action) => {
 
       //calculate source, dest
       if (newState.inputFocus === 'dest') {
-        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 5)
       }
 
       if (newState.inputFocus === 'source') {
-        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 4)
+        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 5)
       }
 
       if (!newState.isEditRate) {
@@ -167,14 +167,14 @@ const exchange = (state = initState, action) => {
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken) return newState
-        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 4)
+        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 5)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken) return newState
-        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 5)
       }
       return newState
     }
