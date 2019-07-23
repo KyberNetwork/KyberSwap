@@ -351,10 +351,10 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
         path += params;
     }
 
-    if (time) {
-        const second = calcInterval(time);
-        path += `&from=${second}`;
-    }
+    // if (time) {
+    //     const second = calcInterval(time);
+    //     path += `&from=${second}`;
+    // }
 
     if (dateSort) {
         path += `&sort=${dateSort}`;
