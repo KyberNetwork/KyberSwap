@@ -1399,19 +1399,28 @@
         }
     }
 
-    &__success-msg {
-        background-color: #e8f9e8;
+    &__msg {
         color: #222222;
         font-size: 14px;
-        display: flex;
         padding: 30px 30px;
         font-weight: 500;
         border-radius: 0 0 10px 10px;
         animation: fadeIn 0.3s forwards;
+
+        &--success {
+            background-color: #e8f9e8;
+        }
+
+        &--failed {
+            background-color: #FBEAE7;
+        }
     }
 
-    &__success-text {
+    &__text {
         animation: slideUp 0.3s forwards;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         img {
             position: relative;
@@ -1420,6 +1429,47 @@
 
         span {
             margin-left: 15px;
+        }
+
+        &--failed {
+            color: #f25129;
+            font-weight: 500;
+        }
+    }
+
+    &__left-content {
+        display: flex;
+        align-items: flex-start;
+        max-width: calc(100% - 150px);
+
+        img {
+            margin-right: 15px;
+            bottom: -2px;
+        }
+    }
+
+    &__button {
+        padding: 9px 40px;
+        color: white;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &--success {
+            background-color: #35B27D;
+
+            &:hover {
+                background-color: darken(#35B27D, 10%);
+            }
+        }
+
+        &--failed {
+            background-color: #f25129;
+
+            &:hover {
+                background-color: darken(#f25129, 10%);
+            }
         }
     }
 

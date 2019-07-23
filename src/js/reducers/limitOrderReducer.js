@@ -49,7 +49,7 @@ const limitOrder = (state = initState, action) => {
           var errors = newState.errors
           errors.triggerRate = []
           newState.errors = errors
-          newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value)  
+          newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate);
           break
         case "rate": 
           newState.triggerRate = value
