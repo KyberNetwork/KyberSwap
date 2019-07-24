@@ -1230,12 +1230,13 @@ $divider-color: darken($title-background-color, 5);
 .modal-info {
   &__warning {
     text-align: center;
-    margin-bottom: 15px;
+    margin: 15px 0;
+    display: block;
 
     img {
       margin-right: 5px;
       position: relative;
-      bottom: 1px;
+      bottom: 2px;
     }
 
     span {

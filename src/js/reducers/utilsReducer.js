@@ -78,12 +78,11 @@ const utils = (state = initState, action) => {
     }
     case "UTIL.OPEN_INFO_MODAL": {
       var newState = { ...state }
-      var { title, content, warning } = action.payload;
+      var { title, content } = action.payload;
       newState.infoModal = {
         open: true,
         title: title,
         content: content,
-        warning
       }
       return newState
     }
