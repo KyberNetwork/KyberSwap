@@ -14,7 +14,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions";
 export default class Pagination extends React.Component {
   range = (start, end) => {
     const arr = [];
-    for (i = start; i <= end - start; i++) {
+    for (let i = start; i < end; i++) {
       arr.push(i)
     }
     return arr;
