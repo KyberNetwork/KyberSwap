@@ -14,6 +14,12 @@ const InfoModal = (props) => {
                       {props.content}
                       </p>
                   </center>
+                {props.warning &&
+                  <div className={"modal-info__warning"}>
+                    <img src={require("../../../assets/img/v3/info_blue.svg")} />
+                    <span>{props.warning}</span>
+                  </div>
+                }
               </div>
           </div>
       </div>

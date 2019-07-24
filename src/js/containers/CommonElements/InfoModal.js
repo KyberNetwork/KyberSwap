@@ -25,8 +25,9 @@ export default class Info extends React.Component {
           isOpen={this.props.modal.open}
           title={this.props.modal.title} 
           translate={this.props.translate} 
-          content={this.props.modal.content} 
-          closeModal={this.exitIdleMode.bind(this)}          
+          content={this.props.modal.content}
+          warning={this.props.modal.warning}
+          closeModal={this.exitIdleMode.bind(this)}
       />
     )  
   }

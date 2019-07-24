@@ -254,7 +254,8 @@
     "rate_too_low": "触发汇率太低，请提高触发汇率",
     "insufficient_balance_order": "您的余额不足。请检查您的${tokenSymbol}余额和正在缓冲的订单。",
     "insufficient_balance": "您的余额不足以支持这笔交易",
-    "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}"
+    "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",
