@@ -9,7 +9,7 @@ import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import * as constants from "../../services/constants"
 import limitOrderServices from "../../services/limit_order";
-import { default as _ } from 'underscore';
+import { debounce } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
@@ -88,7 +88,7 @@ export default class LimitOrderForm extends React.Component {
     
   }
 
-  lazyFetchRate = _.debounce(this.fetchCurrentRate, 500)
+  lazyFetchRate = debounce(this.fetchCurrentRate, 500)
 
   handleFocus = (e, type) => {
     this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);

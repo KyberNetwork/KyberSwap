@@ -2,7 +2,6 @@ import Web3 from "web3"
 import constants from "../../constants"
 import * as ethUtil from 'ethereumjs-util'
 import BLOCKCHAIN_INFO from "../../../../../env"
-import abiDecoder from "abi-decoder"
 import * as converters from "../../../utils/converter"
 
 export default class BaseProvider {
@@ -516,9 +515,9 @@ export default class BaseProvider {
                 //get trade abi from 
                 var tradeAbi = this.getAbiByName("tradeWithHint", constants.KYBER_NETWORK)
                 //  console.log(tradeAbi)
-                abiDecoder.addABI(tradeAbi)
+                // addABI(tradeAbi)
                 //  console.log(abiDecoder)
-                var decoded = abiDecoder.decodeMethod(data);
+                var decoded = this.decodeMethod(tradeAbi, data);
                 //      console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
@@ -526,6 +525,86 @@ export default class BaseProvider {
             }
 
         })
+    }
+
+    decodeMethod(abiArray, data) {
+        const state = {
+            savedABIs: [],
+            methodIDs: {}
+        }
+        if (Array.isArray(abiArray)) {
+            abiArray.map(abi => {
+                if (abi.name) {
+                    const signature = this.rpc.utils.sha3(
+                        `${abi.name}(${abi.inputs.map(item => item.type).join(",")})`
+                    );
+
+                    if (abi.type === "event") {
+                        state.methodIDs[signature.slice(2)] = abi;
+                    } else {
+                        state.methodIDs[signature.slice(2, 10)] = abi;
+                    }
+                }
+            });
+
+            state.savedABIs = state.savedABIs.concat(abiArray);
+        } else {
+            throw new Error("Expected ABI array, got " + typeof abiArray);
+        }
+
+        const methodID = data.slice(2, 10);
+        const abiItem = state.methodIDs[methodID];
+        if (abiItem) {
+            const params = abiItem.inputs.map(item => ({
+                type: item.type,
+                name: item.name
+            }));
+            let decoded = this.rpc.eth.abi.decodeParameters(params, "0x" + data.slice(10));
+            let retData = {
+                name: abiItem.name,
+                params: []
+            }
+
+            Object.keys(decoded).forEach(key => {
+                const foundItems = abiItem.inputs.filter(t => t.name === key);
+                if (foundItems.length > 0) {
+                    const field = foundItems[0];
+                    const isUint = field.type.indexOf("uint") === 0;
+                    const isInt = field.type.indexOf("int") === 0;
+                    const isAddress = field.type.indexOf("address") === 0;
+                    const param = decoded[field.name];
+                    let parsedParam = param;
+
+                    if (isUint || isInt) {
+                        const isArray = Array.isArray(param);
+
+                        if (isArray) {
+                            parsedParam = param.map(val => this.rpc.utils.toBN(val).toString());
+                        } else {
+                            parsedParam = this.rpc.utils.toBN(param).toString();
+                        }
+                    }
+
+                    if (isAddress) {
+                        const isArray = Array.isArray(param);
+
+                        if (isArray) {
+                            parsedParam = param.map(val => val.toLowerCase());
+                        } else {
+                            parsedParam = param.toLowerCase();
+                        }
+                    }
+
+                    retData.params.push({
+                        name: field.name,
+                        value: parsedParam,
+                        type: field.type
+                    });
+                }
+            });
+
+            return retData;
+        }
     }
 
 
