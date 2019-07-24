@@ -15,7 +15,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
-import { default as _ } from 'underscore';
+import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
@@ -117,7 +117,7 @@ class ExchangeBody extends React.Component {
       return
     }
   }
-  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+  lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
 
   updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
@@ -261,10 +261,10 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.estimateGasNormal())
   }
 
-  lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
-  // lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)
+  // lazyUpdateValidateSourceAmount = debounce(this.validateSourceAmount, 500)
 
-  lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
+  lazyEstimateGas = debounce(this.dispatchEstimateGasNormal, 500)
 
 
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {

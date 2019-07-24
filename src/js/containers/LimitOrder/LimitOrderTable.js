@@ -10,9 +10,10 @@ import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
-import { calcInterval, isArrayEqual } from "../../utils/common";
+import { calcInterval } from "../../utils/common";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import BLOCKCHAIN_INFO from "../../../../env"
+import { sortBy } from "underscore";
 
 @connect((store, props) => {
   return {
@@ -702,10 +703,14 @@ export default class LimitOrderTable extends Component {
     }
 
     if (dateSort) {
-      results = _.orderBy(results, item => {
+      results = sortBy(results, item => {
         // return getFormattedDate(item.updated_at, true);
         return item.updated_at;
-      }, [dateSort]);
+      });
+
+      if (dateSort === "desc") {
+        results.reverse();
+      }
     }
     
 

@@ -3,7 +3,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 // import { converters.toT } from "../../utils/converter";
 import * as converters from "../../utils/converter";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-import _ from "lodash";
+import { sortBy } from "underscore";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -62,10 +62,14 @@ export function getOrders() {
 }
 
 function sortOrders(orders, dateSort) {
-    let results = _.orderBy(orders, item => {
+    let results = sortBy(orders, item => {
         // return getFormattedDate(item.updated_at, true);
         return item.updated_at;
-    }, [dateSort]);
+    });
+
+    if (dateSort === "desc") {
+        results.reverse();
+    }
 
     // results = _.sortBy(results, item => {
     //     if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {

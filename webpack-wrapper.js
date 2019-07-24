@@ -49,6 +49,10 @@ var getConfig = env => {
                 'logger': env === 'production' || env === 'staging'?'false': 'true',
                 'env': JSON.stringify(env)
             }
+        }),
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
         })
     ];
     return {

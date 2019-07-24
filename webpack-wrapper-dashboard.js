@@ -65,7 +65,11 @@ var getConfig = env => {
                // onBuildStart:['node webpack.beforebuild.js'],
                 onBuildEnd:[`BUNDLE_NAME=[hash] chain=${chain} folder=${buildFolder} node webpack.afterbuild.js`]
             }
-        )
+        ),
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
+        })
     ];
     return {
         context: path.join(__dirname, 'src'),

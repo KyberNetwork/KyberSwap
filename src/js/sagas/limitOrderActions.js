@@ -6,9 +6,8 @@ import * as common from "./common"
 import limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
 import * as utilActions from '../actions/utilActions'
-import _ from "lodash";
 import * as constants from "../services/constants"
-import { subOfTwoNumber, multiplyOfTwoNumber } from "../utils/converter"
+import { multiplyOfTwoNumber } from "../utils/converter"
 
 function* selectToken(action) {
     const { symbol, address, type } = action.payload
