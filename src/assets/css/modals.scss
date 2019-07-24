@@ -1226,3 +1226,22 @@ $divider-color: darken($title-background-color, 5);
     }
   }
 }
+
+.modal-info {
+  &__warning {
+    text-align: center;
+    margin: 15px 0;
+    display: block;
+
+    img {
+      margin-right: 5px;
+      position: relative;
+      bottom: 2px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
