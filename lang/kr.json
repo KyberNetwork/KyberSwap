@@ -137,6 +137,7 @@
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "리밋 오더",
     "rate_label":"율",
+    "market_rate": "Market rate",
     "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
@@ -424,7 +425,10 @@
     "execute_rate": "오더는 ${tokenPair}가 ${executeRate}에 도달하면 실행됩니다.  (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> 높은 비율).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "오픈 상태의 오더",
-    "order_history": "오더 내역"
+    "order_history": "오더 내역",
+    "actual_receive_amount": "Actual receive amount:",
+    "estimated_amount": "Estimated amount:",
+    "extra_amount": "You got extra amount:"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -444,5 +448,7 @@
   "more_info": "More Info",
   "ok": "OK",
   "done": "완료",
-  "error_text": "오류"
+  "error_text": "오류",
+  "extra": "extra",
+  "off": "OFF"
 }

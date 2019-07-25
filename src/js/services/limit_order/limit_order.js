@@ -12,6 +12,7 @@ const keyMapping = {
     "addr": "user_address",
     "nonce": "nonce",
     "fee": "fee",
+    "receive": "receive",
     "status": "status",
     "created_at": "created_at",
     "updated_at": "updated_at",

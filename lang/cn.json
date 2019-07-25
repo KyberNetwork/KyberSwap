@@ -137,6 +137,7 @@
     "please_swap_and_send_before": "请在这之前兑换并发送您的钱包",
     "limit_order": "限价订单",
     "rate_label":"率",
+    "market_rate": "市场价格",
     "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
@@ -423,7 +424,10 @@
     "execute_rate": "您的订单当${tokenPair}汇率达到${executeRate}(高<span class=\"limit-order__percent limit-order__percent--positive\">1%</span>)时会执行。",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "有效订单",
-    "order_history": "订单历史"
+    "order_history": "订单历史",
+    "actual_receive_amount": "实际接收数量:",
+    "estimated_amount": "预计数量:",
+    "extra_amount": "您获得了额外的数量:"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -443,5 +447,7 @@
   "more_info": "More Info",
   "ok": "OK",
   "done": "完成",
-  "error_text": "错误"
+  "error_text": "错误",
+  "extra": "额外",
+  "off": "折扣"
 }
