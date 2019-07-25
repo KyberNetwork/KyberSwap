@@ -137,7 +137,8 @@
     "please_swap_and_send_before": "Vui lòng trao đổi token và chuyển về ví cá nhân của bạn trước",
     "limit_order": "Lệnh giao dịch",
     "rate_label": "Tỉ lệ",
-    "market_rate": "Tỉ giá thị trường"
+    "market_rate": "Tỉ giá thị trường",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -255,7 +256,8 @@
     "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh.",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
-    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}"
+    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",

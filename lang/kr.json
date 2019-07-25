@@ -137,7 +137,8 @@
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "리밋 오더",
     "rate_label":"율",
-    "market_rate": "Market rate"
+    "market_rate": "Market rate",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -255,7 +256,8 @@
     "rate_too_low": "트리거 배율이 너무 낮습니다. 배율을 올려주세요.",
     "insufficient_balance_order": "주문을 위한 잔액이 부족합니다. KNC 잔액과 대기 중인 주문을 확인해주세요",
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
-    "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다."
+    "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "Metamask",

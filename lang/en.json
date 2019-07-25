@@ -45,7 +45,7 @@
     "amount": "amount",
     "select_token": "Select token",
     "advanced": "Advanced",
-    "transaction_fee": "Transaction fee",
+    "transaction_fee": "Transaction Fee",
     "address_balance": "Address Balance",
     "balance": "Balance",
     "password_needed_exchange": "Password is needed for every exchange transaction",
@@ -140,7 +140,8 @@
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "Limit Order",
     "rate_label":"Rate",
-    "market_rate": "Market rate"
+    "market_rate": "Market rate",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -257,7 +258,8 @@
     "rate_too_low": "Trigger rate is too low, please increase trigger rate",
     "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
     "insufficient_balance": "Your balance is insufficient for transaction",
-    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
+    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "METAMASK",

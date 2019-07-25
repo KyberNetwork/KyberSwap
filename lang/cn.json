@@ -137,7 +137,8 @@
     "please_swap_and_send_before": "请在这之前兑换并发送您的钱包",
     "limit_order": "限价订单",
     "rate_label":"率",
-    "market_rate": "市场价格"
+    "market_rate": "市场价格",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -255,7 +256,8 @@
     "rate_too_low": "触发汇率太低，请提高触发汇率",
     "insufficient_balance_order": "您的余额不足。请检查您的${tokenSymbol}余额和正在缓冲的订单。",
     "insufficient_balance": "您的余额不足以支持这笔交易",
-    "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}"
+    "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",

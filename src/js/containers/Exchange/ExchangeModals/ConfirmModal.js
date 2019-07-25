@@ -490,7 +490,8 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-        console.log(this.state.isFetchGas, this.state.isFetchRate, this.state.isConfirmingTx)
+        const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.02, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
+
         return (
             <div>
                 <a className="x" onClick={this.closeModal}>
@@ -509,6 +510,13 @@ export default class ConfirmModal extends React.Component {
                                     gas={this.state.gasLimit}
                                     isFetchingGas={this.state.isFetchGas}
                                 />
+
+                              {warningLowFee &&
+                                  <div className={"tx-fee-warning"}>
+                                    <img src={require("../../../../assets/img/warning-triangle.svg")}/>
+                                    <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
+                                  </div>
+                              }
 
                             </div>
                             {this.errorHtml()}
