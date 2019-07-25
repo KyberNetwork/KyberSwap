@@ -422,7 +422,10 @@
     "execute_rate": "Lệnh giao dịch của bạn sẽ được thực hiện khi tỉ giá ${tokenPair} đạt ${executeRate} (cao hơn <span class=\"limit-order__percent limit-order__percent--positive\">1%</span>).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Các lệnh đang mở",
-    "order_history": "Lịch sử giao dịch"
+    "order_history": "Lịch sử giao dịch",
+    "actual_receive_amount": "Actual receive amount:",
+    "estimated_amount": "Estimated amount:",
+    "extra_amount": "You got extra amount:"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -442,5 +445,6 @@
   "more_info": "More Info",
   "ok": "OK",
   "done": "Hoàn Thành",
-  "error_text": "Lỗi Xảy Ra"
+  "error_text": "Lỗi Xảy Ra",
+  "extra": "extra"
 }

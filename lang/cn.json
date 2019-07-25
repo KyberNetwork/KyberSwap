@@ -421,7 +421,10 @@
     "execute_rate": "您的订单当${tokenPair}汇率达到${executeRate}(高<span class=\"limit-order__percent limit-order__percent--positive\">1%</span>)时会执行。",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "有效订单",
-    "order_history": "订单历史"
+    "order_history": "订单历史",
+    "actual_receive_amount": "Actual receive amount:",
+    "estimated_amount": "Estimated amount:",
+    "extra_amount": "You got extra amount:"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -441,5 +444,6 @@
   "more_info": "More Info",
   "ok": "OK",
   "done": "完成",
-  "error_text": "错误"
+  "error_text": "错误",
+  "extra": "extra"
 }

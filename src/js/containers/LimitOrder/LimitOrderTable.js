@@ -5,7 +5,7 @@ import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
 import { getFormattedDate } from "../../utils/common";
-import { roundingRateNumber, multiplyOfTwoNumber, formatNumber, displayNumberWithDot } from "../../utils/converter";
+import { roundingRateNumber, multiplyOfTwoNumber, formatNumber, displayNumberWithDot, compareTwoNumber, subOfTwoNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
@@ -14,6 +14,7 @@ import { calcInterval } from "../../utils/common";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import BLOCKCHAIN_INFO from "../../../../env"
 import { sortBy } from "underscore";
+import LimitOrderExtraTooltip from "./LimitOrderExtraTooltip";
 
 @connect((store, props) => {
   return {
@@ -32,7 +33,8 @@ export default class LimitOrderTable extends Component {
       addressFilterVisible: false,
       expanded: {},
       addressCopied: false,
-      currentTooltipId: ''
+      currentTooltipId: '',
+      isExtraOpen: null
     }
     
     this.btnCancelRef = null;
@@ -64,7 +66,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getAddressCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-text-small",
-      width: 110,
+      width: 90,
     }, {
       id: "condition",
       Header: this.getHeader("condition"),
@@ -80,11 +82,11 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from",
-      width: 100
+      width: 90
     }, {
       id: "to",
       Header: this.getHeader("to"),
-      accessor: item => ({ dest: item.dest, minRate: item.min_rate, sourceAmount: item.src_amount, fee: item.fee }),
+      accessor: item => item,
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to",
@@ -174,7 +176,7 @@ export default class LimitOrderTable extends Component {
     return (
       <div key={this.state.addressCopied}>
         <CopyToClipboard text={user_address}>
-          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 6)} ... ${user_address.slice(-4)}`}</div>
+          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 5)} ... ${user_address.slice(-3)}`}</div>
         </CopyToClipboard>
       </div>
     )
@@ -212,14 +214,33 @@ export default class LimitOrderTable extends Component {
     )
   }
 
+  toggleExtraModal = (id) => {
+    this.setState({
+      isExtraOpen: id
+    });
+  }
+
   getToCell = (props) => {
-    const { dest, minRate, fee, sourceAmount } = props;
-    let destAmount = sourceAmount * (1 - fee) * minRate;  // fee already in percentage format
+    const { dest, min_rate, fee, src_amount, status, id, receive } = props;
+    let destAmount = src_amount * (1 - fee) * min_rate;  // fee already in percentage format
     destAmount = formatNumber(destAmount, 5);
+
+    const receiveAmount = formatNumber(receive, 5);
+    const isShowExtra = compareTwoNumber(receiveAmount, destAmount) > 0;
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
-        <span>{dest.toUpperCase()}</span>
+        <span>{dest.toUpperCase()}</span>{' '}
+        {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
+          <React.Fragment>
+            <span data-tip data-for={`extra-${id}`} className="to-number-cell--extra" onClick={e => this.toggleExtraModal(id)}>{this.props.translate("extra") || "extra"}</span>
+            {this.state.isExtraOpen === id && <LimitOrderExtraTooltip
+              estimateAmount={destAmount}
+              dest={dest}
+              actualAmount={receiveAmount}
+              toggleExtraModal={this.toggleExtraModal} />}
+          </React.Fragment>
+        }
       </div>
     )
   }
@@ -278,7 +299,7 @@ export default class LimitOrderTable extends Component {
     return (
       <div className="cell-action">
         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
+        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
           {/* <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a> */}
           {this.props.translate("limit_order.view_tx") || "View tx"}
         </button>}
@@ -317,7 +338,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getOrderDetail = (row) => {
-    const { source, dest, min_rate, status, updated_at, src_amount, fee } = row.original;
+    const { source, dest, min_rate, status, updated_at, src_amount, fee, receive } = row.original;
 
     const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
@@ -326,6 +347,14 @@ export default class LimitOrderTable extends Component {
     const sourceAmount = formatNumber(src_amount, 5);
     let destAmount = src_amount * (1 - fee) * min_rate;
     destAmount = formatNumber(destAmount, 5);
+
+    let actualAmount = 0, extraAmount = 0, isShowExtra = false;
+    if (status === LIMIT_ORDER_CONFIG.status.FILLED) {
+      actualAmount = formatNumber(receive, 5);
+      isShowExtra = compareTwoNumber(actualAmount, destAmount) > 0;
+      extraAmount = subOfTwoNumber(actualAmount, destAmount);
+      extraAmount = formatNumber(extraAmount, 5);
+    }
 
     return (
       <div className="limit-order-modal__detail-order">
@@ -359,17 +388,50 @@ export default class LimitOrderTable extends Component {
               <span class="to-number-cell">{destAmount}</span>{' '}
               <span>{dest.toUpperCase()}</span>
             </div>
+
+            {/* Actual, estimated, extra amount */}
+            {isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED && <div className="extra-tooltip__mobile">
+              <div>
+                {this.props.translate("limit_order.actual_receive_amount") || "Actual receive amount:"}{' '}
+                {`${actualAmount} ${dest}`} 
+              </div>
+              <div>
+                {this.props.translate("limit_order.estimated_amount") || "Estimated amount:"}{' '}
+                {`${destAmount} ${dest}`} 
+              </div>
+              <div>
+                {this.props.translate("limit_order.extra_amount") || "You got extra amount:"}{' '}
+                <span className="extra-tooltip--extra-amount">
+                  {`${extraAmount} ${dest}`}
+                </span>
+              </div>
+              <div className="extra-tooltip--faq">
+                <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+                  {this.props.translate("why") || "Why?"}
+                </a>
+              </div>
+            </div>}
+
           </div>
-          <div className="limit-order-modal__detail-order__amount">
+
+          {!isShowExtra && <div className="limit-order-modal__detail-order__amount">
             <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
             <div className="cell-to">
               <span class="to-number-cell">{formatedFee}</span>{' '}
               <span>{source.toUpperCase()}</span>
             </div>
-          </div>
+          </div>}
         </div>
         {/* Button */}
-        <div>
+        <div className={isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED ? "limit-order-modal__detail-order--footer" : ""}>
+          {isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED && <div className="limit-order-modal__detail-order__amount">
+            <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
+            <div className="cell-to">
+              <span class="to-number-cell">{formatedFee}</span>{' '}
+              <span>{source.toUpperCase()}</span>
+            </div>
+          </div>}
+
           {this.getActionCell(row.original)}
         </div>
       </div>
@@ -736,9 +798,17 @@ export default class LimitOrderTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
+    // if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
+    //   this.setState({
+    //     statusFilterVisible: false,
+    //     addressFilterVisible: false,
+    //     conditionFilterVisible: false,
+    //     expanded: {}
+    //   })
+    // }
+
+    if (this.props.limitOrder.activeOrderTab !== nextProps.limitOrder.activeOrderTab) {
       this.setState({
-        // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
         statusFilterVisible: false,
         addressFilterVisible: false,
         conditionFilterVisible: false,
