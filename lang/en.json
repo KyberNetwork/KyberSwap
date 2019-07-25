@@ -45,7 +45,7 @@
     "amount": "amount",
     "select_token": "Select token",
     "advanced": "Advanced",
-    "transaction_fee": "Transaction fee",
+    "transaction_fee": "Transaction Fee",
     "address_balance": "Address Balance",
     "balance": "Balance",
     "password_needed_exchange": "Password is needed for every exchange transaction",
@@ -139,7 +139,8 @@
     "please_swap_before": "Please swap before",
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "Limit Order",
-    "rate_label":"Rate"
+    "rate_label":"Rate",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Enter Password",

@@ -671,14 +671,14 @@ export default class LimitOrderTable extends Component {
     }
 
     // Time filter
-    if (timeFilter) {
-      const interval = calcInterval(timeFilter);
-      const currentTime = new Date().getTime() / 1000;
+    // if (timeFilter) {
+    //   const interval = calcInterval(timeFilter);
+    //   const currentTime = new Date().getTime() / 1000;
 
-      results = results.filter(item => {
-        return item.updated_at >= currentTime - interval;
-      });
-    }
+    //   results = results.filter(item => {
+    //     return item.updated_at >= currentTime - interval;
+    //   });
+    // }
 
     return results;
   }

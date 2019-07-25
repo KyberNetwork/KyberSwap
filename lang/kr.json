@@ -136,7 +136,8 @@
     "please_swap_before": "Please swap before",
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "리밋 오더",
-    "rate_label":"율"
+    "rate_label":"율",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "비밀번호 입력",

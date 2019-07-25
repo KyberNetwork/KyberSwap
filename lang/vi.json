@@ -136,7 +136,8 @@
     "please_swap_before": "Vui lòng trao đổi token trước",
     "please_swap_and_send_before": "Vui lòng trao đổi token và chuyển về ví cá nhân của bạn trước",
     "limit_order": "Lệnh giao dịch",
-    "rate_label": "Tỉ lệ"
+    "rate_label": "Tỉ lệ",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
