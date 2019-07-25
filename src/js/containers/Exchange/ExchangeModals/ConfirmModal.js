@@ -490,7 +490,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-        const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.02, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
+        const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
 
         return (
             <div>
