@@ -25,7 +25,7 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-- if browser.device.mobile? || cookies[:is_visited] == 'true'
+- if cookies[:is_visited] == 'true'
     link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
     #swap-app onClick="animateSwap()"
         div style="text-align:center"
