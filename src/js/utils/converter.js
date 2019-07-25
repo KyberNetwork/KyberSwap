@@ -437,7 +437,7 @@ export function roundingNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -483,7 +483,7 @@ export function roundingRateNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
