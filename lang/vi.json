@@ -423,9 +423,9 @@
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Các lệnh đang mở",
     "order_history": "Lịch sử giao dịch",
-    "actual_receive_amount": "Actual receive amount:",
-    "estimated_amount": "Estimated amount:",
-    "extra_amount": "You got extra amount:"
+    "actual_receive_amount": "Lượng token thực lĩnh:",
+    "estimated_amount": "Lượng token dự tính:",
+    "extra_amount": "Bạn nhận được thêm:"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -446,5 +446,5 @@
   "ok": "OK",
   "done": "Hoàn Thành",
   "error_text": "Lỗi Xảy Ra",
-  "extra": "extra"
+  "extra": "thêm"
 }

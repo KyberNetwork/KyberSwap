@@ -222,7 +222,7 @@ export default class LimitOrderTable extends Component {
 
   getToCell = (props) => {
     const { dest, min_rate, fee, src_amount, status, id, receive } = props;
-    let destAmount = src_amount * (1 - fee) * min_rate;  // fee already in percentage format
+    let destAmount = multiplyOfTwoNumber(src_amount, multiplyOfTwoNumber(min_rate, subOfTwoNumber(1, fee))); // fee already in percentage format
     destAmount = formatNumber(destAmount, 5);
 
     const receiveAmount = formatNumber(receive, 5);
