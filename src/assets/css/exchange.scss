@@ -153,6 +153,26 @@
   // }
 }
 
+.exchange-market-rate {
+  border-radius: 14px;
+  background-color: #e8eff6;
+  font-size: 10px;
+  font-weight: 600;
+  color: #8690ad;
+  padding: 5px 25px;
+  margin-bottom: 3px;
+  cursor: pointer;
+
+  &--wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .exchange-item-label {
+      margin-bottom: 0 !important;
+      padding: 5px 0;
+    }
+  }
+}
 
 .exchange-rate {
   // color: white;

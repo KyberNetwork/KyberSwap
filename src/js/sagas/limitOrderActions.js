@@ -256,6 +256,8 @@ function* changeOrderTab(action) {
   
   yield put(limitOrderActions.getOrdersByFilter({
     statusFilter: [],
+    addressFilter: [],
+    pairFilter: [],
     pageIndex: 1
   }));
 }

@@ -140,6 +140,7 @@
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "Limit Order",
     "rate_label":"Rate",
+    "market_rate": "Market rate",
     "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
@@ -425,7 +426,10 @@
     "execute_rate": "Your order will execute when ${tokenPair} hits ${executeRate} (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> higher).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Open Orders",
-    "order_history": "Order History"
+    "order_history": "Order History",
+    "actual_receive_amount": "Actual receive amount:",
+    "estimated_amount": "Estimated amount:",
+    "extra_amount": "You got extra amount:"
   },
   "home": "Home",
   "tracker": "Tracker",
@@ -445,5 +449,7 @@
   "more_info": "More Info",
   "ok": "OK",
   "done": "Done",
-  "error_text": "Error"
+  "error_text": "Error",
+  "extra": "extra",
+  "off": "OFF"
 }
