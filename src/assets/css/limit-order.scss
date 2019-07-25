@@ -622,7 +622,7 @@
         display: flex;
         position: relative;
         margin-bottom: 3px;
-        align-items: center;
+        align-items: flex-start;
 
         &-title {
             width: 100px;
@@ -652,6 +652,21 @@
 
     &__info {
         margin-top: 15px;
+    }
+
+    &__net {
+        color: #222222 !important;
+    }
+
+    &__discount {
+        // display: inline-block;
+        border-radius: 14px;
+        background-color: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        color: #ef8102;
+        padding: 2px 8px;
+        margin-left: 5px;
     }
 }
 
@@ -1971,5 +1986,10 @@
 
   &__bold-text {
     font-weight: 600;
+  }
+
+  &__line-through-text {
+    text-decoration: line-through;
+    color: #999999;
   }
 }

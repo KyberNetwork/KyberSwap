@@ -220,6 +220,11 @@ export default class LimitOrderForm extends React.Component {
     return tableComp;
   }
 
+  resetToMarketRate = (e) => {
+    const expectedRate = converters.toT(this.props.limitOrder.offeredRate);
+    this.props.dispatch(limitOrderActions.inputChange("rate", converters.roundingRateNumber(expectedRate)));
+  }
+
   getRateWarningTooltip = () => {
     if (!this.props.account) {
       return null;
@@ -363,8 +368,10 @@ export default class LimitOrderForm extends React.Component {
         </div>
 
         <div className={"exchange-content__item--wrapper"}>
-          <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-          
+          <div className="exchange-market-rate--wrapper">
+            <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
+            <div className="exchange-market-rate" onClick={e => this.resetToMarketRate()}>{this.props.translate("transaction.market_rate") || "Market rate"}</div>
+          </div>
           <Tooltip
             open={this.props.limitOrder.errors.rateWarning !== "" && this.props.global.isOnMobile == false}
             position="right"

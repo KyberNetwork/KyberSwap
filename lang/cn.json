@@ -136,7 +136,8 @@
     "please_swap_before": "请在之前兑换",
     "please_swap_and_send_before": "请在这之前兑换并发送您的钱包",
     "limit_order": "限价订单",
-    "rate_label":"率"
+    "rate_label":"率",
+    "market_rate": "市场价格"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -445,5 +446,6 @@
   "ok": "OK",
   "done": "完成",
   "error_text": "错误",
-  "extra": "额外"
+  "extra": "额外",
+  "off": "折扣"
 }

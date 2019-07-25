@@ -139,7 +139,8 @@
     "please_swap_before": "Please swap before",
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "Limit Order",
-    "rate_label":"Rate"
+    "rate_label":"Rate",
+    "market_rate": "Market rate"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -447,5 +448,6 @@
   "ok": "OK",
   "done": "Done",
   "error_text": "Error",
-  "extra": "extra"
+  "extra": "extra",
+  "off": "OFF"
 }

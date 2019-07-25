@@ -174,6 +174,7 @@ export function submitOrder(order) {
         newOrder.min_rate = converters.toT(order.min_rate, 18);
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;
+        newOrder.receive = 100;
         data.push(newOrder);
         resolve(newOrder);
         return;
