@@ -51,11 +51,11 @@ export default class LimitOrderExtraTooltip extends React.PureComponent {
             {`${extraAmount} ${this.props.dest}`}
           </span>
         </div>
-        {/* <div className="extra-tooltip--faq">
-          <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+        <div className="extra-tooltip--faq">
+          <a href={`/faq#Why-received-amount-is-higher-than-estimated-amount`} target="_blank">
             {this.props.translate("why") || "Why?"}
           </a>
-        </div> */}
+        </div> 
       </div>
     )
   }
