@@ -878,5 +878,5 @@ export function formatNumberByPrecision(number, precision = 4) {
   const amountString = amountBigNumber.toFixed().toString();
   const indexOfDecimal = amountString.indexOf('.');
 
-  return indexOfDecimal !== -1 ? parseFloat(amountString.slice(0, indexOfDecimal + (precision + 1))) : parseFloat(amountString);
+  return indexOfDecimal !== -1 ? amountString.slice(0, indexOfDecimal + (precision + 1)) :amountString;
 }

@@ -34,7 +34,9 @@ const limitOrder = (state = initState, action) => {
     }
 
     case "LIMIT_ORDER.INPUT_CHANGE": {
-      const {focus, value} = action.payload     
+      const {focus, value} = action.payload
+      const balanceData = newState.balanceData;
+
       switch(focus) {
         case "source":
           newState.sourceAmount = value
@@ -42,14 +44,14 @@ const limitOrder = (state = initState, action) => {
           errors.sourceAmount = []
           newState.errors = errors
           var bigRate = converter.roundingRate(state.triggerRate)
-          newState.destAmount = converter.caculateDestAmount(value, bigRate)
+          newState.destAmount = converter.caculateDestAmount(value, bigRate, balanceData.destDecimal)
           break
         case "dest":
           newState.destAmount = value
           var errors = newState.errors
           errors.triggerRate = []
           newState.errors = errors
-          newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate);
+          newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, balanceData.sourceDecimal);
           break
         case "rate": 
           newState.triggerRate = value
@@ -57,7 +59,7 @@ const limitOrder = (state = initState, action) => {
           errors.triggerRate = []
           newState.errors = errors
           var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate)  
+          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, balanceData.destDecimal)
           break
       }
       return newState
@@ -91,7 +93,7 @@ const limitOrder = (state = initState, action) => {
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
         newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 4)  
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, newState.balanceData.destDecimal)
       }
 
       newState.isSelectToken = false
