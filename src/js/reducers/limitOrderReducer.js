@@ -34,8 +34,7 @@ const limitOrder = (state = initState, action) => {
     }
 
     case "LIMIT_ORDER.INPUT_CHANGE": {
-      const {focus, value} = action.payload
-      const balanceData = newState.balanceData;
+      const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload
 
       switch(focus) {
         case "source":
@@ -44,22 +43,23 @@ const limitOrder = (state = initState, action) => {
           errors.sourceAmount = []
           newState.errors = errors
           var bigRate = converter.roundingRate(state.triggerRate)
-          newState.destAmount = converter.caculateDestAmount(value, bigRate, balanceData.destDecimal)
+          newState.destAmount = converter.caculateDestAmount(value, bigRate, destTokenDecimals)
           break
         case "dest":
           newState.destAmount = value
           var errors = newState.errors
           errors.triggerRate = []
           newState.errors = errors
-          newState.sourceAmount = converter.caculateSourceAmount(value, state.offeredRate, balanceData.sourceDecimal);
+          var bigRate = converter.roundingRate(state.triggerRate)
+          newState.sourceAmount = converter.caculateSourceAmount(value, bigRate, sourceTokenDecimals);
           break
         case "rate": 
-          newState.triggerRate = value
+          newState.triggerRate = value.replace(',', '');
           var errors = newState.errors
           errors.triggerRate = []
           newState.errors = errors
           var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, balanceData.destDecimal)
+          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, destTokenDecimals)
           break
       }
       return newState
@@ -69,7 +69,7 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
-      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals } = action.payload
 
   
       if (expectedPrice == "0") {
@@ -92,8 +92,8 @@ const limitOrder = (state = initState, action) => {
       newState.blockNo = blockNo
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
-        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, newState.balanceData.destDecimal)
+        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(',', "");
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimals)
       }
 
       newState.isSelectToken = false

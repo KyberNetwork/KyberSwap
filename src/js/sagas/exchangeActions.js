@@ -57,6 +57,9 @@ function* updateRatePending(action) {
 
   const state = store.getState();
   const translate = getTranslate(state.locale);
+  const tokens = state.tokens.tokens;
+  const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
+  const destTokenDecimal = tokens[destTokenSymbol].decimals;
 
   if (refetchSourceAmount) {
     try {
@@ -101,7 +104,7 @@ function* updateRatePending(action) {
       yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate))
     }
 
-    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange))
+    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
 
   }catch(err){
     console.log(err)
@@ -573,7 +576,7 @@ export function* doAfterAccountImported(action){
       try{
         var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
         var balance = converter.toT(balanceSource, promoDecimal)
-        yield put(actions.inputChange('source', balance))
+        yield put(actions.inputChange('source', balance, promoDecimal, destTokenSymbol))
         yield put(actions.focusInput('source'));
       }catch(e){
         console.log(e)

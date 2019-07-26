@@ -22,10 +22,12 @@ import { Tooltip } from "react-tippy";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
+  const sourceToken = tokens[limitOrder.sourceTokenSymbol]
+  const destToken = tokens[limitOrder.destTokenSymbol]
 
   return {
     translate, limitOrder, tokens, account, ethereum,
-    global: store.global
+    global: store.global, sourceToken, destToken
 
   }
 })
@@ -99,7 +101,7 @@ export default class LimitOrderForm extends React.Component {
     var check = filterInputNumber(e, value, referValue)
     if (check) {     
       if (value < 0) return
-      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value));
+      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value, this.props.sourceToken.decimals, this.props.destToken.decimals));
       
       if (type === "source"){
         this.lazyFetchRate(value)
@@ -162,7 +164,7 @@ export default class LimitOrderForm extends React.Component {
 
     // console.log("souirce_token")
     // console.log(sourceAmountByPercentage)
-    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals)));
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals), this.props.sourceToken.decimals, this.props.destToken.decimals));
   };
 
   closeRateWarningTooltip = () => {
@@ -222,7 +224,7 @@ export default class LimitOrderForm extends React.Component {
 
   resetToMarketRate = (e) => {
     const expectedRate = converters.toT(this.props.limitOrder.offeredRate);
-    this.props.dispatch(limitOrderActions.inputChange("rate", converters.roundingRateNumber(expectedRate)));
+    this.props.dispatch(limitOrderActions.inputChange("rate", converters.roundingRateNumber(expectedRate), this.props.sourceToken.decimals, this.props.destToken.decimals));
   }
 
   getRateWarningTooltip = () => {
