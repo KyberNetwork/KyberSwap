@@ -334,8 +334,8 @@ export default class ConfirmModal extends React.Component {
         }
 
         var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
-        var destAmount = converter.calculateDest(sourceAmount, this.state.expectedRate)
-        destAmount = destAmount.toString()
+        var destDecimal = this.props.exchange.snapshot.balanceData.destDecimal;
+        var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
 
         var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
         var destTokenSymbol = this.props.exchange.destTokenSymbol

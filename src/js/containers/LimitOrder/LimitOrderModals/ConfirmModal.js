@@ -217,9 +217,6 @@ export default class ConfirmModal extends React.Component {
 
       return `
       <div>
-        <div className="title">
-          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.state.fee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
-        </div>
         <div className="description">
           ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
         </div>

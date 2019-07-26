@@ -81,17 +81,19 @@ const exchange = (state = initState, action) => {
       newState.blockNo = lastestBlock
       newState.percentChange = percentChange
 
+      const balanceData = newState.balanceData;
+
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
+        newState.minDestAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, balanceData.destDecimal)
       }
 
       //calculate source, dest
       if (newState.inputFocus === 'dest') {
-        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 5)
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, balanceData.sourceDecimal)
       }
 
       if (newState.inputFocus === 'source') {
-        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 5)
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, balanceData.destDecimal)
       }
 
       if (!newState.isEditRate) {
@@ -104,16 +106,15 @@ const exchange = (state = initState, action) => {
 
     case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
       var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
-
-
       var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
       var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
+      const balanceData = newState.snapshot.balanceData;
 
       newState.snapshot.slippageRate = slippagePrice
       newState.snapshot.expectedRate = expectedRate
 
       if (newState.sourceAmount !== "") {
-        newState.snapshot.minDestAmount = converter.calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
+        newState.snapshot.minDestAmount = converter.caculateDestAmount(newState.snapshot.sourceAmount, expectedRate, balanceData.destDecimal)
       }
       if (!newState.isEditRate) {
         newState.snapshot.minConversionRate = slippageRate
@@ -131,19 +132,25 @@ const exchange = (state = initState, action) => {
    
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken) return newState
+
+      const balanceData = newState.balanceData;
+
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, balanceData.sourceDecimal)
       } else {
-        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, 4)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, balanceData.destDecimal)
       }
       return newState
     }
     case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
       if (newState.snapshot.errors.selectSameToken) return newState
+
+      const balanceData = newState.snapshot.balanceData;
+
       if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, 4)
+        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, balanceData.sourceDecimal)
       } else {
-        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, 4)
+        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, balanceData.destDecimal)
       }
       newState.snapshot.isFetchingRate = false
       //  console.log("***************")
@@ -162,19 +169,21 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.INPUT_CHANGE": {
       let focus = action.payload.focus
       let value = action.payload.value
+      const balanceData = newState.balanceData;
+
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken) return newState
-        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 5)
+        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, balanceData.destDecimal)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken) return newState
-        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 5)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, balanceData.sourceDecimal)
       }
       return newState
     }
