@@ -11,7 +11,7 @@ import history from "../../history"
 import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { createNewConnectionInstance } from "../../actions/connectionActions"
-import { default as _ } from 'underscore';
+import { throttle } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
@@ -116,7 +116,7 @@ export default class Layout extends React.Component {
     }
   }
 
-  resetTimmer = _.throttle(this.doResetTimer.bind(this), 5000)
+  resetTimmer = throttle(this.doResetTimer.bind(this), 5000)
 
   doResetTimer() {
     this.idleTime = 0;

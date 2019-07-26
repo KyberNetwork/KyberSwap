@@ -5,7 +5,6 @@ import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as transferActions from "../../actions/transferActions"
-import { default as _ } from 'underscore'
 import { clearSession, setIsChangingPath } from "../../actions/globalActions"
 import { ImportAccount } from "../ImportAccount"
 import {HeaderTransaction} from "../TransactionCommon"

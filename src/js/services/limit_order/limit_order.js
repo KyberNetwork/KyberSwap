@@ -1,8 +1,5 @@
 import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
-import BLOCKCHAIN_INFO from "../../../../env"
-import { multiplyOfTwoNumber } from "../../utils/converter"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-import _ from "lodash";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -15,6 +12,7 @@ const keyMapping = {
     "addr": "user_address",
     "nonce": "nonce",
     "fee": "fee",
+    "receive": "receive",
     "status": "status",
     "created_at": "created_at",
     "updated_at": "updated_at",
@@ -312,20 +310,6 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
     })
 }
 
-function sortOrders(orders) {
-    const results = _.sortBy(orders, item => {
-        if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-            return 0;
-        } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }, ["asc"]);
-
-    return results;
-}
-
 export function getOrdersByFilter(address = null, pair = null, status = null, time = null, dateSort = "desc", pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
     let path = `/api/orders?page_index=${pageIndex}&page_size=${pageSize}`;
 
@@ -351,10 +335,10 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
         path += params;
     }
 
-    if (time) {
-        const second = calcInterval(time);
-        path += `&from=${second}`;
-    }
+    // if (time) {
+    //     const second = calcInterval(time);
+    //     path += `&from=${second}`;
+    // }
 
     if (dateSort) {
         path += `&sort=${dateSort}`;

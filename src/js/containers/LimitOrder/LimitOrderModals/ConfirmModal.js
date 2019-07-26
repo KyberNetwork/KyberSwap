@@ -217,9 +217,6 @@ export default class ConfirmModal extends React.Component {
 
       return `
       <div>
-        <div className="title">
-          ${`${this.props.translate("limit_order.fee") || "Fee"} ${calculateFee} ${this.props.limitOrder.sourceTokenSymbol} (${this.state.fee}% of ${sourceAmount} ${this.props.limitOrder.sourceTokenSymbol})`}
-        </div>
         <div className="description">
           ${this.props.translate("limit_order.fee_info_message") || "Don’t worry. You will not be charged now. You pay fees only when transaction is executed (broadcasted & mined)."}
         </div>
@@ -261,9 +258,10 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
-                    rate: converters.roundingRateNumber(this.props.limitOrder.triggerRate)
+                    rawRate: this.props.limitOrder.triggerRate,
+                    rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)}`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
                 <div className="limit-order-modal__pair">
@@ -291,7 +289,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                       </div> 
                       <div className="amount--calc">
-                        <span title={receiveAmount}>{`(${formatedSrcAmount} - ${formatedFee}) ${this.props.limitOrder.sourceTokenSymbol} * ${converters.roundingRateNumber(this.props.limitOrder.triggerRate)} = ${converters.formatNumber(receiveAmount, 5)} ${this.props.limitOrder.destTokenSymbol}`}</span>
+                        <span>({formatedSrcAmount} - {formatedFee}) {this.props.limitOrder.sourceTokenSymbol} * <span title={this.props.limitOrder.triggerRate}>{converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span> = {converters.formatNumber(receiveAmount, 5)} {this.props.limitOrder.destTokenSymbol}</span>
                       </div>
                     </div>
                   </div>
@@ -319,10 +317,7 @@ export default class ConfirmModal extends React.Component {
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
                 </div> */}
 
-                  {this.msgHtml()}
-                {this.state.err && <div className="limit-order-modal__result--error">
-                  {this.state.err}
-                </div>}
+                {this.msgHtml()}
 
                 {this.state.feeErr.length > 0 && <div className="limit-order-modal__result--error">
                   {this.props.translate("limit_order.fetch_fee_err") || "Cannot get fee."}
@@ -331,23 +326,49 @@ export default class ConfirmModal extends React.Component {
               </div>
             </div>
 
-            {!this.state.isFinish && <div className="limit-order-modal__footer">
-              <button
-                className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
-                onClick={e => this.closeModal()}
-              >
-                {this.props.translate("modal.cancel") || "Cancel"}
-              </button>
-              <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
-                onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
-            </div>}
-
-            {this.state.isFinish && <div className="limit-order-modal__success-msg">
-              <div className={"limit-order-modal__success-text"}>
-                <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
-                <span>{this.props.translate("modal.success") || "Success"}</span>
+            {(!this.state.isFinish && !this.state.err) &&
+              <div className="limit-order-modal__footer">
+                <button
+                  className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+                  onClick={e => this.closeModal()}
+                >
+                  {this.props.translate("modal.cancel") || "Cancel"}
+                </button>
+                <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
+                  onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
               </div>
-            </div>}
+            }
+
+            {this.state.isFinish &&
+              <div className="limit-order-modal__msg limit-order-modal__msg--success">
+                <div className={"limit-order-modal__text"}>
+                  <div>
+                    <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+                    <span>{this.props.translate("modal.success") || "Success"}</span>
+                  </div>
+                  <div className={"limit-order-modal__button limit-order-modal__button--success"} onClick={this.closeModal}>
+                    {this.props.translate("done") || "Done"}
+                  </div>
+                </div>
+              </div>
+            }
+
+            {this.state.err &&
+              <div className="limit-order-modal__msg limit-order-modal__msg--failed">
+                <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
+                  <div className={"limit-order-modal__left-content"}>
+                    <img src={require("../../../../assets/img/limit-order/error.svg")}/>
+                    <div>
+                      <div>{this.props.translate("error_text") || "Error"}</div>
+                      <div>{this.state.err}</div>
+                    </div>
+                  </div>
+                  <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
+                    {this.props.translate("ok") || "OK"}
+                  </div>
+                </div>
+              </div>
+            }
           </div>
       )
     }

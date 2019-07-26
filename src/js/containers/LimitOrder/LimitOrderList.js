@@ -1,13 +1,9 @@
 import React from "react";
 import { connect } from "react-redux"
-import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
-import _ from "lodash";
-import Dropdown, { DropdownContent, DropdownTrigger } from "react-simple-dropdown";
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 
 import * as limitOrderActions from "../../actions/limitOrderActions";
-import * as common from "../../utils/common";
 
 import LimitOrderTable from "./LimitOrderTable";
 

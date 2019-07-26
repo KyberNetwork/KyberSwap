@@ -155,6 +155,17 @@ export default class LimitOrderSubmit extends React.Component {
       console.log(err);
       var title = this.props.translate("error.error_occurred") || "Error occurred"
       var content = err.toString();
+      const content = (
+        <span>
+          <span>{err.toString()}</span>
+          {this.props.account.type === 'metamask' &&
+            <span className={"modal-info__warning"}>
+              <img src={require("../../../assets/img/v3/info_blue.svg")} />
+              <span>{this.props.translate("error.not_latest_browser_metamask") || "This error may be caused by your browser or Metamask is not the latest version."}</span>
+            </span>
+          }
+        </span>
+      )
       this.props.dispatch(utilActions.openInfoModal(title, content));
       return;
     }

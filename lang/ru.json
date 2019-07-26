@@ -138,7 +138,9 @@
     "please_swap_before": "Please swap before",
     "please_swap_and_send_before": "Please swap and send to your personal wallet before",
     "limit_order": "Limit Order",
-    "rate_label":"Rate"
+    "rate_label":"Rate",
+    "market_rate": "Market rate",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -253,7 +255,8 @@
     "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
     "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
     "insufficient_balance": "Your balance is insufficient for transaction",
-    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}"
+    "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -395,7 +398,7 @@
     "eth_not_support": "ETH* is the combination of ETH and WETH",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
-    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= ${rate}",
+    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} >= <span title=\"${rawRate}\">${rate}</span>",
     "fee": "Fee",
     "change_rate": "Change Rate",
     "current_rate": "Current Rate",
@@ -420,7 +423,10 @@
     "execute_rate": "Your order will execute when ${tokenPair} hits ${executeRate} (<span class=\"limit-order__percent limit-order__percent--positive\">1%</span> higher).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Open Orders",
-    "order_history": "Order History"
+    "order_history": "Order History",
+    "actual_receive_amount": "Actual receive amount:",
+    "estimated_amount": "Estimated amount:",
+    "extra_amount": "You got extra amount:"
   },
   "home": "Домой",
   "tracker": "Трекер",
@@ -437,5 +443,10 @@
   "i_understand": "я понимаю",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "Выполнено",
+  "error_text": "ошибка",
+  "extra": "extra",
+  "off": "OFF"
 }

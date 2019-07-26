@@ -9,7 +9,7 @@ import * as globalActions from "../../actions/globalActions"
 import { TokenSelector } from "../TransactionCommon"
 import * as constants from "../../services/constants"
 import limitOrderServices from "../../services/limit_order";
-import { default as _ } from 'underscore';
+import { debounce } from 'underscore';
 import { LimitOrderCompareRate } from "../LimitOrder";
 import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
@@ -22,10 +22,12 @@ import { Tooltip } from "react-tippy";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
+  const sourceToken = tokens[limitOrder.sourceTokenSymbol]
+  const destToken = tokens[limitOrder.destTokenSymbol]
 
   return {
     translate, limitOrder, tokens, account, ethereum,
-    global: store.global
+    global: store.global, sourceToken, destToken
 
   }
 })
@@ -88,7 +90,7 @@ export default class LimitOrderForm extends React.Component {
     
   }
 
-  lazyFetchRate = _.debounce(this.fetchCurrentRate, 500)
+  lazyFetchRate = debounce(this.fetchCurrentRate, 500)
 
   handleFocus = (e, type) => {
     this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);
@@ -99,7 +101,7 @@ export default class LimitOrderForm extends React.Component {
     var check = filterInputNumber(e, value, referValue)
     if (check) {     
       if (value < 0) return
-      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value));
+      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value, this.props.sourceToken.decimals, this.props.destToken.decimals));
       
       if (type === "source"){
         this.lazyFetchRate(value)
@@ -162,7 +164,7 @@ export default class LimitOrderForm extends React.Component {
 
     // console.log("souirce_token")
     // console.log(sourceAmountByPercentage)
-    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals)));
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals), this.props.sourceToken.decimals, this.props.destToken.decimals));
   };
 
   closeRateWarningTooltip = () => {
@@ -208,16 +210,21 @@ export default class LimitOrderForm extends React.Component {
 
     const tableComp = higherRateOrders.map(item => {
       const datetime = common.getFormattedDate(item.updated_at);
-      const rate = converters.roundingRateNumber(item.min_rate);
+      const rate = converters.displayNumberWithDot(item.min_rate, 9);
       return (
         <div key={item.id} className="rate-warning-tooltip__order">
           <div>{datetime}</div>
-          <div>{`${item.source.toUpperCase()}/${item.dest.toUpperCase()} >= ${rate}`}</div>
+          <div>{item.source.toUpperCase()}/{item.dest.toUpperCase()} >= <span title={item.min_rate}>{rate}</span></div>
         </div>
       );
     });
 
     return tableComp;
+  }
+
+  resetToMarketRate = (e) => {
+    const expectedRate = converters.toT(this.props.limitOrder.offeredRate);
+    this.props.dispatch(limitOrderActions.inputChange("rate", converters.roundingRateNumber(expectedRate), this.props.sourceToken.decimals, this.props.destToken.decimals));
   }
 
   getRateWarningTooltip = () => {
@@ -363,8 +370,10 @@ export default class LimitOrderForm extends React.Component {
         </div>
 
         <div className={"exchange-content__item--wrapper"}>
-          <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
-          
+          <div className="exchange-market-rate--wrapper">
+            <div className={"exchange-item-label"}>{this.props.translate("transaction.rate_label") || "Rate"}:</div>
+            <div className="exchange-market-rate" onClick={e => this.resetToMarketRate()}>{this.props.translate("transaction.market_rate") || "Market rate"}</div>
+          </div>
           <Tooltip
             open={this.props.limitOrder.errors.rateWarning !== "" && this.props.global.isOnMobile == false}
             position="right"

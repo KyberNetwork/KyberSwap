@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getTranslate } from 'react-localize-redux';
-import _ from "lodash";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 
@@ -13,8 +12,16 @@ import * as limitOrderActions from "../../actions/limitOrderActions";
   }
 })
 export default class Pagination extends React.Component {
+  range = (start, end) => {
+    const arr = [];
+    for (let i = start; i < end; i++) {
+      arr.push(i)
+    }
+    return arr;
+  }
+  
   generatePageRange = (start, end, activePage) => {
-    const component = _.range(start, end).map(item => {
+    const component = this.range(start, end).map(item => {
       return <div className={`Pagination__page-item ${item == activePage ? "Pagination__page-item--selected" : ""}`}
         key={item} 
         onClick={(e) => this.validatePageIndex(item)}

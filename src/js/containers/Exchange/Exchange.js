@@ -141,8 +141,11 @@ export default class Exchange extends React.Component {
     if (!this.props.account) {
       return
     }
+
+    var { sourceTokenDecimals, destTokenDecimals } = this.getTokenInit();
+
     this.props.dispatch(exchangeActions.verifyExchange())
-    this.props.dispatch(exchangeActions.caculateAmount())
+    this.props.dispatch(exchangeActions.caculateAmount(sourceTokenDecimals, destTokenDecimals))
   }
 
   setInvervalProcess = () => {
@@ -168,11 +171,12 @@ export default class Exchange extends React.Component {
   getTokenInit = () => {
     var sourceTokenSymbol = this.props.params.source.toUpperCase()
     var sourceToken = this.props.tokens[sourceTokenSymbol].address
-
+    var sourceTokenDecimals = this.props.tokens[sourceTokenSymbol].decimals
     var destTokenSymbol = this.props.params.dest.toUpperCase()
     var destToken = this.props.tokens[destTokenSymbol].address
+    var destTokenDecimals = this.props.tokens[destTokenSymbol].decimals
 
-    return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
+    return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceTokenDecimals, destTokenDecimals}
   }
 
   componentDidMount = () =>{

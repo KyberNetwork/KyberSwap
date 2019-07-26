@@ -82,7 +82,7 @@ const utils = (state = initState, action) => {
       newState.infoModal = {
         open: true,
         title: title,
-        content: content
+        content: content,
       }
       return newState
     }

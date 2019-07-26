@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
-import { QRCode, ChooseBalanceModal } from "../CommonElements"
+import { QRCode } from "../CommonElements"
 import { AdvanceConfigLayout } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
@@ -16,11 +16,8 @@ import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
 import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
-import { default as _ } from 'underscore'
+import { debounce } from 'underscore'
 import BLOCKCHAIN_INFO from "../../../../env";
-import * as web3Package from "../../services/web3"
-import { importAccountMetamask } from "../../actions/accountActions"
-import EthereumService from "../../services/ethereum/ethereum"
 
 import constants from "../../services/constants"
 
@@ -105,8 +102,8 @@ class Transfer extends React.Component {
     this.props.dispatch(transferActions.estimateGasWhenAmountChange(value))
   }
 
-  lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
-  lazyEstimateGas = _.debounce(this.dispatchEstimateGas, 500)
+  lazyUpdateValidateSourceAmount = debounce(this.validateSourceAmount, 500)
+  lazyEstimateGas = debounce(this.dispatchEstimateGas, 500)
 
   onAddressReceiveChange = (event) => {
     var value = event.target.value

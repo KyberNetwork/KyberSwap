@@ -437,7 +437,7 @@ export function roundingNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -483,7 +483,7 @@ export function roundingRateNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -856,14 +856,12 @@ export function findMaxNumber(arr) {
   return maxNum
 }
 
-export function displayNumberWithDot(num) {
-  const NUM_DIGIT = 7
-
+export function displayNumberWithDot(num, numDigit = 7) {
   var numDisplay = parseFloat(num)
   numDisplay = isNaN(numDisplay) ? 0 : numDisplay.toFixed(10).replace(/\.?0+$/,"")
   numDisplay = numDisplay.toString()
-  if (numDisplay.length > 7) {
-    numDisplay = numDisplay.substring(0, NUM_DIGIT) + "..."
+  if (numDisplay.length > numDigit) {
+    numDisplay = numDisplay.substring(0, numDigit) + "..."
   }
   return numDisplay
 }
@@ -880,5 +878,5 @@ export function formatNumberByPrecision(number, precision = 4) {
   const amountString = amountBigNumber.toFixed().toString();
   const indexOfDecimal = amountString.indexOf('.');
 
-  return indexOfDecimal !== -1 ? parseFloat(amountString.slice(0, indexOfDecimal + (precision + 1))) : parseFloat(amountString);
+  return indexOfDecimal !== -1 ? amountString.slice(0, indexOfDecimal + (precision + 1)) :amountString;
 }

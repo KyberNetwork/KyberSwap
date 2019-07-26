@@ -15,7 +15,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as exchangeActions from "../../actions/exchangeActions"
 import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
-import { default as _ } from 'underscore';
+import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import * as web3Package from "../../services/web3"
 import { importAccountMetamask } from "../../actions/accountActions"
@@ -30,11 +30,12 @@ import ReactTooltip from 'react-tooltip'
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
   const global = store.global
-
+  const sourceToken = tokens[exchange.sourceTokenSymbol]
+  const destToken = tokens[exchange.destTokenSymbol]
 
   return {
     account, ethereum, tokens, translate, 
-    global, exchange   
+    global, exchange, sourceToken, destToken
   }
 })
 
@@ -117,7 +118,7 @@ class ExchangeBody extends React.Component {
       return
     }
   }
-  lazyValidateTransactionFee = _.debounce(this.validateTxFee, 500)
+  lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
 
   updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
@@ -261,10 +262,10 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.estimateGasNormal())
   }
 
-  lazyUpdateRateExchange = _.debounce(this.dispatchUpdateRateExchange, 500)
-  // lazyUpdateValidateSourceAmount = _.debounce(this.validateSourceAmount, 500)
+  lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)
+  // lazyUpdateValidateSourceAmount = debounce(this.validateSourceAmount, 500)
 
-  lazyEstimateGas = _.debounce(this.dispatchEstimateGasNormal, 500)
+  lazyEstimateGas = debounce(this.dispatchEstimateGasNormal, 500)
 
 
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
@@ -278,7 +279,7 @@ class ExchangeBody extends React.Component {
       value = amount
     }
     if (value < 0) return
-    this.props.dispatch(exchangeActions.inputChange('source', value));
+    this.props.dispatch(exchangeActions.inputChange('source', value, this.props.sourceToken.decimals, this.props.destToken.decimals));
 
     this.lazyEstimateGas()
 
@@ -294,7 +295,7 @@ class ExchangeBody extends React.Component {
     }
     
     if (value < 0) return
-    this.props.dispatch(exchangeActions.inputChange('dest', value))
+    this.props.dispatch(exchangeActions.inputChange('dest', value, this.props.sourceToken.decimals, this.props.destToken.decimals))
 
     var valueSource = converters.caculateSourceAmount(value, this.props.exchange.expectedRate, 6)
     this.validateRateAndSource(valueSource, true);
@@ -342,7 +343,7 @@ class ExchangeBody extends React.Component {
 
       this.focusSource()
 
-      this.props.dispatch(exchangeActions.inputChange('source', balance))
+      this.props.dispatch(exchangeActions.inputChange('source', balance, this.props.sourceToken.decimals, this.props.destToken.decimals))
       this.props.ethereum.fetchRateExchange(true)
     }
     this.props.global.analytics.callTrack("trackClickAllIn", "Swap", tokenSymbol);
@@ -559,7 +560,7 @@ class ExchangeBody extends React.Component {
 
         if (amount < 0) amount = 0;
 
-        this.props.dispatch(exchangeActions.inputChange('source', amount))
+        this.props.dispatch(exchangeActions.inputChange('source', amount, this.props.sourceToken.decimals, this.props.destToken.decimals))
         this.props.dispatch(exchangeActions.focusInput('source'));
         this.selectTokenBalance();
         this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);

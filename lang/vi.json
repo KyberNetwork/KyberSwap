@@ -136,7 +136,9 @@
     "please_swap_before": "Vui lòng trao đổi token trước",
     "please_swap_and_send_before": "Vui lòng trao đổi token và chuyển về ví cá nhân của bạn trước",
     "limit_order": "Lệnh giao dịch",
-    "rate_label": "Tỉ lệ"
+    "rate_label": "Tỉ lệ",
+    "market_rate": "Tỉ giá thị trường",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -254,7 +256,8 @@
     "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh.",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
-    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}"
+    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -396,7 +399,7 @@
     "eth_not_support": "ETH* được tính bằng cả ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
-    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${srcToken}/${destToken} >= ${rate}",
+    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${srcToken}/${destToken} >= <span title=\"${rawRate}\">${rate}</span>",
     "fee": "Phí",
     "change_rate": "Thay đổi tỉ lệ",
     "current_rate": "Tỉ giá hiện tại",
@@ -422,7 +425,10 @@
     "execute_rate": "Lệnh giao dịch của bạn sẽ được thực hiện khi tỉ giá ${tokenPair} đạt ${executeRate} (cao hơn <span class=\"limit-order__percent limit-order__percent--positive\">1%</span>).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Các lệnh đang mở",
-    "order_history": "Lịch sử giao dịch"
+    "order_history": "Lịch sử giao dịch",
+    "actual_receive_amount": "Lượng token thực lĩnh:",
+    "estimated_amount": "Lượng token dự tính:",
+    "extra_amount": "Bạn nhận được thêm:"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -439,5 +445,10 @@
   "i_understand": "Tôi hiểu",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "Hoàn Thành",
+  "error_text": "Lỗi Xảy Ra",
+  "extra": "thêm",
+  "off": "GIẢM"
 }

@@ -82,13 +82,12 @@ export default class LimitOrderAccount extends React.Component {
     const srcToken = tokens.find(token => {
       return token.symbol === sourceSymbol;
     });
+    const destToken = tokens.find(token => {
+      return token.symbol === this.props.limitOrder.destTokenSymbol;
+    });
     var sourceBalance = srcToken.balance;
 
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-
-    // sourceBalance = converters.toT(sourceBalance, sourceDecimal)
-
-
 
     if (sourceSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
 
@@ -106,7 +105,7 @@ export default class LimitOrderAccount extends React.Component {
 
     if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
 
-    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal)))
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
     this.props.dispatch(limitOrderActions.focusInput('source'));
 
     this.selectTokenBalance();

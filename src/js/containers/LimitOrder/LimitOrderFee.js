@@ -61,16 +61,19 @@ class LimitOrderFee extends React.Component {
     const orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);
     const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
 
-    let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
-    let orderDiscountFeeText = `0 ${sourceTokenSymbol} (${isDiscount ? '~' : ''}${converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)`;
+    let orderFeeText = null;
+    // let orderDiscountFeeText = `0 ${sourceTokenSymbol} (${isDiscount ? '~' : ''}${converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)`;
+    let orderDiscountFeeText = null;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
 
     if (!this.props.limitOrder.isFetchingFee) {
-      orderFeeText = <span><span title={orderFee}>{converter.formatNumber(orderFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})</span>
-      orderNetFeeText = <span className={"limit-order__bold-text"}>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
+      // orderFeeText = <span><span title={orderFee}>{converter.formatNumber(orderFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})</span>
+      orderNetFeeText = <span className="limit-order-fee__net">{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
 
       if (this.props.limitOrder.sourceAmount && isDiscount) {
-        orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> (~{converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)</span>
+        orderFeeText = <span className="limit-order__line-through-text">{converter.formatNumber(orderFee, 5)} {sourceTokenSymbol}</span>
+        orderDiscountFeeText = <span className="limit-order-fee__discount">{converter.formatNumber(orderFeeDiscountPercentage, 2)}% {this.props.translate("off") || "OFF"}</span>
+        // orderDiscountFeeText = <span><span className={"limit-order__percent limit-order__percent--positive"}>- {converter.formatNumber(discountFee, 5, '')} {sourceTokenSymbol}</span> (~{converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)</span>
       }
     }
 
@@ -78,20 +81,17 @@ class LimitOrderFee extends React.Component {
       <div className={"limit-order-fee"}>
         <div className={"limit-order-fee__item"}>
           <div className={"limit-order-fee__item-title"}>{this.props.translate("limit_order.fee") || "Fee"}:</div>
-          <div className={"limit-order-fee__item-value"}>{orderFeeText}</div>
+          <div className={"limit-order-fee__item-value"}>
+            <div>
+              {orderNetFeeText}
+              {orderDiscountFeeText}  
+            </div>
+            <div>{orderFeeText}</div>
+          </div>
           <a className={"limit-order-fee__item-link"} href="/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees" target="_blank" rel="noopener noreferrer">
             {this.props.translate("more_info") || "More Info"}
           </a>
         </div>
-        <div className={"limit-order-fee__item"}>
-          <div className={"limit-order-fee__item-title"}>{this.props.translate("discount") || "Discount"}:</div>
-          <div className={"limit-order-fee__item-value"}>{orderDiscountFeeText}</div>
-        </div>
-        <div className={"limit-order-fee__item"}>
-          <div className={"limit-order-fee__item-title"}>{this.props.translate("net_fee") || "Net Fee"}:</div>
-          <div className={"limit-order-fee__item-value"}>{orderNetFeeText}</div>
-        </div>
-
         {this.props.limitOrder.sourceAmount > 0 &&
           <div className={"limit-order-fee__info"}>
             {this.props.translate("limit_order.fee_info", {

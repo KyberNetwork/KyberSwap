@@ -103,21 +103,47 @@ $divider-color: darken($title-background-color, 5);
         }
       }
       .total-fee {
-        font-size: 36px;
+        font-size: 16px;
         color: #141927;
         font-weight: 600;
-        span {
-          font-size: 16px;
+        margin-top: 3px;
+        white-space: normal;
+
+        &__number {
+          margin-right: 15px;
+          letter-spacing: 1px;
+        }
+
+        &__formula {
+          font-size: 13px;
           font-weight: normal;
+          color: #666666;
+        }
+
+        @include screen-max-width(mid-small) {
+          &__formula {
+            display: block;
+          }
         }
       }
-      .fee-detail {
-        font-size: 13px;
-        color: #666666;
-        font-weight: normal;
-        // margin-top: 10px;
+    }
+
+    .tx-fee-warning {
+      background-color: #FDFAE5;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: normal;
+
+      img {
+        margin-right: 6px;
+        position: relative;
+        bottom: 2px;
       }
     }
+
     hr{
       border-color: #a5a5a5;
     }
@@ -649,7 +675,7 @@ $divider-color: darken($title-background-color, 5);
       }
       
       @include screen-min-width(medium){
-        padding: 18px 5px;
+        padding: 18px 5px 10px;
         margin: 0 auto;
       }
 
@@ -1223,6 +1249,25 @@ $divider-color: darken($title-background-color, 5);
       cursor: pointer;
       color: #ff5d00;
       font-style: italic;
+    }
+  }
+}
+
+.modal-info {
+  &__warning {
+    text-align: center;
+    margin: 15px 0;
+    display: block;
+
+    img {
+      margin-right: 5px;
+      position: relative;
+      bottom: 2px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
     }
   }
 }

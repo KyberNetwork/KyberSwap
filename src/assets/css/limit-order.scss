@@ -19,6 +19,10 @@
             height: 260px !important;
         }
 
+        .rt-table {
+            overflow: visible;
+        }
+
         .rt-thead {
             overflow-y: auto;
             font-size: 12px;
@@ -58,6 +62,7 @@
             font-weight: 500;
             color: #222222;
             $row-height: 50px;
+            overflow: visible;
 
             .rt-td {
                 border: none;
@@ -65,12 +70,14 @@
                 justify-content: center;
                 align-items: center;
                 padding: 7px 0;
+                overflow: visible;
             }
 
             .rt-tr-group {
                 height: $row-height;
                 max-height: $row-height;
                 border: none;
+                overflow: visible;
             }
         }
 
@@ -244,6 +251,14 @@
                 height: 25px;
                 width: 90px;
             }
+
+            &--view-tx {
+                color: #007bde !important;
+
+                &:hover {
+                    background-color: #E2F2FF !important;
+                }
+            }
         }
     }
 
@@ -258,6 +273,7 @@
             display: inline-block;
             vertical-align: middle;
         }
+        position: relative;
     }
 
     .cell-text-small {
@@ -282,6 +298,16 @@
     .to-number-cell {
         @extend %number-cell;
         max-width: 100px;
+
+        &--extra {
+            border-radius: 8px;
+            background-color: #999999;
+            font-size: 9px;
+            font-weight: 500;
+            color: #ffffff;
+            padding: 0 2px;
+            cursor: pointer;
+        }
     }
 }
 
@@ -596,7 +622,7 @@
         display: flex;
         position: relative;
         margin-bottom: 3px;
-        align-items: center;
+        align-items: flex-start;
 
         &-title {
             width: 100px;
@@ -626,6 +652,21 @@
 
     &__info {
         margin-top: 15px;
+    }
+
+    &__net {
+        color: #222222 !important;
+    }
+
+    &__discount {
+        // display: inline-block;
+        border-radius: 14px;
+        background-color: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        color: #ef8102;
+        padding: 2px 8px;
+        margin-left: 5px;
     }
 }
 
@@ -861,8 +902,9 @@
 
                 .expanded-row {
                     position: relative;
-                    height: 215px !important;
-                    max-height: 215px !important;
+                    min-height: 280px !important;
+                    height: auto !important;
+                    max-height: 300px !important;
                 }
 
                 .cell-pair__mobile {
@@ -914,13 +956,14 @@
 
                 >div:nth-child(2) {
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-columns: 120px auto auto;
                     grid-gap: 10px;
                 }
 
                 >div:nth-child(3) {
                     display: flex;
                     justify-content: flex-end;
+                    margin-top: 15px;
                 }
 
                 &__rate {
@@ -930,6 +973,11 @@
                     font-size: 13px;
                     font-weight: 500;
                     color: #222222;
+                }
+
+                &--footer {
+                    justify-content: space-between !important;
+                    margin-top: 0 !important;
                 }
 
                 &__amount {
@@ -1399,19 +1447,28 @@
         }
     }
 
-    &__success-msg {
-        background-color: #e8f9e8;
+    &__msg {
         color: #222222;
         font-size: 14px;
-        display: flex;
         padding: 30px 30px;
         font-weight: 500;
         border-radius: 0 0 10px 10px;
         animation: fadeIn 0.3s forwards;
+
+        &--success {
+            background-color: #e8f9e8;
+        }
+
+        &--failed {
+            background-color: #FBEAE7;
+        }
     }
 
-    &__success-text {
+    &__text {
         animation: slideUp 0.3s forwards;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         img {
             position: relative;
@@ -1420,6 +1477,47 @@
 
         span {
             margin-left: 15px;
+        }
+
+        &--failed {
+            color: #f25129;
+            font-weight: 500;
+        }
+    }
+
+    &__left-content {
+        display: flex;
+        align-items: flex-start;
+        max-width: calc(100% - 150px);
+
+        img {
+            margin-right: 15px;
+            bottom: -2px;
+        }
+    }
+
+    &__button {
+        padding: 9px 40px;
+        color: white;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &--success {
+            background-color: #35B27D;
+
+            &:hover {
+                background-color: darken(#35B27D, 10%);
+            }
+        }
+
+        &--failed {
+            background-color: #f25129;
+
+            &:hover {
+                background-color: darken(#f25129, 10%);
+            }
         }
     }
 
@@ -1776,6 +1874,73 @@
     }
 }
 
+.extra-tooltip {
+    font-size: 11px;
+    font-weight: 500;
+    color: #222222;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    z-index: 1;
+    padding: 10px 15px; 
+
+    border-radius: 2px;
+    box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
+    border: solid 0.9px #e8e8e8;
+    background-color: #ffffff;
+
+    &__mobile {
+        font-size: 10px;
+        font-weight: 500;
+        color: #222222;
+        margin-top: 10px;
+
+        .extra-tooltip--faq {
+            margin-top: 10px !important;
+            >a {
+                font-size: 10px !important;
+            }
+        }
+    }
+
+    &--extra-amount {
+        font-weight: bold;
+        color: #31cb9e;
+    }
+
+    &--faq {
+        margin-top: 18px;
+        > a {
+            font-size: 12px;
+            color: #666666;
+            text-decoration: underline;
+        }
+    }
+
+    &::after, &::before {
+        right: 100%;
+        top: 25%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &::after {
+        border-right-color: #ffffff;
+        border-width: 10px;
+        margin-top: -10px;
+    }
+
+    &::before {
+        border-right-color: #e8e8e8;
+        border-width: 11px;
+        margin-top: -11px;
+    }
+}
+
 // Override React Tippy
 .tippy-popper {
     // left: -155px !important;
@@ -1821,5 +1986,10 @@
 
   &__bold-text {
     font-weight: 600;
+  }
+
+  &__line-through-text {
+    text-decoration: line-through;
+    color: #999999;
   }
 }
