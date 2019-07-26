@@ -405,11 +405,11 @@ export default class LimitOrderTable extends Component {
                   {`${extraAmount} ${dest}`}
                 </span>
               </div>
-              <div className="extra-tooltip--faq">
+              {/* <div className="extra-tooltip--faq">
                 <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
                   {this.props.translate("why") || "Why?"}
                 </a>
-              </div>
+              </div> */}
             </div>}
 
           </div>
