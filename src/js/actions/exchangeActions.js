@@ -19,22 +19,17 @@ export function checkSelectToken() {
   }
 }
 
-export function caculateAmount() {
+export function caculateAmount(sourceTokenDecimals, destTokenDecimals) {
   return {
-    type: "EXCHANGE.CACULATE_AMOUNT"
+    type: "EXCHANGE.CACULATE_AMOUNT",
+    payload: { sourceTokenDecimals, destTokenDecimals }
   }
 }
 
-export function caculateAmountInSnapshot() {
-  return {
-    type: "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT"
-  }
-}
-
-export function inputChange(focus, value) {
+export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals) {
   return {
     type: "EXCHANGE.INPUT_CHANGE",
-    payload: { focus, value }
+    payload: { focus, value, sourceTokenDecimals, destTokenDecimals }
   }
 }
 
@@ -170,10 +165,10 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
 //   }
 // }
 
-export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange) {
+export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal) {
   return {
     type: "EXCHANGE.UPDATE_RATE_COMPLETE",
-    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange }
+    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal }
   }
 
 }

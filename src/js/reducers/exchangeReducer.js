@@ -71,7 +71,7 @@ const exchange = (state = initState, action) => {
     }
    
     case "EXCHANGE.UPDATE_RATE_COMPLETE": {
-      const {expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange } = action.payload
+      const {expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal } = action.payload
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(expectedRateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? expectedRateInit : expectedPrice
@@ -81,19 +81,17 @@ const exchange = (state = initState, action) => {
       newState.blockNo = lastestBlock
       newState.percentChange = percentChange
 
-      const balanceData = newState.balanceData;
-
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, balanceData.destDecimal)
+        newState.minDestAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimal)
       }
 
       //calculate source, dest
       if (newState.inputFocus === 'dest') {
-        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, balanceData.sourceDecimal)
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, srcTokenDecimal)
       }
 
       if (newState.inputFocus === 'source') {
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, balanceData.destDecimal)
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimal)
       }
 
       if (!newState.isEditRate) {
@@ -102,27 +100,6 @@ const exchange = (state = initState, action) => {
 
       newState.isSelectToken = false
       return newState
-    }
-
-    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
-      var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
-      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
-      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
-      const balanceData = newState.snapshot.balanceData;
-
-      newState.snapshot.slippageRate = slippagePrice
-      newState.snapshot.expectedRate = expectedRate
-
-      if (newState.sourceAmount !== "") {
-        newState.snapshot.minDestAmount = converter.caculateDestAmount(newState.snapshot.sourceAmount, expectedRate, balanceData.destDecimal)
-      }
-      if (!newState.isEditRate) {
-        newState.snapshot.minConversionRate = slippageRate
-      }
-      newState.snapshot.isSelectToken = false
-
-      return newState
-
     }
     
     case "EXCHANGE.FINISH_EXCHANGE": {
@@ -133,30 +110,16 @@ const exchange = (state = initState, action) => {
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken) return newState
 
-      const balanceData = newState.balanceData;
+      var { sourceTokenDecimals, destTokenDecimals } = action.payload
 
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, balanceData.sourceDecimal)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, sourceTokenDecimals)
       } else {
-        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, balanceData.destDecimal)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, destTokenDecimals)
       }
       return newState
     }
-    case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
-      if (newState.snapshot.errors.selectSameToken) return newState
 
-      const balanceData = newState.snapshot.balanceData;
-
-      if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, balanceData.sourceDecimal)
-      } else {
-        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, balanceData.destDecimal)
-      }
-      newState.snapshot.isFetchingRate = false
-      //  console.log("***************")
-      //  console.log(newState)
-      return newState
-    }
     case "EXCHANGE.CHANGE_AMOUNT": {
       var { input, value } = action.payload
       if (input === "source") {
@@ -167,26 +130,25 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {
-      let focus = action.payload.focus
-      let value = action.payload.value
-      const balanceData = newState.balanceData;
+      const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload;
 
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken) return newState
-        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, balanceData.destDecimal)
+        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, destTokenDecimals)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken) return newState
-        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, balanceData.sourceDecimal)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, sourceTokenDecimals)
       }
       return newState
     }
+
     case "EXCHANGE.FOCUS_INPUT": {
       newState.inputFocus = action.payload
       return newState
