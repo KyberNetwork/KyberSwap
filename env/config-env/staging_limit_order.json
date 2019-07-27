@@ -37,7 +37,7 @@
         "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
-        "page_size": 5
+        "page_size": 50
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",

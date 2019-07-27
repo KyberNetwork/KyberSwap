@@ -30,7 +30,7 @@
         "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
-        "page_size": 5
+        "page_size": 50
     },
     "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
