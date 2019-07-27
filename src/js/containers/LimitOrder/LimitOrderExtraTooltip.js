@@ -55,7 +55,7 @@ export default class LimitOrderExtraTooltip extends React.PureComponent {
           <a href={`/faq#Why-received-amount-is-higher-than-estimated-amount`} target="_blank">
             {this.props.translate("why") || "Why?"}
           </a>
-        </div>
+        </div> 
       </div>
     )
   }
