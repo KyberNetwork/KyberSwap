@@ -31,6 +31,10 @@
             border-bottom: 2px solid #cccccc;
             height: 44px;
             margin-bottom: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #ffffff;
 
             .rt-th {
                 font-weight: 600;
