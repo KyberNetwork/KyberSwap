@@ -333,12 +333,12 @@ export default class ConfirmModal extends React.Component {
             expiredYear = new Date().getFullYear() + 1;
         }
 
+        var destTokenSymbol = this.props.exchange.destTokenSymbol
         var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
-        var destAmount = converter.calculateDest(sourceAmount, this.state.expectedRate)
-        destAmount = destAmount.toString()
+        var destDecimal = this.props.tokens[destTokenSymbol].decimal;
+        var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
 
         var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-        var destTokenSymbol = this.props.exchange.destTokenSymbol
         var sourceIcon = this.props.exchange.sourceIcon
         var destIcon = this.props.exchange.destIcon
 

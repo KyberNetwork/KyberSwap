@@ -173,11 +173,13 @@ export default class LimitOrderBody extends React.Component {
     const destToken = this.props.limitOrder.destToken;
     const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
     const destAmount = this.props.limitOrder.destAmount;
+    const sourceTokenDecimals = this.props.tokens[srcTokenSymbol]
+    const destTokenDecimals = this.props.tokens[destTokenSymbol]
 
     this.props.dispatch(limitOrderActions.selectToken(destTokenSymbol, destToken, srcTokenSymbol, srcToken, ''));
 
-    this.props.dispatch(limitOrderActions.inputChange('source', destAmount));
-    this.props.dispatch(limitOrderActions.inputChange('dest', ''));
+    this.props.dispatch(limitOrderActions.inputChange('source', destAmount, sourceTokenDecimals, destTokenDecimals));
+    this.props.dispatch(limitOrderActions.inputChange('dest', '', sourceTokenDecimals, destTokenDecimals));
 
     this.updateGlobal(destTokenSymbol, destToken, srcTokenSymbol, srcToken, destAmount);
   }

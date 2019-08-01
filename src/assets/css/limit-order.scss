@@ -24,7 +24,7 @@
         }
 
         .rt-table {
-            overflow: visible;
+            // overflow: visible;
         }
 
         .rt-thead {
@@ -306,6 +306,11 @@
     .to-number-cell {
         @extend %number-cell;
         max-width: 100px;
+
+        &--extra-wrapper {
+            position: relative;
+            display: inline-block;
+        }
 
         &--extra {
             border-radius: 8px;
@@ -1891,6 +1896,8 @@
     top: 0;
     z-index: 1;
     padding: 10px 15px; 
+
+    transform: translateX(15px) translateY(-18px);
 
     border-radius: 2px;
     box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);

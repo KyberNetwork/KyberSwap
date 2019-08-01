@@ -52,7 +52,11 @@ function* selectToken(action) {
 
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
-  const translate = getTranslate(store.getState().locale)
+  const state = store.getState();
+  const translate = getTranslate(state.locale)
+  const tokens = state.tokens.tokens;
+  const destTokenDecimal = tokens[destTokenSymbol].decimals;
+
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
   var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol)
 
@@ -63,7 +67,7 @@ function* updateRatePending(action) {
     var { expectedPrice, slippagePrice } = rate
     const rateInit = rateZero.expectedPrice.toString();
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, ""))
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, "", destTokenDecimal))
   } catch(err) {
     if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",

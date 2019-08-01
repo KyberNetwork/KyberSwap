@@ -30,11 +30,12 @@ import ReactTooltip from 'react-tooltip'
   const tokens = store.tokens.tokens
   const translate = getTranslate(store.locale)
   const global = store.global
-
+  const sourceToken = tokens[exchange.sourceTokenSymbol]
+  const destToken = tokens[exchange.destTokenSymbol]
 
   return {
     account, ethereum, tokens, translate, 
-    global, exchange   
+    global, exchange, sourceToken, destToken
   }
 })
 
@@ -278,7 +279,7 @@ class ExchangeBody extends React.Component {
       value = amount
     }
     if (value < 0) return
-    this.props.dispatch(exchangeActions.inputChange('source', value));
+    this.props.dispatch(exchangeActions.inputChange('source', value, this.props.sourceToken.decimals, this.props.destToken.decimals));
 
     this.lazyEstimateGas()
 
@@ -294,7 +295,7 @@ class ExchangeBody extends React.Component {
     }
     
     if (value < 0) return
-    this.props.dispatch(exchangeActions.inputChange('dest', value))
+    this.props.dispatch(exchangeActions.inputChange('dest', value, this.props.sourceToken.decimals, this.props.destToken.decimals))
 
     var valueSource = converters.caculateSourceAmount(value, this.props.exchange.expectedRate, 6)
     this.validateRateAndSource(valueSource, true);
@@ -342,7 +343,7 @@ class ExchangeBody extends React.Component {
 
       this.focusSource()
 
-      this.props.dispatch(exchangeActions.inputChange('source', balance))
+      this.props.dispatch(exchangeActions.inputChange('source', balance, this.props.sourceToken.decimals, this.props.destToken.decimals))
       this.props.ethereum.fetchRateExchange(true)
     }
     this.props.global.analytics.callTrack("trackClickAllIn", "Swap", tokenSymbol);
@@ -559,7 +560,7 @@ class ExchangeBody extends React.Component {
 
         if (amount < 0) amount = 0;
 
-        this.props.dispatch(exchangeActions.inputChange('source', amount))
+        this.props.dispatch(exchangeActions.inputChange('source', amount, this.props.sourceToken.decimals, this.props.destToken.decimals))
         this.props.dispatch(exchangeActions.focusInput('source'));
         this.selectTokenBalance();
         this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
