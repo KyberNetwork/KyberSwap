@@ -41,7 +41,8 @@
             "decimals": 18,
             "cg_id": "ethereum",
             "gasLimit": "0",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "WETH": {
             "symbol": "WETH",
@@ -50,7 +51,8 @@
             "decimals": 18,
             "cg_id": "weth",
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "KNC": {
             "symbol": "KNC",
@@ -69,7 +71,8 @@
             "cg_id": "dai",
             "gasLimit": "500000",
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "OMG": {
             "symbol": "OMG",
@@ -329,7 +332,8 @@
             "cg_id": "true-usd",
             "gasLimit": "600000",
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "LEND": {
             "symbol": "LEND",
@@ -530,7 +534,8 @@
             "cg_id": "wrapped-bitcoin",
             "listing_time": 1548853200,
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "MLN": {
             "symbol": "MLN",
@@ -551,7 +556,8 @@
             "listing_time": 1549976400,
             "gasLimit": "550000",
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "EURS": {
             "symbol": "EURS",
@@ -668,6 +674,14 @@
             "decimals": 18,
             "cg_id": "quadrant-protocol",
             "listing_time": 1563195600
+        },
+        "UPP": {
+            "symbol": "UPP",
+            "name": "Sentinel Protocol",
+            "address": "0xc86d054809623432210c107af2e3f619dcfbf652",
+            "decimals": 18,
+            "cg_id": "sentinel-protocol",
+            "listing_time": 1563973200
         }
     },
     "ethScanUrl": "https://etherscan.io/",
