@@ -261,10 +261,12 @@ export default class ConfirmModal extends React.Component {
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
                     destToken: this.props.limitOrder.destTokenSymbol,
+                    srcAmount: formatedSrcAmount,
+                    srcToken: this.props.limitOrder.sourceTokenSymbol,
                     rawRate: this.props.limitOrder.triggerRate,
                     rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
+                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} (for ${formatedSrcAmount} ${this.props.limitOrder.sourceTokenSymbol}) >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
                 <div className="limit-order-modal__pair">
