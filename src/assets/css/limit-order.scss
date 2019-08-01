@@ -17,6 +17,10 @@
 
         &--empty {
             height: 260px !important;
+
+            .rt-thead {
+                background-color: transparent !important;
+            }
         }
 
         .rt-table {
