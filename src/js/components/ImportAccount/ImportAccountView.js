@@ -95,8 +95,8 @@ const ImportAccountView = (props) => {
                   {props.translate("address.download") || "Download"}
                 </a>}
                 {isAndroid && <a
-                  className="import-account__block-right import-account__block-right--comming-soon"
-                  href={""}
+                  className="import-account__block-right import-account__block-right--download"
+                  href={"/android_landingpage"}
                   target="_blank"
                 >
                   {props.translate("address.register_beta") || "Comming soon"}
