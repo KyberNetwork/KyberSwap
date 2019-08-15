@@ -17,12 +17,19 @@
         display: flex;
         justify-content: space-between;
         font-size: 13px;
+
+        &--bold {
+            .top-token-item {
+                opacity: 1;
+            }
+        }
     }
     &-item{
         cursor: pointer;
+        opacity: 0.3;
+
         &.active{
-            opacity: 0.3;
-            // pointer-events: none;
+            opacity: 1;
         }
         &__symbol{
             text-decoration: underline;
