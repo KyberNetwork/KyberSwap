@@ -56,7 +56,7 @@ const TokenSelectorView = (props) => {
         <div className={"select-item__information"}>
           <div>
             <span className="bold-text">{props.translate("limit_order.eth_not_support").slice(0, 4) || "ETH*"}</span>
-            <span> {props.translate("limit_order.eth_not_support").slice(4) || " is the combination of ETH and WETH"}</span>
+            <span> {props.translate("limit_order.eth_not_support").slice(4) || " represents the sum of ETH & WETH for easy reference."}</span>
           </div>
         </div>
       </div>
