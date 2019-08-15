@@ -353,6 +353,10 @@ ul.broadcast-steps {
   &:not(.loading){
     list-style-type: disc;
   }
+
+  .analyze-link {
+    font-size: 12px;
+  }
 }
 
 
