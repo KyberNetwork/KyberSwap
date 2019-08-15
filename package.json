@@ -110,10 +110,10 @@
     "webpack-shell-plugin": "^0.5.0"
   },
   "scripts": {
-    "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js",
-    "build-production": "NODE_ENV=production node webpack-wrapper.js",
-    "build-rinkeby": "NODE_ENV=rinkeby node webpack-wrapper.js",
-    "build-staging": "NODE_ENV=staging node webpack-wrapper.js",
+    "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js --env.logger=true",
+    "build-production": "NODE_ENV=production node webpack-wrapper.js --env.logger=true",
+    "build-rinkeby": "NODE_ENV=rinkeby node webpack-wrapper.js --env.logger=true",
+    "build-staging": "NODE_ENV=staging node webpack-wrapper.js --env.logger=true",
     "build-all": "npm run build-staging && npm run build-production && npm run build-rinkeby && npm run build-ropsten",
     "build-all-mainnet": "npm run build-staging && npm run build-production",
     "rinkeby": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=rinkeby --env.logger=true",
@@ -122,11 +122,11 @@
     "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=ropsten --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
-    "build_ieo_ropsten": "NODE_ENV=ropsten node webpack-wrapper-dashboard.js --env.logger=true",
-    "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js --env.logger=true",
-    "build_ieo_rinkeby": "NODE_ENV=rinkeby node webpack-wrapper-dashboard.js --env.logger=true",
-    "build_ieo_staging": "NODE_ENV=staging node webpack-wrapper-dashboard.js --env.logger=true",
-    "build_ieo_staging_limit_order": "NODE_ENV=staging_limit_order node webpack-wrapper-dashboard.js --env.logger=true",
+    "build_ieo_ropsten": "NODE_ENV=ropsten node webpack-wrapper-dashboard.js",
+    "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js",
+    "build_ieo_rinkeby": "NODE_ENV=rinkeby node webpack-wrapper-dashboard.js",
+    "build_ieo_staging": "NODE_ENV=staging node webpack-wrapper-dashboard.js",
+    "build_ieo_staging_limit_order": "NODE_ENV=staging_limit_order node webpack-wrapper-dashboard.js",
     "build_all_ieo": "npm run build_ieo_ropsten & npm run build_ieo_production & npm run build_ieo_staging & npm run build_ieo_staging_limit_order"
   },
   "jest": {
