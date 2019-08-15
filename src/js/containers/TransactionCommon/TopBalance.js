@@ -97,33 +97,28 @@ export default class TopBalance extends React.Component {
     }
 
     renderToken = (tokens) => {
-        // let orderedTokens = [];
-        // const maxItemNumber = 3;
-
-        // if (this.props.isLimitOrderTab) {
-        //     orderedTokens = this.props.getFilteredTokens(true, maxItemNumber);
-        // } else {
-        //     orderedTokens = this.reorderToken(tokens, maxItemNumber);
-        // }
-
         var isFixedSourceToken = !!(this.props.account && this.props.account.account.type ==="promo");
+        let isAnyTokenActive = false;
+
         var tokenLayout = this.props.orderedTokens.map(token => {
             const classTokenItem = (isFixedSourceToken && this.props.screen === "swap") 
             || (token.symbol === "PT" && this.props.screen === "transfer")
              ? "top-token-item--deactivated" : "";
+            const isTokenActive = this.props.activeSymbol === token.symbol;
+            if (isTokenActive) isAnyTokenActive = true;
              
-            return <div className={`top-token-item ${classTokenItem} ${this.props.activeSymbol === token.symbol ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.props.selectToken(token.symbol) }}>
+            return <div className={`top-token-item ${classTokenItem} ${isTokenActive ? "active" : ""}`} key={token.symbol} onClick={(e) => { this.props.selectToken(token.symbol) }}>
                 <div className="top-token-item__symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
                 <div className="top-token-item__balance">{converters.roundingNumber(converters.toT(token.balance, token.decimals))}</div>
             </div>
         })
-        return tokenLayout
+      return <div className={`top-token-content ${!isAnyTokenActive ? 'top-token-content--bold' : ''}`}>{tokenLayout}</div>
     }
 
     render() {
         return (
             <div className="top-token">
-                <div className="top-token-content">{this.renderToken(this.props.tokens)}</div>
+                {this.renderToken(this.props.tokens)}
                 <div className="top-token-more" onClick={this.showMore}>{this.props.translate("market.more") || "more"}</div>
             </div>
         )
