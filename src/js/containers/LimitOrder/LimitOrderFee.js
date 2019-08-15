@@ -61,7 +61,7 @@ class LimitOrderFee extends React.Component {
     const orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);
     const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
 
-    let orderFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
+    let orderFeeText = null;
     // let orderDiscountFeeText = `0 ${sourceTokenSymbol} (${isDiscount ? '~' : ''}${converter.formatNumber(orderFeeDiscountPercentage, 1)}% of Fee)`;
     let orderDiscountFeeText = null;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
@@ -69,7 +69,6 @@ class LimitOrderFee extends React.Component {
     if (!this.props.limitOrder.isFetchingFee) {
       // orderFeeText = <span><span title={orderFee}>{converter.formatNumber(orderFee, 5, '')}</span> {sourceTokenSymbol} ({this.props.limitOrder.orderFee}% of <span title={this.props.limitOrder.sourceAmount}>{converter.displayNumberWithDot(this.props.limitOrder.sourceAmount)}</span> {sourceTokenSymbol})</span>
       orderNetFeeText = <span className="limit-order-fee__net">{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>;
-      orderFeeText = null;
 
       if (this.props.limitOrder.sourceAmount && isDiscount) {
         orderFeeText = <span className="limit-order__line-through-text">{converter.formatNumber(orderFee, 5)} {sourceTokenSymbol}</span>

@@ -30,7 +30,7 @@
         "minSupportOrder": 0.001,
         "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
-        "page_size": 5
+        "page_size": 50
     },
     "wrapETHToken": "WETH",
     "userdashboard_url": "https://staging-kyberswap.knstats.com",
@@ -42,7 +42,8 @@
             "decimals": 18,
             "cg_id": "ethereum",
             "gasLimit": "0",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "KNC": {
             "symbol": "KNC",
@@ -202,7 +203,8 @@
             "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
             "decimals": 18,
             "cg_id": "dai",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "LINK": {
             "symbol": "LINK",
@@ -309,7 +311,8 @@
             "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
             "decimals": 18,
             "cg_id": "weth",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true
         },
         "BAM": {
             "symbol": "BAM",
@@ -356,6 +359,13 @@
             "address": "0xfcd404ec70c662128d3a6bd508dfb3e598d79a0c",
             "decimals": 18,
             "cg_id": "btu-protocol"
+        },
+        "XD": {
+            "symbol": "XD",
+            "name": "Data Transaction Token",
+            "address": "0xeaf845462e78cfba40a2f11c13154ce5f103eeff",
+            "decimals": 18,
+            "cg_id": "scroll-token"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

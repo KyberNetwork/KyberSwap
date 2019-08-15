@@ -16,10 +16,10 @@ export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, des
   }
 }
 
-export function inputChange(focus, value) {
+export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals) {
   return {
     type: "LIMIT_ORDER.INPUT_CHANGE",
-    payload: { focus, value }
+    payload: { focus, value, sourceTokenDecimals, destTokenDecimals }
   }
 }
 
@@ -30,10 +30,10 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg) {
+export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg }
+    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals }
   }
 
 }

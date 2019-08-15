@@ -333,12 +333,12 @@ export default class ConfirmModal extends React.Component {
             expiredYear = new Date().getFullYear() + 1;
         }
 
+        var destTokenSymbol = this.props.exchange.destTokenSymbol
         var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
-        var destAmount = converter.calculateDest(sourceAmount, this.state.expectedRate)
-        destAmount = destAmount.toString()
+        var destDecimal = this.props.tokens[destTokenSymbol].decimal;
+        var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
 
         var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-        var destTokenSymbol = this.props.exchange.destTokenSymbol
         var sourceIcon = this.props.exchange.sourceIcon
         var destIcon = this.props.exchange.destIcon
 
@@ -490,7 +490,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     contentModal = () => {
-        const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.02, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
+        const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
 
         return (
             <div>

@@ -437,7 +437,7 @@ export function roundingNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -483,7 +483,7 @@ export function roundingRateNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -878,5 +878,5 @@ export function formatNumberByPrecision(number, precision = 4) {
   const amountString = amountBigNumber.toFixed().toString();
   const indexOfDecimal = amountString.indexOf('.');
 
-  return indexOfDecimal !== -1 ? parseFloat(amountString.slice(0, indexOfDecimal + (precision + 1))) : parseFloat(amountString);
+  return indexOfDecimal !== -1 ? amountString.slice(0, indexOfDecimal + (precision + 1)) :amountString;
 }

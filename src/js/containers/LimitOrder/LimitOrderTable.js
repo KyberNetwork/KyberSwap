@@ -51,7 +51,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header",
       className: "cell-flex-start cell-text-small",
-      maxWidth: 85,
+      maxWidth: 80,
       getHeaderProps: (state, rowInfo) => {
         return {
           onClick: (e) => {
@@ -66,7 +66,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getAddressCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-text-small",
-      width: 90,
+      width: 85,
     }, {
       id: "condition",
       Header: this.getHeader("condition"),
@@ -82,7 +82,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from",
-      width: 90
     }, {
       id: "to",
       Header: this.getHeader("to"),
@@ -90,6 +89,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to",
+      width: 125
     }, {
       id: "fee",
       Header: this.getHeader("fee"),
@@ -232,14 +232,17 @@ export default class LimitOrderTable extends Component {
         <span className="to-number-cell">{destAmount}</span>{' '}
         <span>{dest.toUpperCase()}</span>{' '}
         {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
-          <React.Fragment>
-            <span data-tip data-for={`extra-${id}`} className="to-number-cell--extra" onClick={e => this.toggleExtraModal(id)}>{this.props.translate("extra") || "extra"}</span>
+          <div className="to-number-cell--extra-wrapper">
+            <span className="to-number-cell--extra" 
+              onClick={e => this.toggleExtraModal(id)}>
+              {this.props.translate("extra") || "extra"}
+            </span>
             {this.state.isExtraOpen === id && <LimitOrderExtraTooltip
-              estimateAmount={destAmount}
-              dest={dest}
-              actualAmount={receiveAmount}
-              toggleExtraModal={this.toggleExtraModal} />}
-          </React.Fragment>
+            estimateAmount={destAmount}
+            dest={dest}
+            actualAmount={receiveAmount}
+            toggleExtraModal={this.toggleExtraModal} />}
+          </div>
         }
       </div>
     )
@@ -406,7 +409,7 @@ export default class LimitOrderTable extends Component {
                 </span>
               </div>
               <div className="extra-tooltip--faq">
-                <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+                <a href={`/faq#Why-received-amount-is-higher-than-estimated-amount`} target="_blank">
                   {this.props.translate("why") || "Why?"}
                 </a>
               </div>
