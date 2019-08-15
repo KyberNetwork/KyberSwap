@@ -359,6 +359,13 @@
             "address": "0xfcd404ec70c662128d3a6bd508dfb3e598d79a0c",
             "decimals": 18,
             "cg_id": "btu-protocol"
+        },
+        "XD": {
+            "symbol": "XD",
+            "name": "Data Transaction Token",
+            "address": "0xeaf845462e78cfba40a2f11c13154ce5f103eeff",
+            "decimals": 18,
+            "cg_id": "scroll-token"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
