@@ -91,10 +91,15 @@ const TransactionLoadingView = (props) => {
               </div>
     }
     if (!props.debug.isDebuging && props.debug.isDebugComplete) {
+      let txDebuggerUrl = `https://developer.kyber.network/tx-diagnose/${props.txHash}`;
+      if (BLOCKCHAIN_INFO.chainName !== 'Mainnet') txDebuggerUrl += `/${BLOCKCHAIN_INFO.chainName.toLowerCase()}`;
+      const txDebuggerLink = <a className={"analyze-link"} href={txDebuggerUrl} target="_blank">{props.translate("more_info") || "More Info"}</a>
+
       if (Object.keys(props.debug.errorTx).length === 0){
         reason = <div className="analyze-panel">
                   <div className="empty-error">{props.translate("transaction.error_no_reason") 
                     || "Cannot find any reason for your failed transaction. Please try again in a while"}</div>
+                  {txDebuggerLink}
                 </div>
       }else{
         reason = 
@@ -102,6 +107,7 @@ const TransactionLoadingView = (props) => {
             Object.keys(props.debug.errorTx).map(key => {
               return <div key={key}>{props.debug.errorTx[key]}</div>
             })}
+            {txDebuggerLink}
           </div>
       }
     }
