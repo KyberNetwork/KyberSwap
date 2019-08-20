@@ -16,3 +16,6 @@ export { default as LimitOrderListModal } from "./LimitOrderListModal";
 export { default as LimitOrderTable } from "./LimitOrderTable";
 export { default as LimitOrderPagination } from "./LimitOrderPagination";
 export { default as LimitOrderExtraTooltip } from "./LimitOrderExtraTooltip";
+
+export { default as LimitOrderChart } from "./LimitOrderChart";
+export { default as LimitOrderMarket } from "./LimitOrderMarket";

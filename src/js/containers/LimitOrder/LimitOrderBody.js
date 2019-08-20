@@ -6,7 +6,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
-import { LimitOrderForm, LimitOrderSubmit, LimitOrderFee, LimitOrderList, LimitOrderAccount, LimitOrderListModal } from "../LimitOrder"
+import { LimitOrderForm, LimitOrderChart, LimitOrderList, LimitOrderMarket } from "../LimitOrder"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
@@ -187,9 +187,17 @@ export default class LimitOrderBody extends React.Component {
   render() {
     return (
       <div className={"limit-order-body"}>
-        <div className="limit-order-body--form">
-          <div>
-            <LimitOrderForm
+        <div className={"limit-order-left"}>
+            <LimitOrderChart />
+            <div className="limit-order-body--list">
+            <LimitOrderList 
+              srcInputElementRef={this.srcInputElementRef}
+            />
+          </div>
+        </div>
+        <div className={"limit-order-right"}>
+          <LimitOrderMarket />
+          <LimitOrderForm
               setSrcInputElementRef={this.setSrcInputElementRef}
               selectSourceToken={this.selectSourceToken}
               selectDestToken ={this.selectDestToken}
@@ -199,39 +207,7 @@ export default class LimitOrderBody extends React.Component {
               getOpenOrderAmount={this.getOpenOrderAmount}
               setSubmitHandler={this.setSubmitHandler}
             />
-          </div>
-          <div>
-            <div>
-              <LimitOrderAccount
-                chooseToken={this.selectSourceToken}
-                modifiedTokenList = {this.getModifiedTokenList}
-              />
-            </div>
-            <div>
-              {this.props.account !== false &&
-                <LimitOrderFee/>
-              }
-            </div>
-          </div>
         </div>
-        <div>
-          <LimitOrderSubmit
-            availableBalanceTokens={this.getModifiedTokenList()}
-            getOpenOrderAmount={this.getOpenOrderAmount}
-            setSubmitHandler={this.setSubmitHandler}
-          />
-        </div>
-        {!this.props.global.isOnMobile &&
-          <div className="limit-order-body--list">
-            <LimitOrderList 
-              srcInputElementRef={this.srcInputElementRef}
-            />
-          </div>
-        }
-        {this.props.global.isOnMobile &&
-          <LimitOrderListModal 
-            srcInputElementRef={this.srcInputElementRef}
-          />}
       </div>
     )
   }
