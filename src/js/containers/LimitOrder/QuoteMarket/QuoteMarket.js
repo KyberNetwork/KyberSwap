@@ -1,10 +1,12 @@
 import React from "react"
-import * as common from "../../utils/common"
-import * as converter from "../../utils/converter"
+import * as common from "../../../utils/common"
+import * as converter from "../../../utils/converter"
 import { connect } from "react-redux"
-import * as limitOrderActions from "../../actions/limitOrderActions"
-import { ProcessingModal } from "../../components/CommonElement"
-import limitOrderServices from "../../services/limit_order";
+import * as limitOrderActions from "../../../actions/limitOrderActions"
+import { ProcessingModal } from "../../../components/CommonElement"
+import limitOrderServices from "../../../services/limit_order";
+import { QuoteList, Search, SortableTh } from "../QuoteMarket"
+
 @connect((store, props) => {
   const tokens = store.tokens.tokens
   const favorite_pairs_anonymous = store.limitOrder.favorite_pairs_anonymous
@@ -13,7 +15,7 @@ import limitOrderServices from "../../services/limit_order";
     tokens, favorite_pairs_anonymous, current_quote
   }
 })
-class QuoteMarket extends React.Component{
+export default class QuoteMarket extends React.Component{
   constructor() {
     super()
     this.state = {
@@ -147,8 +149,8 @@ class QuoteMarket extends React.Component{
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
               <div id="panel">
-                <PairRateQuoteList onClick={this.onQuoteClick} currentQuote={current_quote} quotes={["FAV"].concat(Object.keys(quotes))}/>
-                <PairRateSearch onSearch={this.onSearch}/>
+                <QuoteList onClick={this.onQuoteClick} currentQuote={current_quote} quotes={["FAV"].concat(Object.keys(quotes))}/>
+                <Search onSearch={this.onSearch}/>
               </div>
               <table>
                 <thead>
@@ -170,67 +172,8 @@ class QuoteMarket extends React.Component{
                 </tbody>
               </table>
             </div> : 
-            <div className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></div>}
+            <div className="rate-loading"> <img src={require('../../../../assets/img/waiting-white.svg')} /></div>}
       </div>
     )
   }
 }
-
-class SortableTh extends React.Component {
-  constructor() {
-    super()
-    this.state = { is_asc: true }
-  }
-  onSort = (isAsc) => {
-    const { isEnable } = this.props
-    this.props.onSort(isEnable ? !this.state.is_asc : true)
-    this.setState((state, props) => ({is_asc: (isEnable ? !state.is_asc : true)}))
-  }
-  render() {
-    const { children, isEnable } = this.props
-    const { is_asc } = this.state
-    return (
-      <th width="20%" onClick={() => this.onSort(is_asc)}> 
-        {children} 
-        <img src={ isEnable ? (is_asc ? require("../../../assets/img/limit-order/sort-asc-icon.svg") : 
-          require("../../../assets/img/limit-order/sort-desc-icon.svg")) : "" }/>
-      </th>
-    )
-  } 
-}
-
-
-class PairRateQuoteList extends React.Component{
-  render() {
-    const { currentQuote, quotes, onClick } = this.props
-    return (
-      <div id="quote_panel">
-        { quotes.map(i => 
-          <span key={i} className={currentQuote == i ? "active" :""} onClick={() => onClick(i)}>
-            {i == "FAV" ? <div style={{display: 'inline-block'}} className={currentQuote == i  ? "star active" : "star" } />  : i}
-          </span>)}
-      </div>
-    )
-  }
-}
-
-class PairRateSearch extends React.Component{
-  constructor() {
-    super()
-    this.state = { text: "" }
-  }
-  onChange = (e) => {
-    const { onSearch } = this.props
-    onSearch(e.target.value)
-    this.setState({text: e.target.value})
-  } 
-  render(){
-    return (
-      <div id="search_panel"> 
-        <input type="text" value={this.state.text} onChange={this.onChange} />
-      </div>
-    )
-  }
-}
-
-export default QuoteMarket

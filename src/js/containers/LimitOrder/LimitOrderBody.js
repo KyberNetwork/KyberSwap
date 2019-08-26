@@ -6,8 +6,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
-import { LimitOrderForm, LimitOrderChart, LimitOrderList, LimitOrderMarket } from "../LimitOrder"
-import {default as QuoteMarket} from "./QuoteMarket"
+import { LimitOrderForm, LimitOrderChart, LimitOrderList, LimitOrderMarket, QuoteMarket } from "../LimitOrder"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
