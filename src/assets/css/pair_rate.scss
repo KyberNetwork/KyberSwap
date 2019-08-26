@@ -18,6 +18,16 @@
     color: #fa6566
   }
 
+  .star {
+    width: 18px;
+    height: 18px;
+    background-image: url($image-path + 'common/star.svg');
+    background-repeat: no-repeat; 
+  }
+
+  .star.active {
+    background-image: url($image-path + 'common/star_active.svg');
+  }
   div#container {
     height: 100%;
     overflow-y: auto;
@@ -54,7 +64,7 @@
 
     #search_panel {
       float: right;
-      margin-top: 10px;
+      margin-top: 5px;
       width: 30%;
       display: inline-block;
 
@@ -107,6 +117,7 @@
     td {
       color: #adbdd2;
       font-size: 12px;
+      line-height: 2em;
 
       i {
         width: 20px;

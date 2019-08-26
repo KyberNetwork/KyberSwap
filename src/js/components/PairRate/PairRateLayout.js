@@ -122,16 +122,16 @@ class PairRateLayout extends React.Component{
     const quotes = Object.keys(tokens).filter((key)=> (("is_quote" in tokens[key]) && tokens[key]["is_quote"]))
       .reduce((res, quote) => {
         res[quote] = Object.keys(tokens)
-                    .reduce((vt, key) =>{ 
-                      return key == quote ? vt : vt.concat({   
-                          id: key+"_"+quote, 
-                          base: key, quote: quote, 
-                          price: (BigNumber(tokens[key].rate) /(quote == "ETH" ? new BigNumber(1000000000000000000) : BigNumber(tokens[quote].rate))).toFixed(5), 
-                          is_favorite: fav.includes(key+"_"+quote),
-                          volume: "-",
-                          change: "0"
-                      });
-                    }, []); 
+          .reduce((vt, key) =>{ 
+            return key == quote ? vt : vt.concat({   
+                id: key+"_"+quote, 
+                base: key, quote: quote, 
+                price: (BigNumber(tokens[key].rate) /(quote == "ETH" ? new BigNumber(1000000000000000000) : BigNumber(tokens[quote].rate))).toFixed(5), 
+                is_favorite: fav.includes(key+"_"+quote),
+                volume: "-",
+                change: "0"
+            });
+          }, []); 
         return res
       },{})
     return quotes;
@@ -159,8 +159,9 @@ class PairRateLayout extends React.Component{
                 </thead>
                 <tbody>
                   {list.map(pair => <tr key={pair["id"]}>
-                      <td onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>{pair["is_favorite"] ? <i className="material-icons active">star</i>
-       : <i className="material-icons">star_border</i>}</td>
+                      <td onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                        <div className={pair["is_favorite"] ? "star active" : "star" } /> 
+                      </td>
                       <td>{pair["base"] + "/" + pair["quote"]}</td>
                       <td>{pair["price"]}</td>
                       <td>{pair["volume"]}</td>
@@ -191,8 +192,8 @@ class SortableTh extends React.Component {
     return (
       <th width="20%" onClick={() => this.onSort(is_asc)}> 
         {children} 
-        <img src={ isEnable ? (is_asc ? "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE0IDE4Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTS01LTNoMjR2MjRILTV6Ii8+CiAgICAgICAgPHBhdGggZmlsbD0iIzVBNUU2NyIgZD0iTTExIDE0LjAxVjdIOXY3LjAxSDZMMTAgMThsNC0zLjk5aC0zeiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNGRjkwMDgiIGQ9Ik00IDBMMCAzLjk5aDNWMTFoMlYzLjk5aDN6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=" : 
-          "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE0IDE4Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTS01LTNoMjR2MjRILTV6Ii8+CiAgICAgICAgPHBhdGggZmlsbD0iI0ZGOTAwOCIgZD0iTTExIDE0LjAxVjdIOXY3LjAxSDZMMTAgMThsNC0zLjk5aC0zeiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiM1QTVFNjciIGQ9Ik00IDBMMCAzLjk5aDNWMTFoMlYzLjk5aDN6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=") : "" }/>
+        <img src={ isEnable ? (is_asc ? require("../../../assets/img/limit-order/sort-asc-icon.svg") : 
+          require("../../../assets/img/limit-order/sort-desc-icon.svg")) : "" }/>
       </th>
     )
   } 
@@ -206,7 +207,7 @@ class PairRateQuoteList extends React.Component{
       <div id="quote_panel">
         { quotes.map(i => 
           <span key={i} className={currentQuote == i ? "active" :""} onClick={() => onClick(i)}>
-            {i == "FAV" ? <i className="material-icons">{currentQuote == i ? "star" : "star_border"}</i> : i}
+            {i == "FAV" ? <div style={{display: 'inline-block'}} className={currentQuote == i  ? "star active" : "star" } />  : i}
           </span>)}
       </div>
     )
