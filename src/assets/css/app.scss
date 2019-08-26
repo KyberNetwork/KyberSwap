@@ -49,6 +49,10 @@ $alert-color: #ff5d00;
 @import "swap_vi";
 @import "swap_ru";
 
+// Themes
+@import "themes/dark";
+@import "themes/light";
+
 @font-face{
   font-family: 'text-security-disc';
   font-style: normal;

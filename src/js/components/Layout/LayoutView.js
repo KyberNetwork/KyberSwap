@@ -64,9 +64,9 @@ const LayoutView = (props) => {
   defaultPathLimitOrder = common.getPath(defaultPathLimitOrder, constansts.LIST_PARAMS_SUPPORTED)
 
   return (
-    <ConnectedRouter history={props.history}  store ={store}>
+    <ConnectedRouter history={props.history} store ={store}>
       <div>
-        <section id="content" className={props.langClass}>
+        <section id="content" className={`${props.langClass} theme theme--${props.theme}`}>
           <Switch>
             <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
