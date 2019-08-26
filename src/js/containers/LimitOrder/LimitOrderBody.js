@@ -188,7 +188,6 @@ export default class LimitOrderBody extends React.Component {
   render() {
     return (
       <div className={"limit-order-body"}>
-        
         <PairRate />
         <div className={"limit-order-left"}>
             <LimitOrderChart />

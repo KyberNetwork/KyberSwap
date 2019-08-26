@@ -24,7 +24,6 @@ const rootReducer = combineReducers({
     storage: session,
     blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error']
   }, account),
-
   global: persistReducer({
     key: 'global',
     storage: session,

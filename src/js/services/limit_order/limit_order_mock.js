@@ -372,32 +372,31 @@ function changeState() {
 }
 
 const getvolumeAndChangeDumpData = () => {
-    return `{"ADX_ETH" : {
+  return `{"ADX_ETH" : {
     "id": "ADX_ETH",
     "base": "ADX",
     "quote": "ETH",
     "volume": "${Math.ceil(Math.random() *10)}",
     "change": "${Math.ceil(Math.random() *10) -5}"}
-}`
+  }`
 }
 
 export function getVolumeAndChange(){
-    return new Promise((resolve, rejected) => {       
-        resolve(JSON.parse(getvolumeAndChangeDumpData()));
-        return;
-    })
+  return new Promise((resolve, rejected) => {       
+      resolve(JSON.parse(getvolumeAndChangeDumpData()));
+      return;
+  })
 }
 
-
 export function getFavoritePairs(){
-    return new Promise((resolve, reject) => {
-                resolve(JSON.parse('["BITX_ETH"]'))
-            })
+  return new Promise((resolve, reject) => {
+    resolve(JSON.parse('["BITX_ETH"]'))
+  })
 }
 
 export function updateFavoritePairs(){
-    return new Promise((resolve, reject) => {
-                resolve(JSON.parse('["BITX_ETH"]'))
-            })
+  return new Promise((resolve, reject) => {
+    resolve(JSON.parse('["BITX_ETH"]'))
+  })
 }
 
