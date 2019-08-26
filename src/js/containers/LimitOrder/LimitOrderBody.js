@@ -7,7 +7,7 @@ import * as common from "../../utils/common"
 import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
 import { LimitOrderForm, LimitOrderChart, LimitOrderList, LimitOrderMarket } from "../LimitOrder"
-import {default as PairRate} from "../PairRate"
+import {default as QuoteMarket} from "./QuoteMarket"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
@@ -188,7 +188,7 @@ export default class LimitOrderBody extends React.Component {
   render() {
     return (
       <div className={"limit-order-body"}>
-        <PairRate />
+        <QuoteMarket />
         <div className={"limit-order-left"}>
             <LimitOrderChart />
             <div className="limit-order-body--list">

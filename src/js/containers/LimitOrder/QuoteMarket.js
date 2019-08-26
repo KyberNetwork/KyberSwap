@@ -3,7 +3,7 @@ import {default as pairRateServices} from "../../services/pair_rate/pair_rate_mo
 import * as utils from "../../utils/common"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
-import { ProcessingModal } from "../CommonElement"
+import { ProcessingModal } from "../../components/CommonElement"
 import BigNumber from "bignumber.js"
 import limitOrderServices from "../../services/limit_order";
 @connect((store, props) => {
@@ -14,7 +14,7 @@ import limitOrderServices from "../../services/limit_order";
     tokens, favorite_pairs_anonymous, current_quote
   }
 })
-class PairRateLayout extends React.Component{
+class QuoteMarket extends React.Component{
   constructor() {
     super()
     this.state = {
@@ -233,4 +233,4 @@ class PairRateSearch extends React.Component{
   }
 }
 
-export default PairRateLayout
+export default QuoteMarket
