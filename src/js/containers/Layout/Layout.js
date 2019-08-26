@@ -8,7 +8,7 @@ import { ExchangeHistory } from "../../containers/CommonElements/"
 import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { createNewConnectionInstance } from "../../actions/connectionActions"
 import { throttle } from 'underscore';
@@ -60,7 +60,8 @@ import BLOCKCHAIN_INFO from "../../../../env";
     locale: locale,
     tokens: store.tokens.tokens,
     analytics: store.global.analytics,
-    langClass: langClass
+    langClass: langClass,
+    theme: store.global.theme
   }
 })
 
@@ -96,6 +97,15 @@ export default class Layout extends React.Component {
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
     }
+
+    if (window.kyberBus) {
+      window.kyberBus.on("swap.switch_theme", this.switchTheme.bind(this));
+    }
+  }
+
+  switchTheme = () => {
+    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
+    this.props.dispatch(switchTheme(theme));
   }
 
   handleCloseWeb = () => {
@@ -147,6 +157,7 @@ export default class Layout extends React.Component {
         currentLanguage = {currentLanguage}  
         tokens = {this.props.tokens}
         langClass = {this.props.langClass}
+        theme = {this.props.theme}
       />
     )
   }
