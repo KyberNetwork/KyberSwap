@@ -1,10 +1,9 @@
 import React from "react"
-import {default as pairRateServices} from "../../services/pair_rate/pair_rate_mock"
-import * as utils from "../../utils/common"
+import * as common from "../../utils/common"
+import * as converter from "../../utils/converter"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import { ProcessingModal } from "../../components/CommonElement"
-import BigNumber from "bignumber.js"
 import limitOrderServices from "../../services/limit_order";
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -33,7 +32,7 @@ class QuoteMarket extends React.Component{
       this.updateVolume()
     }, 2000);
 
-    if (utils.isUserLogin()) {
+    if (common.isUserLogin()) {
       limitOrderServices.getFavoritePairs().then((res) => this.setState({favorite_pairs: res}))
     } 
   }
@@ -58,7 +57,7 @@ class QuoteMarket extends React.Component{
   }
 
   onFavoriteClick = (base, quote, to_fav) => {
-    if (utils.isUserLogin()) {
+    if (common.isUserLogin()) {
       limitOrderServices
         .updateFavoritePairs()
         .then((res) => {
@@ -115,10 +114,11 @@ class QuoteMarket extends React.Component{
     .sort(function(a,b){return (current_sort_asc ? -1 : 1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
   }
 
+
   renderQuotes(){
     const { tokens, favorite_pairs_anonymous } = this.props
     const { favorite_pairs } = this.state
-    const fav = utils.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
+    const fav = common.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
     const quotes = Object.keys(tokens).filter((key)=> (("is_quote" in tokens[key]) && tokens[key]["is_quote"]))
       .reduce((res, quote) => {
         res[quote] = Object.keys(tokens)
@@ -126,7 +126,7 @@ class QuoteMarket extends React.Component{
             return key == quote ? vt : vt.concat({   
                 id: key+"_"+quote, 
                 base: key, quote: quote, 
-                price: (BigNumber(tokens[key].rate) /(quote == "ETH" ? new BigNumber(1000000000000000000) : BigNumber(tokens[quote].rate))).toFixed(5), 
+                price: (+converter.divOfTwoNumber(tokens[key].rate, quote == "ETH" ? '1000000000000000000' : tokens[quote].rate)).toFixed(5), 
                 is_favorite: fav.includes(key+"_"+quote),
                 volume: "-",
                 change: "0"
