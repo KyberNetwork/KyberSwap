@@ -277,10 +277,6 @@ export function changeOrderTabComplete(tab) {
   }
 }
 
-/**
- * Pair Rate
- */
-
 export function updateCurrentQuote(quote) {
   return {
     type: "LIMIT_ORDER.UPDATE_CURRENT_QUOTE",

@@ -83,9 +83,9 @@ class QuoteMarket extends React.Component{
   renderTh = () => {
     return [
       { html: "Pair", field: "base" }, 
-      {html: "Price", field: "price"}, 
-      {html: "Volume", field: "volume"}, 
-      {html: "Change", field: "change"}
+      { html: "Price", field: "price" }, 
+      { html: "Volume", field: "volume" }, 
+      { html: "Change", field: "change" }
     ].map((i, index) => (
       <SortableTh 
         key={i["html"]} 
@@ -143,7 +143,7 @@ class QuoteMarket extends React.Component{
     const { tokens, current_quote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
     return (
-      <div id="pair_rate"> 
+      <div id="quote-market"> 
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
               <div id="panel">
