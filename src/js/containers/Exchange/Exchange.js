@@ -4,14 +4,13 @@ import {ExchangeBody} from "../Exchange"
 import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
-
 import * as exchangeActions from "../../actions/exchangeActions"
 import {setIsChangingPath, clearSession} from "../../actions/globalActions"
-
 import {HeaderTransaction} from "../TransactionCommon"
 import * as analytics from "../../utils/analytics"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
+import { Market } from "../Market"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -23,7 +22,6 @@ import constants from "../../services/constants"
   return {
     translate, exchange, tokens, account, ethereum,
     params: {...props.match.params},
-
   }
 })
 
@@ -61,28 +59,10 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.checkKyberEnable(ethereum))
   }
 
-  // fetchUserCap = () => {
-  //   var account = this.props.account
-  //   if (this.props.account == false) {
-  //     return
-  //   }
-  //   var ethereum = this.getEthereumInstance()
-  //   this.props.dispatch(exchangeActions.fetchUserCap(ethereum))
-  // }
-
   fetchRateExchange = () => {    
     var ethereum = this.getEthereumInstance()
-
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
-    // if (this.state.isFirstTime){
-      
-    // }
-
-    // var sourceToken = this.props.exchange.sourceToken
-    // var destToken = this.props.exchange.destToken
-    
     var sourceAmount = this.props.exchange.sourceAmount
-    
     let refetchSourceAmount = false;
     
     if (sourceTokenSymbol === "ETH") {
@@ -96,8 +76,7 @@ export default class Exchange extends React.Component {
     if (this.props.exchange.inputFocus !== "source"){
       //calculate source amount by dest amount
       var destAmount = this.props.exchange.destAmount
-      // var destTokenSymbol = this.props.exchange.destTokenSymbol
-      // relative source amount 
+      // relative source amount
       var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
       var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
@@ -133,10 +112,6 @@ export default class Exchange extends React.Component {
     }
   }
 
-  // fetchApproveTxsData = () => {
-  //   this.props.dispatch(updateApproveTxsData())
-  // }
-
   verifyExchange = () => {
     if (!this.props.account) {
       return
@@ -150,14 +125,9 @@ export default class Exchange extends React.Component {
 
   setInvervalProcess = () => {
     this.setInterValGroup( this.checkKyberEnable, 10000)
-    // this.setInterValGroup( this.fetchUserCap, 10000)
-
     this.setInterValGroup( this.fetchRateExchange, 10000)
-
     this.setInterValGroup( this.fetchGasExchange, 10000)
     this.setInterValGroup( this.fetchMaxGasPrice.bind(this), 10000)
-    // this.setInterValGroup( this.fetchApproveTxsData, 10000)    
-
     this.setInterValGroup( this.verifyExchange, 3000)
   }
 
@@ -180,32 +150,24 @@ export default class Exchange extends React.Component {
   }
 
   componentDidMount = () =>{
-    // set interval process
     this.setInvervalProcess()
 
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 
     if ((sourceTokenSymbol !== this.props.exchange.sourceTokenSymbol) ||
       (destTokenSymbol !== this.props.exchange.destTokenSymbol) ){
-
-      // var sourceSymbol = this.props.params.source.toUpperCase()
-      // var sourceAddress = this.props.tokens[sourceSymbol].address
-
-      // var destSymbol = this.props.params.dest.toUpperCase()
-      // var destAddress = this.props.tokens[destSymbol].address
-
-      // this.props.dispatch(exchangeActions.selectTokenAsync(sourceSymbol, sourceAddress, "source", this.props.ethereum))
-      // this.props.dispatch(exchangeActions.selectTokenAsync(destSymbol, destAddress, "dest", this.props.ethereum))
-
       this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
     }
   }
 
   render() {
     return (
-      <div className={"exchange-container"}>
-        <HeaderTransaction page="exchange"/>
-        <ExchangeBody/>
+      <div>
+        <div className={"exchange-container"}>
+          <HeaderTransaction page="exchange"/>
+          <ExchangeBody/>
+        </div>
+        <Market/>
       </div>
     )
   }

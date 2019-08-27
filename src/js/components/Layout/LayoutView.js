@@ -69,18 +69,15 @@ const LayoutView = (props) => {
         <section id="content" className={`${props.langClass} theme theme--${props.theme}`}>
           <Switch>
             <Route exact path={constansts.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
-            <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />       
+            <Route exact path={constansts.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constansts.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />
-
             <Route exact path={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/:source${listLimitOrderToken}-:dest${listLimitOrderToken}`} component={props.LimitOrder} />       
             <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}`} to={defaultPathLimitOrder} />
             <Redirect from={constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/*`} to={defaultPathLimitOrder} />
-            
             <Redirect to={defaultPathExchange} />
           </Switch>
           <Processing />
-          {props.market}
         </section>
         <section id="modals">
           <InfoModal />

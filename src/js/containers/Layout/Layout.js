@@ -3,9 +3,7 @@ import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
 import { LimitOrder } from "../../containers/LimitOrder"
-// import { Header } from "../../containers/Header"
 import { ExchangeHistory } from "../../containers/CommonElements/"
-import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
 import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
@@ -21,7 +19,6 @@ import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
-  // console.log("locale: ", store.locale)
   var locale = store.locale
   var code
   if(Array.isArray(locale.languages)) {
@@ -141,9 +138,7 @@ export default class Layout extends React.Component {
   }
 
   render() {
-
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-    var market = <Market />
 
     return (
       <LayoutView
@@ -151,7 +146,6 @@ export default class Layout extends React.Component {
         Exchange={Exchange}
         Transfer={Transfer}
         LimitOrder = {LimitOrder}
-        market={market}
         supportedLanguages={Language.supportLanguage}
         setActiveLanguage={this.setActiveLanguage}      
         currentLanguage = {currentLanguage}  

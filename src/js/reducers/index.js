@@ -36,35 +36,4 @@ const rootReducer = combineReducers({
   exchange, transfer, limitOrder, txs, utils, tokens, market, connection
 })
 
-
-// const appReducer = combineReducers({
-//   exchange, transfer, limitOrder, connection, router: routerReducer, market, global, 
-//   // market: persistReducer({
-//   //   key: 'market',
-//   //   storage: localForage
-//   // }, market),  
-//   locale: localizeReducer,
-//   tokens, txs,
-//   utils,
-//   // locale: persistReducer({
-//   //   key: 'locale',
-//   //   storage: localForage
-//   // }, locale),  
-//   account: persistReducer({
-//     key: 'account',
-//     storage: session
-//   }, account),  
-//   txs: persistReducer({
-//     key: 'txs',
-//     storage: session
-//   }, txs),
-//   // global: persistReducer({
-//   //   key: 'global',
-//   //   storage: localForage,
-//   //   blacklist: ['conn_checker', 'analizeError', 'isOpenAnalyze', 'termOfServiceAccepted']
-//   // }, global)
-// })
-
-
 export default rootReducer
-

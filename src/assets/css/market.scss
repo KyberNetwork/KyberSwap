@@ -434,7 +434,6 @@
           &.dropdown--active {
             .focus-item {
               img {
-                @include rotate-icon(90deg);
                 transition: 0.3s;
               }
             }
