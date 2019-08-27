@@ -277,6 +277,28 @@ const limitOrder = (state = initState, action) => {
       newState.selectedGas = selectedGas;
       return newState;
     }
+
+
+
+    case 'LIMIT_ORDER.UPDATE_CURRENT_QUOTE':{
+      const { quote } =  action.payload;
+      newState.current_quote = quote
+      return newState; 
+    }
+
+    case 'LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS':{
+      const { base, quote, toFav } =  action.payload;
+      const index = newState.favorite_pairs_anonymous.indexOf(base+"_"+quote)
+      if (index == -1){
+        newState.favorite_pairs_anonymous.push(base+"_"+quote)
+      }else {
+        newState.favorite_pairs_anonymous.splice(index, 1)
+      }
+      newState.favorite_pairs_anonymous = newState.favorite_pairs_anonymous.slice()
+      return newState; 
+    }
+
+
   }
   return state
 }

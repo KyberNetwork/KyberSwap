@@ -19,3 +19,5 @@ export { default as LimitOrderExtraTooltip } from "./LimitOrderExtraTooltip";
 
 export { default as LimitOrderChart } from "./LimitOrderChart";
 export { default as LimitOrderMarket } from "./LimitOrderMarket";
+
+export { default as QuoteMarket } from "./QuoteMarket/QuoteMarket";
