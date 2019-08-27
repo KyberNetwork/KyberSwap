@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
 import session from 'redux-persist/lib/storage/session'
+import storage from 'redux-persist/lib/storage'
 import { routerReducer } from 'react-router-redux'
 import * as BLOCKCHAIN_INFO from "../../../env"
 import constants from "../services/constants"
@@ -23,17 +24,20 @@ const rootReducer = combineReducers({
     storage: session,
     blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error']
   }, account),
-
   global: persistReducer({
     key: 'global',
     storage: session,
     whitelist:['theme']
   }, global),
-
+  limitOrder: persistReducer({
+    key: 'limitOrder',
+    storage: storage,  
+    whitelist: ['favorite_pairs_anonymous']
+  }, limitOrder),
   locale: localizeReducer,
   router: routerReducer,
 
-  exchange, transfer, limitOrder, txs, utils, tokens, market, connection
+  exchange, transfer, txs, utils, tokens, market, connection
 })
 
 

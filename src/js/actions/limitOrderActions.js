@@ -276,3 +276,18 @@ export function changeOrderTabComplete(tab) {
     payload: { tab }
   }
 }
+
+export function updateCurrentQuote(quote) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_CURRENT_QUOTE",
+    payload: { quote }
+  }
+}
+
+export function updateFavoriteAnonymous(base, quote, toFav) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS",
+    payload: { base, quote, toFav }
+  }
+}
+

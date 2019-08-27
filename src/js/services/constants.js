@@ -424,7 +424,9 @@ const INIT_LIMIT_ORDER_STATE = {
   // Disable submit button state
   isDisableSubmit: false,
   isAgreeForceSubmit: false,
-  forceSubmitRate: 0
+  forceSubmitRate: 0,
+  favorite_pairs_anonymous: [],
+  current_quote: "ETH"
 }
 
 
