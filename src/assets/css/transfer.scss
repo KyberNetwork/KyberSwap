@@ -3,234 +3,191 @@ $padding-col : 1rem;
 $padding-col-left : 2rem;
 
 #transfer-screen{
-  // display: inline-block;
-  // width: 100%;
-  .address-balance{
-    margin-top: 25px;
-    .balance{
-      margin-left: 15px;
-    }
+  margin-top: 25px;
+  .balance{
+    margin-left: 15px;
   }
-  @include screen-max-width(large){
-    margin:  0 10px 10px 10px;
-    box-shadow: 0 7px 25px #ddd;
-    .transfer-col {
-      background-color: white;
-    }
+}
+@include screen-max-width(large){
+  margin:  0 10px 10px 10px;
+  box-shadow: 0 7px 25px #ddd;
+  .transfer-col {
+    background-color: white;
   }
+}
 
-  .transfer-col{
-    padding: 1rem;
-    &.transfer-advanced {
-      padding-bottom: 0;
-      @include screen-min-width(medium) {
-        padding: 1rem 1rem 0 2rem;
-      }
-    }
-  }
-
-  .transfer-col-1 {
-    background: white;
-  }
-
-  @include screen-min-width(large){
-    .transfer-col-1{
-      box-shadow: $box-shadow-tab;
-      min-height: 510px;
-    }
-    .transfer-col-3-1{
-      position: relative;
-      top: -160px;
-    }
-  }
-  .frame {
-    // .exchange-pd {
-      // padding-left: 2.5rem;
-      // padding-right: 2.5rem;
-      // .row {
-        
-        .transfer-col-3{
-          .transfer-col-3-1{
-            @include breakpoint(medium) {
-              padding-left: $padding-col-left;
-            }
-          }
-          .submit-transfer{
-            @include breakpoint(small only) {
-              width: 100%;
-            }
-          }
-        }
-        .transfer-detail {
-          @include screen-max-width(large) {
-            background-color: white;
-          }
-
-          .transfer-col-1-2{
-            @include breakpoint(medium up) {
-              padding-left: $padding-col-left;
-            }
-          }
-          
-
-          
-          .change-amount{
-            
-              padding-left: 1.2rem;
-              @include breakpoint(small only) {
-                @media screen and (min-width: 40em){
-                  height: 153px;        
-                }
-                padding-left: 0;
-              }
-          }
-          .select-token-panel {
-            margin-top: 0;
-          }
-          .receive-addr{
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            @include breakpoint(small only) {
-              margin-bottom: 20px;
-              height: 55px;
-            }
-            .qc-code-content{
-              padding-right: 10px;
-            
-
-            }
-            .hashAddr {
-                  font-size: 18px;
-                  text-align: center;
-                  letter-spacing: 1.25px;
-                  //background-color: #415b68;
-                  
-                  
-                  //color: $white;
-                  resize: none;
-                  margin-bottom: 0;
-                  outline: none;
-                  padding: 10px;
-                  width: 100%;
-                  border: none;
-                  height: 100%;
-
-                  border-radius: 10px;
-                  
-            
-            }
-          }
-          
-        }
-      //}
-    //}
-  }
-  label{
-      margin-bottom: 8px;
-  }
-  .main-title {
-    padding-top: 1.5rem;
+.transfer-col{
+  padding: 1rem;
+  &.transfer-advanced {
     padding-bottom: 0;
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    @include screen-max-width(medium) {
-      display: none;
-    }
-  }
-  .transaction-label{
-	  font-size: 14px;
-	 	text-transform: uppercase;
-	 	padding-left: 0;
-  }
-  .transfer-btn {
-    .accent {
-      margin-top: 15px;
-      line-height: 55px;
-      padding: 0 35px;
-      background: #ef8102;
-      border-radius: 4px;
-      //box-shadow: 0 10px 15px #ccc;
-      font-size: 20px;
-      font-weight: 600;
-      text-transform: unset;
-    }
-    &.error {
-      .accent {
-        @include screen-min-width(large) {
-          margin-top: 40px;
-        }
-      }
-    }
-  }
-  .text-center {
-  	display: flex;
-  	justify-content: center;
-  }
-  .token-selector {
-    .dropdown {
-      &.dropdown--active {
-        position: relative;
-        z-index: 1;
-        .focus-item{
-          border-color: #aaa;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
-    }
-    .focus-item {
-      border-radius: 5px;
-      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-      background-color: #ffffff;
-      border: solid 0.8px rgba(204, 204, 204, 0.72);
-      padding: 8px 12px;
-      align-items: center;
-      font-size: 15px;
-      &.d-flex{
-        justify-content: space-between;
-      }
-      .k-angle {
-        background-image: url(../img/exchange/arrow-down-swap.svg);
-        width: 13px;
-      }
-      .d-flex{
-        align-items: center;
-      }
-      .focus-name{
-        color: #222222;
-        font-weight: 600;
-        text-transform: initial;
-      }
-      .focus-balance{
-        color: #666666;
-        font-size: 14px;
-        font-weight: 600;
-        .token-symbol{
-          margin-left: 5px;
-        }
-      }
-      .icon{
-        margin-right: 10px;
-        img{
-          vertical-align: top;
-        }
-      }
-    }
-  }
-  
-  .gas-option {
-    .focus-item {
-      padding-left: 0;
+    @include screen-min-width(medium) {
+      padding: 1rem 1rem 0 2rem;
     }
   }
 }
 
+.transfer-col-1 {
+  background: white;
+}
 
+@include screen-min-width(large){
+  .transfer-col-1{
+    box-shadow: $box-shadow-tab;
+    min-height: 510px;
+  }
+  .transfer-col-3-1{
+    position: relative;
+    top: -160px;
+  }
+}
+.frame {
+  .transfer-detail {
+    @include screen-max-width(large) {
+      background-color: white;
+    }
+
+    .change-amount{
+      padding-left: 1.2rem;
+    }
+    .select-token-panel {
+      margin-top: 0;
+    }
+    .receive-addr{
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .qc-code-content{
+        padding-right: 10px;
+      }
+      .hashAddr {
+        font-size: 18px;
+        text-align: center;
+        letter-spacing: 1.25px;
+        //background-color: #415b68;
+
+
+        //color: $white;
+        resize: none;
+        margin-bottom: 0;
+        outline: none;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        height: 100%;
+
+        border-radius: 10px;
+
+
+      }
+    }
+
+  }
+  //}
+  //}
+}
+label{
+  margin-bottom: 8px;
+}
+.main-title {
+  padding-top: 1.5rem;
+  padding-bottom: 0;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  @include screen-max-width(medium) {
+    display: none;
+  }
+}
+.transaction-label{
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-left: 0;
+}
+.transfer-btn {
+  .accent {
+    margin-top: 15px;
+    line-height: 55px;
+    padding: 0 35px;
+    background: #ef8102;
+    border-radius: 4px;
+    //box-shadow: 0 10px 15px #ccc;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: unset;
+  }
+  &.error {
+    .accent {
+      @include screen-min-width(large) {
+        margin-top: 40px;
+      }
+    }
+  }
+}
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+.token-selector {
+  .dropdown {
+    &.dropdown--active {
+      position: relative;
+      z-index: 1;
+      .focus-item{
+        border-color: #aaa;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+  .focus-item {
+    border-radius: 5px;
+    box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
+    background-color: #ffffff;
+    border: solid 0.8px rgba(204, 204, 204, 0.72);
+    padding: 8px 12px;
+    align-items: center;
+    font-size: 15px;
+    &.d-flex{
+      justify-content: space-between;
+    }
+    .k-angle {
+      background-image: url(../img/exchange/arrow-down-swap.svg);
+      width: 13px;
+    }
+    .d-flex{
+      align-items: center;
+    }
+    .focus-name{
+      color: #222222;
+      font-weight: 600;
+      text-transform: initial;
+    }
+    .focus-balance{
+      color: #666666;
+      font-size: 14px;
+      font-weight: 600;
+      .token-symbol{
+        margin-left: 5px;
+      }
+    }
+    .icon{
+      margin-right: 10px;
+      img{
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+.gas-option {
+  .focus-item {
+    padding-left: 0;
+  }
+}
 
 .qc-modal{
   .qc-title{
@@ -262,7 +219,7 @@ $padding-col-left : 2rem;
           background-repeat: no-repeat;
           top: 2px;
         }
-        
+
       }
     }
   }

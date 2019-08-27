@@ -59,7 +59,6 @@
       background-color: transparent;
       transition: background-color 0.1s ease-in-out;
       cursor: pointer;
-      @include clearfix;
       &:not(:last-child) {
         border-bottom: 1px solid $k-divider-light;
       }
@@ -128,7 +127,6 @@
 
   .address-list-navigation {
     margin: 30px 0;
-    // @include clearfix;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -281,8 +279,6 @@
       width: 0;
       height: 0;
       &:checked + .address-path-stamp {
-        background: $accent-gradient;
-        box-shadow: 0 10px 40px 0 rgba($primary-color, .3);
         .submit {
           display: block;
         }
@@ -380,8 +376,7 @@
 }
 
 .address-balance {
-  @include clearfix;
-  justify-content: space-between;  
+  justify-content: space-between;
   .note {
     font-weight: bold;
     font-size: 14px;
