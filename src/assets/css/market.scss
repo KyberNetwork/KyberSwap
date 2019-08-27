@@ -434,7 +434,6 @@
           &.dropdown--active {
             .focus-item {
               img {
-                @include rotate-icon(90deg);
                 transition: 0.3s;
               }
             }
@@ -875,17 +874,6 @@
           background: #ef8102;
           color: $white;
           box-shadow: 0px 0px 5px #eee;
-        }
-      }
-      @include breakpoint(small only) {
-        font-size: 13px;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        .-next, .-previous {
-          margin: 0 10px;
-        }
-        .select-wrap {
-          display: none;
         }
       }
     }

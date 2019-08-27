@@ -1,18 +1,16 @@
-
-
 .top-token{
     padding: 10px 20px;
 
     @media screen and (max-width: 320px) {
         padding: 10px;
     }
-    
+
     display: flex;
     justify-content: space-between;
     .top-token-content{
         width: 70%;
     }
-    
+
     &-content{
         display: flex;
         justify-content: space-between;

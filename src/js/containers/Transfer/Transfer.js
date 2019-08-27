@@ -9,8 +9,8 @@ import { clearSession, setIsChangingPath } from "../../actions/globalActions"
 import { ImportAccount } from "../ImportAccount"
 import {HeaderTransaction} from "../TransactionCommon"
 import EthereumService from "../../services/ethereum/ethereum"
-
 import constants from "../../services/constants"
+import { Market } from "../Market"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -114,9 +114,12 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-      <div className={"exchange-container"}>
-        <HeaderTransaction page="transfer"/>
-        <TransferBody/>
+      <div>
+        <div className={"exchange-container"}>
+          <HeaderTransaction page="transfer"/>
+          <TransferBody/>
+        </div>
+        <Market/>
       </div>
     )
   }
