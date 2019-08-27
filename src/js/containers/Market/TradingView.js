@@ -18,13 +18,13 @@ export default class TradingView extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			rateType: "sell",
+			rateType: "",
 		}
 	}
 
 	static defaultProps = {
 		//	symbol: this.props.selectedSymbol,
-		interval: '60',
+		interval: '5',
 		locale: 'en',
 		containerId: 'tv_chart_container',
 		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
@@ -106,9 +106,9 @@ export default class TradingView extends React.Component {
 		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
 		widget.onChartReady(() => {
-			this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
-			this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
-			this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
+			// this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
+			// this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
+			// this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 
 			widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
 				this.props.dispatch(changeSymbol(symbolData.name))
