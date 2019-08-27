@@ -59,9 +59,7 @@
       background-color: transparent;
       transition: background-color 0.1s ease-in-out;
       cursor: pointer;
-      &:not(:last-child) {
-        border-bottom: 1px solid $k-divider-light;
-      }
+
       .info {
         float: right;
         white-space: nowrap;
@@ -97,7 +95,6 @@
       }
       &:hover{
         .name label{
-          // color: $k-success;
           cursor: pointer;
         }
         .info{
@@ -204,7 +201,6 @@
 
   .address-stamp {
     background-color: white;
-    box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
     margin-bottom: 25px;
     position: relative;
     padding: 5px 5px 5px 55px;
@@ -229,7 +225,7 @@
 
   label.address-path-stamp {
     display: block;
-    background-color: $white;
+    background-color: white;
     padding: 12px 10px;
     .name {
       text-transform: none;

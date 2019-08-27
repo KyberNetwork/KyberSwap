@@ -1,17 +1,5 @@
-// 1. Global
-// ---------
-
-$global-font-size: 100%;
-$global-width: rem-calc(1280px);
-$global-lineheight: 1.5;
-$foundation-palette: (
-  primary: white,
-  secondary: #262C41,
-  success: #00FF7A,
-  warning: #ffae00,
-  alert: #E50000,
-);
-
+// Colors
+$error-color: #F1637D;
 $base-color: #666;
 $swap-color: #EF8102;
 $color-swap-light: #F2A657;
@@ -21,48 +9,14 @@ $dark-gray: #0B0F1A;
 $black: #2c2c2c;
 $white: #ffffff;
 $white-light: rgba(255, 255, 255, 0.56);
-$body-background: #fff;
-$body-font-color: #0B0F1A;
-$k-primary: #2a4552;
-$k-primary-lighter: #3f5662;
-$k-primary-darker: #233a44;
-$k-success-gradient: linear-gradient(135deg, #30968e, #298083);
-$k-success: #3ee6c1;
-$k-divider: #243c47;
-$k-divider-light: rgba(254, 254, 254, 0.12);
-$k-gray: #f4f4f4;
+$accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
+$alert-color: #ff5d00;
 
-$body-font-family:'Montserrat', sans-serif;
-$body-antialiased: true;
-$global-margin: 1rem;
-$global-padding: 1rem;
-$global-position: 1rem;
-$global-weight-normal: normal;
-$global-weight-bold: bold;
-$global-radius: 4px;
-$global-menu-padding: 0.7rem 1rem;
-$global-menu-nested-margin: 1rem;
-$global-text-direction: ltr;
-$global-flexbox: true;
-$global-prototype-breakpoints: false;
-$global-button-cursor: auto;
-$global-color-pick-contrast-tolerance: 0;
-$print-transparent-backgrounds: true;
-
-$container-max-width: 77rem;
-$container-side-padding: 1rem;
-
+// Paths
 $image-path: '../img/';
 $asset-url: 'https://files.kyber.network/DesignAssets/';
-$box-shadow-tab: 0 10px 20px 0 rgba(135, 136, 136, 0.26), 0 6px 6px 0 rgba(173, 177, 176, 0.26);
 
-// 2. Breakpoints
-// --------------
-$break-point-large: 1024px;
-$break-point-medium: 768px;
-$break-point-small: 640px;
-$print-breakpoint: large;
-$breakpoint-classes: (small medium large);
+// Breakpoints
 $breakpoints: (
   small: 0,
   mid-small: 480px,
@@ -75,17 +29,11 @@ $breakpoints: (
   xxlarge: 1440px,
 );
 
-// 3. Base Typography
-// ------------------
+// Fonts
+$font-roboto: 'Roboto', sans-serif;
 
-$header-font-family: 'Montserrat', sans-serif;
-$header-font-weight: $global-weight-normal;
-$header-font-style: normal;
 
-$font-cera: 'Cera', 'Open Sans', sans-serif;
-$font-openSans: 'Open Sans', sans-serif;
-$font-montserrat: 'Montserrat', sans-serif;
-
+// Mixins
 @mixin screen-max-width($breakpoint) {
   @media screen and (max-width: calc(#{map-get($breakpoints, $breakpoint)} - 1px)) {
     @content;
@@ -97,5 +45,3 @@ $font-montserrat: 'Montserrat', sans-serif;
     @content;
   }
 }
-
-$error-color: #F1637D;

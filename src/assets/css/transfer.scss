@@ -32,7 +32,6 @@ $padding-col-left : 2rem;
 
 @include screen-min-width(large){
   .transfer-col-1{
-    box-shadow: $box-shadow-tab;
     min-height: 510px;
   }
   .transfer-col-3-1{
