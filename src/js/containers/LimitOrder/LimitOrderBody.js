@@ -6,7 +6,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
-import { LimitOrderForm, LimitOrderChart, LimitOrderList, QuoteMarket } from "../LimitOrder"
+import { LimitOrderForm, LimitOrderChart, LimitOrderList, LimitOrderAccount, QuoteMarket } from "../LimitOrder"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
@@ -193,6 +193,10 @@ export default class LimitOrderBody extends React.Component {
         </div>
 
         <div>
+          <LimitOrderAccount
+            chooseToken={this.selectSourceToken}
+            modifiedTokenList = {this.getModifiedTokenList}
+          />
           <QuoteMarket/>
           <LimitOrderForm
             setSrcInputElementRef={this.setSrcInputElementRef}

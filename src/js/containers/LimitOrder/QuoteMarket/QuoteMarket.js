@@ -91,6 +91,7 @@ export default class QuoteMarket extends React.Component{
       <SortableTh 
         key={i["html"]} 
         id={i["field"]}
+        width={"20%"}
         onSort={(is_asc) => this.onSort(i["field"], is_asc)}
         isEnable={this.state.current_sort_index == i["field"]}>
           {i["html"]}
@@ -161,13 +162,13 @@ export default class QuoteMarket extends React.Component{
                 </thead>
                 <tbody>
                   {list.map(pair => <tr key={pair["id"]}>
-                      <td onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                      <td width="10%" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                         <div className={pair["is_favorite"] ? "star active" : "star" } /> 
                       </td>
-                      <td>{pair["base"] + "/" + pair["quote"]}</td>
-                      <td>{pair["price"]}</td>
-                      <td>{pair["volume"]}</td>
-                      <td className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
+                      <td width="20%">{pair["base"] + "/" + pair["quote"]}</td>
+                      <td width="20%">{pair["price"]}</td>
+                      <td width="20%">{pair["volume"]}</td>
+                      <td width="20%" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
                     </tr>)} 
                 </tbody>
               </table>

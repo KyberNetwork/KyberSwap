@@ -172,7 +172,7 @@
 
   &__item {
     width: 160px;
-    border-radius: 3px;
+    border-radius: 23px;
     background-color: #e7edf5;
     margin: 0 0 12px;
 
@@ -231,70 +231,78 @@
 
   &__block {
     height: 100%;
+    background-color: #e7edf5;
     display: flex;
     padding: 6px 15px;
+    border-radius: 20px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all .4s;
     outline: none;
     &:hover {
-      background-color: transparent;
+      border-color: transparent;
+      background-color: #ef8102;
 
       .import-account__name {
-        color: #ff9008;
+        color: white;
       }
 
       .metamask {
-        background-image: url($asset-url + 'wallets/metamask.svg');
+        background-image: url($asset-url + 'wallets/metamask-white.svg');
       }
 
       .json {
-        background-image: url($asset-url + 'wallets/keystore.svg');
+        background-image: url($asset-url + 'wallets/keystore-white.svg');
       }
 
       .trezor {
-        background-image: url($asset-url + 'wallets/trezor.svg');
+        background-image: url($asset-url + 'wallets/trezor-white.svg');
       }
 
       .ledger {
-        background-image: url($asset-url + 'wallets/ledger.svg');
+        background-image: url($asset-url + 'wallets/ledger-white.svg');
       }
 
       .private-key {
-        background-image: url($asset-url + 'wallets/privatekey.svg');
+        background-image: url($asset-url + 'wallets/privatekey-white.png');
       }
 
       .promo-code {
-        background-image: url($asset-url + 'wallets/promo_code.svg');
+        background-image: url($asset-url + 'wallets/promo_code-white.svg');
       }
     }
   }
 
   &__icon {
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     margin-right: 10px;
     background: center no-repeat;
     background-size: contain;
 
     &.metamask {
-      background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
+      background-image: url($asset-url + 'wallets/metamask.svg');
     }
-    &.ledger {
-      background-image: url($image-path + 'import-account/wallet-icon/ledger_gray.svg');
-    }
-    &.trezor {
-      background-image: url($image-path + 'import-account/wallet-icon/trezor_gray.svg');
-    }
+
     &.json {
-      background-image: url($image-path + 'import-account/wallet-icon/keystore_gray.svg');
+      background-image: url($asset-url + 'wallets/keystore.svg');
     }
+
+    &.trezor {
+      background-image: url($asset-url + 'wallets/trezor.svg');
+    }
+
+    &.ledger {
+      background-image: url($asset-url + 'wallets/ledger.svg');
+    }
+
     &.private-key {
-      background-image: url($image-path + 'import-account/wallet-icon/private_key_gray.svg');
+      background-image: url($asset-url + 'wallets/privatekey.svg');
     }
+
     &.promo-code {
-      background-image: url($image-path + 'import-account/wallet-icon/promocode_gray.svg');
+      background-image: url($asset-url + 'wallets/promo_code.svg');
     }
   }
 
@@ -308,7 +316,7 @@
       line-height: inherit;
       font-weight: inherit;
       position: relative;
-      top: 1px;
+      top: 4px;
     }
   }
 

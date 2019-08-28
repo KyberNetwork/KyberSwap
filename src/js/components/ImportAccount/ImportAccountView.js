@@ -29,7 +29,7 @@ const ImportAccountView = (props) => {
   }
 
   return (
-    <div className="import-account">
+    <div className="import-account theme__bg">
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
           <h1 className="import-account__title">
@@ -38,7 +38,7 @@ const ImportAccountView = (props) => {
         )}
 
         {props.tradeType === "limit_order" && (
-          <h1 className="import-account__title">
+          <h1 className="import-account__title theme__text-bold">
             {importAccountTitle}
           </h1>
         )}

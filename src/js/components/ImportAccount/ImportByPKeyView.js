@@ -31,14 +31,14 @@ const ImportByPKeyView = (props) => {
   return (
     <div>
       {!props.isOnMobile && (
-        <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+        <div className="import-account__block theme__import-button" onClick={(e) => props.modalOpen()}>
           <div className="import-account__icon private-key"/>
           <div className="import-account__name"><h3>{props.translate("import.from_private_key") || "PRIVATE KEY"}</h3></div>
         </div>
       )}
 
       {props.isOnMobile && (
-        <div className={"import-account__block"}>
+        <div className={"import-account__block theme__import-button"}>
           <div className={"import-account__block-left"}>
             <div className="import-account__icon private-key"/>
             <div>

@@ -3,7 +3,7 @@ import React from "react"
 const ImportByMetamaskView = (props) => {
   return (
     <div>
-      <div className="import-account__block" onClick={(e) => props.connect(e)}>
+      <div className="import-account__block theme__import-button" onClick={(e) => props.connect(e)}>
         <div className="import-account__icon metamask"/>
         <div className="import-account__name">
             <h3>

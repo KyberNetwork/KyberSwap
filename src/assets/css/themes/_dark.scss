@@ -1,6 +1,8 @@
+$bg-light: #303a47;
+$bg: #1f2731;
 .theme.theme--dark {
   .theme__bg {
-    background-color: #1f2731;
+    background-color: $bg;
   }
 
   .theme__bg-bold {
@@ -8,7 +10,7 @@
   }
 
   .theme__bg-light {
-    background-color: #303a47;
+    background-color: $bg-light;
   }
 
   .theme__bg-boldest {
@@ -53,5 +55,17 @@
 
   .theme__text-blue {
     color: #1db1ff;
+  }
+  
+  /*vt*/
+  .theme__import-button{
+    border: 1px solid;
+    border-radius: 3px;
+    border-color: #303a47;
+    background-color: $bg-light;
+  }
+  .theme__import-button:hover{
+    border-color: #455263;
+    background-color: $bg;
   }
 }

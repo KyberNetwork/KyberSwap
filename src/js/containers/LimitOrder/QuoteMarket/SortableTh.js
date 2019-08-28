@@ -13,7 +13,7 @@ export default class SortableTh extends React.Component {
     const { children, isEnable } = this.props
     const { is_asc } = this.state
     return (
-      <th width="20%" onClick={() => this.onSort(is_asc)}> 
+      <th width={this.props.width} onClick={() => this.onSort(is_asc)}> 
         {children} 
         <img src={ isEnable ? (is_asc ? require("../../../../assets/img/limit-order/sort-asc-icon.svg") : 
           require("../../../../assets/img/limit-order/sort-desc-icon.svg")) : "" }/>
