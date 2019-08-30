@@ -24,11 +24,6 @@ const rootReducer = combineReducers({
     storage: session,
     blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error']
   }, account),
-  global: persistReducer({
-    key: 'global',
-    storage: session,
-    whitelist:['theme']
-  }, global),
   limitOrder: persistReducer({
     key: 'limitOrder',
     storage: storage,  
@@ -37,7 +32,7 @@ const rootReducer = combineReducers({
   locale: localizeReducer,
   router: routerReducer,
 
-  exchange, transfer, txs, utils, tokens, market, connection
+  exchange, transfer, txs, utils, tokens, market, connection, global
 })
 
 export default rootReducer

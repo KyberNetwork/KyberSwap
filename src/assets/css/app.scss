@@ -21,8 +21,7 @@
 @import "limit-order";
 @import "quote-market";
 @import "components/trading-view";
-@import "themes/dark";
-@import "themes/light";
+@import "themes/index";
 
 @font-face{
   font-family: 'text-security-disc';
@@ -38,6 +37,7 @@
 
 html body {
   font-family: $font-roboto;
+  font-weight: 300;
 }
 
 a {

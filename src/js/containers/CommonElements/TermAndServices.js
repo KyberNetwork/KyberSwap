@@ -19,7 +19,7 @@ export default class TermAndServices extends React.Component {
     </a>)
     
     return (
-      <div className="exchange-terms" onClick={() => {this.props.analytics.callTrack("acceptTerm", this.props.tradeType)}}>
+      <div className="exchange-terms theme__text-4" onClick={() => {this.props.analytics.callTrack("acceptTerm", this.props.tradeType)}}>
         <span>
           {this.props.tradeType === "swap" && (this.props.translate("terms.description_term_swap", {term: termLink}) || `By Swapping, you agree to the ${termLink}`)}
           {this.props.tradeType === "transfer" && (this.props.translate("terms.description_term_transfer", {term: termLink}) || `By Transfering, you agree to the ${termLink}`)}

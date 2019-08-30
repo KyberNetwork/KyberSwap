@@ -32,7 +32,7 @@ const initState = {
     callTrack: () => { return }
   },
   documentTitle: "Kyber Network | Instant Exchange | No Fees",
-  theme: 'light'
+  theme: 'dark'
 }
 
 const global = (state = initState, action) => {

@@ -167,32 +167,15 @@ export default class LimitOrderBody extends React.Component {
     this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
   }
 
-  switchToken = () => {
-    const srcToken = this.props.limitOrder.sourceToken;
-    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
-    const destToken = this.props.limitOrder.destToken;
-    const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
-    const destAmount = this.props.limitOrder.destAmount;
-    const sourceTokenDecimals = this.props.tokens[srcTokenSymbol]
-    const destTokenDecimals = this.props.tokens[destTokenSymbol]
-
-    this.props.dispatch(limitOrderActions.selectToken(destTokenSymbol, destToken, srcTokenSymbol, srcToken, ''));
-
-    this.props.dispatch(limitOrderActions.inputChange('source', destAmount, sourceTokenDecimals, destTokenDecimals));
-    this.props.dispatch(limitOrderActions.inputChange('dest', '', sourceTokenDecimals, destTokenDecimals));
-
-    this.updateGlobal(destTokenSymbol, destToken, srcTokenSymbol, srcToken, destAmount);
-  }
-
   render() {
     return (
       <div className={"limit-order"}>
-        <div>
+        <div className={"limit-order__container limit-order__container--left"}>
           <LimitOrderChart/>
           <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
         </div>
 
-        <div>
+        <div className={"limit-order__container limit-order__container--right"}>
           <QuoteMarket/>
           <LimitOrderForm
             setSrcInputElementRef={this.setSrcInputElementRef}
@@ -200,7 +183,6 @@ export default class LimitOrderBody extends React.Component {
             selectDestToken ={this.selectDestToken}
             availableBalanceTokens={this.getModifiedTokenList()}
             submitHandler={this.submitHandler}
-            switchToken={this.switchToken}
             getOpenOrderAmount={this.getOpenOrderAmount}
             setSubmitHandler={this.setSubmitHandler}
           />

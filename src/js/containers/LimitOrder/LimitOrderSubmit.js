@@ -42,15 +42,10 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   getSourceAmount = () => {
-    // var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
-    // if (isNaN(sourceAmount)) {
-    //   return 0
-    // }
     if (this.props.limitOrder.sourceAmount === "NaN") return 0;
     var sourceAmountBig = converters.toTWei(this.props.limitOrder.sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
     return sourceAmountBig.toString()
   }
-
 
   calculateETHequivalent = () => {
     if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken){
@@ -400,15 +395,15 @@ export default class LimitOrderSubmit extends React.Component {
 
   render() {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
-
     var isDisable = (isUserLogin() && this.props.account == false) || (isDisableSubmit && !isAgreeForceSubmit);
+    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.triggerRate.length > 0;
 
-    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.triggerRate.length > 0
     return (
       <div className={"limit-order-submit"}>
-        <button className={`accept-button ${isDisable ? "disable" : ""} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder} >
-          {isUserLogin() ? this.props.translate("limit_order.submit") || "Submit" : this.props.translate("limit_order.login_to_submit") || "Login to Submit Order"}
-        </button>
+        <div className={`limit-order-submit__accept-button theme__button ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
+          Submit Order
+        </div>
+
         {!this.props.hideTermAndCondition &&
           <TermAndServices tradeType="limit_order"/>
         }
