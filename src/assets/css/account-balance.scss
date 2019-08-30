@@ -33,7 +33,6 @@
   &__address-text {
     font-size: 14px;
     font-weight: 600;
-    color: #222222;
     padding-right: 5px;
   }
 
@@ -49,23 +48,59 @@
 
   &__address-link {
     font-size: 13px;
-    color: #5a5e67;
     word-break: break-all;
     transition: color .2s;
 
     &:hover {
-      color: #ef8102;
       text-decoration: underline;
     }
   }
 
+  &__cat-panel{
+    margin: 10px 0 0 0;
+
+    span{
+      font-size: 12px;
+      margin: 0 10px 0 0;
+      padding-bottom: 5px;
+
+      &.active{
+        border-bottom: 3px solid #ff9008;
+        transition: border-bottom .15s ease-in-out;
+      }
+    }
+  }
+
+  &__sort-panel{
+    margin: 20px 0 0 0;
+    cursor: pointer;
+    #sec-2{
+      float: right;
+    }
+
+    span{
+      font-size: 14px;
+    }
+    .active{
+      &.asc:after{
+        content: '\2191';
+        margin: 5px
+      }
+
+      &.dsc:after{
+        content: '\2193';
+        margin: 5px
+      }
+    }
+  }
+
   &__token-list {
-    display: flex;
+    /*display: flex;*/
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 5px;
+    margin: 10px 0;
     overflow: auto;
-    max-height: 116px;
+    max-height: 50vh;
 
     &::-webkit-scrollbar-track {
       border-radius: 8px;
@@ -263,7 +298,7 @@
     }
 
     &__token-list {
-      max-height: 103px;
+      /*max-height: 103px;*/
     }
 
     &__token-item {

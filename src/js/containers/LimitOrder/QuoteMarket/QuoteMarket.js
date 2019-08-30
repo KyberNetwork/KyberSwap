@@ -3,9 +3,9 @@ import * as common from "../../../utils/common"
 import * as converter from "../../../utils/converter"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
-import { ProcessingModal } from "../../../components/CommonElement"
+import { ProcessingModal, SortableComponent } from "../../../components/CommonElement"
 import limitOrderServices from "../../../services/limit_order";
-import { QuoteList, Search, SortableTh } from "../QuoteMarket"
+import { QuoteList, Search } from "../QuoteMarket"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -24,7 +24,7 @@ export default class QuoteMarket extends React.Component{
       favorite_pairs: [],
       current_search: "", 
       current_sort_index: "base", 
-      current_sort_asc: true
+      current_sort_dsc: true
     }
   }
 
@@ -77,29 +77,12 @@ export default class QuoteMarket extends React.Component{
     } 
   }
 
-  onSort = (i, is_asc) => {
-    this.setState((state, props)=>({current_sort_index: i, current_sort_asc: is_asc}))
-  }
-
-  renderTh = () => {
-    return [
-      { html: "Pair", field: "base" }, 
-      { html: "Price", field: "price" }, 
-      { html: "Volume", field: "volume" }, 
-      { html: "Change", field: "change" }
-    ].map((i, index) => (
-      <SortableTh 
-        key={i["html"]} 
-        id={i["field"]}
-        onSort={(is_asc) => this.onSort(i["field"], is_asc)}
-        isEnable={this.state.current_sort_index == i["field"]}>
-          {i["html"]}
-      </SortableTh>
-    ))
+  onSort = (i, isDsc) => {
+    this.setState((state, props)=>({current_sort_index: i, current_sort_dsc: isDsc}))
   }
   
   search(quotes){
-    const { current_search, current_sort_index, current_sort_asc, pairs } = this.state
+    const { current_search, current_sort_index, current_sort_dsc, pairs } = this.state
     const { current_quote } = this.props
 
     return ( 
@@ -113,7 +96,7 @@ export default class QuoteMarket extends React.Component{
       volume: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].volume : "-" ), 
       change: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].change : "0" )
     }))
-    .sort(function(a,b){return (current_sort_asc ? -1 : 1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
+    .sort(function(a,b){return (current_sort_dsc ? 1 : -1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
   }
 
 
@@ -140,6 +123,23 @@ export default class QuoteMarket extends React.Component{
 
   }
 
+  renderTh = () => {
+    return [
+      { html: "Pair", field: "base" }, 
+      { html: "Price", field: "price" }, 
+      { html: "Volume", field: "volume" }, 
+      { html: "Change", field: "change" }
+    ].map((i, index) => (
+      <SortableComponent 
+        Wrapper={"th"}
+        key={i["html"]} 
+        width={"20%"}
+        text={i["html"]}
+        onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
+        isActive={this.state.current_sort_index == i["field"]} />
+    ))
+  }
+
   render(){
     const quotes = this.renderQuotes()
     const { tokens, current_quote } = this.props
@@ -161,13 +161,13 @@ export default class QuoteMarket extends React.Component{
                 </thead>
                 <tbody>
                   {list.map(pair => <tr key={pair["id"]}>
-                      <td onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                      <td width="10%" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                         <div className={pair["is_favorite"] ? "star active" : "star" } /> 
                       </td>
-                      <td>{pair["base"] + "/" + pair["quote"]}</td>
-                      <td>{pair["price"]}</td>
-                      <td>{pair["volume"]}</td>
-                      <td className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
+                      <td width="20%">{pair["base"] + "/" + pair["quote"]}</td>
+                      <td width="20%">{pair["price"]}</td>
+                      <td width="20%">{pair["volume"]}</td>
+                      <td width="20%" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
                     </tr>)} 
                 </tbody>
               </table>
