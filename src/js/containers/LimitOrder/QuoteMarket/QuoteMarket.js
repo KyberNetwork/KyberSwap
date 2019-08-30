@@ -145,16 +145,16 @@ export default class QuoteMarket extends React.Component{
     const { tokens, current_quote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
     return (
-      <div id="quote-market"> 
+      <div id="quote-market" className="theme__background-2"> 
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
-              <div id="panel">
+              <div id="panel" className="theme__text-4">
                 <QuoteList onClick={this.onQuoteClick} currentQuote={current_quote} quotes={["FAV"].concat(Object.keys(quotes))}/>
                 <Search onSearch={this.onSearch}/>
               </div>
               <table>
                 <thead>
-                  <tr>
+                  <tr className="theme__text-3">
                     <th width="10%"></th>
                     {this.renderTh()}
                   </tr>

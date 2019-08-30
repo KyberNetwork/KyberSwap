@@ -55,6 +55,7 @@ export default class LimitOrderBody extends React.Component {
       weth = Object.create(weth);
       weth.substituteSymbol = constants.WETH_SUBSTITUTE_NAME;
       weth.substituteImage = 'eth-weth';
+      weth.rateUSD = eth.rateUSD
 
       if (eth) {
         weth.balance = converts.sumOfTwoNumber(weth.balance, eth.balance);

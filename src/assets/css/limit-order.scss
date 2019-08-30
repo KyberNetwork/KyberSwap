@@ -428,7 +428,6 @@
     justify-content: space-between;
     font-size: 14px;
     font-weight: 600;
-    color: #222222;
 
     @include screen-max-width(medium) {
       border-top: 1px solid #e1e4eb;
@@ -452,7 +451,6 @@
   .import-account {
     &__title {
       font-size: 14px;
-      color: #5A5E67;
       font-weight: 500;
       margin: 0 0 10px 12px;
       padding-top: 10px;
@@ -460,7 +458,7 @@
     }
 
     &__item {
-      width: 135px;
+      width: 115px;
 
       @include screen-max-width(medium) {
         width: 100%;
@@ -598,7 +596,6 @@
       &__wallet-name {
         font-size: 12px;
         font-weight: 500;
-        color: #141927;
       }
 
       &__address-link {
@@ -626,9 +623,8 @@
       }
 
       &__token-item {
-        font-size: 12px;
+        font-size: 16px;
         font-weight: 500;
-        color: #5a5e67;
       }
     }
   }

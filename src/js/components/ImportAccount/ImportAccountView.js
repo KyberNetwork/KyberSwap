@@ -29,7 +29,7 @@ const ImportAccountView = (props) => {
   }
 
   return (
-    <div className="import-account theme__bg">
+    <div className="import-account theme__background-2">
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
           <h1 className="import-account__title">
@@ -38,7 +38,7 @@ const ImportAccountView = (props) => {
         )}
 
         {props.tradeType === "limit_order" && (
-          <h1 className="import-account__title theme__text-bold">
+          <h1 className="import-account__title">
             {importAccountTitle}
           </h1>
         )}
@@ -60,14 +60,14 @@ const ImportAccountView = (props) => {
           }
 
           {!isOnMobile &&
-            <div className={`import-account__item import-account__item-trezor ${importInactiveClass}`}>
-              <ImportByDeviceWithTrezor />
-            </div>
-          }
-
-          {!isOnMobile &&
             <div className={`import-account__item import-account__item-ledger ${importInactiveClass}`}>
               <ImportByDeviceWithLedger />
+            </div>
+          }
+          
+          {!isOnMobile &&
+            <div className={`import-account__item import-account__item-trezor ${importInactiveClass}`}>
+              <ImportByDeviceWithTrezor />
             </div>
           }
 

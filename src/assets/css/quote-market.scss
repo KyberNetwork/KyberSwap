@@ -1,14 +1,12 @@
 #quote-market {
   height:300px;
   overflow-y: auto;
-  background: #1f2731;
   padding: 1.5em;
   font-size: 14px;
   font-weight: 500;
   font-size: 14px;
   font-weight: 500;
   font-family: roboto;
-  color: #546780;
 
   .up {
       color: #31cb9e
@@ -107,7 +105,6 @@
     }
 
     th {
-      color: #546780;
       font-weight: 500;
       cursor: pointer; 
       text-align: start;
@@ -131,7 +128,6 @@
     }
 
     td {
-      color: #adbdd2;
       font-size: 12px;
       line-height: 2em;
       text-align: start;
