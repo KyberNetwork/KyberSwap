@@ -238,6 +238,8 @@
     cursor: pointer;
     transition: all .4s;
     outline: none;
+    border: 1px solid;
+    border-radius: 3px;
     &:hover {
       background-color: transparent;
 

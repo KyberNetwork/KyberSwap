@@ -438,11 +438,23 @@
     font-size: 14px;
     font-weight: 600;
     color: #222222;
-    margin: 0 25px 10px;
 
     @include screen-max-width(medium) {
       border-top: 1px solid #e1e4eb;
       padding-top: 15px;
+    }
+  }
+
+  .right-slide-panel{
+    position: fixed;
+    right: 0;
+    border-radius: 3px 0 0 3px;
+    font-size: 10px;
+    padding: 5px 10px;
+    &:before{
+      content: '\2190';
+      font-size: 15px;
+      margin-right: 5px;
     }
   }
 
@@ -523,12 +535,14 @@
   }
 
   &__advance {
-    width: calc(100% - 25px);
-    height: 252px;
+    width: 270px;
+    position: fixed!important;
+    z-index: 1000;
+    top: 60px;
+    right: 0;
+    height: calc(100% - 60px);
     padding: 10px 20px;
-    margin: 15px 0 0 25px;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
+    box-shadow: -4px 2px 34px 0 rgba(0, 0, 0, 0.38);
     background-color: #ffffff;
     position: relative;
 
@@ -538,12 +552,18 @@
       height: 280px;
     }
 
-    @include animation(slideInDown) {
+    @include animation(slideInRight) {
       animation-duration: 0.3s;
       animation-timing-function: ease-out;
     };
+    &.inactive{
+      @include animation(slideOutRight) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      };
+    }
 
-    .advance-close {
+    /*.advance-close {
       position: absolute;
       right: 5px;
       top: 5px;
@@ -563,14 +583,25 @@
       @include screen-max-width(medium) {
         top: 5px;
       }
+    }*/
+    .advance-close {
+      width: 30px;
+      float: right;
+      font-size: 26px;
+      &:after{
+        content:'\2192';
+        color: #ff9008;
+      };
     }
-
     // Override
     .account-balance {
       &__address-text {
-        font-size: 16px;
+        font-weight: 500;
+      }
+      &__address-eth-balance {
+        font-size: 28px;
         font-weight: 600;
-        color: #ef8102;
+        margin: 20px 0 0 0;
       }
 
       &__wallet-name {

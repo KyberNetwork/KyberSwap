@@ -38,11 +38,10 @@ export default class AccountBalance extends React.Component {
     super()
     this.state = {
       searchWord: "",
-      sortActive: false,
       sortValueSymbol_DES:  false,
       sortValuePrice_DES:  true,
-      sortType: 'Eth',
-      sortDESC: true
+      sortType: 'Price',
+      sortActive: false,
     }
   }
 
@@ -151,13 +150,9 @@ export default class AccountBalance extends React.Component {
     this.props.onToggleBalanceContent()
   }
 
-  onSort = (sortType, isDsc) => {
-    console.log("[]",{sortType: sortType, sortDESC: isDsc})
-    this.setState({sortType: sortType, sortDESC: isDsc})
-  }
   render() {
-    // var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
-    var sortValue = this.state.sortDESC
+    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
+
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
@@ -190,7 +185,6 @@ export default class AccountBalance extends React.Component {
         selectBalance = {this.props.selectToken}
         isLimitOrderTab={this.props.isLimitOrderTab}
         getFilteredTokens={this.props.getFilteredTokens}
-        onSort={this.onSort}
       />
     )
   }
