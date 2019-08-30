@@ -3,7 +3,7 @@ import * as converts from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
-import { SortableComponent } from "../CommonElement"
+
 const AccountBalanceLayout = (props) => {
 
   function displayBalance(balance, rateUSD) {
@@ -17,61 +17,49 @@ const AccountBalanceLayout = (props) => {
 
   function reorderToken() {
     let tokens = props.tokens;
+
     if (props.isLimitOrderTab) {
       tokens = props.getFilteredTokens(props.sortValue);
     }
-    switch (props.sortType) {
-      case "Eth": 
-        if (props.isLimitOrderTab) {
-          return tokens;
-        } else {
-          if (props.sortValue) {
-            return converts.sortEthBalance(tokens)
-          } else {
-            return converts.sortASCEthBalance(tokens)
-          }
-        }
-        break;
-      case "Name":
-        if (props.isLimitOrderTab) {
-          return tokens.sort((firstToken, secondToken) => {
-            const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
-            const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
 
-            return !props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
-          });
+    if (props.sortType === "Price") {
+      if (props.isLimitOrderTab) {
+        return tokens;
+      } else {
+        if (props.sortValue) {
+          return converts.sortEthBalance(tokens)
         } else {
-          if (props.sortValue) {
-            var ordered = []
-            Object.keys(tokens).sort().forEach(function (key) {
-              ordered.push(tokens[key])
-            })
-            return ordered
-          } else {
-            var ordered = []
-            Object.keys(tokens).sort().reverse().forEach(function (key) {
-              ordered.push(tokens[key])
-            })
-            return ordered
-          }
+          return converts.sortASCEthBalance(tokens)
         }
-        break;
-      case "Bal": 
-        return tokens.sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
-        break;
-      case "USDT":
-        return tokens.sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
-        break;
+      }
+    } else {
+      if (props.isLimitOrderTab) {
+        return tokens.sort((firstToken, secondToken) => {
+          const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
+          const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
+
+          return props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
+        });
+      } else {
+        if (props.sortValue) {
+          var ordered = []
+          Object.keys(tokens).sort().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          return ordered
+        } else {
+          var ordered = []
+          Object.keys(tokens).sort().reverse().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          return ordered
+        }
+      }
     }
   }
 
-  function getsubstituteSymbol(){
-    return reorderToken().filter((t) => Object.keys(t).includes("substituteSymbol"))[0]
-  }
   function getBalances() {
     var tokens = reorderToken()
-    console.log("[][]", tokens)
-
     var balances = tokens
       .map(token => {
         var balance = converts.toT(token.balance, token.decimals)
@@ -93,8 +81,8 @@ const AccountBalanceLayout = (props) => {
             onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
-            <div className="account-balance__token-symbol theme__text-label-bold">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
-            <div className="account-balance__token-balance theme__text-label-light">{converts.roundingNumber(balance)}</div>
+            <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
+            <div className="account-balance__token-balance">{converts.roundingNumber(balance)}</div>
           </div>
         )
       })
@@ -168,9 +156,7 @@ const AccountBalanceLayout = (props) => {
       return props.walletName
     }
   }
-  const onClick = (id, isDsc) => {
-    props.onSort(id, isDsc)
-  }
+
   return (
     <div className="account-balance">
       {props.account !== false && (
@@ -204,43 +190,54 @@ const AccountBalanceLayout = (props) => {
                 <div>
                   <div className={"account-balance__address"}>
                     <div>
-                      <span className="account-balance__address-text theme__text-label-bold">{props.translate("address.your_wallet") || "Wallet"}</span>
-                      {!props.isOnDAPP && <span className={"account-balance__wallet-name theme__text-label-light"}><span>-</span>{getWalletName()}</span>}
+                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
+                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
                     </div>
                     {/* <div className="slide-arrow-container">
                       <div className="slide-arrow"></div>
                     </div> */}
                   </div>
-                  <div className="account-balance__address-eth-balance theme__text-label-bold">{converts.toT(getsubstituteSymbol().balance, getsubstituteSymbol().decimals, 3)} <h6 style={{display: 'inline-block'}}>ETH</h6></div>
-                  <a className="account-balance__address-link theme__text-label-light" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                  <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                     onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
                     {props.account.address}
                   </a>
                 </div>
               </div>
             </div>
-            <div className="account-balance__control-panel">
-              <div className="account-balance__cat-panel">
-                <span className="theme__tab active">KYBER LIST</span>
-                <span className="theme__tab">OTHER</span>
-              </div>
-              <div className="account-balance__sort-panel">
-                <span id="sec-1">
-                  <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => onClick("Name", isDsc)}/>
-                  <span className="theme__separation"> | </span> 
-                  <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => onClick("Bal", isDsc)}/>
-                </span>
-                <span id="sec-2">
-                  <SortableComponent text="Eth" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => onClick("Eth", isDsc)}/> 
-                  <span className="theme__separation"> | </span> 
-                  <SortableComponent text="USDT" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => onClick("USDT", isDsc)}/> 
-                </span>
-              </div>
-              
-            </div>
-
             <div className="account-balance__content">
               <div>
+                <div className={"account-balance__content-input-container"}>
+                  <div className="account-balance__content-search-container">
+                    <input
+                      className="account-balance__content-search"
+                      type="text"
+                      placeholder={props.translate("address.search") || "Search by Name"}
+                      onChange={(e) => props.changeSearchBalance(e)}
+                      value={props.searchWord}
+                    />
+                  </div>
+
+                  <Dropdown
+                    className={"account-balance__sort"}
+                    onShow={(e) => props.showSort(e)}
+                    onHide={(e) => props.hideSort(e)}
+                    active={props.sortActive}
+                  >
+                    <DropdownTrigger>
+                      <div className={"account-balance__sort-dropdown"}>
+                        {props.sortType == 'Symbol' ? props.translate("address.symbol") || "Symbol" : props.translate("address.price") || "Price"}
+                      </div>
+                      <div className={"account-balance__sort-arrow"}></div>
+                    </DropdownTrigger>
+                    <DropdownContent>
+                      <div className={"account-balance__sort-category"}>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Symbol' ? 'active' : ''}`} onClick={(e) => props.sortSymbol()}>{props.translate("address.symbol") || "Symbol"}</div>
+                        <div className={`account-balance__sort-item ${props.sortType == 'Price' ? 'active' : ''}`} onClick={(e) => props.sortPrice()}>{props.translate("address.price") || "Price"}</div>
+                      </div>
+                    </DropdownContent>
+                  </Dropdown>
+                </div>
+
                 <div className="balances custom-radio">
                   <div className="account-balance__token-list">
                     {getBalances()}

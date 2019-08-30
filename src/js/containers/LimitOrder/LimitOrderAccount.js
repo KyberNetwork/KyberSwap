@@ -123,7 +123,7 @@ export default class LimitOrderAccount extends React.Component {
   }
 
   closeReImport = () => {
-    this.setState({ isReImport: false, isAdvanceTokenVisible: false });
+    this.setState({ isReImport: false });
   }
 
   clearSession = () => {
@@ -178,6 +178,7 @@ export default class LimitOrderAccount extends React.Component {
     } else {
       return (
         <div className={"limit-order-account"}>
+      {/*
           <div className="limit-order-account__title">
             <div>
               {this.props.translate("limit_order.your_available_balance") || "Tokens available for Limit Order"}
@@ -212,10 +213,29 @@ export default class LimitOrderAccount extends React.Component {
             selectToken={this.selectToken}
             orderedTokens={this.getFilteredTokens(true, 3)}
           />
-
-          {this.state.isAdvanceTokenVisible && <div className="limit-order-account__advance">
+      */}
+          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__silde-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
+          
+          {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__bg-gradient">
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
               <div className="advance-close_wrapper"></div>
+            </div>
+            <div className="limit-order-account__title">
+              <div className="reimport-msg">
+                <div onClick={this.openReImport}>
+                  {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
+                </div>
+                <Modal className={{
+                  base: 'reveal tiny reimport-modal',
+                  afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
+                }}
+                  isOpen={this.state.isReImport}
+                  onRequestClose={this.closeReImport}
+                  contentLabel="advance modal"
+                  content={this.reImportModal()}
+                  size="tiny"
+                />
+              </div>
             </div>
             <AccountBalance
               isLimitOrderTab={true}

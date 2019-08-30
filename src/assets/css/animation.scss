@@ -26,6 +26,34 @@
   }
 }
 
+@keyframes slideInRight {
+  0% {
+    -webkit-transform: translate3d(30em, 0, 0);
+    transform: translate3d(30em, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translate3d(30em, 0, 0);
+    transform: translate3d(30em, 0, 0);
+    opacity: 1;
+  }
+}
+
 @keyframes slideUp {
   0% {
     transform: translateY(10px);

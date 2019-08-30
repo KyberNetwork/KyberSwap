@@ -44,12 +44,11 @@
     #quote_panel {
       width: 60%;
       display: inline-block;
-      padding-top: 10px;
+      cursor: pointer;
 
       span {
         margin-left:2em;
-        padding-bottom: 12px;
-        cursor: pointer;
+        padding-bottom: 10px;
       }
 
       span.active {
@@ -67,26 +66,29 @@
       margin-top: 5px;
       width: 30%;
       display: inline-block;
+      cursor: pointer;
 
       input {
+        width: 100%;
         color: white;
         background: rgba(0,0,0,0);
         border: none;
         padding-right: 3em;
         background-image: url($image-path + 'common/icon-search-gray.svg');
-        background-position: right;
+        background-position: right 0px;
         background-repeat: no-repeat;
-        cursor: pointer;
+        background-size: 15px;
+        padding: 0 0 10px 0;
       };
 
       input:focus {
         box-shadow: none;
+        outline: none;
         border: none;
         border-bottom: 1px solid white;
       };
     }
   }
-
   table {
     margin-top: 0.5em;
 
@@ -96,6 +98,7 @@
     }
 
     tr {
+      line-height: 2em;
       background: rgba(0,0,0,0);
     }
 
@@ -107,10 +110,23 @@
       color: #546780;
       font-weight: 500;
       cursor: pointer; 
+      text-align: start;
 
       img {
         margin-left: 3px;
         height: 15px;
+      }
+
+      &.active{
+        &.asc:after{
+          content: url($image-path + 'limit-order/sort-asc-icon.svg');
+          margin: 5px
+        }
+
+        &.dsc:after{
+          content: url($image-path + 'limit-order/sort-desc-icon.svg');
+          margin: 5px
+        }
       }
     }
 
@@ -118,6 +134,7 @@
       color: #adbdd2;
       font-size: 12px;
       line-height: 2em;
+      text-align: start;
 
       i {
         width: 20px;
