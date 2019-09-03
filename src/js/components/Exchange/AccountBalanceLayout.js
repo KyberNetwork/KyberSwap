@@ -93,8 +93,15 @@ const AccountBalanceLayout = (props) => {
             onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
-            <div className="account-balance__token-symbol theme__text-label-bold">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
-            <div className="account-balance__token-balance theme__text-label-light">{converts.roundingNumber(balance)}</div>
+            <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.symbol == "WETH" ? "eth" : token.symbol).toLowerCase()+".svg"} />
+            <div>
+              <span className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</span>
+              <div className="account-balance__token-balance theme__text-3">{converts.roundingNumber(balance)}</div>
+            </div>
+            <div id="stable-equivalent">{
+              props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rate), false, 6)} <h6 style={{display: 'inline-block'}}>E</h6></span>) : 
+              (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} <h6 style={{display: 'inline-block'}}>$</h6></span>)
+            }</div>
           </div>
         )
       })
@@ -205,14 +212,14 @@ const AccountBalanceLayout = (props) => {
                   <div className={"account-balance__address"}>
                     <div>
                       <span className="account-balance__address-text theme__text-label-bold">{props.translate("address.your_wallet") || "Wallet"}</span>
-                      {!props.isOnDAPP && <span className={"account-balance__wallet-name theme__text-label-light"}><span>-</span>{getWalletName()}</span>}
+                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
                     </div>
                     {/* <div className="slide-arrow-container">
                       <div className="slide-arrow"></div>
                     </div> */}
                   </div>
-                  <div className="account-balance__address-eth-balance theme__text-label-bold">{converts.toT(getsubstituteSymbol().balance, getsubstituteSymbol().decimals, 3)} <h6 style={{display: 'inline-block'}}>ETH</h6></div>
-                  <a className="account-balance__address-link theme__text-label-light" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                  {/* <div className="account-balance__address-eth-balance theme__text-label-bold">{converts.toT(getsubstituteSymbol().balance, getsubstituteSymbol().decimals, 3)} <h6 style={{display: 'inline-block'}}>ETH</h6></div>*/}
+                  <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                     onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
                     {props.account.address}
                   </a>
@@ -220,11 +227,22 @@ const AccountBalanceLayout = (props) => {
               </div>
             </div>
             <div className="account-balance__control-panel">
-              <div className="account-balance__cat-panel">
+              {/* <div className="account-balance__cat-panel">
                 <span className="theme__tab active">KYBER LIST</span>
                 <span className="theme__tab">OTHER</span>
+              </div>*/}
+              <div className="account-balance__search-panel">
+                <div className="account-balance__content-search-container">
+                    <input
+                      className="account-balance__content-search theme__search"
+                      type="text"
+                      placeholder={props.translate("address.search") || "Search by Name"}
+                      onChange={(e) => props.changeSearchBalance(e)}
+                      value={props.searchWord}
+                    />
+                </div>
               </div>
-              <div className="account-balance__sort-panel">
+              <div className="account-balance__sort-panel theme__background-2">
                 <span id="sec-1">
                   <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => onClick("Name", isDsc)}/>
                   <span className="theme__separation"> | </span> 
@@ -233,7 +251,7 @@ const AccountBalanceLayout = (props) => {
                 <span id="sec-2">
                   <SortableComponent text="Eth" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => onClick("Eth", isDsc)}/> 
                   <span className="theme__separation"> | </span> 
-                  <SortableComponent text="USDT" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => onClick("USDT", isDsc)}/> 
+                  <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => onClick("USDT", isDsc)}/> 
                 </span>
               </div>
               

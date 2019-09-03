@@ -12,7 +12,6 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: #222222;
     margin: 30px 0 20px;
     &--inactive{
       max-width: 550px;
@@ -232,7 +231,7 @@
   &__block {
     height: 100%;
     display: flex;
-    padding: 6px 15px;
+    padding: 6px 10px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -276,7 +275,7 @@
   &__icon {
     width: 20px;
     height: 20px;
-    margin-right: 10px;
+    margin-right: 5px;
     background: center no-repeat;
     background-size: contain;
 

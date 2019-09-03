@@ -216,7 +216,7 @@ export default class LimitOrderAccount extends React.Component {
       */}
           <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__silde-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
           
-          {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__bg-gradient">
+          {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
               <div className="advance-close_wrapper"></div>
             </div>
