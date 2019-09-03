@@ -136,21 +136,28 @@
     &.disabled{
       opacity: 0.3;
     }
+
     &.active {
       .account-balance__token-symbol,
       .account-balance__token-balance {
         color: #ef8102;
       }
     }
+
     &.deactivated {
       pointer-events: none;
     }
+
     img{
       width: 24px; 
       height: 24px;
       margin-right: 10px
     }
 
+    #stable-equivalent{
+      width: 100%;
+      text-align: right;
+    }
   }
 
   &__token-symbol {

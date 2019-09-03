@@ -80,16 +80,16 @@
   .theme__import-button{
     border-color: $dark-background-3;
     background-color: $dark-background-3;
-  }
 
-  .theme__import-button:hover{
-    border-color: $dark-border;
-    background-color: $dark-background-5;
+    &:hover{
+      border-color: $dark-border;
+      background-color: $dark-background-5;
+    };
   }
 
   .theme__silde-menu{
     background-color: $dark-background-6;
-    color: $default-text;
+    color: $dark-text-default;
   }
 
   .theme__search{

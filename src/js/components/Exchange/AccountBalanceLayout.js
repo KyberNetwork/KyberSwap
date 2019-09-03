@@ -98,7 +98,7 @@ const AccountBalanceLayout = (props) => {
               <span className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</span>
               <div className="account-balance__token-balance theme__text-3">{converts.roundingNumber(balance)}</div>
             </div>
-            <div style={{width: '100%', textAlign: 'right'}}>{
+            <div id="stable-equivalent">{
               props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rate), false, 6)} <h6 style={{display: 'inline-block'}}>E</h6></span>) : 
               (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} <h6 style={{display: 'inline-block'}}>$</h6></span>)
             }</div>
