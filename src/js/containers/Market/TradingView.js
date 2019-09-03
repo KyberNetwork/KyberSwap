@@ -28,7 +28,7 @@ export default class TradingView extends React.Component {
 		locale: 'en',
 		containerId: 'tv_chart_container',
 		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
-		updateFrequency: 300000, // 1 minutes
+		updateFrequency: 50000, // 1 minutes
 		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
 		autosize: true
@@ -116,15 +116,15 @@ export default class TradingView extends React.Component {
 			
 			const chart = widget.chart();
 
-			chart.onIntervalChanged().subscribe(null, (interval, obj) => {
-				if (interval === "D") {
-					obj.timeframe = "100D"
-				} else if (interval === "W") {
-					obj.timeframe = "24M"
-				} else {
-					obj.timeframe = `${interval / 60 * 4}D`;
-				}
-			});
+			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
+			// 	if (interval === "D") {
+			// 		obj.timeframe = "100D"
+			// 	} else if (interval === "W") {
+			// 		obj.timeframe = "24M"
+			// 	} else {
+			// 		obj.timeframe = `${3600 / interval * 24}`;
+			// 	}
+			// });
 		});
 	}
 
