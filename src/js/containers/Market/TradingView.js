@@ -76,10 +76,42 @@ export default class TradingView extends React.Component {
 		button[0].innerHTML = data.content;
 	}
 
+	getTimeFrame = (interval) => {
+		switch(interval) {
+			case '5':
+				return 6 * 3600
+				break 
+			case '15':
+				return 6 * 3 * 3600
+				break 
+			case '30':
+				return 6 * 6 * 3600
+				break 
+			case '60':
+				return 6 * 12 * 3600
+				break 
+			case '120':
+				return 6 * 24 * 3600
+				break 
+			case '240':
+				return 6 * 48 * 3600
+				break 
+			case '360':
+				return 6 * 72 * 3600
+				break 
+			case '720':
+				return 6 * 144 * 3600
+				break 			
+		}
+		return '4D'
+	}
+
 	componentDidMount() {
 		// console.log(this.props)
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
 			this.props.datafeedUrl, this.props.updateFrequency);
+
+		
 		const widgetOptions = {
 			symbol: this.props.selectedSymbol,
 			datafeed: feeder,
@@ -91,7 +123,7 @@ export default class TradingView extends React.Component {
 			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
 			autosize: this.props.autosize,
-			timeframe: "4D",
+			timeframe: this.getTimeFrame(this.props.interval),
 			// timezone: "Asia/Singapore",
 			overrides: {
 				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
@@ -117,6 +149,7 @@ export default class TradingView extends React.Component {
 			const chart = widget.chart();
 
 			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
+				
 			// 	if (interval === "D") {
 			// 		obj.timeframe = "100D"
 			// 	} else if (interval === "W") {
