@@ -1,3 +1,57 @@
+.token-selector {
+  .dropdown {
+    &.dropdown--active {
+      position: relative;
+      z-index: 1;
+      .focus-item{
+        border-color: #aaa;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .focus-item {
+    border-radius: 5px;
+    padding: 8px 12px;
+    align-items: center;
+    font-size: 15px;
+
+    &.d-flex{
+      justify-content: space-between;
+    }
+
+    .k-angle {
+      background-image: url(../img/exchange/arrow-down-swap.svg);
+      width: 13px;
+    }
+
+    .d-flex{
+      align-items: center;
+    }
+
+    .focus-name{
+      font-weight: 600;
+      text-transform: initial;
+    }
+
+    .focus-balance{
+      font-size: 14px;
+      font-weight: 600;
+      .token-symbol{
+        margin-left: 5px;
+      }
+    }
+
+    .icon {
+      margin-right: 10px;
+      img {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
 .exchange-content {
   display: flex;
   justify-content: space-between;
@@ -29,10 +83,8 @@
       
       .exchange-item-label {
         font-size: 16px;
-        font-weight: 600;
-        color: #ef8102;
-        margin-left: 25px;
-        margin-bottom: 3px;
+        font-weight: 500;
+        margin-bottom: 10px;
         text-align: left;
       }
     }
@@ -40,11 +92,11 @@
     &--left,
     &--right {
       display: flex;
-      height: 62px;
-      border-radius: 29.5px;
-      background-color: #ffffff;
-      border: 1px solid #e7edf5;
+      height: 50px;
+      border-radius: 3px;
+      border: 1px solid transparent;
       padding: 0 10px;
+      margin-bottom: 10px;
 
       .input-div-content {
         display: flex;
@@ -74,14 +126,6 @@
         margin-top: 10px;
       }
     }
-
-    // &--left {
-      // padding: 0 20px;
-    // }
-
-    // &--right {
-      // padding: 0 0px 0 25px;
-    // }
 
     &--absolute {
       width: 33px;
@@ -145,8 +189,6 @@
         background-position: 0 0;
       }
     }
-
-  
   }
 
   &__label {
@@ -217,11 +259,7 @@
       justify-content: unset !important;
 
       .focus-name {
-        // display: none;
         font-size: 16px;
-        // @include screen-max-width(medium) {
-        //   display: block;
-        // }
       }
     }
   }
@@ -260,43 +298,8 @@
       }
     }
 
-    .exchange-col-3{
-      >div{
-        position: relative;
-        .exchange-wrapper-btn{
-          position: absolute;
-          margin-top: -125px;
-          width: 100%;
-        }
-      }
-    }
-
     .error {
       margin-bottom: 0 !important;
-    }
-
-    .error-msg {
-      width: calc(100% + 1px);
-      background-color: white;
-      border: 0.5px solid #cccccc;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      padding: 15px 20px;
-      color: #f1637d;
-      span {
-        margin-top: 5px;
-      }
-
-      div {
-        color: #f1637d;
-      }
-
-      &-source {
-        width: calc(100% + 21px);
-      }
-      @include screen-max-width(medium) {
-        display: none;
-      }
     }
 
     .dropdown__content {
@@ -413,10 +416,9 @@
   }
 
   & &__input {
-    color: #666;
-    font-size: 21px;
+    font-size: 18px;
     margin: 0;
-    padding: 0px 5px 0 15px;
+    padding: 0 5px 0 15px;
     min-height: 32px;
     height: 45px;
     width: 100%;
@@ -434,21 +436,11 @@
       }
     }
 
-    &.has-account {
-      padding-right: 20px;
-    }
-
     @include screen-max-width(medium) {
       padding: 0;
       padding-left: 20px;
       padding-right: 10px;
-      &.has-account {
-        padding-right: 10px;
-        // padding-left: 20px;
-        &.error {
-          // padding-right: 25px;
-        }
-      }
+
       &-address {
         text-align: left;
       }
@@ -595,60 +587,8 @@
     border: 1px solid #EE344E;
     position: relative;
 
-    .exchange-content__input {
-      padding-right: 20px;
-      @include screen-max-width(medium) {
-        padding-right: 30px;
-      }
-    }
-
-    input{
+    input {
       color: #ee344e;
-    }
-
-    .main-input:after{
-      content: '';
-      position: absolute;
-      right: 20px;
-      width: 15px;
-      height: 15px;
-      background-image: url("../img/v3/error_notice.svg");
-    }
-
-    .exchange-content__label--dropdown {
-      margin-right: 25px;
-    }
-
-    .__react_component_tooltip{
-        position: absolute;
-        z-index: 2 !important;
-        background-color: #FFCAD1;
-        width: 100% !important;
-        left: 0px !important;
-        top: 60px !important;
-        &.show{
-          opacity: 1;
-        }
-        .error-text{
-          color: #222;
-          font-size: 11px;
-        }
-        &:after{
-              border-bottom-color: #FFCAD1;
-              right: 50px;
-              left:auto;
-        }
-    }
-
-    &.has-account {
-      @include screen-max-width(medium) {
-        .swap-balance-modal {
-          right: 20px;
-        }
-        .exchange-content__input {
-          padding-right: 30px;
-        }
-      }
     }
   }
 
@@ -747,11 +687,10 @@
       color: inherit;
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       width: 350px;
-      background-color: #ffffff;
       border-radius: 10px;
       padding: 25px 25px 40px;
       right: 0;
-    top: 10px;
+      top: 10px;
 
       .current-token {
         align-items: center;
@@ -976,14 +915,7 @@
 .token-selector{
   position: relative;  
   cursor: pointer;
- // background-color: #415b68;
-  // .k-angle{
-  //   -webkit-font-smoothing: antialiased;
-  //   -webkit-backface-visibility: hidden;
-  //   -webkit-transform-style: preserve-3d;
-  //   -webkit-transform:translate3d(0,0,0);
-  // }
-  color: #545268;
+
   &.fix_token{
     .focus-item{
       background-color: #f5f5f5 !important;
@@ -1001,25 +933,16 @@
     width: 100%;
 
     &.dropdown--active{
-     // background-color: #243c48;
       .focus-item{
-        // border-color: $white;
-        // border-bottom: 1px solid #4c636f;        
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
       }
       .select-item{
         display: block;
-        // border: 2px solid $white;
         border-top: none;
         color: inherit;
         padding-bottom: 15px;
       }
-    }
-    .dropdown__content{
-      width: 100%;
-      min-width: 240px;
-      margin-top: -1px;
     }
 
     .dropdown-menu{
@@ -1073,9 +996,8 @@
     .focus-name {
       text-transform: uppercase;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: -0.4px;
-      color: #222222;
       line-height: 1.2;
 
       &--mobile {

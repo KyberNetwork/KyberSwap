@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Modal } from '../CommonElement'
 
 const ImportByPKeyView = (props) => {
@@ -29,7 +29,7 @@ const ImportByPKeyView = (props) => {
   }
 
   return (
-    <div>
+    <Fragment>
       {!props.isOnMobile && (
         <div className="import-account__block theme__import-button" onClick={(e) => props.modalOpen()}>
           <div className="import-account__icon private-key"/>
@@ -92,7 +92,7 @@ const ImportByPKeyView = (props) => {
           </div>
         }
       />
-    </div>
+    </Fragment>
   )
 }
 

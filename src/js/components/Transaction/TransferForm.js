@@ -1,11 +1,8 @@
 import React from "react"
-import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { filterInputNumber, restrictInputNumber, anyErrors } from "../../utils/validators";
+import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { PostTransfer } from "../../containers/Transfer";
-import * as analytics from "../../utils/analytics";
-
 import { AdvanceAccount } from "../../containers/TransactionCommon"
 import { CSSTransition } from "react-transition-group";
 
@@ -16,30 +13,6 @@ const TransferForm = (props) => {
     var check = filterInputNumber(e, e.target.value, props.input.amount.value)
     if (check) props.input.amount.onChange(e)
   }
-
-  function getWalletName() {
-    if (props.walletName === "") {
-      switch (props.account.type) {
-        case "metamask":
-          return "METAMASK"
-        case "keystore":
-          return "JSON"
-        case "ledger":
-          return "LEDGER"
-        case "trezor":
-          return "TREZOR"
-        case "privateKey":
-          return "PRIVATE KEY"
-        case "promoCode":
-          return "PROMO CODE"
-        default:
-          return "WALLET"
-      }
-    } else {
-      return props.walletName
-    }
-  }
-
 
   var errorSource = []
   var isErrorSource = false  
@@ -69,15 +42,6 @@ const TransferForm = (props) => {
   })
   var errorDestSelector = document.getElementById("transfer-address-error")
   if (errorDestSelector) errorDestSelector.innerHTML = `<div>${errorDestAddrTooltip}</div>`
-
-
-  function getWalletIconName(type, walletName) {
-    if (walletName === "PROMO CODE") {
-      return "promo_code";
-    }
-
-    return type;
-  }
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "transfer")) {
@@ -125,7 +89,7 @@ const TransferForm = (props) => {
                         <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorSourceTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
                         >
                           <input
-                            className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
+                            className={`exchange-content__input theme__background-4 theme__text-4 ${props.account !== false ? 'has-account' : ''}`}
                             type={isOnMobile ? "number" : "text"}
                             min="0"
                             step="0.000001"
@@ -147,7 +111,9 @@ const TransferForm = (props) => {
                   }
                 </div>
                 {props.account !== false && !props.isAdvanceActive && (
-                  <div>{props.topBalance}</div>
+                  <div className="top-token">
+                    <div className="top-token-more" onClick={props.toggleAdvanceContent}>{props.translate("market.more") || "more"}</div>
+                  </div>
                 )}
               </div>
 
@@ -163,7 +129,7 @@ const TransferForm = (props) => {
                       <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorDestAddrTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
                       >
                         <input
-                          className={`exchange-content__input exchange-content__input-address`}
+                          className={`exchange-content__input theme__background-4 theme__text-4 exchange-content__input-address`}
                           value={props.input.destAddress.value}
                           onChange={props.input.destAddress.onChange}
                           placeholder="0x0de..."
@@ -182,7 +148,7 @@ const TransferForm = (props) => {
               </div>
             </div>
 
-            <div className="exchange-rate-container container">
+            <div className="exchange-rate-container">
               <div className="exchange-rate__balance">
                 {(!props.isChangingWallet && props.account !== false) && (
                   <span>

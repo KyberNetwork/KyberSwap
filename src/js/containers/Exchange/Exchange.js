@@ -3,11 +3,9 @@ import { connect } from "react-redux"
 import {ExchangeBody} from "../Exchange"
 import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
-import * as validators from "../../utils/validators"
 import * as exchangeActions from "../../actions/exchangeActions"
 import {setIsChangingPath, clearSession} from "../../actions/globalActions"
 import {HeaderTransaction} from "../TransactionCommon"
-import * as analytics from "../../utils/analytics"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 import { Market } from "../Market"
@@ -32,7 +30,6 @@ export default class Exchange extends React.Component {
       isAnimation: false,
       intervalGroup : [],
       isFirstTime: true,
-      
     }
   }
 
@@ -72,11 +69,8 @@ export default class Exchange extends React.Component {
       }
     } 
 
-    //check input focus
     if (this.props.exchange.inputFocus !== "source"){
-      //calculate source amount by dest amount
       var destAmount = this.props.exchange.destAmount
-      // relative source amount
       var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
       var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
@@ -164,7 +158,7 @@ export default class Exchange extends React.Component {
     return (
       <div>
         <div className={"exchange-container"}>
-          <HeaderTransaction page="exchange"/>
+          {/*<HeaderTransaction page="exchange"/>*/}
           <ExchangeBody/>
         </div>
         <Market/>

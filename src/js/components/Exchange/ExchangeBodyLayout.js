@@ -1,21 +1,12 @@
 import React from "react"
-// import { NavLink } from 'react-router-dom'
-import { roundingNumber, toEther } from "../../utils/converter"
-// import { Link } from 'react-router-dom'
-import constants from "../../services/constants"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { PostExchange } from "../../containers/Exchange";
-// import BLOCKCHAIN_INFO from "../../../../env";
 import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
-import { getAssetUrl, getFormattedDate } from "../../utils/common";
-// import { TermAndServices } from "../../containers/CommonElements";
-// import { AdvanceAccount } from "../TransactionCommon"
-
+import { getFormattedDate } from "../../utils/common";
 import { AdvanceAccount } from "../../containers/TransactionCommon";
-import { CSSTransition } from "react-transition-group";
 
 const ExchangeBodyLayout = (props) => {
   const { isOnMobile } = props.global;
@@ -29,74 +20,17 @@ const ExchangeBodyLayout = (props) => {
     if (check) props.input.destAmount.onChange(e)
   }
 
-
   var errorSource = []
-  var errorExchange = false  
+  var errorExchange = false
+
   Object.values(props.exchange.errors.sourceAmount).map(value => {
     errorExchange = true
     errorSource.push(value)
-  })
+  });
 
-  // var errorSelectSameToken = props.errors.selectSameToken !== '' ? props.translate(props.errors.selectSameToken) : ''
-  // var errorSelectTokenToken = props.errors.selectTokenToken !== '' ? props.translate(props.errors.selectTokenToken) : ''
-  // var errorToken = errorSelectSameToken + errorSelectTokenToken
-  // var maxCap = props.maxCap
-  // var errorSource = []
-  
-
-  // if (props.errorNotPossessKgt !== "") {
-  //   errorSource.push(props.errorNotPossessKgt)
-  //   errorExchange = true
-  // } else {
-  //   if (props.errors.exchange_enable !== "") {
-  //     errorSource.push(props.translate(props.errors.exchange_enable))
-  //     errorExchange = true
-  //   } else {
-  //     if (errorToken !== "") {
-  //       errorSource.push(errorToken)
-  //       errorExchange = true
-  //     }
-  //     if (props.errors.sourceAmount !== "") {
-  //       if (props.errors.sourceAmount === "error.source_amount_too_high_cap") {
-  //         if (props.sourceTokenSymbol === "ETH") {
-  //           errorSource.push(props.translate("error.source_amount_too_high_cap", { cap: maxCap }))
-  //         } else {
-  //           errorSource.push(props.translate("error.dest_amount_too_high_cap", { cap: maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT }))
-  //         }
-  //       } else if (props.errors.sourceAmount === "error.source_amount_too_small") {
-  //         errorSource.push(props.translate("error.source_amount_too_small", { minAmount: toEther(constants.EXCHANGE_CONFIG.EPSILON) }))
-  //       } else {
-  //         errorSource.push(props.translate(props.errors.sourceAmount))
-  //       }
-  //       errorExchange = true
-  //     }
-  //     if (props.errors.rateSystem !== "") {
-  //       errorSource.push(props.translate(props.errors.rateSystem))
-  //       errorExchange = true
-  //     }
-  //   }
-  // }
-
-  // if (errorExchange && props.defaultShowTooltip) {
-  //   setTimeout(() => {
-  //     ReactTooltip.show(document.getElementById("swap-error-trigger"))
-  //     props.setDefaulTooltip(false)
-  //   }, 300)
-  // }
-
-  // if (!errorExchange && !props.defaultShowTooltip) {
-  //   setTimeout(() => {
-  //     props.setDefaulTooltip(true)
-  //   }, 300)
-  // }
-
-  var errorTooltip = ""
-  var errorShow = errorSource.map((value, index) => {
-    errorTooltip += `<span class="error-text" key=${index}>${value}</span>`
-  })
-  var errorSelector = document.getElementById("swap-error")
-  if (errorSelector) errorSelector.innerHTML = `<div>${errorTooltip}</div>`
-
+  const errorShow = errorSource.map((value, index) => {
+    return <div className={"exchange__error-item"} key={index}>{value}</div>
+  });
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "swap")) {
@@ -149,23 +83,16 @@ const ExchangeBodyLayout = (props) => {
             <div className={"exchange-content container"}>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-                <div className={`exchange-content__item exchange-content__item--left select-token ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}
-                >
+                <div className={`exchange-content__item exchange-content__item--left theme__background-4 select-token ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}>
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenSourceSelect}</div>
                     </div>
                     <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__left"}>
-                        <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number" 
-                          in={!errorExchange && props.input.sourceAmount.value > 0 && props.isSelectTokenBalance}
-                          appear={true}
-                          timeout={{ enter: 300, exit: 500 }}>
-                            <div className={`top-token-number`} onClick={props.input.sourceAmount.onFocus}>100%</div>
-                        </CSSTransition>
-                        <div id="swap-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorTooltip}</div>`} data-html={true} data-event='click focus' data-for="swap-error" data-scroll-hide="false">
+                        <div id="swap-error-trigger" className="input-tooltip-wrapper">
                           <input
-                            className={`exchange-content__input ${props.account !== false ? 'has-account' : ''}`}
+                            className={`exchange-content__input theme__background-4 theme__text-4 ${props.account !== false ? 'has-account' : ''}`}
                             min="0"
                             step="0.000001"
                             placeholder="0" autoFocus
@@ -176,19 +103,21 @@ const ExchangeBodyLayout = (props) => {
                             onChange={handleChangeSource}
                           />
                         </div>
-                        {/* {props.account !== false && (
-                          <div className={`exchange-content__label exchange-content__label--right trigger-swap-modal ${errorExchange ? "error" : ""}`}>{props.swapBalance}</div>
-                        )} */}
                       </div>
                     </div>
-                    
                   </div>
-                  {errorExchange &&
-                    <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="swap-error" type="light" />
-                  }
                 </div>
-                {props.account !== false && !props.isAdvanceActive && (
-                  <div>{props.topBalance}</div>
+
+                {errorExchange &&
+                  <div className={"exchange__error"}>{errorShow}</div>
+                }
+
+                {props.account !== false && (
+                  <div className={'common__balance theme__text-2'}>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
+                  </div>
                 )}
               </div>
               <div className={"exchange-content__item--middle"}>
@@ -199,7 +128,7 @@ const ExchangeBodyLayout = (props) => {
               </div>
               <div className={"exchange-content__item--wrapper"}>
                 <div className={"exchange-item-label"}>{props.translate("transaction.exchange_to") || "To"}:</div>
-                <div className={"exchange-content__item exchange-content__item--right"}>
+                <div className={"exchange-content__item exchange-content__item--right theme__background-4"}>
                   <div className={`input-div-content`}>
                     <div className={"exchange-content__label-content"}>
                       <div className="exchange-content__select select-token-panel">{props.tokenDestSelect}</div>
@@ -207,7 +136,7 @@ const ExchangeBodyLayout = (props) => {
                     <div className={`exchange-content__input-container`}>
                       <div className={"main-input main-input__right"}>
                         <input
-                          className={`exchange-content__input`}
+                          className={`exchange-content__input theme__background-4 theme__text-4`}
                           step="0.000001"
                           placeholder="0"
                           min="0"
@@ -224,7 +153,7 @@ const ExchangeBodyLayout = (props) => {
                   </div>
                 </div>
 
-                <div className="exchange-rate-container container">
+                <div className="exchange-rate-container">
                   <div className={"exchange-rate-container__left"}>
                     <RateBetweenToken
                       isSelectToken={props.exchange.isSelectToken}
@@ -237,33 +166,30 @@ const ExchangeBodyLayout = (props) => {
                   </div>
                 </div>
 
+                {props.account !== false && !props.isAdvanceActive && (
+                  <div className="top-token">
+                    <div className="top-token-more" onClick={props.toggleAdvanceContent}>{props.translate("transaction.advanced") || "Advance"}</div>
+                  </div>
+                )}
+
+                {(props.account !== false && props.isAdvanceActive) && (
+                  <AdvanceAccount
+                    toggleAdvanceContent={props.toggleAdvanceContent}
+                    advanceLayout={props.advanceLayout}
+                    isOpenAdvance={props.isOpenAdvance}
+                  />
+                )}
               </div>
             </div>
-
-
-
           </div>
 
           {props.account === false && importAccount()}
         </div>
 
-        {props.account !== false && (
-          <AdvanceAccount
-            clearSession={props.clearSession}
-            toggleAdvanceContent={props.toggleAdvanceContent}
-            balanceLayout={props.balanceLayout}
-            isAdvanceActive={props.isAdvanceActive}
-            advanceLayout={props.advanceLayout}
-            isOpenAdvance={props.isOpenAdvance}
-            clearIsOpenAdvance={props.clearIsOpenAdvance}
-            postWithKey={<PostExchange />}
-            screen={"swap"}
-            selectTokenBalance={props.selectTokenBalance}
-          />
-        )}
+        {props.account !== false &&
+          <PostExchange/>
+        }
       </div>
-
-      {/* {props.transactionLoadingScreen} */}
     </div>
   )
 }

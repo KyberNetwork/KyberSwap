@@ -2,12 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import { ImportAccount } from "../ImportAccount";
-import { TopBalance, AccountBalance } from "../TransactionCommon";
+import { AccountBalance } from "../TransactionCommon";
 import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { isUserLogin } from "../../utils/common";
 import * as converters from "../../utils/converter";
 import * as constants from "../../services/constants"
 
@@ -178,47 +177,11 @@ export default class LimitOrderAccount extends React.Component {
     } else {
       return (
         <div className={"limit-order-account"}>
-      {/*
-          <div className="limit-order-account__title">
-            <div>
-              {this.props.translate("limit_order.your_available_balance") || "Tokens available for Limit Order"}
-            </div>
-            <div className="reimport-msg">
-              <div onClick={this.openReImport}>
-                {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
-              </div>
-              <Modal className={{
-                base: 'reveal tiny reimport-modal',
-                afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
-              }}
-                isOpen={this.state.isReImport}
-                onRequestClose={this.closeReImport}
-                contentLabel="advance modal"
-                content={this.reImportModal()}
-                size="tiny"
-              />
-            </div>
-          </div>
-
-          <TopBalance
-            // isLimitOrderTab={true}
-            // getFilteredTokens={this.getFilteredTokens}
-            showMore={this.toggleAdvanceTokeBalance}
-            // chooseToken={this.props.chooseToken}
-            activeSymbol={this.props.limitOrder.sourceTokenSymbol}
-            screen="limit_order"
-            // selectTokenBalance={this.selectTokenBalance}
-            // changeAmount={limitOrderActions.inputChange}
-            // changeFocus={limitOrderActions.focusInput}
-            selectToken={this.selectToken}
-            orderedTokens={this.getFilteredTokens(true, 3)}
-          />
-      */}
           <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__silde-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
           
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
-              <div className="advance-close_wrapper"></div>
+              <div className="advance-close_wrapper"/>
             </div>
             <div className="limit-order-account__title">
               <div className="reimport-msg">
@@ -240,15 +203,11 @@ export default class LimitOrderAccount extends React.Component {
             <AccountBalance
               isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
-              // chooseToken={this.props.chooseToken}
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isBalanceActive={this.state.isAdvanceTokenVisible}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"
-              // selectTokenBalance={this.selectTokenBalance}
-              // changeAmount={limitOrderActions.inputChange}
-              // changeFocus={limitOrderActions.focusInput}
               selectToken={this.selectToken}
             />
           </div>}

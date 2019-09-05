@@ -44,7 +44,7 @@ const AdvanceAccount = (props) => {
   return (
     <div className="exchange-account">
       <div className="exchange-account__wrapper">
-        <div className="exchange-account__container container">
+        <div className="exchange-account__container">
           {props.isOnMobile ? getMobileContent() :
             getContent()
           }

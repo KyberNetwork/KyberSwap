@@ -130,57 +130,6 @@ label{
   display: flex;
   justify-content: center;
 }
-.token-selector {
-  .dropdown {
-    &.dropdown--active {
-      position: relative;
-      z-index: 1;
-      .focus-item{
-        border-color: #aaa;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-    }
-  }
-  .focus-item {
-    border-radius: 5px;
-    box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-    background-color: #ffffff;
-    border: solid 0.8px rgba(204, 204, 204, 0.72);
-    padding: 8px 12px;
-    align-items: center;
-    font-size: 15px;
-    &.d-flex{
-      justify-content: space-between;
-    }
-    .k-angle {
-      background-image: url(../img/exchange/arrow-down-swap.svg);
-      width: 13px;
-    }
-    .d-flex{
-      align-items: center;
-    }
-    .focus-name{
-      color: #222222;
-      font-weight: 600;
-      text-transform: initial;
-    }
-    .focus-balance{
-      color: #666666;
-      font-size: 14px;
-      font-weight: 600;
-      .token-symbol{
-        margin-left: 5px;
-      }
-    }
-    .icon{
-      margin-right: 10px;
-      img{
-        vertical-align: top;
-      }
-    }
-  }
-}
 
 .gas-option {
   .focus-item {

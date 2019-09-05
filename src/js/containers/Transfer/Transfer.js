@@ -116,7 +116,7 @@ export default class Exchange extends React.Component {
     return (
       <div>
         <div className={"exchange-container"}>
-          <HeaderTransaction page="transfer"/>
+          {/*<HeaderTransaction page="transfer"/>*/}
           <TransferBody/>
         </div>
         <Market/>

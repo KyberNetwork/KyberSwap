@@ -1,5 +1,6 @@
-@import "animation";
-@import 'settings';
+@import "commons/animation";
+@import 'commons/settings';
+@import 'commons/common';
 @import 'broadcast';
 @import 'addresses';
 @import 'tokens';
@@ -12,7 +13,6 @@
 @import "import_account";
 @import "transfer";
 @import "cold_wallet";
-@import "animation";
 @import "slide_down";
 @import '~react-linechart/dist/styles.css';
 @import "slider";

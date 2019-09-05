@@ -31,39 +31,13 @@ const DropFile = (props) => {
 
       {({ getRootProps, getInputProps, isDragActive }) => {
         return (
-          // <div className={"importer json"} {...getRootProps()}>
-          //   <input {...getInputProps()} />
-          //   <div className={"importer__symbol"}>
-          //     <div className={"importer__icon keystore"}/>
-          //     <div className={"importer__name"}>{props.translate("import.json") || "Keystore"}</div>
-          //   </div>
-          // </div>
-
           <div className="import-account__block theme__import-button" {...getRootProps() }>
             <input {...getInputProps() } />          
             <div className="import-account__icon json"/>
             <div className="import-account__name theme__text-4"><h3>{props.translate("import.json") || "KEYSTORE"}</h3></div>
           </div>
-
-          // <div className="importer json" {...getRootProps() }>
-          //   <input {...getInputProps() } />
-          //   <div className="importer__symbol">
-          //     <img src={getAssetUrl('wallets/keystore.svg')} />
-          //     <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
-          //   </div>
-          //   <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
-          // </div>
-
         )
       }}
-
-      {/* <div className="importer json">
-        <div className="importer__symbol">
-          <img src={getAssetUrl('wallets/keystore.svg')} />
-          <div className="importer__name">{props.translate("import.json") || "JSON"}</div>
-        </div>
-        <button className="importer__button" onClick={(e) => props.onDrop(e)}>{props.translate("import.select_or_drag") || "Select or Drag"}</button>
-      </div> */}
     </Dropzone>
   )
 }

@@ -1,15 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import ReactTooltip from 'react-tooltip'
-
 import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import { TransferForm } from "../../components/Transaction"
 import { QRCode } from "../CommonElements"
 import { AdvanceConfigLayout } from "../../components/TransactionCommon"
-import { TokenSelector, AccountBalance, TopBalance } from "../TransactionCommon"
+import { TokenSelector, AccountBalance } from "../TransactionCommon"
 import { hideSelectToken } from "../../actions/utilActions"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
@@ -18,11 +16,9 @@ import * as transferActions from "../../actions/transferActions"
 import { getTranslate } from 'react-localize-redux'
 import { debounce } from 'underscore'
 import BLOCKCHAIN_INFO from "../../../../env";
-
 import constants from "../../services/constants"
 
 @connect((store, props) => {
-
   return {
     transfer: store.transfer,
     account: store.account,
@@ -277,12 +273,6 @@ class Transfer extends React.Component {
     this.props.dispatch(transferActions.setIsSelectTokenBalance(true));
   }
 
-  reorderToken = () => {
-    var tokens = this.props.tokens
-    const orderedTokens = converters.sortEthBalance(tokens);
-    return orderedTokens.slice(0, 3)
-  }
-
   selectToken = (sourceSymbol) => {
             this.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
@@ -354,17 +344,6 @@ class Transfer extends React.Component {
       onScan={this.handleScanQRCode}
       onDAPP={this.props.account.isOnDAPP} /> : ""
 
-    var topBalance = <TopBalance showMore={this.toggleAdvanceContent}
-      // chooseToken={this.chooseToken}
-      activeSymbol={this.props.transfer.tokenSymbol}
-      // selectTokenBalance={this.selectTokenBalance}
-      screen="transfer"
-      // changeAmount={transferActions.specifyAmountTransfer} 
-
-      selectToken = {this.selectToken}
-      orderedTokens = {this.reorderToken(true, 3)}
-      />
-
     return (
       <TransferForm
         transfer = {this.props.transfer}
@@ -397,16 +376,11 @@ class Transfer extends React.Component {
         isBalanceActive={this.props.transfer.isBalanceActive}
         isAdvanceActive={this.props.transfer.isAdvanceActive}
         toggleAdvanceContent={this.toggleAdvanceContent}
-
         isOpenAdvance={this.props.transfer.isOpenAdvance}
         clearIsOpenAdvance={this.clearIsOpenAdvance}
-
-        topBalance={topBalance}
         isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
         acceptConnectWallet={this.acceptConnectWallet}
-
         isOnDAPP={this.props.account.isOnDAPP}
-
         isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
       />
     )

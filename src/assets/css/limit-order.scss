@@ -1996,31 +1996,6 @@
     font-weight: 400;
   }
 
-  &__balance {
-    display: flex;
-    justify-content: flex-end;
-
-    &-item {
-      width: 50px;
-      height: 36px;
-      padding: 5px;
-      margin-right: 5px;
-      font-size: 12px;
-      font-weight: 400;
-      border-radius: 3px;
-      border: solid 1px;
-      cursor: pointer;
-      transition: all .3s;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
   &__fee {
     font-size: 14px;
     font-weight: 400;
