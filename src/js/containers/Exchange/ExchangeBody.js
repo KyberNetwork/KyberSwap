@@ -5,7 +5,7 @@ import * as converters from "../../utils/converter"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
 import { Token } from "../CommonElements"
-import { TokenSelector, AccountBalance } from "../TransactionCommon"
+import { TokenSelector } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
@@ -67,7 +67,6 @@ class ExchangeBody extends React.Component {
         ReactTooltip.show(document.getElementById("swap-error-trigger"))
       }, 300)
     }
-
   }
 
   updateTitle = (pathname) => {
@@ -188,52 +187,6 @@ class ExchangeBody extends React.Component {
     return {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal, maxCap}
   }
 
-  validateSourceAmount = (value) => {
-    var {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal, maxCap} = this.getFormParams()
-    var sourceAmount = value
-    var validateAmount = validators.verifyAmount(sourceAmount,
-      rateSourceToEth,
-      sourceTokenSymbol,
-      sourceDecimal,
-      rateSourceToEth,
-      destTokenSymbol,
-      destDecimal,
-      maxCap)
-    var sourceAmountErrorKey = false
-    switch (validateAmount) {
-      case "not a number":
-        sourceAmountErrorKey = "error.source_amount_is_not_number"
-        break
-      case "too high":
-        sourceAmountErrorKey = "error.source_amount_too_high"
-        break
-      case "too high cap":
-        sourceAmountErrorKey = "error.source_amount_too_high_cap"
-        break
-      case "too high for reserve":
-        sourceAmountErrorKey = "error.source_amount_too_high_for_reserve"
-        break
-    }
-
-    if (sourceAmountErrorKey === "error.source_amount_is_not_number") {
-      return
-    }
-
-    if (sourceAmountErrorKey !== false && sourceAmountErrorKey !== "error.source_amount_is_not_number") {
-      this.props.dispatch(exchangeActions.thowErrorSourceAmount(sourceAmountErrorKey))
-      return
-    }
-
-    var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-      sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
-
-    if (validateWithFee) {
-      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-      return
-    }
-  }
-
-
   dispatchEstimateGasNormal = () => {
     this.props.dispatch(exchangeActions.estimateGasNormal())
   }
@@ -296,31 +249,6 @@ class ExchangeBody extends React.Component {
 
   blurDest = () => {
     this.setState({ focus: "" })
-  }
-
-  setAmount = () => {
-    var tokenSymbol = this.props.exchange.sourceTokenSymbol
-    var token = this.props.tokens[tokenSymbol]
-    if (token) {
-      var balanceBig = converters.stringToBigNumber(token.balance)
-      if (tokenSymbol === "ETH") {
-        var gasLimit = this.props.exchange.max_gas
-        var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.exchange.gasPrice))
-        var totalGas = gasPrice.multipliedBy(gasLimit)
-
-        if (!balanceBig.isGreaterThanOrEqualTo(totalGas)) {
-          return false
-        }
-        balanceBig = balanceBig.minus(totalGas)
-      }
-      var balance = balanceBig.div(Math.pow(10, token.decimals)).toString(10)
-
-      this.focusSource()
-
-      this.props.dispatch(exchangeActions.inputChange('source', balance, this.props.sourceToken.decimals, this.props.destToken.decimals))
-      this.props.ethereum.fetchRateExchange(true)
-    }
-    this.props.global.analytics.callTrack("trackClickAllIn", "Swap", tokenSymbol);
   }
 
   swapToken = () => {
@@ -446,11 +374,6 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.closeChangeWallet())
   }
 
-  clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
-    this.props.global.analytics.callTrack("trackClickChangeWallet")
-  }
-
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService());
     this.props.dispatch(globalActions.acceptConnectWallet());
@@ -458,38 +381,6 @@ class ExchangeBody extends React.Component {
 
   selectTokenBalance = () => {
     this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
-  }
-
-  selectToken = (sourceSymbol) => {
-    this.selectSourceToken(sourceSymbol)
-
-    var sourceBalance = this.props.tokens[sourceSymbol].balance
-    var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-    var amount
-
-    if (sourceSymbol !== "ETH") {
-      amount = sourceBalance
-      amount = converters.toT(amount, sourceDecimal)
-      amount = amount.replace(",", "")
-    } else {
-      var gasLimit
-      var totalGas
-      var destTokenSymbol = this.props.exchange.destTokenSymbol
-      gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
-      totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
-
-      amount = sourceBalance - totalGas * 120 / 100
-      amount = converters.toEther(amount)
-      amount = converters.roundingNumber(amount).toString(10)
-      amount = amount.replace(",", "")
-    }
-
-    if (amount < 0) amount = 0;
-
-    this.props.dispatch(exchangeActions.inputChange('source', amount, this.props.sourceToken.decimals, this.props.destToken.decimals))
-    this.props.dispatch(exchangeActions.focusInput('source'));
-    this.selectTokenBalance();
-    this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
   }
 
   render() {
@@ -555,10 +446,8 @@ class ExchangeBody extends React.Component {
 
     return (
       <ExchangeBodyLayout
-        chooseToken={this.selectSourceToken}
         exchange={this.props.exchange}
         account={this.props.account.account}
-        step={this.props.exchange.step}
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
         input={input}
@@ -567,25 +456,18 @@ class ExchangeBody extends React.Component {
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
         swapToken={this.swapToken}
-        errorNotPossessKgt={this.props.exchange.errorNotPossessKgt}
         isAgreedTermOfService={this.props.global.termOfServiceAccepted}
         advanceLayout={this.getAdvanceLayout()}
-        focus={this.state.focus}
         networkError={this.props.global.network_error}
         isChangingWallet={this.props.global.isChangingWallet}
         changeWalletType={this.props.global.changeWalletType}
         closeChangeWallet={this.closeChangeWallet}
         global={this.props.global}
-        clearSession={this.clearSession}
-        walletName={this.props.account.walletName}
-        isFixedDestToken={isFixedDestToken}
         acceptTerm={this.acceptTerm}
         isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
         isAdvanceActive={this.props.exchange.isAdvanceActive}
         toggleAdvanceContent={this.toggleAdvanceContent}
         isOpenAdvance={this.props.exchange.isOpenAdvance}
-        isOnDAPP={this.props.account.isOnDAPP}
-        isSelectTokenBalance={this.props.exchange.isSelectTokenBalance}
       />
     )
   }

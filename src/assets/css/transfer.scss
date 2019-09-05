@@ -2,6 +2,17 @@ $small-break-point : 40rem;
 $padding-col : 1rem;
 $padding-col-left : 2rem;
 
+.transfer {
+  &__arrow {
+    display: block;
+    margin: 5px auto 0;
+    width: 13px;
+    height: 13px;
+    background-image: url($image-path + 'exchange/arrow-right-orange.svg');
+    cursor: pointer;
+  }
+}
+
 #transfer-screen{
   margin-top: 25px;
   .balance{

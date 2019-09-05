@@ -2,9 +2,8 @@ import React from "react"
 import ReactTooltip from 'react-tooltip'
 import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
-import { PostTransfer } from "../../containers/Transfer";
 import { AdvanceAccount } from "../../containers/TransactionCommon"
-import { CSSTransition } from "react-transition-group";
+import { PostTransfer } from "../../containers/Transfer";
 
 const TransferForm = (props) => {
   const { isOnMobile } = props.global;
@@ -28,20 +27,13 @@ const TransferForm = (props) => {
     errorDestAddr.push(value)
   })
 
-  var errorSourceTooltip = ""
-  errorSource.map((value, index) => {
-    errorSourceTooltip += `<span class="error-text" key=${index}>${value}</span>`
-  })
-  var errorSourceSelector = document.getElementById("transfer-amount-error")
-  if (errorSourceSelector) errorSourceSelector.innerHTML = `<div>${errorSourceTooltip}</div>`
+  const sourceErrors = errorSource.map((value, index) => {
+    return <div className={"exchange__error-item"} key={index}>{value}</div>
+  });
 
-
-  var errorDestAddrTooltip = ""
-  errorDestAddr.map((value, index) => {
-    errorDestAddrTooltip += `<span class="error-text" key=${index}>${value}</span>`
-  })
-  var errorDestSelector = document.getElementById("transfer-address-error")
-  if (errorDestSelector) errorDestSelector.innerHTML = `<div>${errorDestAddrTooltip}</div>`
+  const destErrors = errorDestAddr.map((value, index) => {
+    return <div className={"exchange__error-item"} key={index}>{value}</div>
+  });
 
   var importAccount = function () {
     if (props.account === false || (props.isChangingWallet && props.changeWalletType === "transfer")) {
@@ -71,22 +63,14 @@ const TransferForm = (props) => {
           <div className={"exchange-content container"}>
             <div className={"exchange-content__item--wrapper"}>
               <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
-              <div className={`exchange-content__item exchange-content__item--left exchange-content__item--transfer
-                select-token ${props.account !== false ? 'has-account' : ''} ${isErrorSource ? "error" : ""}`}>
+              <div className={`exchange-content__item exchange-content__item--left theme__background-4 exchange-content__item--transfer select-token ${props.account !== false ? 'has-account' : ''} ${isErrorSource ? "error" : ""}`}>
                 <div className={`input-div-content`}>
                   <div className={"exchange-content__label-content"}>
                     <div className="exchange-content__select select-token-panel">{props.tokenTransferSelect}</div>
                   </div>
                   <div className={"exchange-content__input-container"}>
                     <div className={"main-input main-input__left"}>
-                      <CSSTransition mountOnEnter unmountOnExit classNames="top-token-number"
-                        in={!props.errors.amountTransfer && props.input.amount.value > 0 && props.isSelectTokenBalance}
-                        appear={true}
-                        timeout={{ enter: 500, exit: 500 }}>
-                          <div className={`top-token-number`} onClick={props.onFocus}>100%</div>
-                      </CSSTransition>
-                      <div id="transfer-amount-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorSourceTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-amount-error" data-scroll-hide="false"
-                      >
+                      <div className="input-tooltip-wrapper">
                         <input
                           className={`exchange-content__input theme__background-4 theme__text-4 ${props.account !== false ? 'has-account' : ''}`}
                           type={isOnMobile ? "number" : "text"}
@@ -105,28 +89,37 @@ const TransferForm = (props) => {
                     </div>
                   </div>
                 </div>
-                {isErrorSource &&
-                  <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-amount-error" type="light" />
-                }
               </div>
-              {props.account !== false && !props.isAdvanceActive && (
-                <div className="top-token">
-                  <div className="top-token-more" onClick={props.toggleAdvanceContent}>{props.translate("market.more") || "more"}</div>
+
+              {isErrorSource &&
+                <div className={"exchange__error"}>{sourceErrors}</div>
+              }
+
+              {props.account !== false && (
+                <div className={"common__flexbox"}>
+                  <div className={"exchange__balance"}>
+                    <div>{props.tokenSymbol} Balance</div>
+                    <div>{props.addressBalance.roundingValue} {props.tokenSymbol}</div>
+                  </div>
+                  <div className={'common__balance theme__text-2'}>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
+                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
+                  </div>
                 </div>
               )}
             </div>
 
             <div className={"exchange-content__item--middle"}>
-              <i className="k k-transfer k-3x"></i>
+              <i className={"transfer__arrow"}/>
             </div>
 
             <div className={"exchange-content__item--wrapper"}>
               <div className={"exchange-item-label"}>{props.translate("transaction.address") || "To Address"}:</div>
-              <div className={`exchange-content__item exchange-content__item--right select-token ${isErrorDestAddr ? "error" : ""}`}>
+              <div className={`exchange-content__item exchange-content__item--right theme__background-4 select-token ${isErrorDestAddr ? "error" : ""}`}>
                 <div className={`input-div-content`}>
                   <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
-                    <div id="transfer-address-error-trigger" className="input-tooltip-wrapper" data-tip={`<div>${errorDestAddrTooltip}</div>`} data-html={true} data-event='click focus' data-for="transfer-address-error" data-scroll-hide="false"
-                    >
+                    <div className="input-tooltip-wrapper">
                       <input
                         className={`exchange-content__input theme__background-4 theme__text-4 exchange-content__input-address`}
                         value={props.input.destAddress.value}
@@ -140,41 +133,34 @@ const TransferForm = (props) => {
                     {props.qcCode}
                   </div>
                 </div>
-                {isErrorDestAddr &&
-                  <ReactTooltip globalEventOff="click" html={true} place="bottom" className="select-token-error" id="transfer-address-error" type="light" />
-                }
               </div>
-            </div>
-          </div>
 
-          <div className="exchange-rate-container">
-            <div className="exchange-rate__balance">
-              {(!props.isChangingWallet && props.account !== false) && (
-                <span>
-                  <span className="exchange-rate__balance-text">Balance: </span>
-                  <span className="exchange-rate__balance-amount">{props.addressBalance.roundingValue}</span>
-                </span>
+              {isErrorDestAddr &&
+                <div className={"exchange__error"}>{destErrors}</div>
+              }
+
+              {props.account !== false && (
+                <div className="top-token">
+                  <div className="top-token-more" onClick={props.toggleAdvanceContent}>{props.translate("transaction.advanced") || "Advanced"}</div>
+                  <div className={`top-token__arrow common__triangle theme__border-top ${props.isAdvanceActive ? 'up' : ''}`}/>
+                </div>
+              )}
+
+              {props.account !== false && (
+                <AdvanceAccount
+                  advanceLayout={props.advanceLayout}
+                  isOpenAdvance={props.isOpenAdvance}
+                />
               )}
             </div>
           </div>
         </div>
-
         {props.account === false && importAccount()}
       </div>
 
-      {props.account !== false && (
-        <AdvanceAccount
-          clearSession={props.clearSession}
-          toggleAdvanceContent={props.toggleAdvanceContent}
-          balanceLayout={props.balanceLayout}
-          isAdvanceActive={props.isAdvanceActive}
-          advanceLayout={props.advanceLayout}
-          isOpenAdvance={props.isOpenAdvance}
-          clearIsOpenAdvance={props.clearIsOpenAdvance}
-          postWithKey={<PostTransfer />}
-          screen={"transfer"}
-        />
-      )}
+      {props.account !== false &&
+        <PostTransfer/>
+      }
     </div>
   )
 }
