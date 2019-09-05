@@ -87,7 +87,7 @@ export default class LimitOrderList extends React.Component {
     const tab = ["open", "history"];
 
     return tab.map((item, index) => {
-      let className = item === activeOrderTab ? "limit-order-list__tab--active" : "";
+      let className = item === activeOrderTab ? "limit-order-list__tab--active theme__sort active" : "theme__sort";
 
       return (
         <div key={item} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
@@ -102,21 +102,22 @@ export default class LimitOrderList extends React.Component {
 
   render() {
     return (
-      <div className={`limit-order-list ${this.props.limitOrder.listOrder.length === 0 ? "limit-order-list--empty" : ""}`}>
+      <div className={`limit-order-list theme__background-2 ${this.props.limitOrder.listOrder.length === 0 ? "limit-order-list--empty" : ""}`}>
         <div>
           <div className="limit-order-list--title">
             <div>
-              <div className="title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
-              {<div className="limit-order-list--title-faq">
+              <div className="title">{this.props.translate("limit_order.order_list_title") || "Limit Orders"}</div>
+              { false && <div className="limit-order-list--title-faq">
                 <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
                   {this.props.translate("limit_order.wonder_why_order_not_filled")}
                 </a>
               </div>}
             </div>
+            {/* 
             <a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
               Limit Order LeaderBoard
             </a>
-            {/* <div className="limit-order-list__filter-container">
+            <div className="limit-order-list__filter-container">
               <ul className="filter">
                 {this.getTimeFilter()}
               </ul>

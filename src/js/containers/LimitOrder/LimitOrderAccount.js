@@ -34,7 +34,7 @@ export default class LimitOrderAccount extends React.Component {
   constructor() {
     super();
     this.state = {
-      isAdvanceTokenVisible: false,
+      isAdvanceTokenVisible: true,
       isReimport: false
     }
   }
@@ -177,7 +177,7 @@ export default class LimitOrderAccount extends React.Component {
       );
     } else {
       return (
-        <div className={"limit-order-account"}>
+        <div className={"limit-order-account"} style={{marginTop: "-25px"}}>
       {/*
           <div className="limit-order-account__title">
             <div>
@@ -222,9 +222,6 @@ export default class LimitOrderAccount extends React.Component {
             </div>
             <div className="limit-order-account__title">
               <div className="reimport-msg">
-                <div onClick={this.openReImport}>
-                  {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
-                </div>
                 <Modal className={{
                   base: 'reveal tiny reimport-modal',
                   afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
@@ -250,6 +247,7 @@ export default class LimitOrderAccount extends React.Component {
               // changeAmount={limitOrderActions.inputChange}
               // changeFocus={limitOrderActions.focusInput}
               selectToken={this.selectToken}
+              openReImport={this.openReImport}
             />
           </div>}
         </div>

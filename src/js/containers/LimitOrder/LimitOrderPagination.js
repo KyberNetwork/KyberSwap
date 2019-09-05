@@ -22,7 +22,7 @@ export default class Pagination extends React.Component {
   
   generatePageRange = (start, end, activePage) => {
     const component = this.range(start, end).map(item => {
-      return <div className={`Pagination__page-item ${item == activePage ? "Pagination__page-item--selected" : ""}`}
+      return <div className={`Pagination__page-item ${item == activePage ? "Pagination__page-item--selected theme__button-2" : ""}`}
         key={item} 
         onClick={(e) => this.validatePageIndex(item)}
       >
@@ -47,7 +47,7 @@ export default class Pagination extends React.Component {
           <React.Fragment>
             {pageRange}
             <span>...</span>
-            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected" : ""}`}
+            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected theme__button-2" : ""}`}
               key={totalPage} 
               onClick={(e) => this.validatePageIndex(totalPage)}>
               {totalPage}
@@ -59,7 +59,7 @@ export default class Pagination extends React.Component {
 
         return (
           <React.Fragment>
-            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected" : ""}`}
+            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected theme__button-2" : ""}`}
               key={1} 
               onClick={(e) => this.validatePageIndex(1)}>
               {1}
@@ -73,7 +73,7 @@ export default class Pagination extends React.Component {
       
         return (
           <React.Fragment>
-            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected" : ""}`}
+            <div className={`Pagination__page-item ${activePage == 1 ? "Pagination__page-item--selected theme__button-2" : ""}`}
               key={1} 
               onClick={(e) => this.validatePageIndex(1)}>
               {1}
@@ -81,7 +81,7 @@ export default class Pagination extends React.Component {
             <span>...</span>
               {pageRange}
             <span>...</span>
-            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected" : ""}`}
+            <div className={`Pagination__page-item ${activePage == totalPage ? "Pagination__page-item--selected theme__button-2" : ""}`}
               key={totalPage} 
               onClick={(e) => this.validatePageIndex(totalPage)}>
               {totalPage}
@@ -127,6 +127,7 @@ export default class Pagination extends React.Component {
   
         {/* Previous button */}
         <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex - 1)}>
+          <span id="prev" />
           <img src={require("../../../assets/img/prev.svg")}/>
         </div>
         
@@ -138,6 +139,7 @@ export default class Pagination extends React.Component {
   
         {/* Next button */}
         <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex + 1)}>
+          <span id="next" />
           <img src={require("../../../assets/img/next.svg")}/>
         </div>
       </div>

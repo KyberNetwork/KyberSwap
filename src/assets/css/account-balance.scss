@@ -31,7 +31,6 @@
   }
 
   &__address {
-    display: flex;
     align-items: center;
   }
 
@@ -107,7 +106,7 @@
     margin: 10px 0;
     padding: 0 15px 0 0;
     overflow: auto;
-    max-height: 50vh;
+    max-height: 70vh;
 
     &::-webkit-scrollbar-track {
       border-radius: 8px;
@@ -157,6 +156,7 @@
     #stable-equivalent{
       width: 100%;
       text-align: right;
+      font-weight: 300;
     }
   }
 
@@ -171,7 +171,7 @@
   &__token-balance {
     margin: 5px 0 0 0;
     font-size: 16px;
-    font-weight: normal;
+    font-weight: 300;
     transition: color .3s;
   }
 
@@ -315,10 +315,10 @@
     }
 
     &__token-item {
-      width: 50%;
+      /*width: 50%;
       margin: 0;
       padding: 7px 0;
-      font-size: 14px;
+      font-size: 14px;*/
     }
   }
 }

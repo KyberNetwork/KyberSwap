@@ -7,7 +7,6 @@
   font-size: 14px;
   font-weight: 500;
   font-family: roboto;
-
   .up {
       color: #31cb9e
   }
@@ -37,7 +36,7 @@
 
   #panel {
     padding-bottom: 10px;
-    border-bottom: solid 2px #303a47;
+    border-bottom: solid 2px $dark-background-4;
 
     #quote_panel {
       width: 60%;
