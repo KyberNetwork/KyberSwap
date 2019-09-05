@@ -86,10 +86,13 @@ function* fetchFee(action){
     const feeAfterDiscount = multiplyOfTwoNumber(result.fee, 100);
     const discountPercentage = result.discount_percent;
 
-    yield put(limitOrderActions.fetchFeeComplete(fee, feeAfterDiscount, discountPercentage))
+    const transferFee = result.transfer_fee
+    const signFee = result.sign_fee
+
+    yield put(limitOrderActions.fetchFeeComplete(fee, feeAfterDiscount, discountPercentage, transferFee, signFee))
   }catch(err){
     console.log(err)
-    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0, err))
+    yield put(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0,0, constants.LIMIT_ORDER_CONFIG.maxFee, err))
   }
 
 }

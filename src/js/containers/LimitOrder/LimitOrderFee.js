@@ -43,7 +43,7 @@ class LimitOrderFee extends React.Component {
       var destAmount = this.props.limitOrder.destAmount
       this.props.dispatch(limitOrderActions.fetchFee(userAddr, src, dest, srcAmount, destAmount, shouldLoading))
     } else {
-      this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
+      this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
     }
   }
 

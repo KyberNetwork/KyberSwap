@@ -12,6 +12,7 @@ const keyMapping = {
     "addr": "user_address",
     "nonce": "nonce",
     "fee": "fee",
+    "transfer_fee": "transfer_fee",
     "receive": "receive",
     "status": "status",
     "created_at": "created_at",
@@ -21,7 +22,7 @@ const keyMapping = {
 }
 
 function validateOrder(order) {
-    if (typeof order.fee !== "number" || typeof order.src_amount !== "number" || typeof order.min_rate !== "number"
+    if (typeof order.fee !== "number" || typeof order.transfer_fee !== "number" || typeof order.src_amount !== "number" || typeof order.min_rate !== "number"
     || typeof order.created_at !== "number" || typeof order.updated_at !== "number") return false;
     if (order.fee < 0 || order.fee > 0.5) return false;
 
@@ -39,6 +40,10 @@ function filterOrder(result) {
             order[field] = orders[i][j]
         }
         if (validateOrder(order)) {
+
+            //calculate total fee
+            ỏrder.fee = order.fee + order.transfer_fee
+            
             orderList.push(order)
         }
     }
@@ -156,7 +161,9 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
             }).then((result) => {
                 if (result.success) {
                   if (validateGetFeeResult(result)) {
-                    resolve(result);
+                    // map fee to sign fee
+                    fee = mapFee(result)
+                    resolve(fee);
                   } else {
                     rejected("There is something wrong with rate API")
                   }
@@ -171,12 +178,25 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     })
 }
 
+function mapFee(result){
+    var fee = {
+        success: result.success,
+        fee: result.transfer_fee + result.fee,          
+        transfer_fee: result.transfer_fee,          
+        sign_fee: result.fee,          
+        discount_percent: result.discount_percent,
+        non_discounted_fee: result.non_discounted_fee
+    }
+    return fee
+}
+
 function validateGetFeeResult(result) {
   let nonDiscountFee = result.non_discounted_fee;
   let fee = result.fee;
   let discountPercent = result.discount_percent;
+  let transferFee = result.transfer_fee;
 
-  if (typeof nonDiscountFee !== 'number' || typeof fee !== 'number' || typeof discountPercent !== 'number' || fee > nonDiscountFee) {
+  if (typeof nonDiscountFee !== 'number' || typeof fee !== 'number' || typeof discountPercent !== 'number' || typeof transferFee != 'number' || fee > nonDiscountFee) {
     return false
   }
 

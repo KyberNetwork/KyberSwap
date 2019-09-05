@@ -36,6 +36,7 @@ export default class ConfirmModal extends React.Component {
             isFetchFee : true,
             isFinish: false,
             fee : constants.LIMIT_ORDER_CONFIG.maxFee,
+            sign_fee: constants.LIMIT_ORDER_CONFIG.maxFee,
             feeErr: ""
         }
         this.onSubmit = this.onSubmit.bind(this);
@@ -52,8 +53,8 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
-        this.setState({isFetchFee : false, fee: fee})
+        var { fee, sign_fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
+        this.setState({isFetchFee : false, fee: fee, sign_fee: sign_fee})
       }catch(err){
         console.log(err)
         this.setState({
@@ -119,7 +120,7 @@ export default class ConfirmModal extends React.Component {
             minConversionRate = converters.toHex(minConversionRate)
 
             
-            var feeInPrecision = this.state.fee
+            var feeInPrecision = this.state.sign_fee
             feeInPrecision = converters.toTWei(feeInPrecision, 6)
             feeInPrecision = converters.toHex(feeInPrecision)
 
