@@ -58,7 +58,8 @@ class LimitOrderFee extends React.Component {
     const orderFeeAfterDiscount = converter.multiplyOfTwoNumber(this.props.limitOrder.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFeeAfterDiscount, 100));
     const sourceAmountAfterFee = converter.subOfTwoNumber(this.props.limitOrder.sourceAmount, orderFeeAfterDiscount);
     const discountFee = converter.subOfTwoNumber(orderFee, orderFeeAfterDiscount);
-    const orderFeeDiscountPercentage = converter.multiplyOfTwoNumber(converter.divOfTwoNumber(discountFee, orderFee), 100);
+
+    const orderFeeDiscountPercentage = this.props.limitOrder.orderFeeDiscountPercentage
     const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
 
     let orderFeeText = null;
