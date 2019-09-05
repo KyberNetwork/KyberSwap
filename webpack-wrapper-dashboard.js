@@ -86,7 +86,7 @@ var getConfig = env => {
                     terserOptions: {
                         ecma: 6,
                         compress: {
-                            drop_console: true,
+                            drop_console: chain === "production"? true: false,
                             warnings: false
                         }
                     }

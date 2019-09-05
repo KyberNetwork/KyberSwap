@@ -24,6 +24,7 @@ const keyMapping = {
 function validateOrder(order) {
     if (typeof order.fee !== "number" || typeof order.transfer_fee !== "number" || typeof order.src_amount !== "number" || typeof order.min_rate !== "number"
     || typeof order.created_at !== "number" || typeof order.updated_at !== "number") return false;
+
     if (order.fee < 0 || order.fee > 0.5) return false;
 
     return true;
@@ -38,11 +39,10 @@ function filterOrder(result) {
         for (var j = 0; j < fields.length; j++) {
             var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
             order[field] = orders[i][j]
-        }
-        if (validateOrder(order)) {
-
+        }        
+        if (validateOrder(order)) {            
             //calculate total fee
-            ỏrder.fee = order.fee + order.transfer_fee
+            order.fee = order.fee + order.transfer_fee
             
             orderList.push(order)
         }
@@ -162,7 +162,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
                 if (result.success) {
                   if (validateGetFeeResult(result)) {
                     // map fee to sign fee
-                    fee = mapFee(result)
+                    var fee = mapFee(result)
                     resolve(fee);
                   } else {
                     rejected("There is something wrong with rate API")
@@ -185,7 +185,7 @@ function mapFee(result){
         transfer_fee: result.transfer_fee,          
         sign_fee: result.fee,          
         discount_percent: result.discount_percent,
-        non_discounted_fee: result.non_discounted_fee
+        non_discounted_fee: result.non_discounted_fee + result.transfer_fee
     }
     return fee
 }

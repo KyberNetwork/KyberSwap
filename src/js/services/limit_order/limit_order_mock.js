@@ -16,6 +16,7 @@ const keyMapping = {
     "addr": "user_address",
     "nonce": "nonce",
     "fee": "fee",
+    "transfer_fee": "transfer_fee",
     "receive": "receive",
     "status": "status",
     "created_at": "created_at",
@@ -33,6 +34,7 @@ const jsonString = `{
       "src_amount",
       "min_rate",
       "fee",
+      "transfer_fee",
       "receive",
       "status",
       "msg",
@@ -51,6 +53,7 @@ const jsonString = `{
         0.0644,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -66,6 +69,7 @@ const jsonString = `{
         0.5,
         368.9053,
         0.0045,
+        0,
         0,
         "open",
         [],
@@ -83,6 +87,7 @@ const jsonString = `{
         7.4,
         0.004,
         0,
+        0,
         "open",
         "hello",
         null,
@@ -98,6 +103,7 @@ const jsonString = `{
         1.6835,
         7.4,
         0.004,
+        0,
         0,
         "open",
         [],
@@ -115,6 +121,7 @@ const jsonString = `{
         368.9053,
         0.004,
         0,
+        0,
         "open",
         [],
         null,
@@ -130,6 +137,7 @@ const jsonString = `{
         1.6835,
         368.9053,
         0.004,
+        0,
         0,
         "open",
         [],
@@ -147,6 +155,7 @@ const jsonString = `{
         368.9053,
         0.004,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -162,6 +171,7 @@ const jsonString = `{
         532.05507,
         0.002605,
         0.004,
+        0,
         0,
         "cancelled",
         [],
@@ -195,6 +205,7 @@ const jsonString = `{
         0.002604,
         0.004,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -210,6 +221,7 @@ const jsonString = `{
         1,
         0.002603,
         0.0046,
+        0,
         0,
         "cancelled",
         [],
@@ -227,6 +239,7 @@ const jsonString = `{
         368.9053,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -242,6 +255,7 @@ const jsonString = `{
         3.6694,
         0.1787,
         0.0046,
+        0,
         0,
         "cancelled",
         [],
@@ -259,6 +273,7 @@ const jsonString = `{
         0.0644,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -274,6 +289,7 @@ const jsonString = `{
         7,
         0.0001991,
         0.0046,
+        0,
         0,
         "cancelled",
         [],
@@ -291,6 +307,7 @@ const jsonString = `{
         1.4984,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -306,6 +323,7 @@ const jsonString = `{
         1.7526,
         245,
         0.0046,
+        0,
         0,
         "cancelled",
         [],
@@ -323,6 +341,7 @@ const jsonString = `{
         245,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -338,6 +357,7 @@ const jsonString = `{
         1.7526,
         245,
         0.0046,
+        0,
         0,
         "cancelled",
         [],
@@ -355,6 +375,7 @@ const jsonString = `{
         244.2423,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -371,6 +392,7 @@ const jsonString = `{
         368.9053,
         0.0046,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -386,6 +408,7 @@ const jsonString = `{
         2,
         0.6214,
         0.0045,
+        0,
         0,
         "cancelled",
         [],
@@ -1459,6 +1482,7 @@ const jsonString = `{
         0.064407,
         0.005,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -1474,6 +1498,7 @@ const jsonString = `{
         37.0864631302519,
         0.019928,
         0.005,
+        0,
         0,
         "cancelled",
         [],
@@ -1491,6 +1516,7 @@ const jsonString = `{
         0.019928,
         0.005,
         0,
+        0,
         "cancelled",
         [],
         null,
@@ -1506,6 +1532,7 @@ const jsonString = `{
         1.6,
         372,
         0.005,
+        0,
         0,
         "cancelled",
         [],
@@ -1523,6 +1550,7 @@ const jsonString = `{
         0.0029,
         0.005,
         1,
+        0,
         "filled",
         [],
         null,
@@ -1539,6 +1567,7 @@ const jsonString = `{
         370,
         0.005,
         1,
+        0,
         "filled",
         [],
         null,
@@ -1555,6 +1584,7 @@ const jsonString = `{
         0.129187,
         0.005,
         1,
+        0,
         "filled",
         [],
         null,
@@ -1571,6 +1601,7 @@ const jsonString = `{
         0.002604,
         0.005,
         1,
+        0,
         "filled",
         [],
         null,
@@ -1587,6 +1618,7 @@ const jsonString = `{
         0.002604,
         0.005,
         1,
+        0,
         "filled",
         [],
         null,
@@ -1602,6 +1634,7 @@ const jsonString = `{
         1,
         0.002604,
         0.005,
+        0,
         0,
         "open",
         [],
@@ -1619,6 +1652,7 @@ const jsonString = `{
         368.9053,
         0.005,
         0,
+        0,
         "open",
         [],
         null,
@@ -1634,6 +1668,7 @@ const jsonString = `{
         1,
         7.351693,
         0.005,
+        0,
         0,
         "open",
         [],
@@ -1651,6 +1686,7 @@ const jsonString = `{
         368.9053,
         0.005,
         0,
+        0,
         "open",
         [],
         null,
@@ -1666,6 +1702,7 @@ const jsonString = `{
         1,
         368.9053,
         0.005,
+        0,
         0,
         "open",
         [],
@@ -1683,6 +1720,7 @@ const jsonString = `{
         368.9053,
         0.005,
         0,
+        0,
         "open",
         [],
         null,
@@ -1694,6 +1732,15 @@ const jsonString = `{
 
 const data = filterOrder(JSON.parse(jsonString));
 
+function validateOrder(order) {
+  if (typeof order.fee !== "number" || typeof order.transfer_fee !== "number" || typeof order.src_amount !== "number" || typeof order.min_rate !== "number"
+  || typeof order.created_at !== "number" || typeof order.updated_at !== "number") return false;
+
+  if (order.fee < 0 || order.fee > 0.5) return false;
+
+  return true;
+}
+
 function filterOrder(result) {
     var orderList = []
     var fields = result.fields
@@ -1704,6 +1751,14 @@ function filterOrder(result) {
             var field = keyMapping[fields[j]] ? keyMapping[fields[j]] : fields[j]
             order[field] = orders[i][j]
         }
+        
+        if (validateOrder(order)) {            
+            //calculate total fee
+            order.fee = order.fee + order.transfer_fee
+
+            orderList.push(order)
+        }
+
         orderList.push(order)
     }
     const results = orderList.map(item => {
