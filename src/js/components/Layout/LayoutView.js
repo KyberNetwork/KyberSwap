@@ -75,7 +75,7 @@ const LayoutView = (props) => {
             <Redirect from={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/*`} to={defaultPathLimitOrder} />
             <Redirect to={defaultPathExchange} />
           </Switch>
-          <Processing />
+          <Processing/>
         </section>
         <section id="modals">
           <InfoModal />

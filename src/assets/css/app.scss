@@ -1,6 +1,7 @@
-@import "commons/animation";
+@import "commons/fonts";
+@import "commons/animations";
 @import 'commons/settings';
-@import 'commons/common';
+@import 'commons/commons';
 @import 'broadcast';
 @import 'addresses';
 @import 'tokens';
@@ -22,14 +23,6 @@
 @import "quote-market";
 @import "components/trading-view";
 @import "themes/index";
-
-@font-face{
-  font-family: 'text-security-disc';
-  font-style: normal;
-  font-display: swap;
-  font-weight: normal;
-  src: url(../fonts/text-security-disc.ttf);
-}
 
 * {
   box-sizing: border-box;
@@ -53,16 +46,16 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
-#swap-app{
-  max-width: 1440px;
+#swap-app {
+  max-width: $width-app;
   margin: 0 auto;
 }
 
-.security{
-  font-family: 'text-security-disc';
+.security {
+  font-family: $font-security;
   font-size: 25px;
 }
 
-.hide{
+.hide {
   display: none;
 }

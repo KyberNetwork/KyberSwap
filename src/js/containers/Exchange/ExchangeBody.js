@@ -351,11 +351,6 @@ class ExchangeBody extends React.Component {
   }
 
   toggleAdvanceContent = () => {
-    if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
-      this.props.dispatch(exchangeActions.setCustomRateInputError(true));
-      return;
-    }
-
     if (this.props.exchange.isAdvanceActive) {
       this.props.global.analytics.callTrack("trackClickHideAdvanceOption", "Swap")
       const expectedRate = this.props.exchange.expectedRate;

@@ -4,8 +4,6 @@ import {ExchangeBody} from "../Exchange"
 import { getTranslate } from 'react-localize-redux'
 import * as converter from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
-import {setIsChangingPath, clearSession} from "../../actions/globalActions"
-import {HeaderTransaction} from "../TransactionCommon"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 import { Market } from "../Market"
@@ -156,11 +154,8 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className={"exchange-container"}>
-          {/*<HeaderTransaction page="exchange"/>*/}
-          <ExchangeBody/>
-        </div>
+      <div className={"exchange__container"}>
+        <ExchangeBody/>
         <Market/>
       </div>
     )

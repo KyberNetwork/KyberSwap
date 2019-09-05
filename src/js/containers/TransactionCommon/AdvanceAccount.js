@@ -15,7 +15,6 @@ export default class AdvanceAccount extends React.Component {
         <div className="exchange-account__wrapper">
           <div className="exchange-account__container">
             <div className={`exchange-account__content ${this.props.isOpenAdvance ? "exchange-account__content--animation" : ""}`}>
-              <div className="advance-close" onClick={this.props.toggleAdvanceContent}/>
               <div className={`exchange-account__adv-config exchange-account__content--open`}>{this.props.advanceLayout}</div>
             </div>
           </div>

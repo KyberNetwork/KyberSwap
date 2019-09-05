@@ -55,7 +55,11 @@ $breakpoints: (
 
 // Fonts
 $font-roboto: 'Roboto', sans-serif;
+$font-security: 'text-security-disc';
 
+// Widths
+$width-app: 1440px;
+$width-exchange: 880px;
 
 // Mixins
 @mixin screen-max-width($breakpoint) {

@@ -1,4 +1,10 @@
 .common {
+  &__flexbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__balance {
     display: flex;
     justify-content: flex-end;
@@ -21,6 +27,19 @@
       &:last-child {
         margin-right: 0;
       }
+    }
+  }
+
+  &__triangle {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid black;
+    transition: all .3s;
+
+    &.up {
+      transform: rotate(-180deg);
     }
   }
 }

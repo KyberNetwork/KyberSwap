@@ -37,23 +37,16 @@
   }
 
   &-more {
+    display: inline-block;
     font-size: 12px;
     font-weight: 400;
     cursor: pointer;
-    margin-top: 5px;
-    position: relative;
-    padding-right: 20px;
+    padding-right: 5px;
     transition: all .3s;
+  }
 
-    &:after{
-      background-image: url("../img/v3/arrow_more.svg");
-      content: " ";
-      position: absolute;
-      width: 7px;
-      height: 4px;
-      top: 6px;
-      right: 7px;
-    }
+  &__arrow {
+    display: inline-block;
   }
 
   &-number {

@@ -1,4 +1,24 @@
 .exchange {
+  &__balance {
+    font-size: 13px;
+    font-weight: 400;
+
+    div:first-child {
+      margin-bottom: 3px;
+    }
+  }
+
+  &__container {
+    max-width: $width-exchange;
+    margin: 0 auto;
+  }
+
+  &__form {
+    padding: 45px;
+    border-radius: 3px;
+    box-shadow: 0 2px 29px -10px rgba(0, 0, 0, 0.49);
+  }
+
   &__error {
     color: $error-color;
     font-size: 12px;
@@ -13,6 +33,15 @@
         margin-bottom: 0;
       }
     }
+  }
+
+  &__swap-icon {
+    display: block;
+    margin: 0 auto;
+    width: 19px;
+    height: 24px;
+    background-image: url($image-path + 'exchange/swap-icon.svg');
+    cursor: pointer;
   }
 }
 
@@ -144,9 +173,6 @@
   min-height: 20px;
 
   &-container {
-    max-width: 1050px;
-    margin: 15px auto 0;
-
     &__left {
       @include screen-max-width(large){
         margin-left: 20px;
@@ -251,19 +277,10 @@
     }
   }
 
-  &__container {
-    max-width: 1050px;
-    padding: 0 0 20px;
-  }
-
   &__content {
     display: flex;
     position: relative;
     margin-bottom: 20px;
-
-    @include screen-max-width(large){
-      background-color: #f6f7fa;
-    }
 
     &--animation {
       @include animation(slideInDown) {
@@ -275,30 +292,12 @@
     &--open {
       border-bottom: none;
       border-radius: 5px;
-      @include screen-max-width(large){
-        border-radius: 0;
-      }
-
-      &.exchange-account{
-        &__balance, &__adv-config {
-          @include screen-max-width(large){
-            padding: 5px;
-            background-color: #f6f7fa;
-          }
-        }
-      }
+      width: 100%;
     }
   }
 
   &__balance {
     position: relative;
-
-    @include screen-min-width(large){
-      width: 60%;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
   }
 
   @include screen-max-width(large) {
