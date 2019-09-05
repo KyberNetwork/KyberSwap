@@ -1968,7 +1968,7 @@ export function getFee(userAddr, src, dest, src_amount, dst_amount) {
           fee: 0.0036,          
           transfer_fee: 0.001,          
           sign_fee: 0.0026,          
-          discount_percent: 10,
+          discount_percent: 33.367404,
           non_discounted_fee: 0.004
         })
     })
