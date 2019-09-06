@@ -216,16 +216,15 @@ const AccountBalanceLayout = (props) => {
                     </div>
 
                   </div>
-                          
-                              <div style={{width: '100%'}}>
-                                <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                                  onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                                  {props.account.address.slice(0, 22)}...{props.account.address.slice(-4)}
-                                </a>
-                                <span className="account-balance__reimport" onClick={props.openReImport}>
-                                  {props.translate("import.change_address") || "CHANGE"}
-                                </span>
-                              </div>
+                  <div style={{width: '100%'}}>
+                    <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                      onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
+                      {props.account.address.slice(0, 22)}...{props.account.address.slice(-4)}
+                    </a>
+                    <span className="account-balance__reimport" onClick={props.openReImport}>
+                      {props.translate("import.change_address") || "CHANGE"}
+                    </span>
+                  </div>
                 </div>
 
               </div>
@@ -236,10 +235,9 @@ const AccountBalanceLayout = (props) => {
                 <span className="theme__tab active">KYBER LIST</span>
                 <span className="theme__tab">OTHER</span>
               </div>*/}
-
-                    <div>
-                      <span className="account-balance__address-text">{props.translate("limit_order.available_tokens") || "Wallet"}</span>
-                    </div>
+              <div>
+                <span className="account-balance__address-text">{props.translate("limit_order.available_tokens") || "Wallet"}</span>
+              </div>
               <div className="account-balance__search-panel">
                 <div className="account-balance__content-search-container">
                     <input

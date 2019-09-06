@@ -143,7 +143,6 @@ export default class Layout extends React.Component {
     const LimitOrderAccount = this.LimitOrderAccount
     return (
       <div> 
-
         <LayoutView
           history={history}        
           Exchange={Exchange}

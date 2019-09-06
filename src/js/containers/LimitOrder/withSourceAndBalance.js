@@ -10,18 +10,18 @@ import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
 import BLOCKCHAIN_INFO from "../../../../env";
 const withSourceAndBalance = (Component) => {
-	return connect((store, props) => {
-	  const account = store.account.account
-	  const translate = getTranslate(store.locale)
-	  const tokens = store.tokens.tokens
-	  const limitOrder = store.limitOrder
-	  const ethereum = store.connection.ethereum
+  return connect((store, props) => {
+    const account = store.account.account
+    const translate = getTranslate(store.locale)
+    const tokens = store.tokens.tokens
+    const limitOrder = store.limitOrder
+    const ethereum = store.connection.ethereum
 
-	  return {
-	    translate, limitOrder, tokens, account, ethereum,
-	    global: store.global
-	  }
-	})(class extends React.Component{
+    return {
+      translate, limitOrder, tokens, account, ethereum,
+      global: store.global
+    }
+  })(class extends React.Component{
     mergeEthIntoWeth = () => {
       var tokens = this.props.tokens
       const eth = tokens["ETH"];
@@ -128,7 +128,7 @@ const withSourceAndBalance = (Component) => {
       this.props.dispatch(limitOrderActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
     }
 
-		selectSourceToken = (symbol) => {
+    selectSourceToken = (symbol) => {
       var sourceTokenSymbol = symbol
       var sourceToken = this.props.tokens[sourceTokenSymbol].address
       var destTokenSymbol = this.props.limitOrder.destTokenSymbol
@@ -149,18 +149,16 @@ const withSourceAndBalance = (Component) => {
       this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
     }
-		render(){
-			return React.cloneElement(
-			    Component, 
-			    { 
-            selectSourceToken: this.selectSourceToken, 
-            selectDestToken: this.selectDestToken,
-            availableBalanceTokens: this.getModifiedTokenList,
-            getOpenOrderAmount: this.getOpenOrderAmount
-          }
-			);
-		}
-	})
+
+    render(){
+      return React.cloneElement(Component, { 
+          selectSourceToken: this.selectSourceToken, 
+          selectDestToken: this.selectDestToken,
+          availableBalanceTokens: this.getModifiedTokenList,
+          getOpenOrderAmount: this.getOpenOrderAmount
+      });
+    }
+  })
 
 }
 export default withSourceAndBalance;
