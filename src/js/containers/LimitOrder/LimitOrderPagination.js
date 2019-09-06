@@ -127,8 +127,7 @@ export default class Pagination extends React.Component {
   
         {/* Previous button */}
         <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex - 1)}>
-          <span id="prev" />
-          <img src={require("../../../assets/img/prev.svg")}/>
+          <span class="Pagination__button--prev" />
         </div>
         
   
@@ -139,8 +138,7 @@ export default class Pagination extends React.Component {
   
         {/* Next button */}
         <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex + 1)}>
-          <span id="next" />
-          <img src={require("../../../assets/img/next.svg")}/>
+          <span class="Pagination__button--next" />
         </div>
       </div>
     )

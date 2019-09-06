@@ -170,48 +170,11 @@ export default class LimitOrderAccount extends React.Component {
     } else {
       return (
         <div className={"limit-order-account"} style={{marginTop: "-25px"}}>
-      {/*
-          <div className="limit-order-account__title">
-            <div>
-              {this.props.translate("limit_order.your_available_balance") || "Tokens available for Limit Order"}
-            </div>
-            <div className="reimport-msg">
-              <div onClick={this.openReImport}>
-                {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
-              </div>
-              <Modal className={{
-                base: 'reveal tiny reimport-modal',
-                afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
-              }}
-                isOpen={this.state.isReImport}
-                onRequestClose={this.closeReImport}
-                contentLabel="advance modal"
-                content={this.reImportModal()}
-                size="tiny"
-              />
-            </div>
-          </div>
-
-          <TopBalance
-            // isLimitOrderTab={true}
-            // getFilteredTokens={this.getFilteredTokens}
-            showMore={this.toggleAdvanceTokeBalance}
-            // chooseToken={this.props.chooseToken}
-            activeSymbol={this.props.limitOrder.sourceTokenSymbol}
-            screen="limit_order"
-            // selectTokenBalance={this.selectTokenBalance}
-            // changeAmount={limitOrderActions.inputChange}
-            // changeFocus={limitOrderActions.focusInput}
-            selectToken={this.selectToken}
-            orderedTokens={this.getFilteredTokens(true, 3)}
-          />
-      */}
           <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
           
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
               <div className="advance-close_wrapper"></div>
-            {/* <img src={require("../../../assets/img/exchange/arrow-right-orange.svg")} /> */}
             </div>
             <div className="limit-order-account__title">
               <div className="reimport-msg">
@@ -230,15 +193,11 @@ export default class LimitOrderAccount extends React.Component {
             <AccountBalance
               isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
-              // chooseToken={this.props.chooseToken}
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isBalanceActive={this.state.isAdvanceTokenVisible}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"
-              // selectTokenBalance={this.selectTokenBalance}
-              // changeAmount={limitOrderActions.inputChange}
-              // changeFocus={limitOrderActions.focusInput}
               selectToken={this.selectToken}
               openReImport={this.openReImport}
             />

@@ -212,7 +212,6 @@ const AccountBalanceLayout = (props) => {
                   <div className={"account-balance__address"}>
                     <div>
                       <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</span>
-                      {(!props.isOnDAPP && false) && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
                     </div>
 
                   </div>
@@ -231,10 +230,6 @@ const AccountBalanceLayout = (props) => {
             </div>
 
             <div className="account-balance__control-panel">
-              {/* <div className="account-balance__cat-panel">
-                <span className="theme__tab active">KYBER LIST</span>
-                <span className="theme__tab">OTHER</span>
-              </div>*/}
               <div>
                 <span className="account-balance__address-text">{props.translate("limit_order.available_tokens") || "Wallet"}</span>
               </div>

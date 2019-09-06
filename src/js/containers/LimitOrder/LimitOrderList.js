@@ -107,21 +107,12 @@ export default class LimitOrderList extends React.Component {
           <div className="limit-order-list--title">
             <div>
               <div className="title">{this.props.translate("limit_order.order_list_title") || "Limit Orders"}</div>
-              { false && <div className="limit-order-list--title-faq">
+              {/* <div className="limit-order-list--title-faq">
                 <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
                   {this.props.translate("limit_order.wonder_why_order_not_filled")}
                 </a>
-              </div>}
+              </div> */}
             </div>
-            {/* 
-            <a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
-              Limit Order LeaderBoard
-            </a>
-            <div className="limit-order-list__filter-container">
-              <ul className="filter">
-                {this.getTimeFilter()}
-              </ul>
-            </div> */}
             <div className="limit-order-list__tab-container">
               {this.getOrderTabs()}
             </div>
