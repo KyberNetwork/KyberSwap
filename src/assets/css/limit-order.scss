@@ -309,6 +309,7 @@
     }
 
     &--extra {
+      padding: 5px 10px !important;
       border-radius: 8px;
       background-color: #999999;
       font-size: 9px;
@@ -412,9 +413,12 @@
   .right-slide-panel{
     position: fixed;
     right: 0;
+    top: 100px;
+    z-index: 9999999;
     border-radius: 3px 0 0 3px;
     font-size: 10px;
     padding: 5px 10px;
+    cursor: pointer;
     &:before{
       content: '\2190';
       font-size: 15px;
@@ -548,12 +552,13 @@
       }
     }*/
     .advance-close {
-      width: 30px;
-      height: 30px;
       font-size: 26px;
       cursor: pointer;
       position: absolute;
-      right: 15px;
+      right: 0;
+      top: 0;
+      padding: 15px;
+      z-index: 99999;
 
       &:before{
         content:'\2192';

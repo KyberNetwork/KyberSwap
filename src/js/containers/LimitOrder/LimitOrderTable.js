@@ -78,14 +78,14 @@ export default class LimitOrderTableLegacy extends Component {
       width: 85
     }, {
       id: "from",
-      Header: this.getHeader("from"),
+      Header: this.getHeader("amount"),
       accessor: item => ({ source: item.source, sourceAmount: item.src_amount }),
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-from theme__text-4",
     }, {
       id: "to",
-      Header: this.getHeader("to"),
+      Header: this.getHeader("total"),
       accessor: item => item,
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
@@ -240,7 +240,6 @@ export default class LimitOrderTableLegacy extends Component {
     return (
       <div>
         <span class="from-number-cell">{amount}</span>{' '}
-        <span>{source.toUpperCase()}</span>
       </div>
     )
   }
@@ -261,10 +260,9 @@ export default class LimitOrderTableLegacy extends Component {
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
-        <span>{dest.toUpperCase()}</span>{' '}
         {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
           <div className="to-number-cell--extra-wrapper">
-            <span className="to-number-cell--extra" 
+            <span className="to-number-cell--extra theme__button-2" 
               onClick={e => this.toggleExtraModal(id)}>
               {this.props.translate("extra") || "extra"}
             </span>
@@ -672,7 +670,7 @@ export default class LimitOrderTableLegacy extends Component {
     if (title === "date") {
       return (
         <div>
-          <span>{this.props.translate("limit_order.date") || "Date"}</span>
+          <span>{(this.props.translate("limit_order.date") || "Date").toUpperCase()}</span>
           {this.props.limitOrder.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
           {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
@@ -681,7 +679,7 @@ export default class LimitOrderTableLegacy extends Component {
       return (
         <Dropdown active={this.state.addressFilterVisible} onHide={e => this.togglingAddressFilter()}>
           <div>
-            <span>{this.props.translate("address.address") || "Address"}</span>
+            <span>{(this.props.translate("address.address") || "Address").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -695,7 +693,7 @@ export default class LimitOrderTableLegacy extends Component {
       return (
         <Dropdown active={this.state.conditionFilterVisible} onHide={e => this.togglingConditionFilter()}>
           <div>
-            <span>{this.props.translate("limit_order.pair") || "Pair"}</span>
+            <span>{(this.props.translate("limit_order.pair") || "Pair").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -709,7 +707,7 @@ export default class LimitOrderTableLegacy extends Component {
       return (
         <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
           <div>
-            <span>{this.props.translate("limit_order.status") || "Status"}</span>
+            <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -721,7 +719,7 @@ export default class LimitOrderTableLegacy extends Component {
       )
     } else {
       return (
-        <div>{this.props.translate(`limit_order.${title}`) || title.charAt(0).toUpperCase() + title.slice(1)}</div>
+        <div>{(this.props.translate(`limit_order.${title}`) || title).toUpperCase()}</div>
       )
     }
   }

@@ -432,7 +432,9 @@
     "actual_receive_amount": "Actual receive amount:",
     "estimated_amount": "Estimated amount:",
     "extra_amount": "You got extra amount:",
-    "available_tokens": "Tokens Avaiable for Limit Order"
+    "available_tokens": "Tokens Avaiable for Limit Order",
+    "amount": "amount",
+    "total": "total"
   },
   "home": "Home",
   "tracker": "Tracker",

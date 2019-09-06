@@ -220,7 +220,7 @@ const AccountBalanceLayout = (props) => {
                               <div style={{width: '100%'}}>
                                 <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                                   onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                                  {props.account.address.slice(0,18)}...{props.account.address.slice(-4)}
+                                  {props.account.address.slice(0, 22)}...{props.account.address.slice(-4)}
                                 </a>
                                 <span className="account-balance__reimport" onClick={props.openReImport}>
                                   {props.translate("import.change_address") || "CHANGE"}
