@@ -7,6 +7,7 @@ import { RateBetweenToken } from "../../containers/Exchange";
 import * as converters from "../../utils/converter";
 import { getFormattedDate } from "../../utils/common";
 import { AdvanceAccount } from "../../containers/TransactionCommon";
+import BalancePercentage from "../TransactionCommon/BalancePercentage";
 
 const ExchangeBodyLayout = (props) => {
   const { isOnMobile } = props.global;
@@ -118,11 +119,14 @@ const ExchangeBodyLayout = (props) => {
                     <div>{props.sourceTokenSymbol} Balance</div>
                     <div>{props.addressBalance.roundingValue} {props.sourceTokenSymbol}</div>
                   </div>
-                  <div className={'common__balance theme__text-2'}>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
-                  </div>
+
+                  <BalancePercentage
+                    addressBalance={props.addressBalance.value}
+                    gas={props.exchange.gas}
+                    gasPrice={props.exchange.gasPrice}
+                    sourceTokenSymbol={props.sourceTokenSymbol}
+                    changeSourceAmount={props.changeSourceAmount}
+                  />
                 </div>
               )}
             </div>

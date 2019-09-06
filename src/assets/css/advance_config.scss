@@ -5,6 +5,10 @@
     border-bottom: 1px solid transparent;
     padding-bottom: 15px;
     margin-bottom: 15px;
+
+    &--no-border {
+      border: none;
+    }
   }
 
   &__block {

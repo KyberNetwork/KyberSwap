@@ -14,7 +14,7 @@ export default class AdvanceConfigLayout extends React.Component {
       <SlideDown active={this.props.isAdvanceActive}>
         <SlideDownContent>
           <div className="advance-config theme__text-4">
-            <div className={"advance-config__gas theme__border-2"}>
+            <div className={`advance-config__gas ${this.props.type === 'transfer' ? 'advance-config__gas--no-border' : ''} theme__border-2`}>
               <div className="advance-config__title">{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {

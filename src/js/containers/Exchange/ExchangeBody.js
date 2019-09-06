@@ -15,7 +15,7 @@ import { getTranslate } from 'react-localize-redux'
 import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import { MinRate } from "../Exchange"
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 @connect((store, props) => {
   const ethereum = store.connection.ethereum
@@ -105,8 +105,8 @@ class ExchangeBody extends React.Component {
       return
     }
   }
-  lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
+  lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
   updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
     var path = constants.BASE_HOST +  "/swap/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
@@ -173,27 +173,12 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
   }
 
-  getFormParams = () => {
-    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
-    var sourceBalance =  this.props.tokens[sourceTokenSymbol].balance
-    var sourceDecimal = this.props.tokens[sourceTokenSymbol].decimals
-
-    var destTokenSymbol = this.props.exchange.destTokenSymbol    
-    var destDecimal = this.props.tokens[destTokenSymbol].decimals
-
-    var maxCap = this.props.account.maxCap
-
-    return {sourceTokenSymbol, rateSourceToEth, sourceBalance,  sourceDecimal, destTokenSymbol, destDecimal, maxCap}
-  }
-
   dispatchEstimateGasNormal = () => {
     this.props.dispatch(exchangeActions.estimateGasNormal())
   }
 
   lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)
   lazyEstimateGas = debounce(this.dispatchEstimateGasNormal, 500)
-
 
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
     this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
@@ -368,20 +353,31 @@ class ExchangeBody extends React.Component {
         maxGasPrice={this.props.exchange.maxGasPrice}
       />
     )
-  }
+  };
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
-  }
+  };
 
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService());
     this.props.dispatch(globalActions.acceptConnectWallet());
-  }
+  };
 
   selectTokenBalance = () => {
     this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
-  }
+  };
+
+  getAddressBalance = () => {
+    const token = this.props.tokens[this.props.exchange.sourceTokenSymbol];
+
+    if (!token) return null;
+
+    return {
+      value: converters.toT(token.balance, token.decimals),
+      roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimals))
+    }
+  };
 
   render() {
     var tokenDest = {}
@@ -435,15 +431,6 @@ class ExchangeBody extends React.Component {
       }
     }
 
-    var addressBalance = ""
-    var token = this.props.tokens[this.props.exchange.sourceTokenSymbol]
-    if (token) {
-      addressBalance = {
-        value: converters.toT(token.balance, token.decimals),
-        roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimals))
-      }
-    }
-
     return (
       <ExchangeBodyLayout
         exchange={this.props.exchange}
@@ -451,7 +438,7 @@ class ExchangeBody extends React.Component {
         tokenSourceSelect={tokenSourceSelect}
         tokenDestSelect={tokenDestSelect}
         input={input}
-        addressBalance={addressBalance}
+        addressBalance={this.getAddressBalance()}
         sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
         destTokenSymbol={this.props.exchange.destTokenSymbol}
         translate={this.props.translate}
@@ -468,6 +455,7 @@ class ExchangeBody extends React.Component {
         isAdvanceActive={this.props.exchange.isAdvanceActive}
         toggleAdvanceContent={this.toggleAdvanceContent}
         isOpenAdvance={this.props.exchange.isOpenAdvance}
+        changeSourceAmount={this.changeSourceAmount}
       />
     )
   }

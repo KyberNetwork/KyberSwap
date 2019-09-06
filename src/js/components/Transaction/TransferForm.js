@@ -4,6 +4,7 @@ import { filterInputNumber } from "../../utils/validators";
 import { ImportAccount } from "../../containers/ImportAccount";
 import { AdvanceAccount } from "../../containers/TransactionCommon"
 import { PostTransfer } from "../../containers/Transfer";
+import BalancePercentage from "../TransactionCommon/BalancePercentage";
 
 const TransferForm = (props) => {
   const { isOnMobile } = props.global;
@@ -101,11 +102,14 @@ const TransferForm = (props) => {
                     <div>{props.tokenSymbol} Balance</div>
                     <div>{props.addressBalance.roundingValue} {props.tokenSymbol}</div>
                   </div>
-                  <div className={'common__balance theme__text-2'}>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
-                    <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
-                  </div>
+
+                  <BalancePercentage
+                    addressBalance={props.addressBalance.value}
+                    gas={props.transfer.gas}
+                    gasPrice={props.transfer.gasPrice}
+                    sourceTokenSymbol={props.tokenSymbol}
+                    changeSourceAmount={props.changeSourceAmount}
+                  />
                 </div>
               )}
             </div>
@@ -146,7 +150,7 @@ const TransferForm = (props) => {
                 </div>
               )}
 
-              {props.account !== false && (
+              {(props.account !== false && props.isAdvanceActive) && (
                 <AdvanceAccount
                   advanceLayout={props.advanceLayout}
                   isOpenAdvance={props.isOpenAdvance}

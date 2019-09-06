@@ -1,11 +1,5 @@
-
 import React from "react"
-import * as analytics from "../../utils/analytics"
 import { Modal } from "../CommonElement"
-import ReactTooltip from 'react-tooltip'
-
-
-
 
 const AdvanceAccount = (props) => {
   var getContent = () => {
@@ -36,11 +30,7 @@ const AdvanceAccount = (props) => {
       />
     )
   }
-  var confirmModal = () => {
-    return (
-      <div onClick={(e) => props.clearSession(e)}>Close modal</div>
-    )
-  }
+
   return (
     <div className="exchange-account">
       <div className="exchange-account__wrapper">

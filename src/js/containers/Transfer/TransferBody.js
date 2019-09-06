@@ -52,8 +52,7 @@ class Transfer extends React.Component {
         ReactTooltip.show(document.getElementById("transfer-address-error-trigger"))
       }, 300)
     }
-
-  }
+  };
 
   componentDidUpdate(prevProps) {    
     if (Object.keys(this.props.transfer.errors.sourceAmount).length > Object.keys(prevProps.transfer.errors.sourceAmount).length){      
@@ -69,10 +68,7 @@ class Transfer extends React.Component {
     }
   }
 
-
-
   validateSourceAmount = (value, gasPrice) => {
-    var checkNumber
     if (isNaN(parseFloat(value))) {
       // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
     } else {
@@ -106,8 +102,9 @@ class Transfer extends React.Component {
     this.props.dispatch(transferActions.specifyAddressReceive(value));
   }
 
-  onAmountChange = (event) => {
-    var value = event.target.value
+  onAmountChange = (event, amount) => {
+    var value = amount ? amount : event.target.value;
+
     this.props.dispatch(transferActions.specifyAmountTransfer(value))
     if (this.props.account.account) {
       this.lazyEstimateGas(value)
@@ -154,38 +151,12 @@ class Transfer extends React.Component {
     this.setState({ focus: "" })
   }
 
-  setAmount = () => {
-    var tokenSymbol = this.props.transfer.tokenSymbol
-    var token = this.props.tokens[tokenSymbol]
-    if (token) {
-      var balanceBig = converters.stringToBigNumber(token.balance)
-      if (tokenSymbol === "ETH") {
-        var gasLimit = this.props.transfer.gas
-        var gasPrice = converters.stringToBigNumber(converters.gweiToWei(this.props.transfer.gasPrice))
-        var totalGas = gasPrice.multipliedBy(gasLimit)
-
-        if (!balanceBig.isGreaterThanOrEqualTo(totalGas)) {
-          return false
-        }
-        balanceBig = balanceBig.minus(totalGas)
-      }
-      var balance = balanceBig.div(Math.pow(10, token.decimals)).toString()
-      balance = converters.toPrimitiveNumber(balance)
-      this.props.dispatch(transferActions.specifyAmountTransfer(balance))
-
-      this.onFocus()
-    }
-    this.props.global.analytics.callTrack("trackClickAllIn", "Transfer", tokenSymbol);
-  }
-
   handleErrorQRCode = (err) => {
   }
 
   handleScanQRCode = (data) => {
     this.props.dispatch(transferActions.specifyAddressReceive(data));
   }
-
-
 
   toggleAdvanceContent = () => {
     if (this.props.transfer.isAdvanceActive) {
@@ -200,17 +171,12 @@ class Transfer extends React.Component {
     }
   }
 
-
   specifyGasPrice = (value) => {
     this.props.dispatch(transferActions.specifyGasPrice(value))
 
     if (this.props.account !== false && !this.props.isChangingWallet) {
       this.lazyUpdateValidateSourceAmount(this.props.transfer.amount, value)
     }
-  }
-
-  inputGasPriceHandler = (value) => {
-    this.specifyGasPrice(value)
   }
 
   selectedGasHandler = (value, level, levelString) => {
@@ -236,16 +202,12 @@ class Transfer extends React.Component {
   getBalanceLayout = () => {
     return (
       <AccountBalance
-        // chooseToken={this.chooseToken}
         sourceActive={this.props.transfer.tokenSymbol}
         destTokenSymbol='ETH'
         isBalanceActive={this.props.transfer.isAdvanceActive}
         screen="transfer"
         isOnDAPP={this.props.account.isOnDAPP}
         walletName={this.props.account.walletName}
-        
-        // changeAmount={transferActions.specifyAmountTransfer}
-        // selectTokenBalance={this.selectTokenBalance}
         selectToken={this.selectToken}
       />)
   }
@@ -258,7 +220,6 @@ class Transfer extends React.Component {
     this.props.dispatch(globalActions.clearSession(this.props.transfer.gasPrice));
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
-
 
   acceptTerm = (e) => {
     this.props.dispatch(globalActions.acceptTermOfService());
@@ -274,34 +235,34 @@ class Transfer extends React.Component {
   }
 
   selectToken = (sourceSymbol) => {
-            this.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
+    this.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
-        var sourceBalance = this.props.tokens[sourceSymbol].balance
+    var sourceBalance = this.props.tokens[sourceSymbol].balance
 
 
-        var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-        var amount
+    var sourceDecimal = this.props.tokens[sourceSymbol].decimals
+    var amount
 
-        if (sourceSymbol !== "ETH") {
-            amount = sourceBalance
-            amount = converters.toT(amount, sourceDecimal)
-            amount = amount.replace(",", "")
-        } else {            
-            var gasLimit = this.props.transfer.gas
-            var totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
+    if (sourceSymbol !== "ETH") {
+      amount = sourceBalance
+      amount = converters.toT(amount, sourceDecimal)
+      amount = amount.replace(",", "")
+    } else {
+      var gasLimit = this.props.transfer.gas
+      var totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
 
-            amount = sourceBalance - totalGas * 120 / 100
-            amount = converters.toEther(amount)
-            amount = converters.roundingNumber(amount).toString(10)
-            amount = amount.replace(",", "")
-        }
+      amount = sourceBalance - totalGas * 120 / 100
+      amount = converters.toEther(amount)
+      amount = converters.roundingNumber(amount).toString(10)
+      amount = amount.replace(",", "")
+    }
 
-        if (amount < 0) amount = 0;
+    if (amount < 0) amount = 0;
 
-        this.props.dispatch(transferActions.specifyAmountTransfer(amount))
+    this.props.dispatch(transferActions.specifyAmountTransfer(amount))
 
-        this.selectTokenBalance();
-        this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
+    this.selectTokenBalance();
+    this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
   }
 
   render() {
@@ -382,6 +343,7 @@ class Transfer extends React.Component {
         acceptConnectWallet={this.acceptConnectWallet}
         isOnDAPP={this.props.account.isOnDAPP}
         isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
+        changeSourceAmount={this.onAmountChange}
       />
     )
   }
