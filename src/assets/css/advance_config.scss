@@ -69,6 +69,18 @@
     width: 0;
     height: 0;    
   }
+
+  .__react_component_tooltip{
+    z-index: 1 !important;
+    background-color: #FFCAD1;
+    width: 100% !important;
+    max-width: 200px;
+
+    >div {
+      color: #222;
+      font-size: 11px;
+    }
+  }
   
   &__radio {
     position: absolute;
@@ -126,6 +138,10 @@
     font-weight: 400;
     border-radius: 3px;
     outline: none;
+
+    &-error {
+      border: 1px solid #EE344E !important;
+    }
   }
 
   &__info {

@@ -2,7 +2,8 @@ import React from "react";
 import * as converter from "../../utils/converter";
 import { filterInputNumber } from "../../utils/validators";
 import { connect } from "react-redux"
-import { getTranslate } from 'react-localize-redux'
+import { getTranslate } from 'react-localize-redux';
+import ReactTooltip from 'react-tooltip';
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale)
@@ -14,11 +15,6 @@ import { getTranslate } from 'react-localize-redux'
 })
 
 export default class MinConversionRate extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   onCustomSlippageRateChanged = (event) => {
     if (event.target.value > 100) event.target.value = 100;
 
@@ -31,7 +27,13 @@ export default class MinConversionRate extends React.Component {
 
   onChangeRateOption = (event, isInput) => {
     this.props.onSlippageRateChanged(event, isInput);
-  }
+  };
+
+  showRateInputError = () => {
+    setTimeout(() => {
+      ReactTooltip.show(document.getElementById("rate-input-error-trigger"));
+    }, 300);
+  };
 
   render = () => {
     const percent = Math.round(parseFloat(converter.caculatorPercentageToRate(this.props.minConversionRate, this.props.expectedRate)));
@@ -39,6 +41,10 @@ export default class MinConversionRate extends React.Component {
     const roundExchangeRate = converter.roundingRateNumber(exchangeRate);
     const slippageExchangeRate = converter.roundingRateNumber(exchangeRate * (percent / 100));
     const isError = this.props.customRateInput.isError;
+
+    if (isError) {
+      this.showRateInputError();
+    }
 
     return (
       <div className="advance-config__block">
@@ -75,6 +81,13 @@ export default class MinConversionRate extends React.Component {
               value={this.props.customRateInput.value}
               onChange={this.onCustomSlippageRateChanged}
             />
+
+            <div id="rate-input-error-trigger" className="advance-config__rate-input-error-trigger" data-tip data-event='click focus' data-for="rate-input-error" data-scroll-hide="false"/>
+            {isError &&
+              <ReactTooltip globalEventOff="click" html={true} place="bottom" type="light" id="rate-input-error">
+                {this.props.translate("error.required_field") || "This field is required"}
+              </ReactTooltip>
+            }
           </label>
         </div>
         <div className={"advance-config__info"}>
