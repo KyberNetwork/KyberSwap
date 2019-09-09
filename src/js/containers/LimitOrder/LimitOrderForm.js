@@ -271,10 +271,10 @@ export default class LimitOrderForm extends React.Component {
             <div className={"limit-order-form__available"}>Token Avaiable</div>
             <div className={"limit-order-form__token"}>34,787.098765342 DAI</div>
           </div>
-          <div className={'limit-order-form__balance theme__text-2'}>
-            <div className={'limit-order-form__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
-            <div className={'limit-order-form__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
-            <div className={'limit-order-form__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
+          <div className={'common__balance theme__text-2'}>
+            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
+            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
+            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
           </div>
         </div>
 

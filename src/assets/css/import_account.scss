@@ -13,34 +13,35 @@
     letter-spacing: normal;
     text-align: center;
     margin: 30px 0 20px;
-    &--inactive{
+
+    &--inactive {
       max-width: 550px;
       margin: 0 auto;
       text-align: center;
       margin-bottom: 10px;
       font-size: 13px;
-      &--seperator{
-        width: calc(100% - 35px);
-        margin: 0 auto;
-        border-bottom: 1px solid #e1e4eb;
-      }
-      &--content{
-        width: 230px;
-        position: relative;
-        top: -10px;
-        background-color:#f1f5fb;
-        margin: 0 auto;
-        text-align: center;
-        color: #9ea1aa;
-        font-weight: 500;
-      }
+    }
+
+    &-separator {
+      width: 100%;
+      margin: 0 auto;
+      border-bottom: 1px solid;
+    }
+
+    &-content {
+      font-size: 12px;
+      width: 140px;
+      position: relative;
+      top: -9px;
+      margin: 0 auto;
+      font-weight: 400;
     }
   }
 
   &__content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     max-width: 550px;
     margin: 0 auto;
 
@@ -92,24 +93,6 @@
             color: inherit !important;
           }
         }
-        // @include screen-min-width(large){
-        //   &:hover {
-        //     border-color: #ccc;
-        //     background-color: #fafafa;
-  
-        //     .import-account__name {
-        //       color: #222222;
-        //     }
-        //   }
-        // }
-        // @include screen-max-width(large){
-        //   &:hover {
-        //     background-color: transparent;
-        //     .import-account__name {
-        //       color: inherit;
-        //     }
-        //   }
-        // }
       }
 
       .import-account__block-left {
@@ -171,8 +154,6 @@
 
   &__item {
     width: 160px;
-    border-radius: 3px;
-    background-color: #e7edf5;
     margin: 0 0 12px;
 
     >div {
@@ -376,10 +357,6 @@
     &__wallet-type {
       padding: 5px 10px;
       display: none;
-
-      // &.mobile {
-      //   display: flex;
-      // }
     }
 
     &__wallet-container {
@@ -445,7 +422,6 @@
   }
   .overlap {
     justify-content: center !important;
-    // background-color: #f5f5f5;
     margin-top: 10px;
     padding: 20px 45px 45px;
     border-bottom-left-radius: 10px;
@@ -455,7 +431,6 @@
       padding: 0 35px;
       background: #ef8102;
       font-size: 14px;
-      border-radius: 4px;
       width: 100%;
       max-width: 200px;
       border-radius: 60px;
@@ -506,7 +481,6 @@
 }
 
 .reimport-modal {
-
   &--tiny {
     @media print, screen and (max-width: 40em) {
       top: 40%;
@@ -518,19 +492,19 @@
     }
   }
   
-  .title{
+  .title {
     font-size: 18px !important;
     text-align: center;
-    font-weight: 550;
+    font-weight: 500;
     padding: 20px;
     margin: 0;
   }
+
   .content{
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
     max-width: 250px;
-    margin: 0 auto;
+    margin: 20px auto 0;
     a{
       padding: 10px 35px;
       border-radius: 20px;
