@@ -22,7 +22,7 @@ import LimitOrderExtraTooltip from "./LimitOrderExtraTooltip";
     limitOrder: store.limitOrder
   }
 })
-export default class LimitOrderTableLegacy extends Component {
+export default class LimitOrderTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -969,7 +969,7 @@ export default class LimitOrderTableLegacy extends Component {
   }
 }
 
-LimitOrderTableLegacy.propTypes = {
+LimitOrderTable.propTypes = {
 	data: PropTypes.array,
 	screen: PropTypes.string,
 	openCancelOrderModal: PropTypes.func

@@ -1,14 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import { getTranslate } from 'react-localize-redux'
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as globalActions from "../../actions/globalActions"
 import * as common from "../../utils/common"
 import * as converts from "../../utils/converter"
 import * as constants from "../../services/constants"
 import BLOCKCHAIN_INFO from "../../../../env";
+
 const withSourceAndBalance = (Component) => {
   return connect((store, props) => {
     const account = store.account.account
