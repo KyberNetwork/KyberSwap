@@ -392,11 +392,9 @@ export function stringToNumber(str) {
   return bigNumber.toNumber()
 }
 
-
-
 export function getBigNumberValueByPercentage(number, percentage) {
-  if (percentage == 100) return number
-  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100).toFixed(0);
+  if (percentage === 100) return number
+  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100);
 }
 
 export function stringToHex(number, decimal) {

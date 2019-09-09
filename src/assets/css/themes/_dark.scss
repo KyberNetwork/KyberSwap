@@ -1,6 +1,9 @@
 &.theme--dark {
-  background-color: $dark-background;
   color: $dark-text;
+
+  .theme__text {
+    color: $dark-text
+  }
 
   .theme__text-2 {
     color: $dark-text-2
@@ -56,6 +59,10 @@
 
   .theme__border-2 {
     border-color: $dark-border-2;
+  }
+
+  .theme__border-top {
+    border-top-color: $dark-text;
   }
 
   .theme__button {

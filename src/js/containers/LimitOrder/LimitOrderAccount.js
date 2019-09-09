@@ -2,12 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import { ImportAccount } from "../ImportAccount";
-import { TopBalance, AccountBalance } from "../TransactionCommon";
+import { AccountBalance } from "../TransactionCommon";
 import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { isUserLogin } from "../../utils/common";
 import * as converters from "../../utils/converter";
 import * as constants from "../../services/constants"
 
@@ -169,11 +168,11 @@ export default class LimitOrderAccount extends React.Component {
       return  null
     } else {
       return (
-        <div className={"limit-order-account"} style={{marginTop: "-25px"}}>
+        <div className={"limit-order-account"}>
           <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
-              <div className="advance-close_wrapper"></div>
+              <div className="advance-close_wrapper"/>
             </div>
             <div className="limit-order-account__title">
               <div className="reimport-msg">
