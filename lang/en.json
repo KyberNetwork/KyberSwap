@@ -28,7 +28,7 @@
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
     "download": "Download",
-    "your_wallet": "Your Wallet",
+    "your_wallet": "Wallet",
     "register_beta": "Coming soon",
     "or_connect_with": "Or Connect with",
     "enter": "Enter"
@@ -283,6 +283,7 @@
     "promo_code": "Promocode",
     "cancel": "Cancel",
     "connect_other_wallet": "Connect other wallet",
+    "change_address": "CHANGE",
     "do_you_want_to_connect_other_wallet": "Do you want to connect other Wallet?",
     "yes": "Yes",
     "no": "No"
@@ -387,6 +388,7 @@
     "pair": "Pair",
     "pair_not_supported": "This pair is currently not supported by market",
     "condition": "Condition", 
+    "price": "Price",
     "from": "From",
     "to": "To",
     "status": "Status",
@@ -429,7 +431,10 @@
     "order_history": "Order History",
     "actual_receive_amount": "Actual receive amount:",
     "estimated_amount": "Estimated amount:",
-    "extra_amount": "You got extra amount:"
+    "extra_amount": "You got extra amount:",
+    "available_tokens": "Tokens Avaiable for Limit Order",
+    "amount": "Amount",
+    "total": "Total"
   },
   "home": "Home",
   "tracker": "Tracker",

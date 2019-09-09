@@ -78,7 +78,7 @@
   .theme__button-2 {
     background-color: $dark-background-5;
     border-color: $dark-border;
-
+    color: $dark-text;
     &:hover {
       background-color: $dark-border;
     }
@@ -98,7 +98,7 @@
     };
   }
 
-  .theme__silde-menu{
+  .theme__slide-menu{
     background-color: $dark-background-6;
     color: $dark-text-default;
   }
@@ -122,6 +122,22 @@
         color: #f9566d;
       }
     }
+  }
+  .theme__cancel-button{
+    background-color: $dark-background-5;
+    border-color: $dark-border;
+    color: $dark-text;
+    &:hover{
+      background-color: $dark-border;
+    };
+  }
+  .theme__pagination-selected{
+    background-color: $dark-background-5;
+    border-color: $dark-border;
+    color: $dark-text;
+    &:hover{
+      background-color: $dark-border;
+    };
   }
 }
 

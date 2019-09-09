@@ -49,9 +49,10 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
-      headerClassName: "cell-flex-start-header cell-date-header",
-      className: "cell-flex-start cell-text-small",
+      headerClassName: "cell-flex-start-header cell-date-header theme__background theme__text-3",
+      className: "cell-flex-start cell-text-small theme__text-4",
       maxWidth: 80,
+      lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
           onClick: (e) => {
@@ -60,57 +61,66 @@ export default class LimitOrderTable extends Component {
         }
       }
     }, {
-      id: "address",
-      Header: this.getHeader("address"),
-      accessor: item => item,
-      Cell: props => this.getAddressCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header",
-      className: "cell-flex-start cell-text-small",
-      width: 85,
-    }, {
       id: "condition",
       Header: this.getHeader("condition"),
       accessor: item => item,
       Cell: props => this.getConditionCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header",
-      className: "cell-flex-start cell-condition",
-      width: 165
+      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      className: "cell-flex-start cell-condition theme__text-4",
+      width: 100
+    }, {
+      id: "price",
+      Header: this.getHeader("price"),
+      accessor: item => item,
+      Cell: props => this.getPriceCell(props.value),
+      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      className: "cell-flex-start cell-condition theme__text-4",
+      width: 85
     }, {
       id: "from",
-      Header: this.getHeader("from"),
+      Header: this.getHeader("amount"),
       accessor: item => ({ source: item.source, sourceAmount: item.src_amount }),
       Cell: props => this.getFromCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-from",
+      headerClassName: "cell-flex-start-header theme__background theme__text-3",
+      className: "cell-flex-start cell-from theme__text-4",
     }, {
       id: "to",
-      Header: this.getHeader("to"),
+      Header: this.getHeader("total"),
       accessor: item => item,
       Cell: props => this.getToCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-to",
+      headerClassName: "cell-flex-start-header theme__background theme__text-3",
+      className: "cell-flex-start cell-to theme__text-4",
       width: 125
     }, {
       id: "fee",
       Header: this.getHeader("fee"),
       accessor: item => item,
       Cell: props => this.getFeeCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-to cell-text-small",
+      headerClassName: "cell-flex-start-header theme__background theme__text-3",
+      className: "cell-flex-start cell-to cell-text-small theme__text-4",
       width: 100
+    }, {
+      id: "address",
+      Header: this.getHeader("address"),
+      accessor: item => item,
+      Cell: props => this.getAddressCell(props.value),
+      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      className: "cell-flex-start cell-text-small theme__text-4",
+      width: 85,
     }, {
       id: "status",
       Header: this.getHeader("status"),
       accessor: item => item,
       Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-center-header cell-status-header",
-      className: "cell-flex-center",
+      headerClassName: "cell-flex-center-header cell-status-header theme__background theme__text-3",
+      className: "cell-flex-center theme__text-4",
       width: 130
     }, {
       id: "actions",
       Header: this.getHeader("actions"),
       accessor: item => item,
       Cell: props => this.getActionCell(props.value),
+      headerClassName: "theme__background theme__text-3",
       maxWidth: 80
 		}, {
       expander: true,
@@ -125,14 +135,14 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("condition"),
       accessor: item => item,
       Cell: props => this.getConditionCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header",
+      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition",
     }, {
       id: "status",
       Header: this.getHeader("status"),
       accessor: item => item,
       Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-end-header cell-status-header",
+      headerClassName: "cell-flex-end-header cell-status-header theme__background theme__text-3",
       className: "cell-flex-end",
       maxWidth: 130 
     }, {
@@ -193,13 +203,34 @@ export default class LimitOrderTable extends Component {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
-          <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
+          <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()}`}</div>
           {this.getAddressCell(props)}
         </div>
       )
     }
     return (
-      <div>{source.toUpperCase()}/{dest.toUpperCase()} >= <span title={min_rate}>{rate}</span></div>
+      <div>{source.toUpperCase()}/{dest.toUpperCase()}</div>
+    )
+  }
+
+  getPriceCell = (props) => {
+    const { status, updated_at, min_rate } = props;
+    const { screen } = this.props;
+
+    const datetime = updated_at;
+    const rate = displayNumberWithDot(min_rate, 9);
+
+    if (screen === "mobile") {
+      return (
+        <div className="cell-pair__mobile">
+          {this.getDateCell(props)}
+          <div className="cell-pair__mobile--rate">{`${rate}`}</div>
+          {this.getAddressCell(props)}
+        </div>
+      )
+    }
+    return (
+      <div> <span title={min_rate}>{rate}</span></div>
     )
   }
 
@@ -209,7 +240,6 @@ export default class LimitOrderTable extends Component {
     return (
       <div>
         <span class="from-number-cell">{amount}</span>{' '}
-        <span>{source.toUpperCase()}</span>
       </div>
     )
   }
@@ -230,10 +260,9 @@ export default class LimitOrderTable extends Component {
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
-        <span>{dest.toUpperCase()}</span>{' '}
         {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
           <div className="to-number-cell--extra-wrapper">
-            <span className="to-number-cell--extra" 
+            <span className="to-number-cell--extra theme__button-2" 
               onClick={e => this.toggleExtraModal(id)}>
               {this.props.translate("extra") || "extra"}
             </span>
@@ -301,8 +330,8 @@ export default class LimitOrderTable extends Component {
 
     return (
       <div className="cell-action">
-        {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
+        {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
+        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
           {/* <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a> */}
           {this.props.translate("limit_order.view_tx") || "View tx"}
         </button>}
@@ -466,7 +495,7 @@ export default class LimitOrderTable extends Component {
     });
 
     return (
-      <div className="pair-filter-modal">
+      <div className="pair-filter-modal theme__background theme__text-3">
         <div className="pair-filter-modal__advance">
           {renderedPair}
         </div>
@@ -528,7 +557,7 @@ export default class LimitOrderTable extends Component {
     });
 
     return (
-      <div className="status-filter-modal" >
+      <div className="status-filter-modal theme__background theme__text-3" >
         {renderedStatus}
       </div>
     )
@@ -578,7 +607,7 @@ export default class LimitOrderTable extends Component {
     });
 
     return (
-      <div className="address-filter-modal">
+      <div className="address-filter-modal theme__background theme__text-3">
         {renderedComp}
       </div>
     )
@@ -641,7 +670,7 @@ export default class LimitOrderTable extends Component {
     if (title === "date") {
       return (
         <div>
-          <span>{this.props.translate("limit_order.date") || "Date"}</span>
+          <span>{(this.props.translate("limit_order.date") || "Date").toUpperCase()}</span>
           {this.props.limitOrder.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
           {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
@@ -650,7 +679,7 @@ export default class LimitOrderTable extends Component {
       return (
         <Dropdown active={this.state.addressFilterVisible} onHide={e => this.togglingAddressFilter()}>
           <div>
-            <span>{this.props.translate("address.address") || "Address"}</span>
+            <span>{(this.props.translate("address.address") || "Address").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -664,7 +693,7 @@ export default class LimitOrderTable extends Component {
       return (
         <Dropdown active={this.state.conditionFilterVisible} onHide={e => this.togglingConditionFilter()}>
           <div>
-            <span>{this.props.translate("limit_order.condition") || "Condition"}</span>
+            <span>{(this.props.translate("limit_order.pair") || "Pair").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -678,7 +707,7 @@ export default class LimitOrderTable extends Component {
       return (
         <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
           <div>
-            <span>{this.props.translate("limit_order.status") || "Status"}</span>
+            <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
             <div className="drop-down">
               <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
             </div>
@@ -690,7 +719,7 @@ export default class LimitOrderTable extends Component {
       )
     } else {
       return (
-        <div>{this.props.translate(`limit_order.${title}`) || title.charAt(0).toUpperCase() + title.slice(1)}</div>
+        <div>{(this.props.translate(`limit_order.${title}`) || title).toUpperCase()}</div>
       )
     }
   }

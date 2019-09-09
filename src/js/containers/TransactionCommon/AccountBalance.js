@@ -191,6 +191,7 @@ export default class AccountBalance extends React.Component {
         isLimitOrderTab={this.props.isLimitOrderTab}
         getFilteredTokens={this.props.getFilteredTokens}
         onSort={this.onSort}
+        openReImport={this.props.openReImport}
       />
     )
   }

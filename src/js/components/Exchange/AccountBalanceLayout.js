@@ -86,8 +86,8 @@ const AccountBalanceLayout = (props) => {
               <div className="account-balance__token-balance theme__text-3">{converts.roundingNumber(balance)}</div>
             </div>
             <div id="stable-equivalent">{
-              props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rate), false, 6)} <h6 style={{display: 'inline-block'}}>E</h6></span>) :
-                (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} <h6 style={{display: 'inline-block'}}>$</h6></span>)
+              props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rate), false, 6)} E</span>) :
+                (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
             }</div>
           </div>
         )
@@ -132,15 +132,20 @@ const AccountBalanceLayout = (props) => {
                 <div>
                   <div className={"account-balance__address"}>
                     <div>
-                      <span className="account-balance__address-text theme__text-label-bold">{props.translate("address.your_wallet") || "Wallet"}</span>
-                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
+                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</span>
                     </div>
                   </div>
-                  <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                     onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                    {props.account.address}
-                  </a>
+                  <div>
+                    <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                      onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
+                      {props.account.address.slice(0, 22)}...{props.account.address.slice(-4)}
+                    </a>
+                    <span className="account-balance__reimport" onClick={props.openReImport}>
+                      {props.translate("import.change_address") || "CHANGE"}
+                    </span>
+                  </div>
                 </div>
+
               </div>
             </div>
 
