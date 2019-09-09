@@ -182,28 +182,6 @@ const AccountBalanceLayout = (props) => {
     <div className="account-balance">
       {props.account !== false && (
         <SlideDown active={props.isBalanceActive}>
-          {/* <SlideDownTrigger onToggleContent={() => props.toggleBalanceContent()}>
-            <div className="balance-header">
-
-              <div className="slide-down__trigger-container">
-                <div>
-                  <div className={"account-balance__address"}>
-                    <div>
-                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Your Wallet"}</span>
-                      {!props.isOnDAPP && <span className={"account-balance__wallet-name"}><span>-</span>{getWalletName()}</span>}
-                    </div>
-                    <div className="slide-arrow-container">
-                      <div className="slide-arrow"></div>
-                    </div>
-                  </div>
-                  <a className="account-balance__address-link" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                    onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan");   e.stopPropagation(); }}>
-                    {props.account.address}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </SlideDownTrigger> */}
           <SlideDownContent>
             <div className="balance-header">
 
