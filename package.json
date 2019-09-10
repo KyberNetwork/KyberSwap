@@ -123,6 +123,7 @@
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=dev --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
+    "build_ieo_dev": "NODE_ENV=dev node webpack-wrapper-dashboard.js",
     "build_ieo_ropsten": "NODE_ENV=ropsten node webpack-wrapper-dashboard.js",
     "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js",
     "build_ieo_rinkeby": "NODE_ENV=rinkeby node webpack-wrapper-dashboard.js",

@@ -179,8 +179,7 @@
             "name": "AdEx",
             "address": "0x4470bb87d77b963a013db939be332f927f2b992e",
             "decimals": 4,
-            "cg_id": "adex",
-            "delist_time": 1566219600
+            "cg_id": "adex"
         },
         "AST": {
             "symbol": "AST",
@@ -195,8 +194,7 @@
             "name": "Ripio Credit Network",
             "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
             "decimals": 18,
-            "cg_id": "ripio-credit-network",
-            "delist_time": 1566219600
+            "cg_id": "ripio-credit-network"
         },
         "LINK": {
             "symbol": "LINK",
@@ -214,7 +212,8 @@
             "cg_id": "digix-gold",
             "gasLimit": "750000",
             "gasApprove": 120000,
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "STORM": {
             "symbol": "STORM",
@@ -358,8 +357,7 @@
             "name": "WINGS",
             "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
             "decimals": 18,
-            "cg_id": "wings",
-            "delist_time": 1566219600
+            "cg_id": "wings"
         },
         "MTL": {
             "symbol": "MTL",
@@ -373,8 +371,7 @@
             "name": "WaBi",
             "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
             "decimals": 18,
-            "cg_id": "wabi",
-            "delist_time": 1566219600
+            "cg_id": "wabi"
         },
         "COFI": {
             "symbol": "COFI",
@@ -460,8 +457,7 @@
             "address": "0x624d520bab2e4ad83935fa503fb130614374e850",
             "decimals": 4,
             "cg_id": "smartshare",
-            "listing_time": 1542027600,
-            "delist_time": 1566219600
+            "listing_time": 1542027600
         },
         "PRO": {
             "symbol": "PRO",
@@ -470,7 +466,6 @@
             "decimals": 8,
             "cg_id": "propy",
             "listing_time": 1542027600,
-            "delist_time": 1566219600,
             "gasLimit": "500000",
             "gasApprove": 300000
         },
@@ -480,8 +475,7 @@
             "address": "0x4092678e4e78230f46a1534c0fbc8fa39780892b",
             "decimals": 18,
             "cg_id": "odyssey",
-            "listing_time": 1542027600,
-            "delist_time": 1566219600
+            "listing_time": 1542027600
         },
         "EKO": {
             "symbol": "EKO",
@@ -705,8 +699,7 @@
             "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
             "decimals": 6,
             "cg_id": "tether",
-            "listing_time": 1565960400,
-            "sp_limit_order": true
+            "listing_time": 1565960400
         },
         "SNX": {
             "symbol": "SNX",

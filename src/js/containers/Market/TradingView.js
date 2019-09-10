@@ -79,28 +79,28 @@ export default class TradingView extends React.Component {
 	getTimeFrame = (interval) => {
 		switch(interval) {
 			case '5':
-				return 6 * 3600
+				return 12 * 3600
 				break 
 			case '15':
-				return 6 * 3 * 3600
+				return 12 * 3 * 3600
 				break 
 			case '30':
-				return 6 * 6 * 3600
+				return 12 * 6 * 3600
 				break 
 			case '60':
-				return 6 * 12 * 3600
+				return 12 * 12 * 3600
 				break 
 			case '120':
-				return 6 * 24 * 3600
+				return 12 * 24 * 3600
 				break 
 			case '240':
-				return 6 * 48 * 3600
+				return 12 * 48 * 3600
 				break 
 			case '360':
-				return 6 * 72 * 3600
+				return 12 * 72 * 3600
 				break 
 			case '720':
-				return 6 * 144 * 3600
+				return 12 * 144 * 3600
 				break 			
 		}
 		return '4D'
