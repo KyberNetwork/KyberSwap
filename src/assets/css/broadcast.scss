@@ -240,7 +240,7 @@ ul.broadcast-steps {
   text-align: center;
   padding: 30px 48px 60px 48px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 
   &--error {
@@ -252,7 +252,7 @@ ul.broadcast-steps {
     width: 100%;
     text-transform: capitalize;
     padding: 10px;
-    border-radius: 23px;
+    border-radius: 3px;
     font-size: 14px;
     font-weight: 600;
 
@@ -273,8 +273,9 @@ ul.broadcast-steps {
   }
 
   .change-path {
-    border: 1px solid #ef8102;
-    color: #ef8102;
+    background-color: #a2a7b2;
+    color: white;
+    margin-right: 20px;
   }
 
   @include screen-max-width(medium) {
