@@ -6,117 +6,138 @@ import { filterInputNumber } from "../../utils/validators";
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as constants from "../../services/constants"
 import { debounce } from 'underscore';
-import { LimitOrderCompareRate, LimitOrderSubmit } from "../LimitOrder";
+import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
 import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
+import EthereumService from "../../services/ethereum/ethereum";
 
 @connect((store, props) => {
-  const account = store.account.account
-  const translate = getTranslate(store.locale)
-  const tokens = store.tokens.tokens
-  const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum
-  const sourceToken = tokens[limitOrder.sourceTokenSymbol]
-  const destToken = tokens[limitOrder.destTokenSymbol]
+  const account = store.account.account;
+  const translate = getTranslate(store.locale);
+  const tokens = store.tokens.tokens;
+  const limitOrder = store.limitOrder;
+  const ethereum = store.connection.ethereum;
+  const modifiedTokens = props.availableBalanceTokens();
+  const sourceToken = modifiedTokens.find(token => token.symbol === limitOrder.sourceTokenSymbol);
+  const destToken = modifiedTokens.find(token => token.symbol === limitOrder.destTokenSymbol);
 
   return {
     translate, limitOrder, tokens, account, ethereum,
-    global: store.global, sourceToken, destToken
+    global: store.global, sourceToken, destToken, modifiedTokens
   }
 })
 
 export default class LimitOrderForm extends React.Component {
-  getEthereumInstance = () => {
-    var ethereum = this.props.ethereum
-    if (!ethereum){
-      ethereum = new EthereumService()
+  lazyFetchRate = debounce(this.fetchCurrentRate, 500);
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formType: 'buy'
     }
-    return ethereum
   }
+
+  componentDidMount = () => {
+    this.props.dispatch(limitOrderActions.changeQuotePair(this.props.limitOrder.destTokenSymbol))
+  };
+
+  setFormType = (type) => {
+    this.props.dispatch(limitOrderActions.changeFormType(
+      this.props.sourceToken,
+      this.props.destToken
+    ));
+
+    this.setState({ formType: type });
+  };
+
+  getEthereumInstance = () => {
+    let ethereum = this.props.ethereum;
+
+    if (!ethereum) ethereum = new EthereumService();
+
+    return ethereum
+  };
 
   fetchCurrentRate = (sourceAmount) => {
-    var sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol
-    var sourceToken = this.props.limitOrder.sourceToken
-    var destTokenSymbol = this.props.limitOrder.destTokenSymbol
-    var destToken = this.props.limitOrder.destToken
+    const sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const sourceToken = this.props.limitOrder.sourceToken;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
+    const destToken = this.props.limitOrder.destToken;
+    const isManual = true;
+    const ethereum = this.getEthereumInstance();
 
-    var isManual = true
-
-    var ethereum = this.getEthereumInstance()
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
-    
-  }
-
-  lazyFetchRate = debounce(this.fetchCurrentRate, 500)
+  };
 
   handleFocus = (e, type) => {
     this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);
-  }
+  };
 
   handleInputChange = (e, type, referValue) => {
-    var value = e.target.value
-    var check = filterInputNumber(e, value, referValue)
-    if (check) {     
-      if (value < 0) return
+    const value = e.target.value;
+    const check = filterInputNumber(e, value, referValue);
+
+    if (check) {
+      if (value < 0) return;
+
       this.props.dispatch(limitOrderActions.inputChange(type, e.target.value, this.props.sourceToken.decimals, this.props.destToken.decimals));
       
-      if (type === "source"){
-        this.lazyFetchRate(value)
-      }
+      if (type === "source") this.lazyFetchRate(value);
     }
   };
 
   getMaxGasApprove = () => {
-    var tokens = this.props.tokens
-    var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
+    const tokens = this.props.tokens;
+    const sourceSymbol = this.props.limitOrder.sourceTokenSymbol;
+
     if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
       return tokens[sourceSymbol].gasApprove
     } else {
       return this.props.limitOrder.max_gas_approve
     }
-  }
+  };
 
   getMaxGasExchange = () => {
-    const tokens = this.props.tokens
-    var destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
-    var destTokenLimit = tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas
+    const tokens = this.props.tokens;
+    const destTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken;
 
-    return destTokenLimit;
+    return tokens[destTokenSymbol] && tokens[destTokenSymbol].gasLimit ? tokens[destTokenSymbol].gasLimit : this.props.limitOrder.max_gas;
+  };
 
-  }
+  calculateMaxFee = () => {
+    const gasApprove = this.getMaxGasApprove();
+    const gasExchange = this.getMaxGasExchange();
+    const totalGas = gasExchange + gasApprove * 2;
 
-  calcualteMaxFee = () => {
-    var gasApprove = this.getMaxGasApprove()
-    var gasExchange = this.getMaxGasExchange()
-    var totalGas = gasExchange + gasApprove * 2 
-
-    var totalFee = converters.totalFee(this.props.limitOrder.gasPrice, totalGas)    
-    return totalFee
-  }
+    return converters.totalFee(this.props.limitOrder.gasPrice, totalGas);
+  };
 
   addSrcAmountByBalancePercentage = (balancePercentage) => {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol;
-    const srcToken = this.props.availableBalanceTokens.find(token => {
-      return token.symbol === srcTokenSymbol;
-    });
-
-    var srcTokenBalance = srcToken.balance;
-    let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcTokenBalance, balancePercentage);
+    const srcToken = this.props.modifiedTokens.find(token => token.symbol === srcTokenSymbol);
+    let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(srcToken.balance, balancePercentage);
 
     if (srcTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken && balancePercentage === 100){
-      var ethBalance = this.props.tokens["ETH"].balance
-      var fee = this.calcualteMaxFee()
-      if(converters.compareTwoNumber(ethBalance, fee) === 1){
+      const ethBalance = this.props.tokens["ETH"].balance;
+      const fee = this.calculateMaxFee();
+
+      if (converters.compareTwoNumber(ethBalance, fee) === 1) {
         sourceAmountByPercentage = converters.subOfTwoNumber(sourceAmountByPercentage, fee)
-      }else{
+      } else {
         sourceAmountByPercentage = converters.subOfTwoNumber(sourceAmountByPercentage, ethBalance)
       }
     }
 
-    if (converters.compareTwoNumber(sourceAmountByPercentage, 0) == -1) sourceAmountByPercentage = 0    
+    if (converters.compareTwoNumber(sourceAmountByPercentage, 0) === -1) sourceAmountByPercentage = 0;
 
-    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceAmountByPercentage, srcToken.decimals), this.props.sourceToken.decimals, this.props.destToken.decimals));
+    this.props.dispatch(limitOrderActions.inputChange(
+      'source',
+      converters.toT(sourceAmountByPercentage, srcToken.decimals),
+      this.props.sourceToken.decimals,
+      this.props.destToken.decimals
+    ));
   };
 
   closeRateWarningTooltip = () => {
@@ -127,7 +148,7 @@ export default class LimitOrderForm extends React.Component {
     }
 
     this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-  }
+  };
 
   toggleAgreeSubmit = () => {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
@@ -138,7 +159,7 @@ export default class LimitOrderForm extends React.Component {
 
     this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
     this.props.dispatch(limitOrderActions.setAgreeForceSubmit(!isAgreeForceSubmit));
-  }
+  };
 
   getListWarningOrdersComp = () => {
     if (!this.props.account) return null;
@@ -157,7 +178,7 @@ export default class LimitOrderForm extends React.Component {
       higherRateOrders = this.props.limitOrder.relatedOrders;
     }
 
-    const tableComp = higherRateOrders.map(item => {
+    return higherRateOrders.map(item => {
       const datetime = common.getFormattedDate(item.updated_at);
       const rate = converters.displayNumberWithDot(item.min_rate, 9);
       return (
@@ -167,14 +188,18 @@ export default class LimitOrderForm extends React.Component {
         </div>
       );
     });
+  };
 
-    return tableComp;
-  }
-
-  resetToMarketRate = (e) => {
+  resetToMarketRate = () => {
     const expectedRate = converters.toT(this.props.limitOrder.offeredRate);
-    this.props.dispatch(limitOrderActions.inputChange("rate", converters.roundingRateNumber(expectedRate), this.props.sourceToken.decimals, this.props.destToken.decimals));
-  }
+
+    this.props.dispatch(limitOrderActions.inputChange(
+      "rate",
+      converters.roundingRateNumber(expectedRate),
+      this.props.sourceToken.decimals,
+      this.props.destToken.decimals
+    ));
+  };
 
   getRateWarningTooltip = () => {
     if (!this.props.account) return null;
@@ -205,23 +230,34 @@ export default class LimitOrderForm extends React.Component {
               checked={this.props.limitOrder.isAgreeForceSubmit}
               className="rate-warning-tooltip__confirm--checkbox"
               onChange={e => this.toggleAgreeSubmit()}/>
-            <span className="rate-warning-tooltip__confirm--checkmark"></span>
+            <span className="rate-warning-tooltip__confirm--checkmark"/>
           </label>
         </div>
       </div>
     );
-  }
+  };
 
   render() {
+    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
+
     return (
       <div className={"limit-order-form theme__background-2"}>
         <div className={"limit-order-form__header theme__border-2"}>
-          <div className={"limit-order-form__tab limit-order-form__tab--active"}>Buy OMG</div>
-          <div className={"limit-order-form__tab"}>Sell OMG</div>
+          <div
+            className={`limit-order-form__tab ${this.state.formType === 'buy' ? 'limit-order-form__tab--active' : ''}`}
+            onClick={() => this.setFormType('buy')}>
+              Buy {this.props.limitOrder.currentQuotePair}
+          </div>
+          <div
+            className={`limit-order-form__tab ${this.state.formType === 'sell' ? 'limit-order-form__tab--active' : ''}`}
+            onClick={() => this.setFormType('sell')}>
+              Sell {this.props.limitOrder.currentQuotePair}
+          </div>
         </div>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__background-3"} onClick={e => this.resetToMarketRate()}>Price</div>
+          <div className={"limit-order-form__tag theme__background-3"} onClick={this.resetToMarketRate}>Price</div>
           <input
             className={"limit-order-form__input theme__text-2"}
             step="0.000001"
@@ -230,13 +266,14 @@ export default class LimitOrderForm extends React.Component {
             type={this.props.global.isOnMobile ? "number" : "text"}
             maxLength="50"
             autoComplete="off"
-            value={this.props.limitOrder.triggerRate}
+            value={this.props.limitOrder.isFetchingRate ? 'Loading...' : this.props.limitOrder.triggerRate}
             onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
             onFocus={e => this.handleFocus(e, "rate")}
+            disabled={this.props.limitOrder.isFetchingRate}
           />
-          <div className={"limit-order-form__symbol theme__text-3"}>DAI</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{srcTokenSymbol}</div>
 
-          {this.props.global.isOnMobile == true &&
+          {this.props.global.isOnMobile &&
             <RateWarningModal
               isOpen={this.props.limitOrder.errors.rateWarning !== ""}
               getListWarningOrdersComp={this.getListWarningOrdersComp}
@@ -247,7 +284,17 @@ export default class LimitOrderForm extends React.Component {
           }
         </div>
 
-        <div className={"limit-order-form__prefer-rate theme__text-4"}>Your preferred rate is <span>15%</span> higher than Market rate.</div>
+        <div className={"exchange__error"}>
+          {this.props.limitOrder.errors.triggerRate.map((value, index) => {
+            return <span className="exchange__error-item" key={index}>{value}</span>
+          })}
+
+          {this.props.limitOrder.errors.rateSystem &&
+            <div className={"exchange__error-item"}>{this.props.limitOrder.errors.rateSystem}</div>
+          }
+        </div>
+
+        <LimitOrderCompareRate/>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__background-3"}>Amount</div>
@@ -263,34 +310,40 @@ export default class LimitOrderForm extends React.Component {
             onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
             onFocus={e => this.handleFocus(e, "dest")}
           />
-          <div className={"limit-order-form__symbol theme__text-3"}>OMG</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{destTokenSymbol}</div>
         </div>
 
-        <div className={"limit-order-form__balance-container"}>
-          <div className={"theme__text-4"}>
-            <div className={"limit-order-form__available"}>Token Avaiable</div>
-            <div className={"limit-order-form__token"}>34,787.098765342 DAI</div>
+        <div className={"exchange__error"}>
+          {this.props.limitOrder.errors.sourceAmount.map((value, index) => {
+            return <div className="exchange__error-item" key={index}>{value}</div>
+          })}
+        </div>
+
+        {this.props.account &&
+          <div className={"limit-order-form__balance-container"}>
+            <div className={"theme__text-4"}>
+              <div className={"limit-order-form__available"}>Available Balance</div>
+              <div className={"limit-order-form__token"}>{converters.formatNumber(converters.toT(this.props.sourceToken.balance, this.props.sourceToken.decimals), 6)} {srcTokenSymbol}</div>
+            </div>
+            <div className={'common__balance theme__text-2'}>
+              <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
+              <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
+              <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
+            </div>
           </div>
-          <div className={'common__balance theme__text-2'}>
-            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(25)}>25%</div>
-            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(50)}>50%</div>
-            <div className={'common__balance-item theme__button-2'} onClick={() => this.addSrcAmountByBalancePercentage(100)}>100%</div>
-          </div>
-        </div>
+        }
 
-        <div className={"limit-order-form__fee theme__text-4 theme__border-2"}>Fee: 10.2240005 KNC</div>
-
-        <div className={"limit-order-form__total"}>
-          <span className={"theme__text-4"}>Total</span> <span className={"theme__text-5"}>308.41594 DAI</span>
-        </div>
+        <LimitOrderFee/>
 
         <LimitOrderSubmit
-          availableBalanceTokens={this.props.availableBalanceTokens}
+          availableBalanceTokens={this.props.modifiedTokens}
           getOpenOrderAmount={this.props.getOpenOrderAmount}
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {/*<LimitOrderCompareRate/>*/}
+        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile &&
+          this.getRateWarningTooltip()
+        }
       </div>
     )
   }

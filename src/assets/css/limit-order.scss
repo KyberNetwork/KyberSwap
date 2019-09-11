@@ -617,62 +617,62 @@
 }
 
 .limit-order-fee {
-  margin: 0 25px;
-  border-top: 1px solid #e1e4eb;
-  padding-top: 15px;
-  font-size: 12px;
-  color: #666666;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 20px;
 
-  &__item {
-    display: flex;
-    position: relative;
-    margin-bottom: 3px;
-    align-items: flex-start;
-
-    &-title {
-      width: 100px;
-    }
-
-    &-value {
-      width: calc(100% - 170px);
-    }
-
-    &-link {
-      font-size: 11px;
-      font-weight: 500;
-      color: #666666 !important;
-      text-decoration: underline;
-      width: 70px;
-      position: absolute;
-      top: -2px;
-      right: 0;
-      text-align: right;
-      transition: color .3s;
-
-      &:hover {
-        color: $swap-color !important;
-      }
-    }
-  }
-
-  &__info {
-    margin-top: 15px;
+  &__content {
+    margin-bottom: 20px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid;
   }
 
   &__net {
-    color: #222222 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .slide-down--active {
+    .limit-order-fee__slide-content {
+      padding: 10px 0 5px 40px;
+    }
+  }
+
+  &__slide-content {
+    margin-top: 0;
+  }
+
+  &__line-through-text {
+    font-size: 12px;
+    text-decoration: line-through;
+    margin-right: 15px;
   }
 
   &__discount {
-    // display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: $text-orange;
+    padding: 7px 22px;
     border-radius: 14px;
-    background-color: #ffffff;
-    font-size: 11px;
-    font-weight: 600;
-    color: #ef8102;
-    padding: 2px 8px;
-    margin-left: 5px;
+  }
+
+  &__info {
+    margin-top: 20px;
+    line-height: 1.5;
+    font-size: 12px;
+  }
+
+  &__total {
+    font-weight: 400;
+    font-size: 18px;
+    word-break: break-word;
+    line-height: 1.5;
+
+    span:first-child {
+      margin-right: 5px;
+      font-size: 14px;
+    }
   }
 }
 
@@ -1862,6 +1862,16 @@
       width: 400px;
     }
   }
+
+  &__percent {
+    &--positive {
+      color: $text-green;
+    }
+
+    &--negative {
+      color: $error-color;
+    }
+  }
 }
 
 .limit-order-form {
@@ -1939,10 +1949,6 @@
   &__prefer-rate {
     font-size: 12px;
     margin: 10px 0 15px;
-
-    span {
-      color: $text-green;
-    }
   }
 
   &__balance-container {
@@ -1960,23 +1966,6 @@
   &__token {
     font-size: 14px;
     font-weight: 400;
-  }
-
-  &__fee {
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 15px;
-    padding-bottom: 7px;
-    border-bottom: 1px solid;
-  }
-
-  &__total {
-    font-weight: 400;
-    font-size: 18px;
-
-    span {
-      font-size: 14px;
-    }
   }
 }
 
@@ -1996,9 +1985,14 @@
     transition: all 0.3s;
     cursor: pointer;
 
-    &.waiting {
+    &.waiting,
+    &.disabled {
       pointer-events: none;
       cursor: initial;
+    }
+
+    &.disabled {
+      opacity: 0.7;
     }
 
     &:active {

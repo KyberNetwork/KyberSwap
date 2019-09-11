@@ -395,12 +395,12 @@ export default class LimitOrderSubmit extends React.Component {
 
   render() {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
-    var isDisable = (isUserLogin() && this.props.account == false) || (isDisableSubmit && !isAgreeForceSubmit);
-    var isWaiting = this.props.limitOrder.isSelectToken || this.props.limitOrder.errors.triggerRate.length > 0;
+    const isDisable = (isUserLogin() && !this.props.account) || (isDisableSubmit && !isAgreeForceSubmit);
+    const isWaiting = this.props.limitOrder.isSelectToken;
 
     return (
       <div className={"limit-order-submit"}>
-        <div className={`limit-order-submit__accept-button theme__button ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
+        <div className={`limit-order-submit__accept-button theme__button ${isDisable ? 'disabled' : ''} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
           Submit Order
         </div>
 

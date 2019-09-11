@@ -85,7 +85,7 @@ const ImportByPKeyView = (props) => {
                 </div>
               </div>
             </div>
-            <div className="overlap">
+            <div className="overlap overlap--single">
               <button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
             </div>
 
