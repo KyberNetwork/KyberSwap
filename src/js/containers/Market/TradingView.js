@@ -24,7 +24,7 @@ export default class TradingView extends React.Component {
 
 	static defaultProps = {
 		//	symbol: this.props.selectedSymbol,
-		interval: '60',
+		interval: '5',
 		locale: 'en',
 		containerId: 'tv_chart_container',
 		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
