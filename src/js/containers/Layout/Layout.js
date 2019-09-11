@@ -2,13 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
-import { LimitOrder } from "../../containers/LimitOrder"
-// import { Header } from "../../containers/Header"
+import { LimitOrder, LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
 import { ExchangeHistory } from "../../containers/CommonElements/"
-import {Market} from "../Market"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics } from "../../actions/globalActions"
+import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { createNewConnectionInstance } from "../../actions/connectionActions"
 import { throttle } from 'underscore';
@@ -21,7 +19,6 @@ import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
-  // console.log("locale: ", store.locale)
   var locale = store.locale
   var code
   if(Array.isArray(locale.languages)) {
@@ -60,7 +57,8 @@ import BLOCKCHAIN_INFO from "../../../../env";
     locale: locale,
     tokens: store.tokens.tokens,
     analytics: store.global.analytics,
-    langClass: langClass
+    langClass: langClass,
+    theme: store.global.theme
   }
 })
 
@@ -71,6 +69,7 @@ export default class Layout extends React.Component {
     this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
     this.intervalIdle = null;
+    this.LimitOrderAccount = withSourceAndBalance(<LimitOrderAccount />)
   }
 
   componentWillMount() {
@@ -96,6 +95,15 @@ export default class Layout extends React.Component {
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
     }
+
+    if (window.kyberBus) {
+      window.kyberBus.on("swap.switch_theme", this.switchTheme.bind(this));
+    }
+  }
+
+  switchTheme = () => {
+    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
+    this.props.dispatch(switchTheme(theme));
   }
 
   handleCloseWeb = () => {
@@ -131,23 +139,26 @@ export default class Layout extends React.Component {
   }
 
   render() {
-
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-    var market = <Market />
-
+    const LimitOrderAccount = this.LimitOrderAccount
     return (
-      <LayoutView
-        history={history}        
-        Exchange={Exchange}
-        Transfer={Transfer}
-        LimitOrder = {LimitOrder}
-        market={market}
-        supportedLanguages={Language.supportLanguage}
-        setActiveLanguage={this.setActiveLanguage}      
-        currentLanguage = {currentLanguage}  
-        tokens = {this.props.tokens}
-        langClass = {this.props.langClass}
-      />
+      <div> 
+        <LayoutView
+          history={history}        
+          Exchange={Exchange}
+          Transfer={Transfer}
+          LimitOrder = {LimitOrder}
+          supportedLanguages={Language.supportLanguage}
+          setActiveLanguage={this.setActiveLanguage}      
+          currentLanguage = {currentLanguage}  
+          tokens = {this.props.tokens}
+          langClass = {this.props.langClass}
+          theme = {this.props.theme}
+        />
+        <section id="right-nav" className={`${this.props.langClass} theme theme--${this.props.theme}`}>
+          <LimitOrderAccount />
+        </section>
+      </div>
     )
   }
 }

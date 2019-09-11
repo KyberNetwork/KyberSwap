@@ -300,65 +300,39 @@ const INIT_LIMIT_ORDER_STATE = {
   maxDestAmount: 0,
   prevAmount: 0,
   offeredRate: 0,
-  isEditRate: false,
   slippageRate: 0,
   blockNo: 0,
-  
   orderFee: LIMIT_ORDER_CONFIG.maxFee,
   orderFeeAfterDiscount: LIMIT_ORDER_CONFIG.maxFee,
   orderFeeDiscountPercentage: 0,
   isFetchingFee: false,
+  isFetchingRate: false,
   orderFeeErr: "",
-
-  // currentPath : 0,
   currentPathIndex : -1,
   orderPath: [],    
-
   listOrder: [],
-
-  // List filter properties
   addressFilter: [],
   pairFilter: [],
-  // statusFilter: [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS],
   statusFilter: [],
   timeFilter: {
     interval: 1,
     unit: "month"
   },
   pageIndex: 1,
-
-  // Filter mode,
   filterMode: "client",
-
-  // List available pairs and addresses, use for filtering
   orderPairs: [],
   orderAddresses: [],
-
-  // Date sort
   dateSort: "desc",
-
-  // Orders count
   ordersCount: 0,
-
-  // Pending balances
   pendingBalances: {},
   pendingTxs: [],
-
-  // Active order tab
   activeOrderTab: "open",
-
-  // Related orders
   relatedOrders: [],
-
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 380000,
   max_gas: 380000,
-
   gas_approve: 0,
   max_gas_approve: 120000,
-
-  //max_gas_total: 430000,
-
   isFetchingGas: false,
   gasPrice: 20,
   selectedGas: 'f',
@@ -420,11 +394,12 @@ const INIT_LIMIT_ORDER_STATE = {
   isOpenAdvance: false,
   isSelectTokenBalance: false,
   swappingTime: 0,
-
-  // Disable submit button state
   isDisableSubmit: false,
   isAgreeForceSubmit: false,
-  forceSubmitRate: 0
+  forceSubmitRate: 0,
+  favorite_pairs_anonymous: [],
+  currentQuote: "ETH",
+  currentQuotePair: ""
 }
 
 

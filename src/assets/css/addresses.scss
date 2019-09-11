@@ -59,10 +59,7 @@
       background-color: transparent;
       transition: background-color 0.1s ease-in-out;
       cursor: pointer;
-      @include clearfix;
-      &:not(:last-child) {
-        border-bottom: 1px solid $k-divider-light;
-      }
+
       .info {
         float: right;
         white-space: nowrap;
@@ -98,7 +95,6 @@
       }
       &:hover{
         .name label{
-          // color: $k-success;
           cursor: pointer;
         }
         .info{
@@ -128,7 +124,6 @@
 
   .address-list-navigation {
     margin: 30px 0;
-    // @include clearfix;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -206,7 +201,6 @@
 
   .address-stamp {
     background-color: white;
-    box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
     margin-bottom: 25px;
     position: relative;
     padding: 5px 5px 5px 55px;
@@ -231,7 +225,7 @@
 
   label.address-path-stamp {
     display: block;
-    background-color: $white;
+    background-color: white;
     padding: 12px 10px;
     .name {
       text-transform: none;
@@ -281,8 +275,6 @@
       width: 0;
       height: 0;
       &:checked + .address-path-stamp {
-        background: $accent-gradient;
-        box-shadow: 0 10px 40px 0 rgba($primary-color, .3);
         .submit {
           display: block;
         }
@@ -380,8 +372,7 @@
 }
 
 .address-balance {
-  @include clearfix;
-  justify-content: space-between;  
+  justify-content: space-between;
   .note {
     font-weight: bold;
     font-size: 14px;

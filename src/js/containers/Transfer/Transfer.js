@@ -2,15 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import {TransferBody} from "../Transfer"
 import { getTranslate } from 'react-localize-redux'
-import * as converter from "../../utils/converter"
 import * as validators from "../../utils/validators"
 import * as transferActions from "../../actions/transferActions"
-import { clearSession, setIsChangingPath } from "../../actions/globalActions"
-import { ImportAccount } from "../ImportAccount"
-import {HeaderTransaction} from "../TransactionCommon"
 import EthereumService from "../../services/ethereum/ethereum"
-
 import constants from "../../services/constants"
+import { Market } from "../Market"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -43,9 +39,9 @@ export default class Exchange extends React.Component {
 
   componentWillUnmount = () => {
     for (var i= 0; i<this.state.intervalGroup.length; i++ ){
-      clearInterval(this.state.intervalGroup[i])  
+      clearInterval(this.state.intervalGroup[i])
     }
-    this.setState({intervalGroup: []})    
+    this.setState({intervalGroup: []})
   }
 
   setInterValGroup = (callback, intervalTime) => {
@@ -65,7 +61,7 @@ export default class Exchange extends React.Component {
   verifyTransfer = () => {
     if (!this.props.account) {
       return
-    }    
+    }
     this.props.dispatch(transferActions.verifyTransfer())
   }
 
@@ -92,7 +88,6 @@ export default class Exchange extends React.Component {
   }
 
   validateSourceAmount = (value, gasPrice) => {
-    var checkNumber
     if (isNaN(parseFloat(value))) {
     } else {
       var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.transfer.decimals)
@@ -114,9 +109,9 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-      <div className={"exchange-container"}>
-        <HeaderTransaction page="transfer"/>
+      <div className={"exchange__container"}>
         <TransferBody/>
+        <Market/>
       </div>
     )
   }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Modal } from '../CommonElement'
 
 const ImportByPKeyView = (props) => {
@@ -29,16 +29,16 @@ const ImportByPKeyView = (props) => {
   }
 
   return (
-    <div>
+    <Fragment>
       {!props.isOnMobile && (
-        <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+        <div className="import-account__block theme__import-button" onClick={(e) => props.modalOpen()}>
           <div className="import-account__icon private-key"/>
-          <div className="import-account__name"><h3>{props.translate("import.from_private_key") || "PRIVATE KEY"}</h3></div>
+          <div className="import-account__name theme__text-4"><h3>{props.translate("import.from_private_key") || "PRIVATE KEY"}</h3></div>
         </div>
       )}
 
       {props.isOnMobile && (
-        <div className={"import-account__block"}>
+        <div className={"import-account__block theme__import-button"}>
           <div className={"import-account__block-left"}>
             <div className="import-account__icon private-key"/>
             <div>
@@ -85,14 +85,14 @@ const ImportByPKeyView = (props) => {
                 </div>
               </div>
             </div>
-            <div className="overlap">
+            <div className="overlap overlap--single">
               <button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
             </div>
 
           </div>
         }
       />
-    </div>
+    </Fragment>
   )
 }
 

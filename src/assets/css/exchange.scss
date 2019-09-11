@@ -1,6 +1,51 @@
+.exchange {
+  &__balance {
+    font-size: 13px;
+    font-weight: 400;
+
+    div:first-child {
+      margin-bottom: 3px;
+    }
+  }
+
+  &__container {
+    max-width: $width-exchange;
+    margin: 0 auto;
+  }
+
+  &__form {
+    padding: 45px;
+    border-radius: 3px;
+    box-shadow: 0 2px 29px -10px rgba(0, 0, 0, 0.49);
+  }
+
+  &__error {
+    color: $error-color;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 10px 0 20px;
+
+    &-item {
+      margin-bottom: 7px;
+      animation: slideUp .3s;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__swap-icon {
+    display: block;
+    margin: 0 auto;
+    width: 19px;
+    height: 24px;
+    background-image: url($image-path + 'exchange/swap-icon.svg');
+    cursor: pointer;
+  }
+}
+
 .exchange-container {
-  background-color: #eff4fa;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
   .promo-description {
     margin: 0 auto 10px;
     font-size: 11px;
@@ -41,35 +86,27 @@
   border-radius: 9px 9px 0 0;
   box-shadow: 0 8px 12px 0 rgba(101, 124, 150, 0.14);
   background-color: #ffffff;
-  // background-image: linear-gradient(to right, #fc9920, #eeb43d);
 }
 
 .exchange-tab {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  // max-width: 170px;
   max-width: 392px;
   position: relative;
   margin: 0 auto;
   height: 50px;
-  
+
   &__item {
     font-weight: 500;
     font-size: 14px;
     color: #666666;
     text-transform: uppercase;
     transition: all .3s;
-    // width: 50%;
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: center;
-    
-    &--limit-order {
-      position: relative;
-      height: 100%;
-    }
 
     &--active {
       font-weight: bold;
@@ -92,46 +129,15 @@
     }
 
     &--disabled {
-      // opacity: 0.65;
       color: #666666;
     }
 
-    // &:last-child {
-    //   position: relative;
-    //   left: 32px;
-    // }
-
     &:hover {
-      // opacity: 1;
       color: #8e97ad !important;
     }
   }
-
-  &__limit-order-info {
-    position: absolute;
-    top: 50%;
-    right: -20px;
-    transform: translateY(-50%);
-    cursor: pointer;
-
-    @media screen and (max-width: 320px) {
-      right: -10px
-    }
-  }
-
-  &__limit-order-beta {
-    position: absolute;
-    top: 50%;
-    right: -35px;
-    transform: translateY(-50%);
-
-    @include screen-max-width(medium) {
-      top: 2px;
-      right: 0;
-      transform: translateY(0);
-    }
-  }
 }
+
 #exchange {
   .exchange-extra-info{
     margin-top: 25px;
@@ -140,17 +146,6 @@
     }
   }
   margin-bottom: 50px;
-
-  // &__separator {
-  //   width: 1px;
-  //   height: 100%;
-  //   background-color: white;
-  //   position: absolute;
-  //   right: 0;
-  //   left: 0;
-  //   margin: 0 auto;
-  //   opacity: .65;
-  // }
 }
 
 .exchange-market-rate {
@@ -175,47 +170,33 @@
 }
 
 .exchange-rate {
-  // color: white;
   min-height: 20px;
 
   &-container {
-    max-width: 1050px;
-    // display: flex;
-    // justify-content: space-between;
-    // justify-content: flex-start;
-    margin: 15px auto 0;
-    // padding-bottom: 20px;
-    // min-height: 40px;
     &__left {
-      
-      @include screen-min-width(large){
-        // width: calc(50% - 29px);
-        // margin-left: 35px;
-        float: right;
-      }
       @include screen-max-width(large){
         margin-left: 20px;
       }
+
       .exchange-rate {
-        font-family: Montserrat;
-        font-size: 13px;
-        font-weight: 600;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #8690ad;
+        font-size: 12px;
+        font-weight: 400;
+        margin-top: 12px;
+        text-align: right;
       }
 
       .token-compare {
         &__item {
-          display: flex;
-          align-items: center;
           .rate-loading{
             padding: 0 5px;
+            height: 14px;
+
+            img {
+              height: 14px;
+            }
           }
         }
-  
+
         &__change {
           width: 49px;
           height: 25px;
@@ -230,14 +211,14 @@
             height: auto;
             margin-left: 2px;
           }
-  
+
           &.change-positive {
             color: #007bde;
             background-color: #e6f3fd;
           }
-  
+
           &.change-negative {
-            background-color: #fff3f3; 
+            background-color: #fff3f3;
             color: #ee344e;
 
           }
@@ -247,7 +228,7 @@
           margin-left: 5px;
           display: flex;
           img {
-            height: 13px;  
+            height: 13px;
           }
         }
       }
@@ -255,51 +236,9 @@
   }
 
   &__balance {
-    // color: white;
     height: 20px;
     opacity: 0;
   }
-
-  // &__balance-text {
-  //   font-size: 14px;
-  // }
-
-  // &__balance-amount {
-  //   font-size: 16px;
-  //   font-weight: 600;
-  //   letter-spacing: 0.4px;
-  // }
-
-  // &__unit {
-  //   font-size: 10px;
-  //   font-weight: 600;
-  //   letter-spacing: 0.6px;
-  //   position: relative;
-  //   bottom: 5px;
-  //   margin-right: 5px;
-  // }
-
-  // &__amount {
-  //   font-weight: 600;
-  //   letter-spacing: 0.4px;
-  // }
-
-  // &__equal {
-  //   font-size: 12px;
-  //   margin: 0 13px;
-  // }
-
-  // &__bracket {
-  //   font-size: 13px;
-  //   font-weight: 600;
-  //   margin: 0 10px;
-  //   position: relative;
-  //   bottom: 2px;
-
-  //   &:last-child {
-  //     margin-right: 0;
-  //   }
-  // }
 
   @media screen and (max-width: 650px) {
     &-container {
@@ -309,49 +248,15 @@
 }
 
 .exchange-account {
-  // background-color: #f9f9f9;
   max-width: 1050px;
   margin: 0 auto;
-  
-  
   font-size: 13px;
 
- 
-  @include screen-min-width(large){
-    padding: 0 1rem;
-  }
-  .slide-down__trigger-container{
-    @include screen-min-width(large){
-      // padding: 20px 20px 0 20px;
-      padding-bottom: 20px;
-    } 
-  }
-  .slide-down__content{
-    @include screen-min-width(large){
-      padding: 10px 20px 10px 20px;
-    } 
-  }
-  &__balance{
-    .slide-down__content{
-      @include screen-min-width(large){
-        padding-right: 35px;
-      } 
-    } 
-  }
-  &__adv-config{
-    .slide-down__content{
-      @include screen-min-width(large){
-        padding-left: 30px;
-      } 
-    } 
-  }
   &__wrapper {
-
     &--reimport {
       position: relative;
       height: 20px;
       margin: 0 35px;
-      // border-top: 1px solid #e1e4eb;
     }
 
     .reimport-msg {
@@ -369,27 +274,14 @@
       cursor: pointer;
       padding: 7px 0;
       text-decoration: underline;
-      // z-index: 1;
     }
-  }
-
-  &__container {
-    max-width: 1050px;
-    padding: 0 0 20px;
-    // position: relative;
-    
   }
 
   &__content {
     display: flex;
     position: relative;
     margin-bottom: 20px;
-    // border-bottom: 1px solid rgba(204, 204, 204, 0.36);
 
-    @include screen-max-width(large){
-      background-color: #f6f7fa;
-    }
-    
     &--animation {
       @include animation(slideInDown) {
         animation-duration: 0.3s;
@@ -397,86 +289,25 @@
       };
     }
 
-    .advance-close{
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      z-index: 2;
-      padding: 10px;
-      cursor: pointer;
-      @include screen-max-width(large){
-        right: 0px;
-        top: -5px;
-      }
-      &_wrapper{
-        background-image: url("../img/v3/Close-3.svg");
-        width: 16px;
-        height: 16px;
-      }
-    }
-
-    // @include screen-min-width(large){
-    //   padding: 0 15px 10px;
-    // }
-    
-    // margin: 0 35px 30px;
     &--open {
-      background: white;
-      // margin: 0 0 30px;
       border-bottom: none;
       border-radius: 5px;
-      @include screen-max-width(large){
-        border-radius: 0;
-      }
-
-      &.exchange-account{
-        &__balance, &__adv-config {
-          @include screen-max-width(large){
-            padding: 5px;
-            background-color: #f6f7fa;
-          }
-        }
-      }
+      width: 100%;
     }
   }
 
   &__balance {
-    
-   
     position: relative;
-
-    @include screen-min-width(large){
-      width: 60%;
-      // padding: 0 20px;
-      // padding-right: 40px !important;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
   }
-  @include screen-min-width(large){
-  &__adv-config {
-    width: 40%;
-    // padding: 0 20px;
-    // padding-left: 35px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
 
- @include screen-max-width(large) {
+  @include screen-max-width(large) {
     &__content {
       display: block;
-      // box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-      // background-color: #ffffff;
 
-      
       @include screen-min-width(large){
         padding: 20px 1rem;
       }
 
-      // background-color: #eff4fa;
-      // border-bottom: 1px solid #ddd;
       border-radius: 0;
       &--open{
         background-color: white;
@@ -486,8 +317,6 @@
 
     &__balance {
       width: 100%;
-      // padding: 10px 10px 0 42px;
-      // border-top: solid 1px #cccccc;
       padding: 1rem;
       &::after {
         display: none;
@@ -498,8 +327,6 @@
       padding: 1rem;
       width: 100%;
       margin-top: 20px;
-      // margin-top: 20px;
-      // padding: 0 10px 0 42px;
     }
   }
 
@@ -516,10 +343,8 @@
 
 .exchange-button {
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: 10px;
-  // position: relative;
-  // z-index: 1;
+  margin: 40px 0;
+
   &__button {
     display: block;
     margin-left: auto;
@@ -543,13 +368,6 @@
       background-position: 0 0;
     }
   }
-
-  // @include screen-max-width(large) {
-  //   &__button {
-  //     width: 100%;
-  //     padding: 10px 46px;
-  //   }
-  // }
 }
 
 .exchange-terms {
@@ -559,7 +377,7 @@
   padding: 0 5px;
 
   &__link {
-    color: #ef8102 !important;
+    color: $text-orange !important;
 
     &:hover {
       text-decoration: underline;
@@ -571,7 +389,7 @@
 .swap-balance-modal{
   position: relative;
   z-index: 1;
-  // top: -10px;
+
   @include screen-max-width(large){
     top: 18px;
   }
@@ -584,7 +402,6 @@
   }
   .select-item{
     background-color: white;
-    // border: 1px solid #eee;
     box-shadow: 0 6px 26px 0 rgba(1, 1, 1, 0.13);
     border-radius: 10px;
     .list-item {
@@ -610,8 +427,7 @@
       &::before {
         content: '';
         position: absolute;
-        background-image: url(../img/exchange/choosed.svg);
-        background-repeat: no-repeat;
+        background: url(../img/exchange/choosed.svg) no-repeat;
         background-size: contain;
         left: 8px;
         width: 15px;
@@ -621,7 +437,6 @@
     }
   }
 }
-
 
 #info_indicator{
   max-width: 210px;

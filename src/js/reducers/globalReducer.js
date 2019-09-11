@@ -31,7 +31,8 @@ const initState = {
   analytics: {
     callTrack: () => { return }
   },
-  documentTitle: "Kyber Network | Instant Exchange | No Fees"
+  documentTitle: "Kyber Network | Instant Exchange | No Fees",
+  theme: 'dark'
 }
 
 const global = (state = initState, action) => {
@@ -177,6 +178,12 @@ const global = (state = initState, action) => {
       return {
         ...state,
         documentTitle: action.payload
+      }
+    }
+    case "GLOBAL.SWITCH_THEME": {
+      return {
+        ...state,
+        theme: action.payload
       }
     }
   }

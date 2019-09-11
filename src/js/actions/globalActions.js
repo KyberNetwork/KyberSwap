@@ -293,3 +293,10 @@ export function updateTitleWithRate() {
     type: "GLOBAL.UPDATE_TITLE_WITH_RATE"
   }
 }
+
+export function switchTheme(theme) {
+  return {
+    type: "GLOBAL.SWITCH_THEME",
+    payload: theme
+  }
+}

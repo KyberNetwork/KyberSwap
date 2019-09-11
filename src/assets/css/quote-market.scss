@@ -1,0 +1,145 @@
+#quote-market {
+  height:300px;
+  overflow-y: auto;
+  padding: 1.5em;
+  font-size: 14px;
+  font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: roboto;
+  .up {
+      color: #31cb9e
+  }
+
+  .down {
+    color: #fa6566
+  }
+
+  .star {
+    width: 18px;
+    height: 18px;
+    background-image: url($image-path + 'common/star.svg');
+    background-repeat: no-repeat; 
+  }
+
+  .star.active {
+    background-image: url($image-path + 'common/star_active.svg');
+  }
+  div#container {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .rate-loading {
+    text-align: center;
+  }
+
+  #panel {
+    padding-bottom: 10px;
+    border-bottom: solid 2px $dark-background-4;
+
+    #quote_panel {
+      width: 60%;
+      display: inline-block;
+      cursor: pointer;
+
+      span {
+        margin-left:2em;
+        padding-bottom: 10px;
+      }
+
+      span.active {
+        transition: border-bottom .15s ease-in-out;
+        border-bottom: solid 3px #ff9008;
+
+        i {
+          color: #ff9008
+        }
+      }
+    };
+
+    #search_panel {
+      float: right;
+      margin-top: 5px;
+      width: 30%;
+      display: inline-block;
+      cursor: pointer;
+
+      input {
+        width: 100%;
+        color: white;
+        background: rgba(0,0,0,0);
+        border: none;
+        padding-right: 3em;
+        background-image: url($image-path + 'common/icon-search-gray.svg');
+        background-position: right 0px;
+        background-repeat: no-repeat;
+        background-size: 15px;
+        padding: 0 0 10px 0;
+      };
+
+      input:focus {
+        box-shadow: none;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid white;
+      };
+    }
+  }
+  table {
+    margin-top: 0.5em;
+
+    thead, tbody {
+      border: none;
+      background: rgba(0,0,0,0);
+    }
+
+    tr {
+      line-height: 2em;
+      background: rgba(0,0,0,0);
+    }
+
+    th, td {
+      padding: 0px;
+    }
+
+    th {
+      font-weight: 500;
+      cursor: pointer; 
+      text-align: start;
+
+      img {
+        margin-left: 3px;
+        height: 15px;
+      }
+
+      &.active{
+        &.asc:after{
+          content: url($image-path + 'limit-order/sort-asc-icon.svg');
+          margin: 5px
+        }
+
+        &.dsc:after{
+          content: url($image-path + 'limit-order/sort-desc-icon.svg');
+          margin: 5px
+        }
+      }
+    }
+
+    td {
+      font-size: 12px;
+      line-height: 2em;
+      text-align: start;
+
+      i {
+        width: 20px;
+        cursor: pointer;
+      }
+
+      i.active {
+        color: #ff9008;
+      }
+    }
+  }
+  
+}

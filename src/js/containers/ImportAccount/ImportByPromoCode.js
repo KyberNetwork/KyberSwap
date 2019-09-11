@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import { openPromoCodeModal } from "../../actions/accountActions"
 import { getTranslate } from 'react-localize-redux'
@@ -17,11 +17,11 @@ export default class ImportByPromoCode extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         {!this.props.isOnMobile && (
-          <div className="import-account__block" onClick={this.openModal.bind(this)}>
+          <div className="import-account__block theme__import-button" onClick={this.openModal.bind(this)}>
             <div className="import-account__icon promo-code"></div>
-            <div className="import-account__name"><h3>{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</h3></div>
+            <div className="import-account__name theme__text-4"><h3>{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</h3></div>
           </div>
         )}
 
@@ -37,7 +37,7 @@ export default class ImportByPromoCode extends React.Component {
             <div className="import-account__block-right" onClick={this.openModal.bind(this)}>{this.props.translate("address.enter") || "Enter"}</div>
           </div>
         )}
-      </div>
+      </Fragment>
     )
   }
 }

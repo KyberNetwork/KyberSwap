@@ -1,8 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
-
 
 var initState = constants.INIT_LIMIT_ORDER_STATE
 initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
@@ -10,27 +7,27 @@ initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
 const limitOrder = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case "LIMIT_ORDER.SELECT_TOKEN_ASYNC": {
-    //   newState.isSelectToken = true
-    //   return newState
-    // }
-
     case "LIMIT_ORDER.SELECT_TOKEN": {
+      const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, changeQuotePair } = action.payload;
 
-      var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
-      newState.sourceTokenSymbol = sourceTokenSymbol
-      newState.sourceToken = sourceToken
-      newState.destTokenSymbol = destTokenSymbol
-      newState.destToken = destToken
+      newState.sourceTokenSymbol = sourceTokenSymbol;
+      newState.sourceToken = sourceToken;
+      newState.destTokenSymbol = destTokenSymbol;
+      newState.destToken = destToken;
+      newState.errors.sourceAmount = [];
+      newState.errors.triggerRate = [];
+      newState.selected = true;
 
-      var errors = newState.errors
-      errors.sourceAmount = []
-      errors.triggerRate = []
-      newState.errors = errors
+      if (changeQuotePair) {
+        newState.currentQuotePair = destTokenSymbol;
+      }
 
-      newState.selected = true
-      newState.isEditRate = false
-      return newState
+      return newState;
+    }
+
+    case "LIMIT_ORDER.CHANGE_QUOTE_PAIR": {
+      newState.currentQuotePair = action.payload;
+      return newState;
     }
 
     case "LIMIT_ORDER.INPUT_CHANGE": {
@@ -64,6 +61,19 @@ const limitOrder = (state = initState, action) => {
       }
       return newState
     }
+
+    case "LIMIT_ORDER.RESET_FORM_INPUTS": {
+      newState.destAmount = "";
+      newState.sourceAmount = "";
+
+      return newState;
+    }
+
+    case "LIMIT_ORDER.SET_IS_FETCHING_RATE": {
+      newState.isFetchingRate = action.payload;
+      return newState;
+    }
+
     case "LIMIT_ORDER.FOCUS_INPUT": {
       newState.inputFocus = action.payload;
       return newState;
@@ -277,6 +287,28 @@ const limitOrder = (state = initState, action) => {
       newState.selectedGas = selectedGas;
       return newState;
     }
+
+
+
+    case 'LIMIT_ORDER.UPDATE_CURRENT_QUOTE':{
+      const { quote } =  action.payload;
+      newState.currentQuote = quote
+      return newState; 
+    }
+
+    case 'LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS':{
+      const { base, quote, toFav } =  action.payload;
+      const index = newState.favorite_pairs_anonymous.indexOf(base+"_"+quote)
+      if (index == -1){
+        newState.favorite_pairs_anonymous.push(base+"_"+quote)
+      }else {
+        newState.favorite_pairs_anonymous.splice(index, 1)
+      }
+      newState.favorite_pairs_anonymous = newState.favorite_pairs_anonymous.slice()
+      return newState; 
+    }
+
+
   }
   return state
 }

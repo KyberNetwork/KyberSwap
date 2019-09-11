@@ -8,7 +8,7 @@ import * as converters from "../../utils/converter"
 
 
 @connect((store, props) => {
-  var location = store.router.location.pathname
+  // var location = store.router.location.pathname
   var sourceActive = 'ETH'
   sourceActive = store.exchange.sourceTokenSymbol
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])  
@@ -19,7 +19,7 @@ import * as converters from "../../utils/converter"
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
     showBalance: store.global.showBalance,
-    location,
+    // location,
     walletType: store.account.account.type,
     account: store.account.account,
     address: store.account.account.address,
@@ -38,10 +38,11 @@ export default class AccountBalance extends React.Component {
     super()
     this.state = {
       searchWord: "",
+      sortActive: false,
       sortValueSymbol_DES:  false,
       sortValuePrice_DES:  true,
-      sortType: 'Price',
-      sortActive: false,
+      sortType: 'Eth',
+      sortDESC: true
     }
   }
 
@@ -150,9 +151,13 @@ export default class AccountBalance extends React.Component {
     this.props.onToggleBalanceContent()
   }
 
+  onSort = (sortType, isDsc) => {
+    console.log("[]",{sortType: sortType, sortDESC: isDsc})
+    this.setState({sortType: sortType, sortDESC: isDsc})
+  }
   render() {
-    var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
-
+    // var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
+    var sortValue = this.state.sortDESC
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
@@ -185,6 +190,8 @@ export default class AccountBalance extends React.Component {
         selectBalance = {this.props.selectToken}
         isLimitOrderTab={this.props.isLimitOrderTab}
         getFilteredTokens={this.props.getFilteredTokens}
+        onSort={this.onSort}
+        openReImport={this.props.openReImport}
       />
     )
   }

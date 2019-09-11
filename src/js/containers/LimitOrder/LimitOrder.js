@@ -1,18 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import {HeaderTransaction} from "../TransactionCommon"
-
 import EthereumService from "../../services/ethereum/ethereum"
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
-
 import constants from "../../services/constants"
-
 import {LimitOrderBody} from "../LimitOrder"
 import limitOrderServices from "../../services/limit_order";
 import { isUserLogin } from "../../utils/common";
-
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store, props) => {
@@ -22,8 +16,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
 
-  
-
   return {
     translate, limitOrder, tokens, account, ethereum,
     params: {...props.match.params},
@@ -32,7 +24,6 @@ import BLOCKCHAIN_INFO from "../../../../env";
 })
 
 export default class LimitOrder extends React.Component {
-
   constructor(){
     super()
     this.state = {
@@ -94,7 +85,7 @@ export default class LimitOrder extends React.Component {
     this.setState({intervalGroup: []})    
   }
 
-  async fetchOpenOrders() {   
+  async fetchOpenOrders() {
     // requuest update order
     this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
@@ -145,7 +136,7 @@ export default class LimitOrder extends React.Component {
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
 
-  componentDidMount = () =>{
+  componentDidMount = () => {
     // set interval process
     this.setInvervalProcess()
 
@@ -163,12 +154,10 @@ export default class LimitOrder extends React.Component {
     this.fetchPendingBalance()
   }
 
-
   render() {
     return (
       <div className={"limit-order-container"}>
-        <HeaderTransaction page="limit_order"/>
-        <LimitOrderBody page="limit_order"/>        
+        <LimitOrderBody page="limit_order"/>
       </div>
     )
   }

@@ -1,18 +1,7 @@
-
-
-
-// export function selectTokenAsync(symbol, address, type) {
-//   return {
-//     type: "LIMIT_ORDER.SELECT_TOKEN_ASYNC",
-//     payload: {symbol, address, type }
-//   }
-// }
-
-
-export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type, changeQuotePair = true) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type, changeQuotePair }
   }
 }
 
@@ -20,6 +9,33 @@ export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals
   return {
     type: "LIMIT_ORDER.INPUT_CHANGE",
     payload: { focus, value, sourceTokenDecimals, destTokenDecimals }
+  }
+}
+
+export function changeFormType(srcToken, destToken) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_FORM_TYPE",
+    payload: { srcToken, destToken }
+  }
+}
+
+export function resetFormInputs() {
+  return {
+    type: "LIMIT_ORDER.RESET_FORM_INPUTS"
+  }
+}
+
+export function setIsFetchingRate(isFetching) {
+  return {
+    type: "LIMIT_ORDER.SET_IS_FETCHING_RATE",
+    payload: isFetching
+  }
+}
+
+export function changeQuotePair(quotePair) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_QUOTE_PAIR",
+    payload: quotePair
   }
 }
 
@@ -35,7 +51,6 @@ export function updateRateComplete(rateInit, expectedPrice, slippagePrice, block
     type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
     payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals }
   }
-
 }
 
 export function setIsSelectTokenBalance(value) {
@@ -276,3 +291,18 @@ export function changeOrderTabComplete(tab) {
     payload: { tab }
   }
 }
+
+export function updateCurrentQuote(quote) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_CURRENT_QUOTE",
+    payload: { quote }
+  }
+}
+
+export function updateFavoriteAnonymous(base, quote, toFav) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS",
+    payload: { base, quote, toFav }
+  }
+}
+

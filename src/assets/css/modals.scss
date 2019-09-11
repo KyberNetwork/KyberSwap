@@ -8,24 +8,74 @@ $divider-color: darken($title-background-color, 5);
   -webkit-overflow-scrolling: touch;
 }
 
+.input-reveal {
+  position: relative;
+
+  .tootip {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 22px;
+    margin-top: -11px;
+    left: 24px;
+    transition: opacity .5s ease-in-out;
+    background-image: url($image-path + 'lock.svg');
+  }
+
+  .toggle {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 12px;
+    left: unset;
+    transition: opacity .5s ease-in-out;
+    cursor: pointer;
+    background-image: url($image-path + 'unlock-pass.svg');
+  }
+
+  &.unlock .toggle {
+    background-image: url($image-path + 'lock-pass.svg');
+  }
+}
+
 .reveal {
   position: relative;
   overflow: visible;
-  border-radius: 0;
-  //color: $white;
+  border-radius: 3px;
   outline: none;
   background-color: #f6f7fa;
-  // background-color: $k-primary;
-  // border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
-  @include breakpoint(small only) {
-    // top: 0 !important;
-    height: auto;
+  margin: 0 auto;
+  padding: 10px 10px 30px 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  max-width: 90%;
+
+  &.tiny {
+    width: 450px;
   }
+
+  &.medium {
+    width: 600px;
+  }
+
   .message {
     margin-bottom: 25px;
   }
-  a{
+
+  a {
     color: #EF8102;
     &.x {
       display: block;
@@ -34,23 +84,27 @@ $divider-color: darken($title-background-color, 5);
       top: 5px;
       font-size: 2rem;
       color: #aaa;
-    //color: $white;
     }
   }
+
   .title {
     font-size: 1.8rem;
     margin-top: 20px;
     margin-bottom: 20px;
-  //  background-color: $k-primary-darker;
   }
+
   .overlap {
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: space-between;
-    // background-color: #8CBCAE;
-    padding: 50px 45px;
+    padding: 20px 45px 40px;
     align-items: center;
+
+    &--single {
+      justify-content: center;
+    }
+
     span{
       &:not(.error-text){
         color: white;
@@ -61,11 +115,6 @@ $divider-color: darken($title-background-color, 5);
     }
   }
   .content {
-    // padding: 0 50px;
-    // padding: 20px 10px;
-    // @include breakpoint(medium) {
-    //   padding: 15px;
-    // }
     &.with-overlap {
       padding-bottom: 25px;
       &.tx-loading {
@@ -73,10 +122,10 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .block-title {
-      @include clearfix;
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 15px;
+
       img.loading {
         height: 21px;
         float: right;
@@ -88,7 +137,6 @@ $divider-color: darken($title-background-color, 5);
       line-height: 1.7;
     }
     .gas-configed{
-      // width: 270px;
       max-width: 100%;
       white-space: nowrap;
       text-align: left;
@@ -97,7 +145,6 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 1rem;
       >div{
         &:first-child{
-          // margin-bottom: 0.6rem;
           font-size: 14px;
           font-weight: 600;
         }
@@ -153,9 +200,7 @@ $divider-color: darken($title-background-color, 5);
     border-top: 1px solid $divider-color;
     padding: 25px 10px;
     background-color: $footer-background-color;
-    @include breakpoint(medium) {
-      padding: 15px;
-    }
+
     &.with-overlap {
       padding-top: 45px;
     }
@@ -170,38 +215,6 @@ $divider-color: darken($title-background-color, 5);
 
   &.promocode {
     padding: 0;
-  }
-}
-
-#exchange-from-token-modal,
-#exchange-to-token-modal,
-#transfer-from-token-modal {
-  @include breakpoint(medium) {
-    max-width: 860px;
-  }
-}
-
-#passphrase-modal {
-  @include breakpoint(medium) {
-    max-width: 360px;
-  }
-}
-
-#switch-trezor-address-modal {
-  @include breakpoint(medium) {
-    max-width: 360px;
-  }
-}
-
-#select-trezor-address-modal {
-  @include breakpoint(medium) {
-    max-width: 860px;
-  }
-}
-
-#request-trezor-access-modal {
-  @include breakpoint(medium) {
-    max-width: 400px;
   }
 }
 
@@ -485,7 +498,7 @@ $divider-color: darken($title-background-color, 5);
   padding-right: 0 !important;
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
-  border-radius: 10px;
+  border-radius: 3px;
 
   @include screen-max-width(medium) {
     border-radius: 0;
@@ -508,16 +521,7 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .title {
-    // font-weight: 600;
-    // line-height: 1.3;
-    // letter-spacing: -0.2px;
-    // color: #141927;
     margin-bottom: 20px;
-    // text-align: center;
-    margin-top: 60px;
-    // padding: 0 45px;
-    // font-size: 16px;
-
     font-size: 28px;
     font-weight: 600;
     color: #141927;
@@ -577,7 +581,7 @@ $divider-color: darken($title-background-color, 5);
     }
     .button {
       min-width: 150px;
-      border-radius: 23px;
+      border-radius: 3px;
       padding: 14px 30px 14px 30px;
       color: #fff;
       font-size: 14px;
@@ -590,6 +594,7 @@ $divider-color: darken($title-background-color, 5);
       border: none;
       outline: none;
       box-shadow: none;
+      text-align: center;
 
       // &::after {
       //   content: '';
@@ -608,9 +613,10 @@ $divider-color: darken($title-background-color, 5);
       }
 
       &.cancel-process {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
         color: white;
         text-transform: uppercase;
+        margin-right: 20px;
         // min-width: 135px;
         // padding: 14px;
         &::after {
@@ -645,7 +651,6 @@ $divider-color: darken($title-background-color, 5);
       }
     }
     .block-title {
-      @include clearfix;
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 15px;
@@ -756,15 +761,22 @@ $divider-color: darken($title-background-color, 5);
     }
     
   }
-  .input-confirm{
+  .input-confirm {
     padding: 30px 0px 0px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &--single {
+      display: block;
+    }
+
     @include screen-max-width(medium) {
       padding-top: 20px;
+
       &--approve {
         text-align: center;
+
         .button {
           max-width: 200px;
         }
@@ -1061,12 +1073,12 @@ $divider-color: darken($title-background-color, 5);
   .content {
     padding: 16px 30px;
     input.text-center {
+      width: 100%;
       border: solid 1px #e5e5e5;
       background-color: #ffffff;
       outline: none;
       box-shadow: none;
       height: 55px;
-      border-radius: 4px;
       font-size: 16px;
       text-align: unset;
       margin-bottom: 20px;
@@ -1140,7 +1152,8 @@ $divider-color: darken($title-background-color, 5);
       text-transform: capitalize;
       letter-spacing: 0.5px;
       &.cancel-buttom {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
+        margin-right: 20px;
       }
     }
 
@@ -1268,6 +1281,60 @@ $divider-color: darken($title-background-color, 5);
     span {
       font-size: 14px;
       font-weight: 500;
+    }
+  }
+}
+
+#waiting {
+  &.ledger{
+    .caption{
+      max-width: none;
+      > div{
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+        color: #777;
+      }
+    }
+  }
+  background-color: rgba($dark-gray, .5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  &.pending{
+    background-color: rgba($white, .3);
+    h4{
+      font-size: 1.2rem;
+    }
+  }
+  .caption {
+    box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    color: $medium-gray;
+    font-size: 14px;
+    text-align: center;
+    background-color: white;
+    padding: 60px 30px 30px 30px;
+    max-width: 300px;
+    border-radius: 3px;
+    background-image: url(../img/waiting.svg);
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: center top 30px;
+    > div{
+      opacity: 0;
+      transition: opacity .5s;
+      &:not(:empty){
+        opacity: 1;
+      }
     }
   }
 }

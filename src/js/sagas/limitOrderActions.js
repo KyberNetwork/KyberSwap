@@ -1,54 +1,46 @@
-import { take, put, call, fork, select, takeEvery, takeLatest, all, apply } from 'redux-saga/effects'
+import { put, call, takeEvery, takeLatest } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
 import limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
+import  * as converters from "../utils/converter";
 import * as utilActions from '../actions/utilActions'
 import * as constants from "../services/constants"
 import { multiplyOfTwoNumber } from "../utils/converter"
+import EthereumService from "../services/ethereum/ethereum";
 
 function* selectToken(action) {
-    const { symbol, address, type } = action.payload
-    yield put(limitOrderActions.selectToken(symbol, address, type))
+  const { symbol, address, type } = action.payload
+  yield put(limitOrderActions.selectToken(symbol, address, type))
 
-    const state = store.getState();
-    var ethereum = state.connection.ethereum
-    var limitOrder = state.limitOrder
-    var source = limitOrder.sourceToken
-    var dest = limitOrder.destToken
-    var sourceTokenSymbol = limitOrder.sourceTokenSymbol
-    var isManual = true
-    var sourceAmount = limitOrder.sourceAmount
+  const state = store.getState();
+  var ethereum = state.connection.ethereum
+  var limitOrder = state.limitOrder
+  var source = limitOrder.sourceToken
+  var dest = limitOrder.destToken
+  var sourceTokenSymbol = limitOrder.sourceTokenSymbol
+  var isManual = true
+  var sourceAmount = limitOrder.sourceAmount
 
 
-    if (type === "source" ){
-      var account = state.account.account
-      if (isUserLogin() && account !== false){
-        yield put(limitOrderActions.fetchFee(account.address, symbol, limitOrder.destTokenSymbol))
-      }
-
-      source = address
-      sourceTokenSymbol = symbol
-    }else{
-      dest = address      
+  if (type === "source" ) {
+    var account = state.account.account
+    if (isUserLogin() && account !== false){
+      yield put(limitOrderActions.fetchFee(account.address, symbol, limitOrder.destTokenSymbol))
     }
-    
-    
-    // yield put(utilActions.hideSelectToken())
-  
-    // yield put(actions.checkSelectToken())
-    // yield call(estimateGasNormal)
-    
-    if (ethereum){      
-      yield put(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual ))
-    }
-  
-    //calculate gas use
-    // yield call(updateGasUsed)
+
+    source = address
+    sourceTokenSymbol = symbol
+  } else {
+    dest = address
   }
 
+  if (ethereum) {
+    yield put(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual ))
+  }
+}
 
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
@@ -234,7 +226,7 @@ function* fetchPendingBalances(action) {
 
 function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
   let pendingTxs = [];
-console.log(currentPendingTxs)
+
   newPendingTxs.forEach(newPendingTx => {
     const existingTx = currentPendingTxs.find((currentPendingTx) => {
       return currentPendingTx.tx_hash === newPendingTx.tx_hash;
@@ -256,7 +248,6 @@ function* changeOrderTab(action) {
   const { tab } = action.payload;
 
   yield put(limitOrderActions.changeOrderTabComplete(tab));
-
   
   yield put(limitOrderActions.getOrdersByFilter({
     statusFilter: [],
@@ -266,22 +257,51 @@ function* changeOrderTab(action) {
   }));
 }
 
+function* changeFormType(action) {
+  yield put(limitOrderActions.setIsFetchingRate(true));
+  yield put(limitOrderActions.resetFormInputs());
+
+  let state = store.getState();
+  let ethereum = state.connection.ethereum;
+
+  if (!ethereum) ethereum  = new EthereumService();
+
+  const { srcToken, destToken } = action.payload;
+  const srcSymbol = destToken.symbol;
+  const srcAddress = destToken.address;
+  const destSymbol = srcToken.symbol;
+  const destAddress = srcToken.address;
+
+  yield put(limitOrderActions.selectToken(srcSymbol, srcAddress, destSymbol, destAddress, '', false));
+
+  yield call(updateRatePending, { payload: {
+    ethereum: ethereum,
+    sourceTokenSymbol: srcSymbol,
+    sourceToken: srcAddress,
+    destTokenSymbol: destSymbol,
+    destToken: destAddress,
+    sourceAmount: "",
+    isManual: true,
+    type: false
+  }});
+
+  state = store.getState();
+  const limitOrder = state.limitOrder;
+  const expectedRate = converters.roundingRateNumber(converters.toT(limitOrder.offeredRate));
+
+  yield put(limitOrderActions.inputChange("rate", expectedRate, srcToken.decimals, destToken.decimals));
+  yield put(limitOrderActions.setIsFetchingRate(false));
+}
+
 export function* watchLimitOrder() {
-    yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
-
-    yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending)
-
-    yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee)
-
-    yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport)
-
-    yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus)
-
-    yield takeEvery("LIMIT_ORDER.GET_ORDERS_BY_FILTER", getOrdersByFilter)
-
-    yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter)
-
-    yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances)
-  
-    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab)
+    yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken);
+    yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending);
+    yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee);
+    yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport);
+    yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus);
+    yield takeEvery("LIMIT_ORDER.GET_ORDERS_BY_FILTER", getOrdersByFilter);
+    yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter);
+    yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances);
+    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab);
+    yield takeLatest("LIMIT_ORDER.CHANGE_FORM_TYPE", changeFormType);
   }

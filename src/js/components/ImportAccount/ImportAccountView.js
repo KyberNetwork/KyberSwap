@@ -12,8 +12,8 @@ import {
 const ImportAccountView = (props) => {
   var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
   const { isIOS: isIos, isAndroid } = props.onMobile;
-
   let importInactiveClass =  "";
+  const isNotLimitOrder = !props.isAgreedTermOfService && props.tradeType !== "limit_order";
 
   if (props.tradeType !== "limit_order") {
     importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
@@ -29,7 +29,7 @@ const ImportAccountView = (props) => {
   }
 
   return (
-    <div className="import-account">
+    <div className={`import-account ${!isNotLimitOrder ? 'theme__background-2' : ''}`}>
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
           <h1 className="import-account__title">
@@ -43,10 +43,10 @@ const ImportAccountView = (props) => {
           </h1>
         )}
 
-        {!props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
+        {isNotLimitOrder && (
           <div className="import-account__title--inactive">
-            <div className="import-account__title--inactive--seperator"></div>
-            <div className="import-account__title--inactive--content">
+            <div className="import-account__title-separator theme__border-2"/>
+            <div className="import-account__title-content theme__background theme__text-4">
               {props.translate("address.or_connect_with") || "Or Connect with"}
             </div>
           </div>
@@ -60,14 +60,14 @@ const ImportAccountView = (props) => {
           }
 
           {!isOnMobile &&
-            <div className={`import-account__item import-account__item-trezor ${importInactiveClass}`}>
-              <ImportByDeviceWithTrezor />
-            </div>
-          }
-
-          {!isOnMobile &&
             <div className={`import-account__item import-account__item-ledger ${importInactiveClass}`}>
               <ImportByDeviceWithLedger />
+            </div>
+          }
+          
+          {!isOnMobile &&
+            <div className={`import-account__item import-account__item-trezor ${importInactiveClass}`}>
+              <ImportByDeviceWithTrezor />
             </div>
           }
 
