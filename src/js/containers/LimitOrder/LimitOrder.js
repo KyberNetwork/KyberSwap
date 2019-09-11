@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import {HeaderTransaction} from "../TransactionCommon"
 import EthereumService from "../../services/ethereum/ethereum"
 import * as limitOrderActions from "../../actions/limitOrderActions"
 import constants from "../../services/constants"

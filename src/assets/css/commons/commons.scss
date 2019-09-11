@@ -1,4 +1,8 @@
 .common {
+  &__mr-15 {
+    margin-right: 15px;
+  }
+
   &__flexbox {
     display: flex;
     justify-content: space-between;

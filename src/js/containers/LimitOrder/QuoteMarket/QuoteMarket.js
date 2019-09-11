@@ -10,9 +10,9 @@ import { QuoteList, Search } from "../QuoteMarket"
 @connect((store, props) => {
   const tokens = store.tokens.tokens
   const favorite_pairs_anonymous = store.limitOrder.favorite_pairs_anonymous
-  const current_quote = store.limitOrder.current_quote
+  const currentQuote = store.limitOrder.currentQuote
   return {
-    tokens, favorite_pairs_anonymous, current_quote
+    tokens, favorite_pairs_anonymous, currentQuote
   }
 })
 export default class QuoteMarket extends React.Component{
@@ -83,12 +83,12 @@ export default class QuoteMarket extends React.Component{
   
   search(quotes){
     const { current_search, current_sort_index, current_sort_dsc, pairs } = this.state
-    const { current_quote } = this.props
+    const { currentQuote } = this.props
 
-    return ( 
-      current_quote == "FAV" ? 
+    return (
+      currentQuote === "FAV" ?
         Object.keys(quotes).reduce((res, key) => res.concat(quotes[key]),[]).filter((pair) => pair["is_favorite"]) : 
-        quotes[current_quote]
+        quotes[currentQuote]
     )
     .filter(pair => (pair["base"].toLowerCase().includes(current_search.toLowerCase())))
     .map(pair => ({
@@ -142,14 +142,14 @@ export default class QuoteMarket extends React.Component{
 
   render(){
     const quotes = this.renderQuotes()
-    const { tokens, current_quote } = this.props
+    const { tokens, currentQuote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
     return (
       <div id="quote-market" className="theme__background-2"> 
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
               <div id="panel" className="theme__text-4">
-                <QuoteList onClick={this.onQuoteClick} currentQuote={current_quote} quotes={["FAV"].concat(Object.keys(quotes))}/>
+                <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={["FAV"].concat(Object.keys(quotes))}/>
                 <Search onSearch={this.onSearch}/>
               </div>
               <table>

@@ -8,6 +8,48 @@ $divider-color: darken($title-background-color, 5);
   -webkit-overflow-scrolling: touch;
 }
 
+.input-reveal {
+  position: relative;
+
+  .tootip {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 22px;
+    margin-top: -11px;
+    left: 24px;
+    transition: opacity .5s ease-in-out;
+    background-image: url($image-path + 'lock.svg');
+  }
+
+  .toggle {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 12px;
+    left: unset;
+    transition: opacity .5s ease-in-out;
+    cursor: pointer;
+    background-image: url($image-path + 'unlock-pass.svg');
+  }
+
+  &.unlock .toggle {
+    background-image: url($image-path + 'lock-pass.svg');
+  }
+}
+
 .reveal {
   position: relative;
   overflow: visible;
@@ -15,15 +57,25 @@ $divider-color: darken($title-background-color, 5);
   outline: none;
   background-color: #f6f7fa;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
-
-  padding: 10px;
   margin: 0 auto;
-  top: 30px;
+  padding: 10px 10px 30px 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  max-width: 90%;
+
+  &.tiny {
+    width: 450px;
+  }
+
+  &.medium {
+    width: 600px;
+  }
 
   .message {
     margin-bottom: 25px;
   }
-  a{
+
+  a {
     color: #EF8102;
     &.x {
       display: block;
@@ -34,6 +86,7 @@ $divider-color: darken($title-background-color, 5);
       color: #aaa;
     }
   }
+
   .title {
     font-size: 1.8rem;
     margin-top: 20px;
@@ -44,9 +97,14 @@ $divider-color: darken($title-background-color, 5);
     width: 100%;
     text-align: center;
     display: flex;
-    justify-content: flex-end;
-    padding: 50px 45px;
+    justify-content: space-between;
+    padding: 20px 45px 40px;
     align-items: center;
+
+    &--single {
+      justify-content: center;
+    }
+
     span{
       &:not(.error-text){
         color: white;
@@ -157,13 +215,6 @@ $divider-color: darken($title-background-color, 5);
 
   &.promocode {
     padding: 0;
-  }
-
-  &.tiny{
-    max-width: 450px;
-  }  
-  &.medium{
-    max-width: 650px;
   }
 }
 
@@ -454,7 +505,7 @@ $divider-color: darken($title-background-color, 5);
   }
 
   @include screen-min-width(large) {
-    /*width: 630px;*/
+    width: 630px;
   }
 
   &__cancel-order {
@@ -710,14 +761,22 @@ $divider-color: darken($title-background-color, 5);
     }
     
   }
-  .input-confirm{
+  .input-confirm {
     padding: 30px 0px 0px 0px;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+
+    &--single {
+      display: block;
+    }
+
     @include screen-max-width(medium) {
       padding-top: 20px;
+
       &--approve {
         text-align: center;
+
         .button {
           max-width: 200px;
         }
@@ -1014,12 +1073,12 @@ $divider-color: darken($title-background-color, 5);
   .content {
     padding: 16px 30px;
     input.text-center {
+      width: 100%;
       border: solid 1px #e5e5e5;
       background-color: #ffffff;
       outline: none;
       box-shadow: none;
       height: 55px;
-      border-radius: 4px;
       font-size: 16px;
       text-align: unset;
       margin-bottom: 20px;
@@ -1082,6 +1141,7 @@ $divider-color: darken($title-background-color, 5);
   }
   .overlap {
     // background-color: #f5f5f5;
+    justify-content: space-between;
     background-color: white;
     padding: 30px 45px 35px;
     button {
@@ -1221,6 +1281,60 @@ $divider-color: darken($title-background-color, 5);
     span {
       font-size: 14px;
       font-weight: 500;
+    }
+  }
+}
+
+#waiting {
+  &.ledger{
+    .caption{
+      max-width: none;
+      > div{
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+        color: #777;
+      }
+    }
+  }
+  background-color: rgba($dark-gray, .5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  &.pending{
+    background-color: rgba($white, .3);
+    h4{
+      font-size: 1.2rem;
+    }
+  }
+  .caption {
+    box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    color: $medium-gray;
+    font-size: 14px;
+    text-align: center;
+    background-color: white;
+    padding: 60px 30px 30px 30px;
+    max-width: 300px;
+    border-radius: 3px;
+    background-image: url(../img/waiting.svg);
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: center top 30px;
+    > div{
+      opacity: 0;
+      transition: opacity .5s;
+      &:not(:empty){
+        opacity: 1;
+      }
     }
   }
 }

@@ -46,6 +46,7 @@ const withSourceAndBalance = (Component) => {
       
       return weth;
     }
+
     getTokenListWithoutEthAndWeth = (tokens) => {
       const now = common.getNowTimeStamp();
 
@@ -54,6 +55,7 @@ const withSourceAndBalance = (Component) => {
           token.sp_limit_order && (!token.lod_listing_time || now >= token.lod_listing_time);
       });
     }
+
     getOpenOrderAmount = (tokenSymbol, tokenDecimals) => {
       if (!this.props.account) return 0
 
@@ -77,6 +79,7 @@ const withSourceAndBalance = (Component) => {
         return 0;
       }
     }
+
     getAvailableBalanceTokenList = () => {
       const tokens = this.props.tokens;
       const orderList = this.props.limitOrder.listOrder;

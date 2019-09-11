@@ -6,7 +6,6 @@ import { importNewAccount, throwError } from "../../actions/accountActions"
 import { verifyKey, anyErrors } from "../../utils/validators"
 import { addressFromKey, unlock } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
-
 import { Modal } from "../../components/CommonElement"
 
 @connect((store, props) => {
@@ -55,14 +54,14 @@ export default class ImportKeystore extends React.Component {
     var password = document.getElementById("keystore-pass").value
     try{
       var privKey = unlock(this.state.keystring, password, true, this.props.translate)
-       
+
       var address = addressFromKey(this.state.keystring)
       this.props.dispatch(importNewAccount(address,
         "privateKey",
         privKey.toString("hex"),
         this.props.ethereum,
         this.props.tokens, null, null, "Keystore"))
-        this.setState({ isOpen: false, error: "" })
+      this.setState({ isOpen: false, error: "" })
     }catch(e){
       console.log(e)
       this.setState({ error: e.toString() })
@@ -84,27 +83,24 @@ export default class ImportKeystore extends React.Component {
         <div className="content with-overlap">
           <div className="row">
 
-          <div className="input-reveal">
-            <input className="text-center security" id="keystore-pass" type="text"
-              autoComplete="off" spellCheck="false"
-                autoFocus onKeyPress={(e) => this.submit(e)} />
-            <a className="toggle" onClick={() => this.toggleShowPw()}></a>
-            <a className="tootip"></a>
-          </div>
+            <div className="input-reveal">
+              <input className="text-center security" id="keystore-pass" type="text" autoComplete="off" spellCheck="false" autoFocus onKeyPress={(e) => this.submit(e)} />
+              <a className="toggle" onClick={() => this.toggleShowPw()}/>
+              <a className="tootip"/>
+            </div>
 
             <div>
-              {/* <input type="password" id="keystore-pass" /> */}
               {this.state.error && (
-                  <div className={'modal-error custom-scroll'}>
-                   {this.state.error}
-                 </div>                
+                <div className={'modal-error custom-scroll'}>
+                  {this.state.error}
+                </div>
               )}
             </div>
 
           </div>
         </div>
         <div className="overlap">
-          <div className="input-confirm grid-x input-confirm--approve">
+          <div className="input-confirm input-confirm--single">
             <div className="cell unlock-btn-wrapper">
               <a className={"button process-submit next"} onClick={this.unLock}>{this.props.translate("modal.unlock") || "Unlock"}</a>
             </div>
@@ -152,20 +148,22 @@ export default class ImportKeystore extends React.Component {
   render() {
     return (
       <div>
-        <DropFile id="import_json"
+        <DropFile
+          id="import_json"
           error={this.props.account.error}
           onDrop={this.onDrop}
           translate={this.props.translate}
         />
-        <Modal className={{
-          base: 'reveal tiny confirm-modal',
-          afterOpen: 'reveal tiny confirm-modal'
-        }}
-          isOpen={this.state.isOpen}
-          onRequestClose={this.closeModal}
-          contentLabel="keystore modal"
-          content={this.content()}
-          size="medium"
+        <Modal
+          className={{
+            base: 'reveal tiny confirm-modal',
+            afterOpen: 'reveal tiny confirm-modal'
+         }}
+         isOpen={this.state.isOpen}
+         onRequestClose={this.closeModal}
+         contentLabel="keystore modal"
+         content={this.content()}
+         size="medium"
         />
       </div>
     )

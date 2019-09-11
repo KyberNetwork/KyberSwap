@@ -59,3 +59,12 @@ h1, h2, h3, h4, h5, h6 {
 .hide {
   display: none;
 }
+
+.error-text {
+  color: $alert-color;
+  font-size: 14px;
+  font-weight: 400;
+  display: block;
+  text-transform: none;
+  margin-top: 10px;
+}
