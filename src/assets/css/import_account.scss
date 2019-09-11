@@ -422,7 +422,6 @@
   }
 
   .overlap {
-    justify-content: center !important;
     margin-top: 10px;
     padding: 20px 45px 45px;
     border-bottom-left-radius: 10px;
@@ -432,10 +431,11 @@
       line-height: 45px;
       padding: 0 35px;
       background: #ef8102;
+      color: white;
       font-size: 14px;
       width: 100%;
       max-width: 200px;
-      border-radius: 60px;
+      border-radius: 3px;
       font-weight: 600;
       cursor: pointer;
       color: white;
@@ -459,9 +459,6 @@
 .import-promocode {
   @extend .import-privatekey;
 
-  .overlap {
-    justify-content: space-between !important;
-  }
 }
 
 .keystore-modal{
@@ -488,7 +485,7 @@
 }
 
 .reimport-modal {
-  &--tiny {
+  /*&--tiny {
     @media print, screen and (max-width: 40em) {
       top: 40%;
       height: 160px;
@@ -497,24 +494,23 @@
       border-radius: 10px;
       margin: 0 auto;
     }
-  }
-  
+  }*/
+  padding: 10px; 
+
   .title {
     font-size: 18px !important;
     text-align: center;
     font-weight: 500;
-    padding: 20px;
     margin: 0;
   }
 
   .content{
     display: flex;
-    justify-content: space-between;
-    max-width: 250px;
+    justify-content: flex-end;
     margin: 20px auto 0;
     a{
       padding: 10px 35px;
-      border-radius: 20px;
+      border-radius: 3px;
       display: flex;
       align-items: center;
       color: white;
@@ -522,9 +518,10 @@
       font-size: 14px;
       &.confirm-btn{
         background-color: #EF8102;
+        margin-right: 20px;
       }
       &.cancel-btn{
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
       }
     }
   }

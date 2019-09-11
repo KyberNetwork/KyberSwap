@@ -576,7 +576,7 @@ $divider-color: darken($title-background-color, 5);
     }
     .button {
       min-width: 150px;
-      border-radius: 23px;
+      border-radius: 3px;
       padding: 14px 30px 14px 30px;
       color: #fff;
       font-size: 14px;
@@ -589,6 +589,7 @@ $divider-color: darken($title-background-color, 5);
       border: none;
       outline: none;
       box-shadow: none;
+      text-align: center;
 
       // &::after {
       //   content: '';
@@ -607,9 +608,10 @@ $divider-color: darken($title-background-color, 5);
       }
 
       &.cancel-process {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
         color: white;
         text-transform: uppercase;
+        margin-right: 20px;
         // min-width: 135px;
         // padding: 14px;
         &::after {
@@ -1145,7 +1147,8 @@ $divider-color: darken($title-background-color, 5);
       text-transform: capitalize;
       letter-spacing: 0.5px;
       &.cancel-buttom {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
+        margin-right: 20px;
       }
     }
 
