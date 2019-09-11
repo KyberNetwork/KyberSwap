@@ -100,6 +100,11 @@ $divider-color: darken($title-background-color, 5);
     justify-content: space-between;
     padding: 20px 45px 40px;
     align-items: center;
+
+    &--single {
+      justify-content: center;
+    }
+
     span{
       &:not(.error-text){
         color: white;
