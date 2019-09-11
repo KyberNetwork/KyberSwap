@@ -32,6 +32,13 @@ export function setIsFetchingRate(isFetching) {
   }
 }
 
+export function changeQuotePair(quotePair) {
+  return {
+    type: "LIMIT_ORDER.CHANGE_QUOTE_PAIR",
+    payload: quotePair
+  }
+}
+
 export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, type = false) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_PENDING",

@@ -1985,9 +1985,14 @@
     transition: all 0.3s;
     cursor: pointer;
 
-    &.waiting {
+    &.waiting,
+    &.disabled {
       pointer-events: none;
       cursor: initial;
+    }
+
+    &.disabled {
+      opacity: 0.7;
     }
 
     &:active {

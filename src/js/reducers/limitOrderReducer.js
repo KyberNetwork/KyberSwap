@@ -25,6 +25,11 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
 
+    case "LIMIT_ORDER.CHANGE_QUOTE_PAIR": {
+      newState.currentQuotePair = action.payload;
+      return newState;
+    }
+
     case "LIMIT_ORDER.INPUT_CHANGE": {
       const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload
 

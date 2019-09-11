@@ -39,6 +39,10 @@ export default class LimitOrderForm extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    this.props.dispatch(limitOrderActions.changeQuotePair(this.props.limitOrder.destTokenSymbol))
+  };
+
   setFormType = (type) => {
     this.props.dispatch(limitOrderActions.changeFormType(
       this.props.sourceToken,
@@ -280,6 +284,16 @@ export default class LimitOrderForm extends React.Component {
           }
         </div>
 
+        <div className={"exchange__error"}>
+          {this.props.limitOrder.errors.triggerRate.map((value, index) => {
+            return <span className="exchange__error-item" key={index}>{value}</span>
+          })}
+
+          {this.props.limitOrder.errors.rateSystem &&
+            <div className={"exchange__error-item"}>{this.props.limitOrder.errors.rateSystem}</div>
+          }
+        </div>
+
         <LimitOrderCompareRate/>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
@@ -297,6 +311,12 @@ export default class LimitOrderForm extends React.Component {
             onFocus={e => this.handleFocus(e, "dest")}
           />
           <div className={"limit-order-form__symbol theme__text-3"}>{destTokenSymbol}</div>
+        </div>
+
+        <div className={"exchange__error"}>
+          {this.props.limitOrder.errors.sourceAmount.map((value, index) => {
+            return <div className="exchange__error-item" key={index}>{value}</div>
+          })}
         </div>
 
         {this.props.account &&
@@ -320,6 +340,10 @@ export default class LimitOrderForm extends React.Component {
           getOpenOrderAmount={this.props.getOpenOrderAmount}
           setSubmitHandler={this.props.setSubmitHandler}
         />
+
+        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile &&
+          this.getRateWarningTooltip()
+        }
       </div>
     )
   }
