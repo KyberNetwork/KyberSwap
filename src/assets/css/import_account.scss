@@ -396,6 +396,7 @@
 
 .import-privatekey {
   padding: 0px !important;
+
   .title {
     text-align: center;
     margin-bottom: 70px;
@@ -419,12 +420,14 @@
       }
     }
   }
+
   .overlap {
     justify-content: center !important;
     margin-top: 10px;
     padding: 20px 45px 45px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
     .accent {
       line-height: 45px;
       padding: 0 35px;
@@ -434,8 +437,13 @@
       max-width: 200px;
       border-radius: 60px;
       font-weight: 600;
+      cursor: pointer;
+      color: white;
+      outline: none;
+      border: none;
     }
   }
+
   #private_key {
     text-align: left;
     width: 100%;
