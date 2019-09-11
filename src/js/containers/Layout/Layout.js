@@ -140,25 +140,20 @@ export default class Layout extends React.Component {
 
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-    const LimitOrderAccount = this.LimitOrderAccount
     return (
-      <div> 
-        <LayoutView
-          history={history}        
-          Exchange={Exchange}
-          Transfer={Transfer}
-          LimitOrder = {LimitOrder}
-          supportedLanguages={Language.supportLanguage}
-          setActiveLanguage={this.setActiveLanguage}      
-          currentLanguage = {currentLanguage}  
-          tokens = {this.props.tokens}
-          langClass = {this.props.langClass}
-          theme = {this.props.theme}
-        />
-        <section id="right-nav" className={`${this.props.langClass} theme theme--${this.props.theme}`}>
-          <LimitOrderAccount />
-        </section>
-      </div>
+      <LayoutView
+        history={history}        
+        Exchange={Exchange}
+        Transfer={Transfer}
+        LimitOrder = {LimitOrder}
+        supportedLanguages={Language.supportLanguage}
+        setActiveLanguage={this.setActiveLanguage}      
+        currentLanguage = {currentLanguage}  
+        tokens = {this.props.tokens}
+        langClass = {this.props.langClass}
+        theme = {this.props.theme}
+      />
     )
   }
 }
+

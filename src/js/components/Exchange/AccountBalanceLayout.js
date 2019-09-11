@@ -7,6 +7,7 @@ import { SortableComponent } from "../CommonElement"
 const AccountBalanceLayout = (props) => {
   function reorderToken() {
     let tokens = props.tokens;
+
     if (props.isLimitOrderTab) {
       tokens = props.getFilteredTokens(props.sortValue);
     }
@@ -47,17 +48,16 @@ const AccountBalanceLayout = (props) => {
         }
         break;
       case "Bal":
-        return tokens.sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
+        return Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
         break;
       case "USDT":
-        return tokens.sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
+        return Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
         break;
     }
   }
 
   function getBalances() {
     var tokens = reorderToken()
-    console.log("[][]", tokens)
 
     var balances = tokens
       .map(token => {
@@ -125,7 +125,7 @@ const AccountBalanceLayout = (props) => {
   return (
     <div className="account-balance">
       {props.account !== false && (
-        <SlideDown active={props.isBalanceActive}>
+        <SlideDown active={true}>
           <SlideDownContent>
             <div className="balance-header">
               <div className="slide-down__trigger-container">

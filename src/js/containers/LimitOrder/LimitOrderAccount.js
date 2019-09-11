@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import { ImportAccount } from "../ImportAccount";
 import { AccountBalance } from "../TransactionCommon";
-import { Modal } from "../../components/CommonElement"
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import BLOCKCHAIN_INFO from "../../../../env";
 import * as converters from "../../utils/converter";
 import * as constants from "../../services/constants"
+import ToggleableMenu from "../CommonElements/TogglableMenu.js"
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -32,10 +32,6 @@ import * as constants from "../../services/constants"
 export default class LimitOrderAccount extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isAdvanceTokenVisible: true,
-      isReimport: false
-    }
   }
 
   selectTokenBalance = () => {
@@ -111,41 +107,41 @@ export default class LimitOrderAccount extends React.Component {
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, "limit_order");
   }
 
-  toggleAdvanceTokeBalance = () => {
-    this.setState({
-      isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
-    });
-  }
+  // toggleAdvanceTokeBalance = () => {
+  //   this.setState({
+  //     isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
+  //   });
+  // }
 
-  openReImport = () => {
-    this.setState({ isReImport: true });
-  }
+  // openReImport = () => {
+  //   this.setState({ isReImport: true });
+  // }
 
-  closeReImport = () => {
-    this.setState({ isReImport: false });
-  }
+  // closeReImport = () => {
+  //   this.setState({ isReImport: false });
+  // }
 
-  clearSession = () => {
-    this.closeReImport();
-    this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
-    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
-    this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
-    this.props.global.analytics.callTrack("trackClickChangeWallet");
-    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
-  }
+  // clearSession = () => {
+  //   this.closeReImport();
+  //   this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
+  //   this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
+  //   this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
+  //   this.props.global.analytics.callTrack("trackClickChangeWallet");
+  //   // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+  // }
 
-  reImportModal = () => {
-    return (
-      <div className="reimport-modal">
-        <a className="x" onClick={this.closeReImport}>&times;</a>
-        <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
-        <div className="content">
-          <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
-          <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
-        </div>
-      </div>
-    )
-  }
+  // reImportModal = () => {
+  //   return (
+  //     <div className="reimport-modal">
+  //       <a className="x" onClick={this.closeReImport}>&times;</a>
+  //       <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
+  //       <div className="content">
+  //         <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
+  //         <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     
@@ -163,44 +159,31 @@ export default class LimitOrderAccount extends React.Component {
     return filteredTokens;
   }
 
+  clearSession = () => {
+    this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
+    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
+    this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
+    this.props.global.analytics.callTrack("trackClickChangeWallet");
+    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+  }
+
   render() {
     if (this.props.account === false) {
       return  null
     } else {
       return (
-        <div className={"limit-order-account"}>
-          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
-          {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
-            <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
-              <div className="advance-close_wrapper"/>
-            </div>
-            <div className="limit-order-account__title">
-              <div className="reimport-msg">
-                <Modal className={{
-                  base: 'reveal tiny reimport-modal',
-                  afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
-                }}
-                  isOpen={this.state.isReImport}
-                  onRequestClose={this.closeReImport}
-                  contentLabel="advance modal"
-                  content={this.reImportModal()}
-                  size="tiny"
-                />
-              </div>
-            </div>
+        <ToggleableMenu
+          clearSession={this.clearSession}>
             <AccountBalance
-              isLimitOrderTab={true}
+              isLimitOrderTab={false}
               getFilteredTokens={this.getFilteredTokens}
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
-              isBalanceActive={this.state.isAdvanceTokenVisible}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"
               selectToken={this.selectToken}
-              openReImport={this.openReImport}
             />
-          </div>}
-        </div>
+        </ToggleableMenu>
       );
     }
   }
