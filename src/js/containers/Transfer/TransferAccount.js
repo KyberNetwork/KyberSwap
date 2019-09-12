@@ -39,7 +39,7 @@ export default class TransferAccount extends React.Component {
   }
   
   selectToken = (sourceSymbol) => {
-    this.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
+    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
     var sourceBalance = this.props.tokens[sourceSymbol].balance
 
@@ -65,24 +65,8 @@ export default class TransferAccount extends React.Component {
 
     this.props.dispatch(transferActions.specifyAmountTransfer(amount))
 
-    this.selectTokenBalance();
+    this.props.selectTokenBalance();
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
-  }
-
-  chooseToken = (symbol, address, type) => {
-    this.props.dispatch(transferActions.selectToken(symbol, address))
-    this.props.dispatch(hideSelectToken())
-
-    var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
-
-    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.global.analytics.callTrack("trackChooseToken", type, symbol);
-  }
-
-  selectTokenBalance = () => {
-    this.props.dispatch(transferActions.setIsSelectTokenBalance(true));
   }
 
   clearSession = (e) => {

@@ -16,6 +16,7 @@ import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import { MinRate } from "../Exchange"
 import ReactTooltip from 'react-tooltip';
+import { ExchangeAccount } from "../../containers/Exchange"
 
 @connect((store, props) => {
   const ethereum = store.connection.ethereum
@@ -399,6 +400,8 @@ class ExchangeBody extends React.Component {
     })
 
     var isFixedSourceToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.tokens[BLOCKCHAIN_INFO.promo_token])
+    var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
+    
     var tokenSourceSelect = (
       <TokenSelector
         type="source"
@@ -408,7 +411,6 @@ class ExchangeBody extends React.Component {
         isFixToken={isFixedSourceToken}
       />
     )
-    var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
     var tokenDestSelect = (
       <TokenSelector
         type="dest"
@@ -437,31 +439,36 @@ class ExchangeBody extends React.Component {
     }
 
     return (
-      <ExchangeBodyLayout
-        exchange={this.props.exchange}
-        account={this.props.account.account}
-        tokenSourceSelect={tokenSourceSelect}
-        tokenDestSelect={tokenDestSelect}
-        input={input}
-        addressBalance={this.getAddressBalance()}
-        sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
-        destTokenSymbol={this.props.exchange.destTokenSymbol}
-        translate={this.props.translate}
-        swapToken={this.swapToken}
-        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-        advanceLayout={this.getAdvanceLayout()}
-        networkError={this.props.global.network_error}
-        isChangingWallet={this.props.global.isChangingWallet}
-        changeWalletType={this.props.global.changeWalletType}
-        closeChangeWallet={this.closeChangeWallet}
-        global={this.props.global}
-        acceptTerm={this.acceptTerm}
-        isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-        isAdvanceActive={this.props.exchange.isAdvanceActive}
-        toggleAdvanceContent={this.toggleAdvanceContent}
-        isOpenAdvance={this.props.exchange.isOpenAdvance}
-        changeSourceAmount={this.changeSourceAmount}
-      />
+      <div>
+        <ExchangeBodyLayout
+          exchange={this.props.exchange}
+          account={this.props.account.account}
+          tokenSourceSelect={tokenSourceSelect}
+          tokenDestSelect={tokenDestSelect}
+          input={input}
+          addressBalance={this.getAddressBalance()}
+          sourceTokenSymbol={this.props.exchange.sourceTokenSymbol}
+          destTokenSymbol={this.props.exchange.destTokenSymbol}
+          translate={this.props.translate}
+          swapToken={this.swapToken}
+          isAgreedTermOfService={this.props.global.termOfServiceAccepted}
+          advanceLayout={this.getAdvanceLayout()}
+          networkError={this.props.global.network_error}
+          isChangingWallet={this.props.global.isChangingWallet}
+          changeWalletType={this.props.global.changeWalletType}
+          closeChangeWallet={this.closeChangeWallet}
+          global={this.props.global}
+          acceptTerm={this.acceptTerm}
+          isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+          isAdvanceActive={this.props.exchange.isAdvanceActive}
+          toggleAdvanceContent={this.toggleAdvanceContent}
+          isOpenAdvance={this.props.exchange.isOpenAdvance}
+          changeSourceAmount={this.changeSourceAmount}
+        />
+
+        <ExchangeAccount selectSourceToken = {this.selectSourceToken}
+        selectTokenBalance = {this.selectTokenBalance}/> 
+      </div>
     )
   }
 }

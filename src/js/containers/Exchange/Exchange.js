@@ -7,8 +7,6 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 import { Market } from "../Market"
-import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
-import { ExchangeAccount } from "../../containers/Exchange"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -156,13 +154,10 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-      <div>
-        <ExchangeAccount />
         <div className={"exchange__container"}>
           <ExchangeBody/>
           <Market/>
         </div>
-      </div>
     )
   }
 }

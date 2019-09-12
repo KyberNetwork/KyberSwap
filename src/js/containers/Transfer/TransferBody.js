@@ -17,6 +17,7 @@ import { getTranslate } from 'react-localize-redux'
 import { debounce } from 'underscore'
 import BLOCKCHAIN_INFO from "../../../../env";
 import constants from "../../services/constants"
+import { TransferAccount } from "../../containers/Transfer"
 
 @connect((store, props) => {
   return {
@@ -306,45 +307,49 @@ class Transfer extends React.Component {
       onDAPP={this.props.account.isOnDAPP} /> : ""
 
     return (
-      <TransferForm
-        transfer = {this.props.transfer}
-        account={this.props.account.account}
-        chooseToken={this.chooseToken}
-        sourceActive={this.props.transfer.tokenSymbol}
-        step={this.props.transfer.step}
-        tokenSymbol={this.props.transfer.tokenSymbol}
-        tokenTransferSelect={tokenTransferSelect}
-        input={input}
-        errors={errors}
-        translate={this.props.translate}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        focus={this.state.focus}
-        onFocusAddr={this.onFocusAddr}
-        advanceLayout={this.getAdvanceLayout()}
-        balanceLayout={this.getBalanceLayout()}
-        networkError={this.props.global.network_error}
-        isChangingWallet={this.props.global.isChangingWallet}
-        changeWalletType={this.props.global.changeWalletType}
-        closeChangeWallet={this.closeChangeWallet}
-        global={this.props.global}
-        addressBalance={addressBalance}
-        clearSession={this.clearSession}
-        walletName={this.props.account.walletName}
-        qcCode={qcCode}
-        isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-        acceptTerm={this.acceptTerm}
-        isBalanceActive={this.props.transfer.isBalanceActive}
-        isAdvanceActive={this.props.transfer.isAdvanceActive}
-        toggleAdvanceContent={this.toggleAdvanceContent}
-        isOpenAdvance={this.props.transfer.isOpenAdvance}
-        clearIsOpenAdvance={this.clearIsOpenAdvance}
-        isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-        acceptConnectWallet={this.acceptConnectWallet}
-        isOnDAPP={this.props.account.isOnDAPP}
-        isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
-        changeSourceAmount={this.onAmountChange}
-      />
+      <div>
+        <TransferForm
+          transfer = {this.props.transfer}
+          account={this.props.account.account}
+          chooseToken={this.chooseToken}
+          sourceActive={this.props.transfer.tokenSymbol}
+          step={this.props.transfer.step}
+          tokenSymbol={this.props.transfer.tokenSymbol}
+          tokenTransferSelect={tokenTransferSelect}
+          input={input}
+          errors={errors}
+          translate={this.props.translate}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          focus={this.state.focus}
+          onFocusAddr={this.onFocusAddr}
+          advanceLayout={this.getAdvanceLayout()}
+          balanceLayout={this.getBalanceLayout()}
+          networkError={this.props.global.network_error}
+          isChangingWallet={this.props.global.isChangingWallet}
+          changeWalletType={this.props.global.changeWalletType}
+          closeChangeWallet={this.closeChangeWallet}
+          global={this.props.global}
+          addressBalance={addressBalance}
+          clearSession={this.clearSession}
+          walletName={this.props.account.walletName}
+          qcCode={qcCode}
+          isAgreedTermOfService={this.props.global.termOfServiceAccepted}
+          acceptTerm={this.acceptTerm}
+          isBalanceActive={this.props.transfer.isBalanceActive}
+          isAdvanceActive={this.props.transfer.isAdvanceActive}
+          toggleAdvanceContent={this.toggleAdvanceContent}
+          isOpenAdvance={this.props.transfer.isOpenAdvance}
+          clearIsOpenAdvance={this.clearIsOpenAdvance}
+          isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+          acceptConnectWallet={this.acceptConnectWallet}
+          isOnDAPP={this.props.account.isOnDAPP}
+          isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
+          changeSourceAmount={this.onAmountChange}
+        />
+        <TransferAccount chooseToken={this.chooseToken}
+          selectTokenBalance={this.selectTokenBalance}/>
+      </div>
     )
   }
 }

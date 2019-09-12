@@ -175,7 +175,7 @@ export default class LimitOrderAccount extends React.Component {
         <ToggleableMenu
           clearSession={this.clearSession}>
             <AccountBalance
-              isLimitOrderTab={false}
+              isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
               sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isOnDAPP={this.props.account.isOnDAPP}

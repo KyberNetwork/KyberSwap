@@ -39,8 +39,9 @@ export default class ExchangeAccount extends React.Component {
   constructor() {
     super();
   }
+
   selectToken = (sourceSymbol) => {
-    this.selectSourceToken(sourceSymbol)
+    this.props.selectSourceToken(sourceSymbol)
 
     var sourceBalance = this.props.tokens[sourceSymbol].balance
   
@@ -69,32 +70,8 @@ export default class ExchangeAccount extends React.Component {
 
     this.props.dispatch(exchangeActions.inputChange('source', amount, this.props.sourceToken.decimals, this.props.destToken.decimals))
     this.props.dispatch(exchangeActions.focusInput('source'));
-    this.selectTokenBalance();
+    this.props.selectTokenBalance();
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
-  }
-  selectSourceToken = (symbol) => {        
-    var sourceTokenSymbol = symbol
-    var sourceToken = this.props.tokens[sourceTokenSymbol].address
-    var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var destToken = this.props.tokens[destTokenSymbol].address
-    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
-
-    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
-    this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
-  }
-  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
-    var path = constants.BASE_HOST +  "/swap/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
-    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.dispatch(globalActions.updateTitleWithRate());
-
-    var sourceAmount = this.props.exchange.sourceAmount
-    var refetchSourceAmount = this.props.exchange.inputFocus === "source"?false: true
-    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.selectToken));
-  }
-
-  selectTokenBalance = () => {
-    this.props.dispatch(exchangeActions.setIsSelectTokenBalance(true));
   }
 
   clearSession = (e) => {
