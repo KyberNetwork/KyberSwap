@@ -142,7 +142,7 @@ export default class Layout extends React.Component {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
     const LimitOrderAccount = this.LimitOrderAccount
     return (
-      <div> 
+      <div>
         <LayoutView
           history={history}        
           Exchange={Exchange}

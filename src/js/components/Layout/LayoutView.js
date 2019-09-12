@@ -6,6 +6,7 @@ import ImportByPromoCodeModal from "../../containers/ImportAccount/ImportByPromo
 import constants from "../../services/constants"
 import * as common from "../../utils/common"
 import { store } from '../../store'
+import { HeaderTransaction } from "../../containers/TransactionCommon";
 
 function getAllPathToken(listToken){
   var tokens = []
@@ -65,6 +66,9 @@ const LayoutView = (props) => {
     <ConnectedRouter history={props.history} store ={store}>
       <Fragment>
         <section id="content" className={`${props.langClass} theme theme--${props.theme}`}>
+          {process.env.env === "ropsten" &&
+            <HeaderTransaction/>
+          }
           <Switch>
             <Route exact path={constants.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constants.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />
