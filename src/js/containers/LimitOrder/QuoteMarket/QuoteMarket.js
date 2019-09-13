@@ -93,8 +93,8 @@ export default class QuoteMarket extends React.Component{
     .filter(pair => (pair["base"].toLowerCase().includes(current_search.toLowerCase())))
     .map(pair => ({
       ...pair, 
-      volume: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].volume : "1000000" ), 
-      change: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].change : "0.5" )
+      volume: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].volume : "-" ), 
+      change: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].change : "0" )
     }))
     .sort(function(a,b){return (current_sort_dsc ? 1 : -1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
   }
@@ -120,11 +120,10 @@ export default class QuoteMarket extends React.Component{
         return res
       },{})
     return quotes;
-
   }
 
   renderTh = () => {
-    return [<div style={{width: '25px'}}></div>].concat([
+    return [
       { html: "Pair", field: "base" }, 
       { html: "Price", field: "price" }, 
       { html: "Volume", field: "volume" }, 
@@ -138,7 +137,7 @@ export default class QuoteMarket extends React.Component{
           onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
           isActive={this.state.current_sort_index == i["field"]} />
       </div>
-    )))
+    ))
   }
 
   render(){
@@ -157,15 +156,6 @@ export default class QuoteMarket extends React.Component{
                 {this.renderTh()}
               </div> 
               <table >
-                {/*<thead> 
-                  <tr>
-                    <td width="10%" ></td>
-                    <td width="20%" ></td>
-                    <td width="20%" ></td>
-                    <td width="20%" ></td>
-                    <td width="20%" ></td>
-                  </tr>
-                </thead> */}
                 <tbody>
                   {list.map(pair => <tr key={pair["id"]}>
                       <td width="20px" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>

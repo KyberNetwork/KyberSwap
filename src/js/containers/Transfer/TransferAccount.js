@@ -38,37 +38,6 @@ export default class TransferAccount extends React.Component {
     super();
   }
   
-  selectToken = (sourceSymbol) => {
-    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
-
-    var sourceBalance = this.props.tokens[sourceSymbol].balance
-
-
-    var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-    var amount
-
-    if (sourceSymbol !== "ETH") {
-        amount = sourceBalance
-        amount = converters.toT(amount, sourceDecimal)
-        amount = amount.replace(",", "")
-    } else {            
-        var gasLimit = this.props.transfer.gas
-        var totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
-
-        amount = sourceBalance - totalGas * 120 / 100
-        amount = converters.toEther(amount)
-        amount = converters.roundingNumber(amount).toString(10)
-        amount = amount.replace(",", "")
-    }
-
-    if (amount < 0) amount = 0;
-
-    this.props.dispatch(transferActions.specifyAmountTransfer(amount))
-
-    this.props.selectTokenBalance();
-    this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
-  }
-
   clearSession = (e) => {
     this.props.dispatch(globalActions.clearSession(this.props.transfer.gasPrice));
     this.props.global.analytics.callTrack("trackClickChangeWallet")
@@ -88,7 +57,7 @@ export default class TransferAccount extends React.Component {
               screen="transfer"
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.account.walletName}
-              selectToken={this.selectToken}
+              selectToken={this.props.selectToken}
             />
         </ToggleableMenu>
       );

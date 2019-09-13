@@ -388,57 +388,15 @@ export function getVolumeAndChange(){
   })
 }
 
-// export function getFavoritePairs(){
-//   return new Promise((resolve, reject) => {
-//     resolve(JSON.parse('["BITX_ETH"]'))
-//   })
-// }
-
-const AuthorizationHeader = {
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    // 'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMiwiZXhwIjoxNTY4MzY0OTIyfQ.jZWolNW59a-RGz9xA64MSkTsLlyLHmYCMb7IKiDTp28',
-  }
-}
 export function getFavoritePairs(){
   return new Promise((resolve, rejected) => {
     resolve([{base: "BITX", quote: "ETH"}])
-    // timeout(MAX_REQUEST_TIMEOUT, fetch("http://localhost:3000/api/orders/favorite_pairs", {...AuthorizationHeader}))
-    // .then((response) => {
-    //   return response.json()
-    // }).then((result) => {
-    //   if (result.success) {
-    //     resolve(result.favorite_pairs)
-    //   } else {
-    //     rejected(new Error("Cannot get favorite pairs"));
-    //   }
-    // })
-    // .catch((err) => {
-    //     rejected(new Error(`Cannot get favorite pairs: ${err.toString}`))
-    // })
   })
 }
 
 
 export function updateFavoritePairs(base, quote, to_fav){
   return new Promise((resolve, rejected) => {
-    // timeout(MAX_REQUEST_TIMEOUT, fetch("http://localhost:3000/api/orders/favorite_pair", {...AuthorizationHeader, 
-    //   method: "PUT",
-    //   body: JSON.stringify({base: base, quote: quote, status: to_fav.toString()})
-    // }))
-    // .then((response) => {
-    //   return response.json()
-    // }).then((result) => {
-    //   if (result.success) {
-    //     resolve(result)
-    //   } else {
-    //     rejected(new Error("Cannot update favorite pair"));
-    //   }
-    // })
-    // .catch((err) => {
-    //     rejected(new Error(`Cannot update favorite pair: ${err.toString}`))
-    // })
     resolve("")
   })
 }

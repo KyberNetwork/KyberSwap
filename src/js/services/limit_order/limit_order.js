@@ -374,25 +374,7 @@ export function getModeLimitOrder() {
 }
 
 export function getFavoritePairs(){
-    // /api/orders/favorite_pairs(
-    // return new Promise((resolve, rejected) => {
-    //     timeout(MAX_REQUEST_TIMEOUT, fetch('/api/orders'))
-    //         .then((response) => {
-    //             return response.json()
-    //         }).then((result) => {
-    //             if (result.success) {
-    //                 var orderList = filterOrder(result)
-    //                 resolve(orderList)
-    //             } else {
-    //                 rejected(new Error("Cannot get orders"));
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             rejected(new Error(`Cannot get user orders: ${err.toString}`))
-    //         })
-    // })
-  return new Promise((resolve, reject) => {
-    // resolve(JSON.parse('["BITX_ETH"]'))
+  return new Promise((resolve, rejected) => {
     timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pairs"))
     .then((response) => {
       return response.json()
@@ -409,37 +391,14 @@ export function getFavoritePairs(){
   })
 }
 
-
-const AuthorizationHeader = {
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    // 'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMiwiZXhwIjoxNTY4MzY0OTIyfQ.jZWolNW59a-RGz9xA64MSkTsLlyLHmYCMb7IKiDTp28',
-  }
-}
-export function getFavoritePairs(){
-  return new Promise((resolve, rejected) => {
-    timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pairs", {...AuthorizationHeader}))
-    .then((response) => {
-      return response.json()
-    }).then((result) => {
-      if (result.success) {
-        resolve(result.favorite_pairs)
-      } else {
-        rejected(new Error("Cannot get favorite pairs"));
-      }
-    })
-    .catch((err) => {
-        rejected(new Error(`Cannot get favorite pairs: ${err.toString}`))
-    })
-  })
-}
-
-
 export function updateFavoritePairs(base, quote, to_fav){
   return new Promise((resolve, rejected) => {
-    timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pair", {...AuthorizationHeader, 
+    timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pair", { 
       method: "PUT",
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
       body: JSON.stringify({base: base, quote: quote, status: to_fav.toString()})
     }))
     .then((response) => {

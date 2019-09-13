@@ -66,7 +66,6 @@ export default class LimitOrderAccount extends React.Component {
     return totalFee
   }
 
-
   selectToken = (sourceSymbol) => {
 
     this.props.selectSourceToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
@@ -106,42 +105,6 @@ export default class LimitOrderAccount extends React.Component {
     this.selectTokenBalance();
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, "limit_order");
   }
-
-  // toggleAdvanceTokeBalance = () => {
-  //   this.setState({
-  //     isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
-  //   });
-  // }
-
-  // openReImport = () => {
-  //   this.setState({ isReImport: true });
-  // }
-
-  // closeReImport = () => {
-  //   this.setState({ isReImport: false });
-  // }
-
-  // clearSession = () => {
-  //   this.closeReImport();
-  //   this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
-  //   this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
-  //   this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
-  //   this.props.global.analytics.callTrack("trackClickChangeWallet");
-  //   // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
-  // }
-
-  // reImportModal = () => {
-  //   return (
-  //     <div className="reimport-modal">
-  //       <a className="x" onClick={this.closeReImport}>&times;</a>
-  //       <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
-  //       <div className="content">
-  //         <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
-  //         <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     

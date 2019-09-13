@@ -347,8 +347,7 @@ class Transfer extends React.Component {
           isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
           changeSourceAmount={this.onAmountChange}
         />
-        <TransferAccount chooseToken={this.chooseToken}
-          selectTokenBalance={this.selectTokenBalance}/>
+        <TransferAccount selectToken = {this.selectToken}/>
       </div>
     )
   }
