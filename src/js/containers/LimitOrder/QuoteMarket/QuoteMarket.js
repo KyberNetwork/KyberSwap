@@ -33,9 +33,12 @@ export default class QuoteMarket extends React.Component{
     this.intervalId = setInterval(() => { 
       this.updateVolume()
     }, 2000);
-
     if (common.isUserLogin()) {
-      limitOrderServices.getFavoritePairs().then((res) => this.setState({favorite_pairs: res}))
+      limitOrderServices.getFavoritePairs().then(
+        (res) => { 
+          this.setState({favorite_pairs: res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)}) 
+        } 
+      )
     } 
   }
 
@@ -60,18 +63,15 @@ export default class QuoteMarket extends React.Component{
 
   onFavoriteClick = (base, quote, to_fav) => {
     if (common.isUserLogin()) {
-      limitOrderServices
-        .updateFavoritePairs()
-        .then((res) => {
-          const {favorite_pairs} = this.state
-          const index = favorite_pairs.indexOf(base+"_"+quote)
-            if (index == -1){
-              favorite_pairs.push(base+"_"+quote)
-            }else {
-              favorite_pairs.splice(index, 1)
-            }
-            this.setState({favorite_pairs: favorite_pairs})
-        })
+      const {favorite_pairs} = this.state
+      const index = favorite_pairs.indexOf(base+"_"+quote)
+      if (index == -1){
+        favorite_pairs.push(base+"_"+quote)
+      }else {
+        favorite_pairs.splice(index, 1)
+      }
+      this.setState({favorite_pairs: favorite_pairs})
+      limitOrderServices.updateFavoritePairs(base, quote, to_fav)
     }else {
       this.props.dispatch(limitOrderActions.updateFavoriteAnonymous(base, quote, to_fav))
     } 
@@ -120,7 +120,6 @@ export default class QuoteMarket extends React.Component{
         return res
       },{})
     return quotes;
-
   }
 
   renderTh = () => {
@@ -130,13 +129,14 @@ export default class QuoteMarket extends React.Component{
       { html: "Volume", field: "volume" }, 
       { html: "Change", field: "change" }
     ].map((i, index) => (
-      <SortableComponent 
-        Wrapper={"th"}
-        key={i["html"]} 
-        width={"20%"}
-        text={i["html"]}
-        onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
-        isActive={this.state.current_sort_index == i["field"]} />
+      <div>
+        <SortableComponent 
+          Wrapper={"span"}
+          key={i["html"]} 
+          text={i["html"]}
+          onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
+          isActive={this.state.current_sort_index == i["field"]} />
+      </div>
     ))
   }
 
@@ -152,22 +152,19 @@ export default class QuoteMarket extends React.Component{
                 <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={["FAV"].concat(Object.keys(quotes))}/>
                 <Search onSearch={this.onSearch}/>
               </div>
-              <table>
-                <thead>
-                  <tr className="theme__text-3">
-                    <th width="10%"></th>
-                    {this.renderTh()}
-                  </tr>
-                </thead>
+              <div className="table-th">
+                {this.renderTh()}
+              </div> 
+              <table >
                 <tbody>
                   {list.map(pair => <tr key={pair["id"]}>
-                      <td width="10%" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                      <td width="20px" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                         <div className={pair["is_favorite"] ? "star active" : "star" } /> 
                       </td>
-                      <td width="20%">{pair["base"] + "/" + pair["quote"]}</td>
-                      <td width="20%">{pair["price"]}</td>
-                      <td width="20%">{pair["volume"]}</td>
-                      <td width="20%" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
+                      <td width="82px">{pair["base"] + "/" + pair["quote"]}</td>
+                      <td width="82px">{pair["price"]}</td>
+                      <td width="82px">{pair["volume"]}</td>
+                      <td width="82px" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
                     </tr>)} 
                 </tbody>
               </table>

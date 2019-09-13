@@ -1,6 +1,4 @@
 #quote-market {
-  height:310px;
-  overflow-y: auto;
   padding: 1.5em;
   font-size: 14px;
   font-weight: 500;
@@ -14,6 +12,7 @@
   }
 
   .star {
+    cursor: pointer;
     width: 18px;
     height: 18px;
     background-image: url($image-path + 'common/star.svg');
@@ -30,8 +29,8 @@
   }
 
   div#container {
-    height: 100%;
-    overflow-y: auto;
+    /*height: 100%;
+    overflow-y: auto;*/
   }
 
   .rate-loading {
@@ -47,7 +46,9 @@
       width: 60%;
       display: inline-block;
       cursor: pointer;
-
+      div{
+        display: inline-block;
+      }
       span {
         margin-left: 20px;
         padding-bottom: 4px;
@@ -69,7 +70,6 @@
       margin-top: 5px;
       width: 30%;
       display: inline-block;
-      cursor: pointer;
 
       input {
         width: 100%;
@@ -82,6 +82,7 @@
         background-repeat: no-repeat;
         background-size: 15px;
         padding: 0 0 10px 0;
+        cursor: pointer;
       };
 
       input:focus {
@@ -92,8 +93,28 @@
       };
     }
   }
+  .table-th {
+    margin: 0.5em 0 0.5em 25px;
+
+    div{
+      cursor: pointer;
+      display: inline-block;
+      width: 82px;
+      .active{
+          &.asc:after{
+            content: url($image-path + 'limit-order/sort-asc-icon.svg');
+          }
+
+          &.dsc:after{
+            content: url($image-path + 'limit-order/sort-desc-icon.svg');
+          }
+        }
+    }
+  }
   table {
-    margin-top: 0.5em;
+    display: block;
+    height: 300px;
+    overflow-y: auto; 
     width: 100%;
 
     thead, tbody {
@@ -137,6 +158,7 @@
       font-size: 12px;
       line-height: 2em;
       text-align: start;
+      cursor: pointer;
 
       i {
         width: 20px;

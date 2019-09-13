@@ -8,6 +8,7 @@ import {LimitOrderBody} from "../LimitOrder"
 import limitOrderServices from "../../services/limit_order";
 import { isUserLogin } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
+import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -29,6 +30,7 @@ export default class LimitOrder extends React.Component {
     this.state = {
       intervalGroup: []
     }
+    this.LimitOrderAccount = withSourceAndBalance(<LimitOrderAccount />)
   }
 
   getEthereumInstance = () => {
@@ -155,9 +157,14 @@ export default class LimitOrder extends React.Component {
   }
 
   render() {
+    const LimitOrderAccount = this.LimitOrderAccount;
     return (
-      <div className={"limit-order-container"}>
-        <LimitOrderBody page="limit_order"/>
+      <div>
+        <LimitOrderAccount />
+        <div className={"limit-order-container"}>
+          {/*<HeaderTransaction page="limit_order"/>*/}
+          <LimitOrderBody page="limit_order"/>        
+        </div>
       </div>
     )
   }

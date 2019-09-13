@@ -153,11 +153,10 @@ const withSourceAndBalance = (Component) => {
     }
 
     render(){
-      return React.cloneElement(Component, {
-          selectSourceToken: this.selectSourceToken, 
-          selectDestToken: this.selectDestToken,
-          availableBalanceTokens: this.getModifiedTokenList,
-          getOpenOrderAmount: this.getOpenOrderAmount
+      return React.cloneElement(Component, { 
+          selectSourceToken: this.selectSourceToken, //for limit order account 
+          availableBalanceTokens: this.getModifiedTokenList, //for limit order account + form
+          getOpenOrderAmount: this.getOpenOrderAmount //for limit order form
       });
     }
   })

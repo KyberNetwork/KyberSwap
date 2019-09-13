@@ -389,14 +389,15 @@ export function getVolumeAndChange(){
 }
 
 export function getFavoritePairs(){
-  return new Promise((resolve, reject) => {
-    resolve(JSON.parse('["BITX_ETH"]'))
+  return new Promise((resolve, rejected) => {
+    resolve([{base: "BITX", quote: "ETH"}])
   })
 }
 
-export function updateFavoritePairs(){
-  return new Promise((resolve, reject) => {
-    resolve(JSON.parse('["BITX_ETH"]'))
+
+export function updateFavoritePairs(base, quote, to_fav){
+  return new Promise((resolve, rejected) => {
+    resolve("")
   })
 }
 

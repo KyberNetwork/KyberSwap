@@ -154,10 +154,10 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-      <div className={"exchange__container"}>
-        <ExchangeBody/>
-        <Market/>
-      </div>
+        <div className={"exchange__container"}>
+          <ExchangeBody/>
+          <Market/>
+        </div>
     )
   }
 }

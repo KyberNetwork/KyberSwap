@@ -372,3 +372,47 @@ export function getModeLimitOrder() {
     const totalOrders = getCookie("order_count");
     return totalOrders <= LIMIT_ORDER_CONFIG.pageSize ? "client" : "server";    
 }
+
+export function getFavoritePairs(){
+  return new Promise((resolve, rejected) => {
+    timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pairs"))
+    .then((response) => {
+      return response.json()
+    }).then((result) => {
+      if (result.success) {
+        resolve(result.favorite_pairs)
+      } else {
+        rejected(new Error("Cannot get favorite pairs"));
+      }
+    })
+    .catch((err) => {
+        rejected(new Error(`Cannot get favorite pairs: ${err.toString}`))
+    })
+  })
+}
+
+export function updateFavoritePairs(base, quote, to_fav){
+  return new Promise((resolve, rejected) => {
+    timeout(MAX_REQUEST_TIMEOUT, fetch("/api/orders/favorite_pair", { 
+      method: "PUT",
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({base: base, quote: quote, status: to_fav.toString()})
+    }))
+    .then((response) => {
+      return response.json()
+    }).then((result) => {
+      if (result.success) {
+        resolve(result)
+      } else {
+        rejected(new Error("Cannot update favorite pair"));
+      }
+    })
+    .catch((err) => {
+        rejected(new Error(`Cannot update favorite pair: ${err.toString}`))
+    })
+  })
+}
+

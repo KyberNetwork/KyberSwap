@@ -140,7 +140,6 @@ export default class Layout extends React.Component {
 
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
-    const LimitOrderAccount = this.LimitOrderAccount
     return (
       <div className={`theme theme--${this.props.theme}`}>
         <LayoutView
@@ -154,10 +153,8 @@ export default class Layout extends React.Component {
           tokens = {this.props.tokens}
           langClass = {this.props.langClass}
         />
-        <section id="right-nav">
-          <LimitOrderAccount />
-        </section>
       </div>
     )
   }
 }
+

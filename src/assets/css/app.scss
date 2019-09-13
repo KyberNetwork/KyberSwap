@@ -31,6 +31,23 @@
 html body {
   font-family: $font-roboto;
   font-weight: 300;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px!important;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $grey-dark; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $text-orange-light;
+    border-radius: 10px;
+  }
 }
 
 a {
@@ -67,4 +84,8 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   text-transform: none;
   margin-top: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
 }
