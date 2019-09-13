@@ -212,7 +212,8 @@
             "cg_id": "digix-gold",
             "gasLimit": "750000",
             "gasApprove": 120000,
-            "priority": true
+            "priority": true,
+            "sp_limit_order": true
         },
         "STORM": {
             "symbol": "STORM",
@@ -577,14 +578,6 @@
             "listing_time": 1549976400,
             "priority": true
         },
-        "BIX": {
-            "symbol": "BIX",
-            "name": "BIX Token",
-            "address": "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069",
-            "decimals": 18,
-            "cg_id": "bibox-token",
-            "listing_time": 1549976400
-        },
         "CDT": {
             "symbol": "CDT",
             "name": "CoinDash",
@@ -691,6 +684,31 @@
             "decimals": 18,
             "cg_id": "sentinel-protocol",
             "listing_time": 1563973200
+        },
+        "CND": {
+            "symbol": "CND",
+            "name": "Cindicator",
+            "address": "0xd4c435f5b09f855c3317c8524cb1f586e42795fa",
+            "decimals": 18,
+            "cg_id": "cindicator",
+            "listing_time": 1565701200
+        },
+        "USDT": {
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "decimals": 6,
+            "cg_id": "tether",
+            "listing_time": 1565960400
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+            "decimals": 18,
+            "cg_id": "havven",
+            "listing_time": 1565960400,
+            "gasLimit": "500000"
         }
     },
     "ethScanUrl": "https://etherscan.io/",

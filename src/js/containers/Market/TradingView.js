@@ -14,23 +14,23 @@ import BLOCKCHAIN_INFO from "../../../../env"
 })
 
 export default class TradingView extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      rateType: "sell",
-    }
-  }
+	constructor() {
+		super()
+		this.state = {
+			rateType: "",
+		}
+	}
 
-  static defaultProps = {
-    interval: '60',
-    locale: 'en',
-    containerId: 'tv_chart_container',
-    datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
-    updateFrequency: 300000, // 1 minutes
-    libraryPath: '/trading_view/charting_library/',
-    fullscreen: false,
-    autosize: true
-  };
+	static defaultProps = {
+		interval: '5',
+		locale: 'en',
+		containerId: 'tv_chart_container',
+		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
+		updateFrequency: 300000, // 1 minutes
+		libraryPath: '/trading_view/charting_library/',
+		fullscreen: false,
+		autosize: true
+	};
 
   getLanguageFromURL = () => {
     var locale = this.props.locale
@@ -68,33 +68,70 @@ export default class TradingView extends React.Component {
     button[0].innerHTML = data.content;
   }
 
-  componentDidMount() {
-    const feeder = new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl, this.props.updateFrequency);
-    const widgetOptions = {
-      symbol: this.props.selectedSymbol,
-      datafeed: feeder,
-      interval: this.props.interval,
-      container_id: this.props.containerId,
-      library_path: this.props.libraryPath,
-      locale: this.getLanguageFromURL() || this.props.locale,
-      fullscreen: this.props.fullscreen,
-      autosize: this.props.autosize,
-      timeframe: "4D",
-      overrides: {
-        'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
-        'mainSeriesProperties.candleStyle.downColor': '#F95555',
-        'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
-        'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
-        'mainSeriesProperties.candleStyle.drawBorder': false,
-      }
-    };
+	getTimeFrame = (interval) => {
+		switch(interval) {
+			case '5':
+				return 12 * 3600
+				break
+			case '15':
+				return 12 * 3 * 3600
+				break
+			case '30':
+				return 12 * 6 * 3600
+				break
+			case '60':
+				return 12 * 12 * 3600
+				break
+			case '120':
+				return 12 * 24 * 3600
+				break
+			case '240':
+				return 12 * 48 * 3600
+				break
+			case '360':
+				return 12 * 72 * 3600
+				break
+			case '720':
+				return 12 * 144 * 3600
+				break
+		}
+		return '4D'
+	}
+
+	componentDidMount() {
+		// console.log(this.props)
+		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
+			this.props.datafeedUrl, this.props.updateFrequency);
+
+
+		const widgetOptions = {
+			symbol: this.props.selectedSymbol,
+			datafeed: feeder,
+			interval: this.props.interval,
+			container_id: this.props.containerId,
+			library_path: this.props.libraryPath,
+			// timeframe: this.props.timeframe,
+			// time_frames: this.props.time_frames,
+			locale: this.getLanguageFromURL() || this.props.locale,
+			fullscreen: this.props.fullscreen,
+			autosize: this.props.autosize,
+			timeframe: this.getTimeFrame(this.props.interval),
+			// timezone: "Asia/Singapore",
+			overrides: {
+				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
+				'mainSeriesProperties.candleStyle.downColor': '#F95555',
+				'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
+				'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
+				'mainSeriesProperties.candleStyle.drawBorder': false,
+			}
+		};
 
     const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
-    widget.onChartReady(() => {
-      this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
-      this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
-      this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
+		widget.onChartReady(() => {
+			// this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
+			// this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
+			// this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 
       widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
         this.props.dispatch(changeSymbol(symbolData.name))
@@ -102,17 +139,18 @@ export default class TradingView extends React.Component {
 
       const chart = widget.chart();
 
-      chart.onIntervalChanged().subscribe(null, (interval, obj) => {
-        if (interval === "D") {
-          obj.timeframe = "100D"
-        } else if (interval === "W") {
-          obj.timeframe = "24M"
-        } else {
-          obj.timeframe = `${interval / 60 * 4}D`;
-        }
-      });
-    });
-  }
+			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
+
+			// 	if (interval === "D") {
+			// 		obj.timeframe = "100D"
+			// 	} else if (interval === "W") {
+			// 		obj.timeframe = "24M"
+			// 	} else {
+			// 		obj.timeframe = `${3600 / interval * 24}`;
+			// 	}
+			// });
+		});
+	}
 
   render() {
     return (

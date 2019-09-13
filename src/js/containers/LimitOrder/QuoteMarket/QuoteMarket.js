@@ -149,7 +149,7 @@ export default class QuoteMarket extends React.Component{
       <div id="quote-market" className="theme__background-2"> 
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
-              <div id="panel" className="theme__text-4">
+              <div id="panel" className="theme__text-4 theme__border">
                 <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={["FAV"].concat(Object.keys(quotes))}/>
                 <Search onSearch={this.onSearch}/>
               </div>

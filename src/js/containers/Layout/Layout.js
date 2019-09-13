@@ -97,14 +97,14 @@ export default class Layout extends React.Component {
     }
 
     if (window.kyberBus) {
-      window.kyberBus.on("swap.switch_theme", this.switchTheme.bind(this));
+      window.kyberBus.on('set.theme.light', this.switchTheme('light').bind(this));
+      window.kyberBus.on('set.theme.dark', this.switchTheme('dark').bind(this));
     }
   }
 
-  switchTheme = () => {
-    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
+  switchTheme = (theme) => {
     this.props.dispatch(switchTheme(theme));
-  }
+  };
 
   handleCloseWeb = () => {
     this.props.analytics.callTrack("exitSwap");
@@ -141,18 +141,19 @@ export default class Layout extends React.Component {
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
     return (
-      <LayoutView
-        history={history}        
-        Exchange={Exchange}
-        Transfer={Transfer}
-        LimitOrder = {LimitOrder}
-        supportedLanguages={Language.supportLanguage}
-        setActiveLanguage={this.setActiveLanguage}      
-        currentLanguage = {currentLanguage}  
-        tokens = {this.props.tokens}
-        langClass = {this.props.langClass}
-        theme = {this.props.theme}
-      />
+      <div className={`theme theme--${this.props.theme}`}>
+        <LayoutView
+          history={history}        
+          Exchange={Exchange}
+          Transfer={Transfer}
+          LimitOrder = {LimitOrder}
+          supportedLanguages={Language.supportLanguage}
+          setActiveLanguage={this.setActiveLanguage}      
+          currentLanguage = {currentLanguage}  
+          tokens = {this.props.tokens}
+          langClass = {this.props.langClass}
+        />
+      </div>
     )
   }
 }

@@ -16,25 +16,27 @@ $text-orange-light: #f6934e;
 $text-green: #31cb9e;
 $text-green-light: #27a69a;
 $text-blue: #1e89c1;
+$grey-light: #e1e4eb;
+$grey: #aeb6c3;
+$grey-dark: #9ea1aa;
+$grey-darker: #5a5e67;
+$button-background: linear-gradient(175deg, #ffb046, #f52880) 0 0;
 
 // Dark Theme
-$dark-background: #1a1a1a;
-$dark-background-2: #232323;
-$dark-background-3: #363636;
-$dark-background-4: #424242;
-$dark-background-5: #2b2b2b;
-$dark-background-6: #6f6f6f;
-$dark-background-7: #2f2f2f;
-$dark-text-default: #ffffff;
-$dark-text: #b8babe;
-$dark-text-2: #aeb6c3;
-$dark-text-3: #5a5e67;
-$dark-text-4: #9ea1aa;
-$dark-text-5: #e1e4eb;
-$dark-text-6: #27303b;
-$dark-border: #4c4c4c;
-$dark-border-2: #424242;
-$dark-button-background: linear-gradient(175deg, #ffb046, #f52880) 0 0;
+$dark-color-1: #1a1a1a;
+$dark-color-2: #232323;
+$dark-color-3: #363636;
+$dark-color-4: #424242;
+$dark-color-5: #2b2b2b;
+$dark-color-6: #6f6f6f;
+$dark-color-7: #2f2f2f;
+$dark-color-8: #b8babe;
+$dark-color-9: #27303b;
+$dark-color-10: #4c4c4c;
+
+// Light Theme
+$light-color-1: #f6f7fa;
+$light-color-2: #141927;
 
 // Paths
 $image-path: '../img/';

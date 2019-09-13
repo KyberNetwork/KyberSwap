@@ -593,6 +593,6 @@
     "networkId": 1,
     "chainName": "Mainnet",
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://api.kyber.network",
+    "tracker": "https://dev-api.knstats.com",
     "statEndPoint": "https://mainnet-data.kyber.network"
 }

@@ -1,73 +1,69 @@
 &.theme--dark {
-  color: $dark-text;
+  color: $dark-color-8;
 
   .theme__text {
-    color: $dark-text
+    color: $dark-color-8;
   }
 
   .theme__text-2 {
-    color: $dark-text-2
+    color: $grey;
   }
 
   .theme__text-3 {
-    color: $dark-text-3
+    color: $grey-darker;
   }
 
   .theme__text-4 {
-    color: $dark-text-4
+    color: $grey-dark;
   }
 
   .theme__text-5 {
-    color: $dark-text-5
-  }
-
-  .theme__text-6 {
-    color: $dark-text-6
+    color: $grey-light;
   }
 
   .theme__background {
-    background-color: $dark-background;
+    background-color: $dark-color-1;
   }
 
   .theme__background-2 {
-    background-color: $dark-background-2;
+    background-color: $dark-color-2;
   }
 
   .theme__background-3 {
-    background-color: $dark-background-3;
+    background-color: $dark-color-3;
   }
 
   .theme__background-4 {
-    background-color: $dark-background-4;
+    background-color: $dark-color-4;
   }
 
   .theme__background-5 {
-    background-color: $dark-background-5;
+    background-color: $dark-color-5;
   }
 
   .theme__background-6 {
-    background-color: $dark-background-6;
+    background-color: $dark-color-6;
   }
 
   .theme__background-7 {
-    background-color: $dark-background-7;
+    background-color: $dark-color-7;
   }
 
   .theme__border {
-    border-color: $dark-border;
+    border-color: $dark-color-10;
   }
 
   .theme__border-2 {
-    border-color: $dark-border-2;
+    border-color: $dark-color-4;
   }
 
   .theme__border-top {
-    border-top-color: $dark-text;
+    border-top-color: $dark-color-8;
   }
 
   .theme__button {
-    color: $dark-text-6;
-    background: $dark-button-background;
+    color: $dark-color-9;
+    background: $button-background;
     background-size: auto 150%;
 
     &:hover {
@@ -76,68 +72,78 @@
   }
 
   .theme__button-2 {
-    background-color: $dark-background-5;
-    border-color: $dark-border;
-    color: $dark-text;
+    background-color: $dark-color-5;
+    border-color: $dark-color-10;
+    color: $dark-color-8;
+
     &:hover {
-      background-color: $dark-border;
+      background-color: $dark-color-10;
     }
   }
   
-  .theme__separation{
+  .theme__separation {
     color: #979797;
   }
 
-  .theme__import-button{
-    border-color: $dark-background-3;
-    background-color: $dark-background-3;
+  .theme__import-button {
+    border-color: $dark-color-3;
+    background-color: $dark-color-3;
 
-    &:hover{
-      border-color: $dark-border;
-      background-color: $dark-background-5;
+    &:hover {
+      border-color: $dark-color-10;
+      background-color: $dark-color-5;
     };
   }
 
-  .theme__slide-menu{
-    background-color: $dark-background-6;
-    color: $dark-text-default;
+  .theme__slide-menu {
+    background-color: $dark-color-6;
+    color: white;
   }
 
-  .theme__search{
-    border-color: $dark-border-2;
-    color: $dark-text;
+  .theme__search {
+    border-color: $dark-color-4;
+    color: $dark-color-8;
   }
   
-  .theme__sort{
-    color: $dark-text-3;
+  .theme__sort {
+    color: $grey-darker;
 
-    &.active{
-      color: $dark-text;
+    &.active {
+      color: $dark-color-8;
 
-      &.asc:after{
+      &.asc:after {
         color: #31cb9e;
       }
 
-      &.dsc:after{
+      &.dsc:after {
         color: #f9566d;
       }
     }
   }
-  .theme__cancel-button{
-    background-color: $dark-background-5;
-    border-color: $dark-border;
-    color: $dark-text;
-    &:hover{
-      background-color: $dark-border;
+
+  .theme__cancel-button {
+    background-color: $dark-color-5;
+    border-color: $dark-color-10;
+    color: $dark-color-8;
+
+    &:hover {
+      background-color: $dark-color-10;
     };
   }
-  .theme__pagination-selected{
-    background-color: $dark-background-5;
-    border-color: $dark-border;
-    color: $dark-text;
-    &:hover{
-      background-color: $dark-border;
+
+  .theme__pagination-selected {
+    background-color: $dark-color-5;
+    border-color: $dark-color-10;
+    color: $dark-color-8;
+
+    &:hover {
+      background-color: $dark-color-10;
     };
+  }
+
+  .theme__input-tag {
+    background-color: $dark-color-3;
+    color: $grey;
   }
 }
 
