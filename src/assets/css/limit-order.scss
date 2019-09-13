@@ -88,7 +88,6 @@
       font-size: 12px;
       font-weight: 300;
       $row-height: 50px;
-      overflow: visible;
 
       .rt-td {
         border: none;
@@ -513,6 +512,14 @@
     background-color: #ffffff;
     position: relative;
 
+    &--bg{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: calc(100% - 270px);
+      height: 100%;
+      zIndex: 99999;
+    }
     @include screen-max-width(medium) {
       
     }
