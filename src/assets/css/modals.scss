@@ -71,12 +71,19 @@ $divider-color: darken($title-background-color, 5);
     width: 600px;
   }
 
+  &.large {
+    width: 1200px;
+    top: 50px;
+    transform: initial;
+  }
+
   .message {
     margin-bottom: 25px;
   }
 
   a {
     color: #EF8102;
+
     &.x {
       display: block;
       position: absolute;
@@ -84,6 +91,7 @@ $divider-color: darken($title-background-color, 5);
       top: 5px;
       font-size: 2rem;
       color: #aaa;
+      cursor: pointer;
     }
   }
 

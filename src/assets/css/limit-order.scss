@@ -86,7 +86,7 @@
 
     .rt-tbody {
       font-size: 12px;
-      font-weight: 300;
+      font-weight: 400;
       $row-height: 50px;
       overflow: visible;
 
@@ -258,6 +258,8 @@
       border-radius: 18px;
       border: solid 1px;
       cursor: pointer;
+      outline: none;
+      transition: all .3s;
 
       @include screen-max-width(medium) {
         height: 25px;
@@ -1906,6 +1908,7 @@
         margin: 0 auto;
         background-color: $text-orange;
         border-radius: 5px;
+        animation: fadeIn .2s forwards;
       }
     }
   }
@@ -1927,12 +1930,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   &__input {
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     padding: 0 15px;
     background: none;
     border: none;
@@ -1961,6 +1964,7 @@
   &__available {
     font-size: 12px;
     margin-bottom: 3px;
+    font-weight: 400;
   }
 
   &__token {

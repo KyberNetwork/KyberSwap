@@ -5,13 +5,11 @@
     align-items: center;
     #prev:after{
       content: '\2039';
-      color: $dark-text;
       width: 10px;
       height: 10px
     }
     #next:after{
       content: '\203a';
-      color: $dark-text;
       width: 10px;
       height: 10px
     }
@@ -43,13 +41,11 @@
     padding: 0 10px;
     &--prev:after{
       content: '\2039';
-      color: $dark-text;
       width: 10px;
       height: 10px
     }
     &--next:after{
       content: '\203a';
-      color: $dark-text;
       width: 10px;
       height: 10px
     }

@@ -46,7 +46,7 @@ const ImportAccountView = (props) => {
         {isNotLimitOrder && (
           <div className="import-account__title--inactive">
             <div className="import-account__title-separator theme__border-2"/>
-            <div className="import-account__title-content theme__background theme__text-4">
+            <div className="import-account__title-content theme__background-2 theme__text-4">
               {props.translate("address.or_connect_with") || "Or Connect with"}
             </div>
           </div>

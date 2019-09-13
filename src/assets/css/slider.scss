@@ -47,7 +47,7 @@
         outline: none;
       }
       .pair {
-        font-weight: bold;
+        font-weight: 400;
       }
       .value {
         span {
@@ -58,7 +58,7 @@
       .pair, .value, .percent-change {
         color: #666666;
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 400;
       }
 
       .change-positive, .change-negative {
