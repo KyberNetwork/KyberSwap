@@ -1,3 +1,150 @@
 &.theme--light {
+  color: $light-color-2;
 
+  .theme__text {
+    color: $light-color-2;
+  }
+
+  .theme__text-2 {
+    color: $light-color-2;
+  }
+
+  .theme__text-3 {
+    color: $light-color-2;
+  }
+
+  .theme__text-4 {
+    color: $grey-darker;
+  }
+
+  .theme__text-5 {
+    color: $light-color-2;
+  }
+
+  .theme__background {
+    background-color: $light-color-1;
+  }
+
+  .theme__background-2 {
+    background-color: white;
+  }
+
+  .theme__background-3 {
+    background-color: $dark-color-3;
+  }
+
+  .theme__background-4 {
+    background-color: $light-color-1;
+  }
+
+  .theme__background-5 {
+    background-color: $dark-color-5;
+  }
+
+  .theme__background-6 {
+    background-color: $dark-color-6;
+  }
+
+  .theme__background-7 {
+    background-color: white;
+  }
+
+  .theme__border {
+    border-color: $grey-light;
+  }
+
+  .theme__border-2 {
+    border-color: $grey-light;
+  }
+
+  .theme__border-top {
+    border-top-color: $dark-color-8;
+  }
+
+  .theme__button {
+    color: white;
+    background: $button-background;
+    background-size: auto 150%;
+
+    &:hover {
+      background-position: 0 100%;
+    }
+  }
+
+  .theme__button-2 {
+    background-color: white;
+    border-color: $grey-light;
+    color: $grey-darker;
+
+    &:hover {
+      background-color: $grey-darker;
+      border-color: $grey-darker;
+      color: white;
+    }
+  }
+
+  .theme__separation {
+    color: #979797;
+  }
+
+  .theme__import-button {
+    border-color: $light-color-1;
+    background-color: $light-color-1;
+
+    &:hover {
+      background-color: white;
+    };
+  }
+
+  .theme__slide-menu {
+    background-color: $dark-color-6;
+    color: white;
+  }
+
+  .theme__search {
+    border-color: $dark-color-4;
+    color: $dark-color-8;
+  }
+
+  .theme__sort {
+    color: $grey-darker;
+
+    &.active {
+      color: $dark-color-8;
+
+      &.asc:after {
+        color: #31cb9e;
+      }
+
+      &.dsc:after {
+        color: #f9566d;
+      }
+    }
+  }
+
+  .theme__cancel-button {
+    background-color: $dark-color-5;
+    border-color: $dark-color-10;
+    color: $dark-color-8;
+
+    &:hover {
+      background-color: $dark-color-10;
+    };
+  }
+
+  .theme__pagination-selected {
+    background-color: $dark-color-5;
+    border-color: $dark-color-10;
+    color: $dark-color-8;
+
+    &:hover {
+      background-color: $dark-color-10;
+    };
+  }
+
+  .theme__input-tag {
+    background-color: $grey-light;
+    color: $light-color-2;
+  }
 }
+

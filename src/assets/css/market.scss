@@ -20,7 +20,7 @@
   }
   .market-control{
     margin-bottom: 20px;
-  
+
     @include screen-max-width(large){
       margin-top: 10px;
       >div{
@@ -36,13 +36,13 @@
                 font-weight: 600;
               }
               &:last-child{
-                  display: flex;
-                  align-items: center;
+                display: flex;
+                align-items: center;
               }
             }
           }
         }
-        
+
       }
     }
   }
@@ -166,7 +166,7 @@
                   width: 13px;
                   height: 14px;
                   position: relative;
-                  left: -6px;                      
+                  left: -6px;
                 }
                 // img {
                 //   margin-left: 3px;
@@ -226,7 +226,7 @@
             padding-top: 15px;
             background-color: #f5f5f5;
           }
-          
+
         }
         &.full-info {
           border: none;
@@ -246,15 +246,10 @@
   }
 
   &.container {
-    // .search-area {
-      // .search-icon {
-      //   display: none;
-      // }
-    // }
+    padding-top: 50px;
+
     input.search-input {
-      // background-image: url(../img/search_icon.svg);
       background-size: auto 50%;
-      // text-indent: 40px;
       border: none;
       border-radius: 20px;
       background-color: white;
@@ -262,6 +257,7 @@
       background-position: 1.2rem;
       max-width: 700px;
       margin: auto;
+
       @include screen-max-width(large) {
         max-width: 100%;
       }
@@ -274,12 +270,10 @@
   &__title {
     text-align: center;
     font-size: 28px;
-    text-align: center;
-    font-family: Montserrat;
     color: #222222;
     font-weight: 600;
     margin-bottom: 30px;
-    // font-weight: 600;
+
     @include screen-max-width(large) {
       display: none;
     }
@@ -297,7 +291,7 @@
       .focus-item {
         padding: 13px 15px;
         border: 1px solid #EAEAEA;
-        
+
         div:first-child {
           color: #7A7A7A;
         }
@@ -334,45 +328,39 @@
 
     &-currency {
       width: 100%;
-
+      display: flex;
+      align-items: center;
 
       @include screen-min-width(large){
         max-width: 200px;
       }
-      
-      
-      //.market-choose-currency{
-        display: flex;
-        align-items: center;
+
+      @include screen-max-width(large){
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      a{
+        display: block;
+        padding: 15px 25px;
+        border-bottom: solid 1px #f5f5f5;
+        color: #999999 !important;
+        cursor: pointer;
 
         @include screen-max-width(large){
-          margin-top: 20px;
-          margin-bottom: 10px;
+          width: 50%;
+          text-align: center;
         }
-        a{
-          display: block;
-          padding: 15px 25px;
-          // background-color: #EBEBEB;
-          border-bottom: solid 1px #f5f5f5;
-          color: #999999 !important;
-          @include screen-max-width(large){
-            width: 50%;
-            text-align: center;
-          }
 
-          // &:not(:first-child){
-          //   margin-left: 10px;
-          // }
-          &:hover {
-            // background-color: #eee;
-            // color: inherit;
-            color: #666666;
-          }
-          &.active {
-            border-bottom: solid 1px #EF8102;
-            color: #EF8102 !important;
-          }
+        &:hover {
+          color: #666666;
         }
+
+        &.active {
+          border-bottom: solid 1px #EF8102;
+          color: #EF8102 !important;
+        }
+      }
     }
 
     &-right {
@@ -384,9 +372,6 @@
       .token-selector{
         z-index: 11;
       }
-      // width: 10%;
-      // display: flex;
-      // justify-content: flex-end;
 
       > div {
         @include screen-min-width(large){
@@ -436,10 +421,14 @@
             box-shadow: 0 15px 50px #aaa;
 
             .setting-header {
+              display: flex;
+              align-items: center;
+
               img {
                 height: 25px;
-                margin: 30px 12px 30px 30px;
+                margin: 20px 15px 20px 30px;
               }
+
               span {
                 text-transform: uppercase;
                 font-size: 15px;
@@ -472,14 +461,6 @@
       &-search {
         max-width: 50%;
       }
-
-      // &-currency {
-      //   max-width: 50%;
-      // }
-
-      // &-right {
-      //   width: 100%;
-      // }
     }
 
     @include screen-max-width(mid-small) {
@@ -495,12 +476,6 @@
       &-currency {
         max-width: 100%;
       }
-
-      // &-right {
-      //   > div {
-      //     margin-top: 15px
-      //   }
-      // }
     }
   }
 
@@ -509,10 +484,8 @@
     padding-bottom: 15px;
     color: #222;
     position: relative;
-    // padding-top: 40px;
     .search-space {
       position: absolute;
-      // margin-left: 253px;
       top: 3px;
       z-index: 15;
       left: 0px;
@@ -521,16 +494,7 @@
         right: 40px;
         top: -10px;
       }
-      // width: 25px;
-      // @media only screen and (max-width: 1296px) {
-      //   margin-left: 243px;
-      // }
-      // @include screen-max-width(large){
-      //   position: absolute;
-      //   top: 6px;
-      //   margin-left: unset;
-      //   right: 45px;
-      // }
+
       input{
         background-image: none;
         width: 297px;
@@ -538,10 +502,7 @@
         background-color: #fcfcfe;
         border: none;
         box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19), 0 3px 15px rgba(0,0,0,0.1);
-        // position: absolute;
-        // top: -38px;
         z-index: 15;
-        // left: -265px;
         font-size: 15px;
         padding-left: 15px;
         text-indent: 0;
@@ -549,7 +510,6 @@
     }
     .search-symbol {
       height: 35px;
-      // width: 35px;
       line-height: 35px;
       text-align: center;
       &:hover {
@@ -563,6 +523,10 @@
         max-width: 700px;
         margin: auto;
         position: relative;
+        min-height: 40px;
+        width: 100%;
+        outline: none;
+
         &:after{
           content: '';
           background-image: url($image-path +  "v3/search_icon.svg");
@@ -600,7 +564,7 @@
       border: none;
       //overflow: visible;
       overflow: auto;
-      
+
       .rt-table {
         overflow: initial;
         .rt-thead {
@@ -729,7 +693,7 @@
                     width: 16px;
                     height: 17px;
                     position: relative;
-                    left: -6px;              
+                    left: -6px;
                   }
                 }
                 &.zero-value {
@@ -907,19 +871,19 @@
     .checkmark {
       margin: 5px 0;
       position: absolute;
-      top: 0;
+      top: -8px;
       left: 0;
       height: 20px;
       width: 20px;
       border-radius: 50%;
       border: 2px solid #eee;
     }
-  
+
     /* On mouse-over, add a grey background color */
     &:hover input ~ .checkmark {
       border-color: #F08400;
     }
-  
+
     /* When the checkbox is checked, add a blue background */
     & input:checked ~ .checkmark {
       background-color: #F08400;
@@ -929,19 +893,19 @@
     .item-title {
       color: #F08400;
     }
-  
+
     /* Create the checkmark/indicator (hidden when not checked) */
     .checkmark:after {
       content: "";
       position: absolute;
       display: none;
     }
-  
+
     /* Show the checkmark when checked */
     & input:checked ~ .checkmark:after {
       display: block;
     }
-  
+
     /* Style the checkmark/indicator */
     & .checkmark:after {
       left: 6px;

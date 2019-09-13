@@ -6,9 +6,9 @@ export default class QuoteList extends React.Component{
       <div id="quote_panel">
         { quotes.map(i => {
             if (i == "FAV"){
-              return <div style={{display: 'inline-block'}} className={currentQuote == i  ? "star active" : "star" } onClick={() => onClick(i)} ></div>
+              return <div style={{display: 'inline-block'}} className={`star star--title ${currentQuote === i  ? "active" : ""}`} onClick={() => onClick(i)}/>
             }else {
-              return <span key={i} className={currentQuote == i ? "active" :""} onClick={() => onClick(i)}>{i}</span>
+              return <span key={i} className={currentQuote === i ? "active" :""} onClick={() => onClick(i)}>{i}</span>
             }
           })
         }

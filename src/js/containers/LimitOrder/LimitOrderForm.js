@@ -257,7 +257,7 @@ export default class LimitOrderForm extends React.Component {
         </div>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__background-3"} onClick={this.resetToMarketRate}>Price</div>
+          <div className={"limit-order-form__tag theme__input-tag"} onClick={this.resetToMarketRate}>Price</div>
           <input
             className={"limit-order-form__input theme__text-2"}
             step="0.000001"
@@ -297,7 +297,7 @@ export default class LimitOrderForm extends React.Component {
         <LimitOrderCompareRate/>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__background-3"}>Amount</div>
+          <div className={"limit-order-form__tag theme__input-tag"}>Amount</div>
           <input
             className={"limit-order-form__input theme__text-2"}
             step="0.000001"
