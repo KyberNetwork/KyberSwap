@@ -49,7 +49,7 @@ export default class HeaderTransaction extends React.Component {
 
   render() {
     var transfer = this.props.translate("transaction.transfer") || "Transfer"
-    var swap = this.props.translate("transaction.swap") || "Swapt"
+    var swap = this.props.translate("transaction.swap") || "Swap"
     var order = this.props.translate("transaction.limit_order") || "Limit Order"
 
     const disabledSwapClass = this.props.page === "exchange" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
