@@ -46,4 +46,8 @@
       transform: rotate(-180deg);
     }
   }
+
+  &__slide-up {
+    animation: slideUp .3s forwards;
+  }
 }

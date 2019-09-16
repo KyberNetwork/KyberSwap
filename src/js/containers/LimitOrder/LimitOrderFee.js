@@ -58,17 +58,17 @@ class LimitOrderFee extends React.Component {
 
   render() {
     const sourceTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
+    const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
     const orderFee = converter.multiplyOfTwoNumber(this.props.limitOrder.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFee, 100));
     const orderFeeAfterDiscount = converter.multiplyOfTwoNumber(this.props.limitOrder.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFeeAfterDiscount, 100));
     const sourceAmountAfterFee = converter.formatNumber(converter.subOfTwoNumber(this.props.limitOrder.sourceAmount, orderFeeAfterDiscount), 5, '');
-    const discountFee = converter.subOfTwoNumber(orderFee, orderFeeAfterDiscount);
-
-    const orderFeeDiscountPercentage = this.props.limitOrder.orderFeeDiscountPercentage
+    const orderFeeDiscountPercentage = this.props.limitOrder.orderFeeDiscountPercentage;
     const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
     const displayDiscountInfo = this.props.limitOrder.sourceAmount && isDiscount;
     let orderFeeText = null;
     let orderDiscountFeeText = null;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
+    const totalText = this.props.formType === 'buy' ? `${this.props.limitOrder.sourceAmount ? this.props.limitOrder.sourceAmount : 0} ${sourceTokenSymbol}` : `${this.props.limitOrder.destAmount ? this.props.limitOrder.destAmount : 0} ${destTokenSymbol}`;
 
     if (!this.props.limitOrder.isFetchingFee) {
       orderNetFeeText = <span>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>
@@ -110,7 +110,7 @@ class LimitOrderFee extends React.Component {
               <div className={"limit-order-fee__info"}>
                 {this.props.translate("limit_order.fee_info", {
                   sourceTokenSymbol: sourceTokenSymbol,
-                  destTokenSymbol: this.props.limitOrder.destTokenSymbol,
+                  destTokenSymbol: destTokenSymbol,
                   sourceAmount: sourceAmountAfterFee
                 }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${sourceTokenSymbol} is converted to ${this.props.limitOrder.destTokenSymbol}`}
               </div>
@@ -120,7 +120,7 @@ class LimitOrderFee extends React.Component {
 
         <div className={"limit-order-fee__total"}>
           <span className={"theme__text-4"}>Total:</span>
-          <span className={"theme__text-5"}>{this.props.limitOrder.sourceAmount ? this.props.limitOrder.sourceAmount : 0} {sourceTokenSymbol}</span>
+          <span className={"theme__text-5"}>{totalText}</span>
         </div>
       </div>
     )

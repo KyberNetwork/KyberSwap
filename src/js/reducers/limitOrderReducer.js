@@ -8,7 +8,7 @@ const limitOrder = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
     case "LIMIT_ORDER.SELECT_TOKEN": {
-      const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, changeQuotePair } = action.payload;
+      const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken } = action.payload;
 
       newState.sourceTokenSymbol = sourceTokenSymbol;
       newState.sourceToken = sourceToken;
@@ -18,15 +18,6 @@ const limitOrder = (state = initState, action) => {
       newState.errors.triggerRate = [];
       newState.selected = true;
 
-      if (changeQuotePair) {
-        newState.currentQuotePair = destTokenSymbol;
-      }
-
-      return newState;
-    }
-
-    case "LIMIT_ORDER.CHANGE_QUOTE_PAIR": {
-      newState.currentQuotePair = action.payload;
       return newState;
     }
 

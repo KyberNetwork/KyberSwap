@@ -89,8 +89,8 @@
 
     &:checked {
       ~.advance-config__checkmark {
-        border-color: $text-orange;
-        background-color: $text-orange;
+        border-color: $text-orange !important;
+        background-color: $text-orange !important;
 
         &::after {
           transform: translateY(-50%) scale(1);
@@ -114,8 +114,8 @@
     &::after {
       content: '';
       display: block;
-      width: 4px;
-      height: 4px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background-color: #1f2731;
       position: absolute;
