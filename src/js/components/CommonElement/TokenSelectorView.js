@@ -21,7 +21,7 @@ const TokenSelectorView = (props) => {
       if (item.symbol !== props.focusItem) {
         var balance = toT(item.balance, item.decimals)
         return (
-          <div key={item.symbol} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item">
+          <div key={item.symbol} onClick={(e) => props.selectItem(e, item.symbol, item.address)} className="token-item theme__token-item">
             <div className="d-flex">
               <div className={"token-info"}>
                 <div className="item-icon">
@@ -65,7 +65,7 @@ const TokenSelectorView = (props) => {
 
   const priorityTokens = BLOCKCHAIN_INFO.priority_tokens.map(value => {
     var token = getTokenBySymbol(props.tokens, value)
-    return <span key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
+    return <span className={"theme__priority-token"} key={value} onClick={(e) => {props.selectItem(e, value, token.address); props.hideTokens(e) }}>
       <img src={getAssetUrl(`tokens/${value.toLowerCase()}.svg`)} />
       {value}
     </span>
@@ -93,11 +93,11 @@ const TokenSelectorView = (props) => {
           </div>
         </DropdownTrigger>
         <DropdownContent>
-          <div className="select-item">
+          <div className="select-item theme__background-7">
             {props.screen === "limit_order" && getWethTitle()}
             {props.screen !== "limit_order" && <div className="select-item__priority-token">{priorityTokens}</div>}
             <div className="select-item__body">
-              <div className="search-item">
+              <div className="search-item theme__token-input">
                 <input className="search-item__input" value={props.searchWord} placeholder={props.translate("transaction.try_dai") || `Try "DAI"`} onChange={(e) => props.changeWord(e)} type="text" onFocus={(e) => props.analytics.callTrack("trackSearchToken")}/>
               </div>
               <div className="list-item custom-scroll" onScroll={props.onListScroll}>

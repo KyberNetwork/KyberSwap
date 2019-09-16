@@ -95,7 +95,7 @@
       height: 50px;
       border-radius: 3px;
       border: 1px solid transparent;
-      padding: 0 10px;
+      padding-right: 10px;
       margin-bottom: 10px;
 
       .input-div-content {
@@ -605,9 +605,10 @@
   }
 
   .list-item{
-    height: 200px;
+    height: 230px;
     overflow: auto;
     padding-right: 10px;
+
     &.custom-scroll {
       &::-webkit-scrollbar-track {
         border-radius: 8px;
@@ -624,6 +625,7 @@
       }
     }
   }
+
   .amount-input{
     border-bottom: 1px solid #454E5F;
     display: flex;
@@ -686,10 +688,10 @@
       color: inherit;
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
       width: 350px;
-      border-radius: 10px;
-      padding: 25px 25px 40px;
+      border-radius: 3px;
+      padding: 25px 25px 35px;
       right: 0;
-      top: 10px;
+      top: 1px;
 
       .current-token {
         align-items: center;
@@ -748,12 +750,6 @@
       }
     }
 
-    // @media screen and (max-width: 320px) {
-    //   .dropdown.dropdown--active .select-item {
-    //     width: 285px;
-    //   }
-    // }
-
     @include screen-max-width(medium) {
       .dropdown.dropdown--active .select-item {
         width: calc(100vw - 32px);
@@ -773,8 +769,8 @@
   .token-selector {
     .search-item{
       position: relative;
+
       &:before{
-        background-image: url("../img/v3/search_icon_token.svg");
         background-repeat: no-repeat;
         background-position: 8px center;
         content: ' ';
@@ -787,19 +783,17 @@
       }
     }
     input {
-      border-radius: 0px;
+      border-radius: 0;
       margin-bottom: 0;
       border: none;
-      // border-bottom: solid 1px #474d5f;
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       font-size: 14px;
       box-shadow: none;
-      padding-bottom: 0;
-      color: #222;
+
       &::placeholder {
-        color: #474d5f;
-        font-weight: 600;
+        font-weight: 500;
       }
+
       &:focus {
         outline: none;
         box-shadow: none;
@@ -822,16 +816,24 @@
 
         &__input {
           font-size: 14px;
+          background: transparent;
         }
       }
       .list-item {
         .token-item {
           padding-left: 0;
           padding-right: 0;
-          // border-bottom: 1px solid #d8d8d8;
+          transition: all .3s;
+          border-radius: 3px;
+
+          &:hover .d-flex {
+            transform: translateX(10px);
+          }
+
           &:last-child {
             border-bottom: none;
           }
+
           .item-icon {
             &-source, &-dest {
               @include screen-min-width(large) {
@@ -839,18 +841,15 @@
               }
             }
           }
+
           .item-balance {
-            // font-weight: bold;
             padding-top: 5px;
           }
-          &:hover {
-            background-color: #fcfcfc;
-            .item-balance {
-              color: $swap-color;
-            }
-          }
+
           .d-flex {
             width: 100%;
+            transition: all .3s;
+
             .item-content {
               width: 100%;
               .item-balance {
@@ -872,12 +871,11 @@
               align-items: center;
               min-width: 115px;
               .item-icon {
-                margin-right: 15px;
+                margin-right: 5px;
               }
               div:last-child {
                 font-size: 14px;
-                font-weight: 550;
-                color: #474d5f;
+                font-weight: 500;
               }
             }
           }
@@ -974,7 +972,7 @@
     }
   }
   .focus-item{
-    padding: 12px 12px 12px 0;
+    padding: 12px;
     border-radius: 3px;
     align-items: center;
     font-size: 15px;
@@ -1037,7 +1035,6 @@
     transition: 0.2s;
     width: 100%;
     z-index: 2;
-    background-color: #F1F5FB;
     border-top: none;
     border-bottom: none;
 
@@ -1049,9 +1046,9 @@
       span {
         width: 30%;
         cursor: pointer;
-        border: 1px solid #e7edf5;
+        border: 1px solid;
         padding: 5px 10px;
-        border-radius: 20px;
+        border-radius: 3px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1063,10 +1060,6 @@
 
         &:nth-child(3n) {
           margin-right: 0;
-        }
-
-        &:hover {
-          background-color: #e7edf5;
         }
 
         img {
@@ -1083,6 +1076,8 @@
 
   .list-item{
     overflow-y: auto;
+    overflow-x: hidden;
+
     .token-item{
       padding: 12px 20px;
       display: flex;
@@ -1091,11 +1086,11 @@
         align-content: center;
       }
       .item-balance{
-        color: #666666;
         font-size: 14px;
       }
       .item-balance-value{
         margin-right: 5px;
+        font-weight: 400;
       }
       .item-icon{
         width: 35px;
