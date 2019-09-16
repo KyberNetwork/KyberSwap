@@ -150,11 +150,7 @@
     color: $grey-dark;
 
     &:hover {
-      background: #3a3a3a;
-
-      > div {
-        transform: translateX(10px);
-      }
+      background: $dark-color-11;
     }
   }
 

@@ -826,6 +826,10 @@
           transition: all .3s;
           border-radius: 3px;
 
+          &:hover .d-flex {
+            transform: translateX(10px);
+          }
+
           &:last-child {
             border-bottom: none;
           }
