@@ -146,5 +146,39 @@
     background-color: $grey-light;
     color: $light-color-2;
   }
+
+  .theme__token-item {
+    color: $light-color-2;
+
+    &:hover {
+      background: $light-color-3;
+
+      > div {
+        transform: translateX(10px);
+      }
+    }
+  }
+
+  .theme__token-input {
+    &:before {
+      background-image: url($image-path + "v3/search_icon_token.svg");
+    }
+
+    input {
+      color: $light-color-2;
+
+      &::placeholder {
+        color: $grey-darker;
+      }
+    }
+  }
+
+  .theme__priority-token {
+    border-color: $light-color-4;
+
+    &:hover {
+      background-color: $light-color-4;
+    }
+  }
 }
 
