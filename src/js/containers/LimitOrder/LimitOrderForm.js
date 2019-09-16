@@ -238,7 +238,6 @@ export default class LimitOrderForm extends React.Component {
   render() {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
     const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
-
     const quoteSymbol = this.state.formType === 'buy' ? srcTokenSymbol : destTokenSymbol;
     const targetSymbol = this.state.formType === 'buy' ? destTokenSymbol : srcTokenSymbol;
 
