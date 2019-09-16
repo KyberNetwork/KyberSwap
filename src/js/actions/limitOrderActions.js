@@ -1,7 +1,7 @@
-export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type, changeQuotePair = true) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type, changeQuotePair }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
   }
 }
 
@@ -29,13 +29,6 @@ export function setIsFetchingRate(isFetching) {
   return {
     type: "LIMIT_ORDER.SET_IS_FETCHING_RATE",
     payload: isFetching
-  }
-}
-
-export function changeQuotePair(quotePair) {
-  return {
-    type: "LIMIT_ORDER.CHANGE_QUOTE_PAIR",
-    payload: quotePair
   }
 }
 

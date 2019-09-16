@@ -39,10 +39,6 @@ export default class LimitOrderForm extends React.Component {
     }
   }
 
-  componentDidMount = () => {
-    this.props.dispatch(limitOrderActions.changeQuotePair(this.props.limitOrder.destTokenSymbol))
-  };
-
   setFormType = (type) => {
     this.props.dispatch(limitOrderActions.changeFormType(
       this.props.sourceToken,
@@ -241,18 +237,21 @@ export default class LimitOrderForm extends React.Component {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
     const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
 
+    const quoteSymbol = this.state.formType === 'buy' ? srcTokenSymbol : destTokenSymbol;
+    const targetSymbol = this.state.formType === 'buy' ? destTokenSymbol : srcTokenSymbol;
+
     return (
       <div className={"limit-order-form theme__background-2"}>
         <div className={"limit-order-form__header theme__border-2"}>
           <div
             className={`limit-order-form__tab ${this.state.formType === 'buy' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('buy')}>
-              Buy {this.props.limitOrder.currentQuotePair}
+              Buy {targetSymbol}
           </div>
           <div
             className={`limit-order-form__tab ${this.state.formType === 'sell' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('sell')}>
-              Sell {this.props.limitOrder.currentQuotePair}
+              Sell {targetSymbol}
           </div>
         </div>
 
@@ -271,7 +270,7 @@ export default class LimitOrderForm extends React.Component {
             onFocus={e => this.handleFocus(e, "rate")}
             disabled={this.props.limitOrder.isFetchingRate}
           />
-          <div className={"limit-order-form__symbol theme__text-3"}>{srcTokenSymbol}</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{quoteSymbol}</div>
 
           {this.props.global.isOnMobile &&
             <RateWarningModal
@@ -298,19 +297,37 @@ export default class LimitOrderForm extends React.Component {
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__input-tag"}>Amount</div>
-          <input
-            className={"limit-order-form__input theme__text-2"}
-            step="0.000001"
-            placeholder="0"
-            min="0"
-            type={this.props.global.isOnMobile ? "number" : "text"}
-            maxLength="50"
-            autoComplete="off"
-            value={this.props.limitOrder.destAmount}
-            onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
-            onFocus={e => this.handleFocus(e, "dest")}
-          />
-          <div className={"limit-order-form__symbol theme__text-3"}>{destTokenSymbol}</div>
+          {this.state.formType === 'buy' &&
+            <input
+              className={"limit-order-form__input theme__text-2"}
+              step="0.000001"
+              placeholder="0"
+              min="0"
+              type={this.props.global.isOnMobile ? "number" : "text"}
+              maxLength="50"
+              autoComplete="off"
+              value={this.props.limitOrder.destAmount}
+              onChange={(e) => this.handleInputChange(e, "dest", this.props.limitOrder.destAmount)}
+              onFocus={e => this.handleFocus(e, "dest")}
+            />
+          }
+
+          {this.state.formType === 'sell' &&
+            <input
+              className={"limit-order-form__input theme__text-2"}
+              step="0.000001"
+              placeholder="0"
+              min="0"
+              type={this.props.global.isOnMobile ? "number" : "text"}
+              maxLength="50"
+              autoComplete="off"
+              value={this.props.limitOrder.sourceAmount}
+              onChange={(e) => this.handleInputChange(e, "source", this.props.limitOrder.sourceAmount)}
+              onFocus={e => this.handleFocus(e, "source")}
+            />
+          }
+
+          <div className={"limit-order-form__symbol theme__text-3"}>{targetSymbol}</div>
         </div>
 
         <div className={"exchange__error"}>
@@ -333,7 +350,7 @@ export default class LimitOrderForm extends React.Component {
           </div>
         }
 
-        <LimitOrderFee/>
+        <LimitOrderFee formType={this.state.formType}/>
 
         <LimitOrderSubmit
           availableBalanceTokens={this.props.modifiedTokens}
