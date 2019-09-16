@@ -11,37 +11,6 @@ import * as constants from "../services/constants"
 import { multiplyOfTwoNumber } from "../utils/converter"
 import EthereumService from "../services/ethereum/ethereum";
 
-function* selectToken(action) {
-  const { symbol, address, type } = action.payload
-  yield put(limitOrderActions.selectToken(symbol, address, type))
-
-  const state = store.getState();
-  var ethereum = state.connection.ethereum
-  var limitOrder = state.limitOrder
-  var source = limitOrder.sourceToken
-  var dest = limitOrder.destToken
-  var sourceTokenSymbol = limitOrder.sourceTokenSymbol
-  var isManual = true
-  var sourceAmount = limitOrder.sourceAmount
-
-
-  if (type === "source" ) {
-    var account = state.account.account
-    if (isUserLogin() && account !== false){
-      yield put(limitOrderActions.fetchFee(account.address, symbol, limitOrder.destTokenSymbol))
-    }
-
-    source = address
-    sourceTokenSymbol = symbol
-  } else {
-    dest = address
-  }
-
-  if (ethereum) {
-    yield put(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual ))
-  }
-}
-
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
   const state = store.getState();
@@ -294,7 +263,6 @@ function* changeFormType(action) {
 }
 
 export function* watchLimitOrder() {
-    yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken);
     yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending);
     yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee);
     yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport);

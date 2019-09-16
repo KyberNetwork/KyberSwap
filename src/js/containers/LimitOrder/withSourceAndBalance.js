@@ -105,7 +105,6 @@ const withSourceAndBalance = (Component) => {
     getModifiedTokenList = () => {
       let tokens = this.getAvailableBalanceTokenList();
       tokens = this.getTokenListWithoutEthAndWeth(tokens);
-
       const weth = this.mergeEthIntoWeth();
       if (weth) {
         tokens.splice(0, 0, weth)
@@ -152,9 +151,19 @@ const withSourceAndBalance = (Component) => {
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
     }
 
+    selectSourceAndDestToken = (symbolSource, symbolDest) => {
+      var sourceTokenSymbol = symbolSource
+      var sourceToken = this.props.tokens[sourceTokenSymbol].address
+      var destTokenSymbol = symbolDest
+      var destToken = this.props.tokens[destTokenSymbol].address
+      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
+      this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    }
+
     render(){
       return React.cloneElement(Component, { 
           selectSourceToken: this.selectSourceToken, //for limit order account 
+          selectSourceAndDestToken: this.selectSourceAndDestToken, //for quote market 
           availableBalanceTokens: this.getModifiedTokenList, //for limit order account + form
           getOpenOrderAmount: this.getOpenOrderAmount //for limit order form
       });

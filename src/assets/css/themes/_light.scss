@@ -90,7 +90,8 @@
   .theme__import-button {
     border-color: $light-color-1;
     background-color: $light-color-1;
-
+    color: $grey-darker;
+    
     &:hover {
       background-color: white;
     };

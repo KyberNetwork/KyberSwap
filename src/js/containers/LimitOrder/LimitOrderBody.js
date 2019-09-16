@@ -29,6 +29,9 @@ export default class LimitOrderBody extends React.Component {
         setSubmitHandler={this.setSubmitHandler}
       />
     )
+    this.QuoteMarket = withSourceAndBalance(
+      <QuoteMarket />
+    )
   }
 
   setSrcInputElementRef = (element) => {
@@ -41,7 +44,7 @@ export default class LimitOrderBody extends React.Component {
 
   render() {
     const LimitOrderForm = this.LimitOrderForm
-
+    const QuoteMarket = this.QuoteMarket
     return (
       <div className={"limit-order theme__background"}>
         <div className={"limit-order__container limit-order__container--left"}>
