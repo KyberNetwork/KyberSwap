@@ -104,9 +104,9 @@ export default class QuoteMarket extends React.Component{
     const { tokens, favorite_pairs_anonymous } = this.props
     const { favorite_pairs } = this.state
     const fav = common.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
-    const quotes = Object.keys(tokens).filter((key)=> (("is_quote" in tokens[key]) && tokens[key]["is_quote"]))
+    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "WETH"))
       .reduce((res, quote) => {
-        res[quote] = Object.keys(tokens)
+        res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"]))
           .reduce((vt, key) =>{ 
             return key == quote ? vt : vt.concat({   
                 id: key+"_"+quote, 
@@ -140,6 +140,9 @@ export default class QuoteMarket extends React.Component{
     ))
   }
 
+  onPairClick = (base, quote) => {
+    this.props.selectSourceAndDestToken(quote == "ETH" ? "WETH" : quote, base);
+  }
   render(){
     const quotes = this.renderQuotes()
     const { tokens, currentQuote } = this.props
@@ -161,7 +164,7 @@ export default class QuoteMarket extends React.Component{
                       <td width="20px" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                         <div className={pair["is_favorite"] ? "star active" : "star" } /> 
                       </td>
-                      <td width="82px">{pair["base"] + "/" + pair["quote"]}</td>
+                      <td width="82px" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>{pair["base"] + "/" + pair["quote"]}</td>
                       <td width="82px">{pair["price"]}</td>
                       <td width="82px">{pair["volume"]}</td>
                       <td width="82px" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>

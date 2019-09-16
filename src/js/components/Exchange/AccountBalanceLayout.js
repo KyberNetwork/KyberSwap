@@ -5,27 +5,34 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
+  function removedMaintenance(tokens){
+    return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
+  }
+  function maintenance(tokens){
+    return tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
+  }
   function reorderToken() {
     let tokens = props.tokens;
 
     if (props.isLimitOrderTab) {
       tokens = props.getFilteredTokens(props.sortValue);
     }
+    let res = []
     switch (props.sortType) {
       case "Eth":
         if (props.isLimitOrderTab) {
-          return tokens;
+          res = tokens;
         } else {
           if (props.sortValue) {
-            return converts.sortEthBalance(tokens)
+            res = converts.sortEthBalance(tokens)
           } else {
-            return converts.sortASCEthBalance(tokens)
+            res = converts.sortASCEthBalance(tokens)
           }
         }
         break;
       case "Name":
         if (props.isLimitOrderTab) {
-          return tokens.sort((firstToken, secondToken) => {
+          res = tokens.sort((firstToken, secondToken) => {
             const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
             const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
 
@@ -37,28 +44,29 @@ const AccountBalanceLayout = (props) => {
             Object.keys(tokens).sort().forEach(function (key) {
               ordered.push(tokens[key])
             })
-            return ordered
+            res = ordered
           } else {
             var ordered = []
             Object.keys(tokens).sort().reverse().forEach(function (key) {
               ordered.push(tokens[key])
             })
-            return ordered
+            res = ordered
           }
         }
         break;
       case "Bal":
-        return Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(a.balance, b.balance))} )
         break;
       case "USDT":
-        return Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(+a.balance - b.balance)} )
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(converts.multiplyOfTwoNumber(a.balance, a.rateUSD), converts.multiplyOfTwoNumber(b.balance, b.rateUSD)))} )
         break;
     }
+    res = removedMaintenance(res).concat(maintenance(res))
+    return res
   }
 
   function getBalances() {
     var tokens = reorderToken()
-
     var balances = tokens
       .map(token => {
         var balance = converts.toT(token.balance, token.decimals)
@@ -80,15 +88,21 @@ const AccountBalanceLayout = (props) => {
             onClick={(e) => props.selectBalance(token.symbol)}
             className={"account-balance__token-item" + classBalance}
           >
-            <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.symbol == "WETH" ? "eth" : token.symbol).toLowerCase()+".svg"} />
+            <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
             <div>
               <span className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</span>
               <div className="account-balance__token-balance theme__text-3">{converts.roundingNumber(balance)}</div>
             </div>
-            <div id="stable-equivalent">{
-              props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rate), false, 6)} E</span>) :
-                (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
-            }</div>
+            {
+              (token.symbol == "ETH" || converts.compareTwoNumber(token.rate, 0)) ?  
+                (<div id="stable-equivalent">{
+                  props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
+                    (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
+                }</div>) : 
+                (<div id="stable-equivalent">
+                  <span className="error"> maintenance </span>
+                </div>)
+            }
           </div>
         )
       })
@@ -138,7 +152,7 @@ const AccountBalanceLayout = (props) => {
                   <div>
                     <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                       onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                      {props.account.address.slice(0, 22)}...{props.account.address.slice(-4)}
+                      {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
                     </a>
                     <span className="account-balance__reimport" onClick={props.openReImport}>
                       {props.translate("import.change_address") || "CHANGE"}
@@ -168,7 +182,7 @@ const AccountBalanceLayout = (props) => {
                   <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => onClick("Bal", isDsc)}/>
                 </span>
                 <span id="sec-2">
-                  <SortableComponent text="Eth" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => onClick("Eth", isDsc)}/>
+                  <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => onClick("Eth", isDsc)}/>
                   <span className="theme__separation"> | </span>
                   <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => onClick("USDT", isDsc)}/>
                 </span>

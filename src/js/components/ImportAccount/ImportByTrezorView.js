@@ -5,7 +5,7 @@ const ImportByTrezorView = (props) => {
   return (
     <div className="import-account__block theme__import-button" onClick={(e) => props.showLoading('trezor')}>
       <div className="import-account__icon trezor"/>
-      <div className="import-account__name theme__text-4">
+      <div className="import-account__name">
           <h3>
             {props.translate("import.from_trezor") || "TREZOR"}
           </h3>
