@@ -145,5 +145,37 @@
     background-color: $dark-color-3;
     color: $grey;
   }
+
+  .theme__token-item {
+    color: $grey-dark;
+
+    &:hover {
+      background: $dark-color-11;
+    }
+  }
+
+  .theme__token-input {
+    &:before {
+      background-image: url($image-path + "v3/search_icon.svg");
+    }
+
+    input {
+      color: $grey-dark;
+
+      &::placeholder {
+        color: $grey-darker;
+      }
+    }
+  }
+
+  .theme__priority-token {
+    color: $grey-light;
+    border-color: $dark-color-10;
+    background-color: $dark-color-5;
+
+    &:hover {
+      background-color: $dark-color-10;
+    }
+  }
 }
 
