@@ -92,7 +92,7 @@ const TokenSelectorView = (props) => {
             <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
           </div>
         </DropdownTrigger>
-        <DropdownContent>
+        <DropdownContent className="common__slide-up">
           <div className="select-item theme__background-7">
             {props.screen === "limit_order" && getWethTitle()}
             {props.screen !== "limit_order" && <div className="select-item__priority-token">{priorityTokens}</div>}
