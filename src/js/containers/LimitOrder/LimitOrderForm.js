@@ -40,6 +40,8 @@ export default class LimitOrderForm extends React.Component {
   }
 
   setFormType = (type) => {
+    if (this.state.formType === type) return;
+
     this.props.dispatch(limitOrderActions.changeFormType(
       this.props.sourceToken,
       this.props.destToken
