@@ -22,7 +22,7 @@ $divider-color: darken($title-background-color, 5);
     position: absolute;
     top: 22px;
     margin-top: -11px;
-    left: 24px;
+    left: 15px;
     transition: opacity .5s ease-in-out;
     background-image: url($image-path + 'lock.svg');
   }
@@ -38,7 +38,7 @@ $divider-color: darken($title-background-color, 5);
     position: absolute;
     top: 50%;
     margin-top: -10px;
-    right: 12px;
+    right: 15px;
     left: unset;
     transition: opacity .5s ease-in-out;
     cursor: pointer;
@@ -97,7 +97,7 @@ $divider-color: darken($title-background-color, 5);
 
   .title {
     font-size: 1.8rem;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 20px;
   }
 
@@ -735,7 +735,6 @@ $divider-color: darken($title-background-color, 5);
           padding: 0 20px;
         }
         .amount {
-          // padding: 5px 10px;
           background-color: white;
           border-radius: 0;
         }
@@ -791,45 +790,31 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
-  .password-input{
+
+  .password-input {
     margin-top: 10px;
-    @include screen-min-width(medium){
-      .process-submit{
-        float: right;
-      }
-    }
-    @include screen-max-width(medium){
-      .process-submit{
-        margin-top: 20px;
-        width: 100%;
-      }
-    }
-    .input-reveal{
-      .tootip {
-        opacity: .4;
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        position: absolute;
-        top: 21px;
-        margin-top: -11px;
-        left: 24px; 
-        -webkit-transition: opacity .5s ease-in-out;
-        -o-transition: opacity .5s ease-in-out;
-        transition: opacity .5s ease-in-out;
-        background-image: url(../img/lock.svg);
-      }
-    }
+
     &.error {
       #passphrase {
         border-color: #ee344e;
         background-color: #ffe7eb;
       }
     }
+
+    @include screen-min-width(medium){
+      .process-submit{
+        float: right;
+      }
+    }
+
+    @include screen-max-width(medium){
+      .process-submit{
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
   }
+
   .approve-modal{
     .title{
       padding-left: 50px;
