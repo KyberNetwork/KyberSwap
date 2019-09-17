@@ -843,12 +843,18 @@
           }
 
           .item-balance {
-            padding-top: 5px;
+            padding-right: 15px;
+            font-size: 14px;
+            width: 50%;
+            text-align: right;
           }
 
           .d-flex {
             width: 100%;
             transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
             .item-content {
               width: 100%;
@@ -866,13 +872,14 @@
               }
             }
             .token-info {
-              margin-right: 40px;
               display: flex;
               align-items: center;
-              min-width: 115px;
+              width: 45%;
+
               .item-icon {
                 margin-right: 5px;
               }
+
               div:last-child {
                 font-size: 14px;
                 font-weight: 500;
@@ -1082,12 +1089,7 @@
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
-      .d-flex{
-        align-content: center;
-      }
-      .item-balance{
-        font-size: 14px;
-      }
+
       .item-balance-value{
         margin-right: 5px;
         font-weight: 400;
