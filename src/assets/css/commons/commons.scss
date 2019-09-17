@@ -50,4 +50,11 @@
   &__slide-up {
     animation: slideUp .3s forwards;
   }
+
+  &__circle-loading {
+    width: 30px;
+    height: 30px;
+    background-image: url($image-path + 'common/circle-loading.svg');
+    background-size: contain;
+  }
 }
