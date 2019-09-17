@@ -43,6 +43,18 @@
     background-image: url($image-path + 'exchange/swap-icon.svg');
     cursor: pointer;
   }
+
+  @include screen-max-width(xxmedium) {
+    &__swap-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  @include screen-max-width(medium) {
+    &__form {
+      padding: 45px 15px;
+    }
+  }
 }
 
 .exchange-container {

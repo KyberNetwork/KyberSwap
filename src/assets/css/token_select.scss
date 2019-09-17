@@ -397,7 +397,7 @@
           }
         }
 
-        @media screen and (max-width: 900px) {
+        @include screen-max-width(xxmedium) {
           right: 0;
           left: unset;
           width: calc(100% - 259px);
@@ -449,7 +449,7 @@
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     $labelWidth: 35px;
     $selectorWidth: 200px;
 
@@ -459,15 +459,6 @@
       width: 100%;
       border: none;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-
-      &--left {
-        margin-bottom: 1px;
-        padding-right: 20px;
-      }
-
-      &--right {
-        padding-left: 20px;
-      }
 
       &--absolute {
         background-color: white;
@@ -734,7 +725,7 @@
       left: 0px;
     }
 
-    @media screen and (max-width: 900px) {
+    @include screen-max-width(xxmedium) {
       &.dest .dropdown.dropdown--active .select-item {
         left: 0px;
       }

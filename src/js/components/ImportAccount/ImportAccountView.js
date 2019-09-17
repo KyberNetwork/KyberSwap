@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ImportKeystore,
-  ImportByDevice,
   ImportByPrivateKey,
   ImportByMetamask,
   ImportByDeviceWithLedger,
@@ -10,7 +9,7 @@ import {
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
-  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
+  const isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
   const { isIOS: isIos, isAndroid } = props.onMobile;
   let importInactiveClass =  "";
   const isNotLimitOrder = !props.isAgreedTermOfService && props.tradeType !== "limit_order";
