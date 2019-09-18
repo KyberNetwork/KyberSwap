@@ -159,4 +159,15 @@
     position: relative;
     top: 1px;
   }
+
+  @include screen-max-width(mid-small) {
+    &__option-container {
+      flex-wrap: wrap;
+    }
+
+    &__option {
+      width: 45%;
+      margin-bottom: 12px;
+    }
+  }
 }

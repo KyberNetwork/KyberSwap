@@ -315,15 +315,10 @@
   @include screen-max-width(large) {
     &__content {
       display: block;
+      border-radius: 0;
 
       @include screen-min-width(large){
         padding: 20px 1rem;
-      }
-
-      border-radius: 0;
-      &--open{
-        background-color: white;
-        border-bottom: none;
       }
     }
 
@@ -336,9 +331,9 @@
     }
 
     &__adv-config {
-      padding: 1rem;
       width: 100%;
-      margin-top: 20px;
+      padding: 0;
+      margin-top: 10px;
     }
   }
 
@@ -387,6 +382,7 @@
   font-style: italic;
   color: #9ea1aa;
   padding: 0 5px;
+  line-height: 1.5;
 
   &__link {
     color: $text-orange !important;

@@ -77,10 +77,12 @@
     position: relative;
 
     &--wrapper {
-      @include screen-min-width(large){
-        width: calc(50% - 29px);
+      width: calc(50% - 40px);
+
+      @include screen-max-width(xxmedium){
+        width: 100%;
       }
-      
+
       .exchange-item-label {
         font-size: 16px;
         font-weight: 500;
@@ -115,14 +117,13 @@
       height: 34px;
       text-align: center;
       line-height: 34px;
-      @include screen-min-width(large){
-        position: relative;
-        top: 40px;
-        margin: 0 12px;
-      }
-      @include screen-max-width(large){
-        margin: 0 auto;
-        margin-top: 10px;
+      position: relative;
+      top: 40px;
+      margin: 0 12px;
+
+      @include screen-max-width(xxmedium){
+        margin: 30px auto 0;
+        top: 0;
       }
     }
 
@@ -152,9 +153,7 @@
       }
 
       &.error {
-        // display: none;
         @include screen-max-width(medium) {
-          // display: flex;
           text-align: center;
           span {
             color: #f1637d;
@@ -268,16 +267,15 @@
 
     .qc-code-content {
       margin-left: 10px;
+      position: absolute;
+      top: 12px;
     }
 
     .main-input {
-      // border-left: 1px solid #cccccc;
-      // height: 48px;
       display: flex;
       align-items: center;
 
       &__right {
-        // padding-right: 20px;
         &--transfer {
           border-left: none;
           &.error {
@@ -436,14 +434,9 @@
     }
 
     @include screen-max-width(medium) {
-      padding: 0;
-      padding-left: 20px;
-      padding-right: 10px;
-
-      &-address {
-        text-align: left;
-      }
+      padding: 0 10px 0 20px;
     }
+
     &-address {
       font-size: 15px;
     }
@@ -485,11 +478,7 @@
     }
 
     &__input-container {
-      width: calc(100% - (#{$labelWidth} + #{$labelWidth} + #{$selectorWidth}));
-
       &--to {
-        width: calc(100% - 80px);
-
         .exchange-content__input {
           width: 100%;
           padding-left: 2px;
