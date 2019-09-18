@@ -9,7 +9,8 @@ import BLOCKCHAIN_INFO from "../../../../env"
   return {
     selectedSymbol: store.market.configs.selectedSymbol,
     locale: store.locale,
-    translate: getTranslate(store.locale)
+		translate: getTranslate(store.locale),
+		global: store.global
   }
 })
 
@@ -18,6 +19,9 @@ export default class TradingView extends React.Component {
 		super()
 		this.state = {
 			rateType: "",
+			widget: null,
+			widgetOverrides: null,
+			iframeEl: null
 		}
 	}
 
@@ -31,6 +35,28 @@ export default class TradingView extends React.Component {
 		fullscreen: false,
 		autosize: true
 	};
+
+	darkThemeWidget = {
+		'paneProperties.background':  "#232323",
+		'paneProperties.vertGridProperties.color': "#414141",
+		'paneProperties.horzGridProperties.color': "#414141",
+		'scalesProperties.textColor' : "#9ea1aa",	// text
+		'mainSeriesProperties.candleStyle.upColor': "#32ca9e",
+		'mainSeriesProperties.candleStyle.downColor': "#fa6566",
+		'mainSeriesProperties.candleStyle.wickUpColor': '#32ca9e',
+		'mainSeriesProperties.candleStyle.wickDownColor': '#fa6566'
+	}
+
+	lightThemeWidget = {
+		'paneProperties.background':  "#FFFFFF",
+		'paneProperties.vertGridProperties.color': "#E6E6E6",
+		'paneProperties.horzGridProperties.color': "#E6E6E6",
+		'scalesProperties.textColor' : "#555",
+		'mainSeriesProperties.candleStyle.upColor': "#31CB9E",
+		'mainSeriesProperties.candleStyle.downColor': "#F95555",
+		'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
+		'mainSeriesProperties.candleStyle.wickDownColor': '#F95555'
+	}
 
   getLanguageFromURL = () => {
     var locale = this.props.locale
@@ -118,15 +144,18 @@ export default class TradingView extends React.Component {
 			timeframe: this.getTimeFrame(this.props.interval),
 			// timezone: "Asia/Singapore",
 			overrides: {
-				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
-				'mainSeriesProperties.candleStyle.downColor': '#F95555',
-				'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
-				'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
 				'mainSeriesProperties.candleStyle.drawBorder': false,
 			}
 		};
 
-    const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		const widgetOverrides = this.props.global.theme === "dark" ? this.darkThemeWidget : this.lightThemeWidget;
+
+		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		
+		this.setState({
+			widget,
+			widgetOverrides
+		});
 
 		widget.onChartReady(() => {
 			// this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
@@ -137,7 +166,7 @@ export default class TradingView extends React.Component {
         this.props.dispatch(changeSymbol(symbolData.name))
       })
 
-      const chart = widget.chart();
+			const chart = widget.chart();
 
 			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
 
@@ -150,11 +179,53 @@ export default class TradingView extends React.Component {
 			// 	}
 			// });
 		});
+
+
+		const parent = document.getElementById(this.props.containerId);
+		if (parent !== null) {
+			const iframeEl = parent.getElementsByTagName("iframe")[0];
+			this.setState({
+				iframeEl
+			});
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { iframeEl } = this.state;
+		if (nextProps.global.theme === this.props.global.theme) {
+			return
+		}
+		if (nextProps.global.theme === "dark") {
+			this.setState({
+				widgetOverrides: this.darkThemeWidget,
+			});
+
+			// send message to iframe
+			if (iframeEl !== null) {
+				iframeEl.contentWindow.postMessage("dark", "*")
+			}
+		} else {
+			this.setState({
+				widgetOverrides: this.lightThemeWidget,
+			});
+			
+			// send message to iframe
+			if (iframeEl !== null) {
+				iframeEl.contentWindow.postMessage("light", "*")
+			}
+		}
 	}
 
   render() {
-    return (
-      <div id={this.props.containerId} className={'trading-view'}/>
+		const { widget, widgetOverrides, iframeEl } = this.state;
+		if (widget !== null) {
+			widget.onChartReady(() => {
+				widget.applyOverrides(widgetOverrides)
+			})
+		}
+
+		return (
+      <div id={this.props.containerId} className={`trading-view`}/>
     )
   }
 }
