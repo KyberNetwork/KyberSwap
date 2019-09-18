@@ -163,6 +163,7 @@ const withSourceAndBalance = (Component) => {
     render(){
       return React.cloneElement(Component, { 
           selectSourceToken: this.selectSourceToken, //for limit order account 
+          selectDestToken: this.selectDestToken, //for limit order account 
           selectSourceAndDestToken: this.selectSourceAndDestToken, //for quote market 
           availableBalanceTokens: this.getModifiedTokenList, //for limit order account + form
           getOpenOrderAmount: this.getOpenOrderAmount //for limit order form

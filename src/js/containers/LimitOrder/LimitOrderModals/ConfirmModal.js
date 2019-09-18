@@ -253,7 +253,7 @@ export default class ConfirmModal extends React.Component {
               <div className="limit-order-modal__close" onClick={e => this.closeModal()}>
                 <div className="limit-order-modal__close-wrapper"></div>
               </div>
-              <div className="limit-order-modal__content">
+              <div className="limit-order-modal__content confirm-exchange-modal">
                 <div className="limit-order-modal__message limit-order-modal__message--text-small">
                   {this.props.translate("limit_order.confirm_order_message", {
                     srcToken: this.props.limitOrder.sourceTokenSymbol,
@@ -266,7 +266,7 @@ export default class ConfirmModal extends React.Component {
                     `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} (for ${formatedSrcAmount} ${this.props.limitOrder.sourceTokenSymbol}) >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
-                <div className="limit-order-modal__pair">
+                <div className="limit-order-modal__pair confirm-exchange-modal">
                   <div className="amount">
                     <div className="amount-item amount-left">                         
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
@@ -329,15 +329,17 @@ export default class ConfirmModal extends React.Component {
             </div>
 
             {(!this.state.isFinish && !this.state.err) &&
-              <div className="limit-order-modal__footer">
-                <button
-                  className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
-                  onClick={e => this.closeModal()}
-                >
-                  {this.props.translate("modal.cancel") || "Cancel"}
-                </button>
-                <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
-                  onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
+              <div className="overlap">
+                <div className="input-confirm">
+                  <button
+                    className={`button process-submit cancel-process ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+                    onClick={e => this.closeModal()}
+                  >
+                    {this.props.translate("modal.cancel") || "Cancel"}
+                  </button>
+                  <button className={`button process-submit next ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
+                    onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
+                </div>
               </div>
             }
 
