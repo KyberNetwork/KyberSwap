@@ -1,4 +1,8 @@
 .common {
+  &__mr-5 {
+    margin-right: 5px;
+  }
+
   &__mr-15 {
     margin-right: 15px;
   }
@@ -56,5 +60,9 @@
     height: 30px;
     background-image: url($image-path + 'common/circle-loading.svg');
     background-size: contain;
+  }
+
+  &__hidden {
+    display: none;
   }
 }

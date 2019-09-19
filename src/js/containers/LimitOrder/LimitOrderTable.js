@@ -10,7 +10,6 @@ import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
-import { calcInterval } from "../../utils/common";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import BLOCKCHAIN_INFO from "../../../../env"
 import { sortBy } from "underscore";
@@ -23,28 +22,27 @@ import LimitOrderExtraTooltip from "./LimitOrderExtraTooltip";
   }
 })
 export default class LimitOrderTable extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			currentOrder: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentOrder: null,
       cancelOrderModalVisible: false,
       statusFilterVisible: false,
       conditionFilterVisible: false,
       addressFilterVisible: false,
-      expanded: {},
       addressCopied: false,
       currentTooltipId: '',
       isExtraOpen: null
     }
-    
-    this.btnCancelRef = null;
-	}
 
-	getColumns = () => {
+    this.btnCancelRef = null;
+  }
+
+  getColumns = () => {
     // ---------------
     // Desktop columns
     // ---------------
-		const desktopColumns = [{
+    const desktopColumns = [{
       id: "date",
       Header: this.getHeader("date"),
       accessor: item => item,
@@ -122,49 +120,36 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getActionCell(props.value),
       headerClassName: "theme__background theme__text-3",
       maxWidth: 80
-		}, {
+    }, {
       expander: true,
       show: false
     }];
-    
+
     // --------------
     // Mobile columns
     // --------------
-    const mobileColumns = [{
-      id: "condition",
-      Header: this.getHeader("condition"),
-      accessor: item => item,
-      Cell: props => this.getConditionCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
-      className: "cell-flex-start cell-condition",
-    }, {
-      id: "status",
-      Header: this.getHeader("status"),
-      accessor: item => item,
-      Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-end-header cell-status-header theme__background theme__text-3",
-      className: "cell-flex-end",
-      maxWidth: 130 
-    }, {
-      expander: true,
-      show: false
-    }];
+    const mobileColumns = [
+      {
+        id: "order-detail",
+        accessor: item => item,
+        Cell: props => this.getOrderDetailCell(props.value),
+      }
+    ];
 
-		if (this.props.screen === "mobile") {
+    if (this.props.screen === "mobile") {
       return mobileColumns;
-		} else {
-			// Default render desktop version table
-			return desktopColumns;
-		}
+    } else {
+      // Default render desktop version table
+      return desktopColumns;
+    }
   }
 
-	// --------------
-	// Render cell
-	// --------------
-	getDateCell = (props) => {
+  // --------------
+  // Render cell
+  // --------------
+  getDateCell = (props) => {
     const { updated_at, status } = props;
-    const timestamp = updated_at;
-    const datetime = getFormattedDate(timestamp);
+    const datetime = getFormattedDate(updated_at);
     return (
       <div>{datetime}</div>
     )
@@ -196,9 +181,6 @@ export default class LimitOrderTable extends Component {
     const { source, dest, status, updated_at, min_rate } = props;
     const { screen } = this.props;
 
-    const datetime = updated_at;
-    const rate = displayNumberWithDot(min_rate, 9);
-
     if (screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
@@ -208,6 +190,7 @@ export default class LimitOrderTable extends Component {
         </div>
       )
     }
+
     return (
       <div>{source.toUpperCase()}/{dest.toUpperCase()}</div>
     )
@@ -216,8 +199,6 @@ export default class LimitOrderTable extends Component {
   getPriceCell = (props) => {
     const { status, updated_at, min_rate } = props;
     const { screen } = this.props;
-
-    const datetime = updated_at;
     const rate = displayNumberWithDot(min_rate, 9);
 
     if (screen === "mobile") {
@@ -261,17 +242,17 @@ export default class LimitOrderTable extends Component {
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
         {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
-          <div className="to-number-cell--extra-wrapper">
-            <span className="to-number-cell--extra theme__button-2" 
-              onClick={e => this.toggleExtraModal(id)}>
+        <div className="to-number-cell--extra-wrapper">
+            <span className="to-number-cell--extra theme__button-2"
+                  onClick={e => this.toggleExtraModal(id)}>
               {this.props.translate("extra") || "extra"}
             </span>
-            {this.state.isExtraOpen === id && <LimitOrderExtraTooltip
+          {this.state.isExtraOpen === id && <LimitOrderExtraTooltip
             estimateAmount={destAmount}
             dest={dest}
             actualAmount={receiveAmount}
             toggleExtraModal={this.toggleExtraModal} />}
-          </div>
+        </div>
         }
       </div>
     )
@@ -293,27 +274,25 @@ export default class LimitOrderTable extends Component {
     const { status, msg, id } = props;
 
     const getMsg = (msg) => {
-      // return msg.reduce((result, item) => {
-      //   return result += `<div>${item}</div>`;
-      // }, "");
       return `<div>${msg}</div>`
     }
 
     return (
       <div className="cell-status__container">
         <div className={`cell-status cell-status--${status} ${this.props.screen === "mobile" ? "cell-status__mobile" : ""}`}>{status.toUpperCase()}</div>
-        {msg && msg.length > 0 && 
+        {msg && msg.length > 0 &&
         <React.Fragment>
           <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className={`status-info-icon ${this.props.screen === "mobile" ? "status-info-icon__mobile" : ""}`}>
             <img src={require("../../../assets/img/warning-triangle.svg")}/>
           </div>
-          <ReactTooltip globalEventOff="click"
+          <ReactTooltip
+            globalEventOff="click"
             effect="solid"
             event="click mouseenter mouseleave"
-            html={true} 
-            place="bottom" 
-            type="dark" 
-            id={`order-status-info-${id}`} 
+            html={true}
+            place="bottom"
+            type="dark"
+            id={`order-status-info-${id}`}
             className="order-status-info">
             {getMsg(msg)}
           </ReactTooltip>
@@ -331,16 +310,13 @@ export default class LimitOrderTable extends Component {
     return (
       <div className="cell-action">
         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.props.openCancelOrderModal(props)}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
-        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>
-          {/* <a href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash} target="_blank">View tx</a> */}
-          {this.props.translate("limit_order.view_tx") || "View tx"}
-        </button>}
+        {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => openTx(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + tx_hash)}>{this.props.translate("limit_order.view_tx") || "View tx"}</button>}
         {status !== LIMIT_ORDER_CONFIG.status.OPEN && status !== LIMIT_ORDER_CONFIG.status.FILLED && this.props.screen !== "mobile" && <div className="line-indicator"></div>}
       </div>
     )
-  }
+  };
 
-	handleSortDate = () => {
+  handleSortDate = () => {
     if (this.props.limitOrder.dateSort === "desc") {
       this.props.dispatch(limitOrderActions.getOrdersByFilter({
         dateSort: "asc"
@@ -352,129 +328,57 @@ export default class LimitOrderTable extends Component {
     }
   }
 
-  // -----------------------------------
-  // On mobile only: Toggle detail order
-  // -----------------------------------
-  toggleDetailOrder = (row) => {
-    const expanded = {...this.state.expanded};
-
-    if (expanded[row.index]) {
-      expanded[row.index] = !expanded[row.index];
-    } else {
-      expanded[row.index] = true;
-    }
-
-    this.setState({
-      expanded
-    });
-  }
-
-  getOrderDetail = (row) => {
-    const { source, dest, min_rate, status, updated_at, src_amount, fee, receive } = row.original;
-
+  getOrderDetailCell = (row) => {
+    const { source, dest, min_rate, src_amount, fee } = row;
     const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
-    const formatedFee = formatNumber(calcFee, 5, '');
-
+    const formattedFee = formatNumber(calcFee, 5, '');
     const sourceAmount = formatNumber(src_amount, 5);
     let destAmount = src_amount * (1 - fee) * min_rate;
     destAmount = formatNumber(destAmount, 5);
 
-    let actualAmount = 0, extraAmount = 0, isShowExtra = false;
-    if (status === LIMIT_ORDER_CONFIG.status.FILLED) {
-      actualAmount = formatNumber(receive, 5);
-      isShowExtra = compareTwoNumber(actualAmount, destAmount) > 0;
-      extraAmount = subOfTwoNumber(actualAmount, destAmount);
-      extraAmount = formatNumber(extraAmount, 5);
-    }
-
     return (
-      <div className="limit-order-modal__detail-order">
-        <div>
-          <div className="cell-pair__mobile">
-            {this.getDateCell(row.original)}
-            {/* <div className="cell-pair">
-              <span>{source.toUpperCase()}</span>
-              <span>&rarr;</span>
-              <span>{dest.toUpperCase()}</span>
-            </div> */}
-            <div>{`${source.toUpperCase()}/${dest.toUpperCase()} >= ${rate}`}</div>
-            {this.getAddressCell(row.original)}
-          </div>
-          <div className="limit-order-modal__detail-order__rate">
-            {this.getStatusCell(row.original)}
+      <div className="order-item">
+        <div className={"order-item__date theme__background-3"}>20 Aug 2019</div>
+        <div className={"order-item__row"}>
+          <div className={"order-item__column order-item__pair theme__text"}>{source}/{dest}</div>
+          <div className={"order-item__column"}/>
+          <div className={"order-item__column"}>
+            {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
+              <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
+            )}
           </div>
         </div>
-        {/* Amount */}
-        <div>
-          <div className="limit-order-modal__detail-order__amount limit-order-modal__detail-order__amount--from">
-            <div>{this.props.translate("limit_order.from") || "From"}</div>
-            <div className="cell-from">
-              <span class="from-number-cell">{sourceAmount}</span>{' '}
-              <span>{source.toUpperCase()}</span>
-            </div>
+        <div className={"order-item__row"}>
+          <div className={"order-item__column theme__text-3"}>{this.getAddressCell(row)}</div>
+          <div className={"order-item__column"}>
+            <span className={"theme__text-3 order-item__title common__mr-5"}>Price</span>
+            <span className={"theme__text order-item__value"}>{rate} DAI</span>
           </div>
-          <div className="limit-order-modal__detail-order__amount">
-            <div>{this.props.translate("limit_order.to") || "To"}</div>
-            <div className="cell-to">
-              <span class="to-number-cell">{destAmount}</span>{' '}
-              <span>{dest.toUpperCase()}</span>
-            </div>
-
-            {/* Actual, estimated, extra amount */}
-            {isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED && <div className="extra-tooltip__mobile">
-              <div>
-                {this.props.translate("limit_order.actual_receive_amount") || "Actual receive amount:"}{' '}
-                {`${actualAmount} ${dest}`} 
-              </div>
-              <div>
-                {this.props.translate("limit_order.estimated_amount") || "Estimated amount:"}{' '}
-                {`${destAmount} ${dest}`} 
-              </div>
-              <div>
-                {this.props.translate("limit_order.extra_amount") || "You got extra amount:"}{' '}
-                <span className="extra-tooltip--extra-amount">
-                  {`${extraAmount} ${dest}`}
-                </span>
-              </div>
-              <div className="extra-tooltip--faq">
-                <a href={`/faq#Why-received-amount-is-higher-than-estimated-amount`} target="_blank">
-                  {this.props.translate("why") || "Why?"}
-                </a>
-              </div>
-            </div>}
-
-          </div>
-
-          {!isShowExtra && <div className="limit-order-modal__detail-order__amount">
-            <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
-            <div className="cell-to">
-              <span class="to-number-cell">{formatedFee}</span>{' '}
-              <span>{source.toUpperCase()}</span>
-            </div>
-          </div>}
+          <div className={"order-item__column"}>{this.getStatusCell(row)}</div>
         </div>
-        {/* Button */}
-        <div className={isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED ? "limit-order-modal__detail-order--footer" : ""}>
-          {isShowExtra && status === LIMIT_ORDER_CONFIG.status.FILLED && <div className="limit-order-modal__detail-order__amount">
-            <div>{this.props.translate("limit_order.fee") || "Fee"}</div>
-            <div className="cell-to">
-              <span class="to-number-cell">{formatedFee}</span>{' '}
-              <span>{source.toUpperCase()}</span>
-            </div>
-          </div>}
-
-          {this.getActionCell(row.original)}
+        <div className={"order-item__row"}>
+          <div className={"order-item__column"}>
+            <div className={"theme__text-3 order-item__title"}>Total</div>
+            <div className={"theme__text order-item__value"}>{destAmount} {dest}</div>
+          </div>
+          <div className={"order-item__column"}>
+            <div className={"theme__text-3 order-item__title"}>Amount</div>
+            <div className={"theme__text order-item__value"}>{sourceAmount} {source}</div>
+          </div>
+          <div className={"order-item__column"}>
+            <div className={"theme__text-3 order-item__title"}>Fee</div>
+            <div className={"theme__text order-item__value"}>{formattedFee} {source}</div>
+          </div>
         </div>
       </div>
-      
     )
-  }
+  };
 
-	// -------------------------------
-	// Render pair filter dropdown
-	// -------------------------------
-	getPairFilter = () => {
+  // -------------------------------
+  // Render pair filter dropdown
+  // -------------------------------
+  getPairFilter = () => {
     const { pairFilter, orderPairs } = this.props.limitOrder;
 
     const renderedPair = orderPairs.map(item => {
@@ -485,10 +389,13 @@ export default class LimitOrderTable extends Component {
           <span>{item.split("-")[0]}</span>{' '}
           <span>&rarr;</span>{' '}
           <span>{item.split("-")[1]}</span>
-          <input type="checkbox" value={item}
+          <input
+            type="checkbox"
+            value={item}
             checked={checked}
-            className="pair-filter-modal__checkbox" 
-            onChange={e => this.handleFilterPair(e)}/>
+            className="pair-filter-modal__checkbox"
+            onChange={e => this.handleFilterPair(e)}
+          />
           <span className="pair-filter-modal__checkmark--checkbox"></span>
         </label>
       )
@@ -501,9 +408,9 @@ export default class LimitOrderTable extends Component {
         </div>
       </div>
     )
-	}
+  }
 
-	handleFilterPair = (event) => {
+  handleFilterPair = (event) => {
     const { value, checked } = event.target;
     if (checked) {
       const pairFilter = [...this.props.limitOrder.pairFilter, value];
@@ -522,17 +429,17 @@ export default class LimitOrderTable extends Component {
         }));
       }
     }
-	}
-	
-	// ------------------------------
-	// Render status filter dropdown
-	// ------------------------------
-	getStatusFilter = () => {
+  }
+
+  // ------------------------------
+  // Render status filter dropdown
+  // ------------------------------
+  getStatusFilter = () => {
     const { statusFilter, activeOrderTab } = this.props.limitOrder;
     const filteredStatus = activeOrderTab === "open" ?
-      [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
-    : [LIMIT_ORDER_CONFIG.status.FILLED, LIMIT_ORDER_CONFIG.status.CANCELLED, LIMIT_ORDER_CONFIG.status.INVALIDATED];
-    
+      [LIMIT_ORDER_CONFIG.status.OPEN, LIMIT_ORDER_CONFIG.status.IN_PROGRESS]
+      : [LIMIT_ORDER_CONFIG.status.FILLED, LIMIT_ORDER_CONFIG.status.CANCELLED, LIMIT_ORDER_CONFIG.status.INVALIDATED];
+
     const getTitle = (status) => {
       if (status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
         return "In Progress";
@@ -547,10 +454,14 @@ export default class LimitOrderTable extends Component {
       return (
         <label key={item} className="status-filter-modal__option">
           <span>{getTitle(item)}</span>
-          <input type="checkbox" value={item} name={item} 
-                checked={checked}
-                className="status-filter-modal__checkbox"
-                onChange={e => this.handleFilterStatus(e)}/>
+          <input
+            type="checkbox"
+            value={item}
+            name={item}
+            checked={checked}
+            className="status-filter-modal__checkbox"
+            onChange={e => this.handleFilterStatus(e)}
+          />
           <span className="status-filter-modal__checkmark--checkbox"></span>
         </label>
       )
@@ -561,9 +472,9 @@ export default class LimitOrderTable extends Component {
         {renderedStatus}
       </div>
     )
-	}
-	
-	handleFilterStatus = (event) => {
+  }
+
+  handleFilterStatus = (event) => {
     const { value, checked } = event.target;
     if (checked) {
       const statusFilter = [...this.props.limitOrder.statusFilter, value];
@@ -590,17 +501,21 @@ export default class LimitOrderTable extends Component {
   // --------------------------------
   getAddressFilter = () => {
     const { addressFilter, orderAddresses } = this.props.limitOrder;
-    
+
     const renderedComp = orderAddresses.map(item => {
       const checked = addressFilter.indexOf(item) !== -1;
 
       return (
         <label key={item} className="status-filter-modal__option">
           <span>{`${item.slice(0, 8)} ... ${item.slice(-6)}`}</span>
-          <input type="checkbox" value={item} name={item} 
-                checked={checked}
-                className="status-filter-modal__checkbox"
-                onChange={e => this.handleFilterAddress(e)}/>
+          <input
+            type="checkbox"
+            value={item}
+            name={item}
+            checked={checked}
+            className="status-filter-modal__checkbox"
+            onChange={e => this.handleFilterAddress(e)}
+          />
           <span className="status-filter-modal__checkmark--checkbox"></span>
         </label>
       )
@@ -663,10 +578,10 @@ export default class LimitOrderTable extends Component {
     });
   }
 
-	// --------------
-	// Render header
-	// --------------
-	getHeader = (title) => {
+  // --------------
+  // Render header
+  // --------------
+  getHeader = (title) => {
     if (title === "date") {
       return (
         <div>
@@ -723,7 +638,7 @@ export default class LimitOrderTable extends Component {
       )
     }
   }
-  
+
   clientSideFilter = (orders) => {
     const { addressFilter, pairFilter, timeFilter, statusFilter, activeOrderTab } = this.props.limitOrder;
     let results = JSON.parse(JSON.stringify(orders));
@@ -743,7 +658,7 @@ export default class LimitOrderTable extends Component {
     // Address filter
     if (addressFilter && addressFilter.length > 0) {
       results = results.filter(item => {
-          return addressFilter.indexOf(item.user_address) !== -1;
+        return addressFilter.indexOf(item.user_address) !== -1;
       });
     }
 
@@ -764,24 +679,14 @@ export default class LimitOrderTable extends Component {
       });
     }
 
-    // Time filter
-    // if (timeFilter) {
-    //   const interval = calcInterval(timeFilter);
-    //   const currentTime = new Date().getTime() / 1000;
-
-    //   results = results.filter(item => {
-    //     return item.updated_at >= currentTime - interval;
-    //   });
-    // }
-
     return results;
   }
 
-	// -------------
-	// Render data
-	// -------------
+  // -------------
+  // Render data
+  // -------------
   renderData = (data) => {
-		const { dateSort } = this.props.limitOrder;
+    const { dateSort } = this.props.limitOrder;
     let results = JSON.parse(JSON.stringify(data));
 
     if (this.props.screen === "mobile") {
@@ -806,19 +711,7 @@ export default class LimitOrderTable extends Component {
         results.reverse();
       }
     }
-    
 
-    // // Status sort after all: Priority is In Progress
-    // results = _.sortBy(results, item => {
-    //   if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-    //     return 0;
-    //   } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-    //     return 1;
-    //   } else {
-    //     return 2;
-    //   }
-    // }, ["asc"]);
-    
     return results;
   }
 
@@ -830,21 +723,11 @@ export default class LimitOrderTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (this.props.limitOrder.timeFilter !== nextProps.limitOrder.timeFilter) {
-    //   this.setState({
-    //     statusFilterVisible: false,
-    //     addressFilterVisible: false,
-    //     conditionFilterVisible: false,
-    //     expanded: {}
-    //   })
-    // }
-
     if (this.props.limitOrder.activeOrderTab !== nextProps.limitOrder.activeOrderTab) {
       this.setState({
         statusFilterVisible: false,
         addressFilterVisible: false,
         conditionFilterVisible: false,
-        expanded: {}
       })
     }
   }
@@ -859,32 +742,26 @@ export default class LimitOrderTable extends Component {
 
 
   render() {
-		const columns = this.getColumns();
+    const columns = this.getColumns();
     const data = this.renderData(this.props.data);
 
     const PaginationComponent = (props) => (
-      <LimitOrderPagination totalCount={data.length}
-        {...props}
-      />
+      <LimitOrderPagination totalCount={data.length} {...props}/>
     );
 
     return (
-			<div className="limit-order-list--table">
-				<ReactTable 
-					data={data}
-					columns={columns}
-					showPagination={this.isShowPagination(data)}
-					resizable={false}
-					sortable={false}
+      <div className="limit-order-list--table">
+        <ReactTable
+          data={data}
+          columns={columns}
+          showPagination={this.isShowPagination(data)}
+          resizable={false}
+          sortable={false}
           minRows={0}
           defaultPageSize={LIMIT_ORDER_CONFIG.pageSize}
           pageSizeOptions={[LIMIT_ORDER_CONFIG.pageSize]}
           PaginationComponent={PaginationComponent}
-          expanded={this.props.screen === "mobile" ? this.state.expanded : undefined}
           className={data.length === 0 ? `ReactTable--empty` : ""}
-          // noDataText={this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one here."} 
-					// PadRowComponent={() => (<div className="line-indicator"></div>)}
-          // NoDataComponent={() => null}
           NoDataComponent={(props) => {
             return (
               <div className="empty-order__message">
@@ -893,40 +770,18 @@ export default class LimitOrderTable extends Component {
               </div>
             )
           }}
-					getTheadProps={(state, rowInfo) => {
-						return {
-							style: { overflow: "visible"}
-						}
-          }}
-          getTrGroupProps={(state, rowInfo) => {
-            if (this.props.screen === "mobile" && rowInfo) {
+          getTheadProps={(state, rowInfo) => {
+            if (this.props.screen === "mobile") {
               return {
-                onClick: (e) => {
-                  this.toggleDetailOrder(rowInfo);
-                },
-                className: this.state.expanded[rowInfo.index] ? "expanded-row" : "",
+                style: { display: "none" }
               }
             }
-            return {};
-          }}
-          getTrProps={(state, rowInfo) => {
-            if (this.props.screen === "mobile" && rowInfo) {
-              return {
-                style: this.state.expanded[rowInfo.index] ? {
-                  display: "none",
-                } : {},
-              }
+
+            return {
+              style: { overflow: "visible"}
             }
-            return {};
           }}
           getTheadThProps={(state, rowInfo, column) => {
-            if (this.props.data.length === 0) {
-              // return {
-              //   style: {
-              //     pointerEvents: "none"
-              //   }
-              // }
-            }
             if (column.id === "status") {
               return {
                 onClick: (e) => {
@@ -951,10 +806,7 @@ export default class LimitOrderTable extends Component {
             }
             return {};
           }}
-          SubComponent={(rowInfo) => {
-            return this.getOrderDetail(rowInfo);
-          }}
-				/>
+        />
         {this.state.addressCopied && (
           <ReactTooltip
             getContent={() => this.getCopyTooltipContent()}
@@ -964,13 +816,13 @@ export default class LimitOrderTable extends Component {
             type="dark"
           />
         )}
-			</div>
+      </div>
     )
   }
 }
 
 LimitOrderTable.propTypes = {
-	data: PropTypes.array,
-	screen: PropTypes.string,
-	openCancelOrderModal: PropTypes.func
+  data: PropTypes.array,
+  screen: PropTypes.string,
+  openCancelOrderModal: PropTypes.func
 }
