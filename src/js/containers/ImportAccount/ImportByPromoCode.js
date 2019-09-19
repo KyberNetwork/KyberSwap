@@ -26,7 +26,7 @@ export default class ImportByPromoCode extends React.Component {
         )}
 
         {this.props.isOnMobile && (
-          <div className={"import-account__block"}>
+          <div className={"import-account__block theme__import-button"}>
             <div className={"import-account__block-left"}>
               <div className="import-account__icon promo-code"/>
               <div>
