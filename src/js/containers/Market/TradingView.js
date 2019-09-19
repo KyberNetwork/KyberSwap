@@ -188,6 +188,20 @@ export default class TradingView extends React.Component {
 				iframeEl
 			});
 		}
+
+		// Listening for iframe ready
+		window.addEventListener('message', this.sendMessageToIframe.bind(this), false);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('message', this.sendMessageToIframe.bind(this), false);
+	}
+
+	sendMessageToIframe(e) {
+		const { iframeEl } = this.state
+		if (e.data === "ready" && this.state && iframeEl && iframeEl.contentWindow) {
+			iframeEl.contentWindow.postMessage(this.props.global.theme, "*")
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -199,19 +213,15 @@ export default class TradingView extends React.Component {
 			this.setState({
 				widgetOverrides: this.darkThemeWidget,
 			});
-
-			// send message to iframe
 			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage("dark", "*")
+				iframeEl.contentWindow.postMessage(nextProps.global.theme, "*")
 			}
 		} else {
 			this.setState({
 				widgetOverrides: this.lightThemeWidget,
 			});
-			
-			// send message to iframe
 			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage("light", "*")
+				iframeEl.contentWindow.postMessage(nextProps.global.theme, "*")
 			}
 		}
 	}

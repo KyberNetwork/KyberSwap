@@ -17,6 +17,9 @@ function changeTheme(theme) {
     }
 }
 
+// ready to listen to message, notify parent
+window.parent.postMessage("ready", "*");
+
 // Listen for event change theme
 bindEvent(window, 'message', function (e) {
     const theme = e.data
