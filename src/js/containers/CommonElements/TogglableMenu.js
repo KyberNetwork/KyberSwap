@@ -16,6 +16,10 @@ export default class ToggleableMenu extends React.Component {
       isAdvanceTokenVisible: false,
       isReimport: false
     }
+    if (window.kyberBus) {
+      window.kyberBus.on('wallet.view', () => {this.setState({isAdvanceTokenVisible: true})});
+      window.kyberBus.on('wallet.change', () => {this.setState({isAdvanceTokenVisible: true})});
+    }
   }
   toggleAdvanceTokeBalance = () => {
     this.setState({

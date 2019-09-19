@@ -109,8 +109,6 @@ export default class Layout extends React.Component {
     }
 
     if (window.kyberBus) {
-      window.kyberBus.on('set.theme.light', this.switchTheme('light'));
-      window.kyberBus.on('set.theme.dark', this.switchTheme('dark'));
       window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
       window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
       window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
