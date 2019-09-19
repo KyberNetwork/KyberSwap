@@ -10,19 +10,18 @@ import {
   LimitOrderListModal
 } from "../LimitOrder"
 import { ImportAccount } from "../ImportAccount";
-import { MOBILE_SCREEN_WIDTH } from "../../services/constants";
 import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
 
 @connect((store, props) => {
+  const global = store.global;
   const account = store.account.account
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum
+  const ethereum = store.connection.ethereum;
 
   return {
-    translate, limitOrder, tokens, account, ethereum,
-    global: store.global
+    translate, limitOrder, tokens, account, ethereum, global
   }
 })
 
@@ -39,7 +38,6 @@ export default class LimitOrderBody extends React.Component {
       />
     );
     this.QuoteMarket = withSourceAndBalance(<QuoteMarket/>);
-    this.isOnMobileScreen = window.innerWidth < MOBILE_SCREEN_WIDTH;
   }
 
   setSrcInputElementRef = (element) => {
@@ -53,18 +51,19 @@ export default class LimitOrderBody extends React.Component {
   render() {
     const LimitOrderForm = this.LimitOrderForm
     const QuoteMarket = this.QuoteMarket
+
     return (
       <div className={"limit-order theme__background"}>
-        {this.isOnMobileScreen &&
+        {this.props.global.isOnMobile &&
           <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
         }
 
         <div className={"limit-order__container limit-order__container--left"}>
-          {!this.isOnMobileScreen && (
+          {!this.props.global.isOnMobile && (
             <LimitOrderChart/>
           )}
 
-          {!this.isOnMobileScreen &&
+          {!this.props.global.isOnMobile &&
             <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
           }
         </div>
@@ -80,13 +79,13 @@ export default class LimitOrderBody extends React.Component {
             </div>
           }
 
-          {!this.isOnMobileScreen && (
+          {!this.props.global.isOnMobile && (
             <QuoteMarket/>
           )}
 
           <LimitOrderForm/>
 
-          {this.isOnMobileScreen &&
+          {this.props.global.isOnMobile &&
             <LimitOrderMobileHeader/>
           }
         </div>
