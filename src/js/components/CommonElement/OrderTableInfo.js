@@ -3,18 +3,18 @@ import * as converters from "../../utils/converter";
 
 const OrderTableInfo = (props) => {
   var makeOrderInfo = (higherRateOrders) => {
-    return higherRateOrders.map(item => {
+    return higherRateOrders.map((item, index) => {
       let fee = converters.formatNumber(item.fee * item.src_amount, 5, '')
       let source = item.source == "WETH" ? "ETH*" : item.source
       let dest = item.dest == "WETH" ? "ETH*" : item.dest
-      switch (item.sideTrade) {
+      switch (item.side_trade) {
         case "buy":
           let quote = source
           let base = dest
           return (
-            <div className={"info"}>
-              <div>{item.sideTrade}</div>
-              <div>{converters.roundingNumber(1 / item.min_rate)} {quote}</div>
+            <div key={index} className={"info"}>
+              <div>{item.side_trade}</div>
+              <div>{+item.min_rate !== 0 ? converters.roundingNumber(1 / item.min_rate) : 0} {quote}</div>
               <div>{converters.roundingNumber(item.src_amount * item.min_rate)} {base}</div>
               <div>{converters.roundingNumber(item.src_amount)} {quote}</div>
               <div>{fee} {quote}</div>
@@ -24,8 +24,8 @@ const OrderTableInfo = (props) => {
           quote = dest
           base = source
           return (
-            <div className={"info"}>
-              <div>{item.sideTrade}</div>
+            <div key={index} className={"info"}>
+              <div>{item.side_trade}</div>
               <div>{converters.roundingNumber(item.min_rate)} {quote}</div>
               <div>{converters.roundingNumber(item.src_amount)} {base}</div>
               <div>{converters.roundingNumber(item.src_amount * item.min_rate)} {quote}</div>
@@ -34,7 +34,7 @@ const OrderTableInfo = (props) => {
           )
         default:
           return (
-            <div className={"info"}>
+            <div key={index} className={"info"}>
               <div>{"-"}</div>
               <div>{converters.roundingNumber(item.min_rate)} {dest}</div>
               <div>{converters.roundingNumber(item.src_amount)} {source}</div>
