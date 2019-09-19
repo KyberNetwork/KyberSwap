@@ -11,6 +11,7 @@ import {
 } from "../LimitOrder"
 import { ImportAccount } from "../ImportAccount";
 import { MOBILE_SCREEN_WIDTH } from "../../services/constants";
+import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -59,7 +60,9 @@ export default class LimitOrderBody extends React.Component {
         }
 
         <div className={"limit-order__container limit-order__container--left"}>
-          <LimitOrderChart/>
+          {!this.isOnMobileScreen && (
+            <LimitOrderChart/>
+          )}
 
           {!this.isOnMobileScreen &&
             <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
@@ -76,8 +79,16 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
           }
-          <QuoteMarket/>
-          <LimitOrderForm />
+
+          {!this.isOnMobileScreen && (
+            <QuoteMarket/>
+          )}
+
+          <LimitOrderForm/>
+
+          {this.isOnMobileScreen &&
+            <LimitOrderMobileHeader/>
+          }
         </div>
       </div>
     )

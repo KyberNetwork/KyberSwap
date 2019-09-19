@@ -353,7 +353,7 @@ export default class LimitOrderTable extends Component {
           <div className={"order-item__column theme__text-3"}>{this.getAddressCell(row)}</div>
           <div className={"order-item__column"}>
             <span className={"theme__text-3 order-item__title common__mr-5"}>Price</span>
-            <span className={"theme__text order-item__value"}>{rate} DAI</span>
+            <span className={"theme__text order-item__value"}>{rate}</span>
           </div>
           <div className={"order-item__column"}>{this.getStatusCell(row)}</div>
         </div>
