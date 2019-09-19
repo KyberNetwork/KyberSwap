@@ -404,7 +404,7 @@
     position: fixed;
     right: 0;
     top: 100px;
-    z-index: 9999999;
+    z-index: 99;
     border-radius: 3px 0 0 3px;
     font-size: 10px;
     padding: 5px 10px;
@@ -549,8 +549,8 @@
     }
     
     .account-balance {
-      &__address {
-        margin-bottom: 10px;
+      &__address div{
+        margin-bottom: 20px;
       }
 
       &__address-text {
@@ -606,7 +606,6 @@
       }
 
       &__control-panel{
-        margin: 15px 0 0 0;
       }
     }
   }
@@ -1237,7 +1236,6 @@
     }
 
     .rc-label {
-      color: #999999 !important;
     }
 
     .rc-info {
@@ -1387,7 +1385,7 @@
     padding: 9px 40px;
     color: white;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color .3s;
 
@@ -1527,7 +1525,7 @@
     margin-bottom: 20px;
     .token-item{
       border: 1px solid #cfcfcf;
-      border-radius: 40px;
+      border-radius: 3px;
       display: flex;
       align-items: center;
     }
@@ -1544,9 +1542,10 @@
       font-size: 18px;
       font-weight: 500;
       color: #5a5e67;
-      padding: 2px 20px 2px 40px;
+      padding: 14px 20px 14px 40px;
       background: white;
-      border-radius: 0 40px 40px 0;
+      border-radius: 0 3px 3px 0;
+      border-left: 1px solid #cfcfcf;
 
       input{
         margin: 0;

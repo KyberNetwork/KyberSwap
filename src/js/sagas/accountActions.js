@@ -131,6 +131,8 @@ export function* importNewAccount(action) {
     })
 
     yield put(setBalanceToken(balanceTokens))
+
+    if (window.kyberBus) { window.kyberBus.broadcast('wallet.import', address); }
   }
   catch (err) {
     console.log(err)
