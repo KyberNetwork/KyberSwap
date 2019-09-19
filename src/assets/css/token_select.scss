@@ -77,10 +77,12 @@
     position: relative;
 
     &--wrapper {
-      @include screen-min-width(large){
-        width: calc(50% - 29px);
+      width: calc(50% - 40px);
+
+      @include screen-max-width(xxmedium){
+        width: 100%;
       }
-      
+
       .exchange-item-label {
         font-size: 16px;
         font-weight: 500;
@@ -115,14 +117,13 @@
       height: 34px;
       text-align: center;
       line-height: 34px;
-      @include screen-min-width(large){
-        position: relative;
-        top: 40px;
-        margin: 0 12px;
-      }
-      @include screen-max-width(large){
-        margin: 0 auto;
-        margin-top: 10px;
+      position: relative;
+      top: 40px;
+      margin: 0 12px;
+
+      @include screen-max-width(xxmedium){
+        margin: 30px auto 0;
+        top: 0;
       }
     }
 
@@ -152,9 +153,7 @@
       }
 
       &.error {
-        // display: none;
         @include screen-max-width(medium) {
-          // display: flex;
           text-align: center;
           span {
             color: #f1637d;
@@ -268,16 +267,15 @@
 
     .qc-code-content {
       margin-left: 10px;
+      position: absolute;
+      top: 12px;
     }
 
     .main-input {
-      // border-left: 1px solid #cccccc;
-      // height: 48px;
       display: flex;
       align-items: center;
 
       &__right {
-        // padding-right: 20px;
         &--transfer {
           border-left: none;
           &.error {
@@ -397,7 +395,7 @@
           }
         }
 
-        @media screen and (max-width: 900px) {
+        @include screen-max-width(xxmedium) {
           right: 0;
           left: unset;
           width: calc(100% - 259px);
@@ -436,20 +434,15 @@
     }
 
     @include screen-max-width(medium) {
-      padding: 0;
-      padding-left: 20px;
-      padding-right: 10px;
-
-      &-address {
-        text-align: left;
-      }
+      padding: 0 10px 0 20px;
     }
+
     &-address {
       font-size: 15px;
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     $labelWidth: 35px;
     $selectorWidth: 200px;
 
@@ -459,15 +452,6 @@
       width: 100%;
       border: none;
       box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-
-      &--left {
-        margin-bottom: 1px;
-        padding-right: 20px;
-      }
-
-      &--right {
-        padding-left: 20px;
-      }
 
       &--absolute {
         background-color: white;
@@ -494,11 +478,7 @@
     }
 
     &__input-container {
-      width: calc(100% - (#{$labelWidth} + #{$labelWidth} + #{$selectorWidth}));
-
       &--to {
-        width: calc(100% - 80px);
-
         .exchange-content__input {
           width: 100%;
           padding-left: 2px;
@@ -734,7 +714,7 @@
       left: 0px;
     }
 
-    @media screen and (max-width: 900px) {
+    @include screen-max-width(xxmedium) {
       &.dest .dropdown.dropdown--active .select-item {
         left: 0px;
       }
@@ -843,12 +823,18 @@
           }
 
           .item-balance {
-            padding-top: 5px;
+            padding-right: 15px;
+            font-size: 14px;
+            width: 50%;
+            text-align: right;
           }
 
           .d-flex {
             width: 100%;
             transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
             .item-content {
               width: 100%;
@@ -866,13 +852,14 @@
               }
             }
             .token-info {
-              margin-right: 40px;
               display: flex;
               align-items: center;
-              min-width: 115px;
+              width: 45%;
+
               .item-icon {
                 margin-right: 5px;
               }
+
               div:last-child {
                 font-size: 14px;
                 font-weight: 500;
@@ -1082,12 +1069,7 @@
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
-      .d-flex{
-        align-content: center;
-      }
-      .item-balance{
-        font-size: 14px;
-      }
+
       .item-balance-value{
         margin-right: 5px;
         font-weight: 400;

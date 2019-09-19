@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
-import { LimitOrder, LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
+import { LimitOrder } from "../../containers/LimitOrder"
 import { ExchangeHistory } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 import history from "../../history"
@@ -18,7 +18,6 @@ import Language from "../../../../lang"
 import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
 
-import { Redirect } from 'react-router-dom'
 @connect((store) => {
   var locale = store.locale
   var code
@@ -79,9 +78,6 @@ export default class Layout extends React.Component {
     this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
     this.intervalIdle = null;
-    this.LimitOrderAccount = withSourceAndBalance(<LimitOrderAccount />)
-    this.state = {redirect: false}
-
   }
 
   componentWillMount() {

@@ -399,9 +399,7 @@ const INIT_LIMIT_ORDER_STATE = {
   forceSubmitRate: 0,
   favorite_pairs_anonymous: [],
   currentQuote: "ETH",
-  currentQuotePair: ""
 }
-
 
 // reserves
 const RESERVES = [{ index: 0, name: "Kyber official reserve" }]
@@ -437,21 +435,15 @@ const CONNECTION_CHECKER = {
 }
 
 const LIST_PARAMS_SUPPORTED = [{ key: 'lang', default: 'en' }, { key: 'ref' }]
-
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us"
-
 const BASE_HOST = ""
-
 const ASSET_URL = 'https://files.kyber.network/DesignAssets/';
-
 const STORAGE_KEY = "130"
 const TRADE_TOPIC = "0xd30ca399cb43507ecec6a629a35cf45eb98cda550c27696dcb0d8c4a3873ce6c"
 const LIMIT_ORDER_TOPIC = "0x9d01abd327f261fd9b19b1199ecb4da0499da48fcb528e2868ac72f06235245c"
 const PERM_HINT = "PERM"
 const CONNECTION_TIMEOUT = 6000
-
-
 
 module.exports = {
   ERC20, KYBER_NETWORK, KYBER_WRAPPER, ETHER_ADDRESS, ETH, RESERVES, WETH_SUBSTITUTE_NAME,

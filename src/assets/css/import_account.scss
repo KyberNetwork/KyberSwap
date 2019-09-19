@@ -56,10 +56,15 @@
       display: block;
 
       .import-account__item {
-        margin: 10px 0;
+        margin-top: 15px;
         width: auto;
         height: auto;
-        border-radius: 50px;
+        border-radius: 3px;
+        color: $grey-darker;
+
+        &:first-child {
+          margin-top: 0;
+        }
 
         &.download-app{
           .import-account__block-right--comming-soon{
@@ -76,38 +81,66 @@
             background-color: #ef8102;
           }
         }
+
+        &--inactive {
+          color: $grey-dark;
+        }
       }
 
       .import-account__block {
-        background-color: #E7EDF5;
+        background-color: white;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
+        padding: 10px 15px;
         height: unset;
         cursor: initial;
-        border-radius: 50%;
+        border: none;
+        box-shadow: 0 3px 14px 1px rgba(0, 0, 0, 0.08);
 
         &:hover {
           background-color: transparent !important;
+
           .import-account__name {
             color: inherit !important;
           }
         }
-      }
 
-      .import-account__block-left {
-        display: flex;
-        align-items: center;
+        &-left {
+          display: flex;
+          align-items: center;
+        }
+
+        &-right {
+          display: block;
+          font-size: 12px;
+          color: $grey-dark;
+          width: 100px;
+          padding: 8px 0;
+          text-align: center;
+          cursor: pointer;
+          transition: all .3s;
+          border: 1px solid $grey-dark;
+          border-radius: 3px;
+
+          &:hover {
+            color: white;
+            border-color: #ef8102;
+            background-color: #ef8102;
+          }
+        }
       }
 
       .import-account__icon {
-        width: 25px;
-        height: 35px;
+        width: 24px;
+        height: 24px;
         background-size: contain;
-        margin-right: 15px;
+        margin-right: 16px;
 
         &.kyberapp {
+          width: 30px;
+          height: 43px;
+          margin-right: 12px;
           background-image: url($image-path + '/v3/kyber-logo.svg');
         }
 
@@ -121,34 +154,13 @@
       }
 
       .import-account__name {
-        font-size: 14px;
-        font-weight: 600;
-        color: #222222;
-        margin-bottom: -2px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 2px;
       }
 
       .import-account__desc {
-        font-size: 11px;
-        color: #666666;
-      }
-
-      .import-account__block-right {
-        display: block;
-        font-size: 12px;
-        color: #677C94;
-        width: 100px;
-        padding: 4px 0;
-        text-align: center;
-        cursor: pointer;
-        transition: all .3s;
-        border: 1px solid #677C94;
-        border-radius: 20px;
-
-        &:hover {
-          color: white;
-          border-color: #ef8102;
-          background-color: #ef8102;
-        }
+        font-size: 10px;
       }
     }
   }
@@ -185,7 +197,7 @@
         }
 
         .import-account__icon {
-          background: no-repeat center;
+          background-size: contain;
 
           &.metamask {
             background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
@@ -208,6 +220,14 @@
         }
       }
     }
+
+    @include screen-max-width(xxsmall) {
+      width: 48%;
+    }
+
+    @include screen-max-width(small) {
+      width: 100%;
+    }
   }
 
   &__block {
@@ -221,6 +241,7 @@
     outline: none;
     border: 1px solid;
     border-radius: 3px;
+
     &:hover {
       background-color: transparent;
 
@@ -350,7 +371,7 @@
     text-transform: uppercase;
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     border: none;
     box-shadow: none;
 
@@ -402,8 +423,7 @@
     text-align: center;
     margin-bottom: 70px;
     margin-top: 0;
-    padding-top: 70px;
-    font-size: 28px;
+    padding-top: 50px;
     font-weight: 600;
     line-height: 1.71;
     letter-spacing: -0.4px;
@@ -435,11 +455,10 @@
       color: white;
       font-size: 14px;
       width: 100%;
-      max-width: 200px;
+      max-width: 150px;
       border-radius: 3px;
       font-weight: 600;
       cursor: pointer;
-      color: white;
       outline: none;
       border: none;
     }
@@ -450,16 +469,20 @@
     width: 100%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 23px;
+    border-radius: 3px;
     color: #666666;
     height: 45px;
-    padding-left: 55px;
+    padding: 0 45px;
+    font-size: 18px;
+
+    &.security {
+      font-size: 25px;
+    }
   }
 }
 
 .import-promocode {
   @extend .import-privatekey;
-
 }
 
 .keystore-modal{
@@ -476,26 +499,21 @@
     width: 100%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 23px;
+    border-radius: 3px;
     color: #666666;
     height: 45px;
-    padding-left: 55px;
+    padding: 0 45px;
     outline: none;
     box-shadow: none;
+    font-size: 18px;
+
+    &.security {
+      font-size: 25px;
+    }
   }
 }
 
 .reimport-modal {
-  /*&--tiny {
-    @media print, screen and (max-width: 40em) {
-      top: 40%;
-      height: 160px;
-      min-height: 0;
-      width: 90%;
-      border-radius: 10px;
-      margin: 0 auto;
-    }
-  }*/
   padding: 10px; 
 
   .title {

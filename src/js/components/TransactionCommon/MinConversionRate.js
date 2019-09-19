@@ -62,7 +62,7 @@ export default class MinConversionRate extends React.Component {
               checked={this.props.customRateInput.isSelected === false}
               onChange={e => this.onChangeRateOption(e, false)}
             />
-            <span className="advance-config__checkmark"/>
+            <span className="advance-config__checkmark theme__radio-button"/>
           </label>
           <label className="advance-config__option advance-config__option--with-input">
             <span>{this.props.translate("transaction.custom") || "Custom"}: </span>
@@ -74,7 +74,7 @@ export default class MinConversionRate extends React.Component {
               checked={this.props.customRateInput.isSelected === true}
               onChange={e => this.onChangeRateOption(e, true)}
             />
-            <span className="advance-config__checkmark"/>
+            <span className="advance-config__checkmark theme__radio-button"/>
             <input
               type="number"
               className={`advance-config__input theme__background-5 theme__border theme__text-4 ${isError ? "advance-config__input-error" : ""}`}

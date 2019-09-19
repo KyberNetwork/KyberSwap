@@ -3,50 +3,45 @@ import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 import ReactTooltip from 'react-tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Link } from 'react-router-dom'
-import {getAssetUrl} from "../../utils/common"
+import { getAssetUrl } from "../../utils/common"
 
 const TransactionLoadingView = (props) => {
-  var isBroadcasting = props.broadcasting
-  var broadcastError = props.error
+  const isBroadcasting = props.broadcasting;
+  const broadcastError = props.error;
   const isTxFailed = props.status === "failed";
 
-  isBroadcasting = props.broadcasting
-  broadcastError = props.error
-
   if (isBroadcasting) {
-    var classPending = !props.error ? " pulse" : ""
     return (
       <div>
         <div className="title">
-        {broadcastError  &&
-           <div>
-              <div className="icon icon--failed"></div>
-              <div className="title-status">{ props.translate('transaction.failed') || "Failed!" }</div>
-            </div>
-        }
-        {!broadcastError &&
+          {broadcastError  &&
           <div>
-            <div className="icon icon--broadcasted"></div>
+            <div className="icon icon--failed"/>
+            <div className="title-status">{ props.translate('transaction.failed') || "Failed!" }</div>
+          </div>
+          }
+          {!broadcastError &&
+          <div>
+            <div className="icon icon--broadcasted"/>
             <div className="title-status">{ props.translate('transaction.broadcasting') || "Broadcasting!" }</div>
           </div>
-        }
+          }
         </div>
         <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
         <div className="content with-overlap tx-loading">
           <div className="row">
             <ul class="broadcast-steps">
               {!broadcastError &&
-                <li class="pending">
-                  <h4 class="font-w-b">{props.translate("transaction.broadcasting_blockchain") || "Broadcasting the transaction to the blockchain"}
-                  </h4>
-                </li>
+              <li class="pending">
+                <h4 class="font-w-b">{props.translate("transaction.broadcasting_blockchain") || "Broadcasting the transaction to the blockchain"}
+                </h4>
+              </li>
               }
               {broadcastError &&
-                <li class="failed">
-                  <h4 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h4>
-                  <div class="reason">{broadcastError}</div>
-                </li>
+              <li class="failed">
+                <h4 class="font-w-b">{props.translate("transaction.cound_not_broadcast") || "Couldn't broadcast your transaction to the blockchain"}</h4>
+                <div class="reason">{broadcastError}</div>
+              </li>
               }
             </ul>
           </div>
@@ -65,7 +60,6 @@ const TransactionLoadingView = (props) => {
 
   var handleAnalyze = (e) => {
     props.debug.debugError()
-    // props.toogleModal()
   }
 
   var getTooltipCopy = () => {
@@ -74,22 +68,17 @@ const TransactionLoadingView = (props) => {
       (props.translate("transaction.copy_tx") || "Copy transaction hash")
   }
 
-
   var getError = () => {
+    let reason = "";
 
-    console.log(props.analyze)
-
-    var reason = ""
-
-    if (props.debug.isDebuging && !props.debug.isDebugComplete){
-      reason = <div className="analyze-panel loading">
-                <div>
-                  <div class="cssload-container">
-                    <div class="cssload-double-torus"></div>
-                  </div>
-                </div>
-              </div>
+    if (props.debug.isDebuging && !props.debug.isDebugComplete) {
+      reason = (
+        <div className="analyze-panel loading">
+          <div className="common__circle-loading"/>
+        </div>
+      )
     }
+
     if (!props.debug.isDebuging && props.debug.isDebugComplete) {
       let txDebuggerUrl = `https://developer.kyber.network/tx-diagnose/${props.txHash}`;
       if (BLOCKCHAIN_INFO.chainName !== 'Mainnet') txDebuggerUrl += `/${BLOCKCHAIN_INFO.chainName.toLowerCase()}`;
@@ -97,12 +86,12 @@ const TransactionLoadingView = (props) => {
 
       if (Object.keys(props.debug.errorTx).length === 0){
         reason = <div className="analyze-panel">
-                  <div className="empty-error">{props.translate("transaction.error_no_reason") 
-                    || "Cannot find any reason for your failed transaction. Please try again in a while"}</div>
-                  {txDebuggerLink}
-                </div>
+          <div className="empty-error">{props.translate("transaction.error_no_reason")
+          || "Cannot find any reason for your failed transaction. Please try again in a while"}</div>
+          {txDebuggerLink}
+        </div>
       }else{
-        reason = 
+        reason =
           <div className="analyze-panel">{
             Object.keys(props.debug.errorTx).map(key => {
               return <div key={key}>{props.debug.errorTx[key]}</div>
@@ -115,36 +104,26 @@ const TransactionLoadingView = (props) => {
     return reason
   }
 
-  var classPending = props.status === "pending" ? " pulse" : ""
-  // var analyzeBtn = ""
-
-  // if (props.type === "exchange") {
-  //   analyzeBtn = (
-  //     <a className="analyze" onClick={(e) => handleAnalyze(e)}>
-  //       {props.translate('transaction.analyze') || "Show reasons"}
-  //     </a>
-  //   )
-  // }
   return (
     <div>
       <div className="title">
         {props.status === "success" &&
-          <div>
-            <div className="icon icon--success"></div>
-            <div className="title">{props.translate('transaction.done') || "Done"}</div>
-          </div>
+        <div>
+          <div className="icon icon--success"/>
+          <div className="title">{props.translate('transaction.done') || "Done"}</div>
+        </div>
         }
         {isTxFailed &&
-          <div>
-            <div className="icon icon--failed"></div>
-            <div className="title">{ props.translate('transaction.failed') || "Failed!" }</div>
-          </div>
+        <div>
+          <div className="icon icon--failed"/>
+          <div className="title">{ props.translate('transaction.failed') || "Failed!" }</div>
+        </div>
         }
         {props.status === "pending" &&
-          <div>
-            <div className="icon icon--broadcasted"></div>
-            <div className="title">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
-          </div>
+        <div>
+          <div className="icon icon--broadcasted"/>
+          <div className="title">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
+        </div>
         }
       </div>
       <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
@@ -153,13 +132,13 @@ const TransactionLoadingView = (props) => {
           <div class="info tx-title">
             <div className="tx-title-text">{props.translate("transaction.transaction") || "Transaction hash"}</div>
             <div className={`tx-hash ${isTxFailed ? "tx-hash--error" : ""}`}>
-              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank" 
-                title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} onClick={(e) => props.analytics.callTrack("trackClickViewTxOnEtherscan")}>
+              <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
+                 title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} onClick={(e) => props.analytics.callTrack("trackClickViewTxOnEtherscan")}>
                 {props.txHash}
               </a>
               <a className="copy-tx" data-for='copy-tx-tip' data-tip=""
-                onClick={props.handleCopy}
-                onMouseLeave={props.resetCopy} >
+                 onClick={props.handleCopy}
+                 onMouseLeave={props.resetCopy} >
                 <CopyToClipboard text={props.txHash}>
                   <img src={require("../../../assets/img/copy-address.svg")} />
                 </CopyToClipboard>
@@ -181,45 +160,42 @@ const TransactionLoadingView = (props) => {
             {props.status === "success" &&
               <li class={props.status}>
                 <div>
-                <div>
-                  {props.type === "swap" &&
+                  <div>
+                    {props.type === "swap" &&
                     <div>
                       <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
-                        <span>
-                          <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</strong>
-                        </span>
+                          <span>
+                            <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</strong>
+                          </span>
                         <span> {props.translate('transaction.to') || "to"} </span>
                         <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</strong></span>
                       </div>
                     </div>
-                  }
-                  {props.type === "transfer" &&
-                      <div>
-                          <div className="title final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
-                          <div className="content">
-                            <span>
-                            <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
-                            </span>
-                            <span> {props.translate('transaction.to') || "to"} </span>
-                            <span><strong>{props.balanceInfo.address}</strong></span>
-                          </div>
+                    }
+                    {props.type === "transfer" &&
+                    <div>
+                      <div className="title final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
+                      <div className="content">
+                              <span>
+                              <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
+                              </span>
+                        <span> {props.translate('transaction.to') || "to"} </span>
+                        <span><strong>{props.balanceInfo.address}</strong></span>
                       </div>
-                  }
+                    </div>
+                    }
+                  </div>
                 </div>
-                </div>
-                {/* <div className="broadcast-img">
-                  <img src={require('../../../assets/img/finish.svg')} />
-                  <div>Done</div>
-                </div> */}
               </li>
             }
+
             {isTxFailed &&
               <li class={props.status}>
                 <div>
                   {props.type==="swap" && (
                     <div>
-                      <h4 class="font-w-b d-inline-blocka analyze-btn" onClick={(e) => handleAnalyze(e)}>                    
+                      <h4 class="font-w-b d-inline-blocka analyze-btn" onClick={(e) => handleAnalyze(e)}>
                         {props.translate("transaction.transaction_error") || "Transaction error"}
                       </h4>
                       <div className="list-err">
@@ -230,17 +206,11 @@ const TransactionLoadingView = (props) => {
                 </div>
               </li>
             }
+
             {props.status === "pending" &&
               <li class={props.status}>
-                <div>
-                  <h4>
-                          <div class="cssload-container">
-                            <div class="cssload-double-torus"></div>
-                          </div>
-                    <div>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}
-                    </div>
-                  </h4>
-                </div>
+                <div class="common__circle-loading"/>
+                <div className={"tx-waiting-text"}>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</div>
               </li>
             }
           </ul>
@@ -266,6 +236,5 @@ const TransactionLoadingView = (props) => {
     </div>
   )
 }
-
 
 export default TransactionLoadingView

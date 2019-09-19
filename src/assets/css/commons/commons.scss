@@ -1,4 +1,8 @@
 .common {
+  &__mr-5 {
+    margin-right: 5px;
+  }
+
   &__mr-15 {
     margin-right: 15px;
   }
@@ -35,6 +39,7 @@
   }
 
   &__triangle {
+    display: inline-block;
     width: 0;
     height: 0;
     border-left: 4px solid transparent;
@@ -45,5 +50,28 @@
     &.up {
       transform: rotate(-180deg);
     }
+  }
+
+  &__slide-up {
+    animation: slideUp .3s forwards;
+  }
+
+  &__circle-loading {
+    width: 30px;
+    height: 30px;
+    background-image: url($image-path + 'common/circle-loading.svg');
+    background-size: contain;
+  }
+
+  &__hidden {
+    display: none;
+  }
+
+  &__text-green {
+    color: $text-green;
+  }
+
+  &__text-red {
+    color: $alert-color;
   }
 }
