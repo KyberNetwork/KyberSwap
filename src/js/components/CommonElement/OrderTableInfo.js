@@ -14,7 +14,7 @@ const OrderTableInfo = (props) => {
           return (
             <div key={index} className={"info"}>
               <div>{item.side_trade}</div>
-              <div>{+item.min_rate !== 0 ? converters.roundingNumber(1 / item.min_rate) : 0} {quote}</div>
+              <div>{+item.min_rate !== 0 ? converters.roundingNumber(1 / item.min_rate) : "-"} {quote}</div>
               <div>{converters.roundingNumber(item.src_amount * item.min_rate)} {base}</div>
               <div>{converters.roundingNumber(item.src_amount)} {quote}</div>
               <div>{fee} {quote}</div>
