@@ -51,10 +51,15 @@ function filterOrder(result) {
 export function getOrders() {
     return new Promise((resolve, rejected) => {
         // resolve(data);
-        const results = data.map(item => {
+        const results = data.map((item, index) => {
+            let sideTrade = "buy"
+            if (index % 2 == 0) {
+                sideTrade = "sell"
+            }
             return {
                 ...item,
-                user_address: item.user_address.toLowerCase()
+                user_address: item.user_address.toLowerCase(),
+                side_trade: sideTrade
             }
         });          
         resolve(results);
@@ -175,6 +180,7 @@ export function submitOrder(order) {
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;
         newOrder.receive = 100;
+        newOrder.side_trade = "buy"
         data.push(newOrder);
         resolve(newOrder);
         return;

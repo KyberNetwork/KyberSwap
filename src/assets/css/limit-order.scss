@@ -2012,3 +2012,119 @@
     }
   }
 }
+
+%order-table-info {
+  display: flex;
+  padding: 7px 13px;
+  div {
+    width: 23%;
+    text-align: right;
+    text-transform: uppercase;       
+    &:first-child {
+      width: 8%;
+      text-align: center;
+    }
+  }
+}
+
+.cancel-order {
+  background-color: #f6f7fa;
+  &__title {
+    padding: 25px 40px 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: #141927;
+  }
+  &__content {
+    padding: 0 40px 25px;
+    p {
+      font-size: 14px;
+      color: #141927;
+      margin-bottom: 10px;
+    }
+    a.question {
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      color: #ff9008;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+    .order-table-info {
+      margin-top: 18px;
+      &__header {
+        border-radius: 3px;
+        background-color: #e1e4eb;
+        @extend %order-table-info;
+        div {
+          font-size: 12px;
+          font-weight: 500;
+          color: #5a5e67;
+        }
+      }
+    
+      &__body .info {
+        @extend %order-table-info;
+        margin-top: 8px;
+        div {
+          font-size: 14px;
+          font-weight: 500;
+          color: #141927;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    padding: 0 40px;
+    height: 90px;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #ffffff;
+  }
+
+  &__confirm {
+    position: relative;
+    margin: 0;
+    line-height: 90px;
+    cursor: pointer;
+
+    &--text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #5a5e67;
+      padding-left: 24px;
+    }
+
+    &--checkbox {
+      visibility: hidden;
+      pointer-events: none;
+      margin: 0;
+      width: 0;
+      height: 0;
+
+      &:checked {
+        ~.cancel-order__confirm--checkmark {
+          @extend %checkmark-checkbox--checked;
+          border-radius: 2px;
+          border: solid 2px #007bde;
+          background-color: #007bde;
+        }
+      }
+    }
+
+    &--checkmark {
+      @extend %checkmark-checkbox;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      border: solid 1px #9ea1aa;
+      &::after{
+        width: 5px;
+        height: 8px;
+        border-width: 0 2px 2px 0;
+      }
+    }
+  }
+}
