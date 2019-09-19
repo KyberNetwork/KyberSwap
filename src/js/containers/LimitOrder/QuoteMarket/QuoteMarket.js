@@ -175,19 +175,6 @@ export default class QuoteMarket extends React.Component{
                   </div>)}
                 </div>
               </div>
-              <table style={{display: 'none'}} >
-                <tbody>
-                  {list.map(pair => <tr key={pair["id"]}>
-                      <td width="25px" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
-                        <div className={pair["is_favorite"] ? "star active" : "star" } /> 
-                      </td>
-                      <td width="82px" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>{pair["base"] + "/" + pair["quote"]}</td>
-                      <td width="82px">{pair["price"]}</td>
-                      <td width="82px">{pair["volume"]}</td>
-                      <td width="82px" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
-                    </tr>)} 
-                </tbody>
-              </table>
             </div> : 
             <div className="rate-loading"> <img src={require('../../../../assets/img/waiting-white.svg')} /></div>}
       </div>

@@ -124,56 +124,7 @@
         }
     }
   }
-  table {
-    display: block;
-    height: 300px;
-    overflow-y: auto; 
-    width: 100%;
-
-    thead, tbody {
-      border: none;
-      background: rgba(0,0,0,0);
-    }
-
-    tr {
-      line-height: 2em;
-      background: rgba(0,0,0,0);
-    }
-    tr:hover{
-      background: $grey-light;
-    }
-
-    th, td {
-      padding: 0px;
-    }
-
-    th {
-      font-weight: 500;
-      cursor: pointer; 
-      text-align: start;
-
-      img {
-        margin-left: 3px;
-        height: 15px;
-      }
-    }
-
-    td {
-      font-size: 12px;
-      line-height: 2.5em;
-      text-align: start;
-      cursor: pointer;
-
-      i {
-        width: 20px;
-        cursor: pointer;
-      }
-
-      i.active {
-        color: #ff9008;
-      }
-    }
-  }
+  
   .table{
     margin-left: -5px;
     cursor: pointer;
