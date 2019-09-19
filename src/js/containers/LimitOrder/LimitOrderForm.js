@@ -11,6 +11,7 @@ import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
 import EthereumService from "../../services/ethereum/ethereum";
+import { Modal, OrderTableInfo } from "../../components/CommonElement"
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -35,7 +36,8 @@ export default class LimitOrderForm extends React.Component {
     super(props);
 
     this.state = {
-      formType: 'buy'
+      formType: 'buy',
+      modalState: true
     }
   }
 
@@ -175,17 +177,7 @@ export default class LimitOrderForm extends React.Component {
     } else {
       higherRateOrders = this.props.limitOrder.relatedOrders;
     }
-
-    return higherRateOrders.map(item => {
-      const datetime = common.getFormattedDate(item.updated_at);
-      const rate = converters.displayNumberWithDot(item.min_rate, 9);
-      return (
-        <div key={item.id} className="rate-warning-tooltip__order">
-          <div>{datetime}</div>
-          <div>{item.source.toUpperCase()}/{item.dest.toUpperCase()} >= <span title={item.min_rate}>{rate}</span></div>
-        </div>
-      );
-    });
+    return higherRateOrders
   };
 
   resetToMarketRate = () => {
@@ -234,6 +226,49 @@ export default class LimitOrderForm extends React.Component {
       </div>
     );
   };
+
+  closeModal = () => {
+    this.setState({ modalState: false })
+    // this.props.global.analytics.callTrack("trackClickCloseMarket")
+  }
+
+  openModal = () => {
+    this.setState({ modalState: true })
+    // this.props.global.analytics.callTrack("trackClickCloseMarket")
+  }
+
+  getCancelOrderModal = () => {
+    return (
+      <div className="cancel-order" id="cancel-order">
+        <a className="x" onClick={this.closeModal}>
+          <img src={require("../../../assets/img/v3/Close-3.svg")} />
+        </a>
+        <h1 className="cancel-order__title">{"Cancel Order"}</h1>
+        <div className="cancel-order__content">
+          <p>{"By submitting this order, you also CANCEL the following orders"}:</p>
+          {/* <p className={"question"}>{"Why?"}</p> */}
+          <a className={"question"} href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+            {this.props.translate("why") || "Why?"}
+          </a>
+          <OrderTableInfo 
+            listOrder={this.getListWarningOrdersComp()}
+          />
+        </div>
+        <div className="cancel-order__footer">
+          <label className="cancel-order__confirm">
+            <span className="cancel-order__confirm--text">
+              {this.props.translate("i_understand") || "I understand"}
+            </span>
+            <input type="checkbox" 
+              checked={this.props.limitOrder.isAgreeForceSubmit}
+              className="cancel-order__confirm--checkbox"
+              onChange={e => this.toggleAgreeSubmit()}/>
+            <span className="cancel-order__confirm--checkmark"/>
+          </label>
+        </div>
+      </div>
+    )
+  }
 
   render() {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
@@ -354,15 +389,29 @@ export default class LimitOrderForm extends React.Component {
         <LimitOrderFee formType={this.state.formType}/>
 
         <LimitOrderSubmit
+          openModal={this.openModal}
           availableBalanceTokens={this.props.modifiedTokens}
           getOpenOrderAmount={this.props.getOpenOrderAmount}
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile &&
-          this.getRateWarningTooltip()
+        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile && (
+          <Modal className={{
+          base: 'reveal medium cancel-order-modal',
+          afterOpen: 'reveal medium'
+          }}
+            overlayClassName={"cancel-modal"}
+            isOpen={this.state.modalState}
+            onRequestClose={this.closeModal}
+            contentLabel="Cancel Order"
+            content={this.getCancelOrderModal()}
+            size="medium"
+          />
+        )
         }
       </div>
     )
   }
 }
+
+          {/* this.getRateWarningTooltip() */}

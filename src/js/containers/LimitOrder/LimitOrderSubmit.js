@@ -18,9 +18,10 @@ import limitOrderServices from "../../services/limit_order";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
+  var openModal = props.openModal
 
   return {
-    translate, limitOrder, tokens, account, ethereum,
+    translate, limitOrder, tokens, account, ethereum, openModal,
     global: store.global
 
   }
@@ -375,6 +376,7 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (this.props.account !== false && this.props.account.type !== "promo") {
       this.validateOrder()
+      this.props.openModal()
     } 
   }
 
