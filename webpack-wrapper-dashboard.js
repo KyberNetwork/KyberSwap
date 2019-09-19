@@ -10,7 +10,6 @@ var BLOCKCHAIN_INFO = require("./env")
 const fetch = require("node-fetch");
 var fs = require('fs');
 var sass = require('node-sass');
-var fse = require('fs-extra');
 
 var getConfig = env => {
     var buildFolder = env
@@ -226,14 +225,6 @@ async function main() {
     //await renderLanguage()
 
     var enviroment = process.env.NODE_ENV
-
-    fse.copy("./src/trading_view/charting_library/", "./dist/" + enviroment + "/trading_view/charting_library/", function (err) {
-        if (err) {
-            console.error(err)
-        } 
-        console.log("Migrate trading_view directory success!")
-    })
-
     await saveBackupTokens(enviroment)
 
     var webpackConfig = await getConfig(enviroment)  
