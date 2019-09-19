@@ -34,19 +34,19 @@ html body {
 
   /* width */
   ::-webkit-scrollbar {
-    width: 3px!important;
+    width: 6px!important;
+    height: 6px!important;
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: $grey-dark; 
-    border-radius: 10px;
+    display: none;
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: $text-orange-light;
-    border-radius: 10px;
+    background: $grey-darker;
+    border-radius: 4px;
   }
 }
 
@@ -88,4 +88,5 @@ h1, h2, h3, h4, h5, h6 {
 
 ::-webkit-scrollbar {
     width: 0px;
+    height: 0px;
 }

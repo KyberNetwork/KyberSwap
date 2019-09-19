@@ -5,9 +5,6 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
-  if (window.kyberBus) {
-    window.kyberBus.on('wallet.change', () => {props.openReImport()});
-  }
   function removedMaintenance(tokens){
     return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
   }
