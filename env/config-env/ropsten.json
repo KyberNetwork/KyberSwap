@@ -400,6 +400,6 @@
         "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
     },
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://tracker.knstats.com",
+    "tracker": "https://dev-api.knstats.com",
     "statEndPoint": "https://ropsten-data.kyber.network"
 }
