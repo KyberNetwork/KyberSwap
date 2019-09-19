@@ -2,7 +2,6 @@ import React from "react";
 import * as converters from "../../utils/converter";
 
 const OrderTableInfo = (props) => {
-  console.log("higher order", props.listOrder)
   var makeOrderInfo = (higherRateOrders) => {
     return higherRateOrders.map(item => {
       let fee = converters.formatNumber(item.fee * item.src_amount, 5, '')

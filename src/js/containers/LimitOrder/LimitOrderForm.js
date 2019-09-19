@@ -159,6 +159,7 @@ export default class LimitOrderForm extends React.Component {
 
     this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
     this.props.dispatch(limitOrderActions.setAgreeForceSubmit(!isAgreeForceSubmit));
+    this.setState({ modalState: false })
   };
 
   getListWarningOrdersComp = () => {
@@ -229,12 +230,17 @@ export default class LimitOrderForm extends React.Component {
 
   closeModal = () => {
     this.setState({ modalState: false })
-    // this.props.global.analytics.callTrack("trackClickCloseMarket")
+    const { isAgreeForceSubmit } = this.props.limitOrder;
+
+    if (!isAgreeForceSubmit) {
+      this.props.dispatch(limitOrderActions.setIsDisableSubmit(false));
+    }
+
+    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
   }
 
   openModal = () => {
     this.setState({ modalState: true })
-    // this.props.global.analytics.callTrack("trackClickCloseMarket")
   }
 
   getCancelOrderModal = () => {
