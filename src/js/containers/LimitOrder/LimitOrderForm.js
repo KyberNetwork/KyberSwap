@@ -252,7 +252,6 @@ export default class LimitOrderForm extends React.Component {
         <h1 className="cancel-order__title">{"Cancel Order"}</h1>
         <div className="cancel-order__content">
           <p>{"By submitting this order, you also CANCEL the following orders"}:</p>
-          {/* <p className={"question"}>{"Why?"}</p> */}
           <a className={"question"} href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
             {this.props.translate("why") || "Why?"}
           </a>
@@ -419,5 +418,3 @@ export default class LimitOrderForm extends React.Component {
     )
   }
 }
-
-          {/* this.getRateWarningTooltip() */}
