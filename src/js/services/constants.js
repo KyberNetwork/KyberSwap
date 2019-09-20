@@ -399,6 +399,7 @@ const INIT_LIMIT_ORDER_STATE = {
   forceSubmitRate: 0,
   favorite_pairs_anonymous: [],
   currentQuote: "ETH",
+  sideTrade: "buy",
 }
 
 // reserves

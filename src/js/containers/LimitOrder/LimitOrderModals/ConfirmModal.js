@@ -13,6 +13,9 @@ import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
+import { OrderTableInfo } from "../../../components/CommonElement";
+import makeOrderInfo from "../../../factories/limit_order/make_order_info";
+
 @connect((store, props) => {
     const account = store.account.account
     const translate = getTranslate(store.locale)
@@ -237,11 +240,26 @@ export default class ConfirmModal extends React.Component {
       );
     }
 
+    makeOrderInfo = (rawOrder) => {
+      let listOrder = []
+      let order = {}
+      order.side_trade = rawOrder.sideTrade
+      order.source = rawOrder.sourceTokenSymbol
+      order.dest = rawOrder.destTokenSymbol
+      order.min_rate = rawOrder.triggerRate
+      order.src_amount = rawOrder.sourceAmount
+      order.fee = rawOrder.orderFeeAfterDiscount
+      listOrder.push(order)
+      return listOrder
+    }
+
     contentModal = () => {
       const calculateFee = converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount);
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
       const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 5, '');
       const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);
+      var base = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol
+      var quote = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.sourceTokenSymbol : this.props.limitOrder.destTokenSymbol
 
       return (
           <div className="limit-order-modal">
@@ -256,17 +274,15 @@ export default class ConfirmModal extends React.Component {
               <div className="limit-order-modal__content">
                 <div className="limit-order-modal__message limit-order-modal__message--text-small">
                   {this.props.translate("limit_order.confirm_order_message", {
-                    srcToken: this.props.limitOrder.sourceTokenSymbol,
-                    destToken: this.props.limitOrder.destTokenSymbol,
-                    srcAmount: formatedSrcAmount,
-                    srcToken: this.props.limitOrder.sourceTokenSymbol,
+                    base: base === "WETH" ? "ETH*":base,
+                    quote: quote === "WETH" ? "ETH*":quote,
                     rawRate: this.props.limitOrder.triggerRate,
                     rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} (for ${formatedSrcAmount} ${this.props.limitOrder.sourceTokenSymbol}) >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
+                    `Your transaction will be broadcasted when price of ${base === "WETH" ? "ETH*":base}/${quote === "WETH" ? "ETH*":quote} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
-                <div className="limit-order-modal__pair">
+                {/* <div className="limit-order-modal__pair">
                   <div className="amount">
                     <div className="amount-item amount-left">                         
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
@@ -295,25 +311,10 @@ export default class ConfirmModal extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
-                  
-                <div className="limit-order-modal__fee">
-                  <div className="limit-order-modal__fee--title">
-                    <div>
-                      {this.props.translate("limit_order.fee") || "Fee"}
-                    </div>
-                    {!this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
-                  </div>
-                  <div className="limit-order-modal__fee--amount">
-                    <div title={calculateFee}>
-                      {formatedFee}
-                    </div>
-                    <div>
-                      {this.props.limitOrder.sourceTokenSymbol}
-                    </div>
-                    {this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
-                  </div>
-                </div>
+                </div> */}
+                <OrderTableInfo 
+                  listOrder = {makeOrderInfo(this.props.limitOrder)}
+                />
                 {/* <div className="limit-order-modal__result">
                   <span>{this.props.translate("limit_order.you_will_receive") || "You will receive"}</span>{' '}
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
@@ -344,7 +345,7 @@ export default class ConfirmModal extends React.Component {
             {this.state.isFinish &&
               <div className="limit-order-modal__msg limit-order-modal__msg--success">
                 <div className={"limit-order-modal__text"}>
-                  <div>
+                  <div className={"limit-order-modal__text--success"}>
                     <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
                     <span>{this.props.translate("modal.success") || "Success"}</span>
                   </div>

@@ -9,6 +9,8 @@ import { getFormattedDate } from "../../../utils/common";
 import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../../utils/converter";
 import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
+import { OrderTableInfo } from "../../../components/CommonElement";
+import makeOrderInfo from "../../../factories/limit_order/make_order_info";
 
 @connect((store, props) => {
 	const translate = getTranslate(store.locale);
@@ -280,22 +282,25 @@ export default class CancelOrderModal extends Component {
 							)}
 						</div>
 						{/* Desktop */}
+						{/* <div className="limit-order-modal__table">
+							<ReactTable
+								data={this.props.order ? [this.props.order] : []}
+								columns={this.getColumns()}
+								showPagination={false}
+								resizable={false}
+								sortable={false}
+								minRows={1}
+								noDataText={
+									this.props.translate(
+										"limit_order.no_data_text"
+									) || "You have no orders yet."
+								}
+							/>
+						</div> */}
 						{this.props.screen !== "mobile" && (
-							<div className="limit-order-modal__table">
-								<ReactTable
-									data={this.props.order ? [this.props.order] : []}
-									columns={this.getColumns()}
-									showPagination={false}
-									resizable={false}
-									sortable={false}
-									minRows={1}
-									noDataText={
-										this.props.translate(
-											"limit_order.no_data_text"
-										) || "You have no orders yet."
-									}
-								/>
-							</div>
+							<OrderTableInfo 
+								listOrder={makeOrderInfo(this.props.limitOrder)}
+							/>
 						)}
 						{/* Mobile */}
 						{this.props.screen === "mobile" && this.contentModalMobile()}
@@ -308,13 +313,13 @@ export default class CancelOrderModal extends Component {
 							className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.closeModal()}
 						>
-							{this.props.translate("no_thank") || "No, Thanks"}
+							{this.props.translate("modal.no") || "No"}
 						</button>
 						<button
 							className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
 							onClick={e => this.confirmCancel()}
 						>
-							{this.props.translate("yes_please") || "Yes, Please"}
+							{this.props.translate("modal.yes") || "Yes"}
 						</button>	
 					</div>
 				}
@@ -322,7 +327,7 @@ export default class CancelOrderModal extends Component {
 				{this.state.isFinish && (
 					<div className="limit-order-modal__msg limit-order-modal__msg--success">
 						<div className={"limit-order-modal__text"}>
-							<div>
+							<div className={"limit-order-modal__text--success"}>
 								<img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
                 <span>{this.props.translate("modal.success") || "Success"}</span>
 							</div>

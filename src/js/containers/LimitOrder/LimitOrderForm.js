@@ -46,7 +46,7 @@ export default class LimitOrderForm extends React.Component {
       this.props.sourceToken,
       this.props.destToken
     ));
-
+    this.props.dispatch(limitOrderActions.setSideTrade(type))
     this.setState({ formType: type });
   };
 
