@@ -1149,6 +1149,7 @@
     color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
+    text-transform: capitalize;
 
     @include screen-max-width(xxmedium) {
       font-size: 20px;
@@ -2062,6 +2063,7 @@
     font-size: 24px;
     font-weight: 500;
     color: #141927;
+    text-transform: capitalize;
   }
   &__content {
     padding: 0 40px 25px;

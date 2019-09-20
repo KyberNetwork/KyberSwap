@@ -10,7 +10,7 @@ import { roundingRateNumber, multiplyOfTwoNumber, formatNumber } from "../../../
 import limitOrderServices from "../../../services/limit_order";
 import { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 import { OrderTableInfo } from "../../../components/CommonElement";
-import makeOrderInfo from "../../../factories/limit_order/make_order_info";
+import makeOrderInfo from "../../../utils/convert_object";
 
 @connect((store, props) => {
 	const translate = getTranslate(store.locale);
@@ -261,12 +261,13 @@ export default class CancelOrderModal extends Component {
 	}
 
 	contentModal = () => {
+		var base = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol
 		return (
 			<div className="limit-order-modal">
 				<div className="limit-order-modal__body">
 					<div className="limit-order-modal__title">
-						{this.props.translate("modal.cancel_order") ||
-							"Cancel Order"}
+						{this.props.translate("modal.cancel_order", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
+							`Cancel ${sideTrade} ${base} Order`}
 					</div>
 					<div
 						className="limit-order-modal__close"

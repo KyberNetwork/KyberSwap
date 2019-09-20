@@ -36,12 +36,16 @@ export default class ForceCancelOrderModal extends Component {
   }
 
   getCancelOrderModal = () => {
+    var base = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol
     return (
       <div className="cancel-order" id="cancel-order">
         <a className="x" onClick={this.closeModal}>
           <img src={require("../../../../assets/img/v3/Close-3.svg")} />
         </a>
-        <h1 className="cancel-order__title">{"Cancel Order"}</h1>
+        <h1 className="cancel-order__title">
+          {this.props.translate("modal.cancel_order", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
+						`Cancel ${sideTrade} ${base} Order`}
+          </h1>
         <div className="cancel-order__content">
           <p>{"By submitting this order, you also CANCEL the following orders"}:</p>
           <a className={"question"} href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">

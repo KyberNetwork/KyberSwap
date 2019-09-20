@@ -14,7 +14,7 @@ import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
 import { OrderTableInfo } from "../../../components/CommonElement";
-import makeOrderInfo from "../../../factories/limit_order/make_order_info";
+import makeOrderInfo from "../../../utils/convert_object";
 
 @connect((store, props) => {
     const account = store.account.account
@@ -252,8 +252,8 @@ export default class ConfirmModal extends React.Component {
           <div className="limit-order-modal">
             <div className="limit-order-modal__body">
               <div className="limit-order-modal__title">
-                {this.props.translate("modal.order_confirm") ||
-                  "Order Confirm"}
+                {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
+                  `Confirm ${this.props.limitOrder.sideTrade} ${base} Order`}
               </div>
               <div className="limit-order-modal__close" onClick={e => this.closeModal()}>
                 <div className="limit-order-modal__close-wrapper"></div>
