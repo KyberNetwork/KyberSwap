@@ -67,7 +67,6 @@
 
     #search_panel {
       float: right;
-      margin-top: 5px;
       width: 30%;
       display: inline-block;
 
@@ -94,7 +93,7 @@
     }
   }
   .table-th {
-    margin: 0.5em 0 0.5em 25px;
+    margin: 1em 0 5px 30px;
 
     div{
       cursor: pointer;
@@ -102,73 +101,104 @@
       width: 82px;
       .active{
           &.asc:after{
-            content: url($image-path + 'limit-order/sort-asc-icon.svg');
+            content: "";
+            background-image: url($image-path + 'limit-order/sort-asc-icon.svg') ;
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            margin-left: 3px;
+            background-size: contain;
+            background-repeat: no-repeat;
           }
 
           &.dsc:after{
-            content: url($image-path + 'limit-order/sort-desc-icon.svg');
+            content: "";
+            background-image: url($image-path + 'limit-order/sort-desc-icon.svg');
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            margin-left: 3px;
+            background-size: contain;
+            background-repeat: no-repeat;
           }
         }
     }
   }
-  table {
-    display: block;
-    height: 300px;
-    overflow-y: auto; 
-    width: 100%;
 
-    thead, tbody {
-      border: none;
-      background: rgba(0,0,0,0);
+  .table{
+    margin-left: -5px;
+    cursor: pointer;
+    .table__header{
+      margin-right: 10px;
     }
-
-    tr {
-      line-height: 2em;
-      background: rgba(0,0,0,0);
-    }
-
-    th, td {
-      padding: 0px;
-    }
-
-    th {
-      font-weight: 500;
-      cursor: pointer; 
-      text-align: start;
-
-      img {
-        margin-left: 3px;
-        height: 15px;
-      }
-
-      &.active{
-        &.asc:after{
-          content: url($image-path + 'limit-order/sort-asc-icon.svg');
-          margin: 5px
+    .table__body{
+      display: block;
+      height: 300px;
+      overflow-y: auto;
+      width: 100%;
+      .table__row{
+        .overlay{
+          position: absolute;
+          width: 320px;
+          height: 32px;
+          margin-left: 30px;
+          z-index: 10;
+          margin-top: -0.5em;
         }
 
-        &.dsc:after{
-          content: url($image-path + 'limit-order/sort-desc-icon.svg');
-          margin: 5px
+        &:hover{
+          background: rgba(225, 228, 235, 0.3);
+          transition-duration: 0.3s;
         }
       }
     }
+    .table__row{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5em;
+      padding: 0.5em;
+      position: relative;
 
-    td {
-      font-size: 12px;
-      line-height: 2em;
-      text-align: start;
-      cursor: pointer;
-
-      i {
-        width: 20px;
-        cursor: pointer;
+      .c0{
+        width: 30px;
       }
+      .c1{
+        width: 100px;
+      }
+      .c2{
+        width: 82px;
+      }
+      .c3{
+        width: 82px;
+      }
+      .c4{
+        width: 82px;
+      }
+      span{
+        &.active{
+          &.asc:after{
+            content: "";
+            background-image: url($image-path + 'limit-order/sort-asc-icon.svg') ;
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            margin-left: 3px;
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
 
-      i.active {
-        color: #ff9008;
+          &.dsc:after{
+            content: "";
+            background-image: url($image-path + 'limit-order/sort-desc-icon.svg');
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            margin-left: 3px;
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+        }
       }
     }
   }
-  
 }

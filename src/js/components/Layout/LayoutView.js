@@ -66,7 +66,7 @@ const LayoutView = (props) => {
     <ConnectedRouter history={props.history} store ={store}>
       <Fragment>
         <section id="content" className={`${props.langClass}`}>
-          {process.env.env === "ropsten" &&
+          {!process.env.integrate &&
             <HeaderTransaction/>
           }
           <Switch>

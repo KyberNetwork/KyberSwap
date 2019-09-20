@@ -16,6 +16,7 @@ import * as common from "../utils/common";
 
 import * as converter from "../utils/converter"
 import { store } from '../store'
+import history from "../history";
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -46,6 +47,7 @@ export function* goToRoute(action) {
 export function* clearSession(action) {
   yield put(actions.clearSessionComplete(action.payload))
   //yield put(actions.goToRoute(constants.BASE_HOST));
+  if (window.kyberBus) { window.kyberBus.broadcast('wallet.clear', null); }
 }
 
 export function* updateAllRate(action) {
