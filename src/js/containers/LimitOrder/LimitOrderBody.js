@@ -1,19 +1,27 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import { LimitOrderForm, LimitOrderChart, LimitOrderList, QuoteMarket, withSourceAndBalance } from "../LimitOrder"
+import {
+  LimitOrderForm,
+  LimitOrderChart,
+  LimitOrderList,
+  QuoteMarket,
+  withSourceAndBalance,
+  LimitOrderListModal
+} from "../LimitOrder"
 import { ImportAccount } from "../ImportAccount";
+import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
 
 @connect((store, props) => {
+  const global = store.global;
   const account = store.account.account
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum
+  const ethereum = store.connection.ethereum;
 
   return {
-    translate, limitOrder, tokens, account, ethereum,
-    global: store.global
+    translate, limitOrder, tokens, account, ethereum, global
   }
 })
 
@@ -28,10 +36,8 @@ export default class LimitOrderBody extends React.Component {
         submitHandler={this.submitHandler}
         setSubmitHandler={this.setSubmitHandler}
       />
-    )
-    this.QuoteMarket = withSourceAndBalance(
-      <QuoteMarket />
-    )
+    );
+    this.QuoteMarket = withSourceAndBalance(<QuoteMarket/>);
   }
 
   setSrcInputElementRef = (element) => {
@@ -45,11 +51,21 @@ export default class LimitOrderBody extends React.Component {
   render() {
     const LimitOrderForm = this.LimitOrderForm
     const QuoteMarket = this.QuoteMarket
+
     return (
       <div className={"limit-order theme__background"}>
+        {this.props.global.isOnMobile &&
+          <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
+        }
+
         <div className={"limit-order__container limit-order__container--left"}>
-          <LimitOrderChart/>
-          <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
+          {!this.props.global.isOnMobile && (
+            <LimitOrderChart/>
+          )}
+
+          {!this.props.global.isOnMobile &&
+            <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
+          }
         </div>
 
         <div className={"limit-order__container limit-order__container--right"}>
@@ -62,8 +78,16 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
           }
-          <QuoteMarket/>
-          <LimitOrderForm />
+
+          {!this.props.global.isOnMobile && (
+            <QuoteMarket/>
+          )}
+
+          <LimitOrderForm/>
+
+          {this.props.global.isOnMobile &&
+            <LimitOrderMobileHeader/>
+          }
         </div>
       </div>
     )

@@ -529,7 +529,7 @@ export default class ConfirmModal extends React.Component {
                         <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                             {this.props.translate("modal.cancel" || "Cancel")}
                         </a>
-                        <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
+                        <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
                     </div>
                 </div>
             </div>

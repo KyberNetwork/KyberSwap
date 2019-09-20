@@ -260,7 +260,7 @@ export default class WrapETHModal extends React.Component {
                               </div>
 
                               <div className="token-connector">
-                                  <i className="k k-transfer k-3x"></i>
+                                  <i className="transfer__arrow"></i>
                               </div>
 
                               <div className="dest-token token-item">
@@ -285,13 +285,14 @@ export default class WrapETHModal extends React.Component {
               <div className="overlap">
                 {this.msgHtml()}
                 <div className="input-confirm grid-x input-confirm--approve">
-                  <div className="cell btn-wrapper">
-                        {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
+                
+                  <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
+                  {/*<div className="cell btn-wrapper">
+                        <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
                           onClick={this.props.onSubmit}
-                        >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
-                    <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
-                    <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
-                  </div>
+                        >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> 
+                  </div>*/}
                 </div>
               </div>
             </div>

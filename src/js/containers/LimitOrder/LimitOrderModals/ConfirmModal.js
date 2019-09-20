@@ -271,7 +271,7 @@ export default class ConfirmModal extends React.Component {
               <div className="limit-order-modal__close" onClick={e => this.closeModal()}>
                 <div className="limit-order-modal__close-wrapper"></div>
               </div>
-              <div className="limit-order-modal__content">
+              <div className="limit-order-modal__content confirm-exchange-modal">
                 <div className="limit-order-modal__message limit-order-modal__message--text-small">
                   {this.props.translate("limit_order.confirm_order_message", {
                     base: base === "WETH" ? "ETH*":base,
@@ -282,7 +282,7 @@ export default class ConfirmModal extends React.Component {
                     `Your transaction will be broadcasted when price of ${base === "WETH" ? "ETH*":base}/${quote === "WETH" ? "ETH*":quote} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
-                {/* <div className="limit-order-modal__pair">
+                {/*<div className="limit-order-modal__pair confirm-exchange-modal">
                   <div className="amount">
                     <div className="amount-item amount-left">                         
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>

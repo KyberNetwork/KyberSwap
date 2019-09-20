@@ -1,3 +1,9 @@
+.market-wrapper-container {
+  @include screen-max-width(large) {
+    display: none !important;
+  }
+}
+
 .market {
   padding: 0px 20px;
   padding-top: 35px;
@@ -168,9 +174,6 @@
                   position: relative;
                   left: -6px;
                 }
-                // img {
-                //   margin-left: 3px;
-                // }
               }
               span.negative {
                 background-color: #fef4f6;
@@ -216,9 +219,7 @@
               background-color: #cccccc;
             }
           }
-          // .row-3 {
 
-          // }
           .row-4 {
             display: flex;
             justify-content: space-between;

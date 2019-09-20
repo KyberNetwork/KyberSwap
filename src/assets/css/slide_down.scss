@@ -66,7 +66,7 @@
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     &__trigger-container {
       justify-content: space-between;
     }

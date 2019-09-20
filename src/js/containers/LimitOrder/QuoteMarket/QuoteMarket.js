@@ -129,7 +129,7 @@ export default class QuoteMarket extends React.Component{
       { html: "Volume", field: "volume" }, 
       { html: "Change", field: "change" }
     ].map((i, index) => (
-      <div>
+      <div className={`c${index+1}`}>
         <SortableComponent 
           Wrapper={"span"}
           key={i["html"]} 
@@ -155,22 +155,26 @@ export default class QuoteMarket extends React.Component{
                 <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={["FAV"].concat(Object.keys(quotes))}/>
                 <Search onSearch={this.onSearch}/>
               </div>
-              <div className="table-th">
-                {this.renderTh()}
-              </div> 
-              <table >
-                <tbody>
-                  {list.map(pair => <tr key={pair["id"]}>
-                      <td width="20px" onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
-                        <div className={pair["is_favorite"] ? "star active" : "star" } /> 
-                      </td>
-                      <td width="82px" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>{pair["base"] + "/" + pair["quote"]}</td>
-                      <td width="82px">{pair["price"]}</td>
-                      <td width="82px">{pair["volume"]}</td>
-                      <td width="82px" className={pair["change"] > 0 ? "up" : "down"}>{Math.abs(pair["change"])}%</td>
-                    </tr>)} 
-                </tbody>
-              </table>
+              <div className="table">
+                <div className="table__header">
+                  <div className="table__row">
+                    <div className="c0"></div>
+                    {this.renderTh()}
+                  </div>
+                </div>
+                <div className="table__body">
+                  {list.map(pair => <div key={pair["id"]} className="table__row">
+                    <div className="overlay" onClick={() => this.onPairClick(pair["base"], pair["quote"])}></div>
+                    <div className={"c0"} onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                      <div className={pair["is_favorite"] ? "star active" : "star" } />
+                    </div>
+                    <div className={"c1"} >{pair["base"] + "/" + pair["quote"]}</div>
+                    <div className={"c2"} >{pair["price"]}</div>
+                    <div className={"c3"} >{pair["volume"]}</div>
+                    <div className={`${pair["change"] > 0 ? "up" : "down"} c4`}>{Math.abs(pair["change"])}%</div>
+                  </div>)}
+                </div>
+              </div>
             </div> : 
             <div className="rate-loading"> <img src={require('../../../../assets/img/waiting-white.svg')} /></div>}
       </div>

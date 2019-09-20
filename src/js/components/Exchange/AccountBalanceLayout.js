@@ -14,31 +14,31 @@ const AccountBalanceLayout = (props) => {
   function reorderToken() {
     let tokens = props.tokens;
 
-    if (props.isLimitOrderTab) {
-      tokens = props.getFilteredTokens(props.sortValue);
-    }
+    // if (props.isLimitOrderTab) {
+    //   tokens = props.getFilteredTokens(props.sortValue);
+    // }
     let res = []
     switch (props.sortType) {
       case "Eth":
-        if (props.isLimitOrderTab) {
-          res = tokens;
-        } else {
+        // if (props.isLimitOrderTab) {
+        //   res = tokens;
+        // } else {
           if (props.sortValue) {
             res = converts.sortEthBalance(tokens)
           } else {
             res = converts.sortASCEthBalance(tokens)
           }
-        }
+        // }
         break;
       case "Name":
-        if (props.isLimitOrderTab) {
-          res = tokens.sort((firstToken, secondToken) => {
-            const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
-            const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
+        // if (props.isLimitOrderTab) {
+        //   res = tokens.sort((firstToken, secondToken) => {
+        //     const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
+        //     const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
 
-            return !props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
-          });
-        } else {
+        //     return !props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
+        //   });
+        // } else {
           if (props.sortValue) {
             var ordered = []
             Object.keys(tokens).sort().forEach(function (key) {
@@ -52,7 +52,7 @@ const AccountBalanceLayout = (props) => {
             })
             res = ordered
           }
-        }
+        // }
         break;
       case "Bal":
         res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(a.balance, b.balance))} )
@@ -76,7 +76,11 @@ const AccountBalanceLayout = (props) => {
 
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
-        if (balance == 0) classBalance += " disabled"
+        if (props.isLimitOrderTab){
+          if (!token.sp_limit_order) classBalance += " disabled" 
+        }else {
+          if (balance == 0) classBalance += " disabled" 
+        }
         if ((props.isFixedSourceToken && props.screen === "swap")
           || (token.symbol === "PT" && props.screen === "transfer")) {
           classBalance += " deactivated";
@@ -143,8 +147,8 @@ const AccountBalanceLayout = (props) => {
           <SlideDownContent>
             <div className="balance-header">
               <div className="slide-down__trigger-container">
-                <div>
-                  <div className={"account-balance__address"}>
+                <div className={"account-balance__address"}>
+                  <div>
                     <div>
                       <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</span>
                     </div>
@@ -158,6 +162,10 @@ const AccountBalanceLayout = (props) => {
                       {props.translate("import.change_address") || "CHANGE"}
                     </span>
                   </div>
+                  {props.isLimitOrderTab && 
+                    <div className="account-balance__address-text">
+                      {props.translate("limit_order.available_tokens") || "Tokens Avaiable for Limit Order"}
+                    </div>}
                 </div>
 
               </div>

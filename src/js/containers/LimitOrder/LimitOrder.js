@@ -20,7 +20,6 @@ import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitO
   return {
     translate, limitOrder, tokens, account, ethereum,
     params: {...props.match.params},
-
   }
 })
 
@@ -88,7 +87,6 @@ export default class LimitOrder extends React.Component {
   }
 
   async fetchOpenOrders() {
-    // requuest update order
     this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
 
@@ -110,13 +108,6 @@ export default class LimitOrder extends React.Component {
       }
 
       this.props.dispatch(limitOrderActions.getListFilter());
-
-      // const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
-
-      // this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
-
-      // const totalOrders = orderStats.open + orderStats.in_progress + orderStats.invalidated + orderStats.cancelled + orderStats.filled;
-      
     } catch (err) {
       console.log(err);
     }
@@ -139,7 +130,6 @@ export default class LimitOrder extends React.Component {
   }
 
   componentDidMount = () => {
-    // set interval process
     this.setInvervalProcess()
 
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
@@ -148,7 +138,6 @@ export default class LimitOrder extends React.Component {
       (destTokenSymbol !== this.props.limitOrder.destTokenSymbol) ){
 
       this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
-
     }
 
     this.fetchCurrentRateInit()
@@ -162,8 +151,7 @@ export default class LimitOrder extends React.Component {
       <div>
         <LimitOrderAccount />
         <div className={"limit-order-container"}>
-          {/*<HeaderTransaction page="limit_order"/>*/}
-          <LimitOrderBody page="limit_order"/>        
+          <LimitOrderBody page="limit_order"/>
         </div>
       </div>
     )
