@@ -240,19 +240,6 @@ export default class ConfirmModal extends React.Component {
       );
     }
 
-    makeOrderInfo = (rawOrder) => {
-      let listOrder = []
-      let order = {}
-      order.side_trade = rawOrder.sideTrade
-      order.source = rawOrder.sourceTokenSymbol
-      order.dest = rawOrder.destTokenSymbol
-      order.min_rate = rawOrder.triggerRate
-      order.src_amount = rawOrder.sourceAmount
-      order.fee = rawOrder.orderFeeAfterDiscount
-      listOrder.push(order)
-      return listOrder
-    }
-
     contentModal = () => {
       const calculateFee = converters.multiplyOfTwoNumber(this.state.fee, this.props.limitOrder.sourceAmount);
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
