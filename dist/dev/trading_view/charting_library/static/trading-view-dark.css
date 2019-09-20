@@ -1,0 +1,63 @@
+.chart-container {
+    border: 1px solid transparent !important;
+    background: transparent !important;
+}
+
+.symbol-edit {
+    pointer-events: none;
+}
+
+.layout__area--left > div {
+    background-color: #232323 !important;
+}
+
+.layout__area--top {
+    background-color: #232323 !important;
+}
+
+.layout__area--center {
+    background-color: #232323 !important;
+}
+
+.chart-controls-bar {
+    background-color: #232323 !important;
+}
+
+.group .button {
+    border: 1px solid #232323;
+    background-color: #232323 !important;
+}
+
+.button svg {
+    fill: #9ea1aa !important;
+}
+
+.favored-list-container span {
+    color: #9ea1aa;
+    border: 1px solid #232323;
+    background-color: #232323 !important;
+}
+
+.favored-list-container span:hover {
+    color: #d4d4d4 !important; 
+    background-color: #232323 !important;
+}
+
+.favored-list-container span svg {
+    fill: #9ea1aa !important;
+}
+
+.symbol-edit {
+    color: #9ea1aa !important;
+    border: 1px solid #232323 !important;
+    background-color: #232323 !important;
+}
+
+.symbol-edit-wrap.expanded {
+    box-shadow: none !important;
+}
+
+.tv-close-panel {
+    border: 1px solid #232323 !important;
+    background-color: #232323 !important;
+}

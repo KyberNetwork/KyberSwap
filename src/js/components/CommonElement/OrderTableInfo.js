@@ -2,8 +2,8 @@ import React from "react";
 import * as converters from "../../utils/converter";
 
 const OrderTableInfo = (props) => {
-  var makeOrderInfo = (higherRateOrders) => {
-    return higherRateOrders.map((item, index) => {
+  var makeOrderInfo = (orders) => {
+    return orders.map((item, index) => {
       let fee = converters.formatNumber(item.fee * item.src_amount, 5, '')
       let source = item.source == "WETH" ? "ETH*" : item.source
       let dest = item.dest == "WETH" ? "ETH*" : item.dest

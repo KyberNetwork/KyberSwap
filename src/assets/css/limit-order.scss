@@ -1127,7 +1127,7 @@
 .limit-order-modal {
   &__body {
     background-color: #f6f7fa;
-    padding: 50px 30px 0;
+    padding: 30px 40px 0;
 
     @include screen-max-width(medium) {
       padding: 20px 20px 0;
@@ -1147,10 +1147,12 @@
   }
 
   &__title {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 500;
+    color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
+    text-transform: capitalize;
 
     @include screen-max-width(xxmedium) {
       font-size: 20px;
@@ -1165,9 +1167,10 @@
 
   &__message {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: normal;
     color: #141927;
-    margin-bottom: 15px;
+    margin-bottom: 23px;
+    line-height: 1.5;
 
     &--text-small {
       font-size: 14px;
@@ -1205,7 +1208,7 @@
   }
 
   &__content {
-    margin: 10px 0;
+    margin: 15px 0 30px;
   }
 
   &__table {
@@ -1358,13 +1361,18 @@
     justify-content: space-between;
     align-items: center;
 
+    &--success {
+      display: flex;
+    }
+
     img {
       position: relative;
       bottom: 1px;
+      width: 18px;
     }
 
     span {
-      margin-left: 15px;
+      margin-left: 10px;
     }
 
     &--failed {
@@ -1385,26 +1393,27 @@
   }
 
   &__button {
-    padding: 9px 40px;
+    padding: 10px 32px;
     color: white;
     font-weight: 600;
     border-radius: 3px;
     cursor: pointer;
     transition: background-color .3s;
+    font-size: 14px;
 
     &--success {
-      background-color: #35B27D;
+      background-color: #34b27d;
 
       &:hover {
-        background-color: darken(#35B27D, 10%);
+        background-color: darken(#34b27d, 10%);
       }
     }
 
     &--failed {
-      background-color: #f25129;
+      background-color: #fa6566;
 
       &:hover {
-        background-color: darken(#f25129, 10%);
+        background-color: darken(#fa6566, 10%);
       }
     }
   }
@@ -1419,14 +1428,16 @@
   }
 
   %btn {
-    width: 151px;
-    height: 40px;
-    border-radius: 22.5px;
+    width: 120px;
+    height: 45px;
+    border-radius: 3px;
     padding: 0 25px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     margin-right: 30px;
+    border: none;
     cursor: pointer;
+    outline: none;
 
     @include screen-max-width(medium) {
       margin: 0;
@@ -1435,12 +1446,12 @@
 
   .btn-cancel {
     @extend %btn;
-    color: #222222;
-    background-color: #f5f6f8;
+    color: #5a5e67;
+    background-color: #e1e4eb;
     transition: background-color .3s;
 
     &:hover {
-      background-color: darken(#f5f6f8, 5%);
+      background-color: darken(#e1e4eb, 5%);
     }
   }
 
@@ -1470,8 +1481,8 @@
   }
 
   .title{
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 500;
     text-align: left;
     margin-top: 50px;
     padding: 0 45px;
@@ -2023,6 +2034,31 @@
   }
 }
 
+.order-table-info {
+  margin-top: 18px;
+  &__header {
+    border-radius: 3px;
+    background-color: #e1e4eb;
+    @extend %order-table-info;
+    div {
+      font-size: 12px;
+      font-weight: 500;
+      color: #5a5e67;
+    }
+  }
+
+  &__body .info {
+    @extend %order-table-info;
+    margin-top: 8px;
+    div {
+      font-size: 14px;
+      font-weight: 500;
+      color: #141927;
+      text-transform: uppercase;
+    }
+  }
+}
+
 .cancel-order {
   background-color: #f6f7fa;
   &__title {
@@ -2030,6 +2066,7 @@
     font-size: 24px;
     font-weight: 500;
     color: #141927;
+    text-transform: capitalize;
   }
   &__content {
     padding: 0 40px 25px;
@@ -2045,30 +2082,6 @@
       color: #ff9008;
       margin-top: 10px;
       margin-bottom: 18px;
-    }
-    .order-table-info {
-      margin-top: 18px;
-      &__header {
-        border-radius: 3px;
-        background-color: #e1e4eb;
-        @extend %order-table-info;
-        div {
-          font-size: 12px;
-          font-weight: 500;
-          color: #5a5e67;
-        }
-      }
-    
-      &__body .info {
-        @extend %order-table-info;
-        margin-top: 8px;
-        div {
-          font-size: 14px;
-          font-weight: 500;
-          color: #141927;
-          text-transform: uppercase;
-        }
-      }
     }
   }
 

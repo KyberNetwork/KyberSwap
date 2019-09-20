@@ -70,10 +70,10 @@ deploy:
     bucket: dev-limit-order.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/ropsten
+    local_dir: dist/dev
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -81,11 +81,11 @@ deploy:
     bucket: dev-limit-order.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/ropsten
+    local_dir: dist/dev
     upload-dir: swap
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -93,11 +93,11 @@ deploy:
     bucket: dev-limit-order.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/ropsten
+    local_dir: dist/dev
     upload-dir: transfer
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -105,11 +105,11 @@ deploy:
     bucket: dev-limit-order.knstats.com
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/ropsten
+    local_dir: dist/dev
     upload-dir: limit_order
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID

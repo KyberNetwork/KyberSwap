@@ -86,7 +86,6 @@ export default class LimitOrderListModal extends Component {
           <div className="limit-order-list--table-mobile">
             <LimitOrderTable
               data={this.props.limitOrder.listOrder}
-              screen="mobile"
               openCancelOrderModal={this.openCancelOrderModal}
               srcInputElementRef={this.props.srcInputElementRef}
             />
@@ -94,7 +93,6 @@ export default class LimitOrderListModal extends Component {
               order={this.state.currentOrder}
               isOpen={this.state.cancelOrderModalVisible}
               closeModal={this.closeCancelOrderModal}
-              screen="mobile"
             />
           </div>
         </div>
