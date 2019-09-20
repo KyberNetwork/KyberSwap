@@ -37,6 +37,9 @@ let view = `
               = render "swap/server_rendering/limit_order_rendering"    
           - else
               = render "swap/server_rendering/swap_rendering" 
+    script src="/trading_view/charting_library/charting_library.min.js"
+    script src="/trading_view/datafeeds/udf/dist/polyfills.js"
+    script src="/trading_view/datafeeds/udf/dist/bundle.js"
     script src="https://www.google.com/recaptcha/api.js"
     script src="/swap/${buildFolder}/app.min.js?v=${now}"
 - else 
