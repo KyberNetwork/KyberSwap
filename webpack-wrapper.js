@@ -21,7 +21,6 @@ const fetch = require("node-fetch");
 var fs = require('fs');
 var sass = require('node-sass');
 
-
 var getConfig = env => {
     const outputPath = `dist/${env}`
 
@@ -210,6 +209,7 @@ async function main() {
    // await renderLanguage()
 
     var enviroment = process.env.NODE_ENV
+
     await saveBackupTokens(enviroment)
 
     var webpackConfig = await getConfig(enviroment)  
