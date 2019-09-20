@@ -79,14 +79,12 @@ export default class LimitOrderList extends React.Component {
           <div>
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
-              screen="desktop"
               openCancelOrderModal={this.openCancelOrderModal}
               srcInputElementRef={this.props.srcInputElementRef}
             />
             <CancelOrderModal order={this.state.currentOrder} 
               isOpen={this.state.cancelOrderModalVisible}
               closeModal={this.closeCancelOrderModal}
-              screen="desktop"
             />
           </div>
         </div>

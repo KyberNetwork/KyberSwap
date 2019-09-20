@@ -40,14 +40,13 @@ export default class LimitOrderForm extends React.Component {
   }
 
   setFormType = (type) => {
-    if (this.state.formType === type) return;
+    if (this.props.limitOrder.sideTrade === type) return;
 
     this.props.dispatch(limitOrderActions.changeFormType(
       this.props.sourceToken,
       this.props.destToken
     ));
-
-    this.setState({ formType: type });
+    this.props.dispatch(limitOrderActions.setSideTrade(type))
   };
 
   getEthereumInstance = () => {
@@ -228,19 +227,19 @@ export default class LimitOrderForm extends React.Component {
   render() {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
     const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
-    const quoteSymbol = this.state.formType === 'buy' ? srcTokenSymbol : destTokenSymbol;
-    const targetSymbol = this.state.formType === 'buy' ? destTokenSymbol : srcTokenSymbol;
+    const quoteSymbol = this.props.limitOrder.sideTrade === 'buy' ? srcTokenSymbol : destTokenSymbol;
+    const targetSymbol = this.props.limitOrder.sideTrade === 'buy' ? destTokenSymbol : srcTokenSymbol;
 
     return (
       <div className={"limit-order-form theme__background-2"}>
         <div className={"limit-order-form__header theme__border-2"}>
           <div
-            className={`limit-order-form__tab ${this.state.formType === 'buy' ? 'limit-order-form__tab--active' : ''}`}
+            className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'buy' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('buy')}>
               Buy {targetSymbol}
           </div>
           <div
-            className={`limit-order-form__tab ${this.state.formType === 'sell' ? 'limit-order-form__tab--active' : ''}`}
+            className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'sell' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('sell')}>
               Sell {targetSymbol}
           </div>
@@ -288,7 +287,7 @@ export default class LimitOrderForm extends React.Component {
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__input-tag"}>Amount</div>
-          {this.state.formType === 'buy' &&
+          {this.props.limitOrder.sideTrade === 'buy' &&
             <input
               className={"limit-order-form__input theme__text-2"}
               step="0.000001"
@@ -303,7 +302,7 @@ export default class LimitOrderForm extends React.Component {
             />
           }
 
-          {this.state.formType === 'sell' &&
+          {this.props.limitOrder.sideTrade === 'sell' &&
             <input
               className={"limit-order-form__input theme__text-2"}
               step="0.000001"
@@ -341,7 +340,7 @@ export default class LimitOrderForm extends React.Component {
           </div>
         }
 
-        <LimitOrderFee formType={this.state.formType}/>
+        <LimitOrderFee formType={this.props.limitOrder.sideTrade}/>
 
         <LimitOrderSubmit
           availableBalanceTokens={this.props.modifiedTokens}
