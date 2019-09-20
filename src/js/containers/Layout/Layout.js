@@ -78,6 +78,7 @@ export default class Layout extends React.Component {
     this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
     this.intervalIdle = null;
+    this.state= {isStandalone: true}
   }
 
   componentWillMount() {
@@ -105,6 +106,8 @@ export default class Layout extends React.Component {
     }
 
     if (window.kyberBus) {
+      window.kyberBus.on('set.theme.light', () => {if (this.state.isStandalone) this.setState({isStandalone: false})});
+      window.kyberBus.on('set.theme.dark', () => {if (this.state.isStandalone) this.setState({isStandalone: false})});
       window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
       window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
       window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
@@ -149,17 +152,19 @@ export default class Layout extends React.Component {
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
     return (
-      <LayoutView
-          history={history}
-          Exchange={Exchange}
-          Transfer={Transfer}
-          LimitOrder = {LimitOrder}
-          supportedLanguages={Language.supportLanguage}
-          setActiveLanguage={this.setActiveLanguage}
-          currentLanguage = {currentLanguage}
-          tokens = {this.props.tokens}
-          langClass = {this.props.langClass}
-      />
+      <div className={this.state.isStandalone ? `theme theme--${this.props.theme}` : ""}>
+        <LayoutView
+            history={history}
+            Exchange={Exchange}
+            Transfer={Transfer}
+            LimitOrder = {LimitOrder}
+            supportedLanguages={Language.supportLanguage}
+            setActiveLanguage={this.setActiveLanguage}
+            currentLanguage = {currentLanguage}
+            tokens = {this.props.tokens}
+            langClass = {this.props.langClass}
+        />
+      </div>
     )
   }
 }
