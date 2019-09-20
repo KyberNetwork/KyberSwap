@@ -78,7 +78,6 @@ export default class Layout extends React.Component {
     this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
     this.idleMode = false;
     this.intervalIdle = null;
-    this.state= {isStandalone: true}
   }
 
   componentWillMount() {
