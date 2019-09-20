@@ -149,17 +149,19 @@ export default class Layout extends React.Component {
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
     return (
-      <LayoutView
-          history={history}
-          Exchange={Exchange}
-          Transfer={Transfer}
-          LimitOrder = {LimitOrder}
-          supportedLanguages={Language.supportLanguage}
-          setActiveLanguage={this.setActiveLanguage}
-          currentLanguage = {currentLanguage}
-          tokens = {this.props.tokens}
-          langClass = {this.props.langClass}
-      />
+      <div className={!process.env.integrate ? `theme theme--${this.props.theme}` : ""}>
+        <LayoutView
+            history={history}
+            Exchange={Exchange}
+            Transfer={Transfer}
+            LimitOrder = {LimitOrder}
+            supportedLanguages={Language.supportLanguage}
+            setActiveLanguage={this.setActiveLanguage}
+            currentLanguage = {currentLanguage}
+            tokens = {this.props.tokens}
+            langClass = {this.props.langClass}
+        />
+      </div>
     )
   }
 }
