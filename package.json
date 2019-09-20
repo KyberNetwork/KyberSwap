@@ -112,10 +112,9 @@
   "scripts": {
     "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js",
     "build-production": "NODE_ENV=production node webpack-wrapper.js",
-    "build-rinkeby": "NODE_ENV=rinkeby node webpack-wrapper.js",
     "build-staging": "NODE_ENV=staging node webpack-wrapper.js",
     "build-dev":"NODE_ENV=dev node webpack-wrapper.js",
-    "build-all": "npm run build-staging && npm run build-production && npm run build-rinkeby && npm run build-ropsten",
+    "build-all": "npm run build-staging && npm run build-production && npm run build-dev && npm run build-ropsten",
     "build-all-mainnet": "npm run build-staging && npm run build-production",
     "rinkeby": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=rinkeby --env.logger=true",
     "staging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=staging --env.logger=true",
