@@ -73,7 +73,7 @@ deploy:
     local_dir: dist/dev
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -85,7 +85,7 @@ deploy:
     upload-dir: swap
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -97,7 +97,7 @@ deploy:
     upload-dir: transfer
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -109,7 +109,7 @@ deploy:
     upload-dir: limit_order
     skip_cleanup: true
     on:
-      branch: develop_limit_order
+      branch: develop
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
