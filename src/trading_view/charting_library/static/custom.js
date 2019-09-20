@@ -1,3 +1,5 @@
+const CHANGE_THEME_MESSAGE_TYPE = "change-theme"
+
 function bindEvent(element, eventName, eventHandler) {
     if (element.addEventListener) {
         element.addEventListener(eventName, eventHandler, false);
@@ -22,7 +24,10 @@ window.parent.postMessage("ready", "*");
 
 // Listen for event change theme
 bindEvent(window, 'message', function (e) {
-    const theme = e.data
-    changeTheme(theme)
+    const data = e.data;
+    if (data.type === CHANGE_THEME_MESSAGE_TYPE) {
+        const theme = data.message
+        changeTheme(theme)
+    }
 });
 

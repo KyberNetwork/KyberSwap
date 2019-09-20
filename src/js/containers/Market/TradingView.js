@@ -23,6 +23,7 @@ export default class TradingView extends React.Component {
 			widgetOverrides: null,
 			iframeEl: null
 		}
+		this.changeThemeMessageType = "change-theme"
 	}
 
 	static defaultProps = {
@@ -200,7 +201,10 @@ export default class TradingView extends React.Component {
 	sendMessageToIframe(e) {
 		const { iframeEl } = this.state
 		if (e.data === "ready" && this.state && iframeEl && iframeEl.contentWindow) {
-			iframeEl.contentWindow.postMessage(this.props.global.theme, "*")
+			iframeEl.contentWindow.postMessage({
+				type: this.changeThemeMessageType,
+				message: this.props.global.theme
+			}, "*")
 		}
 	}
 
@@ -214,14 +218,20 @@ export default class TradingView extends React.Component {
 				widgetOverrides: this.darkThemeWidget,
 			});
 			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage(nextProps.global.theme, "*")
+				iframeEl.contentWindow.postMessage({
+					type: this.changeThemeMessageType,
+					message: nextProps.global.theme
+				}, "*")
 			}
 		} else {
 			this.setState({
 				widgetOverrides: this.lightThemeWidget,
 			});
 			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage(nextProps.global.theme, "*")
+				iframeEl.contentWindow.postMessage({
+					type: this.changeThemeMessageType,
+					message: nextProps.global.theme
+				}, "*")
 			}
 		}
 	}
