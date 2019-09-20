@@ -3,6 +3,10 @@
     background: transparent !important;
 }
 
+.symbol-edit {
+    pointer-events: none;
+}
+
 .layout__area--left > div {
     background-color: #232323 !important;
 }

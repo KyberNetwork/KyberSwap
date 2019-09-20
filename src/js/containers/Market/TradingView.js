@@ -131,7 +131,7 @@ export default class TradingView extends React.Component {
 
 
 		const widgetOptions = {
-			symbol: this.props.selectedSymbol,
+			symbol: `${this.props.destTokenSymbol}_${this.props.currentQuote}`,
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
@@ -162,9 +162,9 @@ export default class TradingView extends React.Component {
 			// this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
 			// this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 
-      widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
-        this.props.dispatch(changeSymbol(symbolData.name))
-      })
+      // widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
+      //   this.props.dispatch(changeSymbol(symbolData.name))
+      // })
 
 			const chart = widget.chart();
 
@@ -226,6 +226,17 @@ export default class TradingView extends React.Component {
 		}
 	}
 
+	changePair(baseSymbol, quoteSymbol) {
+		const { widget } = this.state;
+		if (widget) {
+			widget.onChartReady(() => {
+				const chart = widget.chart();
+				const symbol = `${baseSymbol}_${quoteSymbol}`
+				chart.setSymbol(symbol, e => {});
+			});
+		}
+	}
+
   render() {
 		const { widget, widgetOverrides, iframeEl } = this.state;
 		if (widget !== null) {
@@ -233,6 +244,8 @@ export default class TradingView extends React.Component {
 				widget.applyOverrides(widgetOverrides)
 			})
 		}
+
+		this.changePair(this.props.destTokenSymbol, this.props.currentQuote)
 
 		return (
       <div id={this.props.containerId} className={`trading-view`}/>
