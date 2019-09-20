@@ -22,7 +22,7 @@
     },
     "min_accept_amount": 0.5,
     "api_usd": "https://api.coinmarketcap.com",
-    "api_tokens": "https://api.kyber.network/internal/currencies",
+    "api_tokens": "https://dev-api.knstats.com/internal/currencies",
     "priority_tokens": [
         "ETH",
         "DAI",

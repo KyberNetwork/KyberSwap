@@ -11,7 +11,7 @@ function changeTheme(theme) {
     if (linkEl !== null) {
         if (theme === "dark") {
             linkEl.setAttribute("href", "trading-view-dark.css")
-        } else {
+        } else if (theme === "light") {
             linkEl.setAttribute("href", "trading-view-light.css")
         }
     }
