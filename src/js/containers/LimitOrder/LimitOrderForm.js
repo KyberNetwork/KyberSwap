@@ -7,7 +7,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import * as constants from "../../services/constants"
 import { debounce } from 'underscore';
 import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
-import { RateWarningModal } from "../LimitOrder/LimitOrderModals";
+import { RateWarningModal, ForceCancelOrderModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
 import EthereumService from "../../services/ethereum/ethereum";
@@ -175,17 +175,7 @@ export default class LimitOrderForm extends React.Component {
     } else {
       higherRateOrders = this.props.limitOrder.relatedOrders;
     }
-
-    return higherRateOrders.map(item => {
-      const datetime = common.getFormattedDate(item.updated_at);
-      const rate = converters.displayNumberWithDot(item.min_rate, 9);
-      return (
-        <div key={item.id} className="rate-warning-tooltip__order">
-          <div>{datetime}</div>
-          <div>{item.source.toUpperCase()}/{item.dest.toUpperCase()} >= <span title={item.min_rate}>{rate}</span></div>
-        </div>
-      );
-    });
+    return higherRateOrders
   };
 
   resetToMarketRate = () => {
@@ -199,41 +189,41 @@ export default class LimitOrderForm extends React.Component {
     ));
   };
 
-  getRateWarningTooltip = () => {
-    if (!this.props.account) return null;
+  // getRateWarningTooltip = () => {
+  //   if (!this.props.account) return null;
 
-    return (
-      <div className="rate-warning-tooltip">
-        <div className="rate-warning-tooltip__title">
-          <div className="rate-warning-tooltip__description">
-            {this.props.translate("limit_order.rate_warning_title") || `By submitting this order, you also CANCEL the following orders:`}
-          </div>
-          <span className="rate-warning-tooltip__faq">
-            <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
-              {this.props.translate("why") || "Why?"}
-            </a>
-          </span>
-        </div>
+  //   return (
+  //     <div className="rate-warning-tooltip">
+  //       <div className="rate-warning-tooltip__title">
+  //         <div className="rate-warning-tooltip__description">
+  //           {this.props.translate("limit_order.rate_warning_title") || `By submitting this order, you also CANCEL the following orders:`}
+  //         </div>
+  //         <span className="rate-warning-tooltip__faq">
+  //           <a href={`/faq#can-I-submit-multiple-limit-orders-for-same-token-pair`} target="_blank">
+  //             {this.props.translate("why") || "Why?"}
+  //           </a>
+  //         </span>
+  //       </div>
         
-        <div className="rate-warning-tooltip__order-container">
-          {this.getListWarningOrdersComp()}
-        </div>
+  //       <div className="rate-warning-tooltip__order-container">
+  //         {this.getListWarningOrdersComp()}
+  //       </div>
 
-        <div className="rate-warning-tooltip__footer">
-          <label className="rate-warning-tooltip__confirm">
-            <span className="rate-warning-tooltip__confirm--text">
-              {this.props.translate("i_understand") || "I understand"}
-            </span>
-            <input type="checkbox" 
-              checked={this.props.limitOrder.isAgreeForceSubmit}
-              className="rate-warning-tooltip__confirm--checkbox"
-              onChange={e => this.toggleAgreeSubmit()}/>
-            <span className="rate-warning-tooltip__confirm--checkmark"/>
-          </label>
-        </div>
-      </div>
-    );
-  };
+  //       <div className="rate-warning-tooltip__footer">
+  //         <label className="rate-warning-tooltip__confirm">
+  //           <span className="rate-warning-tooltip__confirm--text">
+  //             {this.props.translate("i_understand") || "I understand"}
+  //           </span>
+  //           <input type="checkbox" 
+  //             checked={this.props.limitOrder.isAgreeForceSubmit}
+  //             className="rate-warning-tooltip__confirm--checkbox"
+  //             onChange={e => this.toggleAgreeSubmit()}/>
+  //           <span className="rate-warning-tooltip__confirm--checkmark"/>
+  //         </label>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   render() {
     const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.sourceTokenSymbol;
@@ -359,8 +349,12 @@ export default class LimitOrderForm extends React.Component {
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile &&
-          this.getRateWarningTooltip()
+        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile && (
+          <ForceCancelOrderModal
+            toggleAgreeSubmit={this.toggleAgreeSubmit}
+            getListWarningOrdersComp={this.getListWarningOrdersComp}
+          />
+        )
         }
       </div>
     )

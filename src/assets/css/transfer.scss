@@ -11,6 +11,12 @@ $padding-col-left : 2rem;
     background-image: url($image-path + 'exchange/arrow-right-orange.svg');
     cursor: pointer;
   }
+
+  @include screen-max-width(xxmedium) {
+    &__arrow {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 #transfer-screen{
@@ -136,10 +142,6 @@ label{
       }
     }
   }
-}
-.text-center {
-  display: flex;
-  justify-content: center;
 }
 
 .gas-option {

@@ -4,7 +4,6 @@
   }
 
   &__title {
-    font-family: Montserrat;
     font-size: 18px;
     font-weight: 500;
     font-style: normal;
@@ -16,9 +15,8 @@
 
     &--inactive {
       max-width: 550px;
-      margin: 0 auto;
+      margin: 0 auto 10px;
       text-align: center;
-      margin-bottom: 10px;
       font-size: 13px;
     }
 
@@ -56,10 +54,15 @@
       display: block;
 
       .import-account__item {
-        margin: 10px 0;
+        margin-top: 15px;
         width: auto;
         height: auto;
-        border-radius: 50px;
+        border-radius: 3px;
+        color: $grey-darker;
+
+        &:first-child {
+          margin-top: 0;
+        }
 
         &.download-app{
           .import-account__block-right--comming-soon{
@@ -76,38 +79,66 @@
             background-color: #ef8102;
           }
         }
+
+        &--inactive {
+          color: $grey-dark;
+        }
       }
 
       .import-account__block {
-        background-color: #E7EDF5;
+        background-color: white;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
+        padding: 10px 15px;
         height: unset;
         cursor: initial;
-        border-radius: 50%;
+        border: none;
+        box-shadow: 0 3px 14px 1px rgba(0, 0, 0, 0.08);
 
         &:hover {
           background-color: transparent !important;
+
           .import-account__name {
             color: inherit !important;
           }
         }
-      }
 
-      .import-account__block-left {
-        display: flex;
-        align-items: center;
+        &-left {
+          display: flex;
+          align-items: center;
+        }
+
+        &-right {
+          display: block;
+          font-size: 12px;
+          color: $grey-dark;
+          width: 100px;
+          padding: 8px 0;
+          text-align: center;
+          cursor: pointer;
+          transition: all .3s;
+          border: 1px solid $grey-dark;
+          border-radius: 3px;
+
+          &:hover {
+            color: white;
+            border-color: #ef8102;
+            background-color: #ef8102;
+          }
+        }
       }
 
       .import-account__icon {
-        width: 25px;
-        height: 35px;
+        width: 24px;
+        height: 24px;
         background-size: contain;
-        margin-right: 15px;
+        margin-right: 16px;
 
         &.kyberapp {
+          width: 30px;
+          height: 43px;
+          margin-right: 12px;
           background-image: url($image-path + '/v3/kyber-logo.svg');
         }
 
@@ -121,34 +152,13 @@
       }
 
       .import-account__name {
-        font-size: 14px;
-        font-weight: 600;
-        color: #222222;
-        margin-bottom: -2px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 2px;
       }
 
       .import-account__desc {
-        font-size: 11px;
-        color: #666666;
-      }
-
-      .import-account__block-right {
-        display: block;
-        font-size: 12px;
-        color: #677C94;
-        width: 100px;
-        padding: 4px 0;
-        text-align: center;
-        cursor: pointer;
-        transition: all .3s;
-        border: 1px solid #677C94;
-        border-radius: 20px;
-
-        &:hover {
-          color: white;
-          border-color: #ef8102;
-          background-color: #ef8102;
-        }
+        font-size: 10px;
       }
     }
   }
@@ -183,30 +193,15 @@
             color: inherit;
           }
         }
-
-        .import-account__icon {
-          background: no-repeat center;
-
-          &.metamask {
-            background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
-          }
-          &.ledger {
-            background-image: url($image-path + 'import-account/wallet-icon/ledger_gray.svg');
-          }
-          &.trezor {
-            background-image: url($image-path + 'import-account/wallet-icon/trezor_gray.svg');
-          }
-          &.json {
-            background-image: url($image-path + 'import-account/wallet-icon/keystore_gray.svg');
-          }
-          &.private-key {
-            background-image: url($image-path + 'import-account/wallet-icon/private_key_gray.svg');
-          }
-          &.promo-code {
-            background-image: url($image-path + 'import-account/wallet-icon/promocode_gray.svg');
-          }
-        }
       }
+    }
+
+    @include screen-max-width(xxsmall) {
+      width: 48%;
+    }
+
+    @include screen-max-width(small) {
+      width: 100%;
     }
   }
 
@@ -221,6 +216,7 @@
     outline: none;
     border: 1px solid;
     border-radius: 3px;
+
     &:hover {
       background-color: transparent;
 
@@ -228,28 +224,8 @@
         color: #ff9008;
       }
 
-      .metamask {
-        background-image: url($asset-url + 'wallets/metamask.svg');
-      }
-
-      .json {
-        background-image: url($asset-url + 'wallets/keystore.svg');
-      }
-
-      .trezor {
-        background-image: url($asset-url + 'wallets/trezor.svg');
-      }
-
-      .ledger {
-        background-image: url($asset-url + 'wallets/ledger.svg');
-      }
-
-      .private-key {
-        background-image: url($asset-url + 'wallets/privatekey.svg');
-      }
-
-      .promo-code {
-        background-image: url($asset-url + 'wallets/promo_code.svg');
+      .import-account__icon {
+        background-position: -31px 0;
       }
     }
   }
@@ -257,41 +233,41 @@
   &__icon {
     width: 20px;
     height: 20px;
-    margin-right: 5px;
-    background: center no-repeat;
-    background-size: contain;
+    margin-right: 7px;
+    background: 0 0 no-repeat;
 
     &.metamask {
-      background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
+      background-image: url($image-path + 'import-account/wallets/metamask.svg');
     }
+
     &.ledger {
-      background-image: url($image-path + 'import-account/wallet-icon/ledger_gray.svg');
+      background-image: url($image-path + 'import-account/wallets/ledger.svg');
     }
+
     &.trezor {
-      background-image: url($image-path + 'import-account/wallet-icon/trezor_gray.svg');
+      width: 14px;
+      background-image: url($image-path + 'import-account/wallets/trezor.svg');
     }
+
     &.json {
-      background-image: url($image-path + 'import-account/wallet-icon/keystore_gray.svg');
+      background-image: url($image-path + 'import-account/wallets/keystore.svg');
     }
+
     &.private-key {
-      background-image: url($image-path + 'import-account/wallet-icon/private_key_gray.svg');
+      background-image: url($image-path + 'import-account/wallets/private-key.svg');
     }
+
     &.promo-code {
-      background-image: url($image-path + 'import-account/wallet-icon/promocode_gray.svg');
+      width: 15px;
+      background-image: url($image-path + 'import-account/wallets/promo-code.svg');
     }
   }
 
   &__name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    h3{
-      font-size: inherit;
-      font-family: inherit;
-      line-height: inherit;
-      font-weight: inherit;
-      position: relative;
-      top: 1px;
-    }
+    position: relative;
+    top: 1px;
   }
 
   .column-block {
@@ -350,7 +326,7 @@
     text-transform: uppercase;
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     border: none;
     box-shadow: none;
 
@@ -396,7 +372,7 @@
 }
 
 .import-privatekey {
-  padding: 0px !important;
+  padding: 0 !important;
 
   .title {
     text-align: center;

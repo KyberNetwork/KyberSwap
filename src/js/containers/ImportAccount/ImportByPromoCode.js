@@ -20,13 +20,13 @@ export default class ImportByPromoCode extends React.Component {
       <Fragment>
         {!this.props.isOnMobile && (
           <div className="import-account__block theme__import-button" onClick={this.openModal.bind(this)}>
-            <div className="import-account__icon promo-code"></div>
-            <div className="import-account__name"><h3>{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</h3></div>
+            <div className="import-account__icon promo-code"/>
+            <div className="import-account__name">{this.props.translate("landing_page.promo_code") || "PROMO CODE"}</div>
           </div>
         )}
 
         {this.props.isOnMobile && (
-          <div className={"import-account__block"}>
+          <div className={"import-account__block theme__import-button"}>
             <div className={"import-account__block-left"}>
               <div className="import-account__icon promo-code"/>
               <div>

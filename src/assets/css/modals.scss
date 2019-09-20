@@ -611,7 +611,6 @@ $divider-color: darken($title-background-color, 5);
       &.cancel-process {
         background-color: #a2a7b2;
         color: white;
-        text-transform: uppercase;
         margin-right: 20px;
         // min-width: 135px;
         // padding: 14px;
@@ -1317,4 +1316,7 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
+}
+.cancel-order-modal {
+  padding: 0;
 }
