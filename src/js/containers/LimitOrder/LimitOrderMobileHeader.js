@@ -5,7 +5,7 @@ import QuoteMarket from "./QuoteMarket/QuoteMarket";
 import LimitOrderChart from "./LimitOrderChart";
 import * as constants from "../../services/constants";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { withSourceAndBalance } from "./index";
+import {withFavorite, withSourceAndBalance} from "./index";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -21,7 +21,7 @@ export default class LimitOrderMobileHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.QuoteMarket = withSourceAndBalance(<QuoteMarket/>);
+    this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.state = {
       isChartOpened: false,
       isQuoteMarketOpened: false,
@@ -44,6 +44,7 @@ export default class LimitOrderMobileHeader extends React.Component {
     const marketDestTokenByETH = this.props.marketDestToken.ETH;
     const marketDestTokenByUSD = this.props.marketDestToken.USD;
 
+    console.log("pq", this.props.favorite_pairs, `${this.props.limitOrder.destTokenSymbol}_${this.props.limitOrder.sourceTokenSymbol}`)
     return (
       <div className={"limit-order-header"}>
         <div className={"limit-order-header__wrapper"}>
@@ -65,7 +66,7 @@ export default class LimitOrderMobileHeader extends React.Component {
           </div>
 
           <div className={"limit-order-header__column"}>
-            <div className={`limit-order-header__star ${this.state.isFavorite ? 'limit-order-header__star--active' : ''}`}/>
+            <div className={`limit-order-header__star ${this.props.favorite_pairs.includes(`${this.props.limitOrder.destTokenSymbol}_${this.props.limitOrder.sourceTokenSymbol}`) ? 'limit-order-header__star--active' : ''}`}/>
             <div className={"limit-order-header__chart"} onClick={this.toggleChart}/>
           </div>
         </div>

@@ -9,10 +9,9 @@ import { QuoteList, Search } from "../QuoteMarket"
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
-  const favorite_pairs_anonymous = store.limitOrder.favorite_pairs_anonymous
   const currentQuote = store.limitOrder.currentQuote
   return {
-    tokens, favorite_pairs_anonymous, currentQuote
+    tokens, currentQuote
   }
 })
 export default class QuoteMarket extends React.Component{
@@ -33,13 +32,13 @@ export default class QuoteMarket extends React.Component{
     this.intervalId = setInterval(() => { 
       this.updateVolume()
     }, 2000);
-    if (common.isUserLogin()) {
-      limitOrderServices.getFavoritePairs().then(
-        (res) => { 
-          this.setState({favorite_pairs: res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)}) 
-        } 
-      )
-    } 
+    // if (common.isUserLogin()) {
+    //   limitOrderServices.getFavoritePairs().then(
+    //     (res) => {
+    //       this.setState({favorite_pairs: res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)})
+    //     }
+    //   )
+    // }
   }
 
   componentWillUnmount() {
@@ -84,7 +83,7 @@ export default class QuoteMarket extends React.Component{
   search(quotes){
     const { current_search, current_sort_index, current_sort_dsc, pairs } = this.state
     const { currentQuote } = this.props
-
+    console.log("zx", currentQuote, quotes)
     return (
       currentQuote === "FAV" ?
         Object.keys(quotes).reduce((res, key) => res.concat(quotes[key]),[]).filter((pair) => pair["is_favorite"]) : 
@@ -101,10 +100,9 @@ export default class QuoteMarket extends React.Component{
 
 
   renderQuotes(){
-    const { tokens, favorite_pairs_anonymous } = this.props
-    const { favorite_pairs } = this.state
-    const fav = common.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
-    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "WETH"))
+    const { tokens } = this.props
+    const fav = this.props.favorite_pairs
+    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "ETH"))
       .reduce((res, quote) => {
         res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"]))
           .reduce((vt, key) =>{ 
@@ -119,6 +117,7 @@ export default class QuoteMarket extends React.Component{
           }, []); 
         return res
       },{})
+    console.log("000001 ",quotes)
     return quotes;
   }
 
@@ -165,10 +164,10 @@ export default class QuoteMarket extends React.Component{
                 <div className="table__body">
                   {list.map(pair => <div key={pair["id"]} className="table__row">
                     <div className="overlay" onClick={() => this.onPairClick(pair["base"], pair["quote"])}></div>
-                    <div className={"c0"} onClick={() => this.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                    <div className={"c0"} onClick={() => this.props.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                       <div className={pair["is_favorite"] ? "star active" : "star" } />
                     </div>
-                    <div className={"c1"} >{pair["base"] + "/" + pair["quote"]}</div>
+                    <div className={"c1"} >{`${pair["base"]}/${pair["quote"] == "WETH" ? "ETH*" : pair["quote"]}`}</div>
                     <div className={"c2"} >{pair["price"]}</div>
                     <div className={"c3"} >{pair["volume"]}</div>
                     <div className={`${pair["change"] > 0 ? "up" : "down"} c4`}>{Math.abs(pair["change"])}%</div>

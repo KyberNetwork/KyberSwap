@@ -6,7 +6,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import constants from "../../services/constants"
 import {LimitOrderBody} from "../LimitOrder"
 import limitOrderServices from "../../services/limit_order";
-import { isUserLogin } from "../../utils/common";
+import {default as common, isUserLogin} from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
 
@@ -29,7 +29,7 @@ export default class LimitOrder extends React.Component {
     this.state = {
       intervalGroup: []
     }
-    this.LimitOrderAccount = withSourceAndBalance(<LimitOrderAccount />)
+    this.LimitOrderAccount = withSourceAndBalance(LimitOrderAccount)
   }
 
   getEthereumInstance = () => {
@@ -128,7 +128,15 @@ export default class LimitOrder extends React.Component {
 
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
-
+  async fetchFavoritePairsIfLoggedIn(){
+    if (isUserLogin) {
+      limitOrderServices.getFavoritePairs().then(
+          (res) => {
+            this.props.dispatch(limitOrderActions.addListFavoritePairs(res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)));
+          }
+      )
+    }
+  }
   componentDidMount = () => {
     this.setInvervalProcess()
 
@@ -143,6 +151,7 @@ export default class LimitOrder extends React.Component {
     this.fetchCurrentRateInit()
     this.fetchListOrders()
     this.fetchPendingBalance()
+    this.fetchFavoritePairsIfLoggedIn()
   }
 
   render() {

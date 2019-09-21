@@ -396,7 +396,7 @@ export function getVolumeAndChange(){
 
 export function getFavoritePairs(){
   return new Promise((resolve, rejected) => {
-    resolve([{base: "BITX", quote: "ETH"}])
+    resolve([{base: "BITX", quote: "WETH"}])
   })
 }
 
