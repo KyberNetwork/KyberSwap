@@ -1,5 +1,12 @@
 import React from "react"
+import { connect } from "react-redux"
 import * as converters from "../../utils/converter";
+
+@connect((store, props) => {
+  return {
+    global: store.global
+  }
+})
 
 export default class BalancePercentage extends React.Component {
 
@@ -15,6 +22,7 @@ export default class BalancePercentage extends React.Component {
     }
 
     this.props.changeSourceAmount(null, sourceAmount);
+    this.props.global.analytics.callTrack("trackLimitOrderClickChangeSourceAmountByPercentage", percentage)
   };
 
   render() {

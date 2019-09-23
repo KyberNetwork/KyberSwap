@@ -12,7 +12,8 @@ import { QuoteList, Search } from "../QuoteMarket"
   const favorite_pairs_anonymous = store.limitOrder.favorite_pairs_anonymous
   const currentQuote = store.limitOrder.currentQuote
   return {
-    tokens, favorite_pairs_anonymous, currentQuote
+    tokens, favorite_pairs_anonymous, currentQuote,
+    global: store.global
   }
 })
 export default class QuoteMarket extends React.Component{
@@ -55,6 +56,7 @@ export default class QuoteMarket extends React.Component{
 
   onQuoteClick = (quote) => {
     this.props.dispatch(limitOrderActions.updateCurrentQuote(quote))
+    this.props.global.analytics.callTrack("trackLimitOrderClickChooseMarket", quote)
   }
 
   onSearch = (text) => {
@@ -72,8 +74,10 @@ export default class QuoteMarket extends React.Component{
       }
       this.setState({favorite_pairs: favorite_pairs})
       limitOrderServices.updateFavoritePairs(base, quote, to_fav)
+      this.props.global.analytics.callTrack("trackLimitOrderClickFavoritePair", "Logged in", base + "/" + quote, to_fav)
     }else {
       this.props.dispatch(limitOrderActions.updateFavoriteAnonymous(base, quote, to_fav))
+      this.props.global.analytics.callTrack("trackLimitOrderClickFavoritePair", "Anonymous", base + "/" + quote, to_fav)
     } 
   }
 
@@ -164,7 +168,9 @@ export default class QuoteMarket extends React.Component{
   }
 
   onPairClick = (base, quote) => {
-    this.props.selectSourceAndDestToken(quote == "ETH" ? "WETH" : quote, base);
+    quote = quote == "ETH" ? "WETH" : quote
+    this.props.selectSourceAndDestToken(quote, base);
+    this.props.global.analytics.callTrack("trackLimitOrderClickSelectPair", base + "/" + quote)
   }
   render(){
     const quotes = this.renderQuotes()

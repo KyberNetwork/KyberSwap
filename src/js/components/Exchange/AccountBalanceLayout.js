@@ -138,6 +138,7 @@ const AccountBalanceLayout = (props) => {
 
   const onClick = (id, isDsc) => {
     props.onSort(id, isDsc)
+    props.analytics.callTrack("trackLimitOrderClickSortOnWalletPanel", id, isDsc)
   }
 
   return (

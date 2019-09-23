@@ -39,7 +39,7 @@ export default class LimitOrderForm extends React.Component {
     }
   }
 
-  setFormType = (type) => {
+  setFormType = (type, targetSymbol, quoteSymbol) => {
     if (this.props.limitOrder.sideTrade === type) return;
 
     this.props.dispatch(limitOrderActions.changeFormType(
@@ -47,6 +47,7 @@ export default class LimitOrderForm extends React.Component {
       this.props.destToken
     ));
     this.props.dispatch(limitOrderActions.setSideTrade(type))
+    this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
   };
 
   getEthereumInstance = () => {
@@ -235,12 +236,12 @@ export default class LimitOrderForm extends React.Component {
         <div className={"limit-order-form__header theme__border-2"}>
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'buy' ? 'limit-order-form__tab--active' : ''}`}
-            onClick={() => this.setFormType('buy')}>
+            onClick={() => this.setFormType('buy', targetSymbol, quoteSymbol)}>
               Buy {targetSymbol}
           </div>
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'sell' ? 'limit-order-form__tab--active' : ''}`}
-            onClick={() => this.setFormType('sell')}>
+            onClick={() => this.setFormType('sell', targetSymbol, quoteSymbol)}>
               Sell {targetSymbol}
           </div>
         </div>
