@@ -9,7 +9,8 @@ import BLOCKCHAIN_INFO from "../../../../env"
   return {
     selectedSymbol: store.market.configs.selectedSymbol,
     locale: store.locale,
-    translate: getTranslate(store.locale)
+		translate: getTranslate(store.locale),
+		global: store.global
   }
 })
 
@@ -18,7 +19,11 @@ export default class TradingView extends React.Component {
 		super()
 		this.state = {
 			rateType: "",
+			widget: null,
+			widgetOverrides: null,
+			iframeEl: null
 		}
+		this.changeThemeMessageType = "change-theme"
 	}
 
 	static defaultProps = {
@@ -31,6 +36,28 @@ export default class TradingView extends React.Component {
 		fullscreen: false,
 		autosize: true
 	};
+
+	darkThemeWidget = {
+		'paneProperties.background':  "#232323",
+		'paneProperties.vertGridProperties.color': "#414141",
+		'paneProperties.horzGridProperties.color': "#414141",
+		'scalesProperties.textColor' : "#9ea1aa",	// text
+		'mainSeriesProperties.candleStyle.upColor': "#32ca9e",
+		'mainSeriesProperties.candleStyle.downColor': "#fa6566",
+		'mainSeriesProperties.candleStyle.wickUpColor': '#32ca9e',
+		'mainSeriesProperties.candleStyle.wickDownColor': '#fa6566'
+	}
+
+	lightThemeWidget = {
+		'paneProperties.background':  "#FFFFFF",
+		'paneProperties.vertGridProperties.color': "#E6E6E6",
+		'paneProperties.horzGridProperties.color': "#E6E6E6",
+		'scalesProperties.textColor' : "#555",
+		'mainSeriesProperties.candleStyle.upColor': "#31CB9E",
+		'mainSeriesProperties.candleStyle.downColor': "#F95555",
+		'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
+		'mainSeriesProperties.candleStyle.wickDownColor': '#F95555'
+	}
 
   getLanguageFromURL = () => {
     var locale = this.props.locale
@@ -105,7 +132,7 @@ export default class TradingView extends React.Component {
 
 
 		const widgetOptions = {
-			symbol: this.props.selectedSymbol,
+			symbol: `${this.props.destTokenSymbol}_${this.props.currentQuote}`,
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
@@ -118,26 +145,29 @@ export default class TradingView extends React.Component {
 			timeframe: this.getTimeFrame(this.props.interval),
 			// timezone: "Asia/Singapore",
 			overrides: {
-				'mainSeriesProperties.candleStyle.upColor': '#31CB9E',
-				'mainSeriesProperties.candleStyle.downColor': '#F95555',
-				'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
-				'mainSeriesProperties.candleStyle.wickDownColor': '#F95555',
 				'mainSeriesProperties.candleStyle.drawBorder': false,
 			}
 		};
 
-    const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		const widgetOverrides = this.props.global.theme === "dark" ? this.darkThemeWidget : this.lightThemeWidget;
+
+		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		
+		this.setState({
+			widget,
+			widgetOverrides
+		});
 
 		widget.onChartReady(() => {
 			// this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
 			// this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
 			// this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
 
-      widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
-        this.props.dispatch(changeSymbol(symbolData.name))
-      })
+      // widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
+      //   this.props.dispatch(changeSymbol(symbolData.name))
+      // })
 
-      const chart = widget.chart();
+			const chart = widget.chart();
 
 			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
 
@@ -150,11 +180,85 @@ export default class TradingView extends React.Component {
 			// 	}
 			// });
 		});
+
+
+		const parent = document.getElementById(this.props.containerId);
+		if (parent !== null) {
+			const iframeEl = parent.getElementsByTagName("iframe")[0];
+			this.setState({
+				iframeEl
+			});
+		}
+
+		// Listening for iframe ready
+		window.addEventListener('message', this.sendMessageToIframe.bind(this), false);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('message', this.sendMessageToIframe.bind(this), false);
+	}
+
+	sendMessageToIframe(e) {
+		const { iframeEl } = this.state
+		if (e.data === "ready" && this.state && iframeEl && iframeEl.contentWindow) {
+			iframeEl.contentWindow.postMessage({
+				type: this.changeThemeMessageType,
+				message: this.props.global.theme
+			}, "*")
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { iframeEl } = this.state;
+		if (nextProps.global.theme === this.props.global.theme) {
+			return
+		}
+		if (nextProps.global.theme === "dark") {
+			this.setState({
+				widgetOverrides: this.darkThemeWidget,
+			});
+			if (iframeEl !== null) {
+				iframeEl.contentWindow.postMessage({
+					type: this.changeThemeMessageType,
+					message: nextProps.global.theme
+				}, "*")
+			}
+		} else {
+			this.setState({
+				widgetOverrides: this.lightThemeWidget,
+			});
+			if (iframeEl !== null) {
+				iframeEl.contentWindow.postMessage({
+					type: this.changeThemeMessageType,
+					message: nextProps.global.theme
+				}, "*")
+			}
+		}
+	}
+
+	changePair(baseSymbol, quoteSymbol) {
+		const { widget } = this.state;
+		if (widget) {
+			widget.onChartReady(() => {
+				const chart = widget.chart();
+				const symbol = `${baseSymbol}_${quoteSymbol}`
+				chart.setSymbol(symbol, e => {});
+			});
+		}
 	}
 
   render() {
-    return (
-      <div id={this.props.containerId} className={'trading-view'}/>
+		const { widget, widgetOverrides, iframeEl } = this.state;
+		if (widget !== null) {
+			widget.onChartReady(() => {
+				widget.applyOverrides(widgetOverrides)
+			})
+		}
+
+		this.changePair(this.props.destTokenSymbol, this.props.currentQuote)
+
+		return (
+      <div id={this.props.containerId} className={`trading-view`}/>
     )
   }
 }

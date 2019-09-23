@@ -12,6 +12,13 @@ export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals
   }
 }
 
+export function setSideTrade(sideTrade) {
+  return {
+    type: "LIMIT_ORDER.SET_SIDE_TRADE",
+    payload: sideTrade
+  }
+}
+
 export function changeFormType(srcToken, destToken) {
   return {
     type: "LIMIT_ORDER.CHANGE_FORM_TYPE",

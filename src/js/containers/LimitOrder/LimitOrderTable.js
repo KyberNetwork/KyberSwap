@@ -81,6 +81,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-from theme__text-4",
+      width: 125
     }, {
       id: "to",
       Header: this.getHeader("total"),
@@ -96,7 +97,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFeeCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-to cell-text-small theme__text-4",
-      width: 100
+      width: 125
     }, {
       id: "address",
       Header: this.getHeader("address"),
@@ -171,7 +172,7 @@ export default class LimitOrderTable extends Component {
     return (
       <div key={this.state.addressCopied}>
         <CopyToClipboard text={user_address}>
-          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 5)} ... ${user_address.slice(-3)}`}</div>
+          <div className={"clickable"} data-for={`copy-address-${id}`} data-tip="" onClick={() => this.setCopiedState(true, `copy-address-${id}`)}>{`${user_address.slice(0, 6)} ... ${user_address.slice(-4)}`}</div>
         </CopyToClipboard>
       </div>
     )
@@ -220,7 +221,8 @@ export default class LimitOrderTable extends Component {
     let amount = formatNumber(sourceAmount, 5);
     return (
       <div>
-        <span class="from-number-cell">{amount}</span>{' '}
+        <span className="from-number-cell">{amount}</span>{' '}
+        <span>{source.toUpperCase()}</span>
       </div>
     )
   }
@@ -241,6 +243,7 @@ export default class LimitOrderTable extends Component {
     return (
       <div>
         <span className="to-number-cell">{destAmount}</span>{' '}
+        <span>{dest.toUpperCase()}</span>{' '}
         {status ===  LIMIT_ORDER_CONFIG.status.FILLED && isShowExtra &&
         <div className="to-number-cell--extra-wrapper">
             <span className="to-number-cell--extra theme__button-2"

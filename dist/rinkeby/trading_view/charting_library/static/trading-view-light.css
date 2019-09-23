@@ -1,0 +1,24 @@
+.chart-container {
+    border: 1px solid transparent !important;
+    background: transparent !important;
+}
+
+.symbol-edit {
+    pointer-events: none;
+}
+
+.layout__area--left > div {
+    background-color: transparent !important;
+}
+
+.layout__area--top {
+    background-color: transparent !important;
+}
+
+.layout__area--center {
+    background-color: transparent !important;
+}
+
+.chart-controls-bar {
+    background-color: transparent !important;
+}

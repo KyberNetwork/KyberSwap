@@ -13,6 +13,9 @@ import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
+import { OrderTableInfo } from "../../../components/CommonElement";
+import makeOrderInfo from "../../../utils/convert_object";
+
 @connect((store, props) => {
     const account = store.account.account
     const translate = getTranslate(store.locale)
@@ -242,13 +245,15 @@ export default class ConfirmModal extends React.Component {
       const formatedFee = converters.formatNumber(calculateFee, 5, '');
       const formatedSrcAmount = converters.formatNumber(this.props.limitOrder.sourceAmount, 5, '');
       const receiveAmount = converters.multiplyOfTwoNumber(converters.subOfTwoNumber(this.props.limitOrder.sourceAmount, calculateFee), this.props.limitOrder.triggerRate);
+      var base = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol
+      var quote = this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.sourceTokenSymbol : this.props.limitOrder.destTokenSymbol
 
       return (
           <div className="limit-order-modal">
             <div className="limit-order-modal__body">
               <div className="limit-order-modal__title">
-                {this.props.translate("modal.order_confirm") ||
-                  "Order Confirm"}
+                {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
+                  `Confirm ${this.props.limitOrder.sideTrade} ${base} Order`}
               </div>
               <div className="limit-order-modal__close" onClick={e => this.closeModal()}>
                 <div className="limit-order-modal__close-wrapper"></div>
@@ -256,17 +261,15 @@ export default class ConfirmModal extends React.Component {
               <div className="limit-order-modal__content confirm-exchange-modal">
                 <div className="limit-order-modal__message limit-order-modal__message--text-small">
                   {this.props.translate("limit_order.confirm_order_message", {
-                    srcToken: this.props.limitOrder.sourceTokenSymbol,
-                    destToken: this.props.limitOrder.destTokenSymbol,
-                    srcAmount: formatedSrcAmount,
-                    srcToken: this.props.limitOrder.sourceTokenSymbol,
+                    base: base === "WETH" ? "ETH*":base,
+                    quote: quote === "WETH" ? "ETH*":quote,
                     rawRate: this.props.limitOrder.triggerRate,
                     rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
                   }) || 
-                    `Your transaction will be broadcasted when rate of ${this.props.limitOrder.sourceTokenSymbol}/${this.props.limitOrder.destTokenSymbol} (for ${formatedSrcAmount} ${this.props.limitOrder.sourceTokenSymbol}) >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
+                    `Your transaction will be broadcasted when price of ${base === "WETH" ? "ETH*":base}/${quote === "WETH" ? "ETH*":quote} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
-                <div className="limit-order-modal__pair confirm-exchange-modal">
+                {/*<div className="limit-order-modal__pair confirm-exchange-modal">
                   <div className="amount">
                     <div className="amount-item amount-left">                         
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
@@ -295,25 +298,10 @@ export default class ConfirmModal extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
-                  
-                <div className="limit-order-modal__fee">
-                  <div className="limit-order-modal__fee--title">
-                    <div>
-                      {this.props.translate("limit_order.fee") || "Fee"}
-                    </div>
-                    {!this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
-                  </div>
-                  <div className="limit-order-modal__fee--amount">
-                    <div title={calculateFee}>
-                      {formatedFee}
-                    </div>
-                    <div>
-                      {this.props.limitOrder.sourceTokenSymbol}
-                    </div>
-                    {this.props.global.isOnMobile && this.getFeeInfoComponent(calculateFee)}
-                  </div>
-                </div>
+                </div> */}
+                <OrderTableInfo 
+                  listOrder = {makeOrderInfo(this.props.limitOrder)}
+                />
                 {/* <div className="limit-order-modal__result">
                   <span>{this.props.translate("limit_order.you_will_receive") || "You will receive"}</span>{' '}
                   <span title={receiveAmount}>{`${converters.displayNumberWithDot(receiveAmount)} ${this.props.limitOrder.destTokenSymbol}`}</span>
@@ -329,24 +317,22 @@ export default class ConfirmModal extends React.Component {
             </div>
 
             {(!this.state.isFinish && !this.state.err) &&
-              <div className="overlap">
-                <div className="input-confirm">
-                  <button
-                    className={`button process-submit cancel-process ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
-                    onClick={e => this.closeModal()}
-                  >
-                    {this.props.translate("modal.cancel") || "Cancel"}
-                  </button>
-                  <button className={`button process-submit next ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
-                    onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
-                </div>
+              <div className="limit-order-modal__footer">
+                <button
+                  className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+                  onClick={e => this.closeModal()}
+                >
+                  {this.props.translate("modal.cancel") || "Cancel"}
+                </button>
+                <button className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
+                  onClick={e => this.onSubmit()}>{this.props.translate("modal.confirm") || "Confirm"}</button>
               </div>
             }
 
             {this.state.isFinish &&
               <div className="limit-order-modal__msg limit-order-modal__msg--success">
                 <div className={"limit-order-modal__text"}>
-                  <div>
+                  <div className={"limit-order-modal__text--success"}>
                     <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
                     <span>{this.props.translate("modal.success") || "Success"}</span>
                   </div>

@@ -299,7 +299,10 @@ const limitOrder = (state = initState, action) => {
       return newState; 
     }
 
-
+    case 'LIMIT_ORDER.SET_SIDE_TRADE': {
+      newState.sideTrade = action.payload
+      return newState
+    }
   }
   return state
 }

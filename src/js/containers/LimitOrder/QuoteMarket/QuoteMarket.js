@@ -104,9 +104,32 @@ export default class QuoteMarket extends React.Component{
     const { tokens, favorite_pairs_anonymous } = this.props
     const { favorite_pairs } = this.state
     const fav = common.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
+
     const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "WETH"))
-      .reduce((res, quote) => {
-        res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"]))
+    .sort((first, second) => {
+      const firstQuotePriority = tokens[first].quote_priority;
+      const secondQuotePriority = tokens[second].quote_priority;
+
+      if (firstQuotePriority && secondQuotePriority) {
+        if (firstQuotePriority > secondQuotePriority) return -1;
+        else if (firstQuotePriority < secondQuotePriority) return 1;
+      }
+
+      return 0;
+    })
+
+    const result = quotes.reduce((res, quote) => {
+        res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"])).filter(key => {
+          // if quote A priority < other quote priorities, remove other quotes from list token of quote A
+          const quotePriority = tokens[quote].quote_priority;
+          const tokenPriority = tokens[key].quote_priority;
+
+          if (quotePriority && tokenPriority && quotePriority < tokenPriority) {
+            // remove from list
+            return false;
+          }
+          return true;
+        })
           .reduce((vt, key) =>{ 
             return key == quote ? vt : vt.concat({   
                 id: key+"_"+quote, 
@@ -118,8 +141,8 @@ export default class QuoteMarket extends React.Component{
             });
           }, []); 
         return res
-      },{})
-    return quotes;
+      },{});
+    return result;
   }
 
   renderTh = () => {
