@@ -50,7 +50,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header theme__background theme__text-3",
       className: "cell-flex-start cell-text-small theme__text-4",
-      maxWidth: 80,
+      width: 130,
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -66,7 +66,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 100
+      width: 130
     }, {
       id: "type",
       Header: this.getHeader("type"),
@@ -74,7 +74,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getTypeCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 85
+      width: 130
     }, {
       id: "price",
       Header: this.getHeader("price"),
@@ -82,7 +82,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getPriceCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 85
+      width: 130
     }, {
       id: "from",
       Header: this.getHeader("amount"),
@@ -90,7 +90,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-from theme__text-4",
-      width: 125
+      width: 150
     }, {
       id: "to",
       Header: this.getHeader("total"),
@@ -98,7 +98,7 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-to theme__text-4",
-      width: 125
+      width: 150
     }, {
       id: "status",
       Header: this.getHeader("status"),
@@ -106,19 +106,20 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-center-header cell-status-header theme__background theme__text-3",
       className: "cell-flex-center theme__text-4",
-      width: 130
+      width: 120
     }, {
       expander: true,
       show: false
     }
+    , {
+      id: "actions",
+      Header: this.getHeader("actions"),
+      accessor: item => item,
+      Cell: props => this.getActionCell(props.value),
+      headerClassName: "theme__background theme__text-3",
+      maxWidth: 80
+    }
     // , {
-    //   id: "actions",
-    //   Header: this.getHeader("actions"),
-    //   accessor: item => item,
-    //   Cell: props => this.getActionCell(props.value),
-    //   headerClassName: "theme__background theme__text-3",
-    //   maxWidth: 80
-    // }, {
     //   id: "fee",
     //   Header: this.getHeader("fee"),
     //   accessor: item => item,
@@ -209,7 +210,7 @@ export default class LimitOrderTable extends Component {
   }
   getTypeCell = (props) => {
     return (
-        <div>{props.type}</div>
+        <div>{props.side_trade}</div>
     )
   }
   getPriceCell = (props) => {
@@ -769,7 +770,7 @@ export default class LimitOrderTable extends Component {
     // Type filter
     if (typeFilter && typeFilter.length > 0) {
       results = results.filter(item => {
-        const index = typeFilter.indexOf(item.type);
+        const index = typeFilter.indexOf(item.side_trade);
         return index !== -1;
       });
     }
@@ -835,10 +836,6 @@ export default class LimitOrderTable extends Component {
     }
   }
 
-  openOrderDetail = (state, rowInfo) => {
-    // console.log("aas", state, rowInfo.original)
-
-  }
   render() {
     const columns = this.getColumns();
     const data = this.renderData(this.props.data);
@@ -915,7 +912,7 @@ export default class LimitOrderTable extends Component {
             return {
               onClick: (e) => {
                 e.stopPropagation();
-                this.openOrderDetail(state, rowInfo);
+                this.props.openOrderDetailsModal(rowInfo.original)
               }
             }
           }}
@@ -937,5 +934,6 @@ export default class LimitOrderTable extends Component {
 LimitOrderTable.propTypes = {
   data: PropTypes.array,
   screen: PropTypes.string,
-  openCancelOrderModal: PropTypes.func
+  openCancelOrderModal: PropTypes.func,
+  openOrderDetailsModal: PropTypes.func
 }

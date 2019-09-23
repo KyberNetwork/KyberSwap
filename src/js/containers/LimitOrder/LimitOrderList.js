@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
 import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
+import OrderDetailsModal from "./LimitOrderModals/OrderDetailsModal";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import LimitOrderTable from "./LimitOrderTable";
 
@@ -23,7 +24,8 @@ export default class LimitOrderList extends React.Component {
         { interval: 3, unit: 'month'}
       ],
       cancelOrderModalVisible: false,
-      currentOrder: null
+      currentOrder: null,
+      orderDetailsModalVisible: false
     };
   }
 
@@ -33,6 +35,18 @@ export default class LimitOrderList extends React.Component {
     this.setState({
       cancelOrderModalVisible: true,
       currentOrder
+    });
+  }
+  openOrderDetailsModal = (order) => {
+    const currentOrder = JSON.parse(JSON.stringify(order));
+    this.setState({
+      orderDetailsModalVisible: true,
+      currentOrder
+    });
+  }
+  closeOrderDetailsModal = () => {
+    this.setState({
+      orderDetailsModalVisible: false
     });
   }
 
@@ -80,11 +94,16 @@ export default class LimitOrderList extends React.Component {
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
               openCancelOrderModal={this.openCancelOrderModal}
+              openOrderDetailsModal={this.openOrderDetailsModal}
               srcInputElementRef={this.props.srcInputElementRef}
             />
-            <CancelOrderModal order={this.state.currentOrder} 
-              isOpen={this.state.cancelOrderModalVisible}
-              closeModal={this.closeCancelOrderModal}
+            <CancelOrderModal order={this.state.currentOrder}
+                              isOpen={this.state.cancelOrderModalVisible}
+                              closeModal={this.closeCancelOrderModal}
+            />
+            <OrderDetailsModal order={this.state.currentOrder}
+                              isOpen={this.state.orderDetailsModalVisible}
+                              closeModal={this.closeOrderDetailsModal}
             />
           </div>
         </div>
