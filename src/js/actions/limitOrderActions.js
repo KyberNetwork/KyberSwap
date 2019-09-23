@@ -202,6 +202,13 @@ export function setStatusFilter(statusFilter) {
   }
 }
 
+export function setTypeFilter(typeFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_TYPE_FILTER",
+    payload: { typeFilter }
+  }
+}
+
 export function setTimeFilter(timeFilter) {
   return {
     type: "LIMIT_ORDER.SET_TIME_FILTER",

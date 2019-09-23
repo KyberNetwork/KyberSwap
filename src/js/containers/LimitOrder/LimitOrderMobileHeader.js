@@ -44,7 +44,7 @@ export default class LimitOrderMobileHeader extends React.Component {
     const marketDestTokenByETH = this.props.marketDestToken.ETH;
     const marketDestTokenByUSD = this.props.marketDestToken.USD;
 
-    console.log("pq", this.props.favorite_pairs, `${this.props.limitOrder.destTokenSymbol}_${this.props.limitOrder.sourceTokenSymbol}`)
+    const isFav = this.props.favorite_pairs.includes(`${this.props.limitOrder.destTokenSymbol}_${this.props.limitOrder.sourceTokenSymbol}`)
     return (
       <div className={"limit-order-header"}>
         <div className={"limit-order-header__wrapper"}>
@@ -66,7 +66,8 @@ export default class LimitOrderMobileHeader extends React.Component {
           </div>
 
           <div className={"limit-order-header__column"}>
-            <div className={`limit-order-header__star ${this.props.favorite_pairs.includes(`${this.props.limitOrder.destTokenSymbol}_${this.props.limitOrder.sourceTokenSymbol}`) ? 'limit-order-header__star--active' : ''}`}/>
+            <div className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
+                 onClick={() => this.props.onFavoriteClick(this.props.limitOrder.destTokenSymbol, this.props.limitOrder.sourceTokenSymbol, !isFav)} />
             <div className={"limit-order-header__chart"} onClick={this.toggleChart}/>
           </div>
         </div>

@@ -310,7 +310,7 @@ export function getRelatedOrders(sourceToken, destToken, minRate, address) {
     })
 }
 
-export function getOrdersByFilter(address = null, pair = null, status = null, time = null, dateSort = "desc", pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
+export function getOrdersByFilter(address = null, pair = null, type = null, status = null, time = null, dateSort = "desc", pageIndex = 1, pageSize = LIMIT_ORDER_CONFIG.pageSize) {
     let path = `/api/orders?page_index=${pageIndex}&page_size=${pageSize}`;
 
     if (address) {
@@ -344,6 +344,12 @@ export function getOrdersByFilter(address = null, pair = null, status = null, ti
         path += `&sort=${dateSort}`;
     }
 
+    if (type) {
+        const params = type.reduce((sum, item) => {
+            return sum + `&type[]=${item}`;
+        }, "");
+        path += params;
+    }
     return new Promise((resolve, rejected) => {
         timeout(MAX_REQUEST_TIMEOUT, fetch(path))
             .then((response) => {

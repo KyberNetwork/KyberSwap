@@ -219,6 +219,11 @@ const limitOrder = (state = initState, action) => {
       newState.statusFilter = statusFilter;
       return newState;
     }
+    case "LIMIT_ORDER.SET_TYPE_FILTER": {
+      const { typeFilter } = action.payload;
+      newState.typeFilter = typeFilter;
+      return newState;
+    }
     case "LIMIT_ORDER.SET_TIME_FILTER": {
       const { timeFilter } = action.payload;
       newState.timeFilter = timeFilter;

@@ -27,6 +27,7 @@ export default class LimitOrderTable extends Component {
     this.state = {
       currentOrder: null,
       cancelOrderModalVisible: false,
+      typeFilterVisible: false,
       statusFilterVisible: false,
       conditionFilterVisible: false,
       addressFilterVisible: false,
@@ -67,6 +68,14 @@ export default class LimitOrderTable extends Component {
       className: "cell-flex-start cell-condition theme__text-4",
       width: 100
     }, {
+      id: "type",
+      Header: this.getHeader("type"),
+      accessor: item => item,
+      Cell: props => this.getTypeCell(props.value),
+      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      className: "cell-flex-start cell-condition theme__text-4",
+      width: 85
+    }, {
       id: "price",
       Header: this.getHeader("price"),
       accessor: item => item,
@@ -91,22 +100,6 @@ export default class LimitOrderTable extends Component {
       className: "cell-flex-start cell-to theme__text-4",
       width: 125
     }, {
-      id: "fee",
-      Header: this.getHeader("fee"),
-      accessor: item => item,
-      Cell: props => this.getFeeCell(props.value),
-      headerClassName: "cell-flex-start-header theme__background theme__text-3",
-      className: "cell-flex-start cell-to cell-text-small theme__text-4",
-      width: 125
-    }, {
-      id: "address",
-      Header: this.getHeader("address"),
-      accessor: item => item,
-      Cell: props => this.getAddressCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
-      className: "cell-flex-start cell-text-small theme__text-4",
-      width: 85,
-    }, {
       id: "status",
       Header: this.getHeader("status"),
       accessor: item => item,
@@ -115,16 +108,34 @@ export default class LimitOrderTable extends Component {
       className: "cell-flex-center theme__text-4",
       width: 130
     }, {
-      id: "actions",
-      Header: this.getHeader("actions"),
-      accessor: item => item,
-      Cell: props => this.getActionCell(props.value),
-      headerClassName: "theme__background theme__text-3",
-      maxWidth: 80
-    }, {
       expander: true,
       show: false
-    }];
+    }
+    // , {
+    //   id: "actions",
+    //   Header: this.getHeader("actions"),
+    //   accessor: item => item,
+    //   Cell: props => this.getActionCell(props.value),
+    //   headerClassName: "theme__background theme__text-3",
+    //   maxWidth: 80
+    // }, {
+    //   id: "fee",
+    //   Header: this.getHeader("fee"),
+    //   accessor: item => item,
+    //   Cell: props => this.getFeeCell(props.value),
+    //   headerClassName: "cell-flex-start-header theme__background theme__text-3",
+    //   className: "cell-flex-start cell-to cell-text-small theme__text-4",
+    //   width: 125
+    // }, {
+    //   id: "address",
+    //   Header: this.getHeader("address"),
+    //   accessor: item => item,
+    //   Cell: props => this.getAddressCell(props.value),
+    //   headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+    //   className: "cell-flex-start cell-text-small theme__text-4",
+    //   width: 85,
+    // }
+    ];
 
     // --------------
     // Mobile columns
@@ -196,7 +207,11 @@ export default class LimitOrderTable extends Component {
       <div>{source.toUpperCase()}/{dest.toUpperCase()}</div>
     )
   }
-
+  getTypeCell = (props) => {
+    return (
+        <div>{props.type}</div>
+    )
+  }
   getPriceCell = (props) => {
     const { status, updated_at, min_rate } = props;
     const { screen } = this.props;
@@ -476,6 +491,50 @@ export default class LimitOrderTable extends Component {
       </div>
     )
   }
+  getTypeFilter = () => {
+    const { typeFilter } = this.props.limitOrder;
+    return <div className="status-filter-modal theme__background theme__text-3" >
+      {["buy", "sell"].map((item) => {
+        const checked = typeFilter.indexOf(item) !== -1;
+        return (
+            <label key={item} className="status-filter-modal__option">
+              <span>{item}</span>
+              <input
+                  type="checkbox"
+                  value={item}
+                  name={item}
+                  checked={checked}
+                  className="status-filter-modal__checkbox"
+                  onChange={e => this.handleFilterType(e)}
+              />
+              <span className="status-filter-modal__checkmark--checkbox"></span>
+            </label>
+        )
+      })}
+    </div>
+  }
+  handleFilterType = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      const typeFilter = [...this.props.limitOrder.typeFilter, value];
+      this.props.dispatch(limitOrderActions.getOrdersByFilter({
+        pageIndex: 1,
+        typeFilter
+      }));
+    }
+    else {
+      const typeFilter = [...this.props.limitOrder.typeFilter];
+      const index = typeFilter.indexOf(value);
+      if (index !== -1) {
+        typeFilter.splice(index, 1);
+
+        this.props.dispatch(limitOrderActions.getOrdersByFilter({
+          pageIndex: 1,
+          typeFilter
+        }));
+      }
+    }
+  }
 
   handleFilterStatus = (event) => {
     const { value, checked } = event.target;
@@ -555,10 +614,19 @@ export default class LimitOrderTable extends Component {
   // --------------------------------
   // Toggling status filter dropdown
   // --------------------------------
+  togglingTypeFilter = () => {
+    this.setState({
+      conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
+      addressFilterVisible: this.state.addressFilterVisible ? false: this.state.addressFilterVisible,
+      statusFilterVisible: this.state.statusFilterVisible ? false: this.state.statusFilterVisible,
+      typeFilterVisible: !this.state.typeFilterVisible
+    });
+  }
   togglingStatusFilter = () => {
     this.setState({
       conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
       addressFilterVisible: this.state.addressFilterVisible ? false: this.state.addressFilterVisible,
+      typeFilterVisible: this.state.typeFilterVisible ? false: this.state.typeFilterVisible,
       statusFilterVisible: !this.state.statusFilterVisible
     });
   }
@@ -568,6 +636,7 @@ export default class LimitOrderTable extends Component {
     this.setState({
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
       addressFilterVisible: this.state.addressFilterVisible ? false : this.state.addressFilterVisible,
+      typeFilterVisible: this.state.typeFilterVisible ? false : this.state.typeFilterVisible,
       conditionFilterVisible: !this.state.conditionFilterVisible
     })
   }
@@ -577,6 +646,7 @@ export default class LimitOrderTable extends Component {
     this.setState({
       conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
       statusFilterVisible: this.state.statusFilterVisible ? false : this.state.statusFilterVisible,
+      typeFilterVisible: this.state.typeFilterVisible ? false : this.state.typeFilterVisible,
       addressFilterVisible: !this.state.addressFilterVisible
     });
   }
@@ -623,17 +693,31 @@ export default class LimitOrderTable extends Component {
       )
     } else if (title === "status") {
       return (
-        <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
-          <div>
-            <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
-            <div className="drop-down">
-              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+          <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
+            <div>
+              <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
+              <div className="drop-down">
+                <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+              </div>
             </div>
-          </div>
-          <DropdownContent>
-            {this.getStatusFilter()}
-          </DropdownContent>
-        </Dropdown>
+            <DropdownContent>
+              {this.getStatusFilter()}
+            </DropdownContent>
+          </Dropdown>
+      )
+    } else if (title === "type") {
+      return (
+          <Dropdown active={this.state.typeFilterVisible} onHide={e => this.togglingTypeFilter()}>
+            <div>
+              <span>{(this.props.translate("limit_order.type") || "Type").toUpperCase()}</span>
+              <div className="drop-down">
+                <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
+              </div>
+            </div>
+            <DropdownContent>
+              {this.getTypeFilter()}
+            </DropdownContent>
+          </Dropdown>
       )
     } else {
       return (
@@ -643,7 +727,7 @@ export default class LimitOrderTable extends Component {
   }
 
   clientSideFilter = (orders) => {
-    const { addressFilter, pairFilter, timeFilter, statusFilter, activeOrderTab } = this.props.limitOrder;
+    const { addressFilter, pairFilter, timeFilter, typeFilter, statusFilter, activeOrderTab } = this.props.limitOrder;
     let results = JSON.parse(JSON.stringify(orders));
 
     if (activeOrderTab === "open") {
@@ -678,6 +762,14 @@ export default class LimitOrderTable extends Component {
     if (statusFilter && statusFilter.length > 0) {
       results = results.filter(item => {
         const index = statusFilter.indexOf(item.status);
+        return index !== -1;
+      });
+    }
+
+    // Type filter
+    if (typeFilter && typeFilter.length > 0) {
+      results = results.filter(item => {
+        const index = typeFilter.indexOf(item.type);
         return index !== -1;
       });
     }
@@ -743,7 +835,10 @@ export default class LimitOrderTable extends Component {
     }
   }
 
+  openOrderDetail = (state, rowInfo) => {
+    // console.log("aas", state, rowInfo.original)
 
+  }
   render() {
     const columns = this.getColumns();
     const data = this.renderData(this.props.data);
@@ -806,8 +901,23 @@ export default class LimitOrderTable extends Component {
                   this.togglingAddressFilter();
                 }
               }
+            } else if (column.id === "type") {
+              return {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  this.togglingTypeFilter();
+                }
+              }
             }
             return {};
+          }}
+          getTrProps={(state, rowInfo) => {
+            return {
+              onClick: (e) => {
+                e.stopPropagation();
+                this.openOrderDetail(state, rowInfo);
+              }
+            }
           }}
         />
         {this.state.addressCopied && (

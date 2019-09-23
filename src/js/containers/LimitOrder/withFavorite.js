@@ -21,8 +21,11 @@ const withFavorite = (Component) => {
             }
 
         }
+
         render(){
-            return <Component {...this.props} onFavoriteClick={this.onFavoriteClick} favorite_pairs={common.isUserLogin() ? this.props.favorite_pairs : this.props.favorite_pairs_anonymous}/>;
+            return <Component {...this.props}
+                              onFavoriteClick={this.onFavoriteClick}
+                              favorite_pairs={common.isUserLogin() ? this.props.favorite_pairs : this.props.favorite_pairs_anonymous}/>;
 
         }
     })

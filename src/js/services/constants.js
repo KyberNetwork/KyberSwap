@@ -315,6 +315,7 @@ const INIT_LIMIT_ORDER_STATE = {
   addressFilter: [],
   pairFilter: [],
   statusFilter: [],
+  typeFilter: [],
   timeFilter: {
     interval: 1,
     unit: "month"
