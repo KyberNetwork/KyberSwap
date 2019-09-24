@@ -7,6 +7,7 @@ import {
   LimitOrderList,
   QuoteMarket,
   withSourceAndBalance,
+  withFavorite,
   LimitOrderListModal
 } from "../LimitOrder"
 import { ImportAccount } from "../ImportAccount";
@@ -30,14 +31,10 @@ export default class LimitOrderBody extends React.Component {
     super(props);
     this.srcInputElementRef = null;
     this.submitHandler = null;
-    this.LimitOrderForm = withSourceAndBalance(
-      <LimitOrderForm
-        setSrcInputElementRef={this.setSrcInputElementRef}
-        submitHandler={this.submitHandler}
-        setSubmitHandler={this.setSubmitHandler}
-      />
-    );
-    this.QuoteMarket = withSourceAndBalance(<QuoteMarket/>);
+    this.LimitOrderForm = withSourceAndBalance(LimitOrderForm);
+    this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
+    this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
+
   }
 
   setSrcInputElementRef = (element) => {
@@ -51,6 +48,7 @@ export default class LimitOrderBody extends React.Component {
   render() {
     const LimitOrderForm = this.LimitOrderForm
     const QuoteMarket = this.QuoteMarket
+    const LimitOrderMobileHeader = this.LimitOrderMobileHeader
 
     return (
       <div className={"limit-order theme__background"}>
@@ -78,13 +76,14 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
           }
-
           {!this.props.global.isOnMobile && (
             <QuoteMarket/>
           )}
 
-          <LimitOrderForm/>
-
+          <LimitOrderForm
+              setSrcInputElementRef={this.setSrcInputElementRef}
+              submitHandler={this.submitHandler}
+              setSubmitHandler={this.setSubmitHandler}/>
           {this.props.global.isOnMobile &&
             <LimitOrderMobileHeader/>
           }

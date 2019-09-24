@@ -154,6 +154,11 @@ const limitOrder = (state = initState, action) => {
       newState.listOrder = listOrder;
       return newState;
     }
+    case "LIMIT_ORDER.ADD_LIST_FAVORITE_PAIRS": {
+      const listFavoritePairs = action.payload;
+      newState.listFavoritePairs = listFavoritePairs;
+      return newState;
+    }
     case "LIMIT_ORDER.ADD_NEW_ORDER":{
       const {order} = action.payload
       var listOrder = newState.listOrder
@@ -212,6 +217,11 @@ const limitOrder = (state = initState, action) => {
     case "LIMIT_ORDER.SET_STATUS_FILTER": {
       const { statusFilter } = action.payload;
       newState.statusFilter = statusFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_TYPE_FILTER": {
+      const { typeFilter } = action.payload;
+      newState.typeFilter = typeFilter;
       return newState;
     }
     case "LIMIT_ORDER.SET_TIME_FILTER": {
@@ -287,15 +297,16 @@ const limitOrder = (state = initState, action) => {
       return newState; 
     }
 
-    case 'LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS':{
-      const { base, quote, toFav } =  action.payload;
-      const index = newState.favorite_pairs_anonymous.indexOf(base+"_"+quote)
+    case 'LIMIT_ORDER.UPDATE_FAVORITE':{
+      const { base, quote, toFav, isLoggedIn } =  action.payload;
+      const field = isLoggedIn ? "listFavoritePairs" : "favorite_pairs_anonymous"
+      const index = newState[field].indexOf(base+"_"+quote)
       if (index == -1){
-        newState.favorite_pairs_anonymous.push(base+"_"+quote)
+        newState[field].push(base+"_"+quote)
       }else {
-        newState.favorite_pairs_anonymous.splice(index, 1)
+        newState[field].splice(index, 1)
       }
-      newState.favorite_pairs_anonymous = newState.favorite_pairs_anonymous.slice()
+      newState[field] = newState[field].slice()
       return newState; 
     }
 

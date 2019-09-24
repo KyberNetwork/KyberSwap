@@ -97,7 +97,7 @@ function*  fetchOpenOrderStatus() {
   }
 }
 
-function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex, dateSort }) {
+function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex, dateSort, typeFilter }) {
   if (addressFilter) {
     yield put(limitOrderActions.setAddressFilter(addressFilter));
   }
@@ -116,6 +116,9 @@ function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pa
   if (dateSort) {
     yield put(limitOrderActions.setOrderDateSort(dateSort));
   }
+  if (typeFilter){
+    yield put(limitOrderActions.setTypeFilter(typeFilter));
+  }
 }
 
 /**
@@ -127,7 +130,6 @@ function* getOrdersByFilter(action) {
   yield* updateFilter(action.payload);
 
   const { limitOrder, tokens } = store.getState();
-
   try {
     if (limitOrder.filterMode === "client") {
       return;
@@ -145,7 +147,7 @@ function* getOrdersByFilter(action) {
     // Only get open + in_progress orders in open tab,
     // And only get invalidated + filled + cancelled orders in history tab
     const listStatus = limitOrder.activeOrderTab === "open" ?
-      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
+      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS]
     : [constants.LIMIT_ORDER_CONFIG.status.FILLED, constants.LIMIT_ORDER_CONFIG.status.CANCELLED, constants.LIMIT_ORDER_CONFIG.status.INVALIDATED];
 
     let statusFilter = listStatus;
@@ -155,7 +157,7 @@ function* getOrdersByFilter(action) {
       });
     }
 
-    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.typeFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
 
     yield put(limitOrderActions.setOrdersCount(itemsCount));
     yield put(limitOrderActions.addListOrder(orders));

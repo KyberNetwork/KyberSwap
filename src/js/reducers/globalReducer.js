@@ -1,4 +1,5 @@
 import constants from '../services/constants';
+import * as common from '../utils/common'
 
 const initState = {
   termOfServiceAccepted: false,
@@ -32,7 +33,9 @@ const initState = {
     callTrack: () => { return }
   },
   documentTitle: "Kyber Network | Instant Exchange | No Fees",
-  theme: 'light'
+  theme: (() => {
+    common.getCookie('theme')
+  })()
 }
 
 const global = (state = initState, action) => {

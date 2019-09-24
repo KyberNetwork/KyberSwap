@@ -236,9 +236,11 @@ const INIT_LIMIT_ORDER_STATE = {
   currentPathIndex : -1,
   orderPath: [],    
   listOrder: [],
+  listFavoritePairs: [],
   addressFilter: [],
   pairFilter: [],
   statusFilter: [],
+  typeFilter: [],
   timeFilter: {
     interval: 1,
     unit: "month"
@@ -323,7 +325,7 @@ const INIT_LIMIT_ORDER_STATE = {
   isAgreeForceSubmit: false,
   forceSubmitRate: 0,
   favorite_pairs_anonymous: [],
-  currentQuote: "ETH",
+  currentQuote: "WETH",
   sideTrade: "buy",
 }
 

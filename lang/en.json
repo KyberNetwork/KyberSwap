@@ -436,7 +436,8 @@
     "extra_amount": "You got extra amount:",
     "available_tokens": "Tokens Avaiable for Limit Order",
     "amount": "Amount",
-    "total": "Total"
+    "total": "Total",
+    "type": "Type"
   },
   "home": "Home",
   "tracker": "Tracker",
