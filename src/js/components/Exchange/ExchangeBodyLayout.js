@@ -81,7 +81,7 @@ const ExchangeBodyLayout = (props) => {
               {props.networkError}
             </div>
           )}
-          <div className={"exchange-content container"}>
+          <div className={"exchange-content"}>
             <div className={"exchange-content__item--wrapper"}>
               <div className={"exchange-item-label"}>{props.translate("transaction.exchange_from") || "From"}:</div>
               <div className={`exchange-content__item exchange-content__item--left theme__background-4 select-token ${props.account !== false ? 'has-account' : ''} ${errorExchange ? "error" : ""}`}>

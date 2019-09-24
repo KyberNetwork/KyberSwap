@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { roundingNumber } from "../../utils/converter"
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   const marketTokens = store.market.tokens;
@@ -71,13 +72,29 @@ export default class RateSilderV2 extends React.Component {
     return marketTokenList;
   };
 
+  getTokenRate = (token) => {
+    const buyPrice = token.buy_price;
+    const sellPrice = token.sell_price;
+    let rate = buyPrice;
+
+    if (buyPrice && sellPrice) {
+      rate = (buyPrice + sellPrice) / 2;
+    } else if (!buyPrice) {
+      rate = sellPrice;
+    }
+
+    return rate;
+  };
+
   render() {
     const marketTokenList = this.getMarketTokenList();
 
     const rateContent = marketTokenList.map((value, index) => {
       const rateChange = value.change;
       const pair = value.pair.split('_');
-      const price = value.buy_price;
+      const rate = this.getTokenRate(value);
+
+      if (value.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) || !rate) return '';
 
       return (
         <div key={index}>
@@ -91,7 +108,7 @@ export default class RateSilderV2 extends React.Component {
             <div>
               <div className="pair">{pair[1]} / {pair[0]}</div>
               <div className="value up">
-                {roundingNumber(price)}
+                {roundingNumber(rate)}
               </div>
               <div className="percent-change">{rateChange === 0 ? "---" : Math.abs(rateChange)}%</div>
             </div>

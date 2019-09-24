@@ -7,7 +7,6 @@ const initState = {
   showBalance: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
-  // history: constants.HISTORY_EXCHANGE,
   count: { storageKey: constants.STORAGE_KEY },
   conn_checker: constants.CONNECTION_CHECKER,
   isVisitFirstTime: true,
@@ -34,27 +33,13 @@ const initState = {
   },
   documentTitle: "Kyber Network | Instant Exchange | No Fees",
   theme: (() => {
-    common.getCookie('theme')
+    const cookieTheme = common.getCookie('theme');
+    return cookieTheme ? cookieTheme : 'light';
   })()
 }
 
 const global = (state = initState, action) => {
   switch (action.type) {
-    // case REHYDRATE: {
-    //   if (action.key === "global") {
-    //     if (action.payload){
-    //       return {...state,
-    //         count: {storageKey: constants.STORAGE_KEY}
-    //        }
-    //     }
-    //   }
-    //   return state
-    // }
-    // case "GLOBAL.NEW_BLOCK_INCLUDED_FULFILLED": {
-    //   var history = { ...state.history }
-    //   history.currentBlock = action.payload
-    //   return Object.assign({}, state, { history: history })
-    // }
     case "GLOBAL.TERM_OF_SERVICE_ACCEPTED": {
       return { ...state, termOfServiceAccepted: true }
     }
