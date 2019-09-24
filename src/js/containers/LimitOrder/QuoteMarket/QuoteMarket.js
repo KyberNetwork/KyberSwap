@@ -30,26 +30,6 @@ export default class QuoteMarket extends React.Component{
     }
   }
 
-  componentDidMount() {
-    let i = 1
-    this.intervalId = setInterval(() => { 
-      this.updateVolume()
-    }, 2000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  updateVolume = () => {
-    limitOrderServices.getVolumeAndChange()
-    .then((res) => {
-      const temp = res.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
-      this.setState((state, props) => ({pairs: temp}))
-    })
-
-  }
-
   onQuoteClick = (quote) => {
     this.props.dispatch(limitOrderActions.updateCurrentQuote(quote))
     this.props.global.analytics.callTrack("trackLimitOrderClickChooseMarket", quote)
