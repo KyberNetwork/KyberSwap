@@ -1,5 +1,5 @@
 import constants from '../services/constants';
-import Cookies from 'js-cookie';
+import * as common from '../utils/common'
 
 const initState = {
   termOfServiceAccepted: false,
@@ -34,7 +34,7 @@ const initState = {
   },
   documentTitle: "Kyber Network | Instant Exchange | No Fees",
   theme: (() => {
-   return Cookies.get('theme')
+    common.getCookie('theme')
   })()
 }
 

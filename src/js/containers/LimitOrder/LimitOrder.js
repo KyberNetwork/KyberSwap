@@ -6,7 +6,7 @@ import * as limitOrderActions from "../../actions/limitOrderActions"
 import constants from "../../services/constants"
 import {LimitOrderBody} from "../LimitOrder"
 import limitOrderServices from "../../services/limit_order";
-import {default as common, isUserLogin} from "../../utils/common";
+import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
 
@@ -91,7 +91,7 @@ export default class LimitOrder extends React.Component {
   }
 
   async fetchListOrders() {
-    if (!isUserLogin()) {
+    if (!common.isUserLogin()) {
       return
     }
     try {
@@ -129,12 +129,9 @@ export default class LimitOrder extends React.Component {
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
   async fetchFavoritePairsIfLoggedIn(){
-    if (isUserLogin) {
-      limitOrderServices.getFavoritePairs().then(
-          (res) => {
-            this.props.dispatch(limitOrderActions.addListFavoritePairs(res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)));
-          }
-      )
+    if (common.isUserLogin) {
+      let res = await limitOrderServices.getFavoritePairs()
+      this.props.dispatch(limitOrderActions.addListFavoritePairs(res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)));
     }
   }
   componentDidMount = () => {

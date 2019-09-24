@@ -86,7 +86,6 @@ export default class QuoteMarket extends React.Component{
   search(quotes){
     const { current_search, current_sort_index, current_sort_dsc, pairs } = this.state
     const { currentQuote } = this.props
-    console.log("zx", currentQuote, quotes)
     return (
       currentQuote === "FAV" ?
         Object.keys(quotes).reduce((res, key) => res.concat(quotes[key]),[]).filter((pair) => pair["is_favorite"]) : 

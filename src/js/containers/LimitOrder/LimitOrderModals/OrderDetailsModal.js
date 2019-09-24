@@ -7,7 +7,6 @@ import { Modal } from "../../../components/CommonElement";
 import { LimitOrderSubmit } from "../../LimitOrder";
 import {getFormattedDate} from "../../../utils/common";
 import * as converters from "../../../utils/converter";
-import {displayNumberWithDot} from "../../../utils/converter";
 import {formatNumber} from "../../../utils/converter";
 import {multiplyOfTwoNumber} from "../../../utils/converter";
 import {subOfTwoNumber} from "../../../utils/converter";
@@ -67,7 +66,7 @@ export default class OrderDetailsModal extends Component {
                             <div className={"order-table-info__body"}>
                                 <div className={"info"}>
                                     <div>{`${order.source.toUpperCase()}/${order.dest.toUpperCase()}`}</div>
-                                    <div>{displayNumberWithDot(order.min_rate, 9)}</div>
+                                    <div>{converters.displayNumberWithDot(order.min_rate, 9)}</div>
                                     <div>{`${formatNumber(order.src_amount, 5)} ${order.source.toUpperCase()}`} </div>
                                     <div>{`${formatNumber(destAmount, 5)} ${dest.toUpperCase()}`}</div>
                                     <div>{formatNumber(multiplyOfTwoNumber(fee, src_amount), 5, '')}</div>

@@ -111,14 +111,14 @@ export default class LimitOrderTable extends Component {
       expander: true,
       show: false
     }
-    , {
-      id: "actions",
-      Header: this.getHeader("actions"),
-      accessor: item => item,
-      Cell: props => this.getActionCell(props.value),
-      headerClassName: "theme__background theme__text-3",
-      maxWidth: 80
-    }
+    // , {
+    //   id: "actions",
+    //   Header: this.getHeader("actions"),
+    //   accessor: item => item,
+    //   Cell: props => this.getActionCell(props.value),
+    //   headerClassName: "theme__background theme__text-3",
+    //   maxWidth: 80
+    // }
     // , {
     //   id: "fee",
     //   Header: this.getHeader("fee"),

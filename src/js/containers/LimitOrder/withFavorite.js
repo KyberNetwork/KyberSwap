@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux"
-import * as common from "../../utils/common";
-import limitOrderServices from "../../services/limit_order";
 import * as limitOrderActions from "../../actions/limitOrderActions";
+import limitOrderServices from "../../services/limit_order";
+import * as common from "../../utils/common";
 const withFavorite = (Component) => {
     return connect((store, props) => {
         const favorite_pairs = store.limitOrder.listFavoritePairs;
