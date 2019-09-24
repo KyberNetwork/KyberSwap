@@ -177,7 +177,11 @@
     "order_confirm": "确认订单",
     "success": "成功",
     "keystore_title": "输入密码解锁密钥库",
-    "unlock": "解锁"
+    "unlock": "解锁",
+    "yes": "是",
+    "no": "否",
+    "buy": "买",
+    "sell": "卖"
   },
   "error": {
     "metamask_not_installed": "Metamask未安装",
@@ -398,7 +402,7 @@
     "eth_not_support": "ETH*是ETH和WETH的总和，以便于参考",
     "canceling_order_message": "您正在取消这个订单",
     "fee_info_message": "别担心。您还没有被收费。\n您只有在交易被执行后才会被收费（上链)。",
-    "confirm_order_message": "当 ${srcToken}/${destToken} (换至 ${srcAmount} ${srcToken})>= <span title=\"${rawRate}\">${rate}</span> 时，您的交易会被广播上链",
+    "confirm_order_message": "当价格為${base} / ${quote} >= ${price}时，将发送您的交易",
     "fee": "费用",
     "change_rate": "改变汇率",
     "current_rate": "当前汇率",
@@ -427,7 +431,16 @@
     "order_history": "订单历史",
     "actual_receive_amount": "实际接收数量:",
     "estimated_amount": "预计数量:",
-    "extra_amount": "您获得了额外的数量:"
+    "extra_amount": "您获得了额外的数量:",
+    "price": "价格",
+    "amount": "数量",
+    "total": "估值",
+    "volume": "交易量",
+    "change": "变化",
+    "buy": "购买${symbol}",
+    "sell": "出售${symbol}",
+    "type": "类型",
+    "available_balance": "可用余额"
   },
   "home": "主页",
   "tracker": "跟踪网站",

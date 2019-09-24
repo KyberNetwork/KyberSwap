@@ -11,9 +11,10 @@ const OrderTableInfo = (props) => {
         case "buy":
           let quote = source
           let base = dest
+          let sideTrade = props.translate("modal.buy") || item.side_trade
           return (
             <div key={index} className={"info"}>
-              <div>{item.side_trade}</div>
+              <div>{sideTrade}</div>
               <div>{+item.min_rate !== 0 ? converters.roundingNumber(1 / item.min_rate) : "-"} {quote}</div>
               <div>{converters.roundingNumber(item.src_amount * item.min_rate)} {base}</div>
               <div>{converters.roundingNumber(item.src_amount)} {quote}</div>
@@ -23,9 +24,10 @@ const OrderTableInfo = (props) => {
         case "sell":
           quote = dest
           base = source
+          sideTrade = props.translate("modal.sell") || item.side_trade
           return (
             <div key={index} className={"info"}>
-              <div>{item.side_trade}</div>
+              <div>{sideTrade}</div>
               <div>{converters.roundingNumber(item.min_rate)} {quote}</div>
               <div>{converters.roundingNumber(item.src_amount)} {base}</div>
               <div>{converters.roundingNumber(item.src_amount * item.min_rate)} {quote}</div>
@@ -49,11 +51,11 @@ const OrderTableInfo = (props) => {
   return (
     <div className={"order-table-info"}>
       <div className={"order-table-info__header"}>
-        <div>{"Type"}</div>
-        <div>{"Price"}</div>
-        <div>{"Amount"}</div>
-        <div>{"Total"}</div>
-        <div>{"Fee"}</div>
+        <div>{props.translate("limit_order.type") || "Type"}</div>
+        <div>{props.translate("limit_order.price") || "Price"}</div>
+        <div>{props.translate("limit_order.amount") || "Amount"}</div>
+        <div>{props.translate("limit_order.total") || "Total"}</div>
+        <div>{props.translate("limit_order.fee") || "Fee"}</div>
       </div>
       <div className={"order-table-info__body"}>
         {makeOrderInfo(props.listOrder)}

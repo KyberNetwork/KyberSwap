@@ -8,13 +8,15 @@ import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import { QuoteList, Search } from "../QuoteMarket"
 import { sortQuotePriority } from "../../../utils/sorters";
+import { getTranslate } from 'react-localize-redux'
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
   const currentQuote = store.limitOrder.currentQuote
+  const translate = getTranslate(store.locale)
   const pairs = store.market.tokens.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
   return {
-    tokens, currentQuote, global: store.global, pairs
+    tokens, currentQuote, global: store.global, pairs, translate
   }
 })
 export default class QuoteMarket extends React.Component{
@@ -96,11 +98,15 @@ export default class QuoteMarket extends React.Component{
   }
 
   renderTh = () => {
+    let price = this.props.translate("limit_order.price" || "Price")
+    let pair = this.props.translate("limit_order.pair" || "Pair")
+    let volume = this.props.translate("limit_order.volume" || "Volume")
+    let change = this.props.translate("limit_order.change" || "Change")
     return [
-      { html: "Pair", field: "base" }, 
-      { html: "Price", field: "price" }, 
-      { html: "Volume", field: "volume" }, 
-      { html: "Change", field: "change" }
+      { html: pair, field: "base" }, 
+      { html: price, field: "price" }, 
+      { html: volume, field: "volume" }, 
+      { html: change, field: "change" }
     ].map((i, index) => (
       <div className={`c${index+1}`}>
         <SortableComponent 

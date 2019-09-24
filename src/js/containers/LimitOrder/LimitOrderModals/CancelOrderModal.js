@@ -301,6 +301,7 @@ export default class CancelOrderModal extends Component {
 						{!this.props.global.isOnMobile && (
 							<OrderTableInfo 
 								listOrder={makeOrderInfo(this.props.limitOrder)}
+								translate={this.props.translate}
 							/>
 						)}
 						{/* Mobile */}

@@ -176,7 +176,11 @@
     "order_confirm": "Order Confirm",
     "success": "Success",
     "keystore_title": "Type password to unlock your keystore",
-    "unlock": "Unlock"
+    "unlock": "Unlock",
+    "yes": "Yes",
+    "no": "No",
+    "buy": "Покупка",
+    "sell": "Продажа"
   },
   "error": {
     "metamask_not_installed": "Metamask не установлен",
@@ -398,7 +402,7 @@
     "eth_not_support": "ETH* represents the sum of ETH & WETH for easy reference.",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
-    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} (for ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Your transaction will be broadcasted when price of ${base}/${quote} >= <span title=\"${rawRate}\">${rate}</span>",
     "fee": "Fee",
     "change_rate": "Change Rate",
     "current_rate": "Current Rate",
@@ -426,7 +430,16 @@
     "order_history": "Order History",
     "actual_receive_amount": "Actual receive amount:",
     "estimated_amount": "Estimated amount:",
-    "extra_amount": "You got extra amount:"
+    "extra_amount": "You got extra amount:",
+    "price": "ЦЕНА",
+    "amount": "количество",
+    "total": "Всего",
+    "volume": "Объем",
+    "change": "change",
+    "buy": "Buy ${symbol}",
+    "sell": "Sell ${symbol}",
+    "type": "Type",
+    "available_balance": "Available Balance"
   },
   "home": "Домой",
   "tracker": "Трекер",
