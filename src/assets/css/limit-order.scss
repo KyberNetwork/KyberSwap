@@ -165,7 +165,7 @@
 
   .cell-date {
     &-header {
-      justify-content: center!important;  
+      justify-content: start!important;
       cursor: pointer;
     }
   }
@@ -1132,6 +1132,46 @@
     @include screen-max-width(medium) {
       padding: 20px 20px 0;
     }
+    .cell-status{
+      &--open {
+        color: $text-green;
+      }
+
+      &--cancelled {
+        color: #bf2600;
+      }
+
+
+      &--invalidated {
+        color: #172b4d;
+      }
+
+      &--in_progress {
+        color: $text-blue
+      }
+
+      &--filled {
+        color: #006644;
+      }
+    }
+    .cell-action {
+      .btn-cancel-order {
+        height: 20px;
+        width: 70px;
+        font-size: 11px;
+        font-weight: 300;
+        border-radius: 18px;
+        border: solid 1px;
+        cursor: pointer;
+        outline: none;
+        transition: all .3s;
+
+        @include screen-max-width(medium) {
+          height: 25px;
+          width: 90px;
+        }
+      }
+    }
   }
 
   &__footer {
@@ -2028,7 +2068,7 @@
     text-align: right;
     text-transform: uppercase;       
     &:first-child {
-      width: 8%;
+      width: 15%;
       text-align: center;
     }
   }

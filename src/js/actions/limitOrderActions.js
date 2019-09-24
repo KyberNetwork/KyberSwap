@@ -109,6 +109,13 @@ export function addListOrder(listOrder) {
   }
 }
 
+export function addListFavoritePairs(listFavoritePairs) {
+  return {
+    type: "LIMIT_ORDER.ADD_LIST_FAVORITE_PAIRS",
+    payload: listFavoritePairs
+  }
+}
+
 export function addNewOrder(order) {
   return {
     type: "LIMIT_ORDER.ADD_NEW_ORDER",
@@ -192,6 +199,13 @@ export function setStatusFilter(statusFilter) {
   return {
     type: "LIMIT_ORDER.SET_STATUS_FILTER",
     payload: { statusFilter }
+  }
+}
+
+export function setTypeFilter(typeFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_TYPE_FILTER",
+    payload: { typeFilter }
   }
 }
 
@@ -299,10 +313,10 @@ export function updateCurrentQuote(quote) {
   }
 }
 
-export function updateFavoriteAnonymous(base, quote, toFav) {
+export function updateFavorite(base, quote, toFav, isLoggedIn) {
   return {
-    type: "LIMIT_ORDER.UPDATE_FAVORITE_ANONYMOUS",
-    payload: { base, quote, toFav }
+    type: "LIMIT_ORDER.UPDATE_FAVORITE",
+    payload: { base, quote, toFav, isLoggedIn }
   }
 }
 

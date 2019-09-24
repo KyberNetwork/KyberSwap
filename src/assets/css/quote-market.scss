@@ -43,9 +43,10 @@
     border-bottom-width: 2px;
 
     #quote_panel {
-      width: 60%;
+      width: 100%;
       display: inline-block;
       cursor: pointer;
+      margin-top: 5px;
       div{
         display: inline-block;
       }
@@ -82,13 +83,13 @@
         background-size: 15px;
         padding: 0 0 10px 0;
         cursor: pointer;
+        border-bottom: 1px solid transparent;
       };
 
       input:focus {
         box-shadow: none;
         outline: none;
-        border: none;
-        border-bottom: 1px solid white;
+        border-color: white;
       };
     }
   }
