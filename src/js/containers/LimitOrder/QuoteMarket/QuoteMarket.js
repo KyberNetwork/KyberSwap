@@ -3,9 +3,10 @@ import * as common from "../../../utils/common"
 import * as converter from "../../../utils/converter"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
-import { ProcessingModal, SortableComponent } from "../../../components/CommonElement"
+import { SortableComponent } from "../../../components/CommonElement"
 import limitOrderServices from "../../../services/limit_order";
 import { QuoteList, Search } from "../QuoteMarket"
+import { sortQuotePriority } from "../../../utils/sorters";
 
 @connect((store, props) => {
   const tokens = store.tokens.tokens
@@ -105,18 +106,10 @@ export default class QuoteMarket extends React.Component{
     const { favorite_pairs } = this.state
     const fav = common.isUserLogin() ? favorite_pairs : favorite_pairs_anonymous
 
-    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "WETH"))
+    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key !== "WETH"))
     .sort((first, second) => {
-      const firstQuotePriority = tokens[first].quote_priority;
-      const secondQuotePriority = tokens[second].quote_priority;
-
-      if (firstQuotePriority && secondQuotePriority) {
-        if (firstQuotePriority > secondQuotePriority) return -1;
-        else if (firstQuotePriority < secondQuotePriority) return 1;
-      }
-
-      return 0;
-    })
+      return sortQuotePriority(tokens, first, second);
+    });
 
     const result = quotes.reduce((res, quote) => {
         res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"])).filter(key => {
