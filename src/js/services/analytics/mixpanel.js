@@ -758,4 +758,85 @@ export default class Mixpanel {
       }
     }
   }
+
+  trackLimitOrderClickChooseMarket(market) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track('LimitOrder_Click_Choose_Market', { market });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickSort(field, isDsc) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Sort_${field}`, { typeSort: isDsc ? 'dsc' : 'asc' });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickSortOnWalletPanel(field, isDsc) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Sort_On_Wallet_Panel_${field}`, { typeSort: isDsc ? 'dsc' : 'asc' });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickChooseSideTrade(sideTrade, base, quote) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Choose_Side_${sideTrade}`, { base: base, quote: quote });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickSelectPair(pair) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Select_Pair`, { pair });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickFavoritePair(typeUser, pair, isFavorite) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Favorite_Pair`, {typeUser: typeUser, pair: pair, isFavorite: isFavorite });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackLimitOrderClickChangeSourceAmountByPercentage(percent) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Change_Source_Amount_By_Percentage`, { percent });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
+
+  trackClickShowWalletBalance(isShow) {
+    let status = isShow? 'show' : 'hide'
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`LimitOrder_Click_Show_Wallet_Balance`, { status });
+      }catch(e){
+        console.log(e);
+      }
+    }
+  }
 }

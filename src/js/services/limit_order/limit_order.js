@@ -422,3 +422,9 @@ export function updateFavoritePairs(base, quote, to_fav){
   })
 }
 
+export function getVolumeAndChange(){
+    return new Promise((resolve, rejected) => {
+        resolve([]);
+        return;
+    })
+}

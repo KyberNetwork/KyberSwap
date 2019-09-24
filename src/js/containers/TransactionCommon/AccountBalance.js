@@ -154,6 +154,7 @@ export default class AccountBalance extends React.Component {
   onSort = (sortType, isDsc) => {
     console.log("[]",{sortType: sortType, sortDESC: isDsc})
     this.setState({sortType: sortType, sortDESC: isDsc})
+    this.props.global.analytics.callTrack("trackLimitOrderClickSort", sortType, isDsc ? 'dsc' : 'asc')
   }
   render() {
     // var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;

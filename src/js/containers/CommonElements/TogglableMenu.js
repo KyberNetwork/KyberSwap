@@ -7,6 +7,7 @@ import { getTranslate } from "react-localize-redux";
 
   return {
     translate,
+    global: store.global
   };
 })
 export default class ToggleableMenu extends React.Component {
@@ -25,6 +26,7 @@ export default class ToggleableMenu extends React.Component {
     this.setState({
       isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
     });
+    this.props.global.analytics.callTrack("trackClickShowWalletBalance", this.state.isAdvanceTokenVisible);
   }
 
   openReImport = () => {
