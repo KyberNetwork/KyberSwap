@@ -12,7 +12,9 @@ import {formatNumber} from "../../utils/converter";
   const translate = getTranslate(store.locale);
   const global = store.global;
   const tokens = store.tokens.tokens;
-  const marketTokens = store.market.tokens;
+  const marketTokens = store.market.tokens.filter(token => {
+    return token.pair.split('_')[0] !== BLOCKCHAIN_INFO.wrapETHToken;
+  });
   const limitOrder = store.limitOrder;
   let marketDestTokenByETH = null, marketDestTokenByUSD = null;
 

@@ -422,22 +422,3 @@ export function updateFavoritePairs(base, quote, to_fav){
     })
   })
 }
-
-export function getVolumeAndChange(){
-    return new Promise((resolve, rejected) => {
-        timeout(MAX_REQUEST_TIMEOUT, fetch(BLOCKCHAIN_INFO.tracker + '/pairs/market'))
-        //fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
-            .then((response) => {
-                return response.json()
-            })
-            .then((result) => {
-                resolve(result.data)
-            })
-            .catch((err) => {
-                console.log(err)
-                rejected(err)
-            })
-    })
-}
-
-

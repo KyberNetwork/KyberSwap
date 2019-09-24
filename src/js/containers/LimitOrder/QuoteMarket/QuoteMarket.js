@@ -12,8 +12,9 @@ import { sortQuotePriority } from "../../../utils/sorters";
 @connect((store, props) => {
   const tokens = store.tokens.tokens
   const currentQuote = store.limitOrder.currentQuote
+  const pairs = store.market.tokens.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
   return {
-    tokens, currentQuote, global: store.global
+    tokens, currentQuote, global: store.global, pairs
   }
 })
 export default class QuoteMarket extends React.Component{
@@ -34,13 +35,6 @@ export default class QuoteMarket extends React.Component{
     this.intervalId = setInterval(() => { 
       this.updateVolume()
     }, 2000);
-    // if (common.isUserLogin()) {
-    //   limitOrderServices.getFavoritePairs().then(
-    //     (res) => {
-    //       this.setState({favorite_pairs: res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)})
-    //     }
-    //   )
-    // }
   }
 
   componentWillUnmount() {
@@ -83,8 +77,7 @@ export default class QuoteMarket extends React.Component{
 
 
   renderQuotes(){
-    const { tokens } = this.props
-    const { pairs } = this.state
+    const { tokens, pairs } = this.props
     const fav = this.props.favorite_pairs
 
     const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key !== "ETH"))
@@ -107,10 +100,11 @@ export default class QuoteMarket extends React.Component{
           .reduce((vt, key) =>{
             const pair = key+"_"+quote
             const pairReversed = `${quote}_${key}`
+            const isExisted = (pairReversed in pairs)
             return key == quote ? vt : vt.concat({   
                 id: pair,
-                base: key, quote: quote, 
-                price: converters.formatNumber(+converter.divOfTwoNumber(tokens[key].rate, quote == "ETH" ? '1000000000000000000' : tokens[quote].rate), 5, ''),
+                base: key, quote: quote,
+                price: ((pairReversed in pairs) ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "0"),
                 is_favorite: fav.includes(pair),
                 volume: ((pairReversed in pairs) ? pairs[pairReversed].volume : "-" ),
                 change: ((pairReversed in pairs) ? pairs[pairReversed].change : "0" )
