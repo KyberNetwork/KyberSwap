@@ -119,9 +119,9 @@ export default class OrderDetailsModal extends Component {
         return (
             this.props.order && <Modal
                 className={{
-                    base: "reveal medium confirm-modal",
+                    base: "reveal large confirm-modal",
                     afterOpen:
-                        "reveal medium confirm-modal"
+                        "reveal large confirm-modal"
                 }}
                 isOpen={this.props.isOpen}
                 onRequestClose={this.closeModal}

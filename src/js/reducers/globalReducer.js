@@ -34,7 +34,7 @@ const initState = {
   },
   documentTitle: "Kyber Network | Instant Exchange | No Fees",
   theme: (() => {
-    common.getCookie('theme')
+    return common.getCookie('theme') ? common.getCookie('theme') : 'light'
   })()
 }
 
