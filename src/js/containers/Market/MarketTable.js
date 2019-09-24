@@ -104,7 +104,7 @@ export default class MarketTable extends React.Component {
   addIcon = (input) => {
     return (
       <div className="token-pair">
-        {input}
+        {input.replace('_', '/')}
       </div>
     )
   }
@@ -281,7 +281,7 @@ export default class MarketTable extends React.Component {
   }
 
   onPairClicked = (rowInfo) => {
-    const pairs = rowInfo.original.pair.split("_");
+    const pairs = rowInfo.original.pair.split("/");
     const srcSymbol = pairs[1];
     const quoteSymbol = pairs[0];
 
@@ -309,7 +309,7 @@ export default class MarketTable extends React.Component {
           columns={columns}
           showPagination = {false}
           minRows = {0}
-          defaultPageSize={-1}
+          defaultPageSize={this.props.listTokens.length}
           getTrProps={(state, rowInfo) => {
             return { onClick: () => this.onPairClicked(rowInfo) }
           }}
