@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import ReactTable from "react-table";
-
 import { Modal } from "../../../components/CommonElement";
-import { LimitOrderSubmit } from "../../LimitOrder";
-import {getFormattedDate} from "../../../utils/common";
+import * as limitOrderActions from "../../../actions/limitOrderActions";
+import limitOrderServices from "../../../services/limit_order";
+import * as common from "../../../utils/common";
 import * as converters from "../../../utils/converter";
-import {formatNumber} from "../../../utils/converter";
-import {multiplyOfTwoNumber} from "../../../utils/converter";
-import {subOfTwoNumber} from "../../../utils/converter";
 import {LIMIT_ORDER_CONFIG} from "../../../services/constants";
 import BLOCKCHAIN_INFO from "../../../../../env";
-import limitOrderServices from "../../../services/limit_order";
-import * as limitOrderActions from "../../../actions/limitOrderActions";
 
 @connect((store, props) => {
     const translate = getTranslate(store.locale);
@@ -29,13 +23,12 @@ import * as limitOrderActions from "../../../actions/limitOrderActions";
 })
 export default class OrderDetailsModal extends Component {
     contentModal = () => {
-        console.log("asdas", this.props.order)
         const { order } = this.props
         let source = order.source == "WETH" ? "ETH*" : order.source
         let dest = order.dest == "WETH" ? "ETH*" : order.dest
 
         const { min_rate, fee, src_amount, status } = order;
-        let destAmount = multiplyOfTwoNumber(src_amount, multiplyOfTwoNumber(min_rate, subOfTwoNumber(1, fee))); // fee already in percentage format
+        let destAmount = converters.multiplyOfTwoNumber(src_amount, converters.multiplyOfTwoNumber(min_rate, converters.subOfTwoNumber(1, fee))); // fee already in percentage format
         return (
             <div className="limit-order-modal">
                 <div className="limit-order-modal__body">
@@ -49,7 +42,7 @@ export default class OrderDetailsModal extends Component {
                     </div>
                     <div className="limit-order-modal__content">
                         <div className="limit-order-modal__message">
-                            {getFormattedDate(order.updated_at)} {' '}
+                            {common.getFormattedDate(order.updated_at)} {' '}
                                 <span className={`cell-status cell-status--${order.status}`}>
                                     {(order.status)}
                                 </span>
@@ -67,9 +60,9 @@ export default class OrderDetailsModal extends Component {
                                 <div className={"info"}>
                                     <div>{`${order.source.toUpperCase()}/${order.dest.toUpperCase()}`}</div>
                                     <div>{converters.displayNumberWithDot(order.min_rate, 9)}</div>
-                                    <div>{`${formatNumber(order.src_amount, 5)} ${order.source.toUpperCase()}`} </div>
-                                    <div>{`${formatNumber(destAmount, 5)} ${dest.toUpperCase()}`}</div>
-                                    <div>{formatNumber(multiplyOfTwoNumber(fee, src_amount), 5, '')}</div>
+                                    <div>{`${converters.formatNumber(order.src_amount, 5)} ${order.source.toUpperCase()}`} </div>
+                                    <div>{`${converters.formatNumber(destAmount, 5)} ${dest.toUpperCase()}`}</div>
+                                    <div>{converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')}</div>
                                     <div className="cell-action">
                                         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.confirmCancel()}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
                                         {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => window.open(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + order.tx_hash)}>{this.props.translate("limit_order.view_tx") || "View tx"}</button>}
