@@ -167,23 +167,21 @@
   &__accept-term {
     text-align: center;
     padding-bottom: 45px;
-    .accept-buttom {
-      margin: 0 auto;
-      width: 244px;
-      height: 54px;
-      line-height: 54px;
-      border-radius: 27px;
+
+    .accept-button {
+      margin: 0 auto 20px;
+      width: 180px;
+      height: 45px;
+      line-height: 45px;
+      border-radius: 3px;
       box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.15);
-      background: linear-gradient(164deg, #ffb046, #f52880) 0 100%;
-      background-size: auto 150%;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 500;
       text-align: center;
-      color: #ffffff;
-      margin-bottom: 17px;
       transition: all 0.3s;
+      cursor: pointer;
+
       &:hover {
-        cursor: pointer;
         background-position: 0 0;
       }
     }

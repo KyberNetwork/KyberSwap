@@ -8,7 +8,6 @@ import { TransferForm } from "../../components/Transaction"
 import { QRCode } from "../CommonElements"
 import { AdvanceConfigLayout } from "../../components/TransactionCommon"
 import { TokenSelector, AccountBalance } from "../TransactionCommon"
-import { hideSelectToken } from "../../actions/utilActions"
 import * as common from "../../utils/common"
 import * as globalActions from "../../actions/globalActions"
 import constansts from "../../services/constants"
@@ -111,18 +110,6 @@ class Transfer extends React.Component {
       this.lazyEstimateGas(value)
       this.lazyUpdateValidateSourceAmount(value, this.props.transfer.gasPrice)
     }
-  }
-
-  chooseToken = (symbol, address, type) => {
-    this.props.dispatch(transferActions.selectToken(symbol, address))
-    this.props.dispatch(hideSelectToken())
-
-    var path = constansts.BASE_HOST + "/transfer/" + symbol.toLowerCase()
-
-    path = common.getPath(path, constansts.LIST_PARAMS_SUPPORTED)
-
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.global.analytics.callTrack("trackChooseToken", type, symbol);
   }
 
   makeNewTransfer = (changeTransactionType = false) => {
@@ -236,11 +223,9 @@ class Transfer extends React.Component {
   }
 
   selectToken = (sourceSymbol) => {
-    this.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
+    this.props.setSrcToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
     var sourceBalance = this.props.tokens[sourceSymbol].balance
-
-
     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
     var amount
 
@@ -261,7 +246,6 @@ class Transfer extends React.Component {
     if (amount < 0) amount = 0;
 
     this.props.dispatch(transferActions.specifyAmountTransfer(amount))
-
     this.selectTokenBalance();
     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
   }
@@ -296,7 +280,7 @@ class Transfer extends React.Component {
         type="transfer"
         focusItem={this.props.transfer.tokenSymbol}
         listItem={this.props.tokens}
-        chooseToken={this.chooseToken}
+        chooseToken={this.props.setSrcToken}
         banToken={BLOCKCHAIN_INFO.promo_token}
       />
     )
@@ -311,7 +295,7 @@ class Transfer extends React.Component {
         <TransferForm
           transfer = {this.props.transfer}
           account={this.props.account.account}
-          chooseToken={this.chooseToken}
+          chooseToken={this.props.setSrcToken}
           sourceActive={this.props.transfer.tokenSymbol}
           step={this.props.transfer.step}
           tokenSymbol={this.props.transfer.tokenSymbol}

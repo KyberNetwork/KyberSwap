@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router";
 import * as limitOrderActions from "../../actions/limitOrderActions"
@@ -107,13 +107,19 @@ class LimitOrderFee extends React.Component {
             </div>
 
             {this.props.limitOrder.sourceAmount > 0 &&
-              <div className={"limit-order-fee__info"}>
-                {this.props.translate("limit_order.fee_info", {
-                  sourceTokenSymbol: sourceTokenSymbol,
-                  destTokenSymbol: destTokenSymbol,
-                  sourceAmount: sourceAmountAfterFee
-                }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${sourceTokenSymbol} is converted to ${this.props.limitOrder.destTokenSymbol}`}
-              </div>
+              <Fragment>
+                <div className={"limit-order-fee__info"}>
+                  {this.props.translate("limit_order.fee_info", {
+                    sourceTokenSymbol: sourceTokenSymbol,
+                    destTokenSymbol: destTokenSymbol,
+                    sourceAmount: sourceAmountAfterFee
+                  }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${sourceTokenSymbol} is converted to ${this.props.limitOrder.destTokenSymbol}`}
+                </div>
+
+                <a className={"limit-order-fee__learn"} href='/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees' target="_blank" rel="noopener noreferrer">
+                  {this.props.translate("learn_more") || "Learn More"}
+                </a>
+              </Fragment>
             }
           </SlideDownContent>
         </SlideDown>

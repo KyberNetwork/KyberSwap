@@ -7,11 +7,13 @@ import * as transferActions from "../../actions/transferActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 import { Market } from "../Market"
-import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
+import { hideSelectToken } from "../../actions/utilActions";
+import * as globalActions from "../../actions/globalActions";
+import * as common from "../../utils/common";
 
 @connect((store, props) => {
   const account = store.account.account
-  var translate = getTranslate(store.locale)
+  const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const transfer = store.transfer
   const analytics = store.global.analytics
@@ -108,11 +110,26 @@ export default class Exchange extends React.Component {
     this.props.analytics.callTrack("trackChooseGas", "transfer", value, level);
   }
 
+  setSrcToken = (symbol, address, type) => {
+    this.props.dispatch(transferActions.selectToken(symbol, address));
+    this.props.dispatch(hideSelectToken());
+
+    let path = constants.BASE_HOST + "/transfer/" + symbol.toLowerCase();
+    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED);
+
+    this.props.dispatch(globalActions.goToRoute(path));
+    this.props.analytics.callTrack("trackChooseToken", type, symbol);
+  };
+
   render() {
     return (
         <div className={"exchange__container"}>
-          <TransferBody/>
-          <Market/>
+          <TransferBody setSrcToken={this.setSrcToken}/>
+
+          <Market
+            screen={"transfer"}
+            setTokens={this.setSrcToken}
+          />
         </div>
     )
   }

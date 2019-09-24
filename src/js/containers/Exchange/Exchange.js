@@ -7,6 +7,8 @@ import * as exchangeActions from "../../actions/exchangeActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
 import { Market } from "../Market"
+import * as globalActions from "../../actions/globalActions";
+import * as common from "../../utils/common";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -152,11 +154,39 @@ export default class Exchange extends React.Component {
     }
   }
 
+  updateGlobal = (srcSymbol, srcAddress, destSymbol, destAddress) => {
+    let path = constants.BASE_HOST +  "/swap/" + srcSymbol.toLowerCase() + "-" + destSymbol.toLowerCase();
+    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED);
+
+    this.props.dispatch(globalActions.goToRoute(path))
+    this.props.dispatch(globalActions.updateTitleWithRate());
+
+    const sourceAmount = this.props.exchange.sourceAmount;
+    const refetchSourceAmount = this.props.exchange.inputFocus !== "source";
+
+    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, srcSymbol, srcAddress, destSymbol, destAddress, sourceAmount, true, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.selectToken));
+  };
+
+  setSrcAndDestToken = (srcSymbol, destSymbol) => {
+    const srcAddress = this.props.tokens[srcSymbol].address;
+    const destAddress = this.props.tokens[destSymbol].address;
+
+    this.props.dispatch(exchangeActions.selectToken(srcSymbol, srcAddress, destSymbol, destAddress, "swap"));
+    this.updateGlobal(srcSymbol, srcAddress, destSymbol, destAddress);
+  };
+
   render() {
     return (
         <div className={"exchange__container"}>
-          <ExchangeBody/>
-          <Market/>
+          <ExchangeBody
+            setSrcAndDestToken={this.setSrcAndDestToken}
+            updateGlobal={this.updateGlobal}
+          />
+
+          <Market
+            screen={"swap"}
+            setTokens={this.setSrcAndDestToken}
+          />
         </div>
     )
   }

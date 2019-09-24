@@ -109,17 +109,6 @@ class ExchangeBody extends React.Component {
 
   lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
-  updateGlobal = (sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) => {
-    var path = constants.BASE_HOST +  "/swap/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
-    path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.dispatch(globalActions.updateTitleWithRate());
-
-    var sourceAmount = this.props.exchange.sourceAmount
-    var refetchSourceAmount = this.props.exchange.inputFocus === "source"?false: true
-    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.selectToken));
-  }
-
   selectSourceToken = (symbol) => {        
     var sourceTokenSymbol = symbol
     var sourceToken = this.props.tokens[sourceTokenSymbol].address
@@ -127,7 +116,7 @@ class ExchangeBody extends React.Component {
     var destToken = this.props.tokens[destTokenSymbol].address
     this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
 
-    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
     this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
   }
 
@@ -138,7 +127,7 @@ class ExchangeBody extends React.Component {
     var destToken = this.props.tokens[destTokenSymbol].address
     this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
 
-    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
   }
 
@@ -254,15 +243,9 @@ class ExchangeBody extends React.Component {
       this.props.dispatch(exchangeActions.changeAmount('dest', ""))
     }
 
-    var sourceTokenSymbol = this.props.exchange.destTokenSymbol
-    var sourceToken = this.props.exchange.destToken
-    var destTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var destToken = this.props.exchange.sourceToken
-
-    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "swap"));
-    this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.setSrcAndDestToken(this.props.exchange.destTokenSymbol, this.props.exchange.sourceTokenSymbol);
     this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
-  }
+  };
 
   toggleAdvanceContent = () => {
     if (this.props.exchange.customRateInput.value === "" && this.props.exchange.customRateInput.isDirty) {
