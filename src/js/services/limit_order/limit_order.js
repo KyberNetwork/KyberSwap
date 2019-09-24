@@ -1,5 +1,6 @@
 import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
@@ -424,7 +425,19 @@ export function updateFavoritePairs(base, quote, to_fav){
 
 export function getVolumeAndChange(){
     return new Promise((resolve, rejected) => {
-        resolve([]);
-        return;
+        timeout(MAX_REQUEST_TIMEOUT, fetch(BLOCKCHAIN_INFO.tracker + '/pairs/market'))
+        //fetch(BLOCKCHAIN_INFO.tracker + '/api/tokens/rates', {
+            .then((response) => {
+                return response.json()
+            })
+            .then((result) => {
+                resolve(result.data)
+            })
+            .catch((err) => {
+                console.log(err)
+                rejected(err)
+            })
     })
 }
+
+

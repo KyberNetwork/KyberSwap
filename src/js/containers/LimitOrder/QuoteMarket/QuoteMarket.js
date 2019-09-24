@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import { ProcessingModal, SortableComponent } from "../../../components/CommonElement"
 import limitOrderServices from "../../../services/limit_order";
+import * as converters from "../../../utils/converter"
 import { QuoteList, Search } from "../QuoteMarket"
 
 @connect((store, props) => {
@@ -47,9 +48,11 @@ export default class QuoteMarket extends React.Component{
 
   updateVolume = () => {
     limitOrderServices.getVolumeAndChange()
-    .then((res) => { 
-      this.setState((state, props) => ({pairs: res}))
+    .then((res) => {
+      const temp = res.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
+      this.setState((state, props) => ({pairs: temp}))
     })
+
   }
 
   onQuoteClick = (quote) => {
@@ -61,30 +64,12 @@ export default class QuoteMarket extends React.Component{
     this.setState((state, props) => ({current_search: text}))
   }
 
-  onFavoriteClick = (base, quote, to_fav) => {
-    if (common.isUserLogin()) {
-      const {favorite_pairs} = this.state
-      const index = favorite_pairs.indexOf(base+"_"+quote)
-      if (index == -1){
-        favorite_pairs.push(base+"_"+quote)
-      }else {
-        favorite_pairs.splice(index, 1)
-      }
-      this.setState({favorite_pairs: favorite_pairs})
-      limitOrderServices.updateFavoritePairs(base, quote, to_fav)
-      this.props.global.analytics.callTrack("trackLimitOrderClickFavoritePair", "Logged in", base + "/" + quote, to_fav)
-    }else {
-      this.props.dispatch(limitOrderActions.updateFavoriteAnonymous(base, quote, to_fav))
-      this.props.global.analytics.callTrack("trackLimitOrderClickFavoritePair", "Anonymous", base + "/" + quote, to_fav)
-    } 
-  }
-
   onSort = (i, isDsc) => {
     this.setState((state, props)=>({current_sort_index: i, current_sort_dsc: isDsc}))
   }
   
   search(quotes){
-    const { current_search, current_sort_index, current_sort_dsc, pairs } = this.state
+    const { current_search, current_sort_index, current_sort_dsc } = this.state
     const { currentQuote } = this.props
     return (
       currentQuote === "FAV" ?
@@ -92,17 +77,13 @@ export default class QuoteMarket extends React.Component{
         quotes[currentQuote]
     )
     .filter(pair => (pair["base"].toLowerCase().includes(current_search.toLowerCase())))
-    .map(pair => ({
-      ...pair, 
-      volume: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].volume : "-" ), 
-      change: (Object.keys(pairs).includes(pair.id) ? pairs[pair.id].change : "0" )
-    }))
     .sort(function(a,b){return (current_sort_dsc ? 1 : -1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
   }
 
 
   renderQuotes(){
     const { tokens } = this.props
+    const { pairs } = this.state
     const fav = this.props.favorite_pairs
     const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key != "ETH"))
     .sort((first, second) => {
@@ -130,13 +111,15 @@ export default class QuoteMarket extends React.Component{
           return true;
         })
           .reduce((vt, key) =>{
+            const pair = key+"_"+quote
+            const pairReversed = `${quote}_${key}`
             return key == quote ? vt : vt.concat({   
-                id: key+"_"+quote, 
+                id: pair,
                 base: key, quote: quote, 
-                price: (+converter.divOfTwoNumber(tokens[key].rate, quote == "ETH" ? '1000000000000000000' : tokens[quote].rate)).toFixed(5), 
-                is_favorite: fav.includes(key+"_"+quote),
-                volume: "-",
-                change: "0"
+                price: converters.formatNumber(+converter.divOfTwoNumber(tokens[key].rate, quote == "ETH" ? '1000000000000000000' : tokens[quote].rate), 5, ''),
+                is_favorite: fav.includes(pair),
+                volume: ((pairReversed in pairs) ? pairs[pairReversed].volume : "-" ),
+                change: ((pairReversed in pairs) ? pairs[pairReversed].change : "0" )
             });
           }, []); 
         return res
@@ -194,7 +177,7 @@ export default class QuoteMarket extends React.Component{
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"] == "WETH" ? "ETH*" : pair["quote"]}`}</div>
                     <div className={"c2"} >{pair["price"]}</div>
-                    <div className={"c3"} >{pair["volume"]}</div>
+                    <div className={"c3"} >{converters.formatNumber(pair["volume"], 5, '')}</div>
                     <div className={`${pair["change"] > 0 ? "up" : "down"} c4`}>{Math.abs(pair["change"])}%</div>
                   </div>)}
                 </div>
