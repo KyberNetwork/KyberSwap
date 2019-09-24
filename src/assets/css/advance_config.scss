@@ -54,7 +54,7 @@
         justify-content: right;
 
         .advance-config__option:first-child {
-          margin-right: 81px;
+          margin-right: 85px;
         }
       }
     }
@@ -171,13 +171,14 @@
   }
 
   @include screen-max-width(mid-small) {
-    &__option-container {
-      flex-wrap: wrap;
-    }
-
     &__option {
-      width: 45%;
-      margin-bottom: 12px;
+      margin-right: 11px;
+
+      &-container--rate {
+        .advance-config__option:first-child {
+          margin-right: 40px;
+        }
+      }
     }
   }
 }
