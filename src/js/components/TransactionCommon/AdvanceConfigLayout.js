@@ -20,8 +20,8 @@ export default class AdvanceConfigLayout extends React.Component {
                 {gasOptions.map((item, index) => {
                   return (
                     <label className="advance-config__option advance-config__option--gas" key={index}>
-                      {/*<span className="advance-config__gas-amount">{item.value} </span>*/}
-                      <span className="advance-config__gas-mode">{item.text}</span>
+                      <div className="advance-config__gas-amount">{item.value} </div>
+                      <div className="advance-config__gas-mode">{item.text}</div>
                       <input
                         className="advance-config__radio"
                         type="radio"
@@ -30,7 +30,7 @@ export default class AdvanceConfigLayout extends React.Component {
                         defaultChecked={this.props.selectedGas == item.key}
                         onChange={() => this.props.selectedGasHandler(item.value, item.key, item.text)}
                       />
-                      <span className="advance-config__checkmark theme__radio-button"/>
+                      <span className="advance-config__checkmark advance-config__checkmark--top theme__radio-button"/>
                     </label>
                   )
                 })}

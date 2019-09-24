@@ -35,7 +35,7 @@
     font-weight: 400;
     display: inline-block;
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
     cursor: pointer;
     margin-bottom: 0;
 
@@ -126,6 +126,10 @@
       transform: translateY(-50%) scale(0);
       transition: all .5s;
     }
+
+    &--top {
+      top: 6px;
+    }
   }
 
   & &__input {
@@ -151,13 +155,19 @@
   }
 
   &__gas-amount {
-    letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: $grey-dark;
   }
 
   &__gas-mode {
     text-transform: uppercase;
     position: relative;
     top: 1px;
+    font-size: 10px;
+    font-weight: 400;
+    color: $grey-darker;
   }
 
   @include screen-max-width(mid-small) {
