@@ -1,42 +1,35 @@
 import React from "react"
 import { connect } from "react-redux"
-
 import { getTranslate } from 'react-localize-redux'
-import { Currency, ManageColumn, MarketTable, SearchWord, SortColumn, TradingViewModal, RateSliderV2 } from "../Market"
+import { Currency, MarketTable, SearchWord, RateSliderV2 } from "../Market"
 import * as marketActions from "../../actions/marketActions"
-import { toEther } from "../../utils/converter";
-import * as analytics from "../../utils/analytics"
 import { Modal } from "../../components/CommonElement"
 
-
-function compareString(currency) {
+function compareString() {
   return function (tokenA, tokenB) {
-    var marketA = tokenA + currency
-    var marketB = tokenB + currency
-    if (marketA < marketB)
+    const tokenASymbol = tokenA.pair.split("_")[1];
+    const tokenBSymbol = tokenB.pair.split("_")[1];
+
+    if (tokenASymbol < tokenBSymbol)
       return -1;
-    if (marketA > marketB)
+    if (tokenASymbol > tokenBSymbol)
       return 1;
     return 0;
   }
 }
 
-function compareNum(originalTokens, currency, sortKey) {
+function compareNum(sortKey) {
   return function (tokenA, tokenB) {
-    return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+    return tokenA[sortKey] - tokenB[sortKey]
   }
 }
 
 @connect((store) => {
-
   var searchWord = store.market.configs.searchWord
+
   if (typeof searchWord === "undefined") searchWord = ""
 
   var currency = store.market.configs.currency.focus
-  var page = store.market.configs.page
-  var firstPageSize = store.market.configs.firstPageSize
-  var pageSize = store.market.configs.normalPageSize
-  var currencyList = firstPageSize + (page - 1) * pageSize
   var originalTokens = store.market.tokens
   var sortedTokens = store.market.sortedTokens
   var listTokens = []
@@ -46,18 +39,22 @@ function compareNum(originalTokens, currency, sortKey) {
   if (sortedTokens.length > 0) {
     listTokens = sortedTokens
   } else {
-    Object.keys(originalTokens).forEach((key) => {
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-      listTokens.push(key)
-    })
-    // Object.keys(originalTokens).forEach((key) => {
-    //   if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase()) || originalTokens[key].info.isNew) return
-    //   listTokens.push(key)
-    // })
-    if (sortKey === 'market') {
-      listTokens.sort(compareString(currency))
-    } else if (sortKey != '') {
-      listTokens.sort(compareNum(originalTokens, currency, sortKey))
+    originalTokens.forEach((value) => {
+      const pairs = value.pair.split("_");
+      const tokenSymbol = pairs[1];
+      const quoteSymbol = pairs[0];
+
+      if (!tokenSymbol.toLowerCase().includes(searchWord.toLowerCase())) return;
+
+      if (quoteSymbol.toLowerCase() !== currency.toLowerCase()) return;
+
+      listTokens.push(value)
+    });
+
+    if (sortKey === 'pair') {
+      listTokens.sort(compareString())
+    } else if (sortKey) {
+      listTokens.sort(compareNum(sortKey))
     }
 
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
@@ -65,29 +62,10 @@ function compareNum(originalTokens, currency, sortKey) {
     }
   }
 
-  var tokens = listTokens.slice(0, currencyList).reduce(function (newOb, key) {
-    newOb[key] = originalTokens[key]
-    return newOb
-  }, {})
-
-  var data = []
-  Object.keys(tokens).forEach((key) => {
-    // if (key === "ETH" || key === "WETH") return
-    var item = tokens[key]
-    item.market = key + ' / ' + currency
-    item = { ...item, ...item[currency] }
-    data.push(item)
-  })
-
   return {
     translate: getTranslate(store.locale),
     listTokens: listTokens,
-    data: data,
     currency: currency,
-    tokens: tokens,
-    page: page,
-    firstPageSize: firstPageSize,
-    currencyList: currencyList,
     originalTokens: originalTokens,
     searchWord: searchWord,
     sortType: sortType,
@@ -114,10 +92,6 @@ export default class Market extends React.Component {
     this.setState({ modalState: true })
   }
 
-  getMoreData = () => {
-    this.props.dispatch(marketActions.getMoreData(this.props.listTokens))
-  }
-
   changeSearch = (e) => {
     var value = e.target.value
     this.props.dispatch(marketActions.changeSearchWord(value))
@@ -126,30 +100,24 @@ export default class Market extends React.Component {
 
   getContentMarket = () => {
     return (
-      <div className="market container" id="market-eth">
+      <div className="market" id="market-eth">
         <a className="x" onClick={this.closeModal}>
           <img src={require("../../../assets/img/v3/Close-3.svg")} />
         </a>
-        <h1 className="market__title">{this.props.translate("market.eth_market") || "Ethereum Market"}</h1>
         <div className="market-table">
-          <div>
-            <MarketTable
-              data={this.props.data}
-              currency={this.props.currency}
-              tokens={this.props.tokens}
-              listTokens={this.props.listTokens}
-              page={this.props.page}
-              firstPageSize={this.props.firstPageSize}
-              originalTokens={this.props.originalTokens}
-              searchWord={this.props.searchWord}
-              sortType={this.props.sortType}
-              manageColumn={<ManageColumn />}
-              searchWordLayout={<SearchWord />}
-              currencyLayout={<Currency currentCurrency={this.props.currency} />}
-            />
-          </div>
+          <MarketTable
+            currency={this.props.currency}
+            listTokens={this.props.listTokens}
+            originalTokens={this.props.originalTokens}
+            searchWord={this.props.searchWord}
+            sortType={this.props.sortType}
+            searchWordLayout={<SearchWord />}
+            currencyLayout={<Currency currentCurrency={this.props.currency} />}
+            screen={this.props.screen}
+            setTokens={this.props.setTokens}
+            closeMarketModal={this.closeModal}
+          />
         </div>
-        <TradingViewModal />
       </div>
     )
   }
@@ -188,8 +156,6 @@ export default class Market extends React.Component {
           size="large"
         />
       </div>
-
-
     )
   }
 }

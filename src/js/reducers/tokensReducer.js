@@ -1,14 +1,8 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
-import Rate from "../services/rate"
 import * as BLOCKCHAIN_INFO from "../../../env"
-import constants from "../services/constants"
-
 import * as converter from "../utils/converter"
 
 function initState (tokens = BLOCKCHAIN_INFO.tokens) {
   let wrapperTokens = {}
-
-  //var timeNow = new Date()
   var timeStampNew = Math.floor(new Date().getTime() /1000) - 604800
 
   Object.keys(tokens).forEach((key) => {
@@ -23,13 +17,6 @@ function initState (tokens = BLOCKCHAIN_INFO.tokens) {
     if(tokens[key].listing_time && tokens[key].listing_time > timeStampNew){            
       wrapperTokens[key].isNew = true
     }
-    // if(tokens[key].expireDate){            
-    //     var timeExpire = new Date(BLOCKCHAIN_INFO.tokens[key].expireDate)
-    //     var expireTimeStamp = timeExpire.getTime()
-    //     if (timeStampNow > expireTimeStamp) {
-    //         tokens[key].isNew = false
-    //     }
-    // }
 
     wrapperTokens[key].rate = 0
     wrapperTokens[key].minRate = 0
@@ -40,52 +27,10 @@ function initState (tokens = BLOCKCHAIN_INFO.tokens) {
   })
 
   return wrapperTokens
-  // return {
-  //   tokens: tokens,
-  //   count: { storageKey: constants.STORAGE_KEY }
-  // }
 }
 
 const tokens = (state = {tokens: initState()}, action) => {
   switch (action.type) {
-    // case REHYDRATE: {
-    //   if (action.key === "tokens") {
-    //     var payload = action.payload
-    //     var tokens = {}
-    //     if (payload) {
-    //       // check load from loaclforage or initstate
-    //       var loadedTokens = payload.tokens
-    //       if (payload.count && payload.count.storageKey !== constants.STORAGE_KEY) {
-    //         loadedTokens = initState.tokens
-    //       }
-
-    //       Object.keys(loadedTokens).forEach((id) => {
-    //         var tokenMap = loadedTokens[id]
-    //         var token = new Rate(
-    //           tokenMap.name,
-    //           tokenMap.symbol,
-    //           tokenMap.icon,
-    //           tokenMap.address,
-    //           tokenMap.decimal,
-    //           tokenMap.rate ? tokenMap.rate : 0,
-    //           tokenMap.minRate ? tokenMap.minRate : 0,
-    //           0,
-    //           tokenMap.rateEth ? tokenMap.rateEth : 0,
-    //           tokenMap.minRateEth ? tokenMap.minRateEth : 0,
-    //           tokenMap.rateUSD ? tokenMap.rateUSD : 0
-    //         )
-    //         tokens[id] = token
-    //       })
-    //       return Object.assign({}, state, {
-    //         tokens: tokens,
-    //         count: { storageKey: constants.STORAGE_KEY }
-    //       })
-    //     } else {
-    //       return state;
-    //     }
-    //   }
-    //   return state
-    // }
     case 'TOKEN.INIT_TOKEN':{
       const {tokens} = action.payload
       var wrappeTokens = initState(tokens)
@@ -94,7 +39,6 @@ const tokens = (state = {tokens: initState()}, action) => {
     case 'GLOBAL.ALL_RATE_UPDATED_FULFILLED': {
       var tokens = { ...state.tokens }
       var {rates, rateUSD} = action.payload
-      console.log("mapToken")
       if (!rates){
         return state
       }
@@ -111,28 +55,17 @@ const tokens = (state = {tokens: initState()}, action) => {
 
           var rateByUSD = converter.roundingRateNumber(converter.toT(rate.rate, 18)*rateUSD.replace(",", ""))
           mapToken[rate.source].rateUSD = rateByUSD.replace(",", "")
-          //mapToken[rate.source].rateUSD = rateUSD
         } else {
           if (!mapToken[rate.dest]) {
             mapToken[rate.dest] = {}
           }
           mapToken[rate.dest].rateEth = rate.rate
           mapToken[rate.dest].minRateEth = converter.getMinrate(rate.rate, rate.minRate) 
-
-         // mapToken[rate.dest].rateUSD = converter.roundingNumber(converter.toT(rate.rate, 18)*rateUSD)
         }
       })
-      // console.log("mapToken")
-      // console.log(mapToken)
-      // console.log(tokens)
-      //push data
+
       var newTokens = {}
       Object.keys(tokens).map(key => {
-
-        // if (!mapToken[key]){
-        //   console.log(key)
-        //   return
-        // }
         var token = tokens[key]
 
         if (key === "ETH"){
@@ -238,20 +171,7 @@ const tokens = (state = {tokens: initState()}, action) => {
       tokens[sourceTokenSymbol.toUpperCase()].exchange_tx_approve_max = txHash;
       return Object.assign({}, state, { tokens: tokens });
     }
-  //   case 'GLOBAL.UPDATE_TOKEN_STATUS': {
-  //     var timeNow = new Date()
-  //     var timeStampNow = timeNow.getTime()
-  //     var tokens = { ...state.tokens }
-  //     Object.keys(tokens).map(key => {
-  //         if (!tokens[key]) return
-  //         var timeExpire = new Date(tokens[key].expireDate)
-  //         var expireTimeStamp = timeExpire.getTime()
-  //         if (timeStampNow > expireTimeStamp) {
-  //             tokens[key].isNew = false
-  //         }
-  //     })
-  //     return Object.assign({}, state, { tokens: tokens }) 
-  // }
+
     default: return state
   }
 }
