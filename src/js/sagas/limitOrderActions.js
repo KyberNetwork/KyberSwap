@@ -12,7 +12,8 @@ import { multiplyOfTwoNumber } from "../utils/converter"
 import EthereumService from "../services/ethereum/ethereum";
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
+  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type } = action.payload;
+
   const state = store.getState();
   const translate = getTranslate(state.locale)
   const tokens = state.tokens.tokens;
@@ -26,14 +27,12 @@ function* updateRatePending(action) {
     var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
     var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
     var { expectedPrice, slippagePrice } = rate
-    const rateInit = rateZero.expectedPrice.toString();
 
     yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, "", destTokenDecimal))
   } catch(err) {
     if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-      return
     }
   }
 }

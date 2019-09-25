@@ -1984,7 +1984,7 @@
   }
 
   &__tag {
-    width: 95px;
+    width: 90px;
     height: 48px;
     font-size: 14px;
     text-transform: uppercase;
@@ -1996,6 +1996,7 @@
   }
 
   &__input {
+    width: calc(100% - 170px);
     font-size: 16px;
     font-weight: 400;
     padding: 0 15px;
@@ -2006,9 +2007,11 @@
   }
 
   &__symbol {
+    width: 80px;
     font-size: 16px;
     padding-right: 15px;
     font-weight: 400;
+    text-align: right;
   }
 
   &__prefer-rate {

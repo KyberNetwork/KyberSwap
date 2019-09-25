@@ -13,7 +13,7 @@ import * as converters from "../../utils/converter"
 export default class LimitOrderCompareRate extends React.Component {
   render() {
     const triggerRate = converters.roundingRate(this.props.limitOrder.triggerRate);
-    const percentChange = converters.percentChange(triggerRate, this.props.limitOrder.offeredRate);
+    const percentChange = this.props.limitOrder.offeredRate != "0" ? converters.percentChange(triggerRate, this.props.limitOrder.offeredRate) : 0;
 
     return (
       <div className={"limit-order-form__prefer-rate theme__text-4"}>

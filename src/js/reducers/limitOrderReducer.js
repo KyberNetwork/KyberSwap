@@ -71,19 +71,17 @@ const limitOrder = (state = initState, action) => {
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals } = action.payload
-
   
       if (expectedPrice == "0") {
         newState.errors.rateSystem = errMsg;
-        // if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-        //   newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        // } else {
-        //   newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        // }
+        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
+        } else {
+          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
+        }
       } else {
         newState.errors.rateSystem = ""
       }
-      
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
