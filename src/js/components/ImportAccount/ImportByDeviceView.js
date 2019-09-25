@@ -48,7 +48,6 @@ const ImportByDeviceView = (props) => {
                         </a>
                         <a class="import">
                             {props.translate("import.import") || "Import"}
-                            {/* <img src={require('../../../assets/img/import-account/arrow_right_orange.svg')}/> */}
                         </a>
                     </div>
                 </div>
@@ -71,25 +70,12 @@ const ImportByDeviceView = (props) => {
 
     function getSelectAddressHtml() {
         return (
-            <div className={"import-modal import-modal__cold-wallet"}>
+            <div className={"import-modal"}>
                 <div class="import-modal__header cold-wallet">
                     <div className="import-modal__header--title">
                         {props.translate(`modal.select_${props.walletType}_address`) || 'Select address'}
                     </div>
                     <a class="x" onClick={props.onRequestClose}>&times;</a>
-                    {/* <div className="top-wrapper">
-                        <div class="title">{props.translate(`modal.select_${props.walletType}_address`) || 'Select address'}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
-                        <div class="row">
-                            <div class="column">
-                                <div class="block-title">
-                                    {props.translate("modal.select_hd_path") || "Select HD derivation path"}
-                                </div>
-                                <div className="block-choose-path">
-                                    {getListPathHtml()}
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
                 <div class="import-modal__body">
                     <div class="cold-wallet__path">
@@ -111,13 +97,9 @@ const ImportByDeviceView = (props) => {
                 </div>
                 <div className={"import-modal__footer import-modal__footer--cold-wallet"}>
                     <div class={'address-button address-button-previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                        {/* <img src={require('../../../assets/img/import-account/arrows_left_icon.svg')} /> */}
-                        {/* <span>{props.translate("modal.previous_addresses") || "Previous Addresses"}</span> */}
                         <div className={"address-arrow address-arrow-left"}></div>
                     </div>
                     <div class="address-button address-button-next" onClick={props.getMoreAddress}>
-                        {/* <span>{props.translate("modal.more_addresses") || "More Addresses"}</span> */}
-                        {/* <img src={require('../../../assets/img/import-account/arrows_right_icon.svg')} /> */}
                         <div className={"address-arrow address-arrow-right"}></div>
                     </div>
                 </div>
