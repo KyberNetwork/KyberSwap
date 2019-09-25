@@ -14,7 +14,7 @@ export default class LimitOrderCompareRate extends React.Component {
   render() {
     const offeredRate = converters.toT(this.props.limitOrder.offeredRate);
     const formattedOfferedRate = this.props.limitOrder.sideTrade === 'buy' ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
-    const percentChange = +this.props.limitOrder.offeredRate ? converters.percentChange(this.props.triggerRate, formattedOfferedRate) : 0;
+    const percentChange = this.props.limitOrder.offeredRate != "0" ? converters.percentChange(this.props.triggerRate, formattedOfferedRate) : 0;
 
     return (
       <div className={"limit-order-form__prefer-rate theme__text-4"}>
