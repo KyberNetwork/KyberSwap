@@ -73,23 +73,22 @@
 
       input {
         width: 100%;
-        color: white;
         background: rgba(0,0,0,0);
-        border: none;
+        border-width: 0;
         padding-right: 3em;
         background-image: url($image-path + 'common/icon-search-gray.svg');
         background-position: right 0px;
         background-repeat: no-repeat;
         background-size: 15px;
-        padding: 0 0 10px 0;
+        padding: 0 25px 10px 0;
+        text-align: right;
         cursor: pointer;
-        border-bottom: 1px solid transparent;
       };
 
       input:focus {
         box-shadow: none;
         outline: none;
-        border-color: white;
+        border-bottom: 1px solid;
       };
     }
   }

@@ -11,8 +11,8 @@ export default class Search extends React.Component{
   } 
   render(){
     return (
-      <div id="search_panel"> 
-        <input type="text" value={this.state.text} onChange={this.onChange} />
+      <div id="search_panel">
+        <input type="text"  className="theme__text-4" value={this.state.text} onChange={this.onChange} />
       </div>
     )
   }
