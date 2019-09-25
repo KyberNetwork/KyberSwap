@@ -73,7 +73,7 @@ export default class QuoteMarket extends React.Component{
           const quotePriority = tokens[quote].quote_priority;
           const tokenPriority = tokens[key].quote_priority;
 
-          if (quotePriority && tokenPriority && quotePriority < tokenPriority) {
+          if (quotePriority && tokenPriority && quotePriority <= tokenPriority) {
             // remove from list
             return false;
           }
@@ -128,6 +128,7 @@ export default class QuoteMarket extends React.Component{
     const quotes = this.renderQuotes()
     const { tokens, currentQuote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
+
     return (
       <div id="quote-market" className="theme__background-2"> 
           { Object.keys(tokens).length > 0 ? 

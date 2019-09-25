@@ -132,7 +132,7 @@ export default class TradingView extends React.Component {
 
 
 		const widgetOptions = {
-			symbol: `${this.props.destTokenSymbol}_${this.props.currentQuote}`,
+			symbol: `${this.props.baseSymbol}_${this.props.quoteSymbol}`,
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
@@ -255,7 +255,7 @@ export default class TradingView extends React.Component {
 			})
 		}
 
-		this.changePair(this.props.destTokenSymbol, this.props.currentQuote)
+		this.changePair(this.props.baseSymbol, this.props.quoteSymbol)
 
 		return (
       <div id={this.props.containerId} className={`trading-view`}/>
