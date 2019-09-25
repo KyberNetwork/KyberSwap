@@ -210,7 +210,7 @@ export default class LimitOrderTable extends Component {
   }
   getTypeCell = (props) => {
     return (
-        <div>{props.side_trade}</div>
+      <div className={"common__uppercase"}>{props.side_trade}</div>
     )
   }
   getPriceCell = (props) => {
