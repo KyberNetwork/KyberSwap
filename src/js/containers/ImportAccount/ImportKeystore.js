@@ -77,34 +77,35 @@ export default class ImportKeystore extends React.Component {
 
   content = () => {
     return (
-      <div className="keystore-modal">
-        <div className="title">{this.props.translate("modal.keystore_title") || "Type password to unlock your keystore"}</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
-        <div className="content with-overlap">
-          <div className="row">
-
-            <div className="input-reveal">
-              <input className="text-center security" id="keystore-pass" type="text" autoComplete="off" spellCheck="false" autoFocus onKeyPress={(e) => this.submit(e)} />
-              <a className="toggle" onClick={() => this.toggleShowPw()}/>
-              <a className="tootip"/>
-            </div>
-
-            <div>
-              {this.state.error && (
-                <div className={'modal-error custom-scroll'}>
-                  {this.state.error}
-                </div>
-              )}
-            </div>
-
+      <div className="import-modal import-modal__key-store">
+        <div className="import-modal__header">
+          <div className={"import-modal__header--title"}>
+            {this.props.translate("modal.keystore_title") || "Type password to unlock your keystore"}
           </div>
         </div>
-        <div className="overlap">
-          <div className="input-confirm input-confirm--single">
-            <div className="cell unlock-btn-wrapper">
-              <a className={"button process-submit next"} onClick={this.unLock}>{this.props.translate("modal.unlock") || "Unlock"}</a>
+        <a className="x" onClick={this.closeModal}>&times;</a>
+        <div className="import-modal__body">
+            <div className="input-reveal">
+              <input 
+                className="security" 
+                id="keystore-pass" 
+                type="text" 
+                autoComplete="off" 
+                spellCheck="false" 
+                autoFocus onKeyPress={(e) => this.submit(e)} 
+              />
+              <a className="toggle" onClick={() => this.toggleShowPw()}/>
             </div>
-          </div>
+            {this.state.error && (
+              <div className={'modal-error custom-scroll'}>
+                {this.state.error}
+              </div>
+            )}
+        </div>
+        <div className="import-modal__footer">
+          <button className={"import-modal__footer--button"} onClick={this.unLock}>
+            {this.props.translate("modal.unlock") || "Unlock"}
+          </button>
         </div>
       </div>
     )
@@ -156,8 +157,8 @@ export default class ImportKeystore extends React.Component {
         />
         <Modal
           className={{
-            base: 'reveal tiny confirm-modal',
-            afterOpen: 'reveal tiny confirm-modal'
+            base: 'reveal tiny import-modal',
+            afterOpen: 'reveal tiny import-modal'
          }}
          isOpen={this.state.isOpen}
          onRequestClose={this.closeModal}

@@ -4,7 +4,7 @@ import { Modal } from '../CommonElement'
 const SelectAddressModal = (props) => {
   return (
     <Modal
-      className={{ base: 'reveal large reveal-cold-wallet', afterOpen: 'reveal large reveal-cold-wallet' }}
+      className={{ base: 'reveal tiny import-modal', afterOpen: 'reveal tiny' }}
       isOpen={props.isOpen}
       onRequestClose={props.onRequestClose}
       contentLabel="Select Address"
