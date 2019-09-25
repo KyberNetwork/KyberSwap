@@ -43,7 +43,7 @@ export default class ConfirmModal extends React.Component {
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+
     componentDidMount = () => {
       this.fetchFee()
     }
@@ -55,7 +55,7 @@ export default class ConfirmModal extends React.Component {
       var srcAmount = this.props.limitOrder.sourceAmount
       var destAmount = this.props.limitOrder.destAmount
       try{
-        var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)        
+        var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)
         this.setState({isFetchFee : false, fee: fee})
       }catch(err){
         console.log(err)
@@ -84,19 +84,19 @@ export default class ConfirmModal extends React.Component {
 
             //get minimum nonce
             var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
-            
+
             var validNonce = converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
             return validNonce
         }catch(err){
             console.log(err)
-            throw err         
+            throw err
         }
     }
 
     async onSubmit(){
         this.props.global.analytics.callTrack("trackClickConfirmSubmitOrder");
         if(this.state.isFetchFee) return
-        //reset        
+        //reset
         var wallet = getWallet(this.props.account.type)
         var password = "";
         this.setState({
@@ -121,7 +121,7 @@ export default class ConfirmModal extends React.Component {
             var minConversionRate = converters.toTWei(this.props.limitOrder.triggerRate, 18)
             minConversionRate = converters.toHex(minConversionRate)
 
-            
+
             var feeInPrecision = this.state.fee
             feeInPrecision = converters.toTWei(feeInPrecision, 6)
             feeInPrecision = converters.toHex(feeInPrecision)
@@ -130,21 +130,21 @@ export default class ConfirmModal extends React.Component {
             // console.log("limit_order_sg")
             // console.log("---Sign Data---")
             // console.log(signData)
-            
-            var signature = await wallet.signSignature(signData, this.props.account)     
+
+            var signature = await wallet.signSignature(signData, this.props.account)
             // console.log("---SIGNATURE---")
             // console.log(signature)
-            
+
             // var pramameters = await ethereum.call("getSignatureParameters", signature)
-            
+
             // console.log("limit_order")
             // console.log(signature)
             // console.log(signData)
             // console.log("v, r, s")
             // console.log(pramameters)
             // console.log({user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision})
-            
-            var newOrder = await limitOrderServices.submitOrder({  
+
+            var newOrder = await limitOrderServices.submitOrder({
                 user_address: this.props.account.address.toLowerCase(),
                 nonce: nonce,
                 src_token: this.props.limitOrder.sourceToken,
@@ -153,7 +153,8 @@ export default class ConfirmModal extends React.Component {
                 min_rate: minConversionRate,
                 dest_address: this.props.account.address,
                 fee: feeInPrecision,
-                signature: signature
+                signature: signature,
+                side_trade: this.props.limitOrder.sideTrade
             });
 
             // newOrder.id = this.props.limitOrder.listOrder.length + 1;
@@ -180,12 +181,12 @@ export default class ConfirmModal extends React.Component {
             // console.log(err.message);
             console.log(err)
             var showErr = "Cannot submit order"
-            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid"
               && this.props.account.type === "metamask" && !this.props.isOnDAPP){
                 showErr = "Signature is invalid. There is a possibility that you have signed the message with a Hardware wallet plugged in Metamask. Please try to import a Hardware Wallet to KyberSwap and resubmit the order."
             }
 
-            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid" 
+            if (err.signature && err.signature.length === 1 && err.signature[0] === "Signature is invalid"
               && this.props.account.type === "metamask" && this.props.isOnDAPP){
                 showErr = "Couldn't validate your signature. Your wallet might not be supported yet."
             }
@@ -198,7 +199,7 @@ export default class ConfirmModal extends React.Component {
         }
     }
 
-  
+
     closeModal = () => {
       if (this.state.isConfirming) return;
       this.props.dispatch(limitOrderActions.resetOrderPath())
@@ -265,13 +266,13 @@ export default class ConfirmModal extends React.Component {
                     quote: quote === "WETH" ? "ETH*":quote,
                     rawRate: this.props.limitOrder.triggerRate,
                     rate: converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)
-                  }) || 
+                  }) ||
                     `Your transaction will be broadcasted when price of ${base === "WETH" ? "ETH*":base}/${quote === "WETH" ? "ETH*":quote} >= <span title={this.props.limitOrder.triggerRate}>${converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span>`
                   }
                 </div>
                 {/*<div className="limit-order-modal__pair confirm-exchange-modal">
                   <div className="amount">
-                    <div className="amount-item amount-left">                         
+                    <div className="amount-item amount-left">
                       <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                       <div className={"rc-info"}>
                         <div title={this.props.limitOrder.sourceAmount}>
@@ -279,7 +280,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                         <div>
                           {this.props.limitOrder.sourceTokenSymbol}
-                        </div>  
+                        </div>
                       </div>
                     </div>
                     <div className="space space--padding"><img src={require("../../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
@@ -292,14 +293,14 @@ export default class ConfirmModal extends React.Component {
                         <div>
                           {this.props.limitOrder.destTokenSymbol}
                         </div>
-                      </div> 
+                      </div>
                       <div className="amount--calc">
                         <span>({formatedSrcAmount} - {formatedFee}) {this.props.limitOrder.sourceTokenSymbol} * <span title={this.props.limitOrder.triggerRate}>{converters.displayNumberWithDot(this.props.limitOrder.triggerRate, 9)}</span> = {converters.formatNumber(receiveAmount, 5)} {this.props.limitOrder.destTokenSymbol}</span>
                       </div>
                     </div>
                   </div>
                 </div> */}
-                <OrderTableInfo 
+                <OrderTableInfo
                   listOrder = {makeOrderInfo(this.props.limitOrder)}
                 />
                 {/* <div className="limit-order-modal__result">
@@ -362,7 +363,7 @@ export default class ConfirmModal extends React.Component {
           </div>
       )
     }
-    
+
     render() {
         return (
         <Modal className={{

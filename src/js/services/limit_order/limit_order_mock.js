@@ -180,7 +180,7 @@ export function submitOrder(order) {
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;
         newOrder.receive = 100;
-        newOrder.side_trade = "buy"
+        newOrder.side_trade = order.side_trade
         data.push(newOrder);
         resolve(newOrder);
         return;

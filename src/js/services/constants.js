@@ -221,6 +221,7 @@ const INIT_LIMIT_ORDER_STATE = {
   maxCap: "infinity",
   minConversionRate: 0,
   triggerRate: 0,
+  triggerBuyRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
   prevAmount: 0,
@@ -300,7 +301,6 @@ const INIT_LIMIT_ORDER_STATE = {
   errors: {
     sourceAmount: [],
     triggerRate: [],
-
     rateWarning: '',
     rateError: '',
     rateAmount: '',

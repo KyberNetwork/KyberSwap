@@ -41,11 +41,13 @@ export default class LimitOrderForm extends React.Component {
   setFormType = (type, targetSymbol, quoteSymbol) => {
     if (this.props.limitOrder.sideTrade === type) return;
 
+    this.props.dispatch(limitOrderActions.setSideTrade(type));
+
     this.props.dispatch(limitOrderActions.changeFormType(
       this.props.sourceToken,
       this.props.destToken
     ));
-    this.props.dispatch(limitOrderActions.setSideTrade(type))
+
     this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
   };
 
@@ -73,13 +75,13 @@ export default class LimitOrderForm extends React.Component {
   };
 
   handleInputChange = (e, type, referValue) => {
-    const value = e.target.value;
+    let value = e.target.value;
     const check = filterInputNumber(e, value, referValue);
 
     if (check) {
       if (value < 0) return;
 
-      this.props.dispatch(limitOrderActions.inputChange(type, e.target.value, this.props.sourceToken.decimals, this.props.destToken.decimals));
+      this.props.dispatch(limitOrderActions.inputChange(type, value, this.props.sourceToken.decimals, this.props.destToken.decimals, true));
       
       if (type === "source") this.lazyFetchRate(value);
     }
@@ -193,6 +195,7 @@ export default class LimitOrderForm extends React.Component {
     const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? constants.WETH_SUBSTITUTE_NAME : this.props.limitOrder.destTokenSymbol;
     const quoteSymbol = this.props.limitOrder.sideTrade === 'buy' ? srcTokenSymbol : destTokenSymbol;
     const targetSymbol = this.props.limitOrder.sideTrade === 'buy' ? destTokenSymbol : srcTokenSymbol;
+    const triggerRate = this.props.limitOrder.sideTrade === 'buy' ? this.props.limitOrder.triggerBuyRate : this.props.limitOrder.triggerRate;
 
     return (
       <div className={"limit-order-form theme__background-2"}>
@@ -219,8 +222,8 @@ export default class LimitOrderForm extends React.Component {
             type={this.props.global.isOnMobile ? "number" : "text"}
             maxLength="50"
             autoComplete="off"
-            value={this.props.limitOrder.isFetchingRate ? 'Loading...' : this.props.limitOrder.triggerRate}
-            onChange={(e) => this.handleInputChange(e, "rate", this.props.limitOrder.triggerRate)}
+            value={this.props.limitOrder.isFetchingRate ? 'Loading...' : triggerRate}
+            onChange={(e) => this.handleInputChange(e, "rate", triggerRate)}
             onFocus={e => this.handleFocus(e, "rate")}
             disabled={this.props.limitOrder.isFetchingRate}
           />
@@ -247,7 +250,7 @@ export default class LimitOrderForm extends React.Component {
           }
         </div>
 
-        <LimitOrderCompareRate/>
+        <LimitOrderCompareRate triggerRate={triggerRate}/>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__input-tag"}>Amount</div>

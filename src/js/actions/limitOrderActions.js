@@ -5,10 +5,10 @@ export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, des
   }
 }
 
-export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals) {
+export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate = false) {
   return {
     type: "LIMIT_ORDER.INPUT_CHANGE",
-    payload: { focus, value, sourceTokenDecimals, destTokenDecimals }
+    payload: { focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate }
   }
 }
 
