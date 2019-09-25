@@ -5,21 +5,27 @@ import {TradingView} from "../Market"
 @connect((store, props) => {
   const limitOrder = store.limitOrder
 
-  const currentQuote = limitOrder.sourceTokenSymbol === "WETH" ? "ETH" : limitOrder.sourceTokenSymbol;
-
   return {
-    destTokenSymbol: limitOrder.destTokenSymbol,
-    currentQuote
+    limitOrder
   }
 })
 export default class LimitOrderChart extends React.Component {
   render() {
-    const { currentQuote, destTokenSymbol } = this.props;
+    const { sourceTokenSymbol, destTokenSymbol, sideTrade } = this.props.limitOrder;
+
+    let quoteSymbol, baseSymbol;
+    if (sideTrade === "buy") {
+      baseSymbol = destTokenSymbol;
+      quoteSymbol = sourceTokenSymbol === "WETH" ? "ETH" : sourceTokenSymbol;
+    } else if (sideTrade === "sell") {
+      baseSymbol = sourceTokenSymbol;
+      quoteSymbol = destTokenSymbol === "WETH" ? "ETH" : destTokenSymbol;
+    }
 
     return (
       <TradingView 
-        destTokenSymbol={destTokenSymbol}
-        currentQuote={currentQuote}
+        baseSymbol={baseSymbol}
+        quoteSymbol={quoteSymbol}
       />
     )
   }

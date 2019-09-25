@@ -151,10 +151,12 @@ const withSourceAndBalance = (Component) => {
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
     }
 
-    selectSourceAndDestToken = (symbolSource, symbolDest) => {
-      var sourceTokenSymbol = symbolSource
+    selectSourceAndDestToken = (quoteSymbol, baseSymbol) => {
+      const { sideTrade } = this.props.limitOrder;
+      const sourceTokenSymbol = sideTrade === "buy" ? quoteSymbol : baseSymbol;
+      const destTokenSymbol = sideTrade === "buy" ? baseSymbol : quoteSymbol;
+
       var sourceToken = this.props.tokens[sourceTokenSymbol].address
-      var destTokenSymbol = symbolDest
       var destToken = this.props.tokens[destTokenSymbol].address
       this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
       this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
