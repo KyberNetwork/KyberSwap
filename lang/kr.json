@@ -177,7 +177,11 @@
     "order_confirm": "주문 확인",
     "success": "성공",
     "keystore_title": "키 저장소 잠금해제를 위해 비밀번호를 입력하세요.",
-    "unlock": "잠금해제"
+    "unlock": "잠금해제",
+    "yes": "예",
+    "no": "아니오",
+    "buy": "구매하기",
+    "sell": "판매하기"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -399,7 +403,7 @@
     "eth_not_support": "ETH* 는 편의상 ETH와 WETH의 합을 뜻합니다.",
     "canceling_order_message": "이 거래를 취소합니다.",
     "fee_info_message": "걱정 마세요. \n 거래가 실행 된 경우에만 수수료를 지불합니다. (브로드 캐스트 및 채굴)",
-    "confirm_order_message": "${srcToken}/${destToken} (를 ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span> 인 경우에만 거래가 체결됩니다",
+    "confirm_order_message": "가격이 ${base}/${quote} >= ${price} 일때 해당 거래가 전송됩니다.",
     "fee": "수수료",
     "change_rate": "변동률",
     "current_rate": "현재 가격",
@@ -428,7 +432,16 @@
     "order_history": "오더 내역",
     "actual_receive_amount": "실제로 받는 토큰의 양:",
     "estimated_amount": "예상 토큰의 양:",
-    "extra_amount": "추가로 받은 토큰의 양:"
+    "extra_amount": "추가로 받은 토큰의 양:",
+    "price": "가격",
+    "amount": "금액",
+    "total": "추정 가치",
+    "volume": "볼륨",
+    "change": "변동",
+    "buy": "${symbol} 구매",
+    "sell": "${symbol} 판매",
+    "type": "유형",
+    "available_balance": "사용 가능한 잔액"
   },
   "home": "홈",
   "tracker": "트래커",

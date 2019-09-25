@@ -401,7 +401,7 @@ export default class LimitOrderSubmit extends React.Component {
     return (
       <div className={"limit-order-submit"}>
         <div className={`limit-order-submit__accept-button theme__button ${isDisable ? 'disabled' : ''} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-          Submit Order
+          {this.props.translate("limit_order.submit_order") || "Submit Order"}
         </div>
 
         {!this.props.hideTermAndCondition &&

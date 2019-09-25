@@ -301,6 +301,7 @@ export default class ConfirmModal extends React.Component {
                 </div> */}
                 <OrderTableInfo 
                   listOrder = {makeOrderInfo(this.props.limitOrder)}
+                  translate={this.props.translate}
                 />
                 {/* <div className="limit-order-modal__result">
                   <span>{this.props.translate("limit_order.you_will_receive") || "You will receive"}</span>{' '}

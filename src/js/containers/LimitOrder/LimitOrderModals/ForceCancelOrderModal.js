@@ -53,6 +53,7 @@ export default class ForceCancelOrderModal extends Component {
           </a>
           <OrderTableInfo 
             listOrder={this.props.getListWarningOrdersComp()}
+            translate={this.props.translate}
           />
         </div>
         <div className="cancel-order__footer">

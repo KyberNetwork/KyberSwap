@@ -125,7 +125,7 @@ class LimitOrderFee extends React.Component {
         </SlideDown>
 
         <div className={"limit-order-fee__total"}>
-          <span className={"theme__text-4"}>Total:</span>
+          <span className={"theme__text-4"}>{this.props.translate("limit_order.total")}:</span>
           <span className={"theme__text-5"}>{totalText}</span>
         </div>
       </div>

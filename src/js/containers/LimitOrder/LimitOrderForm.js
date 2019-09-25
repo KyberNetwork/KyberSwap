@@ -237,17 +237,17 @@ export default class LimitOrderForm extends React.Component {
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'buy' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('buy', targetSymbol, quoteSymbol)}>
-              Buy {targetSymbol}
+              {this.props.translate("limit_order.buy", {symbol: targetSymbol}) || `Buy ${targetSymbol}`}
           </div>
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'sell' ? 'limit-order-form__tab--active' : ''}`}
             onClick={() => this.setFormType('sell', targetSymbol, quoteSymbol)}>
-              Sell {targetSymbol}
+            {this.props.translate("limit_order.sell", {symbol: targetSymbol}) || `Sell ${targetSymbol}`}
           </div>
         </div>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__input-tag"} onClick={this.resetToMarketRate}>Price</div>
+          <div className={"limit-order-form__tag theme__input-tag"} onClick={this.resetToMarketRate}>{this.props.translate("limit_order.price") || "Price"}</div>
           <input
             className={"limit-order-form__input theme__text-2"}
             step="0.000001"
@@ -287,7 +287,7 @@ export default class LimitOrderForm extends React.Component {
         <LimitOrderCompareRate/>
 
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__input-tag"}>Amount</div>
+          <div className={"limit-order-form__tag theme__input-tag"}>{this.props.translate("limit_order.amount") || "Amount"}</div>
           {this.props.limitOrder.sideTrade === 'buy' &&
             <input
               className={"limit-order-form__input theme__text-2"}
@@ -330,7 +330,7 @@ export default class LimitOrderForm extends React.Component {
         {this.props.account &&
           <div className={"limit-order-form__balance-container"}>
             <div className={"theme__text-4"}>
-              <div className={"limit-order-form__available"}>Available Balance</div>
+              <div className={"limit-order-form__available"}>{this.props.translate("limit_order.available_balance") || "Available Balance"}</div>
               <div className={"limit-order-form__token"}>{converters.formatNumber(converters.toT(this.props.sourceToken.balance, this.props.sourceToken.decimals), 6)} {srcTokenSymbol}</div>
             </div>
             <div className={'common__balance theme__text-2'}>

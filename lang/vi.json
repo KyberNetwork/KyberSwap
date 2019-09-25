@@ -177,7 +177,11 @@
     "order_confirm": "Xác nhận lệnh",
     "success": "Thành công",
     "keystore_title": "Nhập mật khẩu để mở khóa keystore của bạn",
-    "unlock": "Mở khoá"
+    "unlock": "Mở khoá",
+    "yes": "Có",
+    "no": "Không",
+    "buy": "Mua",
+    "sell": "Bán"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -399,7 +403,7 @@
     "eth_not_support": "ETH* là tổng của ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
-    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${srcToken}/${destToken} (với ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi giá của ${base}/${quote} >= <span title=\"${rawRate}\">${rate}</span>",
     "fee": "Phí",
     "change_rate": "Thay đổi tỉ lệ",
     "current_rate": "Tỉ giá hiện tại",
@@ -428,7 +432,16 @@
     "order_history": "Lịch sử giao dịch",
     "actual_receive_amount": "Lượng token thực lĩnh:",
     "estimated_amount": "Lượng token dự tính:",
-    "extra_amount": "Bạn nhận được thêm:"
+    "extra_amount": "Bạn nhận được thêm:",
+    "price": "Giá",
+    "amount": "Số lượng",
+    "total": "Tổng giá trị",
+    "volume": "Lượng giao dịch",
+    "change": "Thay đổi",
+    "buy": "Mua ${symbol}",
+    "sell": "Bán ${symbol}",
+    "type": "Loại",
+    "available_balance": "Số dư khả dụng"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

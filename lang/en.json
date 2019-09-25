@@ -182,7 +182,9 @@
     "keystore_title": "Type password to unlock your keystore",
     "unlock": "Unlock",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "buy": "Buy",
+    "sell": "Sell"   
   },
   "error": {
     "metamask_not_installed": "Metamask is not installed",
@@ -437,7 +439,12 @@
     "available_tokens": "Tokens Avaiable for Limit Order",
     "amount": "Amount",
     "total": "Total",
-    "type": "Type"
+    "volume": "Volume",
+    "change": "Change",
+    "buy": "Buy ${symbol}",
+    "sell": "Sell ${symbol}",
+    "type": "Type",
+    "available_balance": "Available Balance"
   },
   "home": "Home",
   "tracker": "Tracker",
