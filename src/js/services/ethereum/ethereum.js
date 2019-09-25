@@ -61,10 +61,10 @@ export default class EthereumService extends React.Component {
     this.fetchTokenBalance()
     this.checkConnection()
     this.fetchRateData()
+    this.fetchMarketData()
   }
 
   fetchData_5Min(){
-    this.fetchMarketData()
     this.fetchRateUSD()
   }
 

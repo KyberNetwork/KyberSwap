@@ -4,7 +4,9 @@ import { roundingNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
-  const marketTokens = store.market.tokens;
+  const marketTokens = store.market.tokens.filter(token => {
+      return token.pair.split('_')[0] !== BLOCKCHAIN_INFO.wrapETHToken;
+    });
 
   return { marketTokens }
 })

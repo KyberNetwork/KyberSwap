@@ -4,6 +4,7 @@ import { getTranslate } from 'react-localize-redux'
 import { Currency, MarketTable, SearchWord, RateSliderV2 } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { Modal } from "../../components/CommonElement"
+import BLOCKCHAIN_INFO from "../../../../env"
 
 function compareString() {
   return function (tokenA, tokenB) {
@@ -47,6 +48,8 @@ function compareNum(sortKey) {
       if (!tokenSymbol.toLowerCase().includes(searchWord.toLowerCase())) return;
 
       if (quoteSymbol.toLowerCase() !== currency.toLowerCase()) return;
+
+      if (tokenSymbol == BLOCKCHAIN_INFO.wrapETHToken) return;
 
       listTokens.push(value)
     });
