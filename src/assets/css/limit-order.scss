@@ -104,6 +104,11 @@
         border: none;
         overflow: visible;
         flex: none;
+        cursor: pointer;
+
+        &:hover{
+          background: rgba(225, 228, 235, 0.3);
+        }
       }
     }
 

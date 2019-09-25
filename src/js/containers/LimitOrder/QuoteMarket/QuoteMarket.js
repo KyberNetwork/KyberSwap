@@ -84,9 +84,9 @@ export default class QuoteMarket extends React.Component{
             return key == quote ? vt : vt.concat({   
                 id: pair,
                 base: key, quote: quote,
-                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "-"),
+                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 3, '') : "-"),
                 is_favorite: fav.includes(pair),
-                volume: (isExisted ? pairs[pairReversed].volume : "-" ),
+                volume: (isExisted ? converters.formatNumber(pairs[pairReversed].volume, 0, '') : "-" ),
                 change: (isExisted ? pairs[pairReversed].change : "-" )
             });
           }, []); 
@@ -145,8 +145,8 @@ export default class QuoteMarket extends React.Component{
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                     <div className={"c2"} >{pair["price"]}</div>
-                    <div className={"c3"} >{converters.formatNumber(pair["volume"], 5, '')}</div>
-                    <div className={`${pair["change"] > 0 ? "up" : "down"} c4`}>{Math.abs(pair["change"])}%</div>
+                    <div className={"c3"} >{pair["volume"] == "-" ? "-" : pair["volume"]}</div>
+                    <div className={`${pair["change"] < 0 ? "down" : "up"} c4`}>{pair["volume"] == "-" ? "-" : `${Math.abs(pair["change"])}%`}</div>
                   </div>)}
                 </div>
               </div>

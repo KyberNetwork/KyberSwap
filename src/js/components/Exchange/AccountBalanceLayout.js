@@ -165,7 +165,7 @@ const AccountBalanceLayout = (props) => {
                   </div>
                   {props.isLimitOrderTab && 
                     <div className="account-balance__address-text">
-                      {props.translate("limit_order.available_tokens") || "Tokens Avaiable for Limit Order"}
+                      {props.translate("limit_order.available_tokens") || "Tokens Available for Limit Order"}
                     </div>}
                 </div>
 
