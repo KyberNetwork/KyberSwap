@@ -7,6 +7,10 @@
     margin-right: 15px;
   }
 
+  &__uppercase {
+    text-transform: uppercase;
+  }
+
   &__flexbox {
     display: flex;
     justify-content: space-between;

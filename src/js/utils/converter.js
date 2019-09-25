@@ -489,10 +489,6 @@ export function roundingRateNumber(number) {
   return result;
 }
 
-// export function displayRate(number){
-//   return roundingNumber(number
-// }
-
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
   return bigNum.toString(10)

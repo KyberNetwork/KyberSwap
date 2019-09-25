@@ -63,6 +63,10 @@ $divider-color: darken($title-background-color, 5);
   transform: translateY(-50%);
   max-width: 90%;
 
+  .text-center {
+    text-align: center;
+  }
+
   &.tiny {
     width: 450px;
   }

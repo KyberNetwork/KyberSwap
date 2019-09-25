@@ -22,7 +22,7 @@ const limitOrder = (state = initState, action) => {
     }
 
     case "LIMIT_ORDER.INPUT_CHANGE": {
-      const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload
+      const { focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate } = action.payload
 
       switch(focus) {
         case "source":
@@ -41,13 +41,23 @@ const limitOrder = (state = initState, action) => {
           var bigRate = converter.roundingRate(state.triggerRate)
           newState.sourceAmount = converter.caculateSourceAmount(value, bigRate, sourceTokenDecimals);
           break
-        case "rate": 
-          newState.triggerRate = value.replace(',', '');
-          var errors = newState.errors
-          errors.triggerRate = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, destTokenDecimals)
+        case "rate":
+          const rate = value.replace(',', '');
+
+          if (newState.sideTrade === 'buy' && isBuyRate) {
+            newState.triggerBuyRate = rate;
+            newState.triggerRate = converter.divOfTwoNumber(1, rate);
+            newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, converter.roundingRate(newState.triggerRate), sourceTokenDecimals);
+          } else {
+            newState.triggerRate = rate;
+            newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(newState.offeredRate));
+            newState.destAmount = converter.caculateDestAmount(state.sourceAmount, converter.roundingRate(rate), destTokenDecimals);
+          }
+
+          let errors = newState.errors;
+          errors.triggerRate = [];
+          newState.errors = errors;
+
           break
       }
       return newState
@@ -71,19 +81,17 @@ const limitOrder = (state = initState, action) => {
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals } = action.payload
-
   
       if (expectedPrice == "0") {
         newState.errors.rateSystem = errMsg;
-        // if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-        //   newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        // } else {
-        //   newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        // }
+        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
+        } else {
+          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
+        }
       } else {
         newState.errors.rateSystem = ""
       }
-      
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
@@ -94,6 +102,7 @@ const limitOrder = (state = initState, action) => {
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
         newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(',', "");
+        newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(expectedRate));
         newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimals)
       }
 
