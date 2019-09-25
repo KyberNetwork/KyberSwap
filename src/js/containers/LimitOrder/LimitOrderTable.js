@@ -499,7 +499,7 @@ export default class LimitOrderTable extends Component {
         const checked = typeFilter.indexOf(item) !== -1;
         return (
             <label key={item} className="status-filter-modal__option">
-              <span>{item}</span>
+              <span className={"common__uppercase"}>{item}</span>
               <input
                   type="checkbox"
                   value={item}

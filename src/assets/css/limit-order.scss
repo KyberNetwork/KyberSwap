@@ -73,9 +73,11 @@
         padding: 5px 0;
         overflow: visible;
         line-height: 35px;
-        div:nth-child(1){
-          padding-left: 2px;
+
+        > div {
+          padding-left: 10px;
         }
+
         &.-sort-asc, .-sort-asc {
           box-shadow: none;
         }
@@ -1009,6 +1011,7 @@
   z-index: 1;
   font-size: 14px;
   font-weight: 500;
+  padding-bottom: 10px;
 
   @include screen-max-width(medium) {
     left: 0px;
@@ -1024,6 +1027,10 @@
     position: relative;
     text-align: start;
     display: block;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__basic {
@@ -1032,9 +1039,9 @@
   }
 
   &__advance {
-    padding: 10px 12px 10px;
+    padding: 10px 12px 0;
     height: auto;
-    max-height: 164px;
+    max-height: 170px;
     min-height: 30px;
     min-width: 175px;
     overflow: auto;
@@ -1908,6 +1915,10 @@
 
     &--right {
       width: 400px;
+
+      > div {
+        box-shadow: 0 2px 15px -6px rgba(0, 0, 0, 0.2)
+      }
     }
   }
 
