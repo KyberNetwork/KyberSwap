@@ -8,7 +8,7 @@ export default class QuoteList extends React.Component{
             if (i == "FAV"){
               return <div key={i} className={`star star--title ${currentQuote === i  ? "active" : ""}`} onClick={() => onClick(i)}/>
             }else {
-              return <span key={i} className={currentQuote === i ? "active" :""} onClick={() => onClick(i)}>{i=='WETH' ? 'ETH*' : i}</span>
+              return <span key={i} className={currentQuote === i ? "active" :""} onClick={() => onClick(i)}>{i.replace("WETH", "ETH*")}</span>
             }
           })
         }

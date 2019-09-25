@@ -62,11 +62,11 @@ export default class QuoteMarket extends React.Component{
 
     const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key !== "ETH"))
     .sort((first, second) => {
-      return sortQuotePriority(tokens, first, second);
+      return sortQuotePriority(tokens, first.replace("WETH", "ETH"), second.replace("WETH", "ETH"));
     });
 
     const result = quotes.reduce((res, quote) => {
-        res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"])).filter(key => {
+        res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"] && key !== "ETH")).filter(key => {
           // if quote A priority < other quote priorities, remove other quotes from list token of quote A
           const quotePriority = tokens[quote].quote_priority;
           const tokenPriority = tokens[key].quote_priority;
@@ -84,10 +84,10 @@ export default class QuoteMarket extends React.Component{
             return key == quote ? vt : vt.concat({   
                 id: pair,
                 base: key, quote: quote,
-                price: ((pairReversed in pairs) ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "0"),
+                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "-"),
                 is_favorite: fav.includes(pair),
-                volume: ((pairReversed in pairs) ? pairs[pairReversed].volume : "-" ),
-                change: ((pairReversed in pairs) ? pairs[pairReversed].change : "0" )
+                volume: (isExisted ? pairs[pairReversed].volume : "-" ),
+                change: (isExisted ? pairs[pairReversed].change : "-" )
             });
           }, []); 
         return res
@@ -143,7 +143,7 @@ export default class QuoteMarket extends React.Component{
                     <div className={"c0"} onClick={() => this.props.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                       <div className={pair["is_favorite"] ? "star active" : "star" } />
                     </div>
-                    <div className={"c1"} >{`${pair["base"]}/${pair["quote"] == "WETH" ? "ETH*" : pair["quote"]}`}</div>
+                    <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                     <div className={"c2"} >{pair["price"]}</div>
                     <div className={"c3"} >{converters.formatNumber(pair["volume"], 5, '')}</div>
                     <div className={`${pair["change"] > 0 ? "up" : "down"} c4`}>{Math.abs(pair["change"])}%</div>
