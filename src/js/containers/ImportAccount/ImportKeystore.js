@@ -85,10 +85,9 @@ export default class ImportKeystore extends React.Component {
         </div>
         <a className="x" onClick={this.closeModal}>&times;</a>
         <div className="import-modal__body">
-          {/* <div className="row"> */}
             <div className="input-reveal">
               <input 
-                className="text-center security" 
+                className="security" 
                 id="keystore-pass" 
                 type="text" 
                 autoComplete="off" 
@@ -96,21 +95,14 @@ export default class ImportKeystore extends React.Component {
                 autoFocus onKeyPress={(e) => this.submit(e)} 
               />
               <a className="toggle" onClick={() => this.toggleShowPw()}/>
-              {/* <a className="tootip"/> */}
             </div>
             {this.state.error && (
               <div className={'modal-error custom-scroll'}>
                 {this.state.error}
               </div>
             )}
-          {/* </div> */}
         </div>
         <div className="import-modal__footer">
-          {/* <div className="input-confirm input-confirm--single">
-            <div className="cell unlock-btn-wrapper">
-              <a className={"button process-submit next"} onClick={this.unLock}>{this.props.translate("modal.unlock") || "Unlock"}</a>
-            </div>
-          </div> */}
           <button className={"import-modal__footer--button"} onClick={this.unLock}>
             {this.props.translate("modal.unlock") || "Unlock"}
           </button>
