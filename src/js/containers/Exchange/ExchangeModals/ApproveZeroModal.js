@@ -136,36 +136,39 @@ export default class ApproveZeroModal extends React.Component {
 
   contentModal = () => {
     return (
-      <div className="approve-modal">
-        <div className="title">Approve Token</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
-        <div className="content with-overlap">
-          <div className="row">
-            <div>
+      <div className="approve-modal content-wrapper">
+        <div>
+          <div className="title">Approve Token</div>
+          <a className="x" onClick={this.closeModal}>&times;</a>
+          <div className="content with-overlap">
+            <div className="row">
               <div>
-                <div className="message">
-                  {`You need reset allowance ${this.props.exchange.sourceTokenSymbol} of Kyber Swap with this address`}
-                </div>
-                <div class="info tx-title">
-                  <div className="address-info">
-                    <div>{this.props.translate("modal.address") || "Address"}</div>
-                    <div>{this.props.account.address}</div>
+                <div>
+                  <div className="message">
+                    {`You need reset allowance ${this.props.exchange.sourceTokenSymbol} of Kyber Swap with this address`}
                   </div>
+                  <div class="info tx-title">
+                    <div className="address-info">
+                      <div>{this.props.translate("modal.address") || "Address"}</div>
+                      <div>{this.props.account.address}</div>
+                    </div>
+                  </div>
+                  <FeeDetail
+                    translate={this.props.translate}
+                    gasPrice={this.props.exchange.gasPrice}
+                    gas={this.state.gasLimit}
+                    isFetchingGas={this.state.isFetchGas}
+                  />
                 </div>
-                <FeeDetail
-                  translate={this.props.translate}
-                  gasPrice={this.props.exchange.gasPrice}
-                  gas={this.state.gasLimit}
-                  isFetchingGas={this.state.isFetchGas}
-                />
-              </div>
-              {this.errorHtml()}
+                {this.errorHtml()}
 
+
+              </div>
 
             </div>
-
           </div>
         </div>
+       
         <div className="overlap">
           {/* <div>{this.msgHtml()}</div> */}
           <div className="input-confirm grid-x input-confirm--approve">           
