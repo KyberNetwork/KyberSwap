@@ -403,7 +403,7 @@
     "eth_not_support": "ETH* là tổng của ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
-    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi giá của ${base}/${quote} >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}",
     "fee": "Phí",
     "change_rate": "Thay đổi tỉ lệ",
     "current_rate": "Tỉ giá hiện tại",
@@ -441,7 +441,8 @@
     "buy": "Mua ${symbol}",
     "sell": "Bán ${symbol}",
     "type": "Loại",
-    "available_balance": "Số dư khả dụng"
+    "available_balance": "Số dư khả dụng",
+    "cancel_error": "Something went wrong with cancel order process."
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -464,5 +465,6 @@
   "error_text": "Lỗi Xảy Ra",
   "extra": "thêm",
   "off": "GIẢM",
-  "learn_more": "Tìm hiểu thêm"
+  "learn_more": "Tìm hiểu thêm",
+  "received": "Đã nhận"
 }

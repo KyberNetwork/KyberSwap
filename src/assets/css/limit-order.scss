@@ -815,6 +815,10 @@
         color: #666666;
         text-decoration: underline;
       }
+
+      @include screen-max-width(xxmedium) {
+        padding: 0 15px;
+      }
     }
   }
 
@@ -1002,11 +1006,21 @@
         right: 0;
         top: -25px;
       }
+
+      &__view-tx {
+        width: 18px;
+        height: 18px;
+        display: block;
+        background-image: url($image-path + 'icons/etherscan.png');
+        background-size: contain;
+        position: absolute;
+        right: 0;
+        top: -15px;
+      }
     }
   }
 }
 
-// Pair filter modal
 .pair-filter-modal {
   width: auto;
   box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
@@ -1208,7 +1222,6 @@
   &__title {
     font-size: 24px;
     font-weight: 500;
-    color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
     text-transform: capitalize;
@@ -1227,7 +1240,6 @@
   &__message {
     font-size: 16px;
     font-weight: normal;
-    color: #141927;
     margin-bottom: 23px;
     line-height: 1.5;
 

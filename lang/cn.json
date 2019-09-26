@@ -402,7 +402,7 @@
     "eth_not_support": "ETH*是ETH和WETH的总和，以便于参考",
     "canceling_order_message": "您正在取消这个订单",
     "fee_info_message": "别担心。您还没有被收费。\n您只有在交易被执行后才会被收费（上链)。",
-    "confirm_order_message": "当价格為${base} / ${quote} >= ${price}时，将发送您的交易",
+    "confirm_order_message": "当价格為${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}时，将发送您的交易",
     "fee": "费用",
     "change_rate": "改变汇率",
     "current_rate": "当前汇率",
@@ -440,7 +440,8 @@
     "buy": "购买${symbol}",
     "sell": "出售${symbol}",
     "type": "类型",
-    "available_balance": "可用余额"
+    "available_balance": "可用余额",
+    "cancel_error": "Something went wrong with cancel order process."
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -463,5 +464,6 @@
   "error_text": "错误",
   "extra": "额外",
   "off": "折扣",
-  "learn_more": "学到更多"
+  "learn_more": "学到更多",
+  "received": "收到"
 }

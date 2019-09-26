@@ -57,7 +57,6 @@ export function* updateAllRate(action) {
   const { ethereum, tokens } = action.payload
   if (!rateUSD) {
     try {
-      console.log("run here")
       rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
       yield put(actions.updateAllRateUSDComplete(rateUSD))
       yield put(actions.showBalanceUSD())
@@ -73,7 +72,6 @@ export function* updateAllRate(action) {
     yield call(updateTitleWithRate);
   }
   catch (err) {
-    //get rate from blockchain
     console.log(err.message)
   }
 }
