@@ -288,7 +288,7 @@ export default class ConfirmModal extends React.Component {
 
     msgHtml = () => {
         if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
-            return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+            return <div className="message-waiting">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
         } else {
             return ""
         }
@@ -497,39 +497,41 @@ export default class ConfirmModal extends React.Component {
                 <a className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
                 </a>
-                <div className="content with-overlap">
-                    <div className="row">
-                        <div>
+                <div className="content-wrapper">
+                    <div className="content with-overlap">
+                        <div className="row">
                             <div>
-                                <div className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
-                                {this.recap()}
+                                <div>
+                                    <div className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
+                                    {this.recap()}
 
-                                <FeeDetail
-                                    translate={this.props.translate}
-                                    gasPrice={this.props.exchange.snapshot.gasPrice}
-                                    gas={this.state.gasLimit}
-                                    isFetchingGas={this.state.isFetchGas}
-                                />
+                                    <FeeDetail
+                                        translate={this.props.translate}
+                                        gasPrice={this.props.exchange.snapshot.gasPrice}
+                                        gas={this.state.gasLimit}
+                                        isFetchingGas={this.state.isFetchGas}
+                                    />
 
-                              {warningLowFee &&
-                                  <div className={"tx-fee-warning"}>
-                                    <img src={require("../../../../assets/img/warning-triangle.svg")}/>
-                                    <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
-                                  </div>
-                              }
+                                {warningLowFee &&
+                                    <div className={"tx-fee-warning"}>
+                                        <img src={require("../../../../assets/img/warning-triangle.svg")}/>
+                                        <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
+                                    </div>
+                                }
 
+                                </div>
+                                {this.errorHtml()}
                             </div>
-                            {this.errorHtml()}
                         </div>
+                        <div>{this.msgHtml()}</div>
                     </div>
-                </div>
-                <div className="overlap">
-                    <div>{this.msgHtml()}</div>
-                    <div className="input-confirm grid-x">
-                        <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
-                            {this.props.translate("modal.cancel" || "Cancel")}
-                        </a>
-                        <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                    <div className="overlap">
+                        <div className="input-confirm grid-x">
+                            <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
+                                {this.props.translate("modal.cancel" || "Cancel")}
+                            </a>
+                            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                        </div>
                     </div>
                 </div>
             </div>
