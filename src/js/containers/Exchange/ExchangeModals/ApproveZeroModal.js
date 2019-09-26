@@ -169,13 +169,9 @@ export default class ApproveZeroModal extends React.Component {
         <div className="overlap">
           {/* <div>{this.msgHtml()}</div> */}
           <div className="input-confirm grid-x input-confirm--approve">           
-          <div className="cell medium-8 small-12">{this.msgHtml()}</div> 
-            <div className="cell medium-4 small-12">
-              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
-                onClick={this.onSubmit.bind(this)}
-              >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
-
-            </div>
+            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
+              onClick={this.onSubmit.bind(this)}
+            >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
           </div>
         </div>
       </div>

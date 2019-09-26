@@ -530,7 +530,8 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .transfer-title {
-    padding: 0 45px;
+    padding: 25px 45px;
+    background-color: #EBECF2;
     @include screen-max-width(medium) {
       padding: 0 20px;
     }
@@ -558,7 +559,7 @@ $divider-color: darken($title-background-color, 5);
 
   .recap-transfer{
     display: flex;
-    margin: 10px 0 35px;
+    margin: 10px 0;
     font-size: 18px;
     font-weight: 600;
     color: #999;
@@ -820,7 +821,7 @@ $divider-color: darken($title-background-color, 5);
     }
     .message{
       font-size: 14px;
-      margin-top: 1rem;
+      margin: 1rem 45px 25px;
       font-weight: normal;
       @include screen-max-width(medium) {
         padding: 0 20px;
@@ -838,7 +839,7 @@ $divider-color: darken($title-background-color, 5);
         // box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
         // border: .8px solid hsla(0,0%,80%,.72);
         border-radius: 4px;
-        padding: 15px 25px;
+        padding: 15px 0;
         margin-right: 0;
         div {
           &:first-child {
