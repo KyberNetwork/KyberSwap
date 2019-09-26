@@ -138,7 +138,8 @@
     "limit_order": "限价订单",
     "rate_label":"率",
     "market_rate": "市场价格",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "上查看"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -463,5 +464,6 @@
   "error_text": "错误",
   "extra": "额外",
   "off": "折扣",
-  "learn_more": "学到更多"
+  "learn_more": "学到更多",
+  "details": "Details"
 }
