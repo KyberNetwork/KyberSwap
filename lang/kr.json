@@ -138,7 +138,8 @@
     "limit_order": "리밋 오더",
     "rate_label":"율",
     "market_rate": "시장비율",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "에서 확인"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -466,5 +467,6 @@
   "extra": "추가",
   "off": "할인",
   "learn_more": "더 알아보기",
-  "received": "받았습니다"
+  "received": "받았습니다",
+  "details": "Details"
 }

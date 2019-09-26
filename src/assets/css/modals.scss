@@ -130,7 +130,7 @@ $divider-color: darken($title-background-color, 5);
     &.with-overlap {
       padding-bottom: 25px;
       &.tx-loading {
-        padding-bottom: 100px;
+        padding-bottom: 25px;
       }
     }
     .block-title {
@@ -908,11 +908,23 @@ $divider-color: darken($title-background-color, 5);
     color: #141927;
     margin-bottom: 30px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 35px;
+
+    .broadcast-title-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .title-status {
+      display: flex;
+      align-items: center;
+      font-size: 28px
+    }
+
     .icon {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 10px;
+      width: 40px;
+      height: 40px;
+      margin: 0 15px 0 0;
       background-size: contain;
       background-repeat: no-repeat;
 
@@ -935,15 +947,15 @@ $divider-color: darken($title-background-color, 5);
   }
   .content.with-overlap {
     @include screen-min-width(medium) {
-      padding-left: 3rem;
-      padding-right: 3rem;
+      // padding-left: 3rem;
+      // padding-right: 3rem;
     }
   }
   .final-status {
     text-align: center;
     font-size: 14px;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     letter-spacing: -0.1px;
     font-weight: 600 !important;
     color: #222222;
