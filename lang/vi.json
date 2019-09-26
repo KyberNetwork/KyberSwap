@@ -410,7 +410,7 @@
     "current_rate": "Tỉ giá hiện tại",
     "lower_rate_warning": "Lệnh giao dịch này có tỉ giá thấp hơn một số lệnh trước đó bạn đặt. Những lệnh giao dịch dưới đây sẽ bị hủy khi bạn đặt lệnh này.",
     "wrap_eth_notify": "Bạn không thể đặt lệnh này vì lượng WETH của bạn không đủ, vui lòng chuyển đổi thêm ETH sang WETH.",
-    "empty_order": "Hiện chưa có lệnh đặt nào cả. Bạn có thể đặt lệnh",
+    "empty_order": "Hiện chưa có lệnh đặt nào cả.",
     "you_will_receive": "Bạn sẽ nhận được",
     "submit_successfully": "Lệnh giao dịch của bạn đã được đặt thành công trên server. Bạn có thể kiểm tra lệnh này trên danh sách lệnh giao dịch.",
     "weth_not_supported_tooltip": "Lệnh giao dịch chỉ hỗ trợ những token có trên Kyber. ETH không được hỗ trợ, vui lòng sử dụng WETH.",

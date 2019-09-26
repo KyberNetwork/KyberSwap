@@ -409,7 +409,7 @@
     "current_rate": "当前汇率",
     "lower_rate_warning": "这个新订单的汇率比您的一些其他订单要低。当您提交该订单后，以下的订单将被取消",
     "wrap_eth_notify": "由于您的WETH不足，您的订单不能提交，请先将ETH兑换为WETH",
-    "empty_order": "目前还没有订单。您可以添加一个。",
+    "empty_order": "目前还没有订单。",
     "you_will_receive": "您将会收到",
     "submit_successfully": "您的订单已被成功提交至服务器。您可以在订单列表里查看订单。",
     "weth_not_supported_tooltip": "限价订单仅支持Kyber上支持的代币。不支持ETH，请使用WETH",

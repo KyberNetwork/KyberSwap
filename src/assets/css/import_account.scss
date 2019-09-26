@@ -79,10 +79,6 @@
             background-color: #ef8102;
           }
         }
-
-        &--inactive {
-          color: $grey-dark;
-        }
       }
 
       .import-account__block {
@@ -92,7 +88,7 @@
         justify-content: space-between;
         padding: 10px 15px;
         height: unset;
-        cursor: initial;
+        cursor: pointer;
         border: none;
         box-shadow: 0 3px 14px 1px rgba(0, 0, 0, 0.08);
 
@@ -130,24 +126,13 @@
       }
 
       .import-account__icon {
-        width: 24px;
-        height: 24px;
-        background-size: contain;
         margin-right: 16px;
 
         &.kyberapp {
           width: 30px;
-          height: 43px;
-          margin-right: 12px;
-          background-image: url($image-path + '/v3/kyber-logo.svg');
-        }
-
-        &.promo-code {
-          background-image: url($image-path + '/v3/kyber-promo-mobile.svg');
-        }
-
-        &.private-key {
-          background-image: url($image-path + '/v3/private-key-mobile.svg');
+          height: 33px;
+          background-size: 250%;
+          margin-right: 6px;
         }
       }
 
@@ -181,19 +166,10 @@
       margin-right: 0;
     }
 
-    &--inactive {
-      .import-account__block {
-        border: 1px solid transparent;
-
-        &:hover {
-          border-color: #e7edf5;
-          background-color: white;
-
-          .import-account__name {
-            color: inherit;
-          }
-        }
-      }
+    &--disabled {
+      opacity: 0.6;
+      cursor: initial;
+      pointer-events: none;
     }
 
     @include screen-max-width(xxsmall) {
@@ -211,11 +187,11 @@
     padding: 6px 10px;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     transition: all .4s;
     outline: none;
     border: 1px solid;
     border-radius: 3px;
+    cursor: pointer;
 
     &:hover {
       background-color: transparent;
@@ -226,6 +202,10 @@
 
       .import-account__icon {
         background-position: -31px 0;
+
+        &.kyberapp {
+          background-position: -51px 0;
+        }
       }
     }
   }
@@ -257,9 +237,14 @@
       background-image: url($image-path + 'import-account/wallets/private-key.svg');
     }
 
-    &.promo-code {
+    &.promo-code,
+    &.kyberapp {
       width: 15px;
       background-image: url($image-path + 'import-account/wallets/promo-code.svg');
+    }
+
+    &.kyberapp {
+      background-position: -51px 0;
     }
   }
 

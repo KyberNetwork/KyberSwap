@@ -1,12 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportAccountView } from '../../components/ImportAccount'
-import {
-  ImportKeystore, ImportByDevice, ImportByPrivateKey,
-  ErrorModal, ImportByMetamask,
-  ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
-} from "../ImportAccount"
-import { visitExchange, setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
+import { ErrorModal } from "../ImportAccount"
+import { setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
