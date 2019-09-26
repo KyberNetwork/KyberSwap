@@ -141,7 +141,8 @@
     "limit_order": "Limit Order",
     "rate_label":"Rate",
     "market_rate": "Market rate",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "View on"
   },
   "modal": {
     "enter_password": "Enter Password",
@@ -469,5 +470,6 @@
   "extra": "extra",
   "off": "OFF",
   "learn_more": "Learn More",
-  "received": "Received"
+  "received": "Received",
+  "details": "Details"
 }
