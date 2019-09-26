@@ -77,7 +77,7 @@ const AccountBalanceLayout = (props) => {
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
         if (props.isLimitOrderTab){
-          if (!token.sp_limit_order) classBalance += " disabled" 
+          if (!token.sp_limit_order || !props.priorityValid(token)) classBalance += " disabled"
         }else {
           if (balance == 0) classBalance += " disabled" 
         }
@@ -89,7 +89,7 @@ const AccountBalanceLayout = (props) => {
         return (
           <div
             key={token.symbol}
-            onClick={(e) => props.selectBalance(token.symbol)}
+            {...(!classBalance.includes('disabled') && {onClick: (e) => props.selectBalance(token.symbol == "ETH" ? "WETH" : token.symbol)})}
             className={"account-balance__token-item" + classBalance}
           >
             <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
