@@ -33,7 +33,7 @@ export default class OrderDetailsModal extends Component {
             <div className="limit-order-modal">
                 <div className="limit-order-modal__body">
                     <div className="limit-order-modal__title">
-                        { `${order.side_trade} ${source} Order`}
+                        { `${order.side_trade ? order.side_trade : ""} ${source} Order`}
                     </div>
 
                     <div className="limit-order-modal__close"
@@ -41,7 +41,7 @@ export default class OrderDetailsModal extends Component {
                         <div className="limit-order-modal__close-wrapper" />
                     </div>
                     <div className="limit-order-modal__content">
-                        <div className="limit-order-modal__message">
+                        <div className="limit-order-modal__message limit-order-modal__message--text-small">
                             {common.getFormattedDate(order.updated_at)} {' '}
                                 <span className={`cell-status cell-status--${order.status}`}>
                                     {(order.status)}
@@ -53,6 +53,7 @@ export default class OrderDetailsModal extends Component {
                                 <div>{"Price"}</div>
                                 <div>{"Amount"}</div>
                                 <div>{"Total"}</div>
+                                {order.status == "open" && <div>Received</div>}
                                 <div>{"Fee"}</div>
                                 <div>{"Action"}</div>
                             </div>
@@ -62,7 +63,8 @@ export default class OrderDetailsModal extends Component {
                                     <div>{converters.displayNumberWithDot(order.min_rate, 9)}</div>
                                     <div>{`${converters.formatNumber(order.src_amount, 5)} ${order.source.toUpperCase()}`} </div>
                                     <div>{`${converters.formatNumber(destAmount, 5)} ${dest.toUpperCase()}`}</div>
-                                    <div>{converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')}</div>
+                                    {order.status == "open" && <div>{`${order.receive} ${order.dest.toUpperCase()}`}</div>}
+                                    <div>{`${converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')} ${order.source.toUpperCase()}`}</div>
                                     <div className="cell-action">
                                         {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.confirmCancel()}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
                                         {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => window.open(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + order.tx_hash)}>{this.props.translate("limit_order.view_tx") || "View tx"}</button>}
@@ -71,10 +73,11 @@ export default class OrderDetailsModal extends Component {
                                 </div>
                             </div>
 
-                            <div className="limit-order-modal__message">
-                                <div>Address</div>
-                                <div>{order.user_address}</div>
-                            </div>
+                        </div>
+                        <br />
+                        <div className="limit-order-modal__message limit-order-modal__message--text-small">
+                            <div className="color-grey-darker">Address</div>
+                            <div>{order.user_address}</div>
                         </div>
                     </div>
                 </div>

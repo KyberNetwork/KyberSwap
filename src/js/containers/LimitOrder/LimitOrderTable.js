@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
-import { getFormattedDate } from "../../utils/common";
+import {getAssetUrl, getFormattedDate} from "../../utils/common";
 import { roundingRateNumber, multiplyOfTwoNumber, formatNumber, displayNumberWithDot, compareTwoNumber, subOfTwoNumber } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
@@ -43,14 +43,13 @@ export default class LimitOrderTable extends Component {
     // ---------------
     // Desktop columns
     // ---------------
-    const desktopColumns = [{
+    let desktopColumns = [{
       id: "date",
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header theme__background theme__text-3",
       className: "cell-flex-start cell-text-small theme__text-4",
-      width: 130,
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -66,7 +65,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "type",
       Header: this.getHeader("type"),
@@ -74,7 +72,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getTypeCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "price",
       Header: this.getHeader("price"),
@@ -82,7 +79,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getPriceCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "from",
       Header: this.getHeader("amount"),
@@ -90,7 +86,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getFromCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-from theme__text-4",
-      width: 150
     }, {
       id: "to",
       Header: this.getHeader("total"),
@@ -98,7 +93,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getToCell(props.value),
       headerClassName: "cell-flex-start-header theme__background theme__text-3",
       className: "cell-flex-start cell-to theme__text-4",
-      width: 150
     }, {
       id: "status",
       Header: this.getHeader("status"),
@@ -106,7 +100,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-center-header cell-status-header theme__background theme__text-3",
       className: "cell-flex-center theme__text-4",
-      width: 120
     }, {
       expander: true,
       show: false
@@ -137,7 +130,23 @@ export default class LimitOrderTable extends Component {
     //   width: 85,
     // }
     ];
+    const {activeOrderTab} = this.props.limitOrder;
+    let widths = [130, 130, 130, 130, 150, 150, 120]
 
+    if (activeOrderTab === "history"){
+      desktopColumns.splice(desktopColumns.length-2, 0, {
+        id: "receive",
+        Header: this.getHeader("receive"),
+        accessor: item => item,
+        Cell: props => this.getReceiveCell(props.value),
+        headerClassName: "theme__background theme__text-3",
+        maxWidth: 80
+      })
+      widths = [120, 120, 100, 120, 140, 140, 80, 120]
+    }
+    for (let i = 0; i < desktopColumns.length ; i++){
+      desktopColumns[i]["width"] = widths[i]
+    }
     // --------------
     // Mobile columns
     // --------------
@@ -210,7 +219,7 @@ export default class LimitOrderTable extends Component {
   }
   getTypeCell = (props) => {
     return (
-      <div className={"common__uppercase"}>{props.side_trade}</div>
+      <div className={"common__uppercase"}>{props.side_trade ? props.side_trade : '-'}</div>
     )
   }
   getPriceCell = (props) => {
@@ -282,10 +291,19 @@ export default class LimitOrderTable extends Component {
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formatedFee = formatNumber(calcFee, 5, '');
     return (
-      <div>
-        <span className="to-number-cell">{formatedFee}</span>{' '}
-        <span>{source.toUpperCase()}</span>
-      </div>
+        <div>
+          <span className="to-number-cell">{formatedFee}</span>{' '}
+          <span>{source.toUpperCase()}</span>
+        </div>
+    )
+  }
+
+  getReceiveCell = (props) => {
+    const { receive, dest, status} = props;
+    return (
+        <div>
+          <span className="to-number-cell">{status == "filled" ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
+        </div>
     )
   }
 
@@ -348,7 +366,7 @@ export default class LimitOrderTable extends Component {
   }
 
   getOrderDetailCell = (row) => {
-    const { source, dest, min_rate, src_amount, fee } = row;
+    const { source, dest, min_rate, src_amount, fee, txHash } = row;
     const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formattedFee = formatNumber(calcFee, 5, '');
@@ -364,7 +382,12 @@ export default class LimitOrderTable extends Component {
           <div className={"order-item__column"}/>
           <div className={"order-item__column"}>
             {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
-              <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
+                <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
+            )}
+            {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (
+                <a href={BLOCKCHAIN_INFO.ethScanUrl + 'eth/transaction/' + txHash} target="_blank" >
+                  <img  src={getAssetUrl(`utils/etherscan_explorer.svg`)}/>
+                </a>
             )}
           </div>
         </div>

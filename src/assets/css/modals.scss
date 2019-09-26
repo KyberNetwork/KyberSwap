@@ -762,8 +762,7 @@ $divider-color: darken($title-background-color, 5);
   .input-confirm {
     padding: 30px 0px 0px 0px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     &--single {
       display: block;

@@ -95,7 +95,7 @@ const AccountBalanceLayout = (props) => {
             <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
             <div>
               <span className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</span>
-              <div className="account-balance__token-balance theme__text-3">{converts.roundingNumber(balance)}</div>
+              <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
             </div>
             {
               (token.symbol == "ETH" || converts.compareTwoNumber(token.rate, 0)) ?  
