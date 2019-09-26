@@ -95,12 +95,15 @@ export default class OrderDetailsModal extends Component {
 
   closeModal = () => {
     this.props.closeModal();
+    this.setCancelErrorMessage(true);
   };
 
-  setCancelErrorMessage = () => {
-    this.setState({
-      cancelError: this.props.translate("limit_order.cancel_error") || "Something went wrong with cancel order process."
-    })
+  setCancelErrorMessage = (isReset = false) => {
+    let errorMessage = this.props.translate("limit_order.cancel_error") || "Something went wrong with cancel order process.";
+
+    if (isReset) errorMessage = null;
+
+    this.setState({ cancelError: errorMessage});
   };
 
   async confirmCancel() {
@@ -132,19 +135,21 @@ export default class OrderDetailsModal extends Component {
     }
   }
 
-    render() {
-        return (
-            this.props.order && <Modal
-                className={{
-                  base: "reveal large confirm-modal",
-                  afterOpen: "reveal large confirm-modal"
-                }}
-                isOpen={this.props.isOpen}
-                onRequestClose={this.closeModal}
-                contentLabel="Order Details"
-                content={this.contentModal()}
-                size="medium"
-            />
-        )
-    }
+  render() {
+    return (
+      this.props.order && (
+        <Modal
+          className={{
+            base: "reveal large confirm-modal",
+            afterOpen: "reveal large confirm-modal"
+          }}
+          isOpen={this.props.isOpen}
+          onRequestClose={this.closeModal}
+          contentLabel="Order Details"
+          content={this.contentModal()}
+          size="medium"
+        />
+      )
+    )
+  }
 }
