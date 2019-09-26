@@ -22,6 +22,14 @@ import BLOCKCHAIN_INFO from "../../../../../env";
   };
 })
 export default class OrderDetailsModal extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      cancelError: null
+    };
+  }
+
   contentModal = () => {
     const { order } = this.props
     let source = order.source == "WETH" ? "ETH*" : order.source
@@ -75,19 +83,25 @@ export default class OrderDetailsModal extends Component {
                 <div>Address</div>
                 <div>{order.user_address}</div>
               </div>
+
+              <div className={"common__text-red"}>{this.state.cancelError}</div>
             </div>
           </div>
         </div>
-        <div className="limit-order-modal__body"></div>
-
-
+        <div className="limit-order-modal__body"/>
       </div>
     )
   }
 
   closeModal = () => {
     this.props.closeModal();
-  }
+  };
+
+  setCancelErrorMessage = () => {
+    this.setState({
+      cancelError: this.props.translate("limit_order.cancel_error") || "Something went wrong with cancel order process."
+    })
+  };
 
   async confirmCancel() {
     this.props.global.analytics.callTrack("trackClickConfirmCancelOrder", this.props.order ? this.props.order.id : null);
@@ -107,21 +121,23 @@ export default class OrderDetailsModal extends Component {
             }
           }
           this.props.dispatch(limitOrderActions.getListFilter());
+          this.props.closeModal();
+        } else {
+          this.setCancelErrorMessage();
         }
       } catch (err) {
         console.log(err);
+        this.setCancelErrorMessage();
       }
     }
-    this.props.closeModal();
   }
 
     render() {
         return (
             this.props.order && <Modal
                 className={{
-                    base: "reveal large confirm-modal",
-                    afterOpen:
-                        "reveal large confirm-modal"
+                  base: "reveal large confirm-modal",
+                  afterOpen: "reveal large confirm-modal"
                 }}
                 isOpen={this.props.isOpen}
                 onRequestClose={this.closeModal}

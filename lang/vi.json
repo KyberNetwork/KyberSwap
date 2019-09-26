@@ -441,7 +441,8 @@
     "buy": "Mua ${symbol}",
     "sell": "Bán ${symbol}",
     "type": "Loại",
-    "available_balance": "Số dư khả dụng"
+    "available_balance": "Số dư khả dụng",
+    "cancel_error": "Something went wrong with cancel order process."
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
