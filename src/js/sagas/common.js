@@ -30,17 +30,6 @@ export function* handleRequest(sendRequest, ...args) {
     }else{
         return { status: "fail", data: res.err }    
     }
-   // return { status: "success", data: res }
-
-    // console.log(res)
-	// if (res.err) {
-    //     return new Promise(resolve => {
-    //         resolve ({
-    //             status: "error",
-    //             data: res.err
-    //         })
-    //     })
-	// }
 }
 
 

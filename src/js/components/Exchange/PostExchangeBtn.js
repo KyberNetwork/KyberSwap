@@ -8,7 +8,7 @@ const PostExchangeBtn = (props) => {
       <div>
         {props.isHaveAccount && !props.isChangingWallet &&
           <div>
-            <a className={props.activeButtonClass + " exchange-button__button"} onClick={props.submit} data-open="passphrase-modal">
+            <a className={props.activeButtonClass + " exchange-button__button theme__button"} onClick={props.submit} data-open="passphrase-modal">
               {props.translate("transaction.swap_now") || "Swap Now"}
             </a>
             <TermAndServices tradeType="swap"/>

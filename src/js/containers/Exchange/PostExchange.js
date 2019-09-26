@@ -188,7 +188,7 @@ export default class PostExchange extends React.Component {
       <div className="exchange-button">
         {this.props.account !== false &&
           <Fragment>
-            <a className={activeButtonClass + " exchange-button__button"} onClick={this.clickExchange}>
+            <a className={activeButtonClass + " exchange-button__button theme__button"} onClick={this.clickExchange}>
               {this.props.translate("transaction.swap_now") || "Swap Now"}
             </a>
             <TermAndServices tradeType="swap"/>

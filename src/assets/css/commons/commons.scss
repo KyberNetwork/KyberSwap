@@ -11,6 +11,10 @@
     text-transform: uppercase;
   }
 
+  &__capitalize {
+    text-transform: capitalize;
+  }
+
   &__flexbox {
     display: flex;
     justify-content: space-between;

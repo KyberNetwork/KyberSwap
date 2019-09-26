@@ -88,7 +88,7 @@ export default class PostTransfer extends React.Component {
         <div>
           {this.props.account !== false &&
             <div>
-              <a className={activeButtonClass + " exchange-button__button"} onClick={this.clickTransfer} data-open="passphrase-modal">
+              <a className={activeButtonClass + " exchange-button__button theme__button"} onClick={this.clickTransfer} data-open="passphrase-modal">
                 {this.props.translate("transaction.transfer_now") || "Transfer Now"}
               </a>
               <TermAndServices tradeType="transfer" />

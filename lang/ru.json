@@ -402,7 +402,7 @@
     "eth_not_support": "ETH* represents the sum of ETH & WETH for easy reference.",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
-    "confirm_order_message": "Your transaction will be broadcasted when price of ${base}/${quote} >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Your transaction will be broadcasted when rate of ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}",
     "fee": "Fee",
     "change_rate": "Change Rate",
     "current_rate": "Current Rate",
@@ -462,5 +462,6 @@
   "error_text": "ошибка",
   "extra": "extra",
   "off": "OFF",
-  "learn_more": "Учить больше"
+  "learn_more": "Учить больше",
+  "received": "Получил"
 }

@@ -78,7 +78,12 @@ export default class LimitOrderListModal extends Component {
   render() {
     return (
       <div className="limit-order-table theme__background-2">
-        <div className="limit-order-modal__title">Limit Order</div>
+        <div className="limit-order-modal__title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
+        <div className={"limit-order-list--title-faq"}>
+          <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank" rel="noreferrer noopener">
+            {this.props.translate("limit_order.wonder_why_order_not_filled")}
+          </a>
+        </div>
         <div className="limit-order-list__tab-container">
           {this.getOrderTabs()}
         </div>
