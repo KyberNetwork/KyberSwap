@@ -8,6 +8,12 @@ import * as common from "../../../utils/common";
 import * as converters from "../../../utils/converter";
 import {LIMIT_ORDER_CONFIG} from "../../../services/constants";
 import BLOCKCHAIN_INFO from "../../../../../env";
+import {displayNumberWithDot} from "../../../utils/converter";
+import {toT} from "../../../utils/converter";
+import {convertBuyRate} from "../../../utils/converter";
+import {roundingRateNumber} from "../../../utils/converter";
+import {formatNumber} from "../../../utils/converter";
+import {multiplyOfTwoNumber} from "../../../utils/converter";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -34,16 +40,20 @@ export default class OrderDetailsModal extends Component {
     const { order } = this.props
     let source = order.source == "WETH" ? "ETH*" : order.source
     let dest = order.dest == "WETH" ? "ETH*" : order.dest
-    const { min_rate, fee, src_amount, status } = order;
+    const { min_rate, fee, src_amount, status, side_trade } = order;
     const destAmount = converters.multiplyOfTwoNumber(src_amount, min_rate);
 
-
-
+    const base = side_trade == "buy" ? dest : source
+    const quote = side_trade == "buy" ? source : dest
+    const pair = side_trade == "buy" ? `${dest}/${source}` : `${source}/${dest}`
+    const rate = side_trade === 'buy' ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
+    const amount = side_trade == "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
+    const total = side_trade == "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
     return (
       <div className="limit-order-modal">
         <div className="limit-order-modal__body">
           <div className="limit-order-modal__title">
-            { `${order.side_trade ? order.side_trade : ""} ${source} Order`}
+            { `${side_trade ? side_trade : ""} ${base} Order`}
           </div>
 
           <div className="limit-order-modal__close"
@@ -65,16 +75,18 @@ export default class OrderDetailsModal extends Component {
                 <div>{"Total"}</div>
                 {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>Received</div>}
                 <div>{"Fee"}</div>
+                <div>{"Address"}</div>
                 <div>{"Action"}</div>
               </div>
               <div className={"order-table-info__body"}>
                 <div className={"info"}>
-                  <div>{`${order.source.toUpperCase()}/${order.dest.toUpperCase()}`}</div>
-                  <div>{converters.displayNumberWithDot(order.min_rate, 9)}</div>
-                  <div>{`${converters.formatNumber(destAmount, 5)} ${dest.toUpperCase()}`}</div>
-                  <div>{`${converters.formatNumber(order.src_amount, 5)} ${order.source.toUpperCase()}`} </div>
-                  {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${order.receive} ${order.dest.toUpperCase()}`}</div>}
-                  <div>{converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')}</div>
+                  <div>{pair}</div>
+                  <div>{rate}</div>
+                  <div>{`${amount} ${base}`}</div>
+                  <div>{`${total} ${quote}`} </div>
+                  {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${order.receive} ${dest.toUpperCase()}`}</div>}
+                  <div>{`${converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')} ${source.toUpperCase()}`}</div>
+                  <div>{`${order.user_address.slice(0, 8)}...${order.user_address.slice(-4)}`}</div>
                   <div className="cell-action">
                     {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.confirmCancel()}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}
                     {status === LIMIT_ORDER_CONFIG.status.FILLED && <button className="btn-cancel-order btn-cancel-order--view-tx theme__button-2" onClick={e => window.open(BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + order.tx_hash)}>{this.props.translate("limit_order.view_tx") || "View tx"}</button>}
@@ -82,13 +94,6 @@ export default class OrderDetailsModal extends Component {
                   </div>
                 </div>
               </div>
-
-              <br />
-              <div className="limit-order-modal__message limit-order-modal__message--text-small">
-                <div className="color-grey-darker">Address</div>
-                <div>{order.user_address}</div>
-              </div>
-
               <div className={"common__text-red"}>{this.state.cancelError}</div>
             </div>
           </div>

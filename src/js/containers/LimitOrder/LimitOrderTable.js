@@ -204,21 +204,22 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest } = props;
+    const { source, dest, side_trade } = props;
     const { screen } = this.props;
+    const pair = side_trade == "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`
 
     if (screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
-          <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()}`}</div>
+          <div className="cell-pair__mobile--rate">{pair}</div>
           {this.getAddressCell(props)}
         </div>
       )
     }
 
     return (
-      <div>{source.toUpperCase()}/{dest.toUpperCase()}</div>
+      <div>{pair}</div>
     )
   };
 
@@ -255,25 +256,25 @@ export default class LimitOrderTable extends Component {
   };
 
   getAmountCell = (props) => {
-    const { dest, min_rate, src_amount } = props;
-    const destAmount = formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5);
-
+    const { source, dest, min_rate, src_amount, side_trade } = props;
+    const amount = side_trade == "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
+    const unit = side_trade == "buy" ? dest.toUpperCase() : source.toUpperCase()
     return (
       <div>
-        <span className="to-number-cell">{destAmount}</span>{' '}
-        <span>{dest.toUpperCase()}</span>
+        <span className="to-number-cell">{amount}</span>{' '}
+        <span>{unit}</span>
       </div>
     )
   };
 
   getTotalCell = (props) => {
-    const { source, src_amount } = props;
-    const amount = formatNumber(src_amount, 5);
-
+    const { source, dest, min_rate, src_amount, side_trade } = props;
+    const amount = side_trade == "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
+    const unit = side_trade == "buy" ? source.toUpperCase() : dest.toUpperCase()
     return (
         <div>
           <span className="to-number-cell">{amount}</span>{' '}
-          <span>{source.toUpperCase()}</span>
+          <span>{unit}</span>
         </div>
     )
   }
@@ -329,7 +330,6 @@ export default class LimitOrderTable extends Component {
 
   getOrderDetailCell = (row) => {
     const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash } = row;
-    const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formattedFee = formatNumber(calcFee, 5, '');
     const sourceAmount = formatNumber(src_amount, 5);
@@ -338,11 +338,14 @@ export default class LimitOrderTable extends Component {
     const datetime = getFormattedDate(updated_at);
     const isFilledOrder = row.status === LIMIT_ORDER_CONFIG.status.FILLED;
 
+    const base = side_trade == "buy" ? dest : source
+    const quote = side_trade == "buy" ? source : dest
+    const rate = side_trade === 'buy' ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
     return (
       <div className="order-item">
         <div className={"order-item__date theme__background-3"}>{datetime}</div>
         <div className={"order-item__row"}>
-          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {dest}</div>
+          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {base}</div>
           <div className={"order-item__column"}/>
           <div className={"order-item__column"}>
             {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
