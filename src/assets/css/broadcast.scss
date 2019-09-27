@@ -1,36 +1,30 @@
 .tx-title {
   font-size: 18rem;
-  margin-top: 35px;
-  text-align: center;
+  margin-top: 10px;
+  background-color: #eaecf2;
+  padding: 25px 45px 15px;
 
   .tx-title-text {
-    font-size: 16px;
-    color: #222222;
-    font-weight: 600;
+    font-size: 14px;
+    color: #5a5e67;
+    font-weight: 500;
+    margin-bottom: 9px;
   }
 }
 
 .tx-hash {
   margin-top: 5px;
   position: relative;
+  display: flex;
 
   a {
-    padding:  13px 10px;
-
     &:first-child{
-      width: 100%;
-      border: 1px solid #E5E5E5;
-      padding-right: 50px;
-      color: #666;
-      white-space: nowrap;
-      overflow:hidden !important;
-      text-overflow: ellipsis;
-      border-radius: 23px;
-      font-size: 16px;
+      color: #5a5e67;
+      font-size: 14px;
       text-align: left;
       display: inline-block;
       font-weight: 600;
-      padding-left: 25px;
+      margin-right: 10px;
 
       @include screen-max-width(medium) {
         background-color: white;
@@ -38,27 +32,14 @@
     }
 
     &.copy-tx {
-      padding: 8px 10px;
-      // background-color: #F5F5F5;
+      width: 16px;
+      height: 16px;
       border-radius: 6px;
-      position: absolute;
-      right: 5px;
-      top: 6px;
-
-      img {
-        position: relative;
-        bottom: 1px;
-        width: 20px;
-      }
+      cursor: pointer;
     }
   }
 
-  &--error {
-    a:first-child {
-      border-color: $error-color;
-      background-color: #FFE7EB;
-    }
-  }
+  &--error {}
 }
 
 .broadcast-animation{
@@ -71,7 +52,7 @@
     }
   }
 ul.broadcast-steps {
-  margin: 0;
+  margin: 0 45px;
   padding: 0;
   list-style: none;
   font-size: 0;
@@ -98,9 +79,14 @@ ul.broadcast-steps {
   .pending{
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    justify-content: center;
+    margin: 20px 0;
     color: #666;
     font-size: 13px;
+
+    &--flex-start{
+      justify-content: flex-start;
+    }
   }
 
   ul.address-balances{
@@ -125,7 +111,6 @@ ul.broadcast-steps {
   }
   > li {
     font-size: 14px;
-    font-weight: bold;    
     display: inline-block;
     background-repeat: no-repeat;
     background-position: top 2px left;
@@ -141,45 +126,35 @@ ul.broadcast-steps {
       font-size: 20px;
       font-weight: normal;
       .title{
-        // color: #EF8102;
-        color: #222222;
+        color: #5a5e67;
+        text-align: start;
         font-weight: 500;
       }
       .content{
-        font-size: 18px;
+        font-size: 16px;
+        color: #5a5e67;
+        text-align: start;
+
+        span:first-child {
+          margin-left: 0;
+        }
+
         span{
           margin-left: 5px;
-          color: #999999;
           strong{
             font-weight: 600;
-            color: #141927;
           }
         }
       }
     }
     &.failed {
-      h4 {
-        cursor: pointer;
-        // margin-top: 10px;
-        display: inline-block;
-        border-bottom: 1px solid #F1637D;
-        color: #F1637D;
-        font-size: 16px;
+      .description {
+        font-size: 14px;
+        color: #5a5e67;
         font-weight: 500;
-        position: relative;
-        margin-left: 45px;
-
-        &::before {
-          content: '';
-          width: 20px;
-          height: 20px;
-          display: inline-block;
-          position: absolute;
-          top: 2px;
-          left: -27px;
-          background-image: url($image-path + 'exchange/error-icon.svg');
-        }
+        text-align: center;
       }
+      
       .list-err {
         div {
           margin-top: 5px;
@@ -225,27 +200,78 @@ ul.broadcast-steps {
     color: #f7f7f7;
     font-weight: normal;
   }
+
+  // Failed footer
+  .failed {
+    &__container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    &__description {
+      margin-left: 7px;
+    }
+
+    &__icon{
+      width: 18px;
+      height: 18px;
+      background-image: url($image-path + 'exchange/error-icon.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &__title {
+      font-size: 14px;
+      color: #5a5e67;
+    }
+
+    &__detail {
+      font-size: 12px;
+      color: #5a5e67;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    &__list-error {
+      margin-top: 8px;
+    }
+  }
 }
 
 .tx-actions{
-  text-align: center;
-  padding: 30px 48px 60px 48px;
+  width: 100%;
+  background-color: white;
+  padding: 25px 45px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
 
   &--error {
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   a {
-    max-width: 165px;
-    width: 100%;
-    text-transform: capitalize;
-    padding: 10px;
-    border-radius: 3px;
     font-size: 14px;
     font-weight: 600;
+
+    text-transform: capitalize;
+    min-width: 150px;
+    border-radius: 3px;
+    padding: 14px 30px 14px 30px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #EF8102;
+    font-weight: bold;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
 
     @include screen-max-width(medium) {
       max-width: 135px;
@@ -339,38 +365,42 @@ ul.broadcast-steps {
   &:not(.loading){
     list-style-type: disc;
   }
+}
 
-  .analyze-link {
-    font-size: 12px;
-  }
+.analyze-link {
+  font-size: 12px;
+  color: #ff9008;
+  font-weight: 500;
+}
+
+.analyze-description {
+  font-style: italic;
+  font-size: 14px;
+  color: #5a5e67;
+  margin-bottom: 8px;
 }
 
 
 .tx-explorer{  
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5a5e67;
 
   width: 350px;
-  margin: 0 auto;
   margin-top: 15px;
-  margin-bottom: 20px;
   @include screen-max-width(medium){
     width: 100%;
   }
   a{
-    color: inherit !important;
-    font-size: 10px;
-    padding: 5px 10px;
-    background-color: #F1F3F8;
-    border-radius: 20px;
-    /* margin-left: 25px; */
-    font-weight: 500;
-    span{
-      margin-left: 6px;
-    }
+    margin-left: 15px
   }
 }
 
 .tx-waiting-text {
+  font-size: 14px;
+  color: #727b8f;
+  font-weight: 500;
   margin-left: 10px;
 }

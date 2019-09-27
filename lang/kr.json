@@ -138,7 +138,8 @@
     "limit_order": "리밋 오더",
     "rate_label":"율",
     "market_rate": "시장비율",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "에서 확인"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -403,7 +404,7 @@
     "eth_not_support": "ETH* 는 편의상 ETH와 WETH의 합을 뜻합니다.",
     "canceling_order_message": "이 거래를 취소합니다.",
     "fee_info_message": "걱정 마세요. \n 거래가 실행 된 경우에만 수수료를 지불합니다. (브로드 캐스트 및 채굴)",
-    "confirm_order_message": "가격이 ${base}/${quote} >= ${price} 일때 해당 거래가 전송됩니다.",
+    "confirm_order_message": "가격이 ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote} 일때 해당 거래가 전송됩니다.",
     "fee": "수수료",
     "change_rate": "변동률",
     "current_rate": "현재 가격",
@@ -441,7 +442,8 @@
     "buy": "${symbol} 구매",
     "sell": "${symbol} 판매",
     "type": "유형",
-    "available_balance": "사용 가능한 잔액"
+    "available_balance": "사용 가능한 잔액",
+    "cancel_error": "Something went wrong with cancel order process."
   },
   "home": "홈",
   "tracker": "트래커",
@@ -464,5 +466,7 @@
   "error_text": "오류",
   "extra": "추가",
   "off": "할인",
-  "learn_more": "더 알아보기"
+  "learn_more": "더 알아보기",
+  "received": "받았습니다",
+  "details": "Details"
 }

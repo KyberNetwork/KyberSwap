@@ -13,7 +13,6 @@
 @import "market";
 @import "import_account";
 @import "transfer";
-@import "cold_wallet";
 @import "slide_down";
 @import '~react-linechart/dist/styles.css';
 @import "slider";
@@ -23,6 +22,7 @@
 @import "quote-market";
 @import "components/trading-view";
 @import "themes/index";
+@import "import-modal";
 
 * {
   box-sizing: border-box;

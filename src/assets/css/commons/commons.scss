@@ -11,6 +11,10 @@
     text-transform: uppercase;
   }
 
+  &__capitalize {
+    text-transform: capitalize;
+  }
+
   &__flexbox {
     display: flex;
     justify-content: space-between;
@@ -61,8 +65,8 @@
   }
 
   &__circle-loading {
-    width: 30px;
-    height: 30px;
+    width: 18px;
+    height: 18px;
     background-image: url($image-path + 'common/circle-loading.svg');
     background-size: contain;
   }
@@ -78,4 +82,8 @@
   &__text-red {
     color: $alert-color;
   }
+}
+
+.text-center {
+  text-align: center;
 }
