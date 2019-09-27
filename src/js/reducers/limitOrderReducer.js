@@ -14,6 +14,8 @@ const limitOrder = (state = initState, action) => {
       newState.sourceToken = sourceToken;
       newState.destTokenSymbol = destTokenSymbol;
       newState.destToken = destToken;
+      newState.sourceAmount = '';
+      newState.destAmount = '';
       newState.errors.sourceAmount = [];
       newState.errors.triggerRate = [];
       newState.selected = true;

@@ -10,9 +10,8 @@ import {
   multiplyOfTwoNumber,
   formatNumber,
   displayNumberWithDot,
-  compareTwoNumber,
-  subOfTwoNumber,
-  convertBuyRate, toT
+  convertBuyRate,
+  toT
 } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
@@ -52,7 +51,7 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
-      headerClassName: "cell-flex-start-header cell-date-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header cell-date-header theme__text-3",
       className: "cell-flex-start cell-text-small theme__text-4",
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
@@ -67,42 +66,42 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("condition"),
       accessor: item => item,
       Cell: props => this.getConditionCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
     }, {
       id: "type",
       Header: this.getHeader("type"),
       accessor: item => item,
       Cell: props => this.getTypeCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
     }, {
       id: "price",
       Header: this.getHeader("price"),
       accessor: item => item,
       Cell: props => this.getPriceCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
     }, {
       id: "amount",
       Header: this.getHeader("amount"),
       accessor: item => item,
       Cell: props => this.getAmountCell(props.value),
-      headerClassName: "cell-flex-start-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from theme__text-4",
     }, {
       id: "total",
       Header: this.getHeader("total"),
       accessor: item => item,
       Cell: props => this.getTotalCell(props.value),
-      headerClassName: "cell-flex-start-header theme__background theme__text-3",
+      headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to theme__text-4",
     }, {
       id: "status",
       Header: this.getHeader("status"),
       accessor: item => item,
       Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-center-header cell-status-header theme__background theme__text-3",
+      headerClassName: "cell-flex-center-header cell-status-header",
       className: "cell-flex-center theme__text-4",
     }, {
       expander: true,
@@ -225,7 +224,7 @@ export default class LimitOrderTable extends Component {
 
   getTypeCell = (props) => {
     return (
-      <div className={"common__uppercase"}>{props.side_trade ? props.side_trade : '-'}</div>
+      <div className={"common__uppercase"}>{props.side_trade ? props.side_trade : '---'}</div>
     )
   };
 
@@ -819,13 +818,6 @@ export default class LimitOrderTable extends Component {
     return results;
   }
 
-  focusSourceInput = () => {
-    if (this.props.screen === "mobile" && this.props.toggleLimitOrderListModal) {
-      this.props.toggleLimitOrderListModal();
-    }
-    this.props.srcInputElementRef.focus();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.limitOrder.activeOrderTab !== nextProps.limitOrder.activeOrderTab) {
       this.setState({
@@ -868,8 +860,7 @@ export default class LimitOrderTable extends Component {
           NoDataComponent={(props) => {
             return (
               <div className="empty-order__message">
-                {this.props.translate("limit_order.empty_order") || "There is no order here yet. You can place one"}{' '}
-                <span className="place-order-trigger" onClick={e => this.focusSourceInput()}>{this.props.translate("info.here") || "here"}</span>
+                {this.props.translate("limit_order.empty_order") || "There is no order here yet."}
               </div>
             )
           }}
@@ -881,7 +872,8 @@ export default class LimitOrderTable extends Component {
             }
 
             return {
-              style: { overflow: "visible"}
+              style: { overflow: "visible" },
+              className: "theme__background theme__text-3"
             }
           }}
           getTheadThProps={(state, rowInfo, column) => {

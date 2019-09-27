@@ -81,9 +81,11 @@ export default class LimitOrderBody extends React.Component {
           )}
 
           <LimitOrderForm
-              setSrcInputElementRef={this.setSrcInputElementRef}
-              submitHandler={this.submitHandler}
-              setSubmitHandler={this.setSubmitHandler}/>
+            setSrcInputElementRef={this.setSrcInputElementRef}
+            submitHandler={this.submitHandler}
+            setSubmitHandler={this.setSubmitHandler}
+          />
+
           {this.props.global.isOnMobile &&
             <LimitOrderMobileHeader/>
           }
