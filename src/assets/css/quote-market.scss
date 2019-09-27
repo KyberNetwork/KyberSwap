@@ -21,6 +21,7 @@
     &--title {
       position: relative;
       top: 3px;
+      padding-right: 35px;
     }
   }
 
@@ -54,6 +55,9 @@
         font-weight: 400;
         cursor: pointer;
 
+      }
+      span:nth-child(2){
+        margin-left: 0px;
       }
 
       span.active {

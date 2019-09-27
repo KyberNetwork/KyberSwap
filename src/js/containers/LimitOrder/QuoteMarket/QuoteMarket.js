@@ -109,10 +109,9 @@ export default class QuoteMarket extends React.Component{
       { html: volume, field: "volume" }, 
       { html: change, field: "change" }
     ].map((i, index) => (
-      <div className={`c${index+1}`}>
+      <div className={`c${index+1}`} key={i["html"]} >
         <SortableComponent 
           Wrapper={"span"}
-          key={i["html"]} 
           text={i["html"]}
           onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
           isActive={this.state.current_sort_index == i["field"]} />
