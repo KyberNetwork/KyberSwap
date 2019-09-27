@@ -12,7 +12,7 @@
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
-    "min_accept_amount": 0.01,
+    "min_accept_amount": 0.00001,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
     "priority_tokens": [
         "ETH",
