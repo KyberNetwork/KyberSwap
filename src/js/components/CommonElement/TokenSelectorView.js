@@ -88,7 +88,7 @@ const TokenSelectorView = (props) => {
             {props.screen === "limit_order" && focusItem.symbol.toLowerCase() === "weth" && 
               <img src={require("../../../assets/img/v3/info_grey.svg")} className="weth-info"/>
             }
-            <div><i className={'k k-angle bold ' + (props.open ? 'up' : 'down')}></i></div>
+            <div className={`common__triangle theme__border-top ${props.open ? 'up' : 'down'}`}/>
           </div>
         </DropdownTrigger>
         <DropdownContent className="common__slide-up">
