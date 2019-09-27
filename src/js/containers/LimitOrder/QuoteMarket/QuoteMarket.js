@@ -83,12 +83,13 @@ export default class QuoteMarket extends React.Component{
             const pair = key+"_"+quote
             const pairReversed = `${quote}_${key}`
             const isExisted = (pairReversed in pairs)
-            return key == quote ? vt : vt.concat({   
+
+            return key == quote ? vt : vt.concat({
                 id: pair,
                 base: key, quote: quote,
-                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "-"),
+                price: (isExisted ? converters.roundingRateNumber(pairs[pairReversed].buy_price) : "-"),
                 is_favorite: fav.includes(pair),
-                volume: (isExisted ? converters.formatNumber(pairs[pairReversed].volume, 0, '') : "-" ),
+                volume: (isExisted ? converters.formatNumber(pairs[pairReversed].volume + (quote == "WETH" ? pairs[`ETH_${key}`].volume : 0 ) + (key == "WETH" ? pairs[`${quote}_ETH`].volume : 0 ), 0, '') : "-" ),
                 change: (isExisted ? pairs[pairReversed].change : "-" )
             });
           }, []); 
