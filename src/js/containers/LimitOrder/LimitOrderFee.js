@@ -68,7 +68,7 @@ class LimitOrderFee extends React.Component {
     let orderFeeText = null;
     let orderDiscountFeeText = null;
     let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
-    const totalText = this.props.formType === 'buy' ? `${this.props.limitOrder.sourceAmount ? this.props.limitOrder.sourceAmount : 0} ${sourceTokenSymbol}` : `${this.props.limitOrder.destAmount ? this.props.limitOrder.destAmount : 0} ${destTokenSymbol}`;
+    const totalText = this.props.formType === 'buy' ? `${this.props.limitOrder.sourceAmount ? converter.formatNumber(this.props.limitOrder.sourceAmount, 6) : 0} ${sourceTokenSymbol}` : `${this.props.limitOrder.destAmount ? converter.formatNumber(this.props.limitOrder.destAmount, 6) : 0} ${destTokenSymbol}`;
 
     if (!this.props.limitOrder.isFetchingFee) {
       orderNetFeeText = <span>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {sourceTokenSymbol}</span>
@@ -86,6 +86,12 @@ class LimitOrderFee extends React.Component {
       </div>
     );
 
+    const learnMoreLink = (
+      <a className={"limit-order-fee__learn"} href='/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees' target="_blank" rel="noopener noreferrer">
+        {this.props.translate("learn_more") || "Learn More"}
+      </a>
+    );
+
     return (
       <div className={"limit-order-fee"}>
         <SlideDown className={"limit-order-fee__content theme__border-2"} active={this.state.isFeeOpened && displayDiscountInfo}>
@@ -97,7 +103,12 @@ class LimitOrderFee extends React.Component {
               </SlideDownTrigger>
             }
 
-            {!displayDiscountInfo && feeTriggerText}
+            {!displayDiscountInfo && (
+              <div className={"common__flexbox"}>
+                {feeTriggerText}
+                {learnMoreLink}
+              </div>
+            )}
           </div>
 
           <SlideDownContent className={"limit-order-fee__slide-content"}>
@@ -116,9 +127,7 @@ class LimitOrderFee extends React.Component {
                   }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${sourceTokenSymbol} is converted to ${this.props.limitOrder.destTokenSymbol}`}
                 </div>
 
-                <a className={"limit-order-fee__learn"} href='/faq#I-have-KNC-in-my-wallet-Do-I-get-any-discount-on-trading-fees' target="_blank" rel="noopener noreferrer">
-                  {this.props.translate("learn_more") || "Learn More"}
-                </a>
+                {learnMoreLink}
               </Fragment>
             }
           </SlideDownContent>

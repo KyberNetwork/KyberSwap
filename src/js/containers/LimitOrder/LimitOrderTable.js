@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { connect } from "react-redux"
 import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
@@ -11,7 +11,7 @@ import {
   formatNumber,
   displayNumberWithDot,
   convertBuyRate,
-  toT
+  toT, divOfTwoNumber
 } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
@@ -106,33 +106,8 @@ export default class LimitOrderTable extends Component {
     }, {
       expander: true,
       show: false
-    }
-    // , {
-    //   id: "actions",
-    //   Header: this.getHeader("actions"),
-    //   accessor: item => item,
-    //   Cell: props => this.getActionCell(props.value),
-    //   headerClassName: "theme__background theme__text-3",
-    //   maxWidth: 80
-    // }
-    // , {
-    //   id: "fee",
-    //   Header: this.getHeader("fee"),
-    //   accessor: item => item,
-    //   Cell: props => this.getFeeCell(props.value),
-    //   headerClassName: "cell-flex-start-header theme__background theme__text-3",
-    //   className: "cell-flex-start cell-to cell-text-small theme__text-4",
-    //   width: 125
-    // }, {
-    //   id: "address",
-    //   Header: this.getHeader("address"),
-    //   accessor: item => item,
-    //   Cell: props => this.getAddressCell(props.value),
-    //   headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
-    //   className: "cell-flex-start cell-text-small theme__text-4",
-    //   width: 85,
-    // }
-    ];
+    }];
+
     const {activeOrderTab} = this.props.limitOrder;
     let widths = [130, 130, 130, 130, 150, 150, 120]
 
@@ -147,9 +122,11 @@ export default class LimitOrderTable extends Component {
       })
       widths = [120, 120, 100, 120, 140, 140, 80, 120]
     }
+
     for (let i = 0; i < desktopColumns.length ; i++){
       desktopColumns[i]["width"] = widths[i]
     }
+
     // --------------
     // Mobile columns
     // --------------
@@ -157,7 +134,7 @@ export default class LimitOrderTable extends Component {
       {
         id: "order-detail",
         accessor: item => item,
-        Cell: props => this.getOrderDetailCell(props.value),
+        Cell: props => this.getOrderMobileTableCell(props.value),
       }
     ];
 
@@ -234,7 +211,7 @@ export default class LimitOrderTable extends Component {
     let rate = displayNumberWithDot(min_rate, 9);
 
     if (side_trade === 'buy') {
-      const fullRate = toT(convertBuyRate(min_rate));
+      const fullRate = divOfTwoNumber(1, min_rate);
       rate = roundingRateNumber(fullRate);
       min_rate = `~${fullRate}`;
     }
@@ -281,9 +258,9 @@ export default class LimitOrderTable extends Component {
   getReceiveCell = (props) => {
     const { receive, dest, status} = props;
     return (
-        <div>
-          <span className="to-number-cell">{status == "filled" ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
-        </div>
+      <div>
+        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
+      </div>
     )
   };
 
@@ -327,33 +304,27 @@ export default class LimitOrderTable extends Component {
     }
   }
 
-  getOrderDetailCell = (row) => {
-    const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash } = row;
-    const calcFee = multiplyOfTwoNumber(fee, src_amount);
-    const formattedFee = formatNumber(calcFee, 5, '');
-    const sourceAmount = formatNumber(src_amount, 5);
-    let destAmount = src_amount * (1 - fee) * min_rate;
-    destAmount = formatNumber(destAmount, 5);
+  getOrderMobileTableCell = (row) => {
+    const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash, receive } = row;
+    const formattedFee = formatNumber(divOfTwoNumber(multiplyOfTwoNumber(fee, src_amount), 100), 5, '');
+    const sourceAmount = formatNumber(src_amount, 6);
+    const destAmount = formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6);
     const datetime = getFormattedDate(updated_at);
     const isFilledOrder = row.status === LIMIT_ORDER_CONFIG.status.FILLED;
+    const isBuyTrade = side_trade === "buy";
+    const baseSymbol = isBuyTrade ? dest : source;
+    const quoteSymbol = isBuyTrade ? source : dest;
+    const rate = isBuyTrade ? roundingRateNumber(divOfTwoNumber(1, min_rate)) : displayNumberWithDot(min_rate, 9)
 
-    const base = side_trade == "buy" ? dest : source
-    const quote = side_trade == "buy" ? source : dest
-    const rate = side_trade === 'buy' ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
     return (
       <div className="order-item">
         <div className={"order-item__date theme__background-3"}>{datetime}</div>
         <div className={"order-item__row"}>
-          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {base}</div>
+          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {baseSymbol}</div>
           <div className={"order-item__column"}/>
           <div className={"order-item__column"}>
             {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
                 <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
-            )}
-            {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (
-                <a href={BLOCKCHAIN_INFO.ethScanUrl + 'eth/transaction/' + txHash} target="_blank" >
-                  <img  src={getAssetUrl(`utils/etherscan_explorer.svg`)}/>
-                </a>
             )}
 
             {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (
@@ -371,26 +342,35 @@ export default class LimitOrderTable extends Component {
         </div>
         <div className={"order-item__row"}>
           <div className={"order-item__column"}>
-            {(!isFilledOrder || side_trade === 'buy') &&
-              <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.total') || 'Total'}</div>
+            {(isFilledOrder && isBuyTrade) &&
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.total') || 'Total'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
+              </Fragment>
             }
 
-            {side_trade === 'sell' && isFilledOrder &&
-              <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.amount') || 'Amount'}</div>
+            {(!isFilledOrder || !isBuyTrade) &&
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.amount') || 'Amount'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? destAmount : sourceAmount} {baseSymbol}</div>
+              </Fragment>
             }
-
-            <div className={"theme__text order-item__value"}>{destAmount} {dest}</div>
           </div>
+
           <div className={"order-item__column"}>
             {isFilledOrder &&
-              <div className={"theme__text-3 order-item__title"}>{this.props.translate('received') || 'Received'}</div>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{this.props.translate('received') || 'Received'}</div>
+                <div className={"theme__text order-item__value"}>{receive} {dest.toUpperCase()}</div>
+              </Fragment>
             }
 
             {!isFilledOrder &&
-              <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.amount') || 'Amount'}</div>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.total') || 'Total'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
+              </Fragment>
             }
-
-            <div className={"theme__text order-item__value"}>{sourceAmount} {source}</div>
           </div>
           <div className={"order-item__column"}>
             <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.fee') || 'Fee'}</div>

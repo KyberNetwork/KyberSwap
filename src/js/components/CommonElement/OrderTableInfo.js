@@ -4,9 +4,9 @@ import * as converters from "../../utils/converter";
 const OrderTableInfo = (props) => {
   var makeOrderInfo = (orders) => {
     return orders.map((item, index) => {
-      let fee = converters.formatNumber(item.fee * item.src_amount, 5, '')
-      let source = item.source == "WETH" ? "ETH*" : item.source
-      let dest = item.dest == "WETH" ? "ETH*" : item.dest
+      let fee = converters.formatNumber(converters.divOfTwoNumber(converters.multiplyOfTwoNumber(item.fee, item.src_amount), 100), 5, '');
+      let source = item.source === "WETH" ? "ETH*" : item.source
+      let dest = item.dest === "WETH" ? "ETH*" : item.dest
       switch (item.side_trade) {
         case "buy":
           let quote = source

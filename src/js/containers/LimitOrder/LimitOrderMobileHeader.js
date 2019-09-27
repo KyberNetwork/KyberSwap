@@ -5,7 +5,7 @@ import QuoteMarket from "./QuoteMarket/QuoteMarket";
 import LimitOrderChart from "./LimitOrderChart";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { withFavorite, withSourceAndBalance } from "./index";
-import { formatNumber } from "../../utils/converter";
+import {formatNumber, sumOfTwoNumber} from "../../utils/converter";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -16,11 +16,15 @@ import { formatNumber } from "../../utils/converter";
   const baseSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.destTokenSymbol : limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.sourceTokenSymbol : limitOrder.destTokenSymbol;
 
-  const marketBaseTokenByETH = store.market.tokens.find(token => {
+  const marketBaseTokenByWETH = store.market.tokens.find(token => {
     return token.pair === `WETH_${baseSymbol}`;
   });
 
-  return { translate, limitOrder, tokens, global, marketBaseTokenByETH, baseSymbol, quoteSymbol }
+  const marketBaseTokenByETH = store.market.tokens.find(token => {
+    return token.pair === `ETH_${baseSymbol}`;
+  });
+
+  return { translate, limitOrder, tokens, global, marketBaseTokenByWETH, marketBaseTokenByETH, baseSymbol, quoteSymbol }
 })
 export default class LimitOrderMobileHeader extends React.Component {
   constructor(props) {
@@ -45,10 +49,10 @@ export default class LimitOrderMobileHeader extends React.Component {
   render() {
     const QuoteMarket = this.QuoteMarket;
     const isFav = this.props.favorite_pairs.includes(`${this.props.quoteSymbol}_${this.props.baseSymbol}`);
-    const tokenETHBuyPrice = this.props.marketBaseTokenByETH ? formatNumber(this.props.marketBaseTokenByETH.buy_price, 6) : '---';
-    const tokenETHVolume = this.props.marketBaseTokenByETH ? formatNumber(this.props.marketBaseTokenByETH.volume, 3) : '---';
+    const tokenETHBuyPrice = this.props.marketBaseTokenByWETH ? formatNumber(this.props.marketBaseTokenByWETH.buy_price, 6) : '---';
+    const tokenETHVolume = this.props.marketBaseTokenByWETH || this.props.marketBaseTokenByETH  ? formatNumber(sumOfTwoNumber(this.props.marketBaseTokenByWETH.volume, this.props.marketBaseTokenByETH.volume), 3) : '---';
     const tokenUSDBuyPrice = tokenETHBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
-    const tokenUSDChange = this.props.marketBaseTokenByETH ? this.props.marketBaseTokenByETH.change : '---';
+    const tokenUSDChange = this.props.marketBaseTokenByWETH ? this.props.marketBaseTokenByWETH.change : '---';
     const displayQuoteSymbol = this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.quoteSymbol;
 
     return (
