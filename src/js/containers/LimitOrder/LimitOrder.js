@@ -9,6 +9,7 @@ import limitOrderServices from "../../services/limit_order";
 import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
+import history from "../../history"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -16,10 +17,14 @@ import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitO
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
+  const src = props.match.params.source.toUpperCase()
+  const dest = props.match.params.dest.toUpperCase()
+  const paramsValid = tokens[src].is_quote && ((tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority) || (!tokens[dest].is_quote))
+  if (!paramsValid) history.push(`/${constants.LIMIT_ORDER_CONFIG.path}`)
 
   return {
     translate, limitOrder, tokens, account, ethereum,
-    params: {...props.match.params},
+    params: {...props.match.params}
   }
 })
 
@@ -150,6 +155,7 @@ export default class LimitOrder extends React.Component {
     this.fetchPendingBalance()
     this.fetchFavoritePairsIfLoggedIn()
   }
+
 
   render() {
     const LimitOrderAccount = this.LimitOrderAccount;
