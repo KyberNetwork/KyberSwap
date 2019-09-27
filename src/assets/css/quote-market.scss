@@ -155,15 +155,19 @@
     .table__row{
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-top: 0.5em;
       padding: 0.5em;
       position: relative;
 
       .c0{
         width: 30px;
+        position: relative;
+        bottom: 1px;
       }
       .c1{
         width: 100px;
+        font-size: 12px;
       }
       .c2{
         width: 82px;

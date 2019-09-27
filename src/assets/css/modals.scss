@@ -57,6 +57,20 @@ $divider-color: darken($title-background-color, 5);
   &.unlock .toggle {
     background-image: url($image-path + 'lock-pass.svg');
   }
+
+  #promo_code {
+    padding-right: 60px;
+  }
+
+  #private_key {
+    padding-right: 42px;
+  }
+
+  .qc-code-content {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
 }
 
 .reveal {
