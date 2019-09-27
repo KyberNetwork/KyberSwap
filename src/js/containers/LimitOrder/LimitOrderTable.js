@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
-import { getFormattedDate } from "../../utils/common";
+import { getAssetUrl, getFormattedDate } from "../../utils/common";
 import {
   roundingRateNumber,
   multiplyOfTwoNumber,
@@ -46,14 +46,13 @@ export default class LimitOrderTable extends Component {
     // ---------------
     // Desktop columns
     // ---------------
-    const desktopColumns = [{
+    let desktopColumns = [{
       id: "date",
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header theme__text-3",
       className: "cell-flex-start cell-text-small theme__text-4",
-      width: 130,
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -69,7 +68,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getConditionCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "type",
       Header: this.getHeader("type"),
@@ -77,7 +75,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getTypeCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "price",
       Header: this.getHeader("price"),
@@ -85,7 +82,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getPriceCell(props.value),
       headerClassName: "cell-flex-start-header cell-condition-header",
       className: "cell-flex-start cell-condition theme__text-4",
-      width: 130
     }, {
       id: "amount",
       Header: this.getHeader("amount"),
@@ -93,7 +89,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getAmountCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-from theme__text-4",
-      width: 150
     }, {
       id: "total",
       Header: this.getHeader("total"),
@@ -101,7 +96,6 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getTotalCell(props.value),
       headerClassName: "cell-flex-start-header",
       className: "cell-flex-start cell-to theme__text-4",
-      width: 150
     }, {
       id: "status",
       Header: this.getHeader("status"),
@@ -109,12 +103,53 @@ export default class LimitOrderTable extends Component {
       Cell: props => this.getStatusCell(props.value),
       headerClassName: "cell-flex-center-header cell-status-header",
       className: "cell-flex-center theme__text-4",
-      width: 120
     }, {
       expander: true,
       show: false
-    }];
+    }
+    // , {
+    //   id: "actions",
+    //   Header: this.getHeader("actions"),
+    //   accessor: item => item,
+    //   Cell: props => this.getActionCell(props.value),
+    //   headerClassName: "theme__background theme__text-3",
+    //   maxWidth: 80
+    // }
+    // , {
+    //   id: "fee",
+    //   Header: this.getHeader("fee"),
+    //   accessor: item => item,
+    //   Cell: props => this.getFeeCell(props.value),
+    //   headerClassName: "cell-flex-start-header theme__background theme__text-3",
+    //   className: "cell-flex-start cell-to cell-text-small theme__text-4",
+    //   width: 125
+    // }, {
+    //   id: "address",
+    //   Header: this.getHeader("address"),
+    //   accessor: item => item,
+    //   Cell: props => this.getAddressCell(props.value),
+    //   headerClassName: "cell-flex-start-header cell-condition-header theme__background theme__text-3",
+    //   className: "cell-flex-start cell-text-small theme__text-4",
+    //   width: 85,
+    // }
+    ];
+    const {activeOrderTab} = this.props.limitOrder;
+    let widths = [130, 130, 130, 130, 150, 150, 120]
 
+    if (activeOrderTab === "history"){
+      desktopColumns.splice(desktopColumns.length-2, 0, {
+        id: "receive",
+        Header: this.getHeader("receive"),
+        accessor: item => item,
+        Cell: props => this.getReceiveCell(props.value),
+        headerClassName: "theme__background theme__text-3",
+        maxWidth: 80
+      })
+      widths = [120, 120, 100, 120, 140, 140, 80, 120]
+    }
+    for (let i = 0; i < desktopColumns.length ; i++){
+      desktopColumns[i]["width"] = widths[i]
+    }
     // --------------
     // Mobile columns
     // --------------
@@ -168,21 +203,22 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest } = props;
+    const { source, dest, side_trade } = props;
     const { screen } = this.props;
+    const pair = side_trade == "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`
 
     if (screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
-          <div className="cell-pair__mobile--rate">{`${source.toUpperCase()}/${dest.toUpperCase()}`}</div>
+          <div className="cell-pair__mobile--rate">{pair}</div>
           {this.getAddressCell(props)}
         </div>
       )
     }
 
     return (
-      <div>{source.toUpperCase()}/{dest.toUpperCase()}</div>
+      <div>{pair}</div>
     )
   };
 
@@ -219,26 +255,35 @@ export default class LimitOrderTable extends Component {
   };
 
   getAmountCell = (props) => {
-    const { dest, min_rate, src_amount } = props;
-    const destAmount = formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5);
-
+    const { source, dest, min_rate, src_amount, side_trade } = props;
+    const amount = side_trade == "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
+    const unit = side_trade == "buy" ? dest.toUpperCase() : source.toUpperCase()
     return (
       <div>
-        <span className="to-number-cell">{destAmount}</span>{' '}
-        <span>{dest.toUpperCase()}</span>
+        <span className="to-number-cell">{amount}</span>{' '}
+        <span>{unit}</span>
       </div>
     )
   };
 
   getTotalCell = (props) => {
-    const { source, src_amount } = props;
-    const amount = formatNumber(src_amount, 5);
-
+    const { source, dest, min_rate, src_amount, side_trade } = props;
+    const amount = side_trade == "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
+    const unit = side_trade == "buy" ? source.toUpperCase() : dest.toUpperCase()
     return (
-      <div>
-        <span className="from-number-cell">{amount}</span>{' '}
-        <span> {source.toUpperCase()}</span>
-      </div>
+        <div>
+          <span className="to-number-cell">{amount}</span>{' '}
+          <span>{unit}</span>
+        </div>
+    )
+  }
+
+  getReceiveCell = (props) => {
+    const { receive, dest, status} = props;
+    return (
+        <div>
+          <span className="to-number-cell">{status == "filled" ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
+        </div>
     )
   };
 
@@ -284,7 +329,6 @@ export default class LimitOrderTable extends Component {
 
   getOrderDetailCell = (row) => {
     const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash } = row;
-    const rate = roundingRateNumber(min_rate);
     const calcFee = multiplyOfTwoNumber(fee, src_amount);
     const formattedFee = formatNumber(calcFee, 5, '');
     const sourceAmount = formatNumber(src_amount, 5);
@@ -293,15 +337,23 @@ export default class LimitOrderTable extends Component {
     const datetime = getFormattedDate(updated_at);
     const isFilledOrder = row.status === LIMIT_ORDER_CONFIG.status.FILLED;
 
+    const base = side_trade == "buy" ? dest : source
+    const quote = side_trade == "buy" ? source : dest
+    const rate = side_trade === 'buy' ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
     return (
       <div className="order-item">
         <div className={"order-item__date theme__background-3"}>{datetime}</div>
         <div className={"order-item__row"}>
-          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {dest}</div>
+          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {base}</div>
           <div className={"order-item__column"}/>
           <div className={"order-item__column"}>
             {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
-              <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
+                <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
+            )}
+            {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (
+                <a href={BLOCKCHAIN_INFO.ethScanUrl + 'eth/transaction/' + txHash} target="_blank" >
+                  <img  src={getAssetUrl(`utils/etherscan_explorer.svg`)}/>
+                </a>
             )}
 
             {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (

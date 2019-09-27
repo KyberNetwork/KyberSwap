@@ -157,6 +157,7 @@ export default class AccountBalance extends React.Component {
     this.props.global.analytics.callTrack("trackLimitOrderClickSort", sortType, isDsc ? 'dsc' : 'asc')
   }
   render() {
+    const {tokens, limitOrder} = this.props
     // var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
     var sortValue = this.state.sortDESC
     return (
@@ -193,6 +194,12 @@ export default class AccountBalance extends React.Component {
         getFilteredTokens={this.props.getFilteredTokens}
         onSort={this.onSort}
         openReImport={this.props.openReImport}
+        {
+          ...(this.props.isLimitOrderTab && {
+            priorityValid: (t) => !("quote_priority" in t) || t.quote_priority < tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')].quote_priority
+          })
+        }
+
       />
     )
   }

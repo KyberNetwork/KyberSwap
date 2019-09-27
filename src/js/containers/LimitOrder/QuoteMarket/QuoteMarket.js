@@ -86,7 +86,7 @@ export default class QuoteMarket extends React.Component{
             return key == quote ? vt : vt.concat({   
                 id: pair,
                 base: key, quote: quote,
-                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 3, '') : "-"),
+                price: (isExisted ? converters.formatNumber(pairs[pairReversed].buy_price, 5, '') : "-"),
                 is_favorite: fav.includes(pair),
                 volume: (isExisted ? converters.formatNumber(pairs[pairReversed].volume, 0, '') : "-" ),
                 change: (isExisted ? pairs[pairReversed].change : "-" )
