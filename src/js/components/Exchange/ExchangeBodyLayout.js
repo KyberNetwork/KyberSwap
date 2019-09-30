@@ -59,7 +59,7 @@ const ExchangeBodyLayout = (props) => {
     <div className={"exchange__form theme__background-2"}>
       <div>
         {props.account && props.account.type === "promo" && props.account.info.description !== ""
-          && <div className={"promo-description"}>
+          && <div className={"promo-description theme__text-3"}>
             <div className="promo-description--icon">
               <img src={require("../../../assets/img/exchange/tick.svg")} />
             </div>

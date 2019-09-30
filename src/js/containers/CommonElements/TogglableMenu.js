@@ -57,7 +57,7 @@ export default class ToggleableMenu extends React.Component {
   render() {
     return (
         <div className={"limit-order-account"}>
-          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible ? "hide" : "")}>Wallet</p>
+          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible || (process.env.integrate && this.props.global.isOnMobile) ? "hide" : "")}>Wallet</p>
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="limit-order-account__advance--bg" onClick={() => this.setState({isAdvanceTokenVisible: false})}> </div>
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
