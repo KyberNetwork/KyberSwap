@@ -192,7 +192,7 @@ export default class ConfirmModal extends React.Component {
           <div className="limit-order-modal__close" onClick={this.closeModal}>
             <div className="limit-order-modal__close-wrapper"/>
           </div>
-          <div className="limit-order-modal__content confirm-exchange-modal">
+          <div className="limit-order-modal__content">
             <div className="limit-order-modal__message limit-order-modal__message--text-small">
               {this.props.translate("limit_order.confirm_order_message", {
                 base: base,

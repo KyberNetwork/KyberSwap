@@ -505,9 +505,16 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .title-container {
-    padding: 0 45px;
+
+    @include screen-min-width(medium) {
+      padding: 0 45px;
+    }
+
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+
 
     >div:nth-child(2) {
       border-left: 2px solid #ccc9c9;
@@ -595,8 +602,8 @@ $divider-color: darken($title-background-color, 5);
     color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
-
-    @include screen-max-width(medium) {
+    
+    @include screen-min-width(medium) {
       margin-top: 20px;
     }
   }
