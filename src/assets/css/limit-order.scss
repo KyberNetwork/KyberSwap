@@ -939,6 +939,10 @@
 
     .ReactTable {
       height: 485px;
+      @include screen-max-width(medium){
+        height: auto;
+      }
+      
       margin: 0;
 
       .rt-td {
