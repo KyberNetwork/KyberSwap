@@ -135,7 +135,7 @@ $divider-color: darken($title-background-color, 5);
 
   .title {
     font-size: 1.8rem;
-    margin-top: 35px;
+    padding-top: 35px;
     margin-bottom: 20px;
   }
 
@@ -966,7 +966,8 @@ $divider-color: darken($title-background-color, 5);
 
     .broadcast-title-container {
       display: flex;
-      justify-content: center;
+      justify-content: center;    
+      align-items: center;      
     }
 
     .title-status {

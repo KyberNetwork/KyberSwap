@@ -51,7 +51,8 @@
             "cg_id": "ethereum",
             "gasLimit": "0",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "WETH": {
             "symbol": "WETH",
@@ -61,7 +62,8 @@
             "cg_id": "weth",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
@@ -81,7 +83,8 @@
             "gasLimit": "500000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "OMG": {
             "symbol": "OMG",
@@ -232,7 +235,7 @@
         },
         "BLZ": {
             "symbol": "BLZ",
-            "name": "Bluezelle",
+            "name": "Bluzelle",
             "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
             "decimals": 18,
             "cg_id": "bluzelle"
@@ -299,7 +302,8 @@
             "gasLimit": "600000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "LEND": {
             "symbol": "LEND",
@@ -394,7 +398,7 @@
             "address": "0x094c875704c14783049ddf8136e298b3a099c446",
             "decimals": 18,
             "cg_id": "",
-            "gasLimit": "380000"
+            "gasLimit": "500000"
         },
         "ABYSS": {
             "symbol": "ABYSS",
@@ -414,7 +418,8 @@
             "listing_time": 1548853200,
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 1
         },
         "MLN": {
             "symbol": "MLN",
@@ -436,7 +441,8 @@
             "gasLimit": "550000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "EURS": {
             "symbol": "EURS",
@@ -577,7 +583,23 @@
             "decimals": 18,
             "cg_id": "havven",
             "listing_time": 1565960400,
-            "gasLimit": "500000"
+            "gasLimit": "600000"
+        },
+        "BTU": {
+            "symbol": "BTU",
+            "name": "BTU Protocol",
+            "address": "0xb683d83a532e2cb7dfa5275eed3698436371cc9f",
+            "decimals": 18,
+            "cg_id": "btu-protocol",
+            "listing_time": 1569330000
+        },
+        "TKN": {
+            "symbol": "TKN",
+            "name": "Monolith",
+            "address": "0xaaaf91d9b90df800df4f55c205fd6989c977e73a",
+            "decimals": 8,
+            "cg_id": "tokencard",
+            "listing_time": 1569330000
         }
     },
     "ethScanUrl": "https://etherscan.io/",

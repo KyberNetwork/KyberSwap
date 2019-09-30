@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import { filterInputNumber } from "../../utils/validators";
 import * as limitOrderActions from "../../actions/limitOrderActions"
+import * as globalActions from "../../actions/globalActions"
 import * as constants from "../../services/constants"
 import { debounce } from 'underscore';
 import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
@@ -47,6 +48,16 @@ export default class LimitOrderForm extends React.Component {
       this.props.sourceToken,
       this.props.destToken
     ));
+
+    var realQuoteSymbol = quoteSymbol === "ETH*"?"WETH": quoteSymbol
+    // update path
+    var path
+    if (type === "buy"){
+      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + targetSymbol.toLowerCase();
+    }else{
+      path = constants.BASE_HOST +  "/limit_order/" + targetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
+    }
+    this.props.dispatch(globalActions.goToRoute(path))   
 
     this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
   };

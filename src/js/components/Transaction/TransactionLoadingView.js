@@ -117,19 +117,19 @@ const TransactionLoadingView = (props) => {
           {props.status === "success" &&
           <div className="broadcast-title-container">
             <div className="icon icon--success"/>
-            <div className="title">{props.translate('transaction.done') || "Done"}</div>
+            <div className="status-title">{props.translate('transaction.done') || "Done"}</div>
           </div>
           }
           {isTxFailed &&
           <div className="broadcast-title-container">
             <div className="icon icon--failed"/>
-            <div className="title">{ props.translate('transaction.failed') || "Failed!" }</div>
+            <div className="status-title">{ props.translate('transaction.failed') || "Failed!" }</div>
           </div>
           }
           {props.status === "pending" &&
           <div className="broadcast-title-container">
             <div className="icon icon--broadcasted"/>
-            <div className="title">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
+            <div className="status-title">{ props.translate('transaction.broadcasted') || "Broadcasted!" }</div>
           </div>
           }
         </div>
@@ -185,7 +185,7 @@ const TransactionLoadingView = (props) => {
                               <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
                               </span>
                         <span> {props.translate('transaction.to') || "to"} </span>
-                        <span><strong>{props.balanceInfo.address}</strong></span>
+                        <span><strong>{props.balanceInfo.address.substring(0, 8) + "..." + props.balanceInfo.address.substring(props.balanceInfo.address.length-8, props.balanceInfo.address.length) }</strong></span>
                       </div>
                     </div>
                     }
