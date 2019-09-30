@@ -61,8 +61,7 @@ var HistoryProvider = /** @class */ (function () {
             symbol: symbolInfo.ticker || '',
             resolution: resolution,
             from: rangeStartDate,
-            to: rangeEndDate,
-            rateType: (window.KyberRateType || "sell")
+            to: rangeEndDate
         };
         return new Promise(function (resolve, reject) {
             _this._requester.sendRequest(_this._datafeedUrl, 'history', requestParams)

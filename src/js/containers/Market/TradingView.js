@@ -23,7 +23,7 @@ export default class TradingView extends React.Component {
 			widgetOverrides: null,
 			iframeEl: null
 		}
-		this.changeThemeMessageType = "change-theme"
+		// this.changeThemeMessageType = "change-theme"
 	}
 
 	static defaultProps = {
@@ -136,13 +136,13 @@ export default class TradingView extends React.Component {
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
-			library_path: this.props.libraryPath,
-			// timeframe: this.props.timeframe,
-			// time_frames: this.props.time_frames,
+			library_path: this.props.libraryPath,			
 			locale: this.getLanguageFromURL() || this.props.locale,
 			fullscreen: this.props.fullscreen,
 			autosize: this.props.autosize,
 			timeframe: this.getTimeFrame(this.props.interval),
+			theme: this.props.global.theme === "dark" ? "Dark": "Light",			
+			disabled_features: ['compare_symbol'],
 			// timezone: "Asia/Singapore",
 			overrides: {
 				'mainSeriesProperties.candleStyle.drawBorder': false,
@@ -159,53 +159,10 @@ export default class TradingView extends React.Component {
 		});
 
 		widget.onChartReady(() => {
-			// this.createButton(widget, { content: this.props.translate("trading_view.sell") || "Sell", value: "sell", title: this.props.translate("trading_view.sell_price") || "Sell price" })
-			// this.createButton(widget, { content: this.props.translate("trading_view.buy") || "Buy", value: "buy", title: this.props.translate("trading_view.buy_price") || "Buy price" })
-			// this.createButton(widget, { content: this.props.translate("trading_view.mid") || "Mid", value: "mid", title: this.props.translate("trading_view.mid_price") || "Mid price" })
-
-      // widget.activeChart().onSymbolChanged().subscribe(null, (symbolData) => {
-      //   this.props.dispatch(changeSymbol(symbolData.name))
-      // })
 
 			const chart = widget.chart();
 
-			// chart.onIntervalChanged().subscribe(null, (interval, obj) => {
-
-			// 	if (interval === "D") {
-			// 		obj.timeframe = "100D"
-			// 	} else if (interval === "W") {
-			// 		obj.timeframe = "24M"
-			// 	} else {
-			// 		obj.timeframe = `${3600 / interval * 24}`;
-			// 	}
-			// });
 		});
-
-
-		const parent = document.getElementById(this.props.containerId);
-		if (parent !== null) {
-			const iframeEl = parent.getElementsByTagName("iframe")[0];
-			this.setState({
-				iframeEl
-			});
-		}
-
-		// Listening for iframe ready
-		window.addEventListener('message', this.sendMessageToIframe.bind(this), false);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('message', this.sendMessageToIframe.bind(this), false);
-	}
-
-	sendMessageToIframe(e) {
-		const { iframeEl } = this.state
-		if (e.data === "ready" && this.state && iframeEl && iframeEl.contentWindow) {
-			iframeEl.contentWindow.postMessage({
-				type: this.changeThemeMessageType,
-				message: this.props.global.theme
-			}, "*")
-		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -213,26 +170,17 @@ export default class TradingView extends React.Component {
 		if (nextProps.global.theme === this.props.global.theme) {
 			return
 		}
+		const { widget } = this.state;
 		if (nextProps.global.theme === "dark") {
+			widget.changeTheme("Dark")
 			this.setState({
 				widgetOverrides: this.darkThemeWidget,
 			});
-			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage({
-					type: this.changeThemeMessageType,
-					message: nextProps.global.theme
-				}, "*")
-			}
 		} else {
+			widget.changeTheme("Light")
 			this.setState({
 				widgetOverrides: this.lightThemeWidget,
 			});
-			if (iframeEl !== null) {
-				iframeEl.contentWindow.postMessage({
-					type: this.changeThemeMessageType,
-					message: nextProps.global.theme
-				}, "*")
-			}
 		}
 	}
 
