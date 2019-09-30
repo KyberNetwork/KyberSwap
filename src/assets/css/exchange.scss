@@ -57,14 +57,15 @@
   }
 }
 
-.exchange-container {
+.exchange__container {
   .promo-description {
     margin: 0 auto 10px;
-    font-size: 11px;
+    font-size: 14px;
     color: #222222;
     display: flex;
     flex-direction: row;
     justify-content: center;
+
 
     &--icon {
       margin: auto 15px auto 0;
@@ -89,6 +90,7 @@
       background-color: #DEEBFF;
       border-radius: 10px;
       padding: 3px 10px;
+      line-height: 2;
     }
   }
 }

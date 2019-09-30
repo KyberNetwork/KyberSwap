@@ -50,14 +50,15 @@ export default class LimitOrderForm extends React.Component {
     ));
 
     var realQuoteSymbol = quoteSymbol === "ETH*"?"WETH": quoteSymbol
+    var realTargetSymbol = targetSymbol === "ETH*"?"WETH": targetSymbol
     // update path
     var path
     if (type === "buy"){
-      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + targetSymbol.toLowerCase();
+      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + realTargetSymbol.toLowerCase();
     }else{
-      path = constants.BASE_HOST +  "/limit_order/" + targetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
+      path = constants.BASE_HOST +  "/limit_order/" + realTargetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
     }
-    this.props.dispatch(globalActions.goToRoute(path))   
+    this.props.dispatch(globalActions.goToRoute(path))
 
     this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
   };

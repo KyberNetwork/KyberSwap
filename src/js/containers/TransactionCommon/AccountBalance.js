@@ -196,7 +196,11 @@ export default class AccountBalance extends React.Component {
         openReImport={this.props.openReImport}
         {
           ...(this.props.isLimitOrderTab && {
-            priorityValid: (t) => !("quote_priority" in t) || t.quote_priority < tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')].quote_priority
+            priorityValid: (t) => {
+              const {sideTrade} = this.props.limitOrder
+              const quote = sideTrade == "buy" ? tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')] : tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')]
+              return !("quote_priority" in t) || t.quote_priority < quote.quote_priority
+            }
           })
         }
 

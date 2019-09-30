@@ -5,11 +5,12 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
-  function removedMaintenance(tokens){
+  function archiveMaintain(tokens){
     return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
+      .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
   }
-  function maintenance(tokens){
-    return tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
+  function archiveUnsupported(tokens){
+    return tokens.filter(t =>  t.sp_limit_order).concat(tokens.filter(t =>  !t.sp_limit_order))
   }
   function reorderToken() {
     let tokens = props.tokens;
@@ -61,7 +62,10 @@ const AccountBalanceLayout = (props) => {
         res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(converts.multiplyOfTwoNumber(a.balance, a.rateUSD), converts.multiplyOfTwoNumber(b.balance, b.rateUSD)))} )
         break;
     }
-    res = removedMaintenance(res).concat(maintenance(res))
+    if (props.isLimitOrderTab){
+      res = archiveUnsupported(res)
+    }
+    res = archiveMaintain(res)
     return res
   }
 
@@ -77,7 +81,7 @@ const AccountBalanceLayout = (props) => {
         if (token.symbol === props.sourceActive) classBalance += " active"
         if (!symbolL.includes(searchWord)) classBalance += " hide"
         if (props.isLimitOrderTab){
-          if (!token.sp_limit_order || !props.priorityValid(token)) classBalance += " disabled"
+          if (!token.sp_limit_order || !props.priorityValid(token)) classBalance += " disabled unclickable"
         }else {
           if (balance == 0) classBalance += " disabled" 
         }
@@ -89,7 +93,7 @@ const AccountBalanceLayout = (props) => {
         return (
           <div
             key={token.symbol}
-            {...(!classBalance.includes('disabled') && {onClick: (e) => props.selectBalance(token.symbol == "ETH" ? "WETH" : token.symbol)})}
+            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance(token.symbol == "ETH" ? "WETH" : token.symbol)})}
             className={"account-balance__token-item" + classBalance}
           >
             <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />

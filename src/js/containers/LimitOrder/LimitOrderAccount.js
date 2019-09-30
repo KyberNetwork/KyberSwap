@@ -105,46 +105,63 @@ export default class LimitOrderAccount extends React.Component {
   //   this.selectTokenBalance();
   //   this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, "limit_order");
   // }
-
-  selectToken = (destSymbol) => {
-
-    this.props.selectDestToken(destSymbol, this.props.tokens[destSymbol].address, "dest")
-
-    // var sourceBalance = this.props.tokens[sourceSymbol].balance
-
+  selectToken = (base) => {
     const tokens = this.getFilteredTokens();
-    const srcToken = tokens.find(token => {
-      return token.symbol === this.props.limitOrder.sourceTokenSymbol;
-    });
-    const destToken = tokens.find(token => {
-      return token.symbol === destSymbol;
-    });
-    var destBalance = destToken.balance;
+    const {sideTrade}  = this.props.limitOrder
+    if (sideTrade == "buy") { //change dest
+      this.props.selectDestToken(base)
+      const srcToken = tokens.find(token => {
+        return token.symbol === this.props.limitOrder.sourceTokenSymbol;
+      });
+      const destToken = tokens.find(token => {
+        return token.symbol === base;
+      });
+      var destBalance = destToken.balance;
 
-    var destDecimal = this.props.tokens[destSymbol].decimals
+      var destDecimal = this.props.tokens[base].decimals
+      this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
+      this.props.dispatch(limitOrderActions.focusInput('dest'));
+    }else { //change source
+      this.props.selectSourceToken(base)
+      const srcToken = tokens.find(token => {
+        return token.symbol === base;
+      });
+      const destToken = tokens.find(token => {
+        return token.symbol === this.props.limitOrder.destTokenSymbol;
+      });
+      var sourceBalance = srcToken.balance;
 
-    // if (sourceSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-
-    //   //if souce token is weth, we spend a small amount to make approve tx, swap tx
-
-    //   var ethBalance = this.props.tokens["ETH"].balance
-    //   var fee = this.calcualteMaxFee()      
-    //   if (converters.compareTwoNumber(ethBalance, fee) === 1) {
-    //     sourceBalance = converters.subOfTwoNumber(sourceBalance, fee)
-    //   } else {
-    //     sourceBalance = converters.subOfTwoNumber(sourceBalance, ethBalance)
-    //   }
-
-    // }
-
-    // if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
-
-    this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
-    this.props.dispatch(limitOrderActions.focusInput('dest'));
-
+      var sourceDecimal = this.props.tokens[base].decimals
+      this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
+      this.props.dispatch(limitOrderActions.focusInput('source'));
+    }
     this.selectTokenBalance();
-    this.props.global.analytics.callTrack("trackClickToken", destSymbol, "limit_order");
+    this.props.global.analytics.callTrack("trackClickToken", base, "limit_order");
   }
+
+  // selectToken = (destSymbol) => {
+  //
+  //   this.props.selectDestToken(destSymbol, this.props.tokens[destSymbol].address, "dest")
+  //
+  //   // var sourceBalance = this.props.tokens[sourceSymbol].balance
+  //
+  //   const tokens = this.getFilteredTokens();
+  //   const srcToken = tokens.find(token => {
+  //     return token.symbol === this.props.limitOrder.sourceTokenSymbol;
+  //   });
+  //   const destToken = tokens.find(token => {
+  //     return token.symbol === destSymbol;
+  //   });
+  //   var destBalance = destToken.balance;
+  //
+  //   var destDecimal = this.props.tokens[destSymbol].decimals
+  //
+  //   this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
+  //   this.props.dispatch(limitOrderActions.focusInput('dest'));
+  //
+  //   this.selectTokenBalance();
+  //   this.props.global.analytics.callTrack("trackClickToken", destSymbol, "limit_order");
+  // }
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     
@@ -180,7 +197,7 @@ export default class LimitOrderAccount extends React.Component {
             <AccountBalance
               isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
-              sourceActive={this.props.limitOrder.destTokenSymbol}
+              sourceActive={this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"
