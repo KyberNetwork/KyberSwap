@@ -201,6 +201,9 @@
 
       .token-compare {
         &__item {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
           .rate-loading{
             padding: 0 5px;
             height: 14px;
@@ -213,7 +216,7 @@
 
         &__change {
           width: 49px;
-          height: 25px;
+          height: 20px;
           border-radius: 23px;
           display: flex;
           align-items: center;
@@ -445,11 +448,12 @@
   max-width: 210px;
   padding: 10px;
   font-style: italic;
-  line-height: 13;
+  line-height: 2;
   color: #666;
-  background-color: rgb(239, 239, 239);
+  background-color: #efefef;
   opacity: 1;
-  box-shadow: 0 10px 20px 0 hsla(180,0%,53%,.26), 0 6px 6px 0 hsla(165,2%,69%,.26);
+  box-shadow: 0 10px 20px 0 rgba(135, 135, 135, 0.26), 0 6px 6px 0 rgba(174, 178, 177, 0.26);
+  text-align: left;
   p{
     font-size: 10px;
     margin-bottom: 0px;

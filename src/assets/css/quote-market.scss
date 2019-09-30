@@ -44,7 +44,10 @@
     border-bottom-width: 2px;
 
     #quote_panel {
-      width: 80%;
+      @include screen-min-width(medium){
+        width: 80%;
+      }
+      
 
       div{
         display: inline-block;
@@ -71,8 +74,16 @@
     };
 
     #search_panel {
-      float: right;
-      width: 20%;
+      @include screen-min-width(medium){
+        float: right;
+        width: 20%;
+      }
+
+      @include screen-max-width(medium){
+        margin-bottom: 10px;
+      }
+      
+      
       margin-top: 3px;
 
       input {
@@ -93,7 +104,7 @@
       input:focus {
         box-shadow: none;
         outline: none;
-        border-bottom: 1px solid;
+        border-bottom: 1px solid #aaa;
       };
     }
   }
@@ -140,6 +151,9 @@
       display: block;
       height: 300px;
       overflow-y: auto;
+      @include screen-max-width(medium){
+        overflow-x: hidden;
+      }
       width: 100%;
       .table__row{
         .overlay{
