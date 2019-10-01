@@ -155,7 +155,8 @@ export default class LimitOrderForm extends React.Component {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
 
     if (!isAgreeForceSubmit) {
-      this.props.dispatch(limitOrderActions.setForceSubmitRate(this.props.limitOrder.triggerRate));
+      const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
+      this.props.dispatch(limitOrderActions.setForceSubmitRate(triggerRate));
     }
 
     this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
@@ -166,14 +167,18 @@ export default class LimitOrderForm extends React.Component {
     if (!this.props.account) return null;
 
     let higherRateOrders = [];
+    const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
 
     if (this.props.limitOrder.filterMode === "client") {
       higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-        return item.source === this.props.limitOrder.sourceTokenSymbol &&
-              item.dest === this.props.limitOrder.destTokenSymbol &&
-              item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-              item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-              converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+        const pairComparison = this.props.limitOrder.sourceTokenSymbol === item.source && this.props.limitOrder.destTokenSymbol === item.dest;
+
+        if (pairComparison) {
+          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
+          return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+                item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+                rateComparison;
+        } 
       });
     } else {
       higherRateOrders = this.props.limitOrder.relatedOrders;
