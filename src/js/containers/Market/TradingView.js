@@ -136,7 +136,8 @@ export default class TradingView extends React.Component {
 			'mainSeriesProperties.candleStyle.drawBorder': false,
 		}
 		if (this.props.global.isOnMobile){
-			disabled_features = ['header_compare', 'left_toolbar', 'header_undo_redo', 'header_settings', 'header_chart_type', 'header_screenshot', 'pane_context_menu']
+			disabled_features = ['header_compare', 'header_symbol_search', 'left_toolbar', 'header_undo_redo', 'header_settings', 
+			'header_chart_type', 'header_screenshot', 'pane_context_menu', 'main_series_scale_menu', 'countdown', 'scales_context_menu', 'chart_property_page_scales']
 			overrides['paneProperties.legendProperties.showSeriesTitle'] = false
 			overrides['paneProperties.legendProperties.showSeriesOHLC'] = false
 			overrides['paneProperties.legendProperties.showBarChange'] = false

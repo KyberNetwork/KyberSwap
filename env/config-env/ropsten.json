@@ -43,7 +43,8 @@
             "cg_id": "ethereum",
             "gasLimit": "0",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
@@ -204,7 +205,8 @@
             "decimals": 18,
             "cg_id": "dai",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "LINK": {
             "symbol": "LINK",
@@ -312,7 +314,8 @@
             "decimals": 18,
             "cg_id": "weth",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "BAM": {
             "symbol": "BAM",
