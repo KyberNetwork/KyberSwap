@@ -21,7 +21,8 @@ import bowser from 'bowser'
     content: props.content,
     translate: getTranslate(store.locale),
     screen: props.screen,
-    analytics: store.global.analytics
+    analytics: store.global.analytics,
+    theme: store.global.theme
   }
 }, null, null, {forwardRef: true})
 
@@ -253,6 +254,7 @@ export default class ImportByDevice extends React.Component {
         showLoading={this.showLoading.bind(this)}
         translate={this.props.translate}
         analytics={this.props.analytics}
+        theme={this.props.theme}
       />
     )
   }

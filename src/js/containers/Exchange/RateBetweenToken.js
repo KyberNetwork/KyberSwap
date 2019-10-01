@@ -24,7 +24,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
   return {
     ...props,
     translate: getTranslate(store.locale), rateEthUsd, rateUSD, tokens,
-    exchange
+    exchange, theme: store.global.theme
   }
 })
 
@@ -38,14 +38,14 @@ export default class RateBetweenToken extends React.Component {
       if (isSourceTokenETH) {
         return (
           <div className={"token-compare__item"}>
-            1 {destToken} =<span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> ETH
+            1 {destToken} =<span className="rate-loading"> <img src={require(`../../../assets/img/${this.props.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} /></span> ETH
           </div>
         )
       }
 
       return (
         <div className={"token-compare__item"}>
-          1 {sourceToken} =<span className="rate-loading"> <img src={require('../../../assets/img/waiting-white.svg')} /></span> {this.props.exchange.destTokenSymbol}
+          1 {sourceToken} =<span className="rate-loading"> <img src={require(`../../../assets/img/${this.props.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} /></span> {this.props.exchange.destTokenSymbol}
         </div>
       )
     }
