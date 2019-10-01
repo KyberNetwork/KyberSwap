@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from 'react-localize-redux';
 import QuoteMarket from "./QuoteMarket/QuoteMarket";
-import LimitOrderChart from "./LimitOrderChart";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { withFavorite, withSourceAndBalance } from "./index";
 import {formatNumber, sumOfTwoNumber} from "../../utils/converter";
@@ -12,19 +11,23 @@ import {formatNumber, sumOfTwoNumber} from "../../utils/converter";
   const global = store.global;
   const tokens = store.tokens.tokens;
   const limitOrder = store.limitOrder;
-
   const baseSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.destTokenSymbol : limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.sourceTokenSymbol : limitOrder.destTokenSymbol;
 
-  var marketBaseTokenByWETH = store.market.tokens.find(token => {
-    return token.pair === `WETH_${baseSymbol}`;
-  });  
+  const pairToken = store.market.tokens.find(token => {
+    return token.pair === `${quoteSymbol}_${baseSymbol}`;
+  });
 
-  var marketBaseTokenByETH = store.market.tokens.find(token => {
-    return token.pair === `ETH_${baseSymbol}`;
-  });  
+  let pairVolume = pairToken ? formatNumber(pairToken.volume, 3, ',') : '---';
 
-  return { translate, limitOrder, tokens, global, marketBaseTokenByWETH, marketBaseTokenByETH, baseSymbol, quoteSymbol }
+  if (quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
+    const ethPairToken = store.market.tokens.find(token => {
+      return token.pair === `ETH_${baseSymbol}`;
+    });
+    pairVolume = pairToken || ethPairToken ? formatNumber(sumOfTwoNumber(pairToken.volume, ethPairToken.volume), 3, ',') : '---'
+  }
+
+  return { translate, limitOrder, tokens, global, pairToken, pairVolume, baseSymbol, quoteSymbol }
 })
 export default class LimitOrderMobileHeader extends React.Component {
   constructor(props) {
@@ -32,12 +35,10 @@ export default class LimitOrderMobileHeader extends React.Component {
 
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.state = {
-      // isChartOpened: false,
       isQuoteMarketOpened: false,
       isFavorite: false
     }
   }
-
 
   toggleQuoteMarket = () => {
     this.setState({ isQuoteMarketOpened: !this.state.isQuoteMarketOpened });
@@ -46,10 +47,9 @@ export default class LimitOrderMobileHeader extends React.Component {
   render() {
     const QuoteMarket = this.QuoteMarket;
     const isFav = this.props.favorite_pairs.includes(`${this.props.quoteSymbol}_${this.props.baseSymbol}`);
-    const tokenETHBuyPrice = this.props.marketBaseTokenByWETH ? formatNumber(this.props.marketBaseTokenByWETH.buy_price, 6) : '---';
-    const tokenETHVolume = this.props.marketBaseTokenByWETH || this.props.marketBaseTokenByETH  ? formatNumber(sumOfTwoNumber(this.props.marketBaseTokenByWETH.volume, this.props.marketBaseTokenByETH.volume), 3) : '---';
-    const tokenUSDBuyPrice = tokenETHBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
-    const tokenUSDChange = this.props.marketBaseTokenByWETH ? this.props.marketBaseTokenByWETH.change : '---';
+    const pairBuyPrice = this.props.pairToken ? formatNumber(this.props.pairToken.buy_price, 6) : '---';
+    const pairUSDBuyPrice = pairBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
+    const pairChange = this.props.pairToken ? this.props.pairToken.change : '---';
     const displayQuoteSymbol = this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.quoteSymbol;
 
     return (
@@ -61,15 +61,15 @@ export default class LimitOrderMobileHeader extends React.Component {
               <span className={`common__triangle ${this.state.isQuoteMarketOpened ? 'up' : ''}`}/>
             </div>
             <div className={"limit-order-header__rate"}>
-              <span>{tokenETHBuyPrice} ETH* = ${tokenUSDBuyPrice}</span>
+              <span>{pairBuyPrice} {displayQuoteSymbol} = ${pairUSDBuyPrice}</span>
 
-              {(tokenUSDChange !== '---' && tokenUSDChange !== 0) &&
-                <span className={`${tokenUSDChange > 0 ? 'common__text-green' : 'common__text-red'}`}>
-                  {tokenUSDChange}%
+              {(pairChange !== '---' && pairChange !== 0) &&
+                <span className={`${pairChange > 0 ? 'common__text-green' : 'common__text-red'}`}>
+                  {pairChange}%
                 </span>
               }
             </div>
-            <div className={"limit-order-header__volume theme__text-3"}>Vol {tokenETHVolume} ETH*</div>
+            <div className={"limit-order-header__volume theme__text-3"}>Vol {this.props.pairVolume} {displayQuoteSymbol}</div>
           </div>
 
           <div className={"limit-order-header__column"}>
@@ -78,12 +78,6 @@ export default class LimitOrderMobileHeader extends React.Component {
             <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart}/>
           </div>
         </div>
-
-        {/* {this.state.isChartOpened && (
-          <div className={"common__slide-up"}>
-            <LimitOrderChart/>
-          </div>
-        )} */}
 
         {this.state.isQuoteMarketOpened && (
           <div className={"common__slide-up"}>

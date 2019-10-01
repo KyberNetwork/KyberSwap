@@ -5,7 +5,7 @@ import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import limitOrderServices from "../../../services/limit_order";
 import { OrderTableInfo } from "../../../components/CommonElement";
-import makeOrderInfo from "../../../utils/convert_object";
+import OrderDetails from "../MobileElements/OrderDetails";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -71,52 +71,59 @@ export default class CancelOrderModal extends Component {
       isFinish: false
     });
     this.props.closeModal();
-  }
+  };
 
   contentModal = () => {
-    var base = this.props.limitOrder.sideTrade === "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol;
+    const base = this.props.limitOrder.sideTrade === "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol;
+
     return (
-      <div className="limit-order-modal">
+      <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
         <div className="limit-order-modal__body">
           <div className="limit-order-modal__title">
             {this.props.translate("modal.cancel_order", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
             `Cancel ${sideTrade} ${base} Order`}
           </div>
-          <div
-            className="limit-order-modal__close"
-            onClick={e => this.closeModal()}
-          >
-            <div className="limit-order-modal__close-wrapper" />
+          <div className="limit-order-modal__close" onClick={this.closeModal}>
+            <div className="limit-order-modal__close-wrapper"/>
           </div>
           <div className="limit-order-modal__content">
             <div className="limit-order-modal__message">
-              {this.props.translate(
-                "limit_order.canceling_order_message" ||
-                "You are canceling this order"
-              )}
+              {this.props.translate("limit_order.canceling_order_message" || "You are canceling this order")}
             </div>
+
+            {!this.props.global.isOnMobile && (
               <OrderTableInfo
-                listOrder={makeOrderInfo(this.props.limitOrder)}
+                listOrder = {[this.props.order]}
                 translate={this.props.translate}
               />
+            )}
+
+            {this.props.global.isOnMobile && (
+              <OrderDetails
+                order = {this.props.order}
+                isModal = {true}
+                translate={this.props.translate}
+              />
+            )}
+
           </div>
         </div>
 
         {(!this.state.isFinish && !this.state.err) &&
-        <div className="limit-order-modal__footer">
-          <button
-            className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
-            onClick={this.closeModal}
-          >
-            {this.props.translate("modal.no") || "No"}
-          </button>
-          <button
-            className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
-            onClick={e => this.confirmCancel()}
-          >
-            {this.props.translate("modal.yes") || "Yes"}
-          </button>
-        </div>
+          <div className="limit-order-modal__footer">
+            <button
+              className={`btn-cancel ${this.state.isConfirming ? "btn-disabled" : ""}`}
+              onClick={this.closeModal}
+            >
+              {this.props.translate("modal.no") || "No"}
+            </button>
+            <button
+              className={`btn-confirm ${this.state.isConfirming ? "btn-disabled" : ""}`}
+              onClick={e => this.confirmCancel()}
+            >
+              {this.props.translate("modal.yes") || "Yes"}
+            </button>
+          </div>
         }
 
         {this.state.isFinish && (
@@ -134,20 +141,20 @@ export default class CancelOrderModal extends Component {
         )}
 
         {this.state.err &&
-        <div className="limit-order-modal__msg limit-order-modal__msg--failed">
-          <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
-            <div className={"limit-order-modal__left-content"}>
-              <img src={require("../../../../assets/img/limit-order/error.svg")}/>
-              <div>
-                <div>{this.props.translate("error_text") || "Error"}</div>
-                <div>{this.state.err}</div>
+          <div className="limit-order-modal__msg limit-order-modal__msg--failed">
+            <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
+              <div className={"limit-order-modal__left-content"}>
+                <img src={require("../../../../assets/img/limit-order/error.svg")}/>
+                <div>
+                  <div>{this.props.translate("error_text") || "Error"}</div>
+                  <div>{this.state.err}</div>
+                </div>
+              </div>
+              <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
+                {this.props.translate("ok") || "OK"}
               </div>
             </div>
-            <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
-              {this.props.translate("ok") || "OK"}
-            </div>
           </div>
-        </div>
         }
       </div>
     );

@@ -7,7 +7,7 @@ import * as globalActions from "../../actions/globalActions"
 import * as constants from "../../services/constants"
 import { debounce } from 'underscore';
 import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
-import { RateWarningModal, ForceCancelOrderModal } from "../LimitOrder/LimitOrderModals";
+import { ForceCancelOrderModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
 import EthereumService from "../../services/ethereum/ethereum";
@@ -151,16 +151,6 @@ export default class LimitOrderForm extends React.Component {
     ));
   };
 
-  closeRateWarningTooltip = () => {
-    const { isAgreeForceSubmit } = this.props.limitOrder;
-
-    if (!isAgreeForceSubmit) {
-      this.props.dispatch(limitOrderActions.setIsDisableSubmit(false));
-    }
-
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-  };
-
   toggleAgreeSubmit = () => {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
 
@@ -240,16 +230,6 @@ export default class LimitOrderForm extends React.Component {
             disabled={this.props.limitOrder.isFetchingRate}
           />
           <div className={"limit-order-form__symbol theme__text-3"}>{quoteSymbol}</div>
-
-          {this.props.global.isOnMobile &&
-            <RateWarningModal
-              isOpen={this.props.limitOrder.errors.rateWarning !== ""}
-              getListWarningOrdersComp={this.getListWarningOrdersComp}
-              toggleAgreeSubmit={this.toggleAgreeSubmit}
-              closeRateWarningTooltip={this.closeRateWarningTooltip}
-              {...this.props}
-            />
-          }
         </div>
 
         <div className={"exchange__error"}>
@@ -327,13 +307,12 @@ export default class LimitOrderForm extends React.Component {
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {this.props.limitOrder.errors.rateWarning !== "" && !this.props.global.isOnMobile && (
+        {this.props.limitOrder.errors.rateWarning !== "" && (
           <ForceCancelOrderModal
             toggleAgreeSubmit={this.toggleAgreeSubmit}
             getListWarningOrdersComp={this.getListWarningOrdersComp}
           />
-        )
-        }
+        )}
       </div>
     )
   }

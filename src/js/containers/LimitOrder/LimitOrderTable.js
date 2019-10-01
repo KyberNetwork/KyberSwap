@@ -1,25 +1,24 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux"
 import ReactTable from "react-table";
 import { getTranslate } from 'react-localize-redux';
 import Dropdown, { DropdownContent } from "react-simple-dropdown";
 import LimitOrderPagination from "./LimitOrderPagination";
-import { getAssetUrl, getFormattedDate } from "../../utils/common";
+import { getFormattedDate } from "../../utils/common";
 import {
   roundingRateNumber,
   multiplyOfTwoNumber,
   formatNumber,
   displayNumberWithDot,
-  convertBuyRate,
-  toT, divOfTwoNumber
+  divOfTwoNumber
 } from "../../utils/converter";
 import ReactTooltip from "react-tooltip";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import PropTypes from "prop-types";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import BLOCKCHAIN_INFO from "../../../../env"
 import { sortBy } from "underscore";
+import OrderDetails from "./MobileElements/OrderDetails";
 
 @connect((store, props) => {
   return {
@@ -132,7 +131,8 @@ export default class LimitOrderTable extends Component {
     // --------------
     const mobileColumns = [
       {
-        id: "order-detail",
+        id: "mobile-order",
+        Header: this.getHeader("mobile-order"),
         accessor: item => item,
         Cell: props => this.getOrderMobileTableCell(props.value),
       }
@@ -182,7 +182,7 @@ export default class LimitOrderTable extends Component {
   getConditionCell = (props) => {
     const { source, dest, side_trade } = props;
     const { screen } = this.props;
-    const pair = side_trade == "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`
+    const pair = side_trade === "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`;
 
     if (screen === "mobile") {
       return (
@@ -194,9 +194,7 @@ export default class LimitOrderTable extends Component {
       )
     }
 
-    return (
-      <div>{pair}</div>
-    )
+    return <div>{pair}</div>
   };
 
   getTypeCell = (props) => {
@@ -233,8 +231,8 @@ export default class LimitOrderTable extends Component {
 
   getAmountCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
-    const amount = side_trade == "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
-    const unit = side_trade == "buy" ? dest.toUpperCase() : source.toUpperCase()
+    const amount = side_trade === "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
+    const unit = side_trade === "buy" ? dest.toUpperCase() : source.toUpperCase()
     return (
       <div>
         <span className="to-number-cell">{amount}</span>{' '}
@@ -245,8 +243,8 @@ export default class LimitOrderTable extends Component {
 
   getTotalCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
-    const amount = side_trade == "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
-    const unit = side_trade == "buy" ? source.toUpperCase() : dest.toUpperCase()
+    const amount = side_trade === "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
+    const unit = side_trade === "buy" ? source.toUpperCase() : dest.toUpperCase()
     return (
         <div>
           <span className="to-number-cell">{amount}</span>{' '}
@@ -305,79 +303,12 @@ export default class LimitOrderTable extends Component {
   }
 
   getOrderMobileTableCell = (row) => {
-    const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash, receive } = row;
-    const formattedFee = formatNumber(divOfTwoNumber(multiplyOfTwoNumber(fee, src_amount), 100), 5, '');
-    const sourceAmount = formatNumber(src_amount, 6);
-    const destAmount = formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6);
-    const datetime = getFormattedDate(updated_at);
-    const isFilledOrder = row.status === LIMIT_ORDER_CONFIG.status.FILLED;
-    const isBuyTrade = side_trade === "buy";
-    const baseSymbol = isBuyTrade ? dest : source;
-    const quoteSymbol = isBuyTrade ? source : dest;
-    const rate = isBuyTrade ? roundingRateNumber(divOfTwoNumber(1, min_rate)) : displayNumberWithDot(min_rate, 9)
-
     return (
-      <div className="order-item">
-        <div className={"order-item__date theme__background-3"}>{datetime}</div>
-        <div className={"order-item__row"}>
-          <div className={"order-item__column order-item__pair theme__text"}><span className={"common__capitalize"}>{side_trade}</span> {baseSymbol}</div>
-          <div className={"order-item__column"}/>
-          <div className={"order-item__column"}>
-            {row.status === LIMIT_ORDER_CONFIG.status.OPEN && (
-                <div className={"order-item__cancel"} onClick={() => this.props.openCancelOrderModal(row)}>×</div>
-            )}
-
-            {row.status === LIMIT_ORDER_CONFIG.status.FILLED && (
-              <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${tx_hash}`} target="_blank" rel="noopener noreferrer" className={"order-item__view-tx"}/>
-            )}
-          </div>
-        </div>
-        <div className={"order-item__row"}>
-          <div className={"order-item__column theme__text-3"}>{this.getAddressCell(row)}</div>
-          <div className={"order-item__column"}>
-            <span className={"theme__text-3 order-item__title common__mr-5"}>{this.props.translate('limit_order.price') || 'Price'}</span>
-            <span className={"theme__text order-item__value"}>{rate}</span>
-          </div>
-          <div className={"order-item__column"}>{this.getStatusCell(row)}</div>
-        </div>
-        <div className={"order-item__row"}>
-          <div className={"order-item__column"}>
-            {(isFilledOrder && isBuyTrade) &&
-              <Fragment>
-                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.total') || 'Total'}</div>
-                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
-              </Fragment>
-            }
-
-            {(!isFilledOrder || !isBuyTrade) &&
-              <Fragment>
-                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.amount') || 'Amount'}</div>
-                <div className={"theme__text order-item__value"}>{isBuyTrade ? destAmount : sourceAmount} {baseSymbol}</div>
-              </Fragment>
-            }
-          </div>
-
-          <div className={"order-item__column"}>
-            {isFilledOrder &&
-              <Fragment>
-                <div className={"theme__text-3 order-item__title"}>{this.props.translate('received') || 'Received'}</div>
-                <div className={"theme__text order-item__value"}>{receive} {dest.toUpperCase()}</div>
-              </Fragment>
-            }
-
-            {!isFilledOrder &&
-              <Fragment>
-                <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.total') || 'Total'}</div>
-                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
-              </Fragment>
-            }
-          </div>
-          <div className={"order-item__column"}>
-            <div className={"theme__text-3 order-item__title"}>{this.props.translate('limit_order.fee') || 'Fee'}</div>
-            <div className={"theme__text order-item__value"}>{formattedFee} {source}</div>
-          </div>
-        </div>
-      </div>
+      <OrderDetails
+        order={row}
+        openCancelOrderModal={this.props.openCancelOrderModal}
+        translate={this.props.translate}
+      />
     )
   };
 
@@ -458,7 +389,7 @@ export default class LimitOrderTable extends Component {
       const checked = statusFilter.indexOf(item) !== -1;
 
       return (
-        <label key={item} className="status-filter-modal__option">
+        <label key={item} className="status-filter-modal__option theme__text">
           <span>{getTitle(item)}</span>
           <input
             type="checkbox"
@@ -478,14 +409,15 @@ export default class LimitOrderTable extends Component {
         {renderedStatus}
       </div>
     )
-  }
+  };
+
   getTypeFilter = () => {
     const { typeFilter } = this.props.limitOrder;
     return <div className="status-filter-modal theme__background theme__text-3" >
       {["buy", "sell"].map((item) => {
         const checked = typeFilter.indexOf(item) !== -1;
         return (
-            <label key={item} className="status-filter-modal__option">
+            <label key={item} className="status-filter-modal__option theme__text">
               <span className={"common__uppercase"}>{item}</span>
               <input
                   type="checkbox"
@@ -500,7 +432,8 @@ export default class LimitOrderTable extends Component {
         )
       })}
     </div>
-  }
+  };
+
   handleFilterType = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -547,59 +480,6 @@ export default class LimitOrderTable extends Component {
   }
 
   // --------------------------------
-  // Render address filter dropdown
-  // --------------------------------
-  getAddressFilter = () => {
-    const { addressFilter, orderAddresses } = this.props.limitOrder;
-
-    const renderedComp = orderAddresses.map(item => {
-      const checked = addressFilter.indexOf(item) !== -1;
-
-      return (
-        <label key={item} className="status-filter-modal__option">
-          <span>{`${item.slice(0, 8)} ... ${item.slice(-6)}`}</span>
-          <input
-            type="checkbox"
-            value={item}
-            name={item}
-            checked={checked}
-            className="status-filter-modal__checkbox"
-            onChange={e => this.handleFilterAddress(e)}
-          />
-          <span className="status-filter-modal__checkmark--checkbox"></span>
-        </label>
-      )
-    });
-
-    return (
-      <div className="address-filter-modal theme__background theme__text-3">
-        {renderedComp}
-      </div>
-    )
-  }
-
-  handleFilterAddress = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      const addressFilter = [...this.props.limitOrder.addressFilter, value];
-      this.props.dispatch(limitOrderActions.getOrdersByFilter({
-        pageIndex: 1,
-        addressFilter
-      }));
-    } else {
-      const addressFilter = [...this.props.limitOrder.addressFilter];
-      const index = addressFilter.indexOf(value);
-      if (index !== -1) {
-        addressFilter.splice(index, 1);
-        this.props.dispatch(limitOrderActions.getOrdersByFilter({
-          pageIndex: 1,
-          addressFilter
-        }));
-      }
-    }
-  }
-
-  // --------------------------------
   // Toggling status filter dropdown
   // --------------------------------
   togglingTypeFilter = () => {
@@ -610,6 +490,7 @@ export default class LimitOrderTable extends Component {
       typeFilterVisible: !this.state.typeFilterVisible
     });
   }
+
   togglingStatusFilter = () => {
     this.setState({
       conditionFilterVisible: this.state.conditionFilterVisible ? false : this.state.conditionFilterVisible,
@@ -643,6 +524,30 @@ export default class LimitOrderTable extends Component {
   // Render header
   // --------------
   getHeader = (title) => {
+    const pairFilter = (
+      <Dropdown active={this.state.conditionFilterVisible} onHide={this.togglingConditionFilter}>
+        <div className={"limit-order-table__dropdown"}>
+          <span>{(this.props.translate("limit_order.pair") || "Pair").toUpperCase()}</span>
+          <div className={`common__triangle theme__border-top ${this.state.conditionFilterVisible ? 'up' : ''}`}/>
+        </div>
+        <DropdownContent>
+          {this.getPairFilter()}
+        </DropdownContent>
+      </Dropdown>
+    );
+
+    const statusFilter = (
+      <Dropdown active={this.state.statusFilterVisible} onHide={this.togglingStatusFilter}>
+        <div className={"limit-order-table__dropdown"}>
+          <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
+          <div className={`common__triangle theme__border-top ${this.state.statusFilterVisible ? 'up' : ''}`}/>
+        </div>
+        <DropdownContent>
+          {this.getStatusFilter()}
+        </DropdownContent>
+      </Dropdown>
+    );
+
     if (title === "date") {
       return (
         <div>
@@ -651,61 +556,28 @@ export default class LimitOrderTable extends Component {
           {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
       )
-    } else if (title === "address") {
-      return (
-        <Dropdown active={this.state.addressFilterVisible} onHide={e => this.togglingAddressFilter()}>
-          <div>
-            <span>{(this.props.translate("address.address") || "Address").toUpperCase()}</span>
-            <div className="drop-down">
-              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-            </div>
-          </div>
-          <DropdownContent>
-            {this.getAddressFilter()}
-          </DropdownContent>
-        </Dropdown>
-      )
     } else if (title === "condition") {
-      return (
-        <Dropdown active={this.state.conditionFilterVisible} onHide={e => this.togglingConditionFilter()}>
-          <div>
-            <span>{(this.props.translate("limit_order.pair") || "Pair").toUpperCase()}</span>
-            <div className="drop-down">
-              <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-            </div>
-          </div>
-          <DropdownContent>
-            {this.getPairFilter()}
-          </DropdownContent>
-        </Dropdown>
-      )
+      return pairFilter;
     } else if (title === "status") {
-      return (
-          <Dropdown active={this.state.statusFilterVisible} onHide={e => this.togglingStatusFilter()}>
-            <div>
-              <span>{(this.props.translate("limit_order.status") || "Status").toUpperCase()}</span>
-              <div className="drop-down">
-                <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-              </div>
-            </div>
-            <DropdownContent>
-              {this.getStatusFilter()}
-            </DropdownContent>
-          </Dropdown>
-      )
+      return statusFilter
     } else if (title === "type") {
       return (
           <Dropdown active={this.state.typeFilterVisible} onHide={e => this.togglingTypeFilter()}>
-            <div>
+            <div className={"limit-order-table__dropdown"}>
               <span>{(this.props.translate("limit_order.type") || "Type").toUpperCase()}</span>
-              <div className="drop-down">
-                <img src={require("../../../assets/img/v3/price_drop_down.svg")}/>
-              </div>
+              <div className={`common__triangle theme__border-top ${this.state.typeFilterVisible ? 'up' : ''}`}/>
             </div>
             <DropdownContent>
               {this.getTypeFilter()}
             </DropdownContent>
           </Dropdown>
+      )
+    } else if (title === 'mobile-order') {
+      return (
+        <div className={'limit-order-table__header'}>
+          <div onClick={this.togglingConditionFilter}>{pairFilter}</div>
+          <div onClick={this.togglingStatusFilter}>{statusFilter}</div>
+        </div>
       )
     } else {
       return (
@@ -847,13 +719,14 @@ export default class LimitOrderTable extends Component {
           getTheadProps={(state, rowInfo) => {
             if (this.props.screen === "mobile") {
               return {
-                style: { display: "none" }
+                style: { overflow: "visible", height: '25px' },
+                className: "theme__text"
               }
             }
 
             return {
               style: { overflow: "visible" },
-              className: "theme__background theme__text-3"
+              className: "theme__background theme__text"
             }
           }}
           getTheadThProps={(state, rowInfo, column) => {
@@ -886,9 +759,12 @@ export default class LimitOrderTable extends Component {
                 }
               }
             }
+
             return {};
           }}
           getTrProps={(state, rowInfo) => {
+            if (this.props.screen === "mobile") return {};
+
             return {
               onClick: (e) => {
                 e.stopPropagation();
