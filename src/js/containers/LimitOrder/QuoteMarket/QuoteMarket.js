@@ -29,7 +29,7 @@ export default class QuoteMarket extends React.Component{
       current_search: "", 
       current_sort_index: "base", 
       current_sort_dsc: true,
-      is_volume: true
+      is_volume: false
     }
   }
 
@@ -140,18 +140,18 @@ export default class QuoteMarket extends React.Component{
                 <Search onSearch={this.onSearch}/>
                 <div className="volume_change_panel">
                   <div className="advance-config__option-container">
-                    <label className="advance-config__option"><span className="advance-config__option-percent">Volume</span>
-                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                             defaultChecked={true}
-                             onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
-                             checked={this.state.is_volume} />
-                      <span className="advance-config__checkmark theme__radio-button"></span>
-                    </label>
                     <label className="advance-config__option"><span className="advance-config__option-percent">Change</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
                              defaultChecked={false}
                              onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
                              checked={!this.state.is_volume} />
+                      <span className="advance-config__checkmark theme__radio-button"></span>
+                    </label>
+                    <label className="advance-config__option"><span className="advance-config__option-percent">Volume</span>
+                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                             defaultChecked={true}
+                             onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
+                             checked={this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>
                     </label>
                   </div>
