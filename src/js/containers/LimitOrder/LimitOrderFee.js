@@ -14,7 +14,7 @@ import SlideDown, { SlideDownContent, SlideDownTrigger } from "../../components/
   const tokens = store.tokens.tokens;
   const limitOrder = store.limitOrder;
 
-  return { translate, limitOrder, tokens, account }
+  return { translate, limitOrder, tokens, account, theme: store.global.theme }
 })
 
 class LimitOrderFee extends React.Component {
@@ -67,7 +67,7 @@ class LimitOrderFee extends React.Component {
     const displayDiscountInfo = this.props.limitOrder.sourceAmount && isDiscount;
     let orderFeeText = null;
     let orderDiscountFeeText = null;
-    let orderNetFeeText = <img src={require('../../../assets/img/waiting-white.svg')}/>;
+    let orderNetFeeText = <img src={require(`../../../assets/img/${this.props.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)}/>;
     const totalText = this.props.formType === 'buy' ? `${this.props.limitOrder.sourceAmount ? converter.formatNumber(this.props.limitOrder.sourceAmount, 6) : 0} ${sourceTokenSymbol}` : `${this.props.limitOrder.destAmount ? converter.formatNumber(this.props.limitOrder.destAmount, 6) : 0} ${destTokenSymbol}`;
 
     if (!this.props.limitOrder.isFetchingFee) {

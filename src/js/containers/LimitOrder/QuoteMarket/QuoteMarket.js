@@ -158,7 +158,7 @@ export default class QuoteMarket extends React.Component{
                 </div>
               </div>
             </div> : 
-            <div className="rate-loading"> <img src={require('../../../../assets/img/waiting-white.svg')} /></div>}
+            <div className="rate-loading"> <img src={require(`../../../../assets/img/${this.props.global.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} /></div>}
       </div>
     )
   }
