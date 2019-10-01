@@ -28,7 +28,8 @@ export default class QuoteMarket extends React.Component{
       favorite_pairs: [],
       current_search: "", 
       current_sort_index: "base", 
-      current_sort_dsc: true
+      current_sort_dsc: true,
+      is_volume: true
     }
   }
 
@@ -103,11 +104,11 @@ export default class QuoteMarket extends React.Component{
     let pair = this.props.translate("limit_order.pair" || "Pair")
     let volume = this.props.translate("limit_order.volume" || "Volume")
     let change = this.props.translate("limit_order.change" || "Change")
+    const {is_volume} = this.state
     return [
       { html: pair, field: "base" }, 
       { html: price, field: "price" }, 
-      { html: volume, field: "volume" }, 
-      { html: change, field: "change" }
+      { html: is_volume ? volume : change, field: is_volume ? "volume" : "change" },
     ].map((i, index) => (
       <div className={`c${index+1}`} key={i["html"]} >
         <SortableComponent 
@@ -126,6 +127,7 @@ export default class QuoteMarket extends React.Component{
   }
   render(){
     const quotes = this.renderQuotes()
+    const {is_volume} = this.state
     const { tokens, currentQuote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
 
@@ -134,8 +136,28 @@ export default class QuoteMarket extends React.Component{
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
               <div id="panel" className="theme__text-4 theme__border">
+                <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
                 <Search onSearch={this.onSearch}/>
-                <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={["FAV"].concat(Object.keys(quotes))}/>
+                <div className="volume_change_panel">
+                  <div className="advance-config__option-container">
+                    <label className="advance-config__option"><span className="advance-config__option-percent">Volume</span>
+                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                             defaultChecked={true}
+                             onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
+                             checked={this.state.is_volume} />
+                      <span className="advance-config__checkmark theme__radio-button"></span>
+                    </label>
+                    <label className="advance-config__option"><span className="advance-config__option-percent">Change</span>
+                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                             defaultChecked={false}
+                             onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
+                             checked={!this.state.is_volume} />
+                      <span className="advance-config__checkmark theme__radio-button"></span>
+                    </label>
+                  </div>
+
+                </div>
+
               </div>
               <div className="table">
                 <div className="table__header">
@@ -144,6 +166,7 @@ export default class QuoteMarket extends React.Component{
                     {this.renderTh()}
                   </div>
                 </div>
+
                 <div className="table__body">
                   {list.map(pair => <div key={pair["id"]} className="table__row">
                     <div className="overlay" onClick={() => this.onPairClick(pair["base"], pair["quote"])}></div>
@@ -152,8 +175,7 @@ export default class QuoteMarket extends React.Component{
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                     <div className={"c2"} >{pair["price"]}</div>
-                    <div className={"c3"} >{pair["volume"] == "-" ? "-" : pair["volume"]}</div>
-                    <div className={`${pair["change"] < 0 ? "down" : "up"} c4`}>{pair["volume"] == "-" ? "-" : `${Math.abs(pair["change"])}%`}</div>
+                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${Math.abs(pair["change"])}%`)}</div>
                   </div>)}
                 </div>
               </div>

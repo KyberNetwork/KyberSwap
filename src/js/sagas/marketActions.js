@@ -21,8 +21,7 @@ export function* fetchMarketData() {
       .sort((first, second) => {
         return sortQuotePriority(tokens, first, second);
       });
-
-    yield put(marketActions.getMarketInfoSuccess(marketData, marketQuotes));
+    yield put(marketActions.getMarketInfoSuccess(marketData ? marketData : [], marketQuotes));
   } catch(e) {
     console.log(e)
   }
