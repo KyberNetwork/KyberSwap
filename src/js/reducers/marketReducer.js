@@ -87,7 +87,7 @@ const market = (state = initMarket, action) => {
           ...newState.configs,
           currency: {
             listItem: marketQuotes,
-            focus: marketQuotes[0]
+            focus: newState.configs.currency.focus ? newState.configs.currency.focus : marketQuotes[0]
           }
         }
       };
