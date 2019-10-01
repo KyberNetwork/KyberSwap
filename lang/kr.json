@@ -233,7 +233,7 @@
     "issue_ether_amount": "전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
     "issue_user_cap": "입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
     "min_rate_too_high": "입력하신 최저 가격이 너무 높습니다.",
-    "ledger_global_err": "<div class='text-left'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>-\n귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서\n이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서\n\"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>-\n귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서\n이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서\n\"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
     "need_to_config_env_ledger": "Ledger에 액세스하려면 Linux 디바이스를 구성해야합니다. <a href=\"${link}\"\ntarget=\"_blank\">여기</a>.",
     "ledger_not_enable_contract": "다음 사항을 확인하십시오: </br>- 귀하의 Ledger에서 \"계약 데이터\"가 활성화되었습니다.",
     "invalid_path_or_session_expired": "이 경로에서 주소를 가져올 수 없습니다. 경로가 유효한지 또는 Ledger가 연결되어\n있는지 확인하십시오.",

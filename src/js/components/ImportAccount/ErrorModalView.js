@@ -5,14 +5,10 @@ const ErrorModalView = (props) => {
     const content = (
         <div>
             <div class="title text-center">{props.title ? props.title : props.translate("error.error_occurred") || "Error occurred"}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
-            <div class="content error-modal">
-                <div class="row">
-                    <div class="column">
+            <div class="content error-modal">                                
                         <center>
                             <p>{props.error}</p>
-                        </center>
-                    </div>
-                </div>
+                        </center>                
             </div>
         </div>
     )

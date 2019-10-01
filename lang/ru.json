@@ -232,7 +232,7 @@
     "issue_ether_amount": "Не удалось, так как пользователь не перевел точный объем эфира",
     "issue_user_cap": "Не удалось, так как начальное значение превышает лимит пользователя",
     "min_rate_too_high": "Ваша минимальная ставка слишком высока!",
-    "ledger_global_err": "<div class='text-left'>Не получается подключиться к Ledger. Пожалуйста\ncheck if:<br/>- Ваш Ledger правильно подлючен.<br/>- Вы подключились к\nLedger.<br/>- Вы запустили приложение Ethereum на вашем Ledger.<br/>-\n\"Браузерная поддержка\" был включен к вашему Ledger. Включите \"Браузерную поддержку\"\n<a href=\"${link}\" target=\"_blank\">здесь</a>.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Не получается подключиться к Ledger. Пожалуйста\ncheck if:<br/>- Ваш Ledger правильно подлючен.<br/>- Вы подключились к\nLedger.<br/>- Вы запустили приложение Ethereum на вашем Ledger.<br/>-\n\"Браузерная поддержка\" был включен к вашему Ledger. Включите \"Браузерную поддержку\"\n<a href=\"${link}\" target=\"_blank\">здесь</a>.</div>",
     "need_to_config_env_ledger": "Вы должны настроить устройство Linux для подключения к Ledger.\nИнструкция <a href=\"${link}\" target=\"_blank\">здесь</a>.",
     "ledger_not_enable_contract": "Пожалуйста, проверьте: </br>- \"Данные контракта\" были включены\nв ваш Ledger.",
     "invalid_path_or_session_expired": "Невозможно получить адрес по этому пути. Пожалуйста, проверьте\nваш путь и подключение Ledger.",

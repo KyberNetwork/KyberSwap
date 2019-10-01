@@ -698,7 +698,7 @@ $divider-color: darken($title-background-color, 5);
       padding-left: 20px;
       padding-right: 20px;
       .button {
-        width: 100%;
+        // width: 100%;
         max-width: 125px;
         margin-top: 10px;
       }
@@ -838,7 +838,7 @@ $divider-color: darken($title-background-color, 5);
 
       &--approve {
         text-align: center;
-        justify-content: flex-end;
+        // justify-content: flex-end;
 
         .button {
           max-width: 200px;
@@ -1399,4 +1399,9 @@ $divider-color: darken($title-background-color, 5);
 }
 .cancel-order-modal {
   padding: 0;
+}
+
+.ledger-error-dest{
+  padding: 0 20px;
+  text-align: left;
 }
