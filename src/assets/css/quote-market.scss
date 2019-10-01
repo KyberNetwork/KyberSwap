@@ -45,6 +45,9 @@
       width: 100%;
       margin-bottom: 10px;
 
+      @include screen-min-width(medium){
+        width: 80%;
+      }
 
       .quote_item{
         width: 70px;
@@ -168,11 +171,18 @@
     cursor: pointer;
     .table__header{
       margin-right: 10px;
+      .table__row span{
+        display: inline-block;
+        width: 100%;
+      }
     }
     .table__body{
       display: block;
       height: 300px;
       overflow-y: auto;
+      @include screen-max-width(medium){
+        overflow-x: hidden;
+      }
       width: 100%;
       .table__row{
         .overlay{

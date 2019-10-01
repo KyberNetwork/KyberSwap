@@ -143,12 +143,7 @@
     &-header {
       justify-content: $position !important;
       span {
-        padding-right: 10px;
-      }
-
-      .drop-down {
-        display: inline;
-        cursor: pointer;
+        padding-right: 5px;
       }
     }
     justify-content: $position !important;
@@ -697,6 +692,31 @@
 
 .limit-order-table {
   padding-top: 25px;
+
+  &__header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+  }
+
+  &__dropdown {
+    display: flex;
+    align-items: center;
+
+    span {
+      padding-right: 5px;
+    }
+
+    .common__triangle {
+      position: relative;
+      bottom: 1px;
+    }
+  }
 }
 
 .limit-order-header {
@@ -936,19 +956,20 @@
 
   &--table-mobile {
     @extend %react-table-layout;
+    font-size: 12px;
+    font-weight: 400;
+    overflow-x: hidden;
 
     .ReactTable {
       height: 485px;
+      @include screen-max-width(medium){
+        height: auto;
+      }
+      
       margin: 0;
 
       .rt-td {
         padding: 0 !important;
-      }
-
-      .cell-status {
-        margin-right: 0;
-        padding: 0;
-        text-align: right;
       }
 
       .status-info-icon.status-info-icon__mobile {
@@ -956,10 +977,22 @@
       }
     }
 
+    .cell-status {
+      margin-right: 0;
+      padding: 0;
+      text-align: right;
+      position: relative;
+      bottom: 1px;
+    }
+
     .order-item {
       width: 100%;
       margin: 10px 0;
       text-transform: uppercase;
+
+      &__container {
+        width: 100%;
+      }
 
       &__date {
         padding: 10px 15px;
@@ -1043,6 +1076,7 @@
   font-size: 14px;
   font-weight: 500;
   padding-bottom: 10px;
+  border-radius: 5px;
 
   @include screen-max-width(medium) {
     left: 0px;
@@ -1070,7 +1104,8 @@
   }
 
   &__advance {
-    padding: 10px 12px 0;
+    margin: 20px 10px 0 0;
+    padding: 0 10px 0;
     height: auto;
     max-height: 170px;
     min-height: 30px;
@@ -1125,7 +1160,6 @@
   }
 
   &__option {
-    color: #5a5e67;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
@@ -1134,6 +1168,10 @@
     position: relative;
     text-align: left;
     display: block;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__checkbox {
@@ -1192,10 +1230,53 @@
   min-height: 30px;
   min-width: 190px;
   overflow: auto;
-
 }
 
 .limit-order-modal {
+  &--mobile {
+    .limit-order-modal {
+      &__body {
+        padding: 0;
+      }
+
+      &__title {
+        padding: 50px 15px 0;
+        font-size: 22px;
+      }
+
+      &__message {
+        padding: 0 15px;
+      }
+
+      &__footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      &__msg {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    .limit-order-list--table-mobile {
+      background: white;
+    }
+
+    .question {
+      padding: 0 15px;
+      display: block;
+      margin: -15px 0 25px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
   &__body {
     background-color: #f6f7fa;
     padding: 30px 40px 0;
@@ -1203,8 +1284,10 @@
     @include screen-max-width(medium) {
       padding: 20px 20px 0;
     }
+
     .cell-status{
-      &--open {
+      &--open,
+      &--new {
         color: $text-green;
       }
 
@@ -1225,6 +1308,7 @@
         color: #006644;
       }
     }
+
     .cell-action {
       .btn-cancel-order {
         height: 20px;
@@ -1424,14 +1508,16 @@
     &--pending {
       font-size: 14px;
       color: #222222;
-      margin: 15px 20px 0;
+      font-weight: 400;
+      margin: 15px 15px 0;
       animation: slideUp 0.3s forwards;
     }
 
     &--error {
       font-size: 14px;
+      font-weight: 400;
       color: #ff5d00;
-      margin: 15px 20px 0;
+      margin: 15px 15px 0;
       max-height: 100px;
       overflow: auto;
       animation: slideUp 0.3s forwards;
@@ -1573,15 +1659,12 @@
 }
 
 .wrap-eth-modal{
-  @include screen-max-width(medium) {
-    padding: 0 20px;
-  }
+  
 
   .content {
     padding: 0 45px;
-
     @include screen-max-width(medium) {
-      padding: 0;
+      padding: 0 20px !important;
     }
   }
 
@@ -1589,12 +1672,13 @@
     font-size: 24px;
     font-weight: 500;
     text-align: left;
-    margin-top: 50px;
-    padding: 0 45px;
+    // margin-top: 50px;
+    // padding: 0 45px;
+    padding-top: 30px;
     line-height: 1.3;
 
     @include screen-max-width(medium) {
-      padding: 0;
+      padding-left: 20px;
     }
   }
   .message{
@@ -1634,6 +1718,11 @@
     .balance-info {
       font-size: 16px;
       font-weight: 600;
+      >div{
+        &:first-child{
+          margin-bottom: 5px;
+        }
+      }
     }
   }
   .illustration{
@@ -1715,6 +1804,12 @@
         text-align: center;
         transform: rotate(90deg);
       }
+    }
+  }
+
+  .transfer__arrow{
+    @include screen-max-width(medium) {
+      transform: none;
     }
   }
 }
@@ -1955,9 +2050,11 @@
   }
 }
 
-.limit-order {
-  display: flex;
-  justify-content: space-between;
+.limit-order {  
+  @include screen-min-width(medium){
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__container {
     &--left {
@@ -1984,7 +2081,7 @@
   }
 
   @include screen-max-width(xxmedium) {
-    flex-direction: column-reverse;
+    // flex-direction: column-reverse;
 
     &__container {
       width: 100%;
@@ -1993,10 +2090,10 @@
 
       }
 
-      &--right {
-        display: flex;
-        flex-direction: column-reverse;
-      }
+      // &--right {
+        // display: flex;
+        // flex-direction: column-reverse;
+      // }
     }
   }
 }
@@ -2248,5 +2345,24 @@
         border-width: 0 2px 2px 0;
       }
     }
+  }
+}
+
+
+.ld-actions{
+  display:  flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  a{
+    background-image: linear-gradient(178deg, #ffb046, #f52880);
+    background-color: #1a1a1a;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 3px;
+    color: #192029;
+    margin-left: 20px;
+    cursor: pointer;
   }
 }

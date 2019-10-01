@@ -224,10 +224,10 @@ export default class WrapETHModal extends React.Component {
 
                           <div className="message">
                               <span>{this.props.translate("limit_order.wrap_eth_notify") || "Your order can not be submited because your WETH is not enough, please convert ETH to WETH."}</span>
-                              <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.'} data-for="weth-tooltip" currentitem="false">
+                              {/* <span className="weth-modal-tooltip-icon" data-tip={this.props.translate("limit_order.weth_not_supported_tooltip") || 'Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.'} data-for="weth-tooltip" currentitem="false">
                                   <img src={require("../../../../assets/img/v3/info_grey.svg")} />
                               </span>
-                              <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" place="left" />
+                              <ReactTooltip class={"weth-modal-tooltip"} id="weth-tooltip" effect="solid" type="dark" place="left" /> */}
                           </div>
                           <div className="address-info">
                               <div>
@@ -287,12 +287,7 @@ export default class WrapETHModal extends React.Component {
                 <div className="input-confirm grid-x input-confirm--approve">
                 
                   <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
-                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
-                  {/*<div className="cell btn-wrapper">
-                        <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
-                          onClick={this.props.onSubmit}
-                        >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> 
-                  </div>*/}
+                  <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>                  
                 </div>
               </div>
             </div>

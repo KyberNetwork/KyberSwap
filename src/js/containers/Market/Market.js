@@ -79,7 +79,8 @@ function compareNum(sortKey) {
 
 export default class Market extends React.Component {
   constructor() {
-    super()
+    super();
+
     this.state = {
       modalState: false
     }
@@ -89,17 +90,17 @@ export default class Market extends React.Component {
     if (window.kyberBus) {
       window.kyberBus.on("swap.open.market", this.setShowMarket.bind(this));
     }   
-  }
+  };
 
   setShowMarket = () => {
     this.setState({ modalState: true })
-  }
+  };
 
   changeSearch = (e) => {
     var value = e.target.value
     this.props.dispatch(marketActions.changeSearchWord(value))
     this.props.dispatch(marketActions.resetListToken(value))
-  }
+  };
 
   getContentMarket = () => {
     return (
@@ -123,18 +124,23 @@ export default class Market extends React.Component {
         </div>
       </div>
     )
-  }
+  };
 
   closeModal = () => {
-    this.setState({ modalState: false })
-    this.props.global.analytics.callTrack("trackClickCloseMarket")
-  }
+    this.setState({ modalState: false });
+    this.props.dispatch(marketActions.changeSearchWord(''));
+    this.props.dispatch(marketActions.resetListToken(''));
+    this.props.global.analytics.callTrack("trackClickCloseMarket");
+  };
+
   openModal = () => {
     this.setState({ modalState: true })
     this.props.global.analytics.callTrack("trackClickOpenMarket")
-  }
+  };
 
   render() {
+    if (!this.props.originalTokens.length) return '';
+
     return (
       <div className="market-wrapper-container">
         {!this.props.global.isOnMobile && (

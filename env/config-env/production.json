@@ -394,7 +394,7 @@
             "address": "0x094c875704c14783049ddf8136e298b3a099c446",
             "decimals": 18,
             "cg_id": "",
-            "gasLimit": "380000"
+            "gasLimit": "500000"
         },
         "ABYSS": {
             "symbol": "ABYSS",
@@ -577,7 +577,23 @@
             "decimals": 18,
             "cg_id": "havven",
             "listing_time": 1565960400,
-            "gasLimit": "500000"
+            "gasLimit": "600000"
+        },
+        "BTU": {
+            "symbol": "BTU",
+            "name": "BTU Protocol",
+            "address": "0xb683d83a532e2cb7dfa5275eed3698436371cc9f",
+            "decimals": 18,
+            "cg_id": "btu-protocol",
+            "listing_time": 1569330000
+        },
+        "TKN": {
+            "symbol": "TKN",
+            "name": "Monolith",
+            "address": "0xaaaf91d9b90df800df4f55c205fd6989c977e73a",
+            "decimals": 8,
+            "cg_id": "tokencard",
+            "listing_time": 1569330000
         }
     },
     "ethScanUrl": "https://etherscan.io/",

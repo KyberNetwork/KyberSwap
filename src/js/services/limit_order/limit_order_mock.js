@@ -183,7 +183,7 @@ export function submitOrder(order) {
         newOrder.id = Math.floor(Date.now() / 1000)
         const sourceAmount = converters.toT(order.src_amount, sourceTokenDecimals);
         newOrder.src_amount = sourceAmount === "Infinity" || sourceAmount === "NaN" ? sourceAmount : parseFloat(sourceAmount);
-        newOrder.fee = converters.toT(order.fee, 2) / 100;
+        newOrder.fee = converters.toT(order.fee, 4) / 100;
         newOrder.min_rate = converters.toT(order.min_rate, 18);
         newOrder.source = sourceTokenSymbol;
         newOrder.dest = destTokenSymbol;

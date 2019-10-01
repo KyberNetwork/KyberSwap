@@ -42,7 +42,7 @@ const ImportByDeviceView = (props) => {
                     <div class="address-item__import">
                         <a class="balance" title={address.balance}>
                             {address.balance == '-1' ?
-                                <img src={require('../../../assets/img/waiting-white.svg')} />
+                                <img src={require(`../../../assets/img/${props.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} />
                                 : roundingNumber(address.balance)
                             } ETH
                         </a>
