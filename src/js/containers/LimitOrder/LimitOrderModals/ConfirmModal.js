@@ -9,7 +9,8 @@ import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import { OrderTableInfo } from "../../../components/CommonElement";
-import makeOrderInfo from "../../../utils/convert_object";
+import createOrderObject from "../../../utils/convert_object";
+import OrderDetails from "../MobileElements/OrderDetails";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -23,9 +24,7 @@ import makeOrderInfo from "../../../utils/convert_object";
     translate, limitOrder, tokens, account, ethereum, global, isOnDAPP: store.account.isOnDAPP
   }
 })
-
 export default class ConfirmModal extends React.Component {
-
   constructor(){
     super()
     this.state = {
@@ -156,7 +155,6 @@ export default class ConfirmModal extends React.Component {
     }
   }
 
-
   closeModal = () => {
     if (this.state.isConfirming) return;
     this.props.dispatch(limitOrderActions.resetOrderPath())
@@ -181,9 +179,10 @@ export default class ConfirmModal extends React.Component {
     const triggerRate = isBuySideTrade ? this.props.limitOrder.triggerBuyRate : this.props.limitOrder.triggerRate;
     const formattedTriggerRate = converters.displayNumberWithDot(triggerRate, 9);
     const compareBaseRateWithQuoteRate = isBuySideTrade ? '<=' : '>=';
+    const orderObject = createOrderObject(this.props.limitOrder, this.props.account.address);
 
     return (
-      <div className="limit-order-modal">
+      <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
         <div className="limit-order-modal__body">
           <div className="limit-order-modal__title">
             {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
@@ -204,65 +203,78 @@ export default class ConfirmModal extends React.Component {
               `Your transaction will be broadcasted when price of ${base} ${compareBaseRateWithQuoteRate} <span title="">${formattedTriggerRate}</span> ${quote}`
               }
             </div>
-            <OrderTableInfo
-              listOrder = {makeOrderInfo(this.props.limitOrder)}
-              translate={this.props.translate}
-            />
+
+            {!this.props.global.isOnMobile && (
+              <OrderTableInfo
+                listOrder = {[orderObject]}
+                translate={this.props.translate}
+              />
+            )}
+
+            {this.props.global.isOnMobile && (
+              <OrderDetails
+                order = {orderObject}
+                isModal = {true}
+                translate={this.props.translate}
+              />
+            )}
+
             {this.msgHtml()}
 
-            {this.state.feeErr.length > 0 && <div className="limit-order-modal__result--error">
-              {this.props.translate("limit_order.fetch_fee_err") || "Cannot get fee."}
-            </div>}
-
+            {this.state.feeErr.length > 0 && (
+              <div className="limit-order-modal__result--error">
+                {this.props.translate("limit_order.fetch_fee_err") || "Cannot get fee."}
+              </div>
+            )}
           </div>
         </div>
 
         {(!this.state.isFinish && !this.state.err) &&
-        <div className="limit-order-modal__footer">
-          <button
-            className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
-            onClick={this.closeModal}
-          >
-            {this.props.translate("modal.cancel") || "Cancel"}
-          </button>
-          <button
-            className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
-            onClick={this.onSubmit}
-          >
-            {this.props.translate("modal.confirm") || "Confirm"}
-          </button>
-        </div>
+          <div className="limit-order-modal__footer">
+            <button
+              className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
+              onClick={this.closeModal}
+            >
+              {this.props.translate("modal.cancel") || "Cancel"}
+            </button>
+            <button
+              className={`btn-confirm ${(this.state.isConfirming || this.state.isFetchFee || this.state.feeErr.length > 0) ? "btn--disabled" : ""}`}
+              onClick={this.onSubmit}
+            >
+              {this.props.translate("modal.confirm") || "Confirm"}
+            </button>
+          </div>
         }
 
         {this.state.isFinish &&
-        <div className="limit-order-modal__msg limit-order-modal__msg--success">
-          <div className={"limit-order-modal__text"}>
-            <div className={"limit-order-modal__text--success"}>
-              <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
-              <span>{this.props.translate("modal.success") || "Success"}</span>
-            </div>
-            <div className={"limit-order-modal__button limit-order-modal__button--success"} onClick={this.closeModal}>
-              {this.props.translate("done") || "Done"}
+          <div className="limit-order-modal__msg limit-order-modal__msg--success">
+            <div className={"limit-order-modal__text"}>
+              <div className={"limit-order-modal__text--success"}>
+                <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
+                <span>{this.props.translate("modal.success") || "Success"}</span>
+              </div>
+              <div className={"limit-order-modal__button limit-order-modal__button--success"} onClick={this.closeModal}>
+                {this.props.translate("done") || "Done"}
+              </div>
             </div>
           </div>
-        </div>
         }
 
         {this.state.err &&
-        <div className="limit-order-modal__msg limit-order-modal__msg--failed">
-          <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
-            <div className={"limit-order-modal__left-content"}>
-              <img src={require("../../../../assets/img/limit-order/error.svg")}/>
-              <div>
-                <div>{this.props.translate("error_text") || "Error"}</div>
-                <div>{this.state.err}</div>
+          <div className="limit-order-modal__msg limit-order-modal__msg--failed">
+            <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
+              <div className={"limit-order-modal__left-content"}>
+                <img src={require("../../../../assets/img/limit-order/error.svg")}/>
+                <div>
+                  <div>{this.props.translate("error_text") || "Error"}</div>
+                  <div>{this.state.err}</div>
+                </div>
+              </div>
+              <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
+                {this.props.translate("ok") || "OK"}
               </div>
             </div>
-            <div className={"limit-order-modal__button limit-order-modal__button--failed"} onClick={this.closeModal}>
-              {this.props.translate("ok") || "OK"}
-            </div>
           </div>
-        </div>
         }
       </div>
     )

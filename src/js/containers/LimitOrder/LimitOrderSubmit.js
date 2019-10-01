@@ -84,7 +84,6 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
 
-
     // var rateBig = converters.toTWei(this.props.tokens[this.props.limitOrder.sourceTokenSymbol].rate, 18)
     var ethEquivalentValue = this.calculateETHequivalent()
 
@@ -174,8 +173,6 @@ export default class LimitOrderSubmit extends React.Component {
 
 
     //check if he is agreed submit order
-    console.log("isAgree")
-    console.log(this.state.isAgree)
     if (this.state.isAgree) {
       this.findPathOrder()
       this.setState({ isAgree: false })
@@ -280,15 +277,10 @@ export default class LimitOrderSubmit extends React.Component {
 
   validateBalance = (orderPath) => {
     var gasLimit = this.getMaxGasLimit(orderPath)
-    // var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
-    // var totalFee = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit)
-
     var totalFeeBig = converters.totalFee(this.props.limitOrder.gasPrice, gasLimit)
-
-
     var ethBalance = this.props.tokens["ETH"].balance
-
     var compareValue
+
     if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
       var srcAmount = this.getSourceAmount()
       var wrapETHTokenBalance = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].balance
@@ -296,15 +288,14 @@ export default class LimitOrderSubmit extends React.Component {
     } else {
       compareValue = totalFeeBig
     }
+
     return converters.compareTwoNumber(ethBalance, compareValue) < 0 ? false : true
   }
 
   async findPathOrder() {
     try {
       var orderPath = []
-      // var currentPath = constants.LIMIT_ORDER_CONFIG.orderPath.confirmSubmitOrder
       var ethereum = this.props.ethereum
-      // check wrapped eth
       var allowance = await ethereum.call("getAllowanceAtLatestBlock", this.props.limitOrder.sourceToken, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
 
       const { limit_order_tx_approve_zero, limit_order_tx_approve_max } = this.props.tokens[this.props.limitOrder.sourceTokenSymbol];
@@ -324,9 +315,6 @@ export default class LimitOrderSubmit extends React.Component {
       if (this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
         var sourceToken = this.getSourceAmount()
         var userBalance = this.getAvailableWethBalance();
-        console.log("user_balance")
-        console.log(sourceToken)
-        console.log(userBalance)
 
         if (converters.compareTwoNumber(userBalance, sourceToken) < 0) {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.wrapETH)
@@ -336,15 +324,9 @@ export default class LimitOrderSubmit extends React.Component {
       orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.submitStatusOrder)
 
       //check balance eth is enough
-
       if (this.validateBalance(orderPath)) {
         this.props.dispatch(limitOrderActions.updateOrderPath(orderPath, 0))
       } else {
-        // console.log("Your eth balance is not enough for transactions")
-        // var title = this.props.translate("error.error_occurred") || "Error occurred"
-        // var content = "Your eth balance is not enough for transactions"
-        // this.props.dispatch(utilActions.openInfoModal(title, content))
-
         this.props.dispatch(limitOrderActions.throwError("sourceAmount", [this.props.translate("error.eth_balance_not_enough_for_fee") || "Your eth balance is not enough for transaction fee"]))
       }
 
@@ -357,7 +339,6 @@ export default class LimitOrderSubmit extends React.Component {
 
     }
   }
-
 
   submitOrder = () => {
     this.props.global.analytics.callTrack("trackClickSubmitOrder");
@@ -375,7 +356,7 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (this.props.account !== false && this.props.account.type !== "promo") {
       this.validateOrder()
-    } 
+    }
   }
 
   agreeSubmit = () => {

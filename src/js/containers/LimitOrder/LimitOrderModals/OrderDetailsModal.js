@@ -41,12 +41,13 @@ export default class OrderDetailsModal extends Component {
     let source = order.source == "WETH" ? "ETH*" : order.source
     let dest = order.dest == "WETH" ? "ETH*" : order.dest
     const { min_rate, fee, src_amount, status, side_trade } = order;
-    const base = side_trade == "buy" ? dest : source
-    const quote = side_trade == "buy" ? source : dest
-    const pair = side_trade == "buy" ? `${dest}/${source}` : `${source}/${dest}`
-    const rate = side_trade === 'buy' ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
-    const amount = side_trade == "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6) : formatNumber(src_amount, 6)
-    const total = side_trade == "buy" ? formatNumber(src_amount, 6) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6)
+    const isBuyTrade = side_trade === "buy";
+    const base = isBuyTrade ? dest : source
+    const quote = isBuyTrade ? source : dest
+    const pair = isBuyTrade ? `${dest}/${source}` : `${source}/${dest}`
+    const rate = isBuyTrade ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
+    const amount = isBuyTrade ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6) : formatNumber(src_amount, 6)
+    const total = isBuyTrade ? formatNumber(src_amount, 6) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6)
     return (
       <div className="limit-order-modal">
         <div className="limit-order-modal__body">
@@ -61,9 +62,7 @@ export default class OrderDetailsModal extends Component {
           <div className="limit-order-modal__content">
             <div className="limit-order-modal__message limit-order-modal__message--text-small">
               {common.getFormattedDate(order.updated_at)} {' '}
-              <span className={`cell-status cell-status--${order.status}`}>
-                                    {(order.status)}
-                                </span>
+              <span className={`cell-status cell-status--${order.status}`}>{(order.status)}</span>
             </div>
             <div className={"order-table-info"}>
               <div className={"order-table-info__header"}>
@@ -83,7 +82,7 @@ export default class OrderDetailsModal extends Component {
                   <div>{`${amount} ${base}`}</div>
                   <div>{`${total} ${quote}`} </div>
                   {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${order.receive} ${dest.toUpperCase()}`}</div>}
-                  <div>{`${converters.formatNumber(converters.divOfTwoNumber(converters.multiplyOfTwoNumber(fee, src_amount), 100), 5, '')} ${source.toUpperCase()}`}</div>
+                  <div>{`${converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')} ${source.toUpperCase()}`}</div>
                   <div>{`${order.user_address.slice(0, 8)}...${order.user_address.slice(-4)}`}</div>
                   <div className="cell-action">
                     {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.confirmCancel()}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}

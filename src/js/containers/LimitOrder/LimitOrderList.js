@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
-import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
 import OrderDetailsModal from "./LimitOrderModals/OrderDetailsModal";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import LimitOrderTable from "./LimitOrderTable";
@@ -29,36 +28,24 @@ export default class LimitOrderList extends React.Component {
     };
   }
 
-  openCancelOrderModal = (order) => {
-    this.props.global.analytics.callTrack("trackClickCancelOrder", order.id);
-    const currentOrder = JSON.parse(JSON.stringify(order));
-    this.setState({
-      cancelOrderModalVisible: true,
-      currentOrder
-    });
-  }
   openOrderDetailsModal = (order) => {
     const currentOrder = JSON.parse(JSON.stringify(order));
+
     this.setState({
       orderDetailsModalVisible: true,
       currentOrder
     });
-  }
+  };
+
   closeOrderDetailsModal = () => {
     this.setState({
       orderDetailsModalVisible: false
     });
-  }
-
-  closeCancelOrderModal = () => {
-    this.setState({
-      cancelOrderModalVisible: false
-    });
-  }
+  };
 
   onChangeOrderTab = (activeOrderTab) => {
     this.props.dispatch(limitOrderActions.changeOrderTab(activeOrderTab));
-  }
+  };
 
   getOrderTabs = () => {
     const { activeOrderTab } = this.props.limitOrder;
@@ -98,14 +85,8 @@ export default class LimitOrderList extends React.Component {
           <div>
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
-              openCancelOrderModal={this.openCancelOrderModal}
               openOrderDetailsModal={this.openOrderDetailsModal}
               srcInputElementRef={this.props.srcInputElementRef}
-            />
-            <CancelOrderModal
-              order={this.state.currentOrder}
-              isOpen={this.state.cancelOrderModalVisible}
-              closeModal={this.closeCancelOrderModal}
             />
             <OrderDetailsModal
               order={this.state.currentOrder}

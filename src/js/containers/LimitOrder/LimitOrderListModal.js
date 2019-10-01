@@ -39,23 +39,24 @@ export default class LimitOrderListModal extends Component {
 
   openCancelOrderModal = (order) => {
     this.props.global.analytics.callTrack("trackClickCancelOrder", order.id);
+
     if (order) {
       this.setState({
         cancelOrderModalVisible: true,
         currentOrder: order
       });
     }
-  }
+  };
 
   closeCancelOrderModal = () => {
     this.setState({
       cancelOrderModalVisible: false
     });
-  }
+  };
 
   onChangeOrderTab = (activeOrderTab) => {
     this.props.dispatch(limitOrderActions.changeOrderTab(activeOrderTab));
-  }
+  };
 
   getOrderTabs = () => {
     const { activeOrderTab } = this.props.limitOrder;
@@ -73,7 +74,7 @@ export default class LimitOrderListModal extends Component {
         </div>
       )
     });
-  }
+  };
 
   render() {
     return (
