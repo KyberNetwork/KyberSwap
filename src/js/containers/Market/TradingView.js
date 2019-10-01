@@ -56,7 +56,7 @@ export default class TradingView extends React.Component {
 		'mainSeriesProperties.candleStyle.upColor': "#31CB9E",
 		'mainSeriesProperties.candleStyle.downColor': "#F95555",
 		'mainSeriesProperties.candleStyle.wickUpColor': '#31CB9E',
-		'mainSeriesProperties.candleStyle.wickDownColor': '#F95555'
+		'mainSeriesProperties.candleStyle.wickDownColor': '#F95555'		
 	}
 
   getLanguageFromURL = () => {
@@ -130,9 +130,21 @@ export default class TradingView extends React.Component {
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
 			this.props.datafeedUrl, this.props.updateFrequency);
 
+		
+		var disabled_features = ['header_compare']
+		var overrides = {
+			'mainSeriesProperties.candleStyle.drawBorder': false,
+		}
+		if (this.props.global.isOnMobile){
+			disabled_features = ['header_compare', 'left_toolbar', 'header_undo_redo', 'header_settings', 'header_chart_type', 'header_screenshot', 'pane_context_menu']
+			overrides['paneProperties.legendProperties.showSeriesTitle'] = false
+			overrides['paneProperties.legendProperties.showSeriesOHLC'] = false
+			overrides['paneProperties.legendProperties.showBarChange'] = false
+		}
 
 		const widgetOptions = {
 			symbol: `${this.props.baseSymbol}_${this.props.quoteSymbol}`,
+			allow_symbol_change: false,
 			datafeed: feeder,
 			interval: this.props.interval,
 			container_id: this.props.containerId,
@@ -142,11 +154,9 @@ export default class TradingView extends React.Component {
 			autosize: this.props.autosize,
 			timeframe: this.getTimeFrame(this.props.interval),
 			theme: this.props.global.theme === "dark" ? "Dark": "Light",			
-			disabled_features: ['compare_symbol'],
+			disabled_features: disabled_features,
 			// timezone: "Asia/Singapore",
-			overrides: {
-				'mainSeriesProperties.candleStyle.drawBorder': false,
-			}
+			overrides: overrides
 		};
 
 		const widgetOverrides = this.props.global.theme === "dark" ? this.darkThemeWidget : this.lightThemeWidget;

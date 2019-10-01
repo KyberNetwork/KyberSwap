@@ -1,3 +1,7 @@
 .trading-view {
   height: 600px;
+  @include screen-max-width(medium){
+    height: 450px;
+  }
+  
 }

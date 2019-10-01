@@ -10,6 +10,8 @@ import {
   withFavorite,
   LimitOrderListModal
 } from "../LimitOrder"
+
+import { MobileChart } from "./MobileElements"
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
 
@@ -35,6 +37,14 @@ export default class LimitOrderBody extends React.Component {
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
+    this.state = {
+      mobileOpenChart: true
+    }
+
+  }
+
+  toggleMobileChart = () => {
+    this.setState({ mobileOpenChart: !this.state.mobileOpenChart })
   }
 
   setSrcInputElementRef = (element) => {
@@ -45,27 +55,16 @@ export default class LimitOrderBody extends React.Component {
     this.submitHandler = func;
   }
 
-  render() {
+  desktopLayout = () => {
     const LimitOrderForm = this.LimitOrderForm
     const QuoteMarket = this.QuoteMarket
     const LimitOrderMobileHeader = this.LimitOrderMobileHeader
-
     return (
       <div className={"limit-order theme__background"}>
-        {this.props.global.isOnMobile &&
-          <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
-        }
-
         <div className={"limit-order__container limit-order__container--left"}>
-          {!this.props.global.isOnMobile && (
-            <LimitOrderChart/>
-          )}
-
-          {!this.props.global.isOnMobile &&
-            <LimitOrderList srcInputElementRef={this.srcInputElementRef}/>
-          }
+          <LimitOrderChart />
+          <LimitOrderList srcInputElementRef={this.srcInputElementRef} />
         </div>
-
         <div className={"limit-order__container limit-order__container--right"}>
           {this.props.account === false &&
             <div className={"limit-order-account"}>
@@ -76,21 +75,69 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
           }
-          {!this.props.global.isOnMobile && (
-            <QuoteMarket/>
-          )}
-
+          <QuoteMarket />
           <LimitOrderForm
             setSrcInputElementRef={this.setSrcInputElementRef}
             submitHandler={this.submitHandler}
             setSubmitHandler={this.setSubmitHandler}
           />
-
-          {this.props.global.isOnMobile &&
-            <LimitOrderMobileHeader/>
-          }
         </div>
       </div>
     )
+  }
+
+
+  mobileLayout = () => {
+    const LimitOrderForm = this.LimitOrderForm
+    const QuoteMarket = this.QuoteMarket
+    const LimitOrderMobileHeader = this.LimitOrderMobileHeader
+    return (
+      <div className={"limit-order theme__background"}>
+
+
+        <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
+
+        {this.state.mobileOpenChart && (
+          <MobileChart toggleMobileChart = {this.toggleMobileChart}/>
+        )}
+
+        {!this.state.mobileOpenChart && (
+          <div>
+            <div className={"limit-order__container limit-order__container--right"}>
+
+
+              <LimitOrderForm
+                setSrcInputElementRef={this.setSrcInputElementRef}
+                submitHandler={this.submitHandler}
+                setSubmitHandler={this.setSubmitHandler}
+              />
+
+              {this.props.account === false &&
+                <div className={"limit-order-account"}>
+                  <ImportAccount
+                    tradeType="limit_order"
+                    isAgreedTermOfService={this.props.global.termOfServiceAccepted}
+                    isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+                  />
+                </div>
+              }
+
+            </div>
+
+            <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef} />
+          </div>
+        )}
+
+
+      </div>
+    )
+  }
+
+  render() {
+    if (this.props.global.isOnMobile) {
+      return this.mobileLayout()
+    } else {
+      return this.desktopLayout()
+    }
   }
 }

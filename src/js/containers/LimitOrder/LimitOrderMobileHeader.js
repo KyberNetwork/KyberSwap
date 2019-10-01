@@ -16,13 +16,13 @@ import {formatNumber, sumOfTwoNumber} from "../../utils/converter";
   const baseSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.destTokenSymbol : limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.sourceTokenSymbol : limitOrder.destTokenSymbol;
 
-  const marketBaseTokenByWETH = store.market.tokens.find(token => {
+  var marketBaseTokenByWETH = store.market.tokens.find(token => {
     return token.pair === `WETH_${baseSymbol}`;
-  });
+  });  
 
-  const marketBaseTokenByETH = store.market.tokens.find(token => {
+  var marketBaseTokenByETH = store.market.tokens.find(token => {
     return token.pair === `ETH_${baseSymbol}`;
-  });
+  });  
 
   return { translate, limitOrder, tokens, global, marketBaseTokenByWETH, marketBaseTokenByETH, baseSymbol, quoteSymbol }
 })
@@ -32,15 +32,12 @@ export default class LimitOrderMobileHeader extends React.Component {
 
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.state = {
-      isChartOpened: false,
+      // isChartOpened: false,
       isQuoteMarketOpened: false,
       isFavorite: false
     }
   }
 
-  toggleChart = () => {
-    this.setState({ isChartOpened: !this.state.isChartOpened });
-  };
 
   toggleQuoteMarket = () => {
     this.setState({ isQuoteMarketOpened: !this.state.isQuoteMarketOpened });
@@ -78,15 +75,15 @@ export default class LimitOrderMobileHeader extends React.Component {
           <div className={"limit-order-header__column"}>
             <div className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
                  onClick={() => this.props.onFavoriteClick(this.props.baseSymbol, this.props.quoteSymbol, !isFav)} />
-            <div className={"limit-order-header__chart"} onClick={this.toggleChart}/>
+            <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart}/>
           </div>
         </div>
 
-        {this.state.isChartOpened && (
+        {/* {this.state.isChartOpened && (
           <div className={"common__slide-up"}>
             <LimitOrderChart/>
           </div>
-        )}
+        )} */}
 
         {this.state.isQuoteMarketOpened && (
           <div className={"common__slide-up"}>
