@@ -5,7 +5,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   const marketTokens = store.market.tokens.filter(token => {
-      return token.pair.split('_')[0] !== BLOCKCHAIN_INFO.wrapETHToken;
+      return !token.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) && (token.buy_price || token.sell_price);
     });
 
   return { marketTokens }
@@ -95,8 +95,6 @@ export default class RateSilderV2 extends React.Component {
       const rateChange = value.change;
       const pair = value.pair.split('_');
       const rate = this.getTokenRate(value);
-
-      if (value.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) || !rate) return '';
 
       return (
         <div key={index}>

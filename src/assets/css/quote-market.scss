@@ -17,16 +17,13 @@
     height: 18px;
     background-image: url($image-path + 'common/star.svg');
     background-repeat: no-repeat;
+    display: inline-block;
 
-    &--title {
-      position: relative;
-      top: 3px;
-      padding-right: 35px;
-    }
   }
 
   .star.active {
     background-image: url($image-path + 'common/star_active.svg');
+    border-bottom: none!important;
   }
 
   div#container {
@@ -39,22 +36,40 @@
   }
 
   #panel {
-    padding-bottom: 5px;
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
+    //padding-bottom: 0px;
+    //border-bottom-style: solid;
+    //border-bottom-width: 2px;
+    //height: 30px;
 
     #quote_panel {
+      width: 100%;
+      margin-bottom: 10px;
+
       @include screen-min-width(medium){
         width: 80%;
       }
-      
 
-      div{
+      .quote_item{
+        width: 70px;
+        position: relative;
         display: inline-block;
+        padding: 8px;
+        margin-right: 10px;
+        border-radius: 3px;
+        top: -2px;
+        border: solid 1px rgba(0,0,0,0);
       }
+
+      .quote_item_2{
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        margin-right: 10px;
+        border-radius: 3px;
+        border: solid 1px rgba(0,0,0,0);
+      }
+
       span {
-        margin-left: 20px;
-        padding-bottom: 4px;
         font-weight: 400;
         cursor: pointer;
 
@@ -63,49 +78,59 @@
         margin-left: 0px;
       }
 
-      span.active {
-        transition: border-bottom .15s ease-in-out;
-        border-bottom: solid 3px #ff9008;
+      .quote_item.active, .quote_item_2.active {
+        //transition: border-bottom .15s ease-in-out;
+        border: solid 1px #ff9008;
 
         i {
           color: #ff9008
         }
       }
+      .dropdown__trigger{
+        span:nth-child(1){
+          padding: 10px 30px 10px 0;
+        }
+        .drop-down{
+          position: absolute;
+          right: 5px;
+        }
+      }
     };
 
     #search_panel {
-      @include screen-min-width(medium){
-        float: right;
-        width: 20%;
-      }
-
-      @include screen-max-width(medium){
-        margin-bottom: 10px;
-      }
-      
-      
-      margin-top: 3px;
+      display: inline;
 
       input {
-        width: 100%;
-        font-size: 12px;
-        background: rgba(0,0,0,0);
+        width: 50%;
+        font-size: 14px;
         border-width: 0;
-        padding-right: 3em;
+        border-radius: 3px;
         background-image: url($image-path + 'common/icon-search-gray.svg');
-        background-position: right 0px;
+        background-position: 10px 7px;
         background-repeat: no-repeat;
         background-size: 15px;
-        padding: 0 25px 7px 0;
-        text-align: right;
+        padding: 7px 7px 7px 30px;
+        text-align: left;
         cursor: pointer;
       };
 
       input:focus {
         box-shadow: none;
         outline: none;
-        border-bottom: 1px solid #aaa;
       };
+    }
+  }
+
+  .volume_change_panel{
+    width: 50%;
+    display: inline-block;
+    .advance-config__option-container{
+      display: flex;
+      justify-content: flex-end;
+      .advance-config__option{
+        font-size: 12px;
+        margin-right: 20px;
+      }
     }
   }
   .table-th {
@@ -146,6 +171,10 @@
     cursor: pointer;
     .table__header{
       margin-right: 10px;
+      .table__row span{
+        display: inline-block;
+        width: 100%;
+      }
     }
     .table__body{
       display: block;
@@ -189,15 +218,12 @@
         font-size: 12px;
       }
       .c2{
-        width: 82px;
+        text-align: right;
+        width: 120px;
       }
       .c3{
         text-align: right;
-        width: 82px;
-      }
-      .c4{
-        text-align: right;
-        width: 82px;
+        width: 120px;
       }
       span{
         &.active{

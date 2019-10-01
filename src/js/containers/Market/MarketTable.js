@@ -32,23 +32,26 @@ import * as converters from "../../utils/converter"
 })
 
 export default class MarketTable extends React.Component {
-  addClassChange = (input) => {
-    if (input === -9999){
+  addClassChange = (input, buyPrice, sellPrice) => {
+    if (input === -9999 || (!buyPrice && !sellPrice && !input)) {
       return (
         <span>---</span>
       )
     }
+
     if (input < 0) {
       return (
         <span className = "negative">{input}%</span>
       )
     }
-    if (input === 0){
+
+    if (input === 0) {
       return (
         <span>{input}%</span>
       )
     }
-    if (input > 0){
+
+    if (input > 0) {
       return (
         <span className = "positive">{input}%</span>
       )
@@ -241,7 +244,7 @@ export default class MarketTable extends React.Component {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  Cell: props => this.addClassChange(props.value),
+                  Cell: props => this.addClassChange(props.value, props.row.buy_price, props.row.sell_price),
                   minWidth: 180,
                   getHeaderProps: () => {
                     return {
