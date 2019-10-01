@@ -98,14 +98,15 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     // check rate is zero
-    var triggerRate = parseFloat(this.props.limitOrder.triggerRate)
-    if (isNaN(triggerRate)) {
+    const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
+    var triggerRateFloat = parseFloat(triggerRate)
+    if (isNaN(triggerRateFloat)) {
       rateError.push(this.props.translate("error.rate_is_not_number") || "Trigger rate is not a number")
       isValidate = false
     }
     // check rate is too big
     if (this.props.limitOrder.offeredRate != 0) {
-      var triggerRateBig = converters.roundingRate(this.props.limitOrder.triggerRate)
+      var triggerRateBig = converters.roundingRate(triggerRate)
       var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
 
       if (triggerRateBig <= 0) {
@@ -113,7 +114,7 @@ export default class LimitOrderSubmit extends React.Component {
         isValidate = false
       }
 
-      if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRate)) {
+      if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRateFloat)) {
         rateError.push(this.props.translate("error.rate_too_high", { maxRate: BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
         isValidate = false
       }
@@ -180,7 +181,7 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     // If user agree force submit order
-    if (this.props.limitOrder.isAgreeForceSubmit && this.props.limitOrder.triggerRate === this.props.limitOrder.forceSubmitRate) {
+    if (this.props.limitOrder.isAgreeForceSubmit && triggerRate === this.props.limitOrder.forceSubmitRate) {
       if (this.props.limitOrder.errors.rateWarning) {
         this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
       }
@@ -193,17 +194,23 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (this.props.limitOrder.filterMode === "client") {
       higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-        return item.source === this.props.limitOrder.sourceTokenSymbol &&
-              item.dest === this.props.limitOrder.destTokenSymbol &&
-              item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-              item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-              converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+        const pairComparison = this.props.limitOrder.sourceTokenSymbol === item.source && this.props.limitOrder.destTokenSymbol === item.dest;
+
+        if (pairComparison) {
+          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
+          return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+                item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+                rateComparison;
+        } 
+        
+        return false;
       });
     } else {
+      const rate = this.props.limitOrder.sideTrade === "buy" ? triggerRate : converters.divOfTwoNumber(1, triggerRate);
       higherRateOrders = await limitOrderServices.getRelatedOrders(
         this.props.limitOrder.sourceToken,
         this.props.limitOrder.destToken,
-        this.props.limitOrder.triggerRate,
+        rate,
         this.props.account.address
       );
 
@@ -226,7 +233,7 @@ export default class LimitOrderSubmit extends React.Component {
          * Check if current user input rate is smaller than previous saved force submit rate
          * If smaller, user have to confirm force submit again.
          */
-        if (this.props.limitOrder.triggerRate !== this.props.limitOrder.forceSubmitRate) {
+        if (triggerRate !== this.props.limitOrder.forceSubmitRate) {
           this.props.dispatch(limitOrderActions.setAgreeForceSubmit(false));
           this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
         }
