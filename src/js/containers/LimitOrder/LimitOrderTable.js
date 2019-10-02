@@ -50,7 +50,7 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("date"),
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
-      headerClassName: "cell-flex-start-header cell-date-header theme__text-3",
+      headerClassName: "cell-flex-start-header cell-date-header",
       className: "cell-flex-start cell-text-small theme__text-4",
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
@@ -116,7 +116,7 @@ export default class LimitOrderTable extends Component {
         Header: this.getHeader("receive"),
         accessor: item => item,
         Cell: props => this.getReceiveCell(props.value),
-        headerClassName: "theme__background theme__text-3",
+        headerClassName: "theme__background",
         maxWidth: 80
       })
       widths = [120, 120, 100, 120, 140, 140, 80, 120]

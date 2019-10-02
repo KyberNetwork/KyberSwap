@@ -44,7 +44,7 @@
       height: 260px !important;
 
       .rt-thead {
-        background-color: transparent !important;
+        //background-color: transparent !important;
       }
     }
 
@@ -1199,7 +1199,6 @@
 .quote-filter-modal {
   width: 72px;
   height: auto;
-  min-height: 85px;
   box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
   background-color: #ffffff;
   position: absolute;
@@ -1208,17 +1207,21 @@
   top:9px;
   font-size: 14px;
   font-weight: 500;
-  padding: 10px 12px;
 
   &__option {
     color: #5a5e67;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    margin-bottom: 10px;
     position: relative;
     text-align: left;
     display: block;
+    padding: 5px 12px;
+    margin: 0;
+
+    &:hover{
+      background: rgba(0,0,0,0.2);
+    }
   }
 }
 
