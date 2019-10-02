@@ -192,7 +192,6 @@ const LIMIT_ORDER_CONFIG = {
     submitStatusOrder: 5
   },
   status: {
-    NEW: 'new',
     OPEN: "open",
     IN_PROGRESS: "in_progress",
     FILLED: "filled",

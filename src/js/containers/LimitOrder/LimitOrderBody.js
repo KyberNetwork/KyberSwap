@@ -14,6 +14,9 @@ import {
 import { MobileChart } from "./MobileElements"
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
+import * as constants from "../../services/constants";
+import * as limitOrderActions from "../../actions/limitOrderActions";
+import * as globalActions from "../../actions/globalActions";
 
 @connect((store, props) => {
   const global = store.global;
@@ -27,7 +30,6 @@ import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
     translate, limitOrder, tokens, account, ethereum, global
   }
 })
-
 export default class LimitOrderBody extends React.Component {
   constructor(props) {
     super(props);
@@ -40,25 +42,48 @@ export default class LimitOrderBody extends React.Component {
     this.state = {
       mobileOpenChart: true
     }
-
   }
 
   toggleMobileChart = () => {
     this.setState({ mobileOpenChart: !this.state.mobileOpenChart })
-  }
+  };
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
-  }
+  };
 
   setSubmitHandler = (func) => {
     this.submitHandler = func;
-  }
+  };
+
+  setFormType = (type, targetSymbol, quoteSymbol) => {
+    if (this.props.limitOrder.sideTrade === type) return;
+
+    this.props.dispatch(limitOrderActions.setSideTrade(type));
+
+    this.props.dispatch(limitOrderActions.changeFormType(
+      this.props.tokens[this.props.limitOrder.sourceTokenSymbol],
+      this.props.tokens[this.props.limitOrder.destTokenSymbol]
+    ));
+
+    const realQuoteSymbol = quoteSymbol === "ETH*" ? "WETH" : quoteSymbol;
+    const realTargetSymbol = targetSymbol === "ETH*" ? "WETH" : targetSymbol;
+    let path;
+
+    if (type === "buy") {
+      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + realTargetSymbol.toLowerCase();
+    } else {
+      path = constants.BASE_HOST +  "/limit_order/" + realTargetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
+    }
+
+    this.props.dispatch(globalActions.goToRoute(path))
+    this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
+  };
 
   desktopLayout = () => {
     const LimitOrderForm = this.LimitOrderForm
     const QuoteMarket = this.QuoteMarket
-    const LimitOrderMobileHeader = this.LimitOrderMobileHeader
+
     return (
       <div className={"limit-order theme__background"}>
         <div className={"limit-order__container limit-order__container--left"}>
@@ -80,36 +105,35 @@ export default class LimitOrderBody extends React.Component {
             setSrcInputElementRef={this.setSrcInputElementRef}
             submitHandler={this.submitHandler}
             setSubmitHandler={this.setSubmitHandler}
+            setFormType={this.setFormType}
           />
         </div>
       </div>
     )
-  }
-
+  };
 
   mobileLayout = () => {
     const LimitOrderForm = this.LimitOrderForm
-    const QuoteMarket = this.QuoteMarket
     const LimitOrderMobileHeader = this.LimitOrderMobileHeader
     return (
       <div className={"limit-order theme__background"}>
-
-
         <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
 
         {this.state.mobileOpenChart && (
-          <MobileChart toggleMobileChart = {this.toggleMobileChart}/>
+          <MobileChart
+            toggleMobileChart = {this.toggleMobileChart}
+            setFormType = {this.setFormType}
+          />
         )}
 
         {!this.state.mobileOpenChart && (
           <div>
             <div className={"limit-order__container limit-order__container--right"}>
-
-
               <LimitOrderForm
                 setSrcInputElementRef={this.setSrcInputElementRef}
                 submitHandler={this.submitHandler}
                 setSubmitHandler={this.setSubmitHandler}
+                setFormType={this.setFormType}
               />
 
               {this.props.account === false &&
@@ -121,14 +145,10 @@ export default class LimitOrderBody extends React.Component {
                   />
                 </div>
               }
-
             </div>
-
             <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef} />
           </div>
         )}
-
-
       </div>
     )
   }

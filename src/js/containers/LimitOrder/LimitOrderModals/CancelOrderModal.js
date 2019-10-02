@@ -74,14 +74,18 @@ export default class CancelOrderModal extends Component {
   };
 
   contentModal = () => {
-    const base = this.props.limitOrder.sideTrade === "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol;
+    const order = this.props.order;
+
+    if (!order) return;
+
+    const baseTokenSymbol = order.side_trade === "buy" ? order.dest : order.source;
 
     return (
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
         <div className="limit-order-modal__body">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.cancel_order", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
-            `Cancel ${sideTrade} ${base} Order`}
+            {this.props.translate("modal.cancel_order", {sideTrade: order.side_trade, symbol: baseTokenSymbol}) ||
+            `Cancel ${order.side_trade} ${baseTokenSymbol} Order`}
           </div>
           <div className="limit-order-modal__close" onClick={this.closeModal}>
             <div className="limit-order-modal__close-wrapper"/>
@@ -93,14 +97,14 @@ export default class CancelOrderModal extends Component {
 
             {!this.props.global.isOnMobile && (
               <OrderTableInfo
-                listOrder = {[this.props.order]}
+                listOrder = {[order]}
                 translate={this.props.translate}
               />
             )}
 
             {this.props.global.isOnMobile && (
               <OrderDetails
-                order = {this.props.order}
+                order = {order}
                 isModal = {true}
                 translate={this.props.translate}
               />
