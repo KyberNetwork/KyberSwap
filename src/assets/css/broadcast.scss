@@ -310,12 +310,20 @@ ul.broadcast-steps {
     cursor: pointer;
     position: relative;
     transition: all .3s;
+
+    &:hover {
+      background-color: #d67302;
+    }
   }
 
   .change-path {
     background-color: #a2a7b2;
     color: white;
     margin-right: 20px;
+
+    &:hover {
+      background-color: #d2d6e1;
+    }
   }
 }
 
