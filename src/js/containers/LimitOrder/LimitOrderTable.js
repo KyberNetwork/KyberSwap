@@ -265,6 +265,10 @@ export default class LimitOrderTable extends Component {
   getStatusCell = (props) => {
     const { status, msg, id } = props;
 
+    const getMsg = (msg) => {
+      return `<div>${msg}</div>`;
+    }
+
     return (
       <div className="cell-status__container">
         <div className={`cell-status cell-status--${status} ${this.props.screen === "mobile" ? "cell-status__mobile" : ""}`}>{status.toUpperCase()}</div>
@@ -283,7 +287,7 @@ export default class LimitOrderTable extends Component {
             id={`order-status-info-${id}`}
             className="order-status-info"
           >
-            <div>${msg}</div>
+            {getMsg(msg)}
           </ReactTooltip>
         </React.Fragment>}
       </div>

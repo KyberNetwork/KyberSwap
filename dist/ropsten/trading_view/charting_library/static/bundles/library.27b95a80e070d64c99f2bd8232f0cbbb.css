@@ -8499,7 +8499,9 @@ html.feature-no-touch.theme-dark .actions-1cGPn1dW- button:hover, html.feature-n
 	height: 100%;
 	border: none;
 	box-sizing: border-box;
-	background-color: transparent;
+  background-color: transparent;
+  
+  pointer-events: none;
 	/*!rtl:raw:
 	direction: ltr;
 	text-align: end;

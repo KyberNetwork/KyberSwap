@@ -68,11 +68,11 @@ export default class EthereumService extends React.Component {
     this.fetchRateUSD()
   }
 
-  testAnalize() {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
-  }
+  // testAnalize() {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
+  // }
 
   fetchMarketData () {
     store.dispatch(marketActions.fetchMarketData())

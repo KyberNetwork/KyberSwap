@@ -571,6 +571,7 @@ $divider-color: darken($title-background-color, 5);
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
   border-radius: 3px;
+  overflow: hidden;
 
   @include screen-max-width(medium) {
     border-radius: 0;
@@ -602,7 +603,7 @@ $divider-color: darken($title-background-color, 5);
     color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
-    
+
     @include screen-min-width(medium) {
       margin-top: 20px;
     }
@@ -630,6 +631,7 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
+
   .overlap {
     display: inherit;
     width: 100%;
@@ -640,20 +642,21 @@ $divider-color: darken($title-background-color, 5);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 
-    span{
+    span {
       &:not(.error-text){
         color: #666666;
-        // font-weight: 600;
         font-size: 14px;
         letter-spacing: normal;
       }
     }
-    .type-password{
+
+    .type-password {
       font-size: 16px;
       font-weight: 600;
       color: #666666;
       margin-bottom: 15px;
     }
+
     .button {
       min-width: 150px;
       border-radius: 3px;
@@ -679,8 +682,6 @@ $divider-color: darken($title-background-color, 5);
         background-color: #a2a7b2;
         color: white;
         margin-right: 20px;
-        // min-width: 135px;
-        // padding: 14px;
         &::after {
           content: none;
         }
@@ -693,25 +694,27 @@ $divider-color: darken($title-background-color, 5);
         min-width: 125px;
       }
     }
-    @include screen-max-width(medium){
+
+    @include screen-max-width(medium) {
       background-color: #ffffff;
       padding-left: 20px;
       padding-right: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+
       .button {
-        width: 100%;
         max-width: 125px;
         margin-top: 10px;
       }
     }
   }
+
   .content {
     &.with-overlap {
       padding-bottom: 25px;
-      @include screen-max-width(medium){
-        margin-top: 40px;
-        padding: 0;
-      }
     }
+
     .block-title {
       font-weight: bold;
       font-size: 16px;
@@ -722,12 +725,13 @@ $divider-color: darken($title-background-color, 5);
         margin-left: 10px;
       }
     }
+
     p {
       font-size: 14px;
       line-height: 1.7;
     }
-    .gas-configed{
-      // width: 95%;
+
+    .gas-configed {
       white-space: nowrap;
       text-align: left;
       font-size: 1rem;
@@ -800,19 +804,18 @@ $divider-color: darken($title-background-color, 5);
     background-color: #ffffff;
     color: #141927;
     text-align: left;
-    // border: none;
     box-shadow: none;
-    // padding-bottom: 20px;
-    // padding-top: 20px;
     border: solid 1px #e5e5e5;
     border-radius: 23px;
     padding-left: 50px;
     height: 45px;
-    &.security{
+
+    &.security {
       font-family: 'text-security-disc';
       font-size: 14px;
     }
   }
+
   .password-input{
     text-align: left;
     width: 100%;
@@ -822,6 +825,7 @@ $divider-color: darken($title-background-color, 5);
     }
     
   }
+
   .input-confirm {
     padding: 25px 0;
     display: flex;
@@ -831,18 +835,15 @@ $divider-color: darken($title-background-color, 5);
       display: block;
     }
 
-    @include screen-max-width(medium) {
-      padding-top: 20px;
-      width: 100%;
+    &--approve {
+      text-align: center;
       justify-content: space-between;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 35px 0;
 
-      &--approve {
-        text-align: center;
-        justify-content: flex-end;
-
-        .button {
-          max-width: 200px;
-        }
+      .button {
+        max-width: 200px;
       }
     }
   }
@@ -894,25 +895,24 @@ $divider-color: darken($title-background-color, 5);
       .address-info {
         overflow: hidden;
         text-overflow: ellipsis;
-        display: flex;
-        justify-content: space-between;
         background-color: #eaecf2;
-        // box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
-        // border: .8px solid hsla(0,0%,80%,.72);
         border-radius: 4px;
         padding: 15px 0;
         margin-right: 0;
+
         div {
           &:first-child {
             color: #ef8102;
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 7px;
           }
+
           &:last-child {
-            // padding: 0 15px;
             font-size: 14px;
             color: #5a5e67;
             font-weight: normal;
+            margin-right: 10px;
           }
         }
         @include screen-max-width(medium) {
@@ -920,7 +920,6 @@ $divider-color: darken($title-background-color, 5);
           padding: 0;
           div {
             &:last-child {
-              // padding: 0 15px;
               margin-top: 10px;
               word-wrap: break-word;
             }
@@ -951,6 +950,10 @@ $divider-color: darken($title-background-color, 5);
     }
     .gas-configed{
       margin-top: 1rem;
+    }
+
+    @include screen-max-width(medium) {
+      padding-bottom: 100px;
     }
   }
 }
@@ -1007,12 +1010,7 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: -15px;
     }
   }
-  .content.with-overlap {
-    @include screen-min-width(medium) {
-      // padding-left: 3rem;
-      // padding-right: 3rem;
-    }
-  }
+
   .final-status {
     text-align: center;
     font-size: 14px;
@@ -1196,18 +1194,19 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
+
   .overlap {
-    // background-color: #f5f5f5;
     justify-content: space-between;
     background-color: white;
     padding: 30px 45px 35px;
+
     button {
       width: 100%;
       max-width: 150px;
-      width: 100%;
       box-shadow: none;
       text-transform: capitalize;
       letter-spacing: 0.5px;
+
       &.cancel-buttom {
         background-color: #a2a7b2;
         margin-right: 20px;
@@ -1399,4 +1398,9 @@ $divider-color: darken($title-background-color, 5);
 }
 .cancel-order-modal {
   padding: 0;
+}
+
+.ledger-error-dest{
+  padding: 0 20px;
+  text-align: left;
 }

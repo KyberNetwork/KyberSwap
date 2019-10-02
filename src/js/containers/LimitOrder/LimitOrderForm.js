@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import { filterInputNumber } from "../../utils/validators";
 import * as limitOrderActions from "../../actions/limitOrderActions"
-import * as globalActions from "../../actions/globalActions"
 import * as constants from "../../services/constants"
 import { debounce } from 'underscore';
 import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
@@ -38,30 +37,6 @@ export default class LimitOrderForm extends React.Component {
       formType: 'buy'
     }
   }
-
-  setFormType = (type, targetSymbol, quoteSymbol) => {
-    if (this.props.limitOrder.sideTrade === type) return;
-
-    this.props.dispatch(limitOrderActions.setSideTrade(type));
-
-    this.props.dispatch(limitOrderActions.changeFormType(
-      this.props.sourceToken,
-      this.props.destToken
-    ));
-
-    var realQuoteSymbol = quoteSymbol === "ETH*"?"WETH": quoteSymbol
-    var realTargetSymbol = targetSymbol === "ETH*"?"WETH": targetSymbol
-    // update path
-    var path
-    if (type === "buy"){
-      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + realTargetSymbol.toLowerCase();
-    }else{
-      path = constants.BASE_HOST +  "/limit_order/" + realTargetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
-    }
-    this.props.dispatch(globalActions.goToRoute(path))
-
-    this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
-  };
 
   getEthereumInstance = () => {
     let ethereum = this.props.ethereum;
@@ -155,7 +130,8 @@ export default class LimitOrderForm extends React.Component {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
 
     if (!isAgreeForceSubmit) {
-      this.props.dispatch(limitOrderActions.setForceSubmitRate(this.props.limitOrder.triggerRate));
+      const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
+      this.props.dispatch(limitOrderActions.setForceSubmitRate(triggerRate));
     }
 
     this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
@@ -166,14 +142,18 @@ export default class LimitOrderForm extends React.Component {
     if (!this.props.account) return null;
 
     let higherRateOrders = [];
+    const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
 
     if (this.props.limitOrder.filterMode === "client") {
       higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-        return item.source === this.props.limitOrder.sourceTokenSymbol &&
-              item.dest === this.props.limitOrder.destTokenSymbol &&
-              item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-              item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-              converters.compareTwoNumber(this.props.limitOrder.triggerRate, item.min_rate) < 0;
+        const pairComparison = this.props.limitOrder.sourceTokenSymbol === item.source && this.props.limitOrder.destTokenSymbol === item.dest;
+
+        if (pairComparison) {
+          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
+          return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
+                item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
+                rateComparison;
+        } 
       });
     } else {
       higherRateOrders = this.props.limitOrder.relatedOrders;
@@ -204,12 +184,12 @@ export default class LimitOrderForm extends React.Component {
         <div className={"limit-order-form__header theme__border-2"}>
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'buy' ? 'limit-order-form__tab--active' : ''}`}
-            onClick={() => this.setFormType('buy', targetSymbol, quoteSymbol)}>
+            onClick={() => this.props.setFormType('buy', targetSymbol, quoteSymbol)}>
               {this.props.translate("limit_order.buy", {symbol: targetSymbol}) || `Buy ${targetSymbol}`}
           </div>
           <div
             className={`limit-order-form__tab ${this.props.limitOrder.sideTrade === 'sell' ? 'limit-order-form__tab--active' : ''}`}
-            onClick={() => this.setFormType('sell', targetSymbol, quoteSymbol)}>
+            onClick={() => this.props.setFormType('sell', targetSymbol, quoteSymbol)}>
             {this.props.translate("limit_order.sell", {symbol: targetSymbol}) || `Sell ${targetSymbol}`}
           </div>
         </div>
