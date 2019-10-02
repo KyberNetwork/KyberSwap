@@ -175,7 +175,7 @@
     "eth_token_exchange": "ETH token exchange",
     "approve": "Approve",
     "address": "Address",
-    "approve_token": "Approve token",
+    "approve_token": "Approve Token",
     "cancel": "Cancel",
     "cancel_order": "Cancel ${sideTrade} ${symbol} Order",
     "order_confirm": "Confirm ${sideTrade} ${symbol} Order",

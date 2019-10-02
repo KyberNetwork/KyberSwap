@@ -94,30 +94,31 @@ class LimitOrderFee extends React.Component {
 
     return (
       <div className={"limit-order-fee"}>
-        <SlideDown className={"limit-order-fee__content theme__border-2"} active={this.state.isFeeOpened && displayDiscountInfo}>
-          <div className={"theme__text-4"}>
-            {displayDiscountInfo &&
+        {this.props.account && (
+          <SlideDown className={"limit-order-fee__content theme__border-2"} active={this.state.isFeeOpened && displayDiscountInfo}>
+            <div className={"theme__text-4"}>
+              {displayDiscountInfo &&
               <SlideDownTrigger className={"limit-order-fee__net"} toggleContent={this.toggleFeeContent}>
                 {feeTriggerText}
                 <div className={"common__triangle theme__border-top"}/>
               </SlideDownTrigger>
-            }
+              }
 
-            {!displayDiscountInfo && (
-              <div className={"common__flexbox"}>
-                {feeTriggerText}
-                {learnMoreLink}
-              </div>
-            )}
-          </div>
-
-          <SlideDownContent className={"limit-order-fee__slide-content"}>
-            <div>
-              <span className={"limit-order-fee__line-through-text theme__text-3"}>{orderFeeText}</span>
-              <span className={"limit-order-fee__discount theme__background-3"}>{orderDiscountFeeText}</span>
+              {!displayDiscountInfo && (
+                <div className={"common__flexbox"}>
+                  {feeTriggerText}
+                  {learnMoreLink}
+                </div>
+              )}
             </div>
 
-            {this.props.limitOrder.sourceAmount > 0 &&
+            <SlideDownContent className={"limit-order-fee__slide-content"}>
+              <div>
+                <span className={"limit-order-fee__line-through-text theme__text-3"}>{orderFeeText}</span>
+                <span className={"limit-order-fee__discount theme__background-3"}>{orderDiscountFeeText}</span>
+              </div>
+
+              {this.props.limitOrder.sourceAmount > 0 &&
               <Fragment>
                 <div className={"limit-order-fee__info"}>
                   {this.props.translate("limit_order.fee_info", {
@@ -129,9 +130,10 @@ class LimitOrderFee extends React.Component {
 
                 {learnMoreLink}
               </Fragment>
-            }
-          </SlideDownContent>
-        </SlideDown>
+              }
+            </SlideDownContent>
+          </SlideDown>
+        )}
 
         <div className={"limit-order-fee__total"}>
           <span className={"theme__text-4"}>{this.props.translate("limit_order.total")}:</span>

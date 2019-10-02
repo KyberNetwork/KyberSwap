@@ -23,10 +23,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 
   }
 })
-
 export default class ApproveMaxModal extends React.Component {
-
-
   constructor() {
     super()
     this.state = {
@@ -45,16 +42,6 @@ export default class ApproveMaxModal extends React.Component {
     
     this.getGasApprove()
   }
-
-  // getMaxGasApprove = () => {
-  //   var tokens = this.props.tokens
-  //   var sourceSymbol = this.props.limitOrder.sourceTokenSymbol
-  //   if (tokens[sourceSymbol] && tokens[sourceSymbol].gasApprove) {
-  //     return tokens[sourceSymbol].gasApprove
-  //   } else {
-  //     return this.props.limitOrder.max_gas_approve
-  //   }
-  // }
 
   async getGasApprove(){
       // estimate gas approve
@@ -113,13 +100,11 @@ export default class ApproveMaxModal extends React.Component {
   
   msgHtml = () => {
     if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
-      return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
+      return <span className={"common__slide-up"}>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
     } else {
       return this.props.translate("modal.press_approve") || "Press approve to continue";
     }
   }
-
-
 
   errorHtml = () => {
     if (this.state.err) {
@@ -136,11 +121,11 @@ export default class ApproveMaxModal extends React.Component {
     }
   }
 
-
   closeModal = () => {
     if (this.state.isConfirming) return
     this.props.dispatch(limitOrderActions.resetOrderPath())
   }
+
   contentModal = () => {
     return (
       <div className="approve-modal">
@@ -168,19 +153,14 @@ export default class ApproveMaxModal extends React.Component {
                     />
               </div>
               {this.errorHtml()}
-
             </div>
 
           </div>
         </div>
         <div className="overlap">
-          {/* <div>{this.msgHtml()}</div> */}
-          <div className="input-confirm grid-x input-confirm--approve">
-            <div className="cell medium-8 small-12">{this.msgHtml()}</div>
-            <div className="cell medium-4 small-12">
-              {/* <a className={"button process-submit " + (this.props.isApproving || this.props.isFetchingGas ? "disabled-button" : "next")}
-                    onClick={this.props.onSubmit}
-                  >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a> */}
+          <div className="input-confirm input-confirm--approve">
+            <div>{this.msgHtml()}</div>
+            <div>
               <a className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`}
                 onClick={this.onSubmit.bind(this)}
               >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
@@ -191,13 +171,13 @@ export default class ApproveMaxModal extends React.Component {
     )
   }
 
-
   render() {
     return (
-      <Modal className={{
-        base: 'reveal medium confirm-modal',
-        afterOpen: 'reveal medium confirm-modal'
-      }}
+      <Modal
+        className={{
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
+        }}
         isOpen={true}
         onRequestClose={this.closeModal}
         contentLabel="approve token"
@@ -205,7 +185,5 @@ export default class ApproveMaxModal extends React.Component {
         size="medium"
       />
     )
-
-
   }
 }
