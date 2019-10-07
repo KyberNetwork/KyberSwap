@@ -228,23 +228,27 @@ class ExchangeBody extends React.Component {
 
   swapToken = () => {
     var isFixedDestToken = !!(this.props.account && this.props.account.account.type === "promo" && this.props.account.account.info.destToken)
+
     if (isFixedDestToken) {
       return
     }
+
     this.props.dispatch(exchangeActions.swapToken())
+
+    const { sourceTokenSymbol, destTokenSymbol, sourceAmount, destAmount } = this.props.exchange;
 
     if (this.props.exchange.inputFocus === "source") {
       this.props.dispatch(exchangeActions.focusInput('dest'));
       this.props.dispatch(exchangeActions.changeAmount('source', ""))
-      this.props.dispatch(exchangeActions.changeAmount('dest', this.props.exchange.sourceAmount))
+      this.props.dispatch(exchangeActions.changeAmount('dest', sourceAmount))
     } else {
       this.props.dispatch(exchangeActions.focusInput('source'));
-      this.props.dispatch(exchangeActions.changeAmount('source', this.props.exchange.destAmount))
+      this.props.dispatch(exchangeActions.changeAmount('source', destAmount))
       this.props.dispatch(exchangeActions.changeAmount('dest', ""))
     }
 
-    this.props.setSrcAndDestToken(this.props.exchange.destTokenSymbol, this.props.exchange.sourceTokenSymbol);
-    this.props.global.analytics.callTrack("trackClickSwapDestSrc", this.props.exchange.sourceTokenSymbol, this.props.exchange.destTokenSymbol);
+    this.props.setSrcAndDestToken(destTokenSymbol, sourceTokenSymbol, destAmount);
+    this.props.global.analytics.callTrack("trackClickSwapDestSrc", sourceTokenSymbol, destTokenSymbol);
   };
 
   toggleAdvanceContent = () => {
