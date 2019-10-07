@@ -140,7 +140,7 @@ export default class LimitOrder extends React.Component {
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
   async fetchFavoritePairsIfLoggedIn(){
-    if (common.isUserLogin) {
+    if (common.isUserLogin()) {
       let res = await limitOrderServices.getFavoritePairs()
       this.props.dispatch(limitOrderActions.addListFavoritePairs(res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)));
     }

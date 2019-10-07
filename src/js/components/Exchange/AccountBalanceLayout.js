@@ -93,7 +93,7 @@ const AccountBalanceLayout = (props) => {
         return (
           <div
             key={token.symbol}
-            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance(token.symbol == "ETH" ? "WETH" : token.symbol)})}
+            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol == "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
             className={"account-balance__token-item" + classBalance}
           >
             <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
