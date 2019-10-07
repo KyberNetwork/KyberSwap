@@ -154,25 +154,25 @@ export default class Exchange extends React.Component {
     }
   }
 
-  updateGlobal = (srcSymbol, srcAddress, destSymbol, destAddress) => {
+  updateGlobal = (srcSymbol, srcAddress, destSymbol, destAddress, srcAmount = null) => {
     let path = constants.BASE_HOST +  "/swap/" + srcSymbol.toLowerCase() + "-" + destSymbol.toLowerCase();
     path = common.getPath(path, constants.LIST_PARAMS_SUPPORTED);
 
     this.props.dispatch(globalActions.goToRoute(path))
     this.props.dispatch(globalActions.updateTitleWithRate());
 
-    const sourceAmount = this.props.exchange.sourceAmount;
+    const sourceAmount = srcAmount ? srcAmount : this.props.exchange.sourceAmount;
     const refetchSourceAmount = this.props.exchange.inputFocus !== "source";
 
     this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, srcSymbol, srcAddress, destSymbol, destAddress, sourceAmount, true, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.selectToken));
   };
 
-  setSrcAndDestToken = (srcSymbol, destSymbol) => {
+  setSrcAndDestToken = (srcSymbol, destSymbol, srcAmount = null) => {
     const srcAddress = this.props.tokens[srcSymbol].address;
     const destAddress = this.props.tokens[destSymbol].address;
 
     this.props.dispatch(exchangeActions.selectToken(srcSymbol, srcAddress, destSymbol, destAddress, "swap"));
-    this.updateGlobal(srcSymbol, srcAddress, destSymbol, destAddress);
+    this.updateGlobal(srcSymbol, srcAddress, destSymbol, destAddress, srcAmount);
   };
 
   render() {
