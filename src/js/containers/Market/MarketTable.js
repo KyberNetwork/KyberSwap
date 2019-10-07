@@ -286,6 +286,11 @@ export default class MarketTable extends React.Component {
   }
 
   onPairClicked = (rowInfo) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
     const pairs = rowInfo.original.pair.split("_");
     const srcSymbol = pairs[1];
     const quoteSymbol = pairs[0];

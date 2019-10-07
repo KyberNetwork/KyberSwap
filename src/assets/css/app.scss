@@ -31,23 +31,6 @@
 html body {
   font-family: $font-roboto;
   font-weight: 300;
-
-  /* width */
-  ::-webkit-scrollbar {
-    width: 6px!important;
-    height: 6px!important;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    display: none;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: $grey-darker;
-    border-radius: 4px;
-  }
 }
 
 a {
@@ -86,9 +69,21 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 10px;
 }
 
+/* width */
 ::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+  width: 6px!important;
+  height: 6px!important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $grey-darker;
+  border-radius: 4px;
 }
 
 .color-grey-darker{
