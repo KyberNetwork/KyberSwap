@@ -1,16 +1,16 @@
 import React from "react"
 import { connect } from "react-redux"
-import { roundingNumber } from "../../utils/converter"
+import { roundingNumber, sumOfTwoNumber, divOfTwoNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   const marketTokens = store.market.tokens.filter(token => {
-      return !token.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) && (token.buy_price || token.sell_price);
+      return !token.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) && (token.buy_price !== "0" || token.sell_price !== "0");
     });
 
   return { marketTokens }
 })
-export default class RateSilderV2 extends React.Component {
+export default class RateSliderV2 extends React.Component {
   constructor(props) {
     super(props);
 
@@ -80,7 +80,7 @@ export default class RateSilderV2 extends React.Component {
     let rate = buyPrice;
 
     if (buyPrice && sellPrice) {
-      rate = (buyPrice + sellPrice) / 2;
+      rate = divOfTwoNumber(sumOfTwoNumber(buyPrice, sellPrice), 2);
     } else if (!buyPrice) {
       rate = sellPrice;
     }

@@ -33,7 +33,7 @@ import * as converters from "../../utils/converter"
 
 export default class MarketTable extends React.Component {
   addClassChange = (input, buyPrice, sellPrice) => {
-    if (input === -9999 || (!buyPrice && !sellPrice && !input)) {
+    if (buyPrice === "0" && sellPrice === "0" && input === "0") {
       return (
         <span>---</span>
       )
@@ -45,7 +45,7 @@ export default class MarketTable extends React.Component {
       )
     }
 
-    if (input === 0) {
+    if (input === "0") {
       return (
         <span>{input}%</span>
       )
