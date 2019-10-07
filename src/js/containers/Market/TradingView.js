@@ -34,7 +34,8 @@ export default class TradingView extends React.Component {
 		updateFrequency: 300000, // 1 minutes
 		libraryPath: '/trading_view/charting_library/',
 		fullscreen: false,
-		autosize: true
+		autosize: true,
+		timezone: "Etc/UTC"
 	};
 
 	darkThemeWidget = {
@@ -125,6 +126,19 @@ export default class TradingView extends React.Component {
 		return '4D'
 	}
 
+	getChartProperties = () => {				
+		var chartProperties = {}
+		try {
+			chartProperties = {
+				"tradingview.chartproperties": JSON.parse(localStorage.getItem("tradingview.chartproperties")),
+				"tvxwevents.settings": JSON.parse(localStorage.getItem("tvxwevents.settings"))
+			}
+		}catch(e){
+			console.log(e)
+		}
+		return chartProperties
+	}
+
 	componentDidMount() {
 		// console.log(this.props)
 		const feeder = new window.Datafeeds.UDFCompatibleDatafeed(
@@ -137,17 +151,22 @@ export default class TradingView extends React.Component {
 		}
 		if (this.props.global.isOnMobile){
 			disabled_features = ['header_compare', 'header_symbol_search', 'left_toolbar', 'header_undo_redo', 'header_settings', 
-			'header_chart_type', 'header_screenshot', 'pane_context_menu', 'main_series_scale_menu', 'countdown', 'scales_context_menu', 'chart_property_page_scales']
+			'header_chart_type', 'header_screenshot', 'pane_context_menu', 'main_series_scale_menu']
 			overrides['paneProperties.legendProperties.showSeriesTitle'] = false
 			overrides['paneProperties.legendProperties.showSeriesOHLC'] = false
 			overrides['paneProperties.legendProperties.showBarChange'] = false
 		}
 
+		var chartProperties = this.getChartProperties()
+				
+
+		// console.log(chartProperties.timezone)
+
 		const widgetOptions = {
 			symbol: `${this.props.baseSymbol}_${this.props.quoteSymbol}`,
 			allow_symbol_change: false,
 			datafeed: feeder,
-			interval: this.props.interval,
+			interval: chartProperties["tvxwevents.settings"]? chartProperties["tvxwevents.settings"].value: this.props.interval,
 			container_id: this.props.containerId,
 			library_path: this.props.libraryPath,			
 			locale: this.getLanguageFromURL() || this.props.locale,
@@ -155,8 +174,11 @@ export default class TradingView extends React.Component {
 			autosize: this.props.autosize,
 			timeframe: this.getTimeFrame(this.props.interval),
 			theme: this.props.global.theme === "dark" ? "Dark": "Light",			
-			disabled_features: disabled_features,
-			// timezone: "Asia/Singapore",
+			disabled_features: disabled_features,						
+			// enabled_features: ['use_localstorage_for_settings'],
+			// load_last_chart: true,						
+		
+			timezone: chartProperties["tradingview.chartproperties"]?chartProperties["tradingview.chartproperties"].timezone:  this.props.timezone,
 			overrides: overrides
 		};
 
@@ -170,9 +192,7 @@ export default class TradingView extends React.Component {
 		});
 
 		widget.onChartReady(() => {
-
 			const chart = widget.chart();
-
 		});
 	}
 

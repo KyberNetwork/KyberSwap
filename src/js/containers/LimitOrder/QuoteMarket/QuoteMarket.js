@@ -142,14 +142,14 @@ export default class QuoteMarket extends React.Component{
                   <div className="advance-config__option-container">
                     <label className="advance-config__option"><span className="advance-config__option-percent">Change</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                             defaultChecked={false}
+                            //  defaultChecked={false}
                              onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
                              checked={!this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>
                     </label>
                     <label className="advance-config__option"><span className="advance-config__option-percent">Volume</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                             defaultChecked={true}
+                            //  defaultChecked={true}
                              onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
                              checked={this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>

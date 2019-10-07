@@ -24,7 +24,7 @@ export default class QuoteList extends React.Component{
         <DropdownContent>
           <div className="quote-filter-modal theme__background theme__text-3">
             <div className="quote-filter-modal__advance">
-              {quotes.filter(i => this.dropdownQuotes.includes(i)).map(i => <label onClick={() => {this.toggle(); onClick(i)}} className="quote-filter-modal__option">{i}</label>)}
+              {quotes.filter(i => this.dropdownQuotes.includes(i)).map(i => <label key={i} onClick={() => {this.toggle(); onClick(i)}} className="quote-filter-modal__option">{i}</label>)}
             </div>
           </div>
         </DropdownContent>
