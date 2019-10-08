@@ -545,6 +545,7 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       font-weight: 600;
       color: #141927;
+      padding: 0 45px;
 
       @include screen-max-width(medium) {
         padding: 0 20px;
@@ -555,10 +556,19 @@ $divider-color: darken($title-background-color, 5);
       color: #1e87f0;
       font-size: 13px;
       font-weight: 500;
-      margin-top: 10px;
+      margin: 10px 0;
+      padding: 0 45px;
+      display: flex;
+      align-items: center;
 
       > img {
         padding-bottom: 4px;
+        margin-right: 3px;
+      }
+
+      @include screen-max-width(medium) {
+        padding: 0;
+        align-items: flex-start;
       }
     }
   }
