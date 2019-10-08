@@ -115,6 +115,7 @@ export default class BroadCastModal extends React.Component {
       var swapLink = constants.BASE_HOST + "/swap/" + this.props.exchange.sourceTokenSymbol.toLowerCase() + "_" + this.props.exchange.destTokenSymbol.toLowerCase();
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
       this.props.dispatch(goToRoute(swapLink))
+      if (window.kyberBus){ window.kyberBus.broadcast('go.to.swap') }
     } else {
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
     }
