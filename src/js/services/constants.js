@@ -327,6 +327,9 @@ const INIT_LIMIT_ORDER_STATE = {
   favorite_pairs_anonymous: [],
   currentQuote: "WETH",
   sideTrade: "buy",
+  mobileState: {
+    showQuoteMarket: false
+  }
 }
 
 const RESERVES = [{ index: 0, name: "Kyber official reserve" }]

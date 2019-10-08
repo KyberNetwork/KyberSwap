@@ -1,10 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from 'react-localize-redux';
-import QuoteMarket from "./QuoteMarket/QuoteMarket";
-import BLOCKCHAIN_INFO from "../../../../env";
-import { withFavorite, withSourceAndBalance } from "./index";
-import {formatNumber, sumOfTwoNumber} from "../../utils/converter";
+
+import * as limitOrderActions from "../../../actions/limitOrderActions"
+
+import QuoteMarket from "../QuoteMarket/QuoteMarket";
+import BLOCKCHAIN_INFO from "../../../../../env";
+import { withFavorite, withSourceAndBalance } from "../index";
+import {formatNumber, sumOfTwoNumber} from "../../../utils/converter";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -34,34 +37,36 @@ export default class LimitOrderMobileHeader extends React.Component {
     super(props);
 
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
-    this.state = {
-      isQuoteMarketOpened: false,
+    this.state = {      
       isFavorite: false
     }
   }
 
-  toggleQuoteMarket = () => {
-    this.setState({ isQuoteMarketOpened: !this.state.isQuoteMarketOpened });
+  toggleQuoteMarket = () => {      
+    var newState = !this.props.limitOrder.mobileState.showQuoteMarket  
+    this.props.dispatch(limitOrderActions.toogleQuoteMarket(newState))
   };
 
   render() {
     const QuoteMarket = this.QuoteMarket;
     const isFav = this.props.favorite_pairs.includes(`${this.props.quoteSymbol}_${this.props.baseSymbol}`);
     const pairBuyPrice = this.props.pairToken ? formatNumber(this.props.pairToken.buy_price, 6) : '---';
-    const pairUSDBuyPrice = pairBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
+    // const pairUSDBuyPrice = pairBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
     const pairChange = this.props.pairToken ? this.props.pairToken.change : '---';
+
     const displayQuoteSymbol = this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.quoteSymbol;
+    const displayBaseSymbol = this.props.baseSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.baseSymbol;
 
     return (
       <div className={"limit-order-header"}>
         <div className={"limit-order-header__wrapper"}>
           <div className={"limit-order-header__column"} onClick={this.toggleQuoteMarket}>
             <div className={"limit-order-header__pair"}>
-              <span>{this.props.baseSymbol}/{displayQuoteSymbol}</span>
-              <span className={`common__triangle ${this.state.isQuoteMarketOpened ? 'up' : ''}`}/>
+              <span>{displayBaseSymbol}/{displayQuoteSymbol}</span>
+              <span className={`common__triangle ${this.props.limitOrder.mobileState.showQuoteMarket ? 'up' : ''}`}/>
             </div>
             <div className={"limit-order-header__rate"}>
-              <span>{pairBuyPrice} {displayQuoteSymbol} = ${pairUSDBuyPrice}</span>
+              <span>1 {displayBaseSymbol} = {pairBuyPrice} {displayQuoteSymbol}</span>
 
               {(pairChange !== '---' && pairChange !== 0) &&
                 <span className={`${pairChange > 0 ? 'common__text-green' : 'common__text-red'}`}>
@@ -79,7 +84,7 @@ export default class LimitOrderMobileHeader extends React.Component {
           </div>
         </div>
 
-        {this.state.isQuoteMarketOpened && (
+        {this.props.limitOrder.mobileState.showQuoteMarket && (
           <div className={"common__slide-up"}>
             <QuoteMarket/>
           </div>

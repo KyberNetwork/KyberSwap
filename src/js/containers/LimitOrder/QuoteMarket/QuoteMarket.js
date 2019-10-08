@@ -121,9 +121,18 @@ export default class QuoteMarket extends React.Component{
   }
 
   onPairClick = (base, quote) => {
-    quote = quote == "ETH" ? "WETH" : quote
+    quote = quote === "ETH" ? "WETH" : quote
     this.props.selectSourceAndDestToken(quote, base);
     this.props.global.analytics.callTrack("trackLimitOrderClickSelectPair", base + "/" + quote)
+    
+    if (this.props.global.isOnMobile){
+      this.props.dispatch(limitOrderActions.toogleQuoteMarket(false))
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
   }
   render(){
     const quotes = this.renderQuotes()

@@ -13,7 +13,7 @@ import {
 
 import { MobileChart } from "./MobileElements"
 import { ImportAccount } from "../ImportAccount";
-import LimitOrderMobileHeader from "./LimitOrderMobileHeader";
+import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
 import * as constants from "../../services/constants";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
@@ -40,13 +40,13 @@ export default class LimitOrderBody extends React.Component {
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
     this.state = {
-      mobileOpenChart: true
+      mobileOpenChart: true      
     }
   }
 
   toggleMobileChart = () => {
     this.setState({ mobileOpenChart: !this.state.mobileOpenChart })
-  };
+  };  
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
@@ -119,14 +119,14 @@ export default class LimitOrderBody extends React.Component {
       <div className={"limit-order theme__background"}>
         <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
 
-        {this.state.mobileOpenChart && (
+        {this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
           <MobileChart
             toggleMobileChart = {this.toggleMobileChart}
             setFormType = {this.setFormType}
           />
         )}
 
-        {!this.state.mobileOpenChart && (
+        {!this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
           <div>
             <div className={"limit-order__container limit-order__container--right"}>
               <LimitOrderForm

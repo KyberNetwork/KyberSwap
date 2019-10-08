@@ -177,8 +177,11 @@
     }
     .table__body{
       display: block;
-      height: 300px;
-      overflow-y: auto;
+            
+      @include screen-min-width(medium){
+        height: 300px;
+        overflow-y: auto;
+      }
       @include screen-max-width(medium){
         overflow-x: hidden;
       }
