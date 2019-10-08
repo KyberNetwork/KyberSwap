@@ -143,20 +143,20 @@ export default class OrderDetailsModal extends Component {
   }
 
   render() {
-    return (
-      this.props.order && (
-        <Modal
-          className={{
-            base: "reveal large confirm-modal",
-            afterOpen: "reveal large confirm-modal"
-          }}
-          isOpen={this.props.isOpen}
-          onRequestClose={this.closeModal}
-          contentLabel="Order Details"
-          content={this.contentModal()}
-          size="medium"
-        />
-      )
-    )
+    if (this.props.order) {
+      return <Modal
+      className={{
+        base: "reveal large confirm-modal",
+        afterOpen: "reveal large confirm-modal"
+      }}
+      isOpen={this.props.isOpen}
+      onRequestClose={this.closeModal}
+      contentLabel="Order Details"
+      content={this.contentModal()}
+      size="medium"
+    />
+    }else{
+      return null
+    }
   }
 }

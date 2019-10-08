@@ -139,7 +139,7 @@ export default class Market extends React.Component {
   };
 
   render() {
-    if (!this.props.originalTokens.length) return '';
+    if (!this.props.originalTokens.length) return null;
 
     return (
       <div className="market-wrapper-container">
