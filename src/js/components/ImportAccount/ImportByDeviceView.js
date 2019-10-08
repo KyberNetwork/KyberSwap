@@ -28,10 +28,9 @@ const ImportByDeviceView = (props) => {
     }
 
     function getCurrentList() {
-        const addressLink = BLOCKCHAIN_INFO.ethScanUrl + 'address/';
         let currentListHtml = props.currentAddresses.map((address, index) => {
             return (
-                <div className={"address-item"} key={address.addressString} onClick={() => getAddress(address)}>
+                <div className={"address-item"} key={address.addressString}>
                     <div className="address-item__address">
                         <a class="name text-lowercase">
                             <label class="mb-0">
@@ -46,7 +45,7 @@ const ImportByDeviceView = (props) => {
                                 : roundingNumber(address.balance)
                             } ETH
                         </a>
-                        <a class="import">
+                        <a class="import" onClick={() => getAddress(address)}>
                             {props.translate("import.import") || "Import"}
                         </a>
                     </div>

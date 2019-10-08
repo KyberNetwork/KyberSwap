@@ -18,7 +18,6 @@ import * as converter from "../../../utils/converter"
   const ethereum = store.connection.ethereum
   return {
     translate, limitOrder, tokens, account, ethereum, global
-
   }
 })
 export default class ApproveZeroModal extends React.Component {

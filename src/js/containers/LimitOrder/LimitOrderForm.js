@@ -201,7 +201,7 @@ export default class LimitOrderForm extends React.Component {
             step="0.000001"
             placeholder="0"
             min="0"
-            type={this.props.global.isOnMobile ? "number" : "text"}
+            type="text"
             maxLength="50"
             autoComplete="off"
             value={this.props.limitOrder.isFetchingRate ? 'Loading...' : triggerRate}
@@ -232,7 +232,7 @@ export default class LimitOrderForm extends React.Component {
               step="0.000001"
               placeholder="0"
               min="0"
-              type={this.props.global.isOnMobile ? "number" : "text"}
+              type="text"
               maxLength="50"
               autoComplete="off"
               value={this.props.limitOrder.destAmount}
@@ -247,7 +247,7 @@ export default class LimitOrderForm extends React.Component {
               step="0.000001"
               placeholder="0"
               min="0"
-              type={this.props.global.isOnMobile ? "number" : "text"}
+              type="text"
               maxLength="50"
               autoComplete="off"
               value={this.props.limitOrder.sourceAmount}

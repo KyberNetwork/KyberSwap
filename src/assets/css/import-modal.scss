@@ -140,6 +140,7 @@
           .address-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 3px 0;
             flex-wrap: wrap;
             &__address {

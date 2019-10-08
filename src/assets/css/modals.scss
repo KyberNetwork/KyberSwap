@@ -250,7 +250,7 @@ $divider-color: darken($title-background-color, 5);
       img {
         margin-right: 6px;
         position: relative;
-        bottom: 2px;
+        bottom: -1px;
       }
     }
 
@@ -1294,11 +1294,11 @@ $divider-color: darken($title-background-color, 5);
 }
 
 
-.modal-error{
+.modal-error {
   font-size: 0.9em;
-  margin-bottom: 25px;
   color: $alert-color;
-  padding-top: 20px;
+  padding: 20px 45px 10px;
+
   &.metamask{
     height: 65px;
     overflow-y: auto;

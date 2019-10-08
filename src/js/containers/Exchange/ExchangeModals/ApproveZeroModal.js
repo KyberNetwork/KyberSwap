@@ -1,20 +1,13 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
-import constants from "../../../services/constants"
-
 import { getWallet } from "../../../services/keys"
-
 import { FeeDetail } from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
-
 import * as converter from "../../../utils/converter"
-
 
 @connect((store, props) => {
   const account = store.account.account
@@ -25,7 +18,6 @@ import * as converter from "../../../utils/converter"
 
   return {
     translate, exchange, tokens, account, ethereum
-
   }
 })
 
@@ -112,8 +104,6 @@ export default class ApproveZeroModal extends React.Component {
     }
   }
 
-
-
   errorHtml = () => {
     if (this.state.err) {
       let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
@@ -161,20 +151,19 @@ export default class ApproveZeroModal extends React.Component {
                   />
                 </div>
                 {this.errorHtml()}
-
-
               </div>
-
             </div>
           </div>
         </div>
        
         <div className="overlap">
-          {/* <div>{this.msgHtml()}</div> */}
-          <div className="input-confirm grid-x input-confirm--approve">           
-            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
-              onClick={this.onSubmit.bind(this)}
-            >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+          <div className="input-confirm grid-x input-confirm--approve">
+            <div>{this.msgHtml()}</div>
+            <div>
+              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>
+                {this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -183,10 +172,11 @@ export default class ApproveZeroModal extends React.Component {
 
   render() {
     return (
-      <Modal className={{
-        base: 'reveal medium confirm-modal',
-        afterOpen: 'reveal medium confirm-modal'
-      }}
+      <Modal
+        className={{
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
+        }}
         isOpen={true}
         onRequestClose={this.closeModal}
         contentLabel="approve token"
@@ -194,7 +184,5 @@ export default class ApproveZeroModal extends React.Component {
         size="medium"
       />
     )
-
-
   }
 }
