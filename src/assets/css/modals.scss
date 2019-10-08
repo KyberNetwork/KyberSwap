@@ -250,7 +250,7 @@ $divider-color: darken($title-background-color, 5);
       img {
         margin-right: 6px;
         position: relative;
-        bottom: 2px;
+        bottom: -1px;
       }
     }
 
@@ -570,7 +570,7 @@ $divider-color: darken($title-background-color, 5);
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
   border-radius: 3px;
-  overflow: hidden;
+  overflow-y: auto;
 
   @include screen-max-width(medium) {
     border-radius: 0;
@@ -695,17 +695,8 @@ $divider-color: darken($title-background-color, 5);
       }
     }
 
-    @include screen-max-width(medium) {
-      background-color: #ffffff;
-      padding-left: 20px;
-      padding-right: 20px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-
-      .button {
-        max-width: 125px;
-      }
+    @include screen-max-width(medium){
+      padding: 0 20px;
     }
   }
 
@@ -954,6 +945,12 @@ $divider-color: darken($title-background-color, 5);
 
     @include screen-max-width(medium) {
       padding-bottom: 100px;
+
+      .overlap {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
     }
   }
 }
@@ -1294,25 +1291,21 @@ $divider-color: darken($title-background-color, 5);
 }
 
 
-.modal-error{
+.modal-error {
   font-size: 0.9em;
-  margin-bottom: 25px;
   color: $alert-color;
-  padding-top: 20px;
-  &.metamask{
+  padding: 20px 45px 10px;
+
+  &.metamask {
     height: 65px;
     overflow-y: auto;
     overflow-x: hidden;
     word-wrap: break-word;
-    margin: 0 45px;
-
-    @include screen-max-width(medium) {
-      margin: 0 20px;
-    }
 
     &.full{
       white-space: normal;
     }
+
     + .show-full{
       font-size: 0.8em;
       margin-top: -20px;
@@ -1321,6 +1314,10 @@ $divider-color: darken($title-background-color, 5);
       color: #ff5d00;
       font-style: italic;
     }
+  }
+
+  @include screen-max-width(medium) {
+    padding: 20px 20px 10px;
   }
 }
 

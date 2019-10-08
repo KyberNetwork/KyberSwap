@@ -161,9 +161,9 @@ export default class ApproveMaxModal extends React.Component {
           <div className="input-confirm input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>
-              <a className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`}
-                onClick={this.onSubmit.bind(this)}
-              >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+              <a className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`} onClick={this.onSubmit.bind(this)}>
+                {this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}
+              </a>
             </div>
           </div>
         </div>

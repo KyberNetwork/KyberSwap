@@ -69,8 +69,8 @@ export default class MarketTable extends React.Component {
   addUnit = (input, currency, groupSeparator = '') => {
     return (
       <div className="symbol-price">
-        <span className="value">{input === 0 ? "---" : this.formatNumber(input, groupSeparator)}</span>
-        <span className="unit">{input === 0 ? '' : currency}</span>
+        <span className="value">{input === "0" ? "---" : this.formatNumber(input, groupSeparator)}</span>
+        <span className="unit">{input === "0" ? '' : currency}</span>
       </div>
     )
   };
