@@ -49,15 +49,24 @@ export default class QuoteMarket extends React.Component{
   search(quotes){
     const { current_search, current_sort_index, current_sort_dsc } = this.state
     const { currentQuote } = this.props
-    return (
+    const filtered = (
       currentQuote === "FAV" ?
-        Object.keys(quotes).reduce((res, key) => res.concat(quotes[key]),[]).filter((pair) => pair["is_favorite"]) : 
+        Object.keys(quotes).reduce((res, key) => res.concat(quotes[key]),[]).filter((pair) => pair["is_favorite"]) :
         quotes[currentQuote]
     )
-    .filter(pair => (pair["base"].toLowerCase().includes(current_search.toLowerCase())))
-    .sort(function(a,b){return (current_sort_dsc ? 1 : -1)*(a[current_sort_index] > b[current_sort_index] ? -1 : 1)})
+      .filter(pair => (pair["base"].toLowerCase().includes(current_search.toLowerCase())))
+    return current_sort_index == "base" ? filtered.sort(this.sortByBase) : filtered.sort(this.sortByDefault)
   }
 
+  sortByBase = (a,b) => {
+    const { current_sort_index, current_sort_dsc } = this.state
+    return (current_sort_dsc ? -1 : 1) * (a[current_sort_index].replace("WETH", "ETH*") > b[current_sort_index].replace("WETH", "ETH*") ? 1 : -1)
+  }
+
+  sortByDefault = (a,b) => {
+    const { current_sort_index, current_sort_dsc } = this.state
+    return (current_sort_dsc ? -1 : 1) * converters.compareTwoNumber(a[current_sort_index], b[current_sort_index])
+  }
 
   renderQuotes(){
     const { tokens, pairs } = this.props
@@ -90,7 +99,7 @@ export default class QuoteMarket extends React.Component{
                 base: key, quote: quote,
                 price: (isExisted ? converters.roundingRateNumber(pairs[pairReversed].buy_price) : "-"),
                 is_favorite: fav.includes(pair),
-                volume: (isExisted ? converters.formatNumber(pairs[pairReversed].volume + (quote == "WETH" ? pairs[`ETH_${key}`].volume : 0 ) + (key == "WETH" ? pairs[`${quote}_ETH`].volume : 0 ), 0, '') : "-" ),
+                volume: (isExisted ? converters.formatNumber(converters.sumOfTwoNumber(pairs[pairReversed].volume, pairs[pairReversed.replace("WETH", "ETH")].volume), 0, '') : "-" ),
                 change: (isExisted ? pairs[pairReversed].change : "-" )
             });
           }, []); 
