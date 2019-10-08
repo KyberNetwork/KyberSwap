@@ -129,6 +129,7 @@ $divider-color: darken($title-background-color, 5);
       top: 5px;
       font-size: 2rem;
       color: #aaa;
+      z-index: 10;
       cursor: pointer;
     }
   }
@@ -1136,7 +1137,7 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 20px;
       padding-left: 35px;
       padding-right: 35px;
-      border-radius: 40px;
+      border-radius: 3px;
       &::placeholder {
         color: #7f7f7f;
         line-height: 1.25;
