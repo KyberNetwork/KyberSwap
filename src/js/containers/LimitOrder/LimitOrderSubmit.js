@@ -206,11 +206,10 @@ export default class LimitOrderSubmit extends React.Component {
         return false;
       });
     } else {
-      const rate = this.props.limitOrder.sideTrade === "buy" ? triggerRate : converters.divOfTwoNumber(1, triggerRate);
       higherRateOrders = await limitOrderServices.getRelatedOrders(
         this.props.limitOrder.sourceToken,
         this.props.limitOrder.destToken,
-        rate,
+        triggerRate,
         this.props.account.address
       );
 
