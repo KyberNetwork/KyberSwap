@@ -125,7 +125,7 @@ const TransferForm = (props) => {
                   <div className="exchange-content__input-container exchange-content__input-container--to exchange-content__transfer-addr">
                     <div className="input-tooltip-wrapper">
                       <input
-                        className={`exchange-content__input theme__background-4 theme__text-4 exchange-content__input-address`}
+                        className={`exchange-content__input theme__background-4 theme__text-4 exchange-content__input-address ${props.global.isOnMobile && "p-l-50px" }`}
                         value={props.input.destAddress.value}
                         onChange={props.input.destAddress.onChange}
                         placeholder="0x0de..."
