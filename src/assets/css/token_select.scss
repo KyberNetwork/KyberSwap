@@ -1,12 +1,26 @@
 .token-selector {
   .dropdown {
-    &.dropdown--active {
+    &--active {
       position: relative;
       z-index: 1;
       .focus-item{
         border-color: #aaa;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+      }
+    }
+
+    &--disabled {
+      background-color: #e2e2e2;
+      margin: 5px;
+      border-radius: 20px;
+
+      .common__triangle {
+        display: none;
+      }
+
+      .focus-name {
+        color: #333;
       }
     }
   }
