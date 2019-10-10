@@ -65,7 +65,7 @@ const LayoutView = (props) => {
   return (
     <ConnectedRouter history={props.history} store ={store}>
       <Fragment>
-        <section id="content" className={`${props.langClass}`}>
+        <section id="content" className={`${props.langClass} ${common.isMobile.any() && "m-t--25px"}`}>
           {!process.env.integrate &&
             <HeaderTransaction/>
           }

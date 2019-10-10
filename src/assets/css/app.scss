@@ -71,8 +71,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 6px!important;
-  height: 6px!important;
+  width: 8px!important;
+  height: 8px!important;
 }
 
 /* Track */
@@ -89,3 +89,10 @@ h1, h2, h3, h4, h5, h6 {
 .color-grey-darker{
   color: $grey-darker;
 };
+
+.m-t--25px{
+  margin-top: -25px;
+}
+.p-l-50px{
+  padding-left: 50px!important;
+}
