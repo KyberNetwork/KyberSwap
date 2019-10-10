@@ -55,7 +55,9 @@ export default class MarketTable extends React.Component {
       return (
         <span className = "positive">{input}%</span>
       )
-    }     
+    }
+
+    return <span>---</span>;
   };
 
   formatNumber = (number, groupSeparator = '') => {

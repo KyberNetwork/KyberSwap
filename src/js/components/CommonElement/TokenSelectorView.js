@@ -71,8 +71,8 @@ const TokenSelectorView = (props) => {
   });
 
   return (
-    <div className={`token-selector ${props.type} ${props.isFixToken?"fix_token" : ""}`}>
-      <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled ={props.isFixToken? true: false}>
+    <div className={`token-selector ${props.type} ${props.isFixToken ? "fix_token" : ""}`}>
+      <Dropdown active={props.open} onShow = {(e) => props.showTokens(e)} onHide = {(e) => props.hideTokens(e)} disabled={props.isFixToken}>
         <DropdownTrigger className="notifications-toggle">
           <div className="focus-item d-flex">
             <div className="d-flex">

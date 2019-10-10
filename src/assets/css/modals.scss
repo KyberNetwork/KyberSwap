@@ -113,6 +113,7 @@ $divider-color: darken($title-background-color, 5);
     width: 1200px;
     top: 50px;
     transform: initial;
+    margin-bottom: 50px;
   }
 
   .message {
@@ -837,6 +838,7 @@ $divider-color: darken($title-background-color, 5);
     }
 
     &--approve {
+      width: 100%;
       text-align: center;
       justify-content: space-between;
       align-items: center;
