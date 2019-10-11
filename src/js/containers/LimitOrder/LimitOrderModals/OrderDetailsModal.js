@@ -40,6 +40,8 @@ export default class OrderDetailsModal extends Component {
     const { order } = this.props
     let source = order.source == "WETH" ? "ETH*" : order.source
     let dest = order.dest == "WETH" ? "ETH*" : order.dest
+    source = source ? source : '--';
+    dest = dest ? dest : '--';
     const { min_rate, fee, src_amount, status, side_trade } = order;
     const isBuyTrade = side_trade === "buy";
     const base = isBuyTrade ? dest : source
@@ -48,6 +50,7 @@ export default class OrderDetailsModal extends Component {
     const rate = isBuyTrade ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
     const amount = isBuyTrade ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6) : formatNumber(src_amount, 6)
     const total = isBuyTrade ? formatNumber(src_amount, 6) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6)
+
     return (
       <div className="limit-order-modal">
         <div className="limit-order-modal__body">
