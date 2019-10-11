@@ -191,7 +191,6 @@
     border-radius: 3px;
     font-size: 10px;
     font-weight: 500;
-    // width: 66px;
     margin: 0 auto;
     text-align: center;
 
@@ -203,9 +202,8 @@
       color: #bf2600;
     }
 
-
     &--invalidated {
-      color: #172b4d;
+      color: #bf2600;
     }
 
     &--in_progress {
@@ -1300,7 +1298,7 @@
 
 
       &--invalidated {
-        color: #172b4d;
+        color: #bf2600;
       }
 
       &--in_progress {

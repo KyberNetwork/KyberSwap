@@ -1,19 +1,13 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
-import constants from "../../../services/constants"
-
 import * as converter from "../../../utils/converter"
-
 import { getWallet } from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
-
 
 @connect((store, props) => {
   const account = store.account.account
@@ -24,13 +18,10 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 
   return {
     translate, exchange, tokens, account, ethereum
-
   }
 })
 
 export default class ApproveMaxModal extends React.Component {
-
-
   constructor() {
     super()
     this.state = {
@@ -170,24 +161,26 @@ export default class ApproveMaxModal extends React.Component {
         </div>
         
         <div className="overlap">
-          {/* <div>{this.msgHtml()}</div> */}
           <div className="input-confirm grid-x input-confirm--approve">
-            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
-                  onClick={this.onSubmit.bind(this)}
-                >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
+            <div>{this.msgHtml()}</div>
+            <div>
+              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>
+                {this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}
+              </a>
+            </div>
           </div>
         </div>
       </div>
     )
   }
 
-
   render() {
     return (
-      <Modal className={{
-        base: 'reveal medium confirm-modal',
-        afterOpen: 'reveal medium confirm-modal'
-      }}
+      <Modal
+        className={{
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
+        }}
         isOpen={true}
         onRequestClose={this.closeModal}
         contentLabel="approve token"
@@ -195,7 +188,5 @@ export default class ApproveMaxModal extends React.Component {
         size="medium"
       />
     )
-
-
   }
 }

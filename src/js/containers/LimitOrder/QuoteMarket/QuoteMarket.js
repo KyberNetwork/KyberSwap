@@ -130,9 +130,18 @@ export default class QuoteMarket extends React.Component{
   }
 
   onPairClick = (base, quote) => {
-    quote = quote == "ETH" ? "WETH" : quote
+    quote = quote === "ETH" ? "WETH" : quote
     this.props.selectSourceAndDestToken(quote, base);
     this.props.global.analytics.callTrack("trackLimitOrderClickSelectPair", base + "/" + quote)
+    
+    if (this.props.global.isOnMobile){
+      this.props.dispatch(limitOrderActions.toogleQuoteMarket(false))
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
   }
   render(){
     const quotes = this.renderQuotes()
@@ -184,7 +193,7 @@ export default class QuoteMarket extends React.Component{
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                     <div className={"c2"} >{pair["price"]}</div>
-                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${Math.abs(pair["change"])}%`)}</div>
+                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${pair["change"]}%`)}</div>
                   </div>)}
                 </div>
               </div>

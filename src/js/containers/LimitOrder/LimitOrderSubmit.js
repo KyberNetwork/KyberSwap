@@ -106,16 +106,21 @@ export default class LimitOrderSubmit extends React.Component {
     }
     // check rate is too big
     if (this.props.limitOrder.offeredRate != 0) {
-      var triggerRateBig = converters.roundingRate(triggerRate)
-      var percentChange = converters.percentChange(triggerRateBig, this.props.limitOrder.offeredRate)
+      const isBuySideTrade = this.props.limitOrder.sideTrade === 'buy';
+      const offeredRate = converters.toT(this.props.limitOrder.offeredRate);
+      const formattedOfferedRate = isBuySideTrade ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
+      const triggerRate = isBuySideTrade ? this.props.limitOrder.triggerBuyRate : this.props.limitOrder.triggerRate;
+      const percentChange = this.props.limitOrder.offeredRate != "0" ? converters.percentChange(triggerRate, formattedOfferedRate) : 0;
+      const maxPercentTriggerRate = BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate;
+      const minPercentBuyTriggerRate = BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate / 10;
 
-      if (triggerRateBig <= 0) {
-        rateError.push(this.props.translate("error.rate_too_low") || `Trigger rate is too low, please increase trigger rate`);
+      if (isBuySideTrade && percentChange < minPercentBuyTriggerRate * -1) {
+        rateError.push(this.props.translate("error.rate_too_low", { minRate: minPercentBuyTriggerRate }) || `Trigger rate is too low, only allow ${minPercentBuyTriggerRate}% less than the current rate`);
         isValidate = false
       }
 
-      if (percentChange > BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate && !isNaN(triggerRateFloat)) {
-        rateError.push(this.props.translate("error.rate_too_high", { maxRate: BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
+      if (!isBuySideTrade && percentChange > maxPercentTriggerRate) {
+        rateError.push(this.props.translate("error.rate_too_high", { maxRate: maxPercentTriggerRate } ) || `Trigger rate is too high, only allow ${constants.LIMIT_ORDER_CONFIG.maxPercentTriggerRate}% greater than the current rate`);
         isValidate = false
       }
     }
@@ -206,11 +211,10 @@ export default class LimitOrderSubmit extends React.Component {
         return false;
       });
     } else {
-      const rate = this.props.limitOrder.sideTrade === "buy" ? triggerRate : converters.divOfTwoNumber(1, triggerRate);
       higherRateOrders = await limitOrderServices.getRelatedOrders(
         this.props.limitOrder.sourceToken,
         this.props.limitOrder.destToken,
-        rate,
+        triggerRate,
         this.props.account.address
       );
 

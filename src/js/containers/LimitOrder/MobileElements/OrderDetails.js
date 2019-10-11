@@ -5,7 +5,9 @@ import  { LIMIT_ORDER_CONFIG } from "../../../services/constants";
 import BLOCKCHAIN_INFO from "../../../../../env";
 
 const OrderDetails = (props) => {
-  const { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash, receive, status, user_address } = props.order;
+  let { source, dest, min_rate, src_amount, fee, side_trade, updated_at, tx_hash, receive, status, user_address } = props.order;
+  source = source ? source : '--';
+  dest = dest ? dest : '--';
   const formattedFee = formatNumber(multiplyOfTwoNumber(fee, src_amount), 5, '');
   const sourceAmount = formatNumber(src_amount, 6);
   const destAmount = formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6);

@@ -320,3 +320,11 @@ export function updateFavorite(base, quote, toFav, isLoggedIn) {
   }
 }
 
+
+
+export function toogleQuoteMarket(show){
+  return {
+    type: "LIMIT_ORDER.TOOGLE_QUOTE_MARKET",
+    payload: show
+  }
+}

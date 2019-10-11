@@ -180,11 +180,12 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest, side_trade } = props;
-    const { screen } = this.props;
-    const pair = side_trade === "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`;
+    let { source, dest, side_trade } = props;
+    source = source ? source : '--';
+    dest = dest ? dest : '--';
+    const pair = side_trade === "buy" ? `${dest}/${source}` : `${source}/${dest}`;
 
-    if (screen === "mobile") {
+    if (this.props.screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
@@ -244,12 +245,12 @@ export default class LimitOrderTable extends Component {
   getTotalCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
     const amount = side_trade === "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
-    const unit = side_trade === "buy" ? source.toUpperCase() : dest.toUpperCase()
+    const unit = side_trade === "buy" ? source : dest;
     return (
-        <div>
-          <span className="to-number-cell">{amount}</span>{' '}
-          <span>{unit}</span>
-        </div>
+      <div>
+        <span className="to-number-cell">{amount}</span>{' '}
+        <span>{unit ? unit : '--'}</span>
+      </div>
     )
   }
 
@@ -265,31 +266,27 @@ export default class LimitOrderTable extends Component {
   getStatusCell = (props) => {
     const { status, msg, id } = props;
 
-    const getMsg = (msg) => {
-      return `<div>${msg}</div>`;
-    }
-
     return (
       <div className="cell-status__container">
         <div className={`cell-status cell-status--${status} ${this.props.screen === "mobile" ? "cell-status__mobile" : ""}`}>{status.toUpperCase()}</div>
         {msg && msg.length > 0 &&
-        <React.Fragment>
-          <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className={`status-info-icon ${this.props.screen === "mobile" ? "status-info-icon__mobile" : ""}`}>
-            <img src={require("../../../assets/img/warning-triangle.svg")}/>
-          </div>
-          <ReactTooltip
-            globalEventOff="click"
-            effect="solid"
-            event="click mouseenter mouseleave"
-            html={true}
-            place="bottom"
-            type="dark"
-            id={`order-status-info-${id}`}
-            className="order-status-info"
-          >
-            {getMsg(msg)}
-          </ReactTooltip>
-        </React.Fragment>}
+          <React.Fragment>
+            <div data-tip data-for={`order-status-info-${id}`} data-scroll-hide={true} className={`status-info-icon ${this.props.screen === "mobile" ? "status-info-icon__mobile" : ""}`}>
+              <img src={require("../../../assets/img/warning-triangle.svg")}/>
+            </div>
+            <ReactTooltip
+              globalEventOff="click"
+              effect="solid"
+              event="click mouseenter mouseleave"
+              html={true}
+              place="bottom"
+              type="dark"
+              id={`order-status-info-${id}`}
+              className="order-status-info"
+              getContent={() => msg}
+            />
+          </React.Fragment>
+        }
       </div>
     )
   }
@@ -446,8 +443,7 @@ export default class LimitOrderTable extends Component {
         pageIndex: 1,
         typeFilter
       }));
-    }
-    else {
+    } else {
       const typeFilter = [...this.props.limitOrder.typeFilter];
       const index = typeFilter.indexOf(value);
       if (index !== -1) {

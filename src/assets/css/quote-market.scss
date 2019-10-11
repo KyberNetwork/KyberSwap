@@ -179,10 +179,9 @@
       display: block;
       height: 300px;
       overflow-y: auto;
-      @include screen-max-width(medium){
-        overflow-x: hidden;
-      }
+      overflow-x: hidden;
       width: 100%;
+
       .table__row{
         .overlay{
           position: absolute;
