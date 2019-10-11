@@ -49,7 +49,7 @@ export default class LimitOrderMobileHeader extends React.Component {
 
   render() {
     const QuoteMarket = this.QuoteMarket;
-    const isFav = this.props.favorite_pairs.includes(`${this.props.quoteSymbol}_${this.props.baseSymbol}`);
+    const isFav = this.props.favorite_pairs.includes(`${this.props.baseSymbol}_${this.props.quoteSymbol}`);
     const pairBuyPrice = this.props.pairToken ? formatNumber(this.props.pairToken.buy_price, 6) : '---';
     // const pairUSDBuyPrice = pairBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
     const pairChange = this.props.pairToken ? this.props.pairToken.change : '---';
