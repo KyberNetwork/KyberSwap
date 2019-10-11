@@ -193,7 +193,7 @@ export default class QuoteMarket extends React.Component{
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                     <div className={"c2"} >{pair["price"]}</div>
-                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${Math.abs(pair["change"])}%`)}</div>
+                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${pair["change"]}%`)}</div>
                   </div>)}
                 </div>
               </div>
