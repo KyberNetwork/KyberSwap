@@ -183,5 +183,13 @@
       background-color: $dark-color-10;
     }
   }
+
+  .theme__dropdown.dropdown--disabled {
+    background-color: $dark-color-12;
+
+    .focus-name {
+      color: $grey-light;
+    }
+  }
 }
 

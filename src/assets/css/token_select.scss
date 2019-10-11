@@ -11,16 +11,11 @@
     }
 
     &--disabled {
-      background-color: #e2e2e2;
-      margin: 5px;
-      border-radius: 20px;
+      margin: 0 5px;
+      border-radius: 3px;
 
       .common__triangle {
         display: none;
-      }
-
-      .focus-name {
-        color: #333;
       }
     }
   }
@@ -971,7 +966,7 @@
     }
   }
   .focus-item{
-    padding: 12px;
+    padding: 7px 10px;
     border-radius: 3px;
     align-items: center;
     font-size: 15px;
