@@ -120,7 +120,7 @@ export default class PathSelector extends React.Component {
                     </DropdownTrigger>
                     <DropdownContent>
                         <div className="select-item">
-                            <div className="list-item custom-scroll">
+                            <div className="list-item">
                                 {this.getListItem()}
                             </div>
                         </div>

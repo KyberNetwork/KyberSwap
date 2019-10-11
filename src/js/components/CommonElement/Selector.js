@@ -66,7 +66,7 @@ const Selector = (props) => {
             <div className="search-item">
               <input value={props.searchWord} placeholder={props.translate("search") || "Search"} onChange={(e) => props.changeWord(e)} type="text"/>
             </div>
-            <div className="list-item custom-scroll">
+            <div className="list-item">
               {getListToken()}
             </div>
           </div>
