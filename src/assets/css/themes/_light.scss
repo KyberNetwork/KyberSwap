@@ -191,5 +191,13 @@
       background-color: white;
     }
   }
+
+  .theme__dropdown.dropdown--disabled {
+    background-color: $light-color-5;
+
+    .focus-name {
+      color: $dark-color-12;
+    }
+  }
 }
 
