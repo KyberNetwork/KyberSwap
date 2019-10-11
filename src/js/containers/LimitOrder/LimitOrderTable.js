@@ -180,11 +180,12 @@ export default class LimitOrderTable extends Component {
   }
 
   getConditionCell = (props) => {
-    const { source, dest, side_trade } = props;
-    const { screen } = this.props;
-    const pair = side_trade === "buy" ? `${dest.toUpperCase()}/${source.toUpperCase()}` : `${source.toUpperCase()}/${dest.toUpperCase()}`;
+    let { source, dest, side_trade } = props;
+    source = source ? source : '--';
+    dest = dest ? dest : '--';
+    const pair = side_trade === "buy" ? `${dest}/${source}` : `${source}/${dest}`;
 
-    if (screen === "mobile") {
+    if (this.props.screen === "mobile") {
       return (
         <div className="cell-pair__mobile">
           {this.getDateCell(props)}
@@ -244,11 +245,11 @@ export default class LimitOrderTable extends Component {
   getTotalCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
     const amount = side_trade === "buy" ? formatNumber(src_amount, 5) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5)
-    const unit = side_trade === "buy" ? source.toUpperCase() : dest.toUpperCase()
+    const unit = side_trade === "buy" ? source : dest;
     return (
       <div>
         <span className="to-number-cell">{amount}</span>{' '}
-        <span>{unit}</span>
+        <span>{unit ? unit : '--'}</span>
       </div>
     )
   }
