@@ -177,15 +177,11 @@
     }
     .table__body{
       display: block;
-            
-      @include screen-min-width(medium){
-        height: 300px;
-        overflow-y: auto;
-      }
-      @include screen-max-width(medium){
-        overflow-x: hidden;
-      }
+      height: 300px;
+      overflow-y: auto;
+      overflow-x: hidden;
       width: 100%;
+
       .table__row{
         .overlay{
           position: absolute;
