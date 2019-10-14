@@ -108,8 +108,8 @@ export default class OrderDetailsModal extends Component {
     this.setCancelErrorMessage(true);
   };
 
-  setCancelErrorMessage = (isReset = false) => {
-    let errorMessage = this.props.translate("limit_order.cancel_error") || "Something went wrong with cancel order process.";
+  setCancelErrorMessage = (isReset = false, message = '') => {
+    let errorMessage = message ? message : this.props.translate("limit_order.cancel_error") || "Something went wrong with cancel order process.";
 
     if (isReset) errorMessage = null;
 
@@ -140,7 +140,7 @@ export default class OrderDetailsModal extends Component {
         }
       } catch (err) {
         console.log(err);
-        this.setCancelErrorMessage();
+        this.setCancelErrorMessage(false, err.message);
       }
     }
   }
