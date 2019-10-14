@@ -255,7 +255,6 @@
     "required_field": "该项是必须的",
     "source_dest_token": "起始代币必须不同于目标代币",
     "amount_too_small": "数量太小。限价订单仅支持${minAmount}ETH以上的订单",
-    "amount_too_big": "数量太大。限价订单仅支持${maxAmount}ETH以下的订单",
     "rate_is_not_number": "触发汇率不是数字",
     "rate_too_high": "触发汇率太高，最高仅能高于现在汇率的${maxRate}%",
     "rate_too_low": "触发率太低，仅允许$ {minRate}％低于当前汇率",

@@ -92,11 +92,6 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
 
-    if (ethEquivalentValue > BLOCKCHAIN_INFO.limitOrder.maxSupportOrder && !isNaN(sourceAmount)) {
-      sourceAmountError.push(this.props.translate("error.amount_too_big", { maxAmount: BLOCKCHAIN_INFO.limitOrder.maxSupportOrder} ) || `Amount is too big. Limit order only support max ${constants.LIMIT_ORDER_CONFIG.maxSupportOrder} ETH equivalent order`)
-      isValidate = false
-    }
-
     // check rate is zero
     const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
     var triggerRateFloat = parseFloat(triggerRate)
