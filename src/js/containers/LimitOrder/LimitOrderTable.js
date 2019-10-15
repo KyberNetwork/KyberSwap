@@ -258,7 +258,7 @@ export default class LimitOrderTable extends Component {
     const { receive, dest, status} = props;
     return (
       <div>
-        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
+        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest.toUpperCase()}` : "-"}</span>
       </div>
     )
   };
