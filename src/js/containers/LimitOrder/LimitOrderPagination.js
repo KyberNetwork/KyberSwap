@@ -119,7 +119,6 @@ export default class Pagination extends React.Component {
     } else {
       pageIndex = this.props.limitOrder.pageIndex;
     }
-    console.log("010101 ",this.props)
     return (
       <div className={`Pagination__container ${this.props.screen}`}>
         {/* Total count */}
