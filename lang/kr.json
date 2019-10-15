@@ -443,7 +443,8 @@
     "sell": "${symbol} 판매",
     "type": "유형",
     "available_balance": "사용 가능한 잔액",
-    "cancel_error": "Something went wrong with cancel order process."
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "받았습니다"
   },
   "home": "홈",
   "tracker": "트래커",

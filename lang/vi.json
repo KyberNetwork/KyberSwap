@@ -443,7 +443,8 @@
     "sell": "Bán ${symbol}",
     "type": "Loại",
     "available_balance": "Số dư khả dụng",
-    "cancel_error": "Something went wrong with cancel order process."
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "Đã nhận"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",

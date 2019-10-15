@@ -441,7 +441,8 @@
     "sell": "Sell ${symbol}",
     "type": "Type",
     "available_balance": "Available Balance",
-    "cancel_error": "Something went wrong with cancel order process."
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "Получил"
   },
   "home": "Домой",
   "tracker": "Трекер",

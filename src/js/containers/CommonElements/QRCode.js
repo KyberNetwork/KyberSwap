@@ -72,7 +72,7 @@ export default class QRCode extends React.Component {
 
   render() {
     var isSupported = this.isSupported()    
-    var qcReader = isSupported ? <QrReader delay={300} onError={this.onError} onScan={this.onScan} style={{ width: "100%" }} /> : <span className="error">Your browser doesn't support scan QR Code</span>
+    var qcReader = ( isSupported && !(!!isMobile.iOS() && checkBrowser.isSafari()) ) ? <QrReader delay={300} onError={this.onError} onScan={this.onScan} style={{ width: "100%" }} /> : <span className="error">Your browser doesn't support scan QR Code</span>
 
     var qcCode = (
       <div className="qc-modal">

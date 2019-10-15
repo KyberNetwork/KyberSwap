@@ -113,7 +113,7 @@ export default class LimitOrderTable extends Component {
     if (activeOrderTab === "history"){
       desktopColumns.splice(desktopColumns.length-2, 0, {
         id: "receive",
-        Header: this.getHeader("receive"),
+        Header: this.getHeader("received"),
         accessor: item => item,
         Cell: props => this.getReceiveCell(props.value),
         headerClassName: "theme__background",

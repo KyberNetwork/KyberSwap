@@ -446,8 +446,9 @@
     "sell": "Sell ${symbol}",
     "type": "Type",
     "available_balance": "Available Balance",
-    "receive": "Received",
-    "cancel_error": "Something went wrong with cancel order process."
+    "received": "Received",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "eth_weth_explanation": "ETH* represents the sum of ETH & WETH for easy reference"
   },
   "home": "Home",
   "tracker": "Tracker",
