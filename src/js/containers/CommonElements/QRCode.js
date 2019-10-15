@@ -66,7 +66,7 @@ export default class QRCode extends React.Component {
   }
 
   isSupported = () => {
-    if (!this.checkWebRTCCompatible() || (this.state.isBlock && this.props.onDAPP)) return false
+    if (!this.checkWebRTCCompatible() || (this.state.isBlock && this.props.onDAPP) || (!!isMobile.iOS() && checkBrowser.isSafari())) return false
     if (this.checkWebRTCCompatible()) return true
   }
 

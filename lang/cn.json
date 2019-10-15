@@ -441,7 +441,8 @@
     "sell": "出售${symbol}",
     "type": "类型",
     "available_balance": "可用余额",
-    "cancel_error": "Something went wrong with cancel order process."
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "收到"
   },
   "home": "主页",
   "tracker": "跟踪网站",

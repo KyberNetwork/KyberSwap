@@ -113,7 +113,7 @@ export default class LimitOrderTable extends Component {
     if (activeOrderTab === "history"){
       desktopColumns.splice(desktopColumns.length-2, 0, {
         id: "receive",
-        Header: this.getHeader("receive"),
+        Header: this.getHeader("received"),
         accessor: item => item,
         Cell: props => this.getReceiveCell(props.value),
         headerClassName: "theme__background",
@@ -258,7 +258,7 @@ export default class LimitOrderTable extends Component {
     const { receive, dest, status} = props;
     return (
       <div>
-        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${receive} ${dest.toUpperCase()}` : "-"}</span>
+        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest.toUpperCase()}` : "-"}</span>
       </div>
     )
   };

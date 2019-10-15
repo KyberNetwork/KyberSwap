@@ -109,10 +109,10 @@ export default class QuoteMarket extends React.Component{
   }
 
   renderTh = () => {
-    let price = this.props.translate("limit_order.price" || "Price")
-    let pair = this.props.translate("limit_order.pair" || "Pair")
-    let volume = this.props.translate("limit_order.volume" || "Volume")
-    let change = this.props.translate("limit_order.change" || "Change")
+    let price = this.props.translate("limit_order.price") || "Price"
+    let pair = this.props.translate("limit_order.pair") || "Pair"
+    let volume = this.props.translate("limit_order.volume") || "Volume"
+    let change = this.props.translate("limit_order.change") || "Change"
     const {is_volume} = this.state
     return [
       { html: pair, field: "base" }, 
@@ -155,17 +155,18 @@ export default class QuoteMarket extends React.Component{
             <div id="container">
               <div id="panel" className="theme__text-4 theme__border">
                 <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
+                {currentQuote == "WETH" && <div className={"instruction"}>{this.props.translate("limit_order.eth_not_support") || "ETH* represents the sum of ETH & WETH for easy reference"}</div>}
                 <Search onSearch={this.onSearch}/>
                 <div className="volume_change_panel">
                   <div className="advance-config__option-container">
-                    <label className="advance-config__option"><span className="advance-config__option-percent">Change</span>
+                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
                             //  defaultChecked={false}
                              onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
                              checked={!this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>
                     </label>
-                    <label className="advance-config__option"><span className="advance-config__option-percent">Volume</span>
+                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
                             //  defaultChecked={true}
                              onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
