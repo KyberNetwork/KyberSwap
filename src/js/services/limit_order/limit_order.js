@@ -120,7 +120,7 @@ export function cancelOrder(order) {
                 if (result.success) {
                     resolve(result.cancelled)
                 } else {
-                    rejected(new Error("Cannot cancel order"));
+                    rejected(new Error(result.message));
                 }
             })
             .catch((err) => {

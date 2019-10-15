@@ -26,7 +26,6 @@
     ],
     "limitOrder": {
         "minSupportOrder": 0.001,
-        "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },

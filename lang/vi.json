@@ -255,7 +255,6 @@
     "required_field": "Mục này cần được điền",
     "source_dest_token": "Vui lòng chọn hai loại token khác nhau",
     "amount_too_small": "Lượng giao dịch quá nhỏ. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối thiểu ${minAmount} ETH.",
-    "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
     "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
     "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% so với tỉ giá hiện tại",
     "rate_too_low": "Tỉ giá khớp lệnh quá thấp, chỉ cho phép nhỏ hơn ${minRate}% so với tỉ giá hiện tại",
