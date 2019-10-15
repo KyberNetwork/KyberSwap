@@ -1,4 +1,9 @@
 .Pagination {
+  &__panel {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
   &__container {
     display: flex;
     justify-content: flex-end;
@@ -12,6 +17,19 @@
       content: '\203a';
       width: 10px;
       height: 10px
+    }
+  }
+
+  &__container.mobile {
+    display: block;
+    text-align: center;
+    align-items: center;
+
+    .Pagination__panel {
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 

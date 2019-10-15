@@ -693,7 +693,7 @@ export default class LimitOrderTable extends Component {
     const data = this.renderData(this.props.data);
 
     const PaginationComponent = (props) => (
-      <LimitOrderPagination totalCount={data.length} {...props}/>
+      <LimitOrderPagination totalCount={data.length} {...props} screen={this.props.screen}/>
     );
 
     return (

@@ -119,26 +119,26 @@ export default class Pagination extends React.Component {
     } else {
       pageIndex = this.props.limitOrder.pageIndex;
     }
-
     return (
-      <div className="Pagination__container">
+      <div className={`Pagination__container ${this.props.screen}`}>
         {/* Total count */}
         <span className="Pagination__count">{`Total ${filterMode === "client" ? totalCount : ordersCount} orders`}</span>
-  
         {/* Previous button */}
-        <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex - 1)}>
-          <span class="Pagination__button--prev" />
-        </div>
-        
-  
-        {/* Page selection */}
-        <div className="Pagination__page-selection">
-          {this.listPage()}
-        </div>
-  
-        {/* Next button */}
-        <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex + 1)}>
-          <span class="Pagination__button--next" />
+        <div className={"Pagination__panel"}>
+          <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex - 1)}>
+            <span className="Pagination__button--prev"/>
+          </div>
+
+
+          {/* Page selection */}
+          <div className="Pagination__page-selection">
+            {this.listPage()}
+          </div>
+
+          {/* Next button */}
+          <div className="Pagination__button" onClick={(e) => this.validatePageIndex(pageIndex + 1)}>
+            <span className="Pagination__button--next"/>
+          </div>
         </div>
       </div>
     )
