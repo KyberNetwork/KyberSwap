@@ -488,10 +488,15 @@
 }
 
 
-.market-modal{
+.market-modal {
   background-color: #f1f5fb !important;
   border-radius: 20px;
-  height: auto;
+  height: 90%;
+
+  &-scroll {
+    overflow: hidden !important;
+  }
+
   @include screen-max-width(large){
     border-radius: 0;
   }
