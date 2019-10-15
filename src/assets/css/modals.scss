@@ -2,6 +2,10 @@ $title-background-color: #DCF0EC;
 $footer-background-color: $title-background-color;
 $divider-color: darken($title-background-color, 5);
 
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
 .reveal-overlay {
   background-color: rgba($dark-gray, .75);
   overflow-y: scroll;
