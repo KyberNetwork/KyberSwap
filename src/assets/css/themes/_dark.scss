@@ -10,11 +10,11 @@
   }
 
   .theme__text-3 {
-    color: $grey-dark;
+    color: $dark-color-13;
   }
 
   .theme__text-4 {
-    color: $grey-dark;
+    color: $dark-color-13;
   }
 
   .theme__text-5 {
@@ -112,11 +112,9 @@
   }
   
   .theme__sort {
-    color: $grey-darker;
+    color: $dark-color-8;
 
     &.active {
-      color: $dark-color-8;
-
       &.asc:after {
         color: #31cb9e;
       }
