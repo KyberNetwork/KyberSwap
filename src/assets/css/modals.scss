@@ -1253,24 +1253,20 @@ $divider-color: darken($title-background-color, 5);
     margin-bottom: $spBallSize;
     background-color: rgba($spCol,1);
     opacity: 1;
-    -webkit-animation: spScaleAlpha 1s infinite linear;
     animation: spScaleAlpha 1s infinite linear;
   }
   .loading-3balls:before, .loading-3balls:after {
     content: '';
-    position: relative;
+    position: absolute;
+    top: 0;
     opacity: 0.25;
   }
   .loading-3balls:before {
     left: 30px;
-    top: -2px;
-    -webkit-animation: spScaleAlphaBefore 1s infinite linear;
     animation: spScaleAlphaBefore 1s infinite linear;
   }
   .loading-3balls:after {
     left: -30px;
-    top: -26px;
-    -webkit-animation: spScaleAlphaAfter 1s infinite linear;
     animation: spScaleAlphaAfter 1s infinite linear;
   }
   @-webkit-keyframes spScaleAlpha {
