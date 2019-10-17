@@ -5,15 +5,9 @@ import { Modal } from "../../../components/CommonElement";
 import * as limitOrderActions from "../../../actions/limitOrderActions";
 import limitOrderServices from "../../../services/limit_order";
 import * as common from "../../../utils/common";
-import * as converters from "../../../utils/converter";
 import {LIMIT_ORDER_CONFIG} from "../../../services/constants";
 import BLOCKCHAIN_INFO from "../../../../../env";
-import {displayNumberWithDot} from "../../../utils/converter";
-import {toT} from "../../../utils/converter";
-import {convertBuyRate} from "../../../utils/converter";
-import {roundingRateNumber} from "../../../utils/converter";
-import {formatNumber} from "../../../utils/converter";
-import {multiplyOfTwoNumber} from "../../../utils/converter";
+import { roundingRateNumber, formatNumber, multiplyOfTwoNumber, divOfTwoNumber } from "../../../utils/converter";
 
 @connect((store, props) => {
   const translate = getTranslate(store.locale);
@@ -47,7 +41,7 @@ export default class OrderDetailsModal extends Component {
     const base = isBuyTrade ? dest : source
     const quote = isBuyTrade ? source : dest
     const pair = isBuyTrade ? `${dest}/${source}` : `${source}/${dest}`
-    const rate = isBuyTrade ? roundingRateNumber(toT(convertBuyRate(min_rate))) : displayNumberWithDot(min_rate, 9)
+    const rate = isBuyTrade ? roundingRateNumber(divOfTwoNumber(1, min_rate)) : roundingRateNumber(min_rate)
     const amount = isBuyTrade ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6) : formatNumber(src_amount, 6)
     const total = isBuyTrade ? formatNumber(src_amount, 6) : formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 6)
 
@@ -85,7 +79,7 @@ export default class OrderDetailsModal extends Component {
                   <div>{`${amount} ${base}`}</div>
                   <div>{`${total} ${quote}`} </div>
                   {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${order.receive} ${dest.toUpperCase()}`}</div>}
-                  <div>{`${converters.formatNumber(converters.multiplyOfTwoNumber(fee, src_amount), 5, '')} ${source.toUpperCase()}`}</div>
+                  <div>{`${formatNumber(multiplyOfTwoNumber(fee, src_amount), 5, '')} ${source.toUpperCase()}`}</div>
                   <div>{`${order.user_address.slice(0, 8)}...${order.user_address.slice(-4)}`}</div>
                   <div className="cell-action">
                     {status === LIMIT_ORDER_CONFIG.status.OPEN && <button className="btn-cancel-order theme__button-2" onClick={e =>this.confirmCancel()}>{this.props.translate("limit_order.cancel") || "Cancel"}</button>}

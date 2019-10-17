@@ -152,7 +152,7 @@ deploy:
     bucket: kyber-swap
     region: ap-southeast-1
     local_dir: dist
-    upload_dir: $TRAVIS_COMMIT
+    upload_dir: $TRAVIS_BRANCH
     skip_cleanup: true
     on:
       all_branches: true

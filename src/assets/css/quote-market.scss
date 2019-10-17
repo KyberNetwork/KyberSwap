@@ -173,14 +173,16 @@
   .table{
     margin-left: -5px;
     cursor: pointer;
-    .table__header{
+
+    .table__header {
       margin-right: 10px;
       .table__row span{
         display: inline-block;
         width: 100%;
       }
     }
-    .table__body{
+
+    .table__body {
       display: block;
       height: 300px;
       overflow-y: auto;
@@ -202,7 +204,12 @@
           transition-duration: 0.3s;
         }
       }
+
+      @include screen-max-width(medium) {
+        height: auto;
+      }
     }
+
     .table__row{
       display: flex;
       justify-content: space-between;
