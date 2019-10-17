@@ -697,7 +697,7 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 }
 
 
-export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell, destTokenSymbol = null) {
+export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell, destTokenSymbol) {
   var minAmount = toTWei(BLOCKCHAIN_INFO.min_accept_amount)
 
   var minETHAllow = new BigNumber(minAmount.toString())

@@ -49,7 +49,7 @@ export function* getSourceAmount(sourceTokenSymbol, sourceAmount, destTokenSymbo
     return sourceAmountHex
   }
   
-  export function getSourceAmountZero(sourceTokenSymbol, destTokenSymbol = null) {
+  export function getSourceAmountZero(sourceTokenSymbol, destTokenSymbol) {
     var state = store.getState()
     var tokens = state.tokens.tokens
     var sourceAmountHex = "0x0"
