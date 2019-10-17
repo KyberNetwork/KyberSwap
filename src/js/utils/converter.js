@@ -679,15 +679,14 @@ export function getMinrate(rate, minRate) {
 }
 
 
-export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell) {
+export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell, destTokenSymbol = null) {
   // console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
-  var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
+  var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell, destTokenSymbol))
 
   var sourceAmountBig = new BigNumber(sourceAmount.toString())
   sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
-
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1) {
     return "0x" + minSourceAllow.toString(16)
   } else {
@@ -698,7 +697,7 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 }
 
 
-export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
+export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell, destTokenSymbol = null) {
   var minAmount = toTWei(BLOCKCHAIN_INFO.min_accept_amount)
 
   var minETHAllow = new BigNumber(minAmount.toString())
@@ -709,11 +708,12 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
   var rate = new BigNumber(rateSell)
   if (rate.comparedTo(0) === 0) {
     var minNumber
-    if (sourceTokenSymbol !== "REN") {
+    if (sourceTokenSymbol !== "REN" && destTokenSymbol != "USDC" ) {
       minNumber = Math.pow(10, Math.round(decimal / 2))
     } else {
       minNumber = Math.pow(10, decimal)
     }
+
     return minNumber.toString()
   }
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10, decimal))

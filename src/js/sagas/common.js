@@ -34,7 +34,7 @@ export function* handleRequest(sendRequest, ...args) {
 
 
 
-export function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
+export function* getSourceAmount(sourceTokenSymbol, sourceAmount, destTokenSymbol = null) {
     var state = store.getState()
     var tokens = state.tokens.tokens
   
@@ -42,21 +42,21 @@ export function* getSourceAmount(sourceTokenSymbol, sourceAmount) {
     if (tokens[sourceTokenSymbol]) {
       var decimals = tokens[sourceTokenSymbol].decimals
       var rateSell = tokens[sourceTokenSymbol].rate
-      sourceAmountHex = converters.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
+      sourceAmountHex = converters.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell, destTokenSymbol)
     } else {
       sourceAmountHex = converters.stringToHex(sourceAmount, 18)
     }
     return sourceAmountHex
   }
   
-  export function getSourceAmountZero(sourceTokenSymbol) {
+  export function getSourceAmountZero(sourceTokenSymbol, destTokenSymbol = null) {
     var state = store.getState()
     var tokens = state.tokens.tokens
     var sourceAmountHex = "0x0"
     if (tokens[sourceTokenSymbol]) {
       var decimals = tokens[sourceTokenSymbol].decimals
       var rateSell = tokens[sourceTokenSymbol].rate
-      sourceAmountHex = converters.toHex(converters.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
+      sourceAmountHex = converters.toHex(converters.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell, destTokenSymbol))
     }
     return sourceAmountHex
   }
