@@ -10,7 +10,6 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
-import service from "../services/limit_order";
 
 function* selectToken(action) {
   const { sourceTokenSymbol, destTokenSymbol } = action.payload
@@ -50,9 +49,9 @@ function* updateRatePending(action) {
   var defaultRate = 0
   if(r == 0){
     if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-      defaultRate = converter.calculateRate(1 ,1)
+      defaultRate = converter.toTWei(1)
     }else{
-      defaultRate = yield call(service.getTokenPrice, sourceTokenSymbol)
+      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
     }
   }
 

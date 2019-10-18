@@ -22,9 +22,9 @@ function* updateRatePending(action) {
   var defaultRate = 0
   if(r == 0){
     if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-      defaultRate = converters.calculateRate(1 ,1)
+      defaultRate = converters.toTWei(1)
     }else{
-      defaultRate = yield call(limitOrderServices.getTokenPrice, sourceTokenSymbol)
+      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
     }
   }
 
