@@ -405,24 +405,19 @@ export default class BaseProvider {
 
         //tokens
         var arrayAmount = Object.keys(tokensObj).map((tokenSymbol) => {
-           var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0, "ETH")
+           var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0)
            var srcAmountEnableFistBit = converters.sumOfTwoNumber(minAmount,  mask)
            srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
            return srcAmountEnableFistBit
         });
 
         //eth 
-        // var minAmountEth = converters.getSourceAmountZero("ETH", 18, 0)
-        // var srcAmountETHEnableFistBit = converters.sumOfTwoNumber(minAmountEth,  mask)
-        // srcAmountETHEnableFistBit = converters.toHex(srcAmountETHEnableFistBit)
-        //
-        // var arrayQtyEth = Array(arrayTokenAddress.length).fill(srcAmountETHEnableFistBit)
+        var minAmountEth = converters.getSourceAmountZero("ETH", 18, 0)
+        var srcAmountETHEnableFistBit = converters.sumOfTwoNumber(minAmountEth,  mask)
+        srcAmountETHEnableFistBit = converters.toHex(srcAmountETHEnableFistBit)
 
-        var arrayQtyEth = Object.keys(tokensObj).map((tokenSymbol) => {
-            var minAmountEth = converters.getSourceAmountZero("ETH", 18, 0, tokenSymbol)
-            var srcAmountETHEnableFistBit = converters.sumOfTwoNumber(minAmountEth,  mask)
-            return converters.toHex(srcAmountETHEnableFistBit)
-        })
+        var arrayQtyEth = Array(arrayTokenAddress.length).fill(srcAmountETHEnableFistBit)
+
         var arrayQty = arrayAmount.concat(arrayQtyEth)
 
         // console.log("arrayQty")
