@@ -708,21 +708,11 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
   var rate = new BigNumber(rateSell)
   if (rate.comparedTo(0) === 0) {
     var minNumber
-    if (sourceTokenSymbol !== "REN" ) {
+    if (sourceTokenSymbol !== "REN") {
       minNumber = Math.pow(10, Math.round(decimal / 2))
     } else {
       minNumber = Math.pow(10, decimal)
     }
-
-    // if (sourceTokenSymbol == "REN"){
-    //   minNumber = Math.pow(10, decimal)
-    // }else if (sourceTokenSymbol == "WBTC"){
-    //   minNumber = Math.pow(10, decimal/2)
-    // }else if (sourceTokenSymbol !== "WBTC" && destTokenSymbol == "USDC"){
-    //   minNumber = Math.pow(10, decimal)
-    // }else {
-    //   minNumber = Math.pow(10, decimal/2)
-    // }
 
     return minNumber.toString()
   }

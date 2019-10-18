@@ -60,7 +60,7 @@ export default class LimitOrder extends React.Component {
     var isManual = false
 
     var ethereum = this.getEthereumInstance()
-    this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, null, 0));
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
 
   }
 

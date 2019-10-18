@@ -59,7 +59,6 @@ function* updateRatePending(action) {
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
   var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
-
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)

@@ -70,10 +70,10 @@ export default class Exchange extends React.Component {
         return;
       }
     }
-    var tokens = this.props.tokens
 
     if (this.props.exchange.inputFocus !== "source"){
       var destAmount = this.props.exchange.destAmount
+      var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
       var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
       
