@@ -2,6 +2,7 @@ import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
 import {isUserLogin} from "../../../utils/common"
+import * as converters from "../../../utils/converter";
 
 export default class CachedServerProvider extends React.Component {
   constructor(props) {
@@ -255,6 +256,27 @@ export default class CachedServerProvider extends React.Component {
           })
       })
     }
+  }
+
+  getTokenPrice(symbol){
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime,
+        fetch(BLOCKCHAIN_INFO.tracker + "/token_price?currency=ETH"))
+        .then(response => response.json())
+        .then((result) => {
+          for (var i = 0; i < result.data.length; i++){
+            if (result.data[i].symbol == symbol){
+              resolve(converters.toTWei(result.data[i].price))
+              return
+            }
+          }
+          resolve(0)
+        })
+        .catch((err) => {
+          console.log(err)
+          rejected(new Error(`Cannot get init token price: ${err.toString}`))
+        })
+    })
   }
 
   timeout(ms, promise) {

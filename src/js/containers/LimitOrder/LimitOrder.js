@@ -10,8 +10,8 @@ import limitOrderServices from "../../services/limit_order";
 import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
-import history from "../../history"
-// import { goToRoute } from "../../sagas/globalActions";
+import service from "../../services/limit_order"
+import * as converter from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -61,7 +61,7 @@ export default class LimitOrder extends React.Component {
 
     var ethereum = this.getEthereumInstance()
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
-    
+
   }
 
   fetchCurrentRateInit = () => {

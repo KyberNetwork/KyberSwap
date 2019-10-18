@@ -410,4 +410,3 @@ export function updateFavoritePairs(base, quote, to_fav){
     resolve("")
   })
 }
-

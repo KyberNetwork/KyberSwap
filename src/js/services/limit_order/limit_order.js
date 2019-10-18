@@ -1,6 +1,5 @@
 import { timeout, calcInterval, getFormattedDate, getCookie } from "../../utils/common"
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
-import BLOCKCHAIN_INFO from "../../../../env";
 
 const MAX_REQUEST_TIMEOUT = 3000
 

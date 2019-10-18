@@ -9,6 +9,7 @@ import constants from "../../services/constants"
 import { Market } from "../Market"
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
+import service from "../../services/limit_order"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -56,7 +57,8 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.checkKyberEnable(ethereum))
   }
 
-  fetchRateExchange = () => {    
+  fetchRateExchange = () => {
+
     var ethereum = this.getEthereumInstance()
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
     var sourceAmount = this.props.exchange.sourceAmount
@@ -67,7 +69,7 @@ export default class Exchange extends React.Component {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return;
       }
-    } 
+    }
 
     if (this.props.exchange.inputFocus !== "source"){
       var destAmount = this.props.exchange.destAmount
@@ -85,6 +87,7 @@ export default class Exchange extends React.Component {
     
     var isManual = this.state.isFirstTime ? true: false
     this.setState({isFirstTime: false})
+
     this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval));
   }
 

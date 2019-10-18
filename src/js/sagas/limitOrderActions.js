@@ -18,9 +18,18 @@ function* updateRatePending(action) {
   const translate = getTranslate(state.locale)
   const tokens = state.tokens.tokens;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
+  var r = tokens[sourceTokenSymbol].rate
+  var defaultRate = 0
+  if(r == 0){
+    if (["ETH", "WETH"].includes(sourceTokenSymbol)){
+      defaultRate = converters.toTWei(1)
+    }else{
+      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
+    }
+  }
 
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol)
+  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
+  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
   try {
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")

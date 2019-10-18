@@ -687,7 +687,6 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 
   var sourceAmountBig = new BigNumber(sourceAmount.toString())
   sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
-
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1) {
     return "0x" + minSourceAllow.toString(16)
   } else {
@@ -714,6 +713,7 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
     } else {
       minNumber = Math.pow(10, decimal)
     }
+
     return minNumber.toString()
   }
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10, decimal))
