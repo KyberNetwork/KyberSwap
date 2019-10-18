@@ -431,6 +431,7 @@ export function getTokenPrice(symbol){
                       resolve(converters.calculateRate(1 ,result.data[i].price ))
                   }
               }
+              resolve(0)
           })
           .catch((err) => {
               rejected(new Error(`Cannot get init token price: ${err.toString}`))
