@@ -414,7 +414,7 @@ export function updateFavoritePairs(base, quote, to_fav){
 }
 
 
-export function getTokenPrice(){
+export function getTokenPrice(symbol){
     return new Promise((resolve, rejected) => {
         timeout(MAX_REQUEST_TIMEOUT,
           fetch("https://api.kyber.network/token_price?currency=ETH", {
@@ -425,7 +425,13 @@ export function getTokenPrice(){
               },
           }))
           .then(response => response.json())
-          .then((result) => resolve(result.data))
+          .then((result) => {
+              for (var i = 0; i < result.data.length; i++){
+                  if (result.data[i].symbol == symbol){
+                      resolve(converters.calculateRate(1 ,result.data[i].price ))
+                  }
+              }
+          })
           .catch((err) => {
               rejected(new Error(`Cannot get init token price: ${err.toString}`))
           })

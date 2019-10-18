@@ -10,6 +10,7 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
+import service from "../services/limit_order";
 
 function* selectToken(action) {
   const { sourceTokenSymbol, destTokenSymbol } = action.payload
@@ -26,7 +27,7 @@ function* selectToken(action) {
 }
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type, defaultRate } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
 
 
   const state = store.getState();
@@ -44,13 +45,26 @@ function* updateRatePending(action) {
     }
   }
 
+
+  var r = tokens[sourceTokenSymbol].rate
+  var defaultRate = 0
+  if(r == 0){
+    if (["ETH", "WETH"].includes(sourceTokenSymbol)){
+      defaultRate = converter.calculateRate(1 ,1)
+    }else{
+      defaultRate = yield call(service.getTokenPrice, sourceTokenSymbol)
+    }
+  }
+
   var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
   var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
+
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
     var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
     var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
+
     var { expectedPrice, slippagePrice } = rate
 
     var percentChange = 0
@@ -66,8 +80,7 @@ function* updateRatePending(action) {
         expectedPrice = 0
         slippagePrice = 0
       }
-    }    
-
+    }
     if (expectedPrice == "0") {
       if (expectedRateInit == "0" || expectedRateInit == 0 || expectedRateInit === undefined || expectedRateInit === null) {
         yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.kyber_maintain")))

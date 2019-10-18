@@ -68,29 +68,7 @@ export default class LimitOrder extends React.Component {
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
     var sourceAmount = 0
     var ethereum = this.getEthereumInstance()
-    var tokens = this.props.tokens
-    var r = tokens[sourceTokenSymbol].rate
-
-    if(r == 0 || r == "0" || r == "" || r == null){
-      if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-        this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken, converter.calculateRate(1 ,1 )));
-      }else{
-        service
-          .getTokenPrice(sourceTokenSymbol)
-          .then((result) => {
-            for (var i = 0; i < result.length; i++){
-              if (result[i].symbol == sourceTokenSymbol){
-                console.log("Source price: ",result[i].price, converter.calculateRate(1, result[i].price ).toString())
-                this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken, converter.calculateRate(1 ,result[i].price )));
-                break;
-              }
-            }
-          })
-      }
-    }else{
-      this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken, 0));
-    }
-    // this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken, 0));
+    this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken));
   }
 
   fetchPendingBalance = () => {
@@ -106,7 +84,7 @@ export default class LimitOrder extends React.Component {
   }
 
   setInvervalProcess = () => {
-    // this.setInterValGroup(this.fetchCurrentRate, 10000)
+    this.setInterValGroup(this.fetchCurrentRate, 10000)
     this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
     this.setInterValGroup(this.fetchListOrders.bind(this), 10000)    
     this.setInterValGroup(this.fetchPendingBalance.bind(this), 10000)    

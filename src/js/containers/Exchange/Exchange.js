@@ -88,26 +88,7 @@ export default class Exchange extends React.Component {
     var isManual = this.state.isFirstTime ? true: false
     this.setState({isFirstTime: false})
 
-    var r = tokens[sourceTokenSymbol].rate
-    if(r == 0 || r == "0" || r == "" || r == null){
-      if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-        this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, converter.calculateRate(1 ,1 )));
-      }else{
-        service
-          .getTokenPrice(sourceTokenSymbol)
-          .then((result) => {
-            for (var i = 0; i < result.length; i++){
-              if (result[i].symbol == sourceTokenSymbol){
-                console.log("Source price: ",result[i].price, converter.calculateRate(1, result[i].price ).toString())
-                this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, converter.calculateRate(1, result[i].price )));
-                break;
-              }
-            }
-          })
-      }
-    }else {
-      this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, 0));
-    }
+    this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval));
   }
 
   fetchGasExchange = () =>{    

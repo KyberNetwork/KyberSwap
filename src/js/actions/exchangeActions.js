@@ -86,10 +86,10 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null, defaultRate) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null) {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type, defaultRate }
+    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type }
   }
 }
 
