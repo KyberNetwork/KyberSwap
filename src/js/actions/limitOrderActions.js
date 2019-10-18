@@ -39,10 +39,10 @@ export function setIsFetchingRate(isFetching) {
   }
 }
 
-export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, type = false) {
+export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, type = false, defaultRate) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_PENDING",
-    payload: {ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual , type}
+    payload: {ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual , type, defaultRate}
   }
 }
 

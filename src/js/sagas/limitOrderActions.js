@@ -12,15 +12,15 @@ import { multiplyOfTwoNumber } from "../utils/converter"
 import EthereumService from "../services/ethereum/ethereum";
 
 function* updateRatePending(action) {
-  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type } = action.payload;
+  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type, defaultRate } = action.payload;
 
   const state = store.getState();
   const translate = getTranslate(state.locale)
   const tokens = state.tokens.tokens;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
 
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, destTokenSymbol)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, destTokenSymbol)
+  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
+  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
   try {
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")

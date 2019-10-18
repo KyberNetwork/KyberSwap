@@ -9,6 +9,7 @@ import constants from "../../services/constants"
 import { Market } from "../Market"
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
+import service from "../../services/limit_order"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -56,7 +57,8 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.checkKyberEnable(ethereum))
   }
 
-  fetchRateExchange = () => {    
+  fetchRateExchange = () => {
+
     var ethereum = this.getEthereumInstance()
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
     var sourceAmount = this.props.exchange.sourceAmount
@@ -67,11 +69,11 @@ export default class Exchange extends React.Component {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
         return;
       }
-    } 
+    }
+    var tokens = this.props.tokens
 
     if (this.props.exchange.inputFocus !== "source"){
       var destAmount = this.props.exchange.destAmount
-      var tokens = this.props.tokens
       var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
       var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
       
@@ -85,7 +87,27 @@ export default class Exchange extends React.Component {
     
     var isManual = this.state.isFirstTime ? true: false
     this.setState({isFirstTime: false})
-    this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval));
+
+    var r = tokens[sourceTokenSymbol].rate
+    if(r == 0 || r == "0" || r == "" || r == null){
+      if (["ETH", "WETH"].includes(sourceTokenSymbol)){
+        this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, converter.calculateRate(1 ,1 )));
+      }else{
+        service
+          .getTokenPrice(sourceTokenSymbol)
+          .then((result) => {
+            for (var i = 0; i < result.length; i++){
+              if (result[i].symbol == sourceTokenSymbol){
+                console.log("Source price: ",result[i].price, converter.calculateRate(1, result[i].price ).toString())
+                this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, converter.calculateRate(1, result[i].price )));
+                break;
+              }
+            }
+          })
+      }
+    }else {
+      this.props.dispatch(exchangeActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.interval, 0));
+    }
   }
 
   fetchGasExchange = () =>{    

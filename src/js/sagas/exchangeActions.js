@@ -26,7 +26,7 @@ function* selectToken(action) {
 }
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type, defaultRate } = action.payload;
 
 
   const state = store.getState();
@@ -44,8 +44,8 @@ function* updateRatePending(action) {
     }
   }
 
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, destTokenSymbol)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, destTokenSymbol)
+  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
+  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
   try{
     var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
