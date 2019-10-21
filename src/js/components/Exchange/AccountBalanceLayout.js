@@ -9,6 +9,10 @@ const AccountBalanceLayout = (props) => {
     return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
       .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
   }
+  function archiveBalanceZero(tokens){
+    return tokens.filter(t =>  (converts.compareTwoNumber(t.balance, 0)))
+      .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
+  }
   function archiveUnsupported(tokens){
     return tokens.filter(t =>  t.sp_limit_order && props.priorityValid(t)).concat(tokens.filter(t =>  !(t.sp_limit_order && props.priorityValid(t)) ))
   }
@@ -64,6 +68,8 @@ const AccountBalanceLayout = (props) => {
     }
     if (props.isLimitOrderTab){
       res = archiveUnsupported(res)
+    }else {
+      res = archiveBalanceZero(res)
     }
     res = archiveMaintain(res)
     return res
