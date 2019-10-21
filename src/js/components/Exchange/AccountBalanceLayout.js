@@ -10,7 +10,7 @@ const AccountBalanceLayout = (props) => {
       .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
   }
   function archiveUnsupported(tokens){
-    return tokens.filter(t =>  t.sp_limit_order).concat(tokens.filter(t =>  !t.sp_limit_order))
+    return tokens.filter(t =>  t.sp_limit_order && props.priorityValid(t)).concat(tokens.filter(t =>  !(t.sp_limit_order && props.priorityValid(t)) ))
   }
   function reorderToken() {
     let tokens = props.tokens;
