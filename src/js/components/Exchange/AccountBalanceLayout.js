@@ -60,10 +60,21 @@ const AccountBalanceLayout = (props) => {
         // }
         break;
       case "Bal":
-        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))} )
+        res = Object.keys(tokens).map(key => tokens[key])
+          .sort((a, b) => {
+            return (props.sortValue ? -1 : 1) *
+                   (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
+          })
         break;
       case "USDT":
-        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD), converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)))} )
+        res = Object.keys(tokens).map(key => tokens[key])
+          .sort((a, b) => {
+            return (props.sortValue ? -1 : 1) *
+                   (converts.subOfTwoNumber(
+                     converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
+                     converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
+                   ))
+          })
         break;
     }
     if (props.isLimitOrderTab){
