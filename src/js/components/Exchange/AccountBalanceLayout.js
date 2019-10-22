@@ -60,10 +60,21 @@ const AccountBalanceLayout = (props) => {
         // }
         break;
       case "Bal":
-        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(a.balance, b.balance))} )
+        res = Object.keys(tokens).map(key => tokens[key])
+          .sort((a, b) => {
+            return (props.sortValue ? -1 : 1) *
+                   (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
+          })
         break;
       case "USDT":
-        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {return (props.sortValue ? -1 : 1)*(converts.subOfTwoNumber(converts.multiplyOfTwoNumber(a.balance, a.rateUSD), converts.multiplyOfTwoNumber(b.balance, b.rateUSD)))} )
+        res = Object.keys(tokens).map(key => tokens[key])
+          .sort((a, b) => {
+            return (props.sortValue ? -1 : 1) *
+                   (converts.subOfTwoNumber(
+                     converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
+                     converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
+                   ))
+          })
         break;
     }
     if (props.isLimitOrderTab){
@@ -170,12 +181,12 @@ const AccountBalanceLayout = (props) => {
                       {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
                     </a>
                     <span className="account-balance__reimport" onClick={props.openReImport}>
-                      {props.translate("import.change_address") || "CHANGE"}
+                      {props.translate("limit_order.change") || "CHANGE"}
                     </span>
                   </div>
                   {props.isLimitOrderTab && 
                     <div className="account-balance__address-text">
-                      {props.translate("limit_order.available_tokens") || "Tokens Available for Limit Order"}
+                      {props.translate("limit_order.your_available_balance") || "Tokens Available for Limit Order"}
                     </div>}
                 </div>
 
