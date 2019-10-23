@@ -248,3 +248,23 @@ export function calcInterval(selectedTimeFilter) {
 export function getNowTimeStamp() {
     return Math.round(new Date().getTime() / 1000);
 }
+let modalExcutors = []
+export function addModalExcutors(f){
+    if (modalExcutors.indexOf(f) == -1){
+        modalExcutors.push(f)
+    }
+}
+
+export function removeModalExcutors(f){
+    if (modalExcutors.indexOf(f) > -1){
+        modalExcutors.splice(index, 1);
+    }
+}
+
+export function clearModalExcutors(){
+    modalExcutors = []
+}
+
+export function getModalExcutors(){
+    return modalExcutors
+}
