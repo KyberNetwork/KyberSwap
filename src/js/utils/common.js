@@ -256,7 +256,8 @@ export function addModalExcutors(f){
 }
 
 export function removeModalExcutors(f){
-    if (modalExcutors.indexOf(f) > -1){
+    const index = modalExcutors.indexOf(f)
+    if (index > -1){
         modalExcutors.splice(index, 1);
     }
 }
