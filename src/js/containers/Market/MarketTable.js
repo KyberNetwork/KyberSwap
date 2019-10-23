@@ -33,7 +33,7 @@ import * as converters from "../../utils/converter"
 
 export default class MarketTable extends React.Component {
   addClassChange = (input, buyPrice, sellPrice) => {
-    if (buyPrice === "0" && sellPrice === "0" && input === "0") {
+    if (input === -999 || (buyPrice === "0" && sellPrice === "0" && input === "0")) {
       return (
         <span>---</span>
       )
@@ -41,19 +41,19 @@ export default class MarketTable extends React.Component {
 
     if (input < 0) {
       return (
-        <span className = "negative">{input}%</span>
+        <span className="negative">{input}%</span>
       )
     }
 
-    if (input === "0") {
+    if (input == 0) {
       return (
-        <span>{input}%</span>
+        <span>0%</span>
       )
     }
 
     if (input > 0) {
       return (
-        <span className = "positive">{input}%</span>
+        <span className="positive">{input}%</span>
       )
     }
 
@@ -144,14 +144,14 @@ export default class MarketTable extends React.Component {
     } else if (sortKey) {
       listTokens.sort(this.compareNum(sortKey))
     }
-    
+
     var sortedTokens = []
     listTokens.forEach((value) => {
       const symbol = value.pair.split("_")[1];
       if (!symbol.toLowerCase().includes(searchWord.toLowerCase())) return;
       sortedTokens.push(value)
     })
-    
+
     if (sortType === '-sort-desc') {
       sortedTokens.reverse()
     }
