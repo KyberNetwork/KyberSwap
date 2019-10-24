@@ -4,204 +4,83 @@ import ReactTable from 'react-table'
 import { getTranslate } from 'react-localize-redux'
 import * as actions from "../../actions/marketActions"
 import * as converters from "../../utils/converter"
-import {Line} from 'react-chartjs-2';
-import { getAssetUrl } from "../../utils/common";
-import { MarketMobile } from "../Market"
 
 @connect((store, props) => {
-  var data = props.data
   var listTokens = props.listTokens
   var currency = props.currency
-  var tokens = props.tokens
-  var page = props.page
-  var firstPageSize = props.firstPageSize
   var sortType = props.sortType
-
-  var numScroll = store.market.configs.numScroll
-
-  var isRussia = false
-  isRussia = store.locale.languages[0] && store.locale.languages[0].active && store.locale.languages[0].code === "ru"
+  const isRussia = store.locale.languages[0] && store.locale.languages[0].active && store.locale.languages[0].code === "ru"
 
   return {
     translate: getTranslate(store.locale),
     currency,
+    quoteTokenSymbol: store.market.configs.currency.focus,
     sort: store.market.configs.sort.focus,
     displayColumn: store.market.configs.column.display.active,
     showActive: store.market.configs.column.shows.active,
     listShowColumn: store.market.configs.column.shows.listItem,
-    data: data,
-    tokens: tokens,
     isLoading: store.market.configs.isLoading,
     listTokens: listTokens,
-    numScroll: numScroll,
-    page: page,
-    firstPageSize: firstPageSize,
     sortType: sortType,
-    manageColumn: props.manageColumn,
     searchWordLayout: props.searchWordLayout,
     currencyLayout: props.currencyLayout,
     isRussia: isRussia,
     isOnMobile: store.global.isOnMobile,
     global: store.global,
+    tokens: store.tokens.tokens
   }
 })
 
 export default class MarketTable extends React.Component {
-
-  getMoreData = () => {
-    this.props.dispatch(actions.getMoreData(this.props.listTokens))
-  }
-
-  handleScroll = () => {
-    if (this.props.listTokens.length > this.props.firstPageSize && !this.props.isLoading && this.props.page - 1 < this.props.numScroll) {
-      var marketModal = document.getElementsByClassName("market-modal-scroll")
-      if (!!marketModal[0]) {
-        var marketScroll = marketModal[0]
-        var market = document.getElementById("market-eth")
-        if ( (window.innerHeight + marketScroll.scrollTop) >= market.offsetHeight) {
-          this.getMoreData()
-        }
-      }
-    }
-  }
-
-  componentDidMount() {
-    if (typeof(document) === "undefined" || typeof(window) === "undefined") return
-    var marketModal = document.getElementsByClassName("market-modal-scroll")
-    var marketElem
-    if(!!marketModal[0]) {
-      marketElem = marketModal[0]
-      marketElem.addEventListener("scroll", this.handleScroll)
-    }   
-  }
-
-  drawChart = (props) => {
-    var lineColor = "#007BDE"
-    var backgroundColor = "#D8E9FA"
-    var point = []
-    var labels = []
-    var input = props.value ? props.value : props.last_7d
-
-    if (Array.isArray(input)) {
-      var maxValue
-      if (input.length > 0) {
-        var maxValue = input[0]
-        input.map((item, index) => {
-          labels.push(index)
-          if (item > maxValue) {
-            maxValue = item
-          }
-        })
-        if (maxValue !== 0) {
-          point = input
-        }
-      }
-
-      var yOption = {
-        display: false,
-        gridLines: {
-          display:false
-        },
-        ticks: {
-          max: maxValue * 1.1
-        }
-      }
-
-      var data = {
-        labels: labels,
-        datasets: [{
-          data: point,
-          backgroundColor: backgroundColor,
-          fill: true,
-          borderColor: lineColor,
-          borderWidth: 1.2
-        }]
-      }
-    } else {
-      return (
-        <div></div>
-      )
-    }
-
-    var options = {
-      elements: {
-        point: {
-          radius: 0
-        }
-      },
-      legend: {
-        display: false
-      },
-      scales: { 
-        xAxes: [{ 
-          display: false,
-          gridLines: {
-            display:false
-          }
-        }],
-        yAxes: [yOption]
-      },
-      tooltips: {
-        enabled: false
-      },
-      hover: {
-        mode: null
-      }
-    } 
-    return (
-      <Line 
-        width={200}
-        height={70}
-        data={data}
-        options={options}
-        hideXAxis = {true}
-        hideYAxis = {true}
-        hidePoints = {true}
-  		/>
-    )
-  }
-  addClassChange = (input) => {
-    if (input === -9999){
+  addClassChange = (input, buyPrice, sellPrice) => {
+    if (buyPrice === "0" && sellPrice === "0" && input === "0") {
       return (
         <span>---</span>
       )
     }
+
     if (input < 0) {
       return (
-        <span className = "negative">{input} %</span>
+        <span className = "negative">{input}%</span>
       )
     }
-    if (input === 0){
+
+    if (input === "0") {
       return (
-        <span>{input} %</span>
+        <span>{input}%</span>
       )
     }
-    if (input > 0){
+
+    if (input > 0) {
       return (
-        <span className = "positive">{input} %</span>
+        <span className = "positive">{input}%</span>
       )
-    }     
-  }
+    }
+
+    return <span>---</span>;
+  };
+
   formatNumber = (number, groupSeparator = '') => {
     if (number > 1000) {
-      return converters.formatNumber(number, 0, groupSeparator)
+      return converters.formatNumber(number, 3, groupSeparator)
     }
-    return number
-  }
+
+    return converters.formatNumber(number, 6, groupSeparator)
+  };
 
   addUnit = (input, currency, groupSeparator = '') => {
     return (
       <div className="symbol-price">
-        <span className="value">{input === 0 ? "---" : this.formatNumber(input, groupSeparator)}</span>
-        <span className="unit">{input === 0 ? '' : currency}</span>
+        <span className="value">{input === "0" ? "---" : this.formatNumber(input, groupSeparator)}</span>
+        <span className="unit">{input === "0" ? '' : currency}</span>
       </div>
     )
-  }
+  };
 
   getTranslateFromKey = (key) => {
     switch (key) {
-      case "market": {
-        return "market.market"
+      case "pair": {
+        return "limit_order.pair"
       }
       case "sell_price": {
         return "market.sell_price"
@@ -209,20 +88,8 @@ export default class MarketTable extends React.Component {
       case "buy_price": {
         return "market.buy_price"
       }
-      case "last_7d": {
-        return "market.last_7d"
-      }
       case "change": {
         return "market.change"
-      }
-      case "circulating_supply": {
-        return "market.circulating_supply"
-      }
-      case "total_supply": {
-        return "market.total_supply"
-      }
-      case "market_cap": {
-        return "market.market_cap"
       }
       case "volume": {
         return "market.volume"
@@ -233,88 +100,60 @@ export default class MarketTable extends React.Component {
   getSortHeader = (title, key) => {
     return (
       <div className="rt-th-img">
-        <img src={require("../../../assets/img/landing/sort.svg")} />{this.props.translate(this.getTranslateFromKey(key)) || title}
-      </div>
-    )
-  }
-
-  handleSortHeader = () => {
-    this.getSortArray('market', this.getSortType('market'))
-    this.updateSortState('market', this.getSortType('market'))
-  }
-
-  getSortHeaderMarket = (title, key) => {
-    return (
-      <div>
-        <div className="for-desktop-only rt-th-first-header">
-          {/* <div className='rt-th-header-title' onClick = {this.handleSortHeader}>
-            {this.props.translate("market.eth_market") || "Ethereum market"}
-          </div> */}
-          <div className="rt-th-control">
-            {/* {this.props.searchWordLayout} */}
-            {this.props.currencyLayout}
-          </div>
-        </div>
-        <div className={"for-mobile-only " +  this.props.sortType['market'] + ' -cursor-pointer'} onClick = {this.handleSortHeader}>
-          <div className="rt-th-img">
-          <img src={require("../../../assets/img/landing/sort.svg")} /> {this.props.translate(this.getTranslateFromKey(key)) || title}
-          </div>
-        </div>
+        <img src={require("../../../assets/img/landing/sort.svg")} />
+        <span>{this.props.translate(this.getTranslateFromKey(key)) || title}</span>
       </div>
     )
   }
 
   addIcon = (input) => {
-    var tokenPair = input.split(" / ")
-    var key = tokenPair[0]
+    const pair = input.split('_');
+
     return (
       <div className="token-pair">
-        <img alt={this.props.tokens[key].info.name} src={getAssetUrl(`tokens/${this.props.tokens[key].info.symbol}.svg`)} />
-        {input}
-        {this.props.tokens[key].info.isNew ? <div className="new-token">{this.props.translate("market.new_token" || "NEW")}</div>:""}
+        {pair[1]}/{pair[0]}
       </div>
     )
   }
 
-  compareString(currency) {
-    return function(tokenA, tokenB) {
-      var marketA = tokenA + currency
-      var marketB = tokenB + currency
-      if (marketA < marketB)
+  compareString() {
+    return function (tokenA, tokenB) {
+      const tokenASymbol = tokenA.pair.split("_")[1];
+      const tokenBSymbol = tokenB.pair.split("_")[1];
+
+      if (tokenASymbol < tokenBSymbol)
         return -1;
-      if (marketA > marketB)
+      if (tokenASymbol > tokenBSymbol)
         return 1;
       return 0;
     }
   }
 
-  compareNum(originalTokens, currency, sortKey) {
+  compareNum(sortKey) {
     return function(tokenA, tokenB) {
-      return originalTokens[tokenA][currency][sortKey] - originalTokens[tokenB][currency][sortKey]
+      return tokenA[sortKey] - tokenB[sortKey]
     }
   }
 
   getSortArray = (sortKey, sortType) => {
     var listTokens = this.props.listTokens
     var searchWord = this.props.searchWord
-    if (sortKey === 'market') {
-      listTokens.sort(this.compareString(this.props.currency))
-    } else if (sortKey != '') {
-       listTokens.sort(this.compareNum(this.props.originalTokens, this.props.currency, sortKey))
+
+    if (sortKey === 'pair') {
+      listTokens.sort(this.compareString())
+    } else if (sortKey) {
+      listTokens.sort(this.compareNum(sortKey))
     }
     
     var sortedTokens = []
-    listTokens.forEach((key) => {
-      if (key === 'ETH') return
-      if ((key !== "") && !key.toLowerCase().includes(searchWord.toLowerCase())) return
-      sortedTokens.push(key)
+    listTokens.forEach((value) => {
+      const symbol = value.pair.split("_")[1];
+      if (!symbol.toLowerCase().includes(searchWord.toLowerCase())) return;
+      sortedTokens.push(value)
     })
     
     if (sortType === '-sort-desc') {
       sortedTokens.reverse()
-      this.props.dispatch(actions.updateSortedTokens(sortedTokens))
-    } else if (sortType === '-sort-asc') {
-      this.props.dispatch(actions.updateSortedTokens(sortedTokens))
     }
   }
 
@@ -326,7 +165,7 @@ export default class MarketTable extends React.Component {
   getSortType = (key) => {
     var sortType = this.props.sortType
     var newSortType = ''
-    if (key !== 'market') {
+    if (key !== 'pair') {
       if ((sortType[key] && sortType[key] === '-sort-asc') || !sortType[key]) {
         newSortType = '-sort-desc'
       } else {
@@ -348,114 +187,67 @@ export default class MarketTable extends React.Component {
   }
 
   getColumn = () => {
-    var columns = [{
-      Header: this.getSortHeaderMarket("Market", "market"),
-      accessor: 'market', // String-based value accessors!
-      Cell: props => this.addIcon(props.value),
-      minWidth: 160
-      //sortable: false,
-      // getHeaderProps: () => {
-      //   return {
-      //     className: this.props.sortType['market'] ?  (this.props.sortType['market'] + ' -cursor-pointer') :'-cursor-pointer',
-      //     onClick: (e) => {
-      //       this.getSortArray('market', this.getSortType('market'))
-      //       this.updateSortState('market', this.getSortType('market'))
-      //     }
-      //   }
-      // }
-    }, {
-      Header: this.getSortHeader("Sell Price", "sell_price"),
-      accessor: 'sellPrice',
-      Cell: props => this.addUnit(props.value, this.props.currency),
-      minWidth: 150,
-      getHeaderProps: () => {
-        return {
-          className: this.props.sortType["sellPrice"] ?  (this.props.sortType["sellPrice"] + ' -cursor-pointer') :'-cursor-pointer',
-          onClick: (e) => {
-            this.getSortArray("sellPrice", this.getSortType("sellPrice"))
-            this.updateSortState("sellPrice", this.getSortType("sellPrice"))
+    const columns = [
+      {
+        Header: this.getSortHeader("Pair", "pair"),
+        accessor: 'pair',
+        Cell: props => this.addIcon(props.value),
+        minWidth: 160,
+        getHeaderProps: () => {
+          return {
+            className: this.props.sortType["pair"] ?  (this.props.sortType["pair"] + ' -cursor-pointer') :'-cursor-pointer',
+            onClick: () => {
+              this.getSortArray("pair", this.getSortType("pair"))
+              this.updateSortState("pair", this.getSortType("pair"))
+            }
+          }
+        }
+      },
+      {
+        Header: this.getSortHeader("Sell Price", "sell_price"),
+        accessor: 'sell_price',
+        Cell: props => this.addUnit(props.value, this.props.currency),
+        minWidth: 150,
+        getHeaderProps: () => {
+          return {
+            className: this.props.sortType["sell_price"] ?  (this.props.sortType["sell_price"] + ' -cursor-pointer') :'-cursor-pointer',
+            onClick: (e) => {
+              this.getSortArray("sell_price", this.getSortType("sell_price"))
+              this.updateSortState("sell_price", this.getSortType("sell_price"))
+            }
+          }
+        }
+      },
+      {
+        Header: this.getSortHeader("Buy Price", "buy_price"),
+        accessor: 'buy_price',
+        Cell: props => this.addUnit(props.value, this.props.currency),
+        minWidth: 150,
+        getHeaderProps: () => {
+          return {
+            className: this.props.sortType["buy_price"] ?  (this.props.sortType["buy_price"] + ' -cursor-pointer') :'-cursor-pointer',
+            onClick: (e) => {
+              this.getSortArray("buy_price", this.getSortType("buy_price"))
+              this.updateSortState("buy_price", this.getSortType("buy_price"))
+            }
           }
         }
       }
-    }, {
-      Header: this.getSortHeader("Buy Price", "buy_price"), // Required because our accessor is not a string
-      accessor: 'buyPrice',
-      Cell: props => this.addUnit(props.value, this.props.currency),
-      minWidth: 150,
-      getHeaderProps: () => {
-        return {
-          className: this.props.sortType["buyPrice"] ?  (this.props.sortType["buyPrice"] + ' -cursor-pointer') :'-cursor-pointer',
-          onClick: (e) => {
-            this.getSortArray("buyPrice", this.getSortType("buyPrice"))
-            this.updateSortState("buyPrice", this.getSortType("buyPrice"))
-          }
-        }
-      }
-    }]
+    ];
 
     Object.keys(this.props.listShowColumn).map((key, i) => {
       var item = this.props.listShowColumn[key]
       var index = this.props.showActive.indexOf(key)
       if (index !== -1) {
         switch (item.type){
-          case "chart":{
-            if (this.props.currency != "USD") {
-              columns.push({
-                Header: this.props.translate(this.getTranslateFromKey(key)) || item.title,
-                accessor: key,
-                Cell: props => this.drawChart(props),
-                sortable: false,
-                maxWidth: 200,
-                minWidth: 150,
-                height: 70
-              })            
-            }
-            break
-          }
           default: {
             switch (key) {
               case "change": {
                 columns.push({
                   Header: this.getSortHeader(item.title, key),
                   accessor: key,
-                  Cell: props => this.addClassChange(props.value),
+                  Cell: props => this.addClassChange(props.value, props.row.buy_price, props.row.sell_price),
                   minWidth: 180,
-                  getHeaderProps: () => {
-                    return {
-                      className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
-                      onClick: (e) => {
-                        this.getSortArray(key, this.getSortType(key))
-                        this.updateSortState(key, this.getSortType(key))
-                      }
-                    }
-                  }
-                })
-                break
-              }
-              case "circulating_supply":{
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  Cell: props => this.formatNumber(props.value),
-                  minWidth: 200
-                })
-                break
-              }
-              case "total_supply":{
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  Cell: props => this.formatNumber(props.value),
-                  minWidth: 150
-                })
-                break
-              }
-              case "market_cap":{
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  Cell: props => this.addUnit(props.value, this.props.currency, ','),
-                  minWidth: this.props.isRussia ? 200 : 150,
                   getHeaderProps: () => {
                     return {
                       className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
@@ -486,22 +278,6 @@ export default class MarketTable extends React.Component {
                 })
                 break
               }
-              case "circulating_supply": {
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  minWidth: 200
-                })
-                break
-              }
-              default: {
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  minWidth: this.props.isRussia ? 175 : 150,
-                })
-                break
-              }
             }
             break
           }
@@ -511,72 +287,57 @@ export default class MarketTable extends React.Component {
     return columns
   }
 
+  onPairClicked = (rowInfo) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    const pairs = rowInfo.original.pair.split("_");
+    const srcSymbol = pairs[1];
+    const quoteSymbol = pairs[0];
+
+    if (this.props.screen === 'swap') {
+      this.props.setTokens(srcSymbol, quoteSymbol);
+    } else if (this.props.screen === 'transfer') {
+      this.props.setTokens(srcSymbol, this.props.tokens[srcSymbol].address, 'chart');
+    }
+
+    this.props.closeMarketModal();
+    this.props.global.analytics.callTrack("tokenForCharting", srcSymbol);
+  };
+
   render() {
     const columns = this.getColumn()
 
     return (
       <div className="market-wrapper">
+        {this.props.currencyLayout}
         <div className="market-control">
-          <div>
-            <div className="for-mobile-only">
-              {this.props.translate("market.eth_market") || "Ethereum market"}
-            </div>
-            {!this.props.isOnMobile && 
-              <div>              
-                <div className="market__header-right">        
-                  {this.props.manageColumn}
-                </div>
-              </div>
-            } 
-            
-          </div>
-
-          {/* {!this.props.isOnMobile && <div className="for-mobile-only">
-            {this.props.currencyLayout}
-          </div>} */}
           {this.props.searchWordLayout}
         </div>
-        {this.props.isOnMobile ? 
-          <MarketMobile 
-            data={this.props.data}
-            sortType={this.props.sortType}
-            makeSort={this.makeSort}
-            handle24hChange={this.addClassChange}
-            drawChart={this.drawChart}
-          /> :
-          <ReactTable
-            data={this.props.data}
-            columns={columns}
-            showPagination = {false}
-            pageSize = {this.props.data.length}
-            minRows = {1}
-            getTrProps={(state, rowInfo) => {
-              return {
-                onClick: (e) => {
-                  var symbol = rowInfo.original.info.symbol
-                  this.props.dispatch(actions.showTradingViewChart(symbol))
-                  this.props.global.analytics.callTrack("tokenForCharting", symbol);
-                }
-              }
-            }
-            }
-            getPaginationProps={() => {
-              return {
-                previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
-                nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
-              }
-            }
-            }
-            getNoDataProps={(state, rowInfo) => {
-              if(this.props.data.length==0) return { style: { border: 'none' ,top:'75%',padding:'0px', backgroundColor:'transparent'} };
-              return {};
-              }
-            }
-            sortable={false}
-          />
-        }
+        <ReactTable
+          data={this.props.listTokens}
+          columns={columns}
+          showPagination = {false}
+          minRows = {0}
+          defaultPageSize={this.props.listTokens.length}
+          getTrProps={(state, rowInfo) => {
+            return { onClick: () => this.onPairClicked(rowInfo) }
+          }}
+          // getPaginationProps={() => {
+          //   return {
+          //     previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
+          //     nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
+          //   }
+          // }}
+          getNoDataProps={(state, rowInfo) => {
+            if(!this.props.listTokens.length) return { style: { border: 'none' ,top:'75%',padding:'0px', backgroundColor:'transparent'} };
+            return {};
+          }}
+          sortable={false}
+        />
       </div>
-      
     )
   }
 }

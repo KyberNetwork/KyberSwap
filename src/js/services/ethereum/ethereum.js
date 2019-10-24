@@ -1,24 +1,13 @@
-
 import React from 'react';
-// import HttpEthereumProvider from "./httpProvider"
-// import WebsocketEthereumProvider from "./wsProvider"
-import constants from "../constants"
-
 import {
-  updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
+  updateBlock, updateRate, updateAllRate, updateAllRateUSD,
   checkConnection, setGasPrice, setMaxGasPrice
 } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
-import { updateRateExchange, estimateGasNormal, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
-import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
-
+import { updateRateExchange, analyzeError, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import * as marketActions from "../../actions/marketActions"
-
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
-import { setConnection } from "../../actions/connectionActions"
-import { stringToHex, calculateMinAmount, compareTwoNumber } from "../../utils/converter"
-
 import * as providers from "./nodeProviders"
 
 export default class EthereumService extends React.Component {
@@ -68,35 +57,25 @@ export default class EthereumService extends React.Component {
   }
 
   fetchData_10s() {
-
     this.fetchAccountData()
     this.fetchTokenBalance()
-
-
     this.checkConnection()
-    this.fetchRateData()  
-
-
-    this.fetGeneralInfoTokens()
-
-    //  this.testAnalize()
+    this.fetchRateData()
+    this.fetchMarketData()
   }
 
-
   fetchData_5Min(){
-    this.fetchVolumn()
     this.fetchRateUSD()
   }
 
-  testAnalize() {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
-  }
+  // testAnalize() {
+  //   var state = store.getState()
+  //   var ethereum = state.connection.ethereum
+  //   store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
+  // }
 
-  
-  fetchVolumn () {
-    store.dispatch(marketActions.getVolumn())
+  fetchMarketData () {
+    store.dispatch(marketActions.fetchMarketData())
   }
   
   fetchRateData() {
@@ -141,56 +120,6 @@ export default class EthereumService extends React.Component {
   fetchGasprice = () => {
     store.dispatch(setGasPrice())
   }
-
-  // fetchRateExchange = (isManual = false) => {
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-  //   var source = state.exchange.sourceToken
-  //   var dest = state.exchange.destToken
-    
-  //   var sourceAmount = state.exchange.sourceAmount
-  //   var sourceTokenSymbol = state.exchange.sourceTokenSymbol
-    
-  //   let refetchSourceAmount = false;
-    
-  //   if (sourceTokenSymbol === "ETH") {
-  //     if (compareTwoNumber(sourceAmount, constants.ETH.MAX_AMOUNT) === 1) {
-  //       store.dispatch(throwErrorHandleAmount());
-  //       return;
-  //     }
-  //   } 
-
-  //   //check input focus
-  //   if (state.exchange.inputFocus !== "source"){
-  //     //calculate source amount by dest amount
-  //     var destAmount = state.exchange.destAmount
-  //     var destTokenSymbol = state.exchange.destTokenSymbol    
-  //     // relative source amount 
-  //     var tokens = state.tokens.tokens
-  //     var rateSourceEth = sourceTokenSymbol === "ETH" ? 1: tokens[sourceTokenSymbol].rate / Math.pow(10,18)
-  //     var rateEthDest = destTokenSymbol === "ETH" ? 1: tokens[destTokenSymbol].rateEth / Math.pow(10,18)
-      
-  //     if (rateSourceEth != 0 && rateEthDest != 0){
-  //       sourceAmount = destAmount / (rateSourceEth * rateEthDest)
-  //     }else{
-  //       sourceAmount = 0
-  //     }
-  //     refetchSourceAmount = true;
-  //   }    
-    
-
-  //   store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual, refetchSourceAmount));
-  // }
-
-
-  fetMarketData = () => {
-    store.dispatch(marketActions.getMarketData())
-  }
-
-  fetGeneralInfoTokens() {
-    store.dispatch(marketActions.getGeneralInfoTokens())
-  }
-
 
   checkConnection = () => {
     var state = store.getState()
@@ -301,7 +230,6 @@ export default class EthereumService extends React.Component {
           }
         })
       })
-      //this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
     })
   }
 

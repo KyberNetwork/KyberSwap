@@ -1,0 +1,89 @@
+.common {
+  &__mr-5 {
+    margin-right: 5px;
+  }
+
+  &__mr-15 {
+    margin-right: 15px;
+  }
+
+  &__uppercase {
+    text-transform: uppercase;
+  }
+
+  &__capitalize {
+    text-transform: capitalize;
+  }
+
+  &__flexbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__balance {
+    display: flex;
+    justify-content: flex-end;
+
+    &-item {
+      width: 50px;
+      height: 36px;
+      padding: 5px;
+      margin-right: 5px;
+      font-size: 12px;
+      font-weight: 400;
+      border-radius: 3px;
+      border: solid 1px;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid black;
+    transition: all .3s;
+
+    &.up {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__slide-up {
+    animation: slideUp .3s forwards;
+  }
+
+  &__circle-loading {
+    width: 18px;
+    height: 18px;
+    background-image: url($image-path + 'common/circle-loading.svg');
+    background-size: contain;
+  }
+
+  &__hidden {
+    display: none;
+  }
+
+  &__text-green {
+    color: $text-green;
+  }
+
+  &__text-red {
+    color: $alert-color;
+  }
+}
+
+.text-center {
+  text-align: center;
+}

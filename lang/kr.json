@@ -138,7 +138,8 @@
     "limit_order": "리밋 오더",
     "rate_label":"율",
     "market_rate": "시장비율",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "에서 확인"
   },
   "modal": {
     "enter_password": "비밀번호 입력",
@@ -177,7 +178,11 @@
     "order_confirm": "주문 확인",
     "success": "성공",
     "keystore_title": "키 저장소 잠금해제를 위해 비밀번호를 입력하세요.",
-    "unlock": "잠금해제"
+    "unlock": "잠금해제",
+    "yes": "예",
+    "no": "아니오",
+    "buy": "구매하기",
+    "sell": "판매하기"
   },
   "error": {
     "metamask_not_installed": "메타마스크가 설치되지 않았습니다",
@@ -228,7 +233,7 @@
     "issue_ether_amount": "전송하실 이더리움 수치를 정확히 넣어 주셔야 합니다.",
     "issue_user_cap": "입력하신 토큰 금액이 사용자 총 한도를 넘었습니다.",
     "min_rate_too_high": "입력하신 최저 가격이 너무 높습니다.",
-    "ledger_global_err": "<div class='text-left'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>-\n귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서\n이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서\n\"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Ledger에 연결할 수 없습니다. 다음 사항을 확인하십시오:<br/>-\n귀하의 Ledger이 올바르게 연결되어 있습니다.<br/>- 귀하는 귀하의 Ledger에 로그인하셨습니다.<br/>- 귀하의 Ledger에서\n이더리움 신청서를 시작했습니다.<br/>- 귀하의 Ledger에서 \"브라우저 지원\"이 활성화되었습니다. <a href=\"${link}\" target=\"_blank\">여기</a>에서\n\"브라우저 지원\"을 사용하는 법을 배우십시오.</div>",
     "need_to_config_env_ledger": "Ledger에 액세스하려면 Linux 디바이스를 구성해야합니다. <a href=\"${link}\"\ntarget=\"_blank\">여기</a>.",
     "ledger_not_enable_contract": "다음 사항을 확인하십시오: </br>- 귀하의 Ledger에서 \"계약 데이터\"가 활성화되었습니다.",
     "invalid_path_or_session_expired": "이 경로에서 주소를 가져올 수 없습니다. 경로가 유효한지 또는 Ledger가 연결되어\n있는지 확인하십시오.",
@@ -250,10 +255,9 @@
     "required_field": "해당 칸 입력은 필수입니다.",
     "source_dest_token": "공급 토큰은 대상 토큰과 달라야 합니다.",
     "amount_too_small": "금액이 너무 적습니다. 리밋 오더는최소 ${minAmount}이더 상당의 금액만 지원합니다",
-    "amount_too_big": "금액이 너무 큽니다. 리밋 오더는 최대 ${maxAmount}이더 상당의 금액만 지원합니다",
     "rate_is_not_number": "트리거 비율은 숫자가 아닙니다",
     "rate_too_high": "트리거 배율이 너무 높습니다. 현재 배율보다 ${maxRate}%까지만 높게 설정할 수 있습니다.",
-    "rate_too_low": "트리거 배율이 너무 낮습니다. 배율을 올려주세요.",
+    "rate_too_low": "작동을 위한 비율이 너무 낮습니다. 현재 비율보다 ${minRate}% 만큼 낮게만 설정할 수 있습니다.",
     "insufficient_balance_order": "주문을 위한 잔액이 부족합니다. KNC 잔액과 대기 중인 주문을 확인해주세요",
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
@@ -399,7 +403,7 @@
     "eth_not_support": "ETH* 는 편의상 ETH와 WETH의 합을 뜻합니다.",
     "canceling_order_message": "이 거래를 취소합니다.",
     "fee_info_message": "걱정 마세요. \n 거래가 실행 된 경우에만 수수료를 지불합니다. (브로드 캐스트 및 채굴)",
-    "confirm_order_message": "${srcToken}/${destToken} (를 ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span> 인 경우에만 거래가 체결됩니다",
+    "confirm_order_message": "가격이 ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote} 일때 해당 거래가 전송됩니다.",
     "fee": "수수료",
     "change_rate": "변동률",
     "current_rate": "현재 가격",
@@ -428,7 +432,18 @@
     "order_history": "오더 내역",
     "actual_receive_amount": "실제로 받는 토큰의 양:",
     "estimated_amount": "예상 토큰의 양:",
-    "extra_amount": "추가로 받은 토큰의 양:"
+    "extra_amount": "추가로 받은 토큰의 양:",
+    "price": "가격",
+    "amount": "금액",
+    "total": "추정 가치",
+    "volume": "볼륨",
+    "change": "변동",
+    "buy": "${symbol} 구매",
+    "sell": "${symbol} 판매",
+    "type": "유형",
+    "available_balance": "사용 가능한 잔액",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "받았습니다"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -450,5 +465,8 @@
   "done": "완료",
   "error_text": "오류",
   "extra": "추가",
-  "off": "할인"
+  "off": "할인",
+  "learn_more": "더 알아보기",
+  "received": "받았습니다",
+  "details": "자세히보기"
 }

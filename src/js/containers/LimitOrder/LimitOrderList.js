@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
-import CancelOrderModal from "./LimitOrderModals/CancelOrderModal";
-
+import OrderDetailsModal from "./LimitOrderModals/OrderDetailsModal";
 import * as limitOrderActions from "../../actions/limitOrderActions";
-
 import LimitOrderTable from "./LimitOrderTable";
 
 @connect((store, props) => {
@@ -25,69 +23,36 @@ export default class LimitOrderList extends React.Component {
         { interval: 3, unit: 'month'}
       ],
       cancelOrderModalVisible: false,
-      currentOrder: null
+      currentOrder: null,
+      orderDetailsModalVisible: false
     };
   }
 
-  openCancelOrderModal = (order) => {
-    this.props.global.analytics.callTrack("trackClickCancelOrder", order.id);
+  openOrderDetailsModal = (order) => {
     const currentOrder = JSON.parse(JSON.stringify(order));
+
     this.setState({
-      cancelOrderModalVisible: true,
+      orderDetailsModalVisible: true,
       currentOrder
     });
-  }
+  };
 
-  closeCancelOrderModal = () => {
+  closeOrderDetailsModal = () => {
     this.setState({
-      cancelOrderModalVisible: false
+      orderDetailsModalVisible: false
     });
-  }
-
-  // Handle filters
-  onChangeTimeFilter = (item) => {
-    const filter = {
-      timeFilter: {
-        interval: item.interval,
-        unit: item.unit
-      },
-      pageIndex: 1
-    };
-    this.props.dispatch(limitOrderActions.getOrdersByFilter(filter));
-    this.props.dispatch(limitOrderActions.getListFilter());
-  }
-  
-  // Render time filter
-  getTimeFilter = () => {
-    const { timeFilter } = this.state;
-
-    return timeFilter.map((item, index) => {
-      // Translate date unit
-      const convertedUnit = this.props.translate(`limit_order.${item.unit.toLowerCase()}`) || item.unit.charAt(0) + item.unit.slice(1);
-
-      let className = "";
-      if (item.unit === this.props.limitOrder.timeFilter.unit && item.interval === this.props.limitOrder.timeFilter.interval) {
-        className = "filter--active";
-      }
-
-      return (
-        <li key={index} onClick={(e) => this.onChangeTimeFilter(item)}>
-          <a className={className}>{`${item.interval} ${convertedUnit}`}</a>
-        </li>
-      );
-    })
-  }
+  };
 
   onChangeOrderTab = (activeOrderTab) => {
     this.props.dispatch(limitOrderActions.changeOrderTab(activeOrderTab));
-  }
+  };
 
   getOrderTabs = () => {
     const { activeOrderTab } = this.props.limitOrder;
     const tab = ["open", "history"];
 
     return tab.map((item, index) => {
-      let className = item === activeOrderTab ? "limit-order-list__tab--active" : "";
+      let className = item === activeOrderTab ? "limit-order-list__tab--active theme__sort active" : "theme__sort";
 
       return (
         <div key={item} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
@@ -102,41 +67,33 @@ export default class LimitOrderList extends React.Component {
 
   render() {
     return (
-      <div className={`limit-order-list ${this.props.limitOrder.listOrder.length === 0 ? "limit-order-list--empty" : ""}`}>
+      <div className={`limit-order-list theme__background-2 ${this.props.limitOrder.listOrder.length === 0 ? "limit-order-list--empty" : ""}`}>
         <div>
           <div className="limit-order-list--title">
             <div>
               <div className="title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
-              {<div className="limit-order-list--title-faq">
-                <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank">
+              <div className={"limit-order-list--title-faq"}>
+                <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank" rel="noreferrer noopener">
                   {this.props.translate("limit_order.wonder_why_order_not_filled")}
                 </a>
-              </div>}
+              </div>
             </div>
-            <a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank" rel="noreferrer noopener">
-              Limit Order LeaderBoard
-            </a>
-            {/* <div className="limit-order-list__filter-container">
-              <ul className="filter">
-                {this.getTimeFilter()}
-              </ul>
-            </div> */}
+            <a className="limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank"
+               rel="noreferrer noopener">Limit Order LeaderBoard</a>
             <div className="limit-order-list__tab-container">
               {this.getOrderTabs()}
             </div>
-            
           </div>
           <div>
             <LimitOrderTable 
               data={this.props.limitOrder.listOrder}
-              screen="desktop"
-              openCancelOrderModal={this.openCancelOrderModal}
+              openOrderDetailsModal={this.openOrderDetailsModal}
               srcInputElementRef={this.props.srcInputElementRef}
             />
-            <CancelOrderModal order={this.state.currentOrder} 
-              isOpen={this.state.cancelOrderModalVisible}
-              closeModal={this.closeCancelOrderModal}
-              screen="desktop"
+            <OrderDetailsModal
+              order={this.state.currentOrder}
+              isOpen={this.state.orderDetailsModalVisible}
+              closeModal={this.closeOrderDetailsModal}
             />
           </div>
         </div>

@@ -138,7 +138,8 @@
     "limit_order": "Lệnh giao dịch",
     "rate_label": "Tỉ lệ",
     "market_rate": "Tỉ giá thị trường",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "Xem trên"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -177,7 +178,11 @@
     "order_confirm": "Xác nhận lệnh",
     "success": "Thành công",
     "keystore_title": "Nhập mật khẩu để mở khóa keystore của bạn",
-    "unlock": "Mở khoá"
+    "unlock": "Mở khoá",
+    "yes": "Có",
+    "no": "Không",
+    "buy": "Mua",
+    "sell": "Bán"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -228,7 +233,7 @@
     "issue_ether_amount": "Lỗi do người dùng đã không gửi chính xác số lượng eths",
     "issue_user_cap": "Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
     "min_rate_too_high": "Tỉ giá của bạn quá cao!",
-    "ledger_global_err": "<div class='text-left'>Không thể kết nối đến Leger của bạn. Kiểm\ntra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>-\nBạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser\nsupport\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Không thể kết nối đến Leger của bạn. Kiểm\ntra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>-\nBạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser\nsupport\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
     "need_to_config_env_ledger": "Bạn phải cài đặt trên thiết bị Linux để truy cập Ledger.\nXem hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
     "ledger_not_enable_contract": "Kiểm tra lại nếu: </br>- \"Contract Data\" đã được bật\ntrên Ledger của bạn.",
     "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại\nđường dẫn hoặc đăng nhập lại Ledger của bạn",
@@ -250,10 +255,9 @@
     "required_field": "Mục này cần được điền",
     "source_dest_token": "Vui lòng chọn hai loại token khác nhau",
     "amount_too_small": "Lượng giao dịch quá nhỏ. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối thiểu ${minAmount} ETH.",
-    "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
     "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
-    "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% tỉ giá hiện tại",
-    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh.",
+    "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% so với tỉ giá hiện tại",
+    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, chỉ cho phép nhỏ hơn ${minRate}% so với tỉ giá hiện tại",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
     "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
@@ -399,13 +403,13 @@
     "eth_not_support": "ETH* là tổng của ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
-    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${srcToken}/${destToken} (với ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}",
     "fee": "Phí",
     "change_rate": "Thay đổi tỉ lệ",
     "current_rate": "Tỉ giá hiện tại",
     "lower_rate_warning": "Lệnh giao dịch này có tỉ giá thấp hơn một số lệnh trước đó bạn đặt. Những lệnh giao dịch dưới đây sẽ bị hủy khi bạn đặt lệnh này.",
     "wrap_eth_notify": "Bạn không thể đặt lệnh này vì lượng WETH của bạn không đủ, vui lòng chuyển đổi thêm ETH sang WETH.",
-    "empty_order": "Hiện chưa có lệnh đặt nào cả. Bạn có thể đặt lệnh",
+    "empty_order": "Hiện chưa có lệnh đặt nào cả.",
     "you_will_receive": "Bạn sẽ nhận được",
     "submit_successfully": "Lệnh giao dịch của bạn đã được đặt thành công trên server. Bạn có thể kiểm tra lệnh này trên danh sách lệnh giao dịch.",
     "weth_not_supported_tooltip": "Lệnh giao dịch chỉ hỗ trợ những token có trên Kyber. ETH không được hỗ trợ, vui lòng sử dụng WETH.",
@@ -428,7 +432,18 @@
     "order_history": "Lịch sử giao dịch",
     "actual_receive_amount": "Lượng token thực lĩnh:",
     "estimated_amount": "Lượng token dự tính:",
-    "extra_amount": "Bạn nhận được thêm:"
+    "extra_amount": "Bạn nhận được thêm:",
+    "price": "Giá",
+    "amount": "Số lượng",
+    "total": "Tổng giá trị",
+    "volume": "Lượng giao dịch",
+    "change": "Thay đổi",
+    "buy": "Mua ${symbol}",
+    "sell": "Bán ${symbol}",
+    "type": "Loại",
+    "available_balance": "Số dư khả dụng",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "Đã nhận"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -450,5 +465,8 @@
   "done": "Hoàn Thành",
   "error_text": "Lỗi Xảy Ra",
   "extra": "thêm",
-  "off": "GIẢM"
+  "off": "GIẢM",
+  "learn_more": "Tìm hiểu thêm",
+  "received": "Đã nhận",
+  "details": "Chi tiết"
 }

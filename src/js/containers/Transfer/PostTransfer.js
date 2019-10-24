@@ -3,15 +3,10 @@ import { connect } from "react-redux"
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as transferActions from "../../actions/transferActions"
-import * as utilActions from "../../actions/utilActions"
 import { PassphraseModal, ConfirmTransferModal, PostTransferBtn } from "../../components/Transaction"
-import { Modal } from "../../components/CommonElement"
 import { getTranslate } from 'react-localize-redux';
-
 import constants from "../../services/constants"
-
 import { ConfirmModal, BroadCastModal } from "./TransferModals"
-
 import TermAndServices from "../CommonElements/TermAndServices";
 
 @connect((store, props) => {
@@ -25,8 +20,6 @@ import TermAndServices from "../CommonElements/TermAndServices";
   };
 
 })
-
-
 export default class PostTransfer extends React.Component {
   clickTransfer = () => {
 
@@ -50,8 +43,8 @@ export default class PostTransfer extends React.Component {
     }
 
   }
+
   validateTransfer = () => {
-    //check dest address is an ethereum address
     var check = true
     var checkNumber = true
     if (validators.verifyAccount(this.props.transfer.destAddress.trim()) !== null) {
@@ -84,7 +77,6 @@ export default class PostTransfer extends React.Component {
   }
 
   render() {
-
     let activeButtonClass = ""
 
     if (Object.keys(this.props.transfer.errors.sourceAmount).length === 0 && Object.keys(this.props.transfer.errors.destAddress).length === 0) {
@@ -96,7 +88,7 @@ export default class PostTransfer extends React.Component {
         <div>
           {this.props.account !== false &&
             <div>
-              <a className={activeButtonClass + " exchange-button__button"} onClick={this.clickTransfer} data-open="passphrase-modal">
+              <a className={activeButtonClass + " exchange-button__button theme__button"} onClick={this.clickTransfer} data-open="passphrase-modal">
                 {this.props.translate("transaction.transfer_now") || "Transfer Now"}
               </a>
               <TermAndServices tradeType="transfer" />

@@ -1,7 +1,7 @@
-import createHistory from 'history/createBrowserHistory'
 import * as analytics from './utils/analytics'
 
 //const history = createHistory()
+const createHistory = require("history").createBrowserHistory
 const history = createHistory({
   basename: '',
   hashType: 'slash',

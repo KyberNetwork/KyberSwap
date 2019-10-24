@@ -140,7 +140,8 @@
     "limit_order": "Limit Order",
     "rate_label":"Rate",
     "market_rate": "Market rate",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "View on"
   },
   "modal": {
     "enter_password": "Введите пароль",
@@ -176,7 +177,11 @@
     "order_confirm": "Order Confirm",
     "success": "Success",
     "keystore_title": "Type password to unlock your keystore",
-    "unlock": "Unlock"
+    "unlock": "Unlock",
+    "yes": "Yes",
+    "no": "No",
+    "buy": "Покупка",
+    "sell": "Продажа"
   },
   "error": {
     "metamask_not_installed": "Metamask не установлен",
@@ -227,7 +232,7 @@
     "issue_ether_amount": "Не удалось, так как пользователь не перевел точный объем эфира",
     "issue_user_cap": "Не удалось, так как начальное значение превышает лимит пользователя",
     "min_rate_too_high": "Ваша минимальная ставка слишком высока!",
-    "ledger_global_err": "<div class='text-left'>Не получается подключиться к Ledger. Пожалуйста\ncheck if:<br/>- Ваш Ledger правильно подлючен.<br/>- Вы подключились к\nLedger.<br/>- Вы запустили приложение Ethereum на вашем Ledger.<br/>-\n\"Браузерная поддержка\" был включен к вашему Ledger. Включите \"Браузерную поддержку\"\n<a href=\"${link}\" target=\"_blank\">здесь</a>.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Не получается подключиться к Ledger. Пожалуйста\ncheck if:<br/>- Ваш Ledger правильно подлючен.<br/>- Вы подключились к\nLedger.<br/>- Вы запустили приложение Ethereum на вашем Ledger.<br/>-\n\"Браузерная поддержка\" был включен к вашему Ledger. Включите \"Браузерную поддержку\"\n<a href=\"${link}\" target=\"_blank\">здесь</a>.</div>",
     "need_to_config_env_ledger": "Вы должны настроить устройство Linux для подключения к Ledger.\nИнструкция <a href=\"${link}\" target=\"_blank\">здесь</a>.",
     "ledger_not_enable_contract": "Пожалуйста, проверьте: </br>- \"Данные контракта\" были включены\nв ваш Ledger.",
     "invalid_path_or_session_expired": "Невозможно получить адрес по этому пути. Пожалуйста, проверьте\nваш путь и подключение Ledger.",
@@ -249,10 +254,9 @@
     "required_field": "This field is required",
     "source_dest_token": "Source token must be different from dest token",
     "amount_too_small": "Amount is too small. Limit order only support min ${minAmount} ETH equivalent order",
-    "amount_too_big": "Amount is too big. Limit order only support max ${maxAmount} ETH equivalent order",
     "rate_is_not_number": "Trigger rate is not a number",
     "rate_too_high": "Trigger rate is too high, only allow ${maxRate}% greater than the current rate",
-    "rate_too_low": "Trigger rate is too low, please increase trigger rate. Minimum rate is 20% lower than current market rate.",
+    "rate_too_low": "Trigger rate is too low, only allow ${minRate}% less than the current rate",
     "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
     "insufficient_balance": "Your balance is insufficient for transaction",
     "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
@@ -398,13 +402,13 @@
     "eth_not_support": "ETH* represents the sum of ETH & WETH for easy reference.",
     "canceling_order_message": "You are canceling this order",
     "fee_info_message": "Don’t worry. You will not be charged now. \nYou pay fees only when transaction is executed (broadcasted & mined).",
-    "confirm_order_message": "Your transaction will be broadcasted when rate of ${srcToken}/${destToken} (for ${srcAmount} ${srcToken}) >= <span title=\"${rawRate}\">${rate}</span>",
+    "confirm_order_message": "Your transaction will be broadcasted when rate of ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}",
     "fee": "Fee",
     "change_rate": "Change Rate",
     "current_rate": "Current Rate",
     "lower_rate_warning": "This new order has a lower rate than some orders you have created. Below orders will be cancelled when you submitted this order.",
     "wrap_eth_notify": "Your order can not be submited because your WETH is not enough, please convert ETH to WETH.",
-    "empty_order": "There is no order here yet. You can place one",
+    "empty_order": "There is no order here yet.",
     "you_will_receive": "You will receive",
     "submit_successfully": "Your order have been submitted sucessfully to server. You can check the order in your order list.",
     "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
@@ -426,7 +430,18 @@
     "order_history": "Order History",
     "actual_receive_amount": "Actual receive amount:",
     "estimated_amount": "Estimated amount:",
-    "extra_amount": "You got extra amount:"
+    "extra_amount": "You got extra amount:",
+    "price": "ЦЕНА",
+    "amount": "количество",
+    "total": "Всего",
+    "volume": "Объем",
+    "change": "change",
+    "buy": "Buy ${symbol}",
+    "sell": "Sell ${symbol}",
+    "type": "Type",
+    "available_balance": "Available Balance",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "Получил"
   },
   "home": "Домой",
   "tracker": "Трекер",
@@ -448,5 +463,8 @@
   "done": "Выполнено",
   "error_text": "ошибка",
   "extra": "extra",
-  "off": "OFF"
+  "off": "OFF",
+  "learn_more": "Учить больше",
+  "received": "Получил",
+  "details": "Details"
 }

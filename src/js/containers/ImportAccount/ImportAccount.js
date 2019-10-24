@@ -1,12 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportAccountView } from '../../components/ImportAccount'
-import {
-  ImportKeystore, ImportByDevice, ImportByPrivateKey,
-  ErrorModal, ImportByMetamask,
-  ImportByDeviceWithLedger, ImportByDeviceWithTrezor, ImportByPromoCode
-} from "../ImportAccount"
-import { visitExchange, setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
+import { ErrorModal } from "../ImportAccount"
+import { setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -91,7 +87,7 @@ export default class ImportAccount extends React.Component {
       <div>
         {(!this.props.isAgreedTermOfService && this.props.account === false && this.props.tradeType !== "limit_order") &&
           <div className={"exchange-content__accept-term"}>
-            <div className={"accept-buttom"} onClick={(e) => this.acceptTerm()}>
+            <div className={"accept-button theme__button"} onClick={(e) => this.acceptTerm()}>
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
                 : this.props.translate("transaction.transfer_now") || "Transfer Now"}
             </div>

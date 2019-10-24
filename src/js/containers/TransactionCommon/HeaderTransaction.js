@@ -4,6 +4,7 @@ import constansts from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
 import { Link } from 'react-router-dom'
+import { switchTheme } from "../../actions/globalActions";
 
 @connect((store, props) => {
   const langs = store.locale.languages
@@ -26,7 +27,8 @@ import { Link } from 'react-router-dom'
   return {
     translate, currentLang, exchangeLink, transferLink, orderLink,
     page: props.page,
-    analytics: store.global.analytics
+    analytics: store.global.analytics,
+    theme: store.global.theme
   }
 })
 
@@ -39,6 +41,11 @@ export default class HeaderTransaction extends React.Component {
       window.location.href = `/?lang=${this.props.currentLang}`
     }
   }
+
+  switchTheme = () => {
+    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
+    this.props.dispatch(switchTheme(theme));
+  };
 
   render() {
     var transfer = this.props.translate("transaction.transfer") || "Transfer"
@@ -55,16 +62,13 @@ export default class HeaderTransaction extends React.Component {
         <div className="exchange-tab">
           <Link to={this.props.exchangeLink} className={"exchange-tab__item" + disabledSwapClass}>{swap}</Link>          
           <Link to={this.props.transferLink} className={"exchange-tab__item" + disabledTransferClass}>{transfer}</Link>
+          <Link to={this.props.orderLink} className={"exchange-tab__item " + disabledLimitOrderClass}>
+            {order}
+          </Link>
           <div className="exchange-tab__item--limit-order">
-            <Link to={this.props.orderLink} className={"exchange-tab__item " + disabledLimitOrderClass}>
-              {order}
-            </Link>
-
-            {/* Beta icon */}
-            <img className="exchange-tab__limit-order-beta" src={require("../../../assets/img/limit-order/beta.svg")}/>
-            {/* Info icon */}
-            {/* <img className="exchange-tab__limit-order-info" src={require("../../../assets/img/v3/info_grey.svg")} /> */}
+            {/* <img className="exchange-tab__limit-order-beta" src={require("../../../assets/img/limit-order/beta.svg")}/> */}
           </div>
+          <div onClick={this.switchTheme} className={"exchange-tab__item"}>Switch Theme</div>
         </div>
       </div>
     )

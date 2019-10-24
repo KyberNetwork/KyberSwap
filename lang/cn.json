@@ -138,7 +138,8 @@
     "limit_order": "限价订单",
     "rate_label":"率",
     "market_rate": "市场价格",
-    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions"
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "上查看"
   },
   "modal": {
     "enter_password": "输入密码",
@@ -177,7 +178,11 @@
     "order_confirm": "确认订单",
     "success": "成功",
     "keystore_title": "输入密码解锁密钥库",
-    "unlock": "解锁"
+    "unlock": "解锁",
+    "yes": "是",
+    "no": "否",
+    "buy": "买",
+    "sell": "卖"
   },
   "error": {
     "metamask_not_installed": "Metamask未安装",
@@ -228,7 +233,7 @@
     "issue_ether_amount": "交易失败，由于用户没有发送准确的eth数量",
     "issue_user_cap": "交易失败，由于原始数量超过了用户限额。",
     "min_rate_too_high": "你设置的最交易低价格太高了！",
-    "ledger_global_err": "<div class='text-left'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>-\n你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\"\ntarget=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>无法连接至Ledger. 请检查是否:<br/>- 你的Ledger硬件钱包插入无误。<br/>-\n你已经登录进你的Ledger了。<br/>- 你已经启动了Ledger上的以太坊应用。<br/>- 你的Ledger中的“浏览器支持“已经启用。 <a href=\"${link}\"\ntarget=\"_blank\">在这</a>里学习如何启用Ledger中的“浏览器支持“。</div>",
     "need_to_config_env_ledger": "你需要调试你的Linux设备来使用Ledger。说明请看<a href=\"${link}\" target=\"_blank\">这里</a>。",
     "ledger_not_enable_contract": "请检查是否: </br>- 你Ledger中的”合约数据“已经被启用。",
     "invalid_path_or_session_expired": "无法从此路径得到地址。请检查您路径的有效性或Ledger的连接",
@@ -250,10 +255,9 @@
     "required_field": "该项是必须的",
     "source_dest_token": "起始代币必须不同于目标代币",
     "amount_too_small": "数量太小。限价订单仅支持${minAmount}ETH以上的订单",
-    "amount_too_big": "数量太大。限价订单仅支持${maxAmount}ETH以下的订单",
     "rate_is_not_number": "触发汇率不是数字",
     "rate_too_high": "触发汇率太高，最高仅能高于现在汇率的${maxRate}%",
-    "rate_too_low": "触发汇率太低，请提高触发汇率",
+    "rate_too_low": "触发率太低，仅允许$ {minRate}％低于当前汇率",
     "insufficient_balance_order": "您的余额不足。请检查您的${tokenSymbol}余额和正在缓冲的订单。",
     "insufficient_balance": "您的余额不足以支持这笔交易",
     "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
@@ -398,13 +402,13 @@
     "eth_not_support": "ETH*是ETH和WETH的总和，以便于参考",
     "canceling_order_message": "您正在取消这个订单",
     "fee_info_message": "别担心。您还没有被收费。\n您只有在交易被执行后才会被收费（上链)。",
-    "confirm_order_message": "当 ${srcToken}/${destToken} (换至 ${srcAmount} ${srcToken})>= <span title=\"${rawRate}\">${rate}</span> 时，您的交易会被广播上链",
+    "confirm_order_message": "当价格為${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}时，将发送您的交易",
     "fee": "费用",
     "change_rate": "改变汇率",
     "current_rate": "当前汇率",
     "lower_rate_warning": "这个新订单的汇率比您的一些其他订单要低。当您提交该订单后，以下的订单将被取消",
     "wrap_eth_notify": "由于您的WETH不足，您的订单不能提交，请先将ETH兑换为WETH",
-    "empty_order": "目前还没有订单。您可以添加一个。",
+    "empty_order": "目前还没有订单。",
     "you_will_receive": "您将会收到",
     "submit_successfully": "您的订单已被成功提交至服务器。您可以在订单列表里查看订单。",
     "weth_not_supported_tooltip": "限价订单仅支持Kyber上支持的代币。不支持ETH，请使用WETH",
@@ -427,7 +431,18 @@
     "order_history": "订单历史",
     "actual_receive_amount": "实际接收数量:",
     "estimated_amount": "预计数量:",
-    "extra_amount": "您获得了额外的数量:"
+    "extra_amount": "您获得了额外的数量:",
+    "price": "价格",
+    "amount": "数量",
+    "total": "估值",
+    "volume": "交易量",
+    "change": "变化",
+    "buy": "购买${symbol}",
+    "sell": "出售${symbol}",
+    "type": "类型",
+    "available_balance": "可用余额",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "收到"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -449,5 +464,8 @@
   "done": "完成",
   "error_text": "错误",
   "extra": "额外",
-  "off": "折扣"
+  "off": "折扣",
+  "learn_more": "学到更多",
+  "received": "收到",
+  "details": "Details"
 }

@@ -1,19 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import {HeaderTransaction} from "../TransactionCommon"
-
 import EthereumService from "../../services/ethereum/ethereum"
-
 import * as limitOrderActions from "../../actions/limitOrderActions"
-
+import * as globalActions from "../../actions/globalActions"
 import constants from "../../services/constants"
-
 import {LimitOrderBody} from "../LimitOrder"
 import limitOrderServices from "../../services/limit_order";
-import { isUserLogin } from "../../utils/common";
-
+import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
+import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
+import service from "../../services/limit_order"
+import * as converter from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -21,24 +19,29 @@ import BLOCKCHAIN_INFO from "../../../../env";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
-
   
+  // const paramsValid = tokens[src].is_quote && ((tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority) || (!tokens[dest].is_quote))
+  // if (!paramsValid) history.push(`/${constants.LIMIT_ORDER_CONFIG.path}`)
+
+  const src = props.match.params.source.toUpperCase()
+  const dest = props.match.params.dest.toUpperCase()
 
   return {
     translate, limitOrder, tokens, account, ethereum,
     params: {...props.match.params},
-
+    src, dest
   }
 })
 
 export default class LimitOrder extends React.Component {
-
   constructor(){
     super()
     this.state = {
       intervalGroup: []
     }
+    this.LimitOrderAccount = withSourceAndBalance(LimitOrderAccount)
   }
+
 
   getEthereumInstance = () => {
     var ethereum = this.props.ethereum
@@ -58,7 +61,7 @@ export default class LimitOrder extends React.Component {
 
     var ethereum = this.getEthereumInstance()
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
-    
+
   }
 
   fetchCurrentRateInit = () => {
@@ -94,13 +97,12 @@ export default class LimitOrder extends React.Component {
     this.setState({intervalGroup: []})    
   }
 
-  async fetchOpenOrders() {   
-    // requuest update order
+  async fetchOpenOrders() {
     this.props.dispatch(limitOrderActions.updateOpenOrderStatus())
   }
 
   async fetchListOrders() {
-    if (!isUserLogin()) {
+    if (!common.isUserLogin()) {
       return
     }
     try {
@@ -117,13 +119,6 @@ export default class LimitOrder extends React.Component {
       }
 
       this.props.dispatch(limitOrderActions.getListFilter());
-
-      // const { pairs, addresses, orderStats } = await limitOrderServices.getUserStats();
-
-      // this.props.dispatch(limitOrderActions.getListFilterComplete(pairs, addresses));
-
-      // const totalOrders = orderStats.open + orderStats.in_progress + orderStats.invalidated + orderStats.cancelled + orderStats.filled;
-      
     } catch (err) {
       console.log(err);
     }
@@ -144,31 +139,75 @@ export default class LimitOrder extends React.Component {
 
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
+  async fetchFavoritePairsIfLoggedIn(){
+    if (common.isUserLogin()) {
+      let res = await limitOrderServices.getFavoritePairs()
+      this.props.dispatch(limitOrderActions.addListFavoritePairs(res.map(obj => `${obj.base.toUpperCase()}_${obj.quote.toUpperCase()}`)));
+    }
+  }
 
-  componentDidMount = () =>{
-    // set interval process
-    this.setInvervalProcess()
-
+  updatePathOrder = () => {
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 
-    if ((sourceTokenSymbol !== this.props.limitOrder.sourceTokenSymbol) ||
-      (destTokenSymbol !== this.props.limitOrder.destTokenSymbol) ){
+    var tokens = this.props.tokens
+    var src = this.props.src
+    var dest = this.props.dest
 
-      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
+    var currentQuote = sourceTokenSymbol
 
+    
+    if (tokens[src].is_quote && !tokens[dest].is_quote) {      
+      this.props.dispatch(limitOrderActions.setSideTrade("buy"))      
     }
 
+    if (!tokens[src].is_quote && tokens[dest].is_quote) {
+      this.props.dispatch(limitOrderActions.setSideTrade("sell"))
+      currentQuote = destTokenSymbol
+    }
+    
+    if ((!tokens[src].is_quote && !tokens[dest].is_quote) || (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority === tokens[dest].quote_priority)) {      
+      sourceTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
+      destTokenSymbol = "KNC"
+      var path = constants.BASE_HOST +  "/limit_order/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase();
+      this.props.dispatch(globalActions.goToRoute(path))   
+
+      currentQuote = BLOCKCHAIN_INFO.wrapETHToken
+    }
+
+    if (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority){
+      this.props.dispatch(limitOrderActions.setSideTrade("buy"))      
+    }
+
+    if (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority < tokens[dest].quote_priority){
+      this.props.dispatch(limitOrderActions.setSideTrade("sell"))      
+      currentQuote = destTokenSymbol
+    }
+
+    this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
+    this.props.dispatch(limitOrderActions.updateCurrentQuote(currentQuote))
+  }
+
+  componentDidMount = () => {
+    this.updatePathOrder()
+
+    this.setInvervalProcess()
+
+   
     this.fetchCurrentRateInit()
     this.fetchListOrders()
     this.fetchPendingBalance()
+    this.fetchFavoritePairsIfLoggedIn()
   }
 
 
   render() {
+    const LimitOrderAccount = this.LimitOrderAccount;
     return (
-      <div className={"limit-order-container"}>
-        <HeaderTransaction page="limit_order"/>
-        <LimitOrderBody page="limit_order"/>        
+      <div>
+        <LimitOrderAccount />
+        <div className={"limit-order-container"}>
+          <LimitOrderBody page="limit_order"/>
+        </div>
       </div>
     )
   }

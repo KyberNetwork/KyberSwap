@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { Modal } from '../CommonElement'
 
 const ImportByPKeyView = (props) => {
@@ -29,16 +29,16 @@ const ImportByPKeyView = (props) => {
   }
 
   return (
-    <div>
+    <Fragment>
       {!props.isOnMobile && (
-        <div className="import-account__block" onClick={(e) => props.modalOpen()}>
+        <div className="import-account__block theme__import-button" onClick={(e) => props.modalOpen()}>
           <div className="import-account__icon private-key"/>
-          <div className="import-account__name"><h3>{props.translate("import.from_private_key") || "PRIVATE KEY"}</h3></div>
+          <div className="import-account__name">{props.translate("import.from_private_key") || "PRIVATE KEY"}</div>
         </div>
       )}
 
       {props.isOnMobile && (
-        <div className={"import-account__block"}>
+        <div className={"import-account__block theme__import-button"}>
           <div className={"import-account__block-left"}>
             <div className="import-account__icon private-key"/>
             <div>
@@ -51,48 +51,43 @@ const ImportByPKeyView = (props) => {
       )}
 
       <Modal
-        className={{ base: 'reveal medium', afterOpen: 'reveal medium import-privatekey' }}
+        className={{ base: 'reveal tiny import-modal', afterOpen: 'reveal tiny import-modal' }}
         isOpen={props.isOpen}
         onRequestClose={() => props.onRequestClose()}
         content={
-          <div>
-            <div className="title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div><a className="x" onClick={props.onRequestClose}>&times;</a>
-            <div className="content with-overlap">
-              <div className="row">
-                <div className="column">
-                  <center>
-                    <label className={!!props.pKeyError ? "error" : ""}>
-                      <div className="input-reveal">
-                        <input className="text-center security" id="private_key"
-                               type="text"
-                               onChange={(e) => props.onChange(e)}
-                               onKeyPress={(e) => submit(e)}
-                               value={props.privateKey}
-                               autoFocus
-                               autoComplete="off"
-                               spellCheck="false"
-                               onFocus={(e) => {props.analytics.callTrack("trackClickInputPrKey")}}
-                               required />
-                        <p>{props.privateKeyVisible}</p>
-                        <a className="toggle" onClick={toggleShowPw}></a>
-                        <a className="tootip"></a>
-                      </div>
-                      {!!props.pKeyError &&
-                      <span className="error-text">{props.pKeyError}</span>
-                      }
-                    </label>
-                  </center>
-                </div>
+          <div className={"import-modal import-modal__private-key"}>
+            <div className="import-modal__header">
+              <div className="import-modal__header--title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div>
+              <a className="x" onClick={props.onRequestClose}>&times;</a>              
+            </div>
+            <div className="import-modal__body">
+              <div className="input-reveal">
+                <input className="security" id="private_key"
+                        type="text"
+                        onChange={(e) => props.onChange(e)}
+                        onKeyPress={(e) => submit(e)}
+                        value={props.privateKey}
+                        autoFocus
+                        autoComplete="off"
+                        spellCheck="false"
+                        onFocus={(e) => {props.analytics.callTrack("trackClickInputPrKey")}}
+                        required />
+                <p>{props.privateKeyVisible}</p>
+                <a className="toggle" onClick={toggleShowPw}></a>
               </div>
+              {!!props.pKeyError &&
+              <span className="error-text">{props.pKeyError}</span>
+              }
             </div>
-            <div className="overlap">
-              <button className="button accent cur-pointer" id="submit_pkey" onClick={() => handldeSubmit()} >{props.translate("modal.import") || "Import"}</button>
+            <div className="import-modal__footer">
+              <button className={"import-modal__footer--button"} id="submit_pkey" onClick={() => handldeSubmit()}>
+                {props.translate("modal.import") || "Import"}
+              </button>
             </div>
-
           </div>
         }
       />
-    </div>
+    </Fragment>
   )
 }
 

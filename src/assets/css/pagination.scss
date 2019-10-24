@@ -1,13 +1,40 @@
 .Pagination {
-  &__container {
+  &__panel {
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
+  &__container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    #prev:after{
+      content: '\2039';
+      width: 10px;
+      height: 10px
+    }
+    #next:after{
+      content: '\203a';
+      width: 10px;
+      height: 10px
+    }
+  }
+
+  &__container.mobile {
+    display: block;
+    text-align: center;
+    align-items: center;
+
+    .Pagination__panel {
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 
   &__count {
     font-size: 13px;
-    color: #666666;
     padding: 0 10px;
   }
 
@@ -20,20 +47,27 @@
     width: 20px;
     height: 20px;
     font-size: 14px;
-    color: #222222;
     cursor: pointer;
     text-align: center;
     margin: 0 5px;
-
-    &--selected {
-      color: #ffffff;
-      border-radius: 3px;
-      background-color: #42526e;
-    }
+    border: 1px solid transparent;
+    border-radius: 5px;
   }
 
   &__button {
     cursor: pointer;
     padding: 0 10px;
+    &--prev:after{
+      content: '\2039';
+      width: 10px;
+      height: 10px
+    }
+    &--next:after{
+      content: '\203a';
+      width: 10px;
+      height: 10px
+    }
   }
+
+
 }

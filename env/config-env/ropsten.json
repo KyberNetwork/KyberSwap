@@ -28,7 +28,6 @@
     ],
     "limitOrder": {
         "minSupportOrder": 0.001,
-        "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
@@ -43,7 +42,8 @@
             "cg_id": "ethereum",
             "gasLimit": "0",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
@@ -204,7 +204,8 @@
             "decimals": 18,
             "cg_id": "dai",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "LINK": {
             "symbol": "LINK",
@@ -312,7 +313,8 @@
             "decimals": 18,
             "cg_id": "weth",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "BAM": {
             "symbol": "BAM",
@@ -341,7 +343,7 @@
         "SUSD": {
             "symbol": "SUSD",
             "name": "Synth sUSD",
-            "address": "0x9952e42ff92149f48b3b7dee3f921a6dd106f79f",
+            "address": "0x8ae2a0bfb3315b63ee8e88ac7d3f6b5a68f01cf5",
             "decimals": 18,
             "cg_id": "susd",
             "gasLimit": "500000"
@@ -366,6 +368,20 @@
             "address": "0xeaf845462e78cfba40a2f11c13154ce5f103eeff",
             "decimals": 18,
             "cg_id": "scroll-token"
+        },
+        "TKN": {
+            "symbol": "TKN",
+            "name": "Monolith",
+            "address": "0xaa15075edf8e33867687428d0e49ae898e5b3513",
+            "decimals": 8,
+            "cg_id": "tokencard"
+        },
+        "FRECNX": {
+            "symbol": "FRECNX",
+            "name": "FreldoCoinX",
+            "address": "0xacbdbc20459d98c902e748b09cfbd5dd98b23cf9",
+            "decimals": 18,
+            "cg_id": "freldo"
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",
@@ -386,6 +402,6 @@
         "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
     },
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://tracker.knstats.com",
+    "tracker": "https://dev-api.knstats.com",
     "statEndPoint": "https://ropsten-data.kyber.network"
 }

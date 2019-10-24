@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ImportKeystore,
-  ImportByDevice,
   ImportByPrivateKey,
   ImportByMetamask,
   ImportByDeviceWithLedger,
@@ -10,16 +9,9 @@ import {
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
-  var isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
+  const isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
   const { isIOS: isIos, isAndroid } = props.onMobile;
-
-  let importInactiveClass =  "";
-
-  if (props.tradeType !== "limit_order") {
-    importInactiveClass = !props.isAgreedTermOfService ? 'import-account__item--inactive' : '';
-  } else {
-    importInactiveClass = !props.isUserLogin ? 'import-account__item--inactive' : '';
-  }
+  const isLimitOrder = props.tradeType === "limit_order";
 
   let importAccountTitle = props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap";
   if (props.tradeType === "transfer") {
@@ -29,7 +21,7 @@ const ImportAccountView = (props) => {
   }
 
   return (
-    <div className="import-account">
+    <div className={`import-account ${isLimitOrder ? 'theme__background-2' : ''}`}>
       <div className="import-account__choose-wallet-container container">
         {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
           <h1 className="import-account__title">
@@ -43,10 +35,10 @@ const ImportAccountView = (props) => {
           </h1>
         )}
 
-        {!props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
+        {!isLimitOrder && (
           <div className="import-account__title--inactive">
-            <div className="import-account__title--inactive--seperator"></div>
-            <div className="import-account__title--inactive--content">
+            <div className="import-account__title-separator theme__border-2"/>
+            <div className="import-account__title-content theme__background-2 theme__text-4">
               {props.translate("address.or_connect_with") || "Or Connect with"}
             </div>
           </div>
@@ -54,25 +46,25 @@ const ImportAccountView = (props) => {
 
         <div className={`import-account__content ${props.isAcceptConnectWallet ? "import-account__content--animation" : ""} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
-            <div className={`import-account__item ${importInactiveClass}`}>
+            <div className={`import-account__item`}>
               <ImportByMetamask />
             </div>
           }
 
           {!isOnMobile &&
-            <div className={`import-account__item import-account__item-trezor ${importInactiveClass}`}>
+            <div className={`import-account__item import-account__item-ledger`}>
+              <ImportByDeviceWithLedger />
+            </div>
+          }
+          
+          {!isOnMobile &&
+            <div className={`import-account__item import-account__item-trezor`}>
               <ImportByDeviceWithTrezor />
             </div>
           }
 
           {!isOnMobile &&
-            <div className={`import-account__item import-account__item-ledger ${importInactiveClass}`}>
-              <ImportByDeviceWithLedger />
-            </div>
-          }
-
-          {!isOnMobile &&
-            <div className={`import-account__item ${importInactiveClass}`}>
+            <div className={`import-account__item`}>
               <ImportKeystore />
             </div>
           }
@@ -105,13 +97,15 @@ const ImportAccountView = (props) => {
             </div>
           }
 
-          <div className={`import-account__item ${importInactiveClass}`}>
+          <div className={`import-account__item`}>
             <ImportByPrivateKey isOnMobile={isOnMobile} />
           </div>
 
-          <div className={`import-account__item ${importInactiveClass}`}>
-            <ImportByPromoCode isOnMobile={isOnMobile} />
-          </div>
+          {(!isLimitOrder || !isOnMobile) &&
+            <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
+              <ImportByPromoCode isOnMobile={isOnMobile} />
+            </div>
+          }
         </div>
       </div>
       {props.errorModal}

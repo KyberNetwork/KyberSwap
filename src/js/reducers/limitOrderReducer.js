@@ -1,8 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
-
 
 var initState = constants.INIT_LIMIT_ORDER_STATE
 initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
@@ -10,31 +7,24 @@ initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
 const limitOrder = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case "LIMIT_ORDER.SELECT_TOKEN_ASYNC": {
-    //   newState.isSelectToken = true
-    //   return newState
-    // }
-
     case "LIMIT_ORDER.SELECT_TOKEN": {
+      const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken } = action.payload;
 
-      var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
-      newState.sourceTokenSymbol = sourceTokenSymbol
-      newState.sourceToken = sourceToken
-      newState.destTokenSymbol = destTokenSymbol
-      newState.destToken = destToken
+      newState.sourceTokenSymbol = sourceTokenSymbol;
+      newState.sourceToken = sourceToken;
+      newState.destTokenSymbol = destTokenSymbol;
+      newState.destToken = destToken;
+      newState.sourceAmount = '';
+      newState.destAmount = '';
+      newState.errors.sourceAmount = [];
+      newState.errors.triggerRate = [];
+      newState.selected = true;
 
-      var errors = newState.errors
-      errors.sourceAmount = []
-      errors.triggerRate = []
-      newState.errors = errors
-
-      newState.selected = true
-      newState.isEditRate = false
-      return newState
+      return newState;
     }
 
     case "LIMIT_ORDER.INPUT_CHANGE": {
-      const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload
+      const { focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate } = action.payload
 
       switch(focus) {
         case "source":
@@ -53,36 +43,57 @@ const limitOrder = (state = initState, action) => {
           var bigRate = converter.roundingRate(state.triggerRate)
           newState.sourceAmount = converter.caculateSourceAmount(value, bigRate, sourceTokenDecimals);
           break
-        case "rate": 
-          newState.triggerRate = value.replace(',', '');
-          var errors = newState.errors
-          errors.triggerRate = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate, destTokenDecimals)
+        case "rate":
+          const rate = value.replace(',', '');
+
+          if (newState.sideTrade === 'buy' && isBuyRate) {
+            newState.triggerBuyRate = rate;
+            newState.triggerRate = converter.divOfTwoNumber(1, rate);
+            newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, converter.roundingRate(newState.triggerRate), sourceTokenDecimals);
+          } else {
+            newState.triggerRate = rate;
+            newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(newState.offeredRate));
+            newState.destAmount = converter.caculateDestAmount(state.sourceAmount, converter.roundingRate(rate), destTokenDecimals);
+          }
+
+          let errors = newState.errors;
+          errors.triggerRate = [];
+          newState.errors = errors;
+
           break
       }
       return newState
     }
+
+    case "LIMIT_ORDER.RESET_FORM_INPUTS": {
+      newState.destAmount = "";
+      newState.sourceAmount = "";
+
+      return newState;
+    }
+
+    case "LIMIT_ORDER.SET_IS_FETCHING_RATE": {
+      newState.isFetchingRate = action.payload;
+      return newState;
+    }
+
     case "LIMIT_ORDER.FOCUS_INPUT": {
       newState.inputFocus = action.payload;
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
       const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals } = action.payload
-
   
       if (expectedPrice == "0") {
         newState.errors.rateSystem = errMsg;
-        // if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-        //   newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        // } else {
-        //   newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        // }
+        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
+          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
+        } else {
+          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
+        }
       } else {
         newState.errors.rateSystem = ""
       }
-      
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
@@ -93,6 +104,7 @@ const limitOrder = (state = initState, action) => {
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
         newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(',', "");
+        newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(expectedRate));
         newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimals)
       }
 
@@ -153,6 +165,11 @@ const limitOrder = (state = initState, action) => {
       newState.listOrder = listOrder;
       return newState;
     }
+    case "LIMIT_ORDER.ADD_LIST_FAVORITE_PAIRS": {
+      const listFavoritePairs = action.payload;
+      newState.listFavoritePairs = listFavoritePairs;
+      return newState;
+    }
     case "LIMIT_ORDER.ADD_NEW_ORDER":{
       const {order} = action.payload
       var listOrder = newState.listOrder
@@ -211,6 +228,11 @@ const limitOrder = (state = initState, action) => {
     case "LIMIT_ORDER.SET_STATUS_FILTER": {
       const { statusFilter } = action.payload;
       newState.statusFilter = statusFilter;
+      return newState;
+    }
+    case "LIMIT_ORDER.SET_TYPE_FILTER": {
+      const { typeFilter } = action.payload;
+      newState.typeFilter = typeFilter;
       return newState;
     }
     case "LIMIT_ORDER.SET_TIME_FILTER": {
@@ -277,6 +299,36 @@ const limitOrder = (state = initState, action) => {
       newState.selectedGas = selectedGas;
       return newState;
     }
+
+
+
+    case 'LIMIT_ORDER.UPDATE_CURRENT_QUOTE':{
+      const { quote } =  action.payload;
+      newState.currentQuote = quote
+      return newState; 
+    }
+
+    case 'LIMIT_ORDER.UPDATE_FAVORITE':{
+      const { base, quote, toFav, isLoggedIn } =  action.payload;
+      const field = isLoggedIn ? "listFavoritePairs" : "favorite_pairs_anonymous"
+      const index = newState[field].indexOf(base+"_"+quote)
+      if (index == -1){
+        newState[field].push(base+"_"+quote)
+      }else {
+        newState[field].splice(index, 1)
+      }
+      newState[field] = newState[field].slice()
+      return newState; 
+    }
+
+    case 'LIMIT_ORDER.SET_SIDE_TRADE': {
+      newState.sideTrade = action.payload
+      return newState
+    }
+    case 'LIMIT_ORDER.TOOGLE_QUOTE_MARKET':{
+      newState.mobileState.showQuoteMarket = action.payload
+      return newState
+    }    
   }
   return state
 }

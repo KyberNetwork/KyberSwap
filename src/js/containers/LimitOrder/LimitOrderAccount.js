@@ -2,14 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import { ImportAccount } from "../ImportAccount";
-import { TopBalance, AccountBalance } from "../TransactionCommon";
-import { Modal } from "../../components/CommonElement"
+import { AccountBalance } from "../TransactionCommon";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { isUserLogin } from "../../utils/common";
 import * as converters from "../../utils/converter";
 import * as constants from "../../services/constants"
+import ToggleableMenu from "../CommonElements/TogglableMenu.js"
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -33,10 +32,6 @@ import * as constants from "../../services/constants"
 export default class LimitOrderAccount extends React.Component {
   constructor() {
     super();
-    this.state = {
-      isAdvanceTokenVisible: false,
-      isReimport: false
-    }
   }
 
   selectTokenBalance = () => {
@@ -71,87 +66,107 @@ export default class LimitOrderAccount extends React.Component {
     return totalFee
   }
 
+  // selectToken = (sourceSymbol) => {
 
-  selectToken = (sourceSymbol) => {
+  //   this.props.selectSourceToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
 
-    this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, "source")
+  //   // var sourceBalance = this.props.tokens[sourceSymbol].balance
 
-    // var sourceBalance = this.props.tokens[sourceSymbol].balance
+  //   const tokens = this.getFilteredTokens();
+  //   const srcToken = tokens.find(token => {
+  //     return token.symbol === sourceSymbol;
+  //   });
+  //   const destToken = tokens.find(token => {
+  //     return token.symbol === this.props.limitOrder.destTokenSymbol;
+  //   });
+  //   var sourceBalance = srcToken.balance;
 
+  //   var sourceDecimal = this.props.tokens[sourceSymbol].decimals
+
+  //   if (sourceSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
+
+  //     //if souce token is weth, we spend a small amount to make approve tx, swap tx
+
+  //     var ethBalance = this.props.tokens["ETH"].balance
+  //     var fee = this.calcualteMaxFee()      
+  //     if (converters.compareTwoNumber(ethBalance, fee) === 1) {
+  //       sourceBalance = converters.subOfTwoNumber(sourceBalance, fee)
+  //     } else {
+  //       sourceBalance = converters.subOfTwoNumber(sourceBalance, ethBalance)
+  //     }
+
+  //   }
+
+  //   if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
+
+  //   this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
+  //   this.props.dispatch(limitOrderActions.focusInput('source'));
+
+  //   this.selectTokenBalance();
+  //   this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, "limit_order");
+  // }
+  selectToken = (base) => {
     const tokens = this.getFilteredTokens();
-    const srcToken = tokens.find(token => {
-      return token.symbol === sourceSymbol;
-    });
-    const destToken = tokens.find(token => {
-      return token.symbol === this.props.limitOrder.destTokenSymbol;
-    });
-    var sourceBalance = srcToken.balance;
+    const {sideTrade}  = this.props.limitOrder
+    if (sideTrade == "buy") { //change dest
+      this.props.selectDestToken(base)
+      const srcToken = tokens.find(token => {
+        return token.symbol === this.props.limitOrder.sourceTokenSymbol;
+      });
+      const destToken = tokens.find(token => {
+        return token.symbol === base;
+      });
+      var destBalance = destToken.balance;
 
-    var sourceDecimal = this.props.tokens[sourceSymbol].decimals
+      var destDecimal = this.props.tokens[base].decimals
+      this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
+      this.props.dispatch(limitOrderActions.focusInput('dest'));
+    }else { //change source
+      this.props.selectSourceToken(base)
+      const srcToken = tokens.find(token => {
+        return token.symbol === base;
+      });
+      const destToken = tokens.find(token => {
+        return token.symbol === this.props.limitOrder.destTokenSymbol;
+      });
+      var sourceBalance = srcToken.balance;
 
-    if (sourceSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-
-      //if souce token is weth, we spend a small amount to make approve tx, swap tx
-
-      var ethBalance = this.props.tokens["ETH"].balance
-      var fee = this.calcualteMaxFee()      
-      if (converters.compareTwoNumber(ethBalance, fee) === 1) {
-        sourceBalance = converters.subOfTwoNumber(sourceBalance, fee)
-      } else {
-        sourceBalance = converters.subOfTwoNumber(sourceBalance, ethBalance)
-      }
-
+      var sourceDecimal = this.props.tokens[base].decimals
+      this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
+      this.props.dispatch(limitOrderActions.focusInput('source'));
     }
-
-    if (converters.compareTwoNumber(sourceBalance, 0) == -1) sourceBalance = 0  
-
-    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
-    this.props.dispatch(limitOrderActions.focusInput('source'));
-
     this.selectTokenBalance();
-    this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, "limit_order");
+    this.props.global.analytics.callTrack("trackClickToken", base, "limit_order");
   }
 
-  toggleAdvanceTokeBalance = () => {
-    this.setState({
-      isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
-    });
-  }
-
-  openReImport = () => {
-    this.setState({ isReImport: true });
-  }
-
-  closeReImport = () => {
-    this.setState({ isReImport: false, isAdvanceTokenVisible: false });
-  }
-
-  clearSession = () => {
-    this.closeReImport();
-    this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
-    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
-    this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
-    this.props.global.analytics.callTrack("trackClickChangeWallet");
-    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
-  }
-
-  reImportModal = () => {
-    return (
-      <div className="reimport-modal">
-        <a className="x" onClick={this.closeReImport}>&times;</a>
-        <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
-        <div className="content">
-          <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
-          <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
-        </div>
-      </div>
-    )
-  }
+  // selectToken = (destSymbol) => {
+  //
+  //   this.props.selectDestToken(destSymbol, this.props.tokens[destSymbol].address, "dest")
+  //
+  //   // var sourceBalance = this.props.tokens[sourceSymbol].balance
+  //
+  //   const tokens = this.getFilteredTokens();
+  //   const srcToken = tokens.find(token => {
+  //     return token.symbol === this.props.limitOrder.sourceTokenSymbol;
+  //   });
+  //   const destToken = tokens.find(token => {
+  //     return token.symbol === destSymbol;
+  //   });
+  //   var destBalance = destToken.balance;
+  //
+  //   var destDecimal = this.props.tokens[destSymbol].decimals
+  //
+  //   this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
+  //   this.props.dispatch(limitOrderActions.focusInput('dest'));
+  //
+  //   this.selectTokenBalance();
+  //   this.props.global.analytics.callTrack("trackClickToken", destSymbol, "limit_order");
+  // }
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     
     let filteredTokens = [];
-    var tokens = this.props.modifiedTokenList()
+    var tokens = this.props.availableBalanceTokens()
   
     if (orderByDesc) {
       filteredTokens = converters.mergeSort(tokens, 1)
@@ -164,75 +179,31 @@ export default class LimitOrderAccount extends React.Component {
     return filteredTokens;
   }
 
+  clearSession = () => {
+    this.props.dispatch(globalActions.clearSession(this.props.limitOrder.gasPrice));
+    this.props.dispatch(limitOrderActions.getPendingBalancesComplete({}, []));
+    this.props.dispatch(limitOrderActions.fetchFeeComplete(constants.LIMIT_ORDER_CONFIG.maxFee, constants.LIMIT_ORDER_CONFIG.maxFee, 0))
+    this.props.global.analytics.callTrack("trackClickChangeWallet");
+    // this.props.dispatch(globalActions.setGasPrice(this.props.ethereum))
+  }
+
   render() {
     if (this.props.account === false) {
-      return (
-        <div className={"limit-order-account"}>
-          <ImportAccount
-            tradeType="limit_order"
-            isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-            isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-          />
-        </div>
-      );
+      return  null
     } else {
       return (
-        <div className={"limit-order-account"}>
-          <div className="limit-order-account__title">
-            <div>
-              {this.props.translate("limit_order.your_available_balance") || "Tokens available for Limit Order"}
-            </div>
-            <div className="reimport-msg">
-              <div onClick={this.openReImport}>
-                {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
-              </div>
-              <Modal className={{
-                base: 'reveal tiny reimport-modal',
-                afterOpen: 'reveal tiny reimport-modal reimport-modal--tiny'
-              }}
-                isOpen={this.state.isReImport}
-                onRequestClose={this.closeReImport}
-                contentLabel="advance modal"
-                content={this.reImportModal()}
-                size="tiny"
-              />
-            </div>
-          </div>
-
-          <TopBalance
-            // isLimitOrderTab={true}
-            // getFilteredTokens={this.getFilteredTokens}
-            showMore={this.toggleAdvanceTokeBalance}
-            // chooseToken={this.props.chooseToken}
-            activeSymbol={this.props.limitOrder.sourceTokenSymbol}
-            screen="limit_order"
-            // selectTokenBalance={this.selectTokenBalance}
-            // changeAmount={limitOrderActions.inputChange}
-            // changeFocus={limitOrderActions.focusInput}
-            selectToken={this.selectToken}
-            orderedTokens={this.getFilteredTokens(true, 3)}
-          />
-
-          {this.state.isAdvanceTokenVisible && <div className="limit-order-account__advance">
-            <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
-              <div className="advance-close_wrapper"></div>
-            </div>
+        <ToggleableMenu
+          clearSession={this.clearSession}>
             <AccountBalance
               isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
-              // chooseToken={this.props.chooseToken}
-              sourceActive={this.props.limitOrder.sourceTokenSymbol}
-              isBalanceActive={this.state.isAdvanceTokenVisible}
+              sourceActive={this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"
-              // selectTokenBalance={this.selectTokenBalance}
-              // changeAmount={limitOrderActions.inputChange}
-              // changeFocus={limitOrderActions.focusInput}
               selectToken={this.selectToken}
             />
-          </div>}
-        </div>
+        </ToggleableMenu>
       );
     }
   }

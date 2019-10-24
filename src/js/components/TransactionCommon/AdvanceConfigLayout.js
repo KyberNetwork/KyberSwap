@@ -1,8 +1,5 @@
 import React from "react";
-import * as converter from "../../utils/converter";
-import SlideDown, { SlideDownTrigger, SlideDownContent } from "../CommonElement/SlideDown";
-import ReactTooltip from 'react-tooltip'
-
+import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 
 export default class AdvanceConfigLayout extends React.Component {
   render() {
@@ -15,67 +12,16 @@ export default class AdvanceConfigLayout extends React.Component {
 
     return (
       <SlideDown active={this.props.isAdvanceActive}>
-        {/* <SlideDownTrigger onToggleContent={() => this.props.toggleAdvanceContent()}>
-          <div className="slide-down__trigger-container slide-down__trigger-container--align-right">
-            <div>
-              <span className="slide-down__trigger-bold">
-                {this.props.translate("transaction.advanced") || "Advance"}
-              </span> - 
-              <span className="slide-down__trigger-light">
-              {this.props.translate("transaction.optional") || "Optional"}
-              </span>
-            </div>
-            <div className="slide-arrow-container">
-              <div className="slide-arrow"></div>
-            </div>
-          </div>
-        </SlideDownTrigger> */}
-
         <SlideDownContent>
-        <div className="slide-down__trigger-container">
-            <div>
-              <span className="slide-down__trigger-bold">
-                {this.props.translate("transaction.advanced") || "Advance"}
-              </span> - 
-              <span className="slide-down__trigger-light">
-              {this.props.translate("transaction.optional") || "Optional"}
-              </span>
-            </div>
-            {/* <div className="slide-arrow-container">
-              <div className="slide-arrow"></div>
-            </div> */}
-          </div>
-          <div className="advance-config">
-            {this.props.minConversionRate}
-
-            <div>
-              <div className="advance-config__title">
-                <span>{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</span>
-                {this.props.type==="exchange" && (
-                  <span className="advance-config__title-info">
-                    <span data-tip={this.props.translate("transaction.transaction_gasprice_50", { gasPrice: this.props.maxGasPrice }) || `Higher gas price, faster transaction. Max gas price: ${this.props.maxGasPrice} Gwei`} data-html={true} data-for="gas-info">
-                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
-                    </span>
-                    <ReactTooltip html={true}  place="right" effect="solid" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
-                  </span>  
-                )}
-
-                {this.props.type==="transfer" && (
-                  <span className="advance-config__title-info">
-                    <span data-tip={this.props.translate("transaction.transaction_gasprice") || `Higher gas price, faster transaction`} data-html={true} data-for="gas-info">
-                      <img src={require("../../../assets/img/v3/info_blue.svg")} />
-                    </span>
-                    <ReactTooltip html={true}  place="right" effect="solid" className="advance-config__gas-tooltip common-tooltip common-tooltip--horizontal" id="gas-info" type="dark"/>
-                  </span>  
-                )}
-                
-              </div>
+          <div className="advance-config theme__text-4">
+            <div className={`advance-config__gas ${this.props.type === 'transfer' ? 'advance-config__gas--no-border' : ''} theme__border-2`}>
+              <div className="advance-config__title">{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (
                     <label className="advance-config__option advance-config__option--gas" key={index}>
-                      <span className="advance-config__gas-amount">{item.value} </span>
-                      <span className="advance-config__gas-mode">{item.text}</span>
+                      <div className="advance-config__gas-amount">{item.value} </div>
+                      <div className="advance-config__gas-mode">{item.text}</div>
                       <input
                         className="advance-config__radio"
                         type="radio"
@@ -84,12 +30,13 @@ export default class AdvanceConfigLayout extends React.Component {
                         defaultChecked={this.props.selectedGas == item.key}
                         onChange={() => this.props.selectedGasHandler(item.value, item.key, item.text)}
                       />
-                      <span className="advance-config__checkmark"></span>
+                      <span className="advance-config__checkmark advance-config__checkmark--top theme__radio-button"/>
                     </label>
                   )
                 })}
               </div>
             </div>
+            {this.props.minConversionRate}
           </div>
         </SlideDownContent>
       </SlideDown>

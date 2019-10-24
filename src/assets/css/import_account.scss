@@ -4,7 +4,6 @@
   }
 
   &__title {
-    font-family: Montserrat;
     font-size: 18px;
     font-weight: 500;
     font-style: normal;
@@ -12,36 +11,35 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: #222222;
     margin: 30px 0 20px;
-    &--inactive{
+
+    &--inactive {
       max-width: 550px;
-      margin: 0 auto;
+      margin: 0 auto 10px;
       text-align: center;
-      margin-bottom: 10px;
       font-size: 13px;
-      &--seperator{
-        width: calc(100% - 35px);
-        margin: 0 auto;
-        border-bottom: 1px solid #e1e4eb;
-      }
-      &--content{
-        width: 230px;
-        position: relative;
-        top: -10px;
-        background-color:#f1f5fb;
-        margin: 0 auto;
-        text-align: center;
-        color: #9ea1aa;
-        font-weight: 500;
-      }
+    }
+
+    &-separator {
+      width: 100%;
+      margin: 0 auto;
+      border-bottom: 1px solid;
+    }
+
+    &-content {
+      font-size: 12px;
+      width: 140px;
+      position: relative;
+      top: -9px;
+      margin: 0 auto;
+      font-weight: 400;
     }
   }
 
   &__content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     max-width: 550px;
     margin: 0 auto;
 
@@ -56,10 +54,15 @@
       display: block;
 
       .import-account__item {
-        margin: 10px 0;
+        margin-top: 15px;
         width: auto;
         height: auto;
-        border-radius: 50px;
+        border-radius: 3px;
+        color: $grey-darker;
+
+        &:first-child {
+          margin-top: 0;
+        }
 
         &.download-app{
           .import-account__block-right--comming-soon{
@@ -79,101 +82,74 @@
       }
 
       .import-account__block {
-        background-color: #E7EDF5;
+        background-color: white;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
+        padding: 10px 15px;
         height: unset;
-        cursor: initial;
-        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 3px 14px 1px rgba(0, 0, 0, 0.08);
+
         &:hover {
           background-color: transparent !important;
+
           .import-account__name {
             color: inherit !important;
           }
         }
-        // @include screen-min-width(large){
-        //   &:hover {
-        //     border-color: #ccc;
-        //     background-color: #fafafa;
-  
-        //     .import-account__name {
-        //       color: #222222;
-        //     }
-        //   }
-        // }
-        // @include screen-max-width(large){
-        //   &:hover {
-        //     background-color: transparent;
-        //     .import-account__name {
-        //       color: inherit;
-        //     }
-        //   }
-        // }
-      }
 
-      .import-account__block-left {
-        display: flex;
-        align-items: center;
+        &-left {
+          display: flex;
+          align-items: center;
+        }
+
+        &-right {
+          display: block;
+          font-size: 12px;
+          color: $grey-dark;
+          width: 100px;
+          padding: 8px 0;
+          text-align: center;
+          cursor: pointer;
+          transition: all .3s;
+          border: 1px solid $grey-dark;
+          border-radius: 3px;
+
+          &:hover {
+            color: white;
+            border-color: #ef8102;
+            background-color: #ef8102;
+          }
+        }
       }
 
       .import-account__icon {
-        width: 25px;
-        height: 35px;
-        background-size: contain;
-        margin-right: 15px;
+        margin-right: 16px;
 
         &.kyberapp {
-          background-image: url($image-path + '/v3/kyber-logo.svg');
-        }
-
-        &.promo-code {
-          background-image: url($image-path + '/v3/kyber-promo-mobile.svg');
-        }
-
-        &.private-key {
-          background-image: url($image-path + '/v3/private-key-mobile.svg');
+          width: 30px;
+          height: 33px;
+          background-size: 250%;
+          margin-right: 6px;
         }
       }
 
       .import-account__name {
-        font-size: 14px;
-        font-weight: 600;
-        color: #222222;
-        margin-bottom: -2px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 2px;
       }
 
       .import-account__desc {
-        font-size: 11px;
-        color: #666666;
-      }
-
-      .import-account__block-right {
-        display: block;
-        font-size: 12px;
-        color: #677C94;
-        width: 100px;
-        padding: 4px 0;
-        text-align: center;
-        cursor: pointer;
-        transition: all .3s;
-        border: 1px solid #677C94;
-        border-radius: 20px;
-
-        &:hover {
-          color: white;
-          border-color: #ef8102;
-          background-color: #ef8102;
-        }
+        font-size: 10px;
       }
     }
   }
 
   &__item {
     width: 160px;
-    border-radius: 23px;
-    background-color: #e7edf5;
     margin: 0 0 12px;
 
     >div {
@@ -190,134 +166,93 @@
       margin-right: 0;
     }
 
-    &--inactive {
-      .import-account__block {
-        border: 1px solid transparent;
+    &--disabled {
+      opacity: 0.6;
+      cursor: initial;
+      pointer-events: none;
+    }
 
-        &:hover {
-          border-color: #e7edf5;
-          background-color: white;
+    @include screen-max-width(xxsmall) {
+      width: 48%;
+    }
 
-          .import-account__name {
-            color: inherit;
-          }
-        }
-
-        .import-account__icon {
-          background: no-repeat center;
-
-          &.metamask {
-            background-image: url($image-path + 'import-account/wallet-icon/metamask_gray.svg');
-          }
-          &.ledger {
-            background-image: url($image-path + 'import-account/wallet-icon/ledger_gray.svg');
-          }
-          &.trezor {
-            background-image: url($image-path + 'import-account/wallet-icon/trezor_gray.svg');
-          }
-          &.json {
-            background-image: url($image-path + 'import-account/wallet-icon/keystore_gray.svg');
-          }
-          &.private-key {
-            background-image: url($image-path + 'import-account/wallet-icon/private_key_gray.svg');
-          }
-          &.promo-code {
-            background-image: url($image-path + 'import-account/wallet-icon/promocode_gray.svg');
-          }
-        }
-      }
+    @include screen-max-width(small) {
+      width: 100%;
     }
   }
 
   &__block {
     height: 100%;
-    background-color: #e7edf5;
     display: flex;
-    padding: 6px 15px;
-    border-radius: 20px;
+    padding: 6px 10px;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     transition: all .4s;
     outline: none;
+    border: 1px solid;
+    border-radius: 3px;
+    cursor: pointer;
+
     &:hover {
-      border-color: transparent;
-      background-color: #ef8102;
+      background-color: transparent;
 
       .import-account__name {
-        color: white;
+        color: #ff9008;
       }
 
-      .metamask {
-        background-image: url($asset-url + 'wallets/metamask-white.svg');
-      }
+      .import-account__icon {
+        background-position: -31px 0;
 
-      .json {
-        background-image: url($asset-url + 'wallets/keystore-white.svg');
-      }
-
-      .trezor {
-        background-image: url($asset-url + 'wallets/trezor-white.svg');
-      }
-
-      .ledger {
-        background-image: url($asset-url + 'wallets/ledger-white.svg');
-      }
-
-      .private-key {
-        background-image: url($asset-url + 'wallets/privatekey-white.png');
-      }
-
-      .promo-code {
-        background-image: url($asset-url + 'wallets/promo_code-white.svg');
+        &.kyberapp {
+          background-position: -51px 0;
+        }
       }
     }
   }
 
   &__icon {
-    width: 17px;
-    height: 17px;
-    margin-right: 10px;
-    background: center no-repeat;
-    background-size: contain;
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+    background: 0 0 no-repeat;
 
     &.metamask {
-      background-image: url($asset-url + 'wallets/metamask.svg');
-    }
-
-    &.json {
-      background-image: url($asset-url + 'wallets/keystore.svg');
-    }
-
-    &.trezor {
-      background-image: url($asset-url + 'wallets/trezor.svg');
+      background-image: url($image-path + 'import-account/wallets/metamask.svg');
     }
 
     &.ledger {
-      background-image: url($asset-url + 'wallets/ledger.svg');
+      background-image: url($image-path + 'import-account/wallets/ledger.svg');
+    }
+
+    &.trezor {
+      width: 14px;
+      background-image: url($image-path + 'import-account/wallets/trezor.svg');
+    }
+
+    &.json {
+      background-image: url($image-path + 'import-account/wallets/keystore.svg');
     }
 
     &.private-key {
-      background-image: url($asset-url + 'wallets/privatekey.svg');
+      background-image: url($image-path + 'import-account/wallets/private-key.svg');
     }
 
-    &.promo-code {
-      background-image: url($asset-url + 'wallets/promo_code.svg');
+    &.promo-code,
+    &.kyberapp {
+      width: 15px;
+      background-image: url($image-path + 'import-account/wallets/promo-code.svg');
+    }
+
+    &.kyberapp {
+      background-position: -51px 0;
     }
   }
 
   &__name {
-    font-size: 13px;
-    font-weight: 600;
-    color: #666666;
-    h3{
-      font-size: inherit;
-      font-family: inherit;
-      line-height: inherit;
-      font-weight: inherit;
-      position: relative;
-      top: 4px;
-    }
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    top: 1px;
   }
 
   .column-block {
@@ -376,17 +311,13 @@
     text-transform: uppercase;
   }
 
-  @media screen and (max-width: 900px) {
+  @include screen-max-width(xxmedium) {
     border: none;
     box-shadow: none;
 
     &__wallet-type {
       padding: 5px 10px;
       display: none;
-
-      // &.mobile {
-      //   display: flex;
-      // }
     }
 
     &__wallet-container {
@@ -426,13 +357,13 @@
 }
 
 .import-privatekey {
-  padding: 0px !important;
+  padding: 0 !important;
+
   .title {
     text-align: center;
     margin-bottom: 70px;
     margin-top: 0;
-    padding-top: 70px;
-    font-size: 28px;
+    padding-top: 50px;
     font-weight: 600;
     line-height: 1.71;
     letter-spacing: -0.4px;
@@ -450,43 +381,48 @@
       }
     }
   }
+
   .overlap {
-    justify-content: center !important;
-    // background-color: #f5f5f5;
     margin-top: 10px;
     padding: 20px 45px 45px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
     .accent {
       line-height: 45px;
       padding: 0 35px;
       background: #ef8102;
+      color: white;
       font-size: 14px;
-      border-radius: 4px;
       width: 100%;
-      max-width: 200px;
-      border-radius: 60px;
+      max-width: 150px;
+      border-radius: 3px;
       font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      border: none;
     }
   }
+
   #private_key {
     text-align: left;
     width: 100%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 23px;
+    border-radius: 3px;
     color: #666666;
     height: 45px;
-    padding-left: 55px;
+    padding: 0 45px;
+    font-size: 18px;
+
+    &.security {
+      font-size: 25px;
+    }
   }
 }
 
 .import-promocode {
   @extend .import-privatekey;
-
-  .overlap {
-    justify-content: space-between !important;
-  }
 }
 
 .keystore-modal{
@@ -503,44 +439,37 @@
     width: 100%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 23px;
+    border-radius: 3px;
     color: #666666;
     height: 45px;
-    padding-left: 55px;
+    padding: 0 45px;
     outline: none;
     box-shadow: none;
+    font-size: 18px;
+
+    &.security {
+      font-size: 25px;
+    }
   }
 }
 
 .reimport-modal {
+  padding: 10px; 
 
-  &--tiny {
-    @media print, screen and (max-width: 40em) {
-      top: 40%;
-      height: 160px;
-      min-height: 0;
-      width: 90%;
-      border-radius: 10px;
-      margin: 0 auto;
-    }
-  }
-  
-  .title{
+  .title {
     font-size: 18px !important;
     text-align: center;
-    font-weight: 550;
-    padding: 20px;
+    font-weight: 500;
     margin: 0;
   }
+
   .content{
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    max-width: 250px;
-    margin: 0 auto;
+    justify-content: center;
+    margin: 50px auto 0;
     a{
       padding: 10px 35px;
-      border-radius: 20px;
+      border-radius: 3px;
       display: flex;
       align-items: center;
       color: white;
@@ -548,9 +477,10 @@
       font-size: 14px;
       &.confirm-btn{
         background-color: #EF8102;
+        margin-right: 20px;
       }
       &.cancel-btn{
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
       }
     }
   }

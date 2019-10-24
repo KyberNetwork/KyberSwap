@@ -114,13 +114,13 @@ export default class PathSelector extends React.Component {
                                 {this.focusItem()}
                             </div>
                             <div>
-                                <img src={require('../../../assets/img/exchange/arrow-down-swap.svg')} />
+                                <img src={require('../../../assets/img/v3/price_drop_down.svg')} />
                             </div>                            
                         </div>
                     </DropdownTrigger>
                     <DropdownContent>
                         <div className="select-item">
-                            <div className="list-item custom-scroll">
+                            <div className="list-item">
                                 {this.getListItem()}
                             </div>
                         </div>

@@ -2,31 +2,131 @@ $title-background-color: #DCF0EC;
 $footer-background-color: $title-background-color;
 $divider-color: darken($title-background-color, 5);
 
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
 .reveal-overlay {
   background-color: rgba($dark-gray, .75);
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
+.content-wrapper {
+  @include screen-max-width(medium) {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.input-reveal {
+  position: relative;
+
+  .tootip {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 22px;
+    margin-top: -11px;
+    left: 15px;
+    transition: opacity .5s ease-in-out;
+    background-image: url($image-path + 'lock.svg');
+  }
+
+  .toggle {
+    opacity: .4;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 15px;
+    left: unset;
+    transition: opacity .5s ease-in-out;
+    cursor: pointer;
+    background-image: url($image-path + 'unlock-pass.svg');
+  }
+
+  &.unlock .toggle {
+    background-image: url($image-path + 'lock-pass.svg');
+  }
+
+  #promo_code {
+    padding-right: 60px;
+  }
+
+  #private_key {
+    padding-right: 42px;
+  }
+
+  .qc-code-content {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
+}
+
 .reveal {
   position: relative;
   overflow: visible;
-  border-radius: 0;
-  //color: $white;
+  border-radius: 3px;
   outline: none;
   background-color: #f6f7fa;
-  // background-color: $k-primary;
-  // border: 2px solid $white;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
-  @include breakpoint(small only) {
-    // top: 0 !important;
-    height: auto;
+  margin: 0 auto;
+  padding: 10px 10px 30px 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  max-width: 90%;
+
+  @include screen-max-width(medium) {
+    padding: 0;
+    left: 0;
+    top: 0 !important;
+    bottom: 0;
+    right: 0;
+    transform: none !important;
+    min-height: 100vh;
+    max-width: 100% !important;
   }
+
+  .text-center {
+    text-align: center;
+  }
+
+  &.tiny {
+    width: 450px;
+  }
+
+  &.medium {
+    width: 600px;
+  }
+
+  &.large {
+    width: 1200px;
+    top: 50px;
+    transform: initial;
+    margin-bottom: 50px;
+  }
+
   .message {
     margin-bottom: 25px;
   }
-  a{
+
+  a {
     color: #EF8102;
+
     &.x {
       display: block;
       position: absolute;
@@ -34,23 +134,29 @@ $divider-color: darken($title-background-color, 5);
       top: 5px;
       font-size: 2rem;
       color: #aaa;
-    //color: $white;
+      z-index: 10;
+      cursor: pointer;
     }
   }
+
   .title {
     font-size: 1.8rem;
-    margin-top: 20px;
+    padding-top: 35px;
     margin-bottom: 20px;
-  //  background-color: $k-primary-darker;
   }
+
   .overlap {
     width: 100%;
     text-align: center;
     display: flex;
-    justify-content: space-between;
-    // background-color: #8CBCAE;
-    padding: 50px 45px;
+    justify-content: flex-end;
+    padding: 20px 45px 40px;
     align-items: center;
+
+    &--single {
+      justify-content: center;
+    }
+
     span{
       &:not(.error-text){
         color: white;
@@ -60,23 +166,33 @@ $divider-color: darken($title-background-color, 5);
       margin: 0;
     }
   }
+
   .content {
-    // padding: 0 50px;
-    // padding: 20px 10px;
-    // @include breakpoint(medium) {
-    //   padding: 15px;
-    // }
-    &.with-overlap {
-      padding-bottom: 25px;
-      &.tx-loading {
-        padding-bottom: 100px;
+
+    // Message container: waiting for confirmation
+    .message-waiting {
+      padding: 15px 45px;
+      font-size: 14px;
+      color: #5a5e67;
+
+      @include screen-max-width(medium) {
+        padding: 15px 20px;
       }
     }
+
+    &.with-overlap {
+      padding-bottom: 25px;
+
+      &.tx-loading {
+        padding-bottom: 25px;
+      }
+    }
+
     .block-title {
-      @include clearfix;
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 15px;
+
       img.loading {
         height: 21px;
         float: right;
@@ -88,7 +204,6 @@ $divider-color: darken($title-background-color, 5);
       line-height: 1.7;
     }
     .gas-configed{
-      // width: 270px;
       max-width: 100%;
       white-space: nowrap;
       text-align: left;
@@ -97,9 +212,10 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 1rem;
       >div{
         &:first-child{
-          // margin-bottom: 0.6rem;
           font-size: 14px;
           font-weight: 600;
+          margin-bottom: 7px;
+          color: #9ea1aa
         }
       }
       .total-fee {
@@ -117,7 +233,7 @@ $divider-color: darken($title-background-color, 5);
         &__formula {
           font-size: 13px;
           font-weight: normal;
-          color: #666666;
+          color: #5a5e67;
         }
 
         @include screen-max-width(mid-small) {
@@ -140,7 +256,7 @@ $divider-color: darken($title-background-color, 5);
       img {
         margin-right: 6px;
         position: relative;
-        bottom: 2px;
+        bottom: -1px;
       }
     }
 
@@ -153,9 +269,7 @@ $divider-color: darken($title-background-color, 5);
     border-top: 1px solid $divider-color;
     padding: 25px 10px;
     background-color: $footer-background-color;
-    @include breakpoint(medium) {
-      padding: 15px;
-    }
+
     &.with-overlap {
       padding-top: 45px;
     }
@@ -170,38 +284,6 @@ $divider-color: darken($title-background-color, 5);
 
   &.promocode {
     padding: 0;
-  }
-}
-
-#exchange-from-token-modal,
-#exchange-to-token-modal,
-#transfer-from-token-modal {
-  @include breakpoint(medium) {
-    max-width: 860px;
-  }
-}
-
-#passphrase-modal {
-  @include breakpoint(medium) {
-    max-width: 360px;
-  }
-}
-
-#switch-trezor-address-modal {
-  @include breakpoint(medium) {
-    max-width: 360px;
-  }
-}
-
-#select-trezor-address-modal {
-  @include breakpoint(medium) {
-    max-width: 860px;
-  }
-}
-
-#request-trezor-access-modal {
-  @include breakpoint(medium) {
-    max-width: 400px;
   }
 }
 
@@ -233,13 +315,12 @@ $divider-color: darken($title-background-color, 5);
     display: grid;
     grid-template-columns: 1fr 35px 1fr;
     grid-gap: 10px;
-    margin-top: 0.8rem;
     // justify-content: space-between;
     background-color: #eaecf2;
     // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
     // border: solid 0.8px rgba(204, 204, 204, 0.72);
     border-radius: 4px;
-    padding: 5px 25px;
+    padding: 5px 35px;
 
     @include screen-max-width(medium) {
       grid-gap: 5px;
@@ -257,6 +338,7 @@ $divider-color: darken($title-background-color, 5);
       }
 
       .rc-label {
+        margin-bottom: 10px;
         color: #ef8102;
         font-size: 12px;
         font-weight: 600;
@@ -428,8 +510,16 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .title-container {
+
+    @include screen-min-width(medium) {
+      padding: 0 45px;
+    }
+
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+
 
     >div:nth-child(2) {
       border-left: 2px solid #ccc9c9;
@@ -440,12 +530,12 @@ $divider-color: darken($title-background-color, 5);
   .title-description{
     margin-bottom: 25px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: #141927;
 
     &-wallet-address {
       color: #5a5e67;
-      margin-top: 3px;
+      margin-top: 7px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -460,6 +550,7 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       font-weight: 600;
       color: #141927;
+      padding: 0 45px;
 
       @include screen-max-width(medium) {
         padding: 0 20px;
@@ -470,10 +561,19 @@ $divider-color: darken($title-background-color, 5);
       color: #1e87f0;
       font-size: 13px;
       font-weight: 500;
-      margin-top: 10px;
+      margin: 10px 0;
+      padding: 0 45px;
+      display: flex;
+      align-items: center;
 
       > img {
         padding-bottom: 4px;
+        margin-right: 3px;
+      }
+
+      @include screen-max-width(medium) {
+        padding: 0;
+        align-items: flex-start;
       }
     }
   }
@@ -485,7 +585,8 @@ $divider-color: darken($title-background-color, 5);
   padding-right: 0 !important;
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
-  border-radius: 10px;
+  border-radius: 3px;
+  overflow-y: auto;
 
   @include screen-max-width(medium) {
     border-radius: 0;
@@ -502,29 +603,23 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .transfer-title {
+    padding: 25px 45px;
+    background-color: #EBECF2;
     @include screen-max-width(medium) {
-      padding: 0 20px;
+      padding: 25px 20px;
     }
   }
 
   .title {
-    // font-weight: 600;
-    // line-height: 1.3;
-    // letter-spacing: -0.2px;
-    // color: #141927;
-    margin-bottom: 20px;
-    // text-align: center;
-    margin-top: 60px;
-    // padding: 0 45px;
-    // font-size: 16px;
-
+    padding: 0 45px;
+    margin: 30px 0;
     font-size: 28px;
     font-weight: 600;
     color: #141927;
     line-height: 0.86;
     letter-spacing: -0.1px;
 
-    @include screen-max-width(medium) {
+    @include screen-min-width(medium) {
       margin-top: 20px;
     }
   }
@@ -537,7 +632,7 @@ $divider-color: darken($title-background-color, 5);
 
   .recap-transfer{
     display: flex;
-    margin: 10px 0 35px;
+    margin: 10px 0;
     font-size: 18px;
     font-weight: 600;
     color: #999;
@@ -551,33 +646,36 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
+
   .overlap {
     display: inherit;
     width: 100%;
     text-align: left;
     background-color: white;
-    padding: 15px 45px 43px 45px;
+    padding: 0 45px;
     align-items: center;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 
-    span{
+    span {
       &:not(.error-text){
         color: #666666;
-        // font-weight: 600;
         font-size: 14px;
         letter-spacing: normal;
       }
     }
-    .type-password{
+
+    .type-password {
       font-size: 16px;
       font-weight: 600;
       color: #666666;
       margin-bottom: 15px;
     }
+
     .button {
+      display: block;
       min-width: 150px;
-      border-radius: 23px;
+      border-radius: 3px;
       padding: 14px 30px 14px 30px;
       color: #fff;
       font-size: 14px;
@@ -590,29 +688,16 @@ $divider-color: darken($title-background-color, 5);
       border: none;
       outline: none;
       box-shadow: none;
-
-      // &::after {
-      //   content: '';
-      //   position: absolute;
-      //   width: 28px;
-      //   height: 28px;
-      //   right: 11px;
-      //   top: 50%;
-      //   border-radius: 50%;
-      //   transform: translateY(-50%);
-      //   background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
-      // }
+      text-align: center;
 
       &:hover {
         background-color: $color-swap-light;
       }
 
       &.cancel-process {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
         color: white;
-        text-transform: uppercase;
-        // min-width: 135px;
-        // padding: 14px;
+        margin-right: 20px;
         &::after {
           content: none;
         }
@@ -625,27 +710,18 @@ $divider-color: darken($title-background-color, 5);
         min-width: 125px;
       }
     }
+
     @include screen-max-width(medium){
-      background-color: #f6f7fa;
-      padding-left: 20px;
-      padding-right: 20px;
-      .button {
-        width: 100%;
-        max-width: 150px;
-        margin-top: 10px;
-      }
+      padding: 0 20px;
     }
   }
+
   .content {
-    padding: 0 45px;
     &.with-overlap {
       padding-bottom: 25px;
-      @include screen-max-width(medium){
-        padding: 0;
-      }
     }
+
     .block-title {
-      @include clearfix;
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 15px;
@@ -655,12 +731,13 @@ $divider-color: darken($title-background-color, 5);
         margin-left: 10px;
       }
     }
+
     p {
       font-size: 14px;
       line-height: 1.7;
     }
-    .gas-configed{
-      // width: 95%;
+
+    .gas-configed {
       white-space: nowrap;
       text-align: left;
       font-size: 1rem;
@@ -675,7 +752,7 @@ $divider-color: darken($title-background-color, 5);
       }
       
       @include screen-min-width(medium){
-        padding: 18px 5px 10px;
+        padding: 18px 45px 10px;
         margin: 0 auto;
       }
 
@@ -722,7 +799,6 @@ $divider-color: darken($title-background-color, 5);
           padding: 0 20px;
         }
         .amount {
-          // padding: 5px 10px;
           background-color: white;
           border-radius: 0;
         }
@@ -734,19 +810,18 @@ $divider-color: darken($title-background-color, 5);
     background-color: #ffffff;
     color: #141927;
     text-align: left;
-    // border: none;
     box-shadow: none;
-    // padding-bottom: 20px;
-    // padding-top: 20px;
     border: solid 1px #e5e5e5;
     border-radius: 23px;
     padding-left: 50px;
     height: 45px;
-    &.security{
+
+    &.security {
       font-family: 'text-security-disc';
       font-size: 14px;
     }
   }
+
   .password-input{
     text-align: left;
     width: 100%;
@@ -756,63 +831,59 @@ $divider-color: darken($title-background-color, 5);
     }
     
   }
-  .input-confirm{
-    padding: 30px 0px 0px 0px;
+
+  .input-confirm {
+    padding: 25px 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    @include screen-max-width(medium) {
-      padding-top: 20px;
-      &--approve {
-        text-align: center;
-        .button {
-          max-width: 200px;
-        }
+    justify-content: flex-end;
+
+    &--single {
+      display: block;
+    }
+
+    &--approve {
+      width: 100%;
+      text-align: center;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 35px 0;
+
+      .button {
+        max-width: 200px;
       }
     }
   }
-  .password-input{
+
+  .password-input {
     margin-top: 10px;
-    @include screen-min-width(medium){
-      .process-submit{
-        float: right;
-      }
-    }
-    @include screen-max-width(medium){
-      .process-submit{
-        margin-top: 20px;
-        width: 100%;
-      }
-    }
-    .input-reveal{
-      .tootip {
-        opacity: .4;
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        position: absolute;
-        top: 21px;
-        margin-top: -11px;
-        left: 24px; 
-        -webkit-transition: opacity .5s ease-in-out;
-        -o-transition: opacity .5s ease-in-out;
-        transition: opacity .5s ease-in-out;
-        background-image: url(../img/lock.svg);
-      }
-    }
+
     &.error {
       #passphrase {
         border-color: #ee344e;
         background-color: #ffe7eb;
       }
     }
+
+    @include screen-min-width(medium){
+      .process-submit{
+        float: right;
+      }
+    }
+
+    @include screen-max-width(medium){
+      .process-submit{
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
   }
+
   .approve-modal{
     .title{
       padding-left: 50px;
+      margin-top: 40px;
       text-align: left;
       @include screen-max-width(medium) {
         padding-left: 20px;
@@ -820,10 +891,10 @@ $divider-color: darken($title-background-color, 5);
     }
     .message{
       font-size: 14px;
-      margin-top: 1rem;
+      margin: 1rem 45px 25px;
       font-weight: normal;
       @include screen-max-width(medium) {
-        padding: 0 20px;
+        margin: 1rem 20px 25px;
       }
     }
     .tx-title{
@@ -832,35 +903,31 @@ $divider-color: darken($title-background-color, 5);
       .address-info {
         overflow: hidden;
         text-overflow: ellipsis;
-        display: flex;
-        justify-content: space-between;
         background-color: #eaecf2;
-        // box-shadow: 0 1px 5px 0 hsla(0,0%,56%,.15);
-        // border: .8px solid hsla(0,0%,80%,.72);
         border-radius: 4px;
-        padding: 15px 25px;
+        padding: 15px 0;
         margin-right: 0;
+
         div {
           &:first-child {
             color: #ef8102;
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 7px;
           }
+
           &:last-child {
-            // padding: 0 15px;
             font-size: 14px;
             color: #5a5e67;
             font-weight: normal;
+            margin-right: 10px;
           }
         }
         @include screen-max-width(medium) {
           display: block;
-          background-color: white;
-          padding-left: 20px;
-          padding-right: 20px;
+          padding: 0;
           div {
             &:last-child {
-              // padding: 0 15px;
               margin-top: 10px;
               word-wrap: break-word;
             }
@@ -892,13 +959,20 @@ $divider-color: darken($title-background-color, 5);
     .gas-configed{
       margin-top: 1rem;
     }
+
+    @include screen-max-width(medium) {
+      padding-bottom: 100px;
+
+      .overlap {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+    }
   }
 }
 
 .reveal.transaction-loading {
-  @include screen-max-width(medium) {
-    padding: 5px 2rem;
-  }
   @include screen-min-width(medium) {
     width: 650px;
     padding: 1rem 0 0 0;
@@ -912,11 +986,24 @@ $divider-color: darken($title-background-color, 5);
     color: #141927;
     margin-bottom: 30px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 35px;
+
+    .broadcast-title-container {
+      display: flex;
+      justify-content: center;    
+      align-items: center;      
+    }
+
+    .title-status {
+      display: flex;
+      align-items: center;
+      font-size: 28px
+    }
+
     .icon {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 10px;
+      width: 40px;
+      height: 40px;
+      margin: 0 15px 0 0;
       background-size: contain;
       background-repeat: no-repeat;
 
@@ -929,7 +1016,7 @@ $divider-color: darken($title-background-color, 5);
       }
 
       &--success {
-        background-image: url($image-path + 'checked-circle-orange.svg');
+        background-image: url($image-path + 'checked-circle.svg');
       }
     }
     .title {
@@ -937,22 +1024,16 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: -15px;
     }
   }
-  .content.with-overlap {
-    @include screen-min-width(medium) {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-  }
+
   .final-status {
     text-align: center;
     font-size: 14px;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     letter-spacing: -0.1px;
     font-weight: 600 !important;
     color: #222222;
     line-height: 1.71;
-    letter-spacing: -0.1px;
   }
   .tx-loading {
     padding: 20px 0 60px 0;
@@ -1061,18 +1142,18 @@ $divider-color: darken($title-background-color, 5);
   .content {
     padding: 16px 30px;
     input.text-center {
+      width: 100%;
       border: solid 1px #e5e5e5;
       background-color: #ffffff;
       outline: none;
       box-shadow: none;
       height: 55px;
-      border-radius: 4px;
       font-size: 16px;
       text-align: unset;
       margin-bottom: 20px;
       padding-left: 35px;
       padding-right: 35px;
-      border-radius: 40px;
+      border-radius: 3px;
       &::placeholder {
         color: #7f7f7f;
         line-height: 1.25;
@@ -1127,20 +1208,22 @@ $divider-color: darken($title-background-color, 5);
       }
     }
   }
+
   .overlap {
-    // background-color: #f5f5f5;
     justify-content: space-between;
     background-color: white;
     padding: 30px 45px 35px;
+
     button {
       width: 100%;
       max-width: 150px;
-      width: 100%;
       box-shadow: none;
       text-transform: capitalize;
       letter-spacing: 0.5px;
+
       &.cancel-buttom {
-        background-color: #6f6f6f;
+        background-color: #a2a7b2;
+        margin-right: 20px;
       }
     }
 
@@ -1170,24 +1253,20 @@ $divider-color: darken($title-background-color, 5);
     margin-bottom: $spBallSize;
     background-color: rgba($spCol,1);
     opacity: 1;
-    -webkit-animation: spScaleAlpha 1s infinite linear;
     animation: spScaleAlpha 1s infinite linear;
   }
   .loading-3balls:before, .loading-3balls:after {
     content: '';
-    position: relative;
+    position: absolute;
+    top: 0;
     opacity: 0.25;
   }
   .loading-3balls:before {
     left: 30px;
-    top: -2px;
-    -webkit-animation: spScaleAlphaBefore 1s infinite linear;
     animation: spScaleAlphaBefore 1s infinite linear;
   }
   .loading-3balls:after {
     left: -30px;
-    top: -26px;
-    -webkit-animation: spScaleAlphaAfter 1s infinite linear;
     animation: spScaleAlphaAfter 1s infinite linear;
   }
   @-webkit-keyframes spScaleAlpha {
@@ -1225,23 +1304,21 @@ $divider-color: darken($title-background-color, 5);
 }
 
 
-.modal-error{
+.modal-error {
   font-size: 0.9em;
-  margin-bottom: 25px;
   color: $alert-color;
-  padding-top: 24px;
-  &.metamask{
+  padding: 20px 45px 10px;
+
+  &.metamask {
     height: 65px;
     overflow-y: auto;
     overflow-x: hidden;
     word-wrap: break-word;
-    margin: 24px;
-    padding: 5px 5px;
-    margin-left: 10px;
-    margin-bottom: 0;
+
     &.full{
       white-space: normal;
     }
+
     + .show-full{
       font-size: 0.8em;
       margin-top: -20px;
@@ -1250,6 +1327,10 @@ $divider-color: darken($title-background-color, 5);
       color: #ff5d00;
       font-style: italic;
     }
+  }
+
+  @include screen-max-width(medium) {
+    padding: 20px 20px 10px;
   }
 }
 
@@ -1270,4 +1351,66 @@ $divider-color: darken($title-background-color, 5);
       font-weight: 500;
     }
   }
+}
+
+#waiting {
+  &.ledger{
+    .caption{
+      max-width: none;
+      > div{
+        border-top: 1px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+        color: #777;
+      }
+    }
+  }
+  background-color: rgba($dark-gray, .5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  &.pending{
+    background-color: rgba($white, .3);
+    h4{
+      font-size: 1.2rem;
+    }
+  }
+  .caption {
+    box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    color: $medium-gray;
+    font-size: 14px;
+    text-align: center;
+    background-color: white;
+    padding: 60px 30px 30px 30px;
+    max-width: 300px;
+    border-radius: 3px;
+    background-image: url(../img/waiting.svg);
+    background-size: 32px 32px;
+    background-repeat: no-repeat;
+    background-position: center top 30px;
+    > div{
+      opacity: 0;
+      transition: opacity .5s;
+      &:not(:empty){
+        opacity: 1;
+      }
+    }
+  }
+}
+.cancel-order-modal {
+  padding: 0;
+}
+
+.ledger-error-dest{
+  padding: 0 20px;
+  text-align: left;
 }

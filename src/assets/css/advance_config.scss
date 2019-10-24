@@ -1,9 +1,18 @@
 .advance-config {
   font-size: 11px;
-  &__block {
-    margin: 11px 0 15px;
+
+  &__gas {
+    border-bottom: 1px solid transparent;
     padding-bottom: 15px;
-    border-bottom: 1px solid #e1e4eb;
+    margin-bottom: 15px;
+
+    &--no-border {
+      border: none;
+    }
+  }
+
+  &__block {
+    margin-top: 10px;
   }
 
   &__gas-tooltip{
@@ -11,29 +20,28 @@
   }
 
   &__title {
-    // font-size: 14px;
-    font-weight: 600;
-    color: #141927;
-    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 15px;
     position: relative;
   }
+
   &__title-info{
     margin-left: 5px;    
   }
 
   &__option {
+    font-size: 10px;
+    font-weight: 400;
     display: inline-block;
     position: relative;
-    padding-left: 22px;
+    padding-left: 18px;
     cursor: pointer;
     margin-bottom: 0;
 
-    span {
-      color: #0a0a0a;
-    }
-
-    &--gas {
-      margin: 0 30px 5px 0;
+    &-percent {
+      position: relative;
+      top: 1px;
     }
 
     &-container {
@@ -41,6 +49,14 @@
       justify-content: space-between;
       align-items: center;
       flex-flow: wrap;
+
+      &--rate {
+        justify-content: right;
+
+        .advance-config__option:first-child {
+          margin-right: 85px;
+        }
+      }
     }
 
     &--with-input {
@@ -55,32 +71,14 @@
   }
 
   .__react_component_tooltip{
-    // position: absolute;
     z-index: 1 !important;
     background-color: #FFCAD1;
     width: 100% !important;
     max-width: 200px;
-    // left: 0px !important;
-    // top: 25px !important;
+
     >div {
       color: #222;
       font-size: 11px;
-    }
-    &:after{
-      // border-bottom-color: #FFCAD1 !important;
-      // right: 20px;
-      // left: auto;
-
-      // border-left: 8px solid transparent !important;
-      // border-right: 8px solid transparent !important;
-      // top: -6px;
-      // // left: 50%;
-      // margin-left: -8px;
-    }
-
-    @media only screen and (max-width: 1100px) {
-      // left: 10px !important;
-      // top: 32px !important;
     }
   }
   
@@ -91,17 +89,12 @@
 
     &:checked {
       ~.advance-config__checkmark {
-        border-color: #1DB1FF;
-        background-color: #1DB1FF;
+        border-color: $text-orange !important;
+        background-color: $text-orange !important;
 
         &::after {
           transform: translateY(-50%) scale(1);
         }
-      }
-
-      ~.advance-config__input {
-        background-color: white !important;
-        pointer-events: initial;
       }
     }
   }
@@ -110,10 +103,10 @@
     position: absolute;
     top: 50%;
     left: 0;
-    height: 16px;
-    width: 16px;
-    border: solid 2px #e9e9e9;
-    background-color: #ffffff;
+    height: 12px;
+    width: 12px;
+    border: solid 1px #e9e9e9;
+    background-color: #1f2731;
     border-radius: 50%;
     transform: translateY(-50%);
     transition: all .3s;
@@ -124,7 +117,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #fff;
+      background-color: #1f2731;
       position: absolute;
       right: 0;
       left: 0;
@@ -133,30 +126,22 @@
       transform: translateY(-50%) scale(0);
       transition: all .5s;
     }
+
+    &--top {
+      top: 6px;
+    }
   }
 
   & &__input {
-    width: 100px;
-    height: 27px;
-    margin: 0 0 0 5px;
-    padding: 0 20px !important;
-    border: solid 1px #e8e8e8 !important;
-    min-height: unset !important;
-    box-shadow: none !important;
-    color: #0a0a0a !important;
-    text-align: right !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
+    width: 65px;
+    height: 30px;
+    margin-left: 10px;
+    border: solid 1px transparent;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 400;
     border-radius: 3px;
-    transition: background-color .3s;
-    pointer-events: none;
-    position: relative;
-    
-    &--suffix {
-      color: #666666;
-      position: absolute;
-      right: 8px;
-    }
+    outline: none;
 
     &-error {
       border: 1px solid #EE344E !important;
@@ -164,41 +149,36 @@
   }
 
   &__info {
-    // font-size: 13px;
-    font-style: italic;
-    color: #5a5e67;
+    font-size: 12px;
     margin-top: 15px;
+    line-height: 1.5;
   }
 
   &__gas-amount {
-    // font-size: 16px;
-    letter-spacing: 1px;
-    color: #141927;
+    font-weight: 400;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: $grey-dark;
   }
 
   &__gas-mode {
-    // font-size: 12px;
-    color: #5a5e67;
     text-transform: uppercase;
+    position: relative;
+    top: 1px;
+    font-size: 10px;
+    font-weight: 400;
+    color: $grey-darker;
   }
 
-  // @media screen and (max-width: 900px) {
-  //   padding: 0 0 5px 20px;
-  // }
+  @include screen-max-width(mid-small) {
+    &__option {
+      margin-right: 11px;
 
-  // @media screen and (max-width: 390px) {
-  //   &__option-container {
-  //     display: block;
-  //   }
-
-  //   &__option {
-  //     display: flex;
-  //     align-items: center;
-  //     margin-bottom: 5px;
-  //   }
-
-  //   &__gas-amount {
-  //     margin-right: 5px;
-  //   }
-  // }
+      &-container--rate {
+        .advance-config__option:first-child {
+          margin-right: 40px;
+        }
+      }
+    }
+  }
 }

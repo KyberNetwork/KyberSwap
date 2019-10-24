@@ -16,6 +16,7 @@ import * as common from "../utils/common";
 
 import * as converter from "../utils/converter"
 import { store } from '../store'
+import history from "../history";
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -46,6 +47,7 @@ export function* goToRoute(action) {
 export function* clearSession(action) {
   yield put(actions.clearSessionComplete(action.payload))
   //yield put(actions.goToRoute(constants.BASE_HOST));
+  if (window.kyberBus) { window.kyberBus.broadcast('wallet.clear', null); }
 }
 
 export function* updateAllRate(action) {
@@ -55,7 +57,6 @@ export function* updateAllRate(action) {
   const { ethereum, tokens } = action.payload
   if (!rateUSD) {
     try {
-      console.log("run here")
       rateUSD = yield call([ethereum, ethereum.call],"getRateETH")
       yield put(actions.updateAllRateUSDComplete(rateUSD))
       yield put(actions.showBalanceUSD())
@@ -71,7 +72,6 @@ export function* updateAllRate(action) {
     yield call(updateTitleWithRate);
   }
   catch (err) {
-    //get rate from blockchain
     console.log(err.message)
   }
 }

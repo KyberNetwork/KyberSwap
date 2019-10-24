@@ -1,31 +1,15 @@
-import { take, put, call, fork, select, takeEvery, all, cancel } from 'redux-saga/effects'
+import { take, put, call, fork, takeEvery, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
-import { fetchExchangeEnable, throwErrorSourceAmount } from "../actions/exchangeActions"
-import * as exchangeActions from "../actions/exchangeActions"
 import { getPendingBalancesComplete } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
-import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { subOfTwoNumber } from "../utils/converter"
-import {
-  setRandomTransferSelectedToken,
-  closeImportAccountTransfer
-} from "../actions/transferActions"
-import * as analytics from "../utils/analytics"
-
-// import { goToRoute, updateAllRate, updateAllRateComplete } from "../actions/globalActions"
-import { randomToken, setRandomExchangeSelectedToken, setCapExchange, thowErrorNotPossessKGt, setSelectedGasPrice, closeImportAccountExchange } from "../actions/exchangeActions"
-import  * as transferActions from "../actions/transferActions"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
-import { Rate, updateAllRatePromise } from "../services/rate"
 import { findNetworkName } from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import { store } from '../store';
-import * as commonUtils from "../utils/common"
-import BLOCKCHAIN_INFO from "../../../env"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -35,7 +19,6 @@ export function* updateAccount(action) {
   } catch (err) {
     console.log(err)
   }
-
 }
 
 export function* updateTokenBalance(action) {
@@ -62,17 +45,12 @@ function* processLimitOrderPendingBalance(ethereum, pendingBalances, pendingTxs,
       if (pendingTxs.status === 1) continue;
 
       const isTxMined = yield call(common.checkTxMined, ethereum, pendingTxs[i].tx_hash, latestBlock, constants.LIMIT_ORDER_TOPIC);
-      console.log("tx_mined")
-      console.log(isTxMined)
-      console.log(latestBlock)
       if (isTxMined) {
         pendingTxs[i].status = 1;
         isModified = true;
       }
     }
 
-    console.log(pendingTxs)
-      
     if (isModified) {
       yield put(getPendingBalancesComplete(pendingBalances, pendingTxs));
     }
@@ -119,132 +97,37 @@ export function* importNewAccount(action) {
       account = accountRequest.data
     }    
 
-    //update token and token balance
     var newTokens = {}
     Object.values(tokens).map(token => {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-
-    // if (type === "promo"){
-    //   //promo token
-    //   var state = store.getState()
-    //   var exchange = state.exchange
-    //   const transfer = state.transfer;
-    //   var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
-    //   var promoToken = BLOCKCHAIN_INFO.promo_token
-
-    //   if (promoToken && newTokens[promoToken]){
-    //     var promoAddr = newTokens[promoToken].address
-    //     var promoDecimal = newTokens[promoToken].decimals
-    //     yield put.resolve(exchangeActions.selectTokenAsync(promoToken, promoAddr, "source", ethereum))
-    //     sourceToken = promoToken.toLowerCase()
-    //   }
-    //   var destToken = exchange.destTokenSymbol.toLowerCase()
-      
-    //   if (info.destToken && newTokens[info.destToken]){
-    //     yield put.resolve(exchangeActions.selectTokenAsync(info.destToken, newTokens[info.destToken].address, "des", ethereum))
-    //     destToken = info.destToken.toLowerCase()
-
-    //     //select in transfer
-    //     yield put(transferActions.selectToken(info.destToken, newTokens[info.destToken].address))
-    //   }
-
-    //   var path = constants.BASE_HOST + "/swap/" + sourceToken + "-" + destToken
-    //   path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-    //   yield put.resolve(goToRoute(path))
-
-
-    //   if (promoToken && newTokens[promoToken]){
-    //     var promoAddr = newTokens[promoToken].address
-    //     var promoDecimal = newTokens[promoToken].decimals
-    //     try{
-    //       var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", address, promoAddr)
-    //       var balance = (balanceSource/Math.pow(10, promoDecimal)).toString()
-    //       yield put.resolve(exchangeActions.inputChange('source', balance))
-    //       yield put.resolve(exchangeActions.focusInput('source'));
-    //     }catch(e){
-    //       console.log(e)
-    //     }
-    //   }
-
-    //   yield put(exchangeActions.setGasPriceSuggest({
-    //     ...exchange.gasPriceSuggest,
-    //     fastGas: exchange.gasPriceSuggest.fastGas + 2
-    //   }));
-
-    //   yield put(transferActions.setGasPriceSuggest({
-    //     ...transfer.gasPriceSuggest,
-    //     fastGas: transfer.gasPriceSuggest.fastGas + 2
-    //   }))
-
-    //   if (!transfer.isEditGasPrice) {
-    //     yield put(transferActions.setSelectedGasPrice(transfer.gasPriceSuggest.fastGas + 2, "f"));
-    //   }
-
-    //   if (!exchange.isEditGasPrice) {
-    //     yield put(setSelectedGasPrice(exchange.gasPriceSuggest.fastGas + 2, "f"));
-    //   }
-    // } else {
-    //   yield put(setGasPrice());
-    // }
 
     yield put(setGasPrice());
-
-   // const account = yield call(service.newAccountInstance, address, type, keystring, ethereum)
     yield put(actions.closeImportLoading())
     yield put(actions.importNewAccountComplete(account, walletName))
+
     if (isChangingWallet) yield put(closeChangeWallet())
 
-    //track login wallet
     global.analytics.callTrack("loginWallet", type)
 
-    // if (type !== "promo"){
-    //   yield put(exchangeActions.fetchExchangeEnable())
-    // }
-
-    // if (screen === "exchange"){
-    //   yield put(closeImportAccountExchange())
-    // }else{
-    //   yield put(closeImportAccountTransfer())
-    // }
-
-    // yield put(fetchExchangeEnable())
-
-    // var maxCapOneExchange = "infinity"
-    // try {
-    //   var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-    //   if (!result.error) {
-    //     maxCapOneExchange = result.cap
-    //   }
-    // } catch(e) {
-    //   console.log(e)
-    // }
-    // yield put(setCapExchange(maxCapOneExchange))
-
-    // if (+maxCapOneExchange == 0){
-    //   var linkReg = 'https://kybernetwork.zendesk.com'
-    //   yield put(throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.zeroCap , translate("error.not_possess_kgt", {link: linkReg}) || "There seems to be a problem with your address, please contact us for more details"))
-    // }
-
-    //update token and token balance
     var newTokens = {}
     Object.values(tokens).map(token => {
       var token = { ...token }
       newTokens[token.symbol] = token
     })
-
-    // yield call(ethereum.fetchRateExchange)
 
     console.log(address)
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtLatestBlock", address, tokens)
-    //map balance
     var mapBalance = {}
+
     balanceTokens.map(token => {
       mapBalance[token.symbol] = token.balance
     })
 
     yield put(setBalanceToken(balanceTokens))
+
+    if (window.kyberBus) { window.kyberBus.broadcast('wallet.import', address); }
   }
   catch (err) {
     console.log(err)
@@ -252,7 +135,6 @@ export function* importNewAccount(action) {
     yield put(actions.closeImportLoading())
   }
 
-  //fork for metamask
   if (type === "metamask") {
     const { web3Service, address, networkId } = { ...metamask }
     const watchCoinbaseTask = yield fork(watchCoinbase, web3Service, address, networkId)
@@ -287,7 +169,7 @@ export function* importMetamask(action) {
         return
       }
     }
-    //get coinbase
+
     const address = yield call([web3Service, web3Service.getCoinbase], true)
     yield call([web3Service, web3Service.setDefaultAddress, address])
 
@@ -343,5 +225,4 @@ export function* watchAccount() {
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
   yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
-
 }

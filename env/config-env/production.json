@@ -35,7 +35,6 @@
     ],
     "limitOrder": {
         "minSupportOrder": 0.1,
-        "maxSupportOrder": 10,
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
@@ -51,7 +50,8 @@
             "cg_id": "ethereum",
             "gasLimit": "0",
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "WETH": {
             "symbol": "WETH",
@@ -61,7 +61,8 @@
             "cg_id": "weth",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
@@ -81,7 +82,8 @@
             "gasLimit": "500000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "OMG": {
             "symbol": "OMG",
@@ -174,13 +176,6 @@
             "decimals": 8,
             "cg_id": "ethos"
         },
-        "ADX": {
-            "symbol": "ADX",
-            "name": "AdEx",
-            "address": "0x4470bb87d77b963a013db939be332f927f2b992e",
-            "decimals": 4,
-            "cg_id": "adex"
-        },
         "AST": {
             "symbol": "AST",
             "name": "AirSwap",
@@ -188,13 +183,6 @@
             "decimals": 4,
             "cg_id": "airswap",
             "sp_limit_order": true
-        },
-        "RCN": {
-            "symbol": "RCN",
-            "name": "Ripio Credit Network",
-            "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
-            "decimals": 18,
-            "cg_id": "ripio-credit-network"
         },
         "LINK": {
             "symbol": "LINK",
@@ -228,13 +216,6 @@
             "decimals": 18,
             "cg_id": "iostoken"
         },
-        "MOT": {
-            "symbol": "MOT",
-            "name": "Olympus Labs",
-            "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
-            "decimals": 18,
-            "cg_id": "olympus-labs"
-        },
         "ABT": {
             "symbol": "ABT",
             "name": "ArcBlock",
@@ -253,24 +234,10 @@
         },
         "BLZ": {
             "symbol": "BLZ",
-            "name": "Bluezelle",
+            "name": "Bluzelle",
             "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
             "decimals": 18,
             "cg_id": "bluzelle"
-        },
-        "ELEC": {
-            "symbol": "ELEC",
-            "name": "ElectrifyAsia",
-            "address": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9",
-            "decimals": 18,
-            "cg_id": "electrify-asia"
-        },
-        "BBO": {
-            "symbol": "BBO",
-            "name": "Bigbom",
-            "address": "0x84f7c44b6fed1080f647e354d552595be2cc602f",
-            "decimals": 18,
-            "cg_id": "bigbom-eco"
         },
         "POLY": {
             "symbol": "POLY",
@@ -292,14 +259,6 @@
             "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
             "decimals": 8,
             "cg_id": "civic"
-        },
-        "WAX": {
-            "symbol": "WAX",
-            "name": "Wax",
-            "address": "0x39bb259f66e1c59d5abef88375979b4d20d98022",
-            "decimals": 8,
-            "cg_id": "wax",
-            "priority": true
         },
         "POE": {
             "symbol": "POE",
@@ -342,7 +301,8 @@
             "gasLimit": "600000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "LEND": {
             "symbol": "LEND",
@@ -351,33 +311,12 @@
             "decimals": 18,
             "cg_id": "ethlend"
         },
-        "WINGS": {
-            "symbol": "WINGS",
-            "name": "WINGS",
-            "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
-            "decimals": 18,
-            "cg_id": "wings"
-        },
         "MTL": {
             "symbol": "MTL",
             "name": "Metal",
             "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
             "decimals": 8,
             "cg_id": "metal"
-        },
-        "WABI": {
-            "symbol": "WABI",
-            "name": "WaBi",
-            "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
-            "decimals": 18,
-            "cg_id": "wabi"
-        },
-        "COFI": {
-            "symbol": "COFI",
-            "name": "CoinFi",
-            "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
-            "decimals": 18,
-            "cg_id": "coinfi"
         },
         "MOC": {
             "symbol": "MOC",
@@ -403,13 +342,6 @@
             "cg_id": "0x",
             "priority": true,
             "sp_limit_order": true
-        },
-        "MAS": {
-            "symbol": "MAS",
-            "name": "MidasProtocol",
-            "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
-            "decimals": 18,
-            "cg_id": "midas-protocol"
         },
         "DAT": {
             "symbol": "DAT",
@@ -443,39 +375,6 @@
             "priority": true,
             "sp_limit_order": true
         },
-        "DCC": {
-            "symbol": "DCC",
-            "name": "Distributed Credit Chain",
-            "address": "0xffa93aacf49297d51e211817452839052fdfb961",
-            "decimals": 18,
-            "cg_id": "distributed-credit-chain"
-        },
-        "SSP": {
-            "symbol": "SSP",
-            "name": "Smartshare Token",
-            "address": "0x624d520bab2e4ad83935fa503fb130614374e850",
-            "decimals": 4,
-            "cg_id": "smartshare",
-            "listing_time": 1542027600
-        },
-        "PRO": {
-            "symbol": "PRO",
-            "name": "Propy",
-            "address": "0x226bb599a12c826476e3a771454697ea52e9e220",
-            "decimals": 8,
-            "cg_id": "propy",
-            "listing_time": 1542027600,
-            "gasLimit": "500000",
-            "gasApprove": 300000
-        },
-        "OCN": {
-            "symbol": "OCN",
-            "name": "OCoin",
-            "address": "0x4092678e4e78230f46a1534c0fbc8fa39780892b",
-            "decimals": 18,
-            "cg_id": "odyssey",
-            "listing_time": 1542027600
-        },
         "EKO": {
             "symbol": "EKO",
             "name": "EchoLink",
@@ -492,39 +391,13 @@
             "cg_id": "simple-token",
             "listing_time": 1542027600
         },
-        "DTH": {
-            "symbol": "DTH",
-            "name": "Dether",
-            "address": "0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190",
-            "decimals": 18,
-            "cg_id": "dether",
-            "listing_time": 1542895200
-        },
         "PT": {
             "symbol": "PT",
             "name": "Promotion Token",
             "address": "0x094c875704c14783049ddf8136e298b3a099c446",
             "decimals": 18,
             "cg_id": "",
-            "gasLimit": "380000"
-        },
-        "INF": {
-            "symbol": "INF",
-            "name": "InfinitusTokens",
-            "address": "0x00e150d741eda1d49d341189cae4c08a73a49c95",
-            "decimals": 18,
-            "cg_id": "infinitus-token",
-            "listing_time": 1545048000,
-            "priority": true,
-            "sp_limit_order": true
-        },
-        "TTC": {
-            "symbol": "TTC",
-            "name": "TTC Protocol",
-            "address": "0x9389434852b94bbad4c8afed5b7bdbc5ff0c2275",
-            "decimals": 18,
-            "cg_id": "ttc-protocol",
-            "listing_time": 1546088400
+            "gasLimit": "500000"
         },
         "ABYSS": {
             "symbol": "ABYSS",
@@ -544,7 +417,8 @@
             "listing_time": 1548853200,
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 1
         },
         "MLN": {
             "symbol": "MLN",
@@ -566,7 +440,8 @@
             "gasLimit": "550000",
             "priority": true,
             "sp_limit_order": true,
-            "is_quote": true
+            "is_quote": true,
+            "quote_priority": 3
         },
         "EURS": {
             "symbol": "EURS",
@@ -576,14 +451,6 @@
             "cg_id": "stasis-eurs",
             "listing_time": 1549976400,
             "priority": true
-        },
-        "BIX": {
-            "symbol": "BIX",
-            "name": "BIX Token",
-            "address": "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069",
-            "decimals": 18,
-            "cg_id": "bibox-token",
-            "listing_time": 1549976400
         },
         "CDT": {
             "symbol": "CDT",
@@ -691,6 +558,47 @@
             "decimals": 18,
             "cg_id": "sentinel-protocol",
             "listing_time": 1563973200
+        },
+        "CND": {
+            "symbol": "CND",
+            "name": "Cindicator",
+            "address": "0xd4c435f5b09f855c3317c8524cb1f586e42795fa",
+            "decimals": 18,
+            "cg_id": "cindicator",
+            "listing_time": 1565701200
+        },
+        "USDT": {
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "decimals": 6,
+            "cg_id": "tether",
+            "listing_time": 1565960400
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+            "decimals": 18,
+            "cg_id": "havven",
+            "listing_time": 1565960400,
+            "gasLimit": "600000"
+        },
+        "BTU": {
+            "symbol": "BTU",
+            "name": "BTU Protocol",
+            "address": "0xb683d83a532e2cb7dfa5275eed3698436371cc9f",
+            "decimals": 18,
+            "cg_id": "btu-protocol",
+            "listing_time": 1569330000
+        },
+        "TKN": {
+            "symbol": "TKN",
+            "name": "Monolith",
+            "address": "0xaaaf91d9b90df800df4f55c205fd6989c977e73a",
+            "decimals": 8,
+            "cg_id": "tokencard",
+            "listing_time": 1569330000
         }
     },
     "ethScanUrl": "https://etherscan.io/",

@@ -392,11 +392,9 @@ export function stringToNumber(str) {
   return bigNumber.toNumber()
 }
 
-
-
 export function getBigNumberValueByPercentage(number, percentage) {
-  if (percentage == 100) return number
-  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100).toFixed(0);
+  if (percentage === 100) return number
+  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100);
 }
 
 export function stringToHex(number, decimal) {
@@ -490,10 +488,6 @@ export function roundingRateNumber(number) {
   }
   return result;
 }
-
-// export function displayRate(number){
-//   return roundingNumber(number
-// }
 
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
@@ -693,7 +687,6 @@ export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rat
 
   var sourceAmountBig = new BigNumber(sourceAmount.toString())
   sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
-
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1) {
     return "0x" + minSourceAllow.toString(16)
   } else {
@@ -720,6 +713,7 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
     } else {
       minNumber = Math.pow(10, decimal)
     }
+
     return minNumber.toString()
   }
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10, decimal))

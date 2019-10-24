@@ -142,6 +142,7 @@ export default class BroadCastModal extends React.Component {
       const transferLink = constants.BASE_HOST + "/transfer/" + this.props.transfer.tokenSymbol.toLowerCase();
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
       this.props.dispatch(goToRoute(transferLink))
+      if (window.kyberBus){ window.kyberBus.broadcast('go.to.transfer') }
       // this.props.history.push(transferLink)
     } else {
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
