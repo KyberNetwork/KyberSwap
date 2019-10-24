@@ -312,9 +312,12 @@ export default class MarketTable extends React.Component {
 
     return (
       <div className="market-wrapper">
-        {this.props.currencyLayout}
-        <div className="market-control">
-          {this.props.searchWordLayout}
+        <div className={"market__header-title"}>{this.props.translate("market.market") || "Market"}</div>
+        <div className={"market__header-wrapper"}>
+          {this.props.currencyLayout}
+          <div className="market-control">
+            {this.props.searchWordLayout}
+          </div>
         </div>
         <ReactTable
           data={this.props.listTokens}

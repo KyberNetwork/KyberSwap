@@ -9,7 +9,7 @@
   margin-bottom: 30px;
 
   .market-control {
-    margin: 15px 0 20px;
+    margin: 10px 0 10px;
   }
 
   .market-wrapper{
@@ -22,6 +22,16 @@
     color: #222222;
     font-weight: 600;
     margin-bottom: 30px;
+  }
+
+  &__header-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include screen-max-width(large) {
+      display: block;
+    }
   }
 
   &__header {
@@ -126,7 +136,8 @@
         width: 250px;
         max-width: 100%;
         outline: none;
-        padding: 10px 50px 10px 15px;
+        padding: 10px 50px 10px 10px;
+        border: 1px solid #e1e4eb;
       }
     }
 
