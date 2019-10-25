@@ -28,10 +28,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    @include screen-max-width(large) {
-      display: block;
-    }
   }
 
   &__header {
@@ -78,11 +74,6 @@
           border-bottom-color: #EF8102;
           cursor: initial;
         }
-      }
-
-      @include screen-max-width(large){
-        margin-top: 20px;
-        margin-bottom: 10px;
       }
     }
   }
@@ -219,12 +210,6 @@
                 }
               }
             }
-            @include screen-max-width(large) {
-              padding-top: 15px;
-              .rt-tr {
-                padding: 25px 0;
-              }
-            }
           }
         }
       }
@@ -336,11 +321,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      &:first-child {
-        @include screen-max-width(large) {
-          max-width: 175px;
-        }
-      }
 
       &.-sort-asc, .-sort-asc {
         box-shadow: none;
@@ -493,8 +473,56 @@
       transform: rotate(45deg);
     }
   }
-  @media only screen and (max-width: 1296px) {
-    max-width: 60rem;
+
+  @include screen-max-width(medium) {
+    padding: 0;
+    margin: 0;
+
+    &-modal {
+      margin: 0 !important;
+    }
+
+    &-control {
+      margin-bottom: 15px !important;
+      display: flex;
+      align-items: center;
+
+      .search-input {
+        width: 170px;
+        margin-right: 15px;
+      }
+
+      .advance-config__option:first-child {
+        margin-right: 15px;
+      }
+    }
+
+    &__header-wrapper {
+      display: block;
+    }
+
+    &__header {
+      &-title {
+        padding: 35px 15px 0;
+      }
+
+      &-wrapper {
+        padding: 0 15px;
+      }
+
+      &-currency {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    }
+
+    .rt-thead {
+      padding: 0 !important;
+
+      .rt-tr {
+        padding: 10px 0 !important;
+      }
+    }
   }
 }
 

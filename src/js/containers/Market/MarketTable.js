@@ -32,6 +32,18 @@ import * as converters from "../../utils/converter"
 })
 
 export default class MarketTable extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      customColumn: 'change'
+    }
+  }
+
+  changeCustomColumn = (column) => {
+    this.setState({ customColumn : column });
+  };
+
   addClassChange = (input, buyPrice, sellPrice) => {
     if (buyPrice === "0" && sellPrice === "0" && input === "0") {
       return (
@@ -72,7 +84,9 @@ export default class MarketTable extends React.Component {
     return (
       <div className="symbol-price">
         <span className="value">{input === "0" ? "---" : this.formatNumber(input, groupSeparator)}</span>
-        <span className="unit">{input === "0" ? '' : currency}</span>
+        {!this.props.isOnMobile && (
+          <span className="unit">{input === "0" ? '' : currency}</span>
+        )}
       </div>
     )
   };
@@ -88,11 +102,20 @@ export default class MarketTable extends React.Component {
       case "buy_price": {
         return "market.buy_price"
       }
+      case "buy_price_mobile": {
+        return "limit_order.price"
+      }
       case "change": {
         return "market.change"
       }
       case "volume": {
         return "market.volume"
+      }
+      case "change_mobile": {
+        return "limit_order.change"
+      }
+      case "volume_mobile": {
+        return "limit_order.volume"
       }
     }
   }
@@ -192,7 +215,6 @@ export default class MarketTable extends React.Component {
         Header: this.getSortHeader("Pair", "pair"),
         accessor: 'pair',
         Cell: props => this.addIcon(props.value),
-        minWidth: 160,
         getHeaderProps: () => {
           return {
             className: this.props.sortType["pair"] ?  (this.props.sortType["pair"] + ' -cursor-pointer') :'-cursor-pointer',
@@ -204,25 +226,9 @@ export default class MarketTable extends React.Component {
         }
       },
       {
-        Header: this.getSortHeader("Sell Price", "sell_price"),
-        accessor: 'sell_price',
-        Cell: props => this.addUnit(props.value, this.props.currency),
-        minWidth: 150,
-        getHeaderProps: () => {
-          return {
-            className: this.props.sortType["sell_price"] ?  (this.props.sortType["sell_price"] + ' -cursor-pointer') :'-cursor-pointer',
-            onClick: (e) => {
-              this.getSortArray("sell_price", this.getSortType("sell_price"))
-              this.updateSortState("sell_price", this.getSortType("sell_price"))
-            }
-          }
-        }
-      },
-      {
-        Header: this.getSortHeader("Buy Price", "buy_price"),
+        Header: this.getSortHeader("Buy Price", this.props.isOnMobile ? "buy_price_mobile" : "buy_price"),
         accessor: 'buy_price',
         Cell: props => this.addUnit(props.value, this.props.currency),
-        minWidth: 150,
         getHeaderProps: () => {
           return {
             className: this.props.sortType["buy_price"] ?  (this.props.sortType["buy_price"] + ' -cursor-pointer') :'-cursor-pointer',
@@ -235,57 +241,70 @@ export default class MarketTable extends React.Component {
       }
     ];
 
-    Object.keys(this.props.listShowColumn).map((key, i) => {
-      var item = this.props.listShowColumn[key]
-      var index = this.props.showActive.indexOf(key)
-      if (index !== -1) {
-        switch (item.type){
-          default: {
-            switch (key) {
-              case "change": {
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  Cell: props => this.addClassChange(props.value, props.row.buy_price, props.row.sell_price),
-                  minWidth: 180,
-                  getHeaderProps: () => {
-                    return {
-                      className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
-                      onClick: (e) => {
-                        this.getSortArray(key, this.getSortType(key))
-                        this.updateSortState(key, this.getSortType(key))
-                      }
-                    }
-                  }
-                })
-                break
-              }
-              case "volume": {
-                columns.push({
-                  Header: this.getSortHeader(item.title, key),
-                  accessor: key,
-                  Cell: props => this.addUnit(props.value, this.props.currency, ','),
-                  minWidth: 150,
-                  getHeaderProps: () => {
-                    return {
-                      className: this.props.sortType[key] ?  (this.props.sortType[key] + ' -cursor-pointer') :'-cursor-pointer',
-                      onClick: (e) => {
-                        this.getSortArray(key, this.getSortType(key))
-                        this.updateSortState(key, this.getSortType(key))
-                      }
-                    }
-                  }
-                })
-                break
-              }
+    if (!this.props.isOnMobile) {
+      columns.push({
+        Header: this.getSortHeader("Sell Price", "sell_price"),
+        accessor: 'sell_price',
+        Cell: props => this.addUnit(props.value, this.props.currency),
+        getHeaderProps: () => {
+          return {
+            className: this.props.sortType["sell_price"] ?  (this.props.sortType["sell_price"] + ' -cursor-pointer') :'-cursor-pointer',
+            onClick: (e) => {
+              this.getSortArray("sell_price", this.getSortType("sell_price"))
+              this.updateSortState("sell_price", this.getSortType("sell_price"))
             }
-            break
+          }
+        }
+      });
+
+      columns.push(this.getChangeColumn());
+      columns.push(this.getVolumeColumn());
+    }
+
+    if (this.props.isOnMobile && this.state.customColumn === 'change') {
+      columns.push(this.getChangeColumn('24h ch%', 'change_mobile'));
+    }
+
+    if (this.props.isOnMobile && this.state.customColumn === 'volume') {
+      columns.push(this.getVolumeColumn('volume_mobile'));
+    }
+
+    return columns
+  };
+
+  getChangeColumn = (title = '24h change', translateKey = 'change') => {
+    return {
+      Header: this.getSortHeader(title, translateKey),
+      accessor: 'change',
+      Cell: props => this.addClassChange(props.value, props.row.buy_price, props.row.sell_price),
+      getHeaderProps: () => {
+        return {
+          className: this.props.sortType['change'] ?  (this.props.sortType['change'] + ' -cursor-pointer') :'-cursor-pointer',
+          onClick: (e) => {
+            this.getSortArray('change', this.getSortType('change'));
+            this.updateSortState('change', this.getSortType('change'));
           }
         }
       }
-    })
-    return columns
-  }
+    }
+  };
+
+  getVolumeColumn = (translateKey = 'volume') => {
+    return {
+      Header: this.getSortHeader('Volume', translateKey),
+      accessor: 'volume',
+      Cell: props => this.addUnit(props.value, this.props.currency, ','),
+      getHeaderProps: () => {
+        return {
+          className: this.props.sortType['volume'] ?  (this.props.sortType['volume'] + ' -cursor-pointer') :'-cursor-pointer',
+          onClick: (e) => {
+            this.getSortArray('volume', this.getSortType('volume'));
+            this.updateSortState('volume', this.getSortType('volume'));
+          }
+        }
+      }
+    }
+  };
 
   onPairClicked = (rowInfo) => {
     window.scrollTo({
@@ -317,6 +336,21 @@ export default class MarketTable extends React.Component {
           {this.props.currencyLayout}
           <div className="market-control">
             {this.props.searchWordLayout}
+
+            {this.props.global.isOnMobile && (
+              <div className="advance-config__option-container">
+                <label className="advance-config__option">
+                  <span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
+                  <input className="advance-config__radio" type="radio" onChange={() => this.changeCustomColumn('change')} checked={this.state.customColumn === 'change'} />
+                  <span className="advance-config__checkmark"/>
+                </label>
+                <label className="advance-config__option">
+                  <span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
+                  <input className="advance-config__radio" type="radio" onChange={() => this.changeCustomColumn('volume')} checked={this.state.customColumn === 'volume'} />
+                  <span className="advance-config__checkmark"/>
+                </label>
+              </div>
+            )}
           </div>
         </div>
         <ReactTable
