@@ -105,8 +105,8 @@
     left: 0;
     height: 12px;
     width: 12px;
-    border: solid 1px #e9e9e9;
-    background-color: #1f2731;
+    border: solid 1px $grey;
+    background-color: white;
     border-radius: 50%;
     transform: translateY(-50%);
     transition: all .3s;
@@ -117,7 +117,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: #1f2731;
+      background-color: white;
       position: absolute;
       right: 0;
       left: 0;
