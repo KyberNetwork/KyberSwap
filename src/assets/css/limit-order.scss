@@ -57,7 +57,7 @@
       margin-bottom: 5px;
       position: sticky;
       top: 0;
-      z-index: 999;
+      z-index: 2;
 
       .rt-th {
         font-weight: 500;
@@ -2356,7 +2356,7 @@
   margin-top: 20px;
   padding-bottom: 20px;
   a{
-    background-image: linear-gradient(178deg, #ffb046, #f52880);
+    background-image: linear-gradient(178deg, #ffb046 -66%, #f52880 371%);
     background-color: #1a1a1a;
     font-size: 16px;
     font-weight: bold;

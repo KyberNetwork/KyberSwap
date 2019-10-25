@@ -4,8 +4,6 @@ import BLOCKCHAIN_INFO from "../../../../env"
 import * as converters from "../../utils/converter";
 import { LIMIT_ORDER_CONFIG } from "../../services/constants";
 import { sortBy } from "underscore";
-import * as exchangeActions from "../../actions/exchangeActions";
-import constants from "../constants";
 
 const MAX_REQUEST_TIMEOUT = 3000
 
