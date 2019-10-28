@@ -3,11 +3,11 @@ import Modal from 'react-modal'
 import * as common from "../../utils/common"
 
 export default class MyModal extends React.Component{
-    state = {
-        prevPropsIsOpen: false
-    };
     constructor() {
         super();
+        this.state = {
+            prevPropsIsOpen: false
+        };
         this.customStyles = {
             overlay: {
                 position: 'fixed',
@@ -27,8 +27,8 @@ export default class MyModal extends React.Component{
 
     static getDerivedStateFromProps(props, state) {
         if (props.isOpen !== state.prevPropsIsOpen) {
-            if (props.isOpen){ common.addModalClose(props.onRequestClose) }
-            else { common.removeModalClose(props.onRequestClose) }
+            if (props.isOpen){ common.addCloseModalExecutors(props.onRequestClose) }
+            else { common.removeCloseModalExecutors(props.onRequestClose) }
 
             return {
                 prevPropsIsOpen: props.isOpen
