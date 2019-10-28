@@ -128,6 +128,9 @@ export default class Layout extends React.Component {
       let timeOut = constanst.IDLE_TIME_OUT/60
       let titleModal = this.props.translate('error.time_out') || 'Time out'
       let contentModal = this.props.translate('error.clear_data_timeout', {time: timeOut}) || `We've cleared all your data because your session is timed out ${timeOut} minutes`
+
+      common.getCloseModalExecutors().forEach(f => f())
+      common.clearCloseModalExecutors()
       this.props.dispatch(openInfoModal(titleModal, contentModal));
       this.endSession();
     } else {
