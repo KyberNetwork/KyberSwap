@@ -27,8 +27,8 @@ export default class MyModal extends React.Component{
 
     static getDerivedStateFromProps(props, state) {
         if (props.isOpen !== state.prevPropsIsOpen) {
-            if (props.isOpen){ common.addModalExcutors(props.onRequestClose) }
-            else { common.removeModalExcutors(props.onRequestClose) }
+            if (props.isOpen){ common.addModalClose(props.onRequestClose) }
+            else { common.removeModalClose(props.onRequestClose) }
 
             return {
                 prevPropsIsOpen: props.isOpen

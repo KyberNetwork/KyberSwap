@@ -248,24 +248,24 @@ export function calcInterval(selectedTimeFilter) {
 export function getNowTimeStamp() {
     return Math.round(new Date().getTime() / 1000);
 }
-let modalExcutors = []
-export function addModalExcutors(f){
-    if (modalExcutors.indexOf(f) == -1){
-        modalExcutors.push(f)
+let modalClose = []
+export function addModalClose(f){
+    if (modalClose.indexOf(f) == -1){
+        modalClose.push(f)
     }
 }
 
-export function removeModalExcutors(f){
-    const index = modalExcutors.indexOf(f)
+export function removeModalClose(f){
+    const index = modalClose.indexOf(f)
     if (index > -1){
-        modalExcutors.splice(index, 1);
+        modalClose.splice(index, 1);
     }
 }
 
-export function clearModalExcutors(){
-    modalExcutors = []
+export function clearModalClose(){
+    modalClose = []
 }
 
-export function getModalExcutors(){
-    return modalExcutors
+export function getModalClose(){
+    return modalClose
 }
