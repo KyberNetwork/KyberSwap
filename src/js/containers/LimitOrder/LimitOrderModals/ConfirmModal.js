@@ -185,7 +185,7 @@ export default class ConfirmModal extends React.Component {
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
         <div className="limit-order-modal__body">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
+            {this.props.translate("modal.order_confirm", {sideTrade: ["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : "", symbol: base}) ||
             `Confirm ${["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : ""}${base} Order`}
           </div>
           <div className="limit-order-modal__close" onClick={this.closeModal}>
