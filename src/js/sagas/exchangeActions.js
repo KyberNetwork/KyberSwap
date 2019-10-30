@@ -144,17 +144,38 @@ function* estimateGas() {
 }
 
 function* getMaxGasExchange() {
-  try {
-    const state = store.getState()
-    const srcTokenAddress = state.exchange.sourceToken;
-    const destTokenAddress = state.exchange.destToken;
-    const srcAmount = state.exchange.sourceAmount;
-    const ethereum = state.connection.ethereum;
+  const state = store.getState();
+  const srcTokenAddress = state.exchange.sourceToken;
+  const destTokenAddress = state.exchange.destToken;
+  const srcAmount = state.exchange.sourceAmount;
+  const ethereum = state.connection.ethereum;
 
-    return yield call([ethereum, ethereum.call], "getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
+  try {
+    const gasLimitResult =  yield call([ethereum, ethereum.call], "getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
+
+    if (gasLimitResult.error) {
+      return yield call(getMaxGasExchangeFromTokens);
+    }
+
+    return gasLimitResult.data;
   } catch (err) {
     console.log(err);
+    return yield call(getMaxGasExchangeFromTokens);
   }
+}
+
+function* getMaxGasExchangeFromTokens() {
+  const state = store.getState();
+  const exchange = state.exchange;
+  const tokens = state.tokens.tokens;
+
+  const sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0;
+  const destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0;
+
+  const sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas;
+  const destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas;
+
+  return sourceGasLimit + destGasLimit;
 }
 
 function* getMaxGasApprove() {
