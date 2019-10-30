@@ -143,20 +143,18 @@ function* estimateGas() {
   }
 }
 
-
 function* getMaxGasExchange() {
-  var state = store.getState()
-  const exchange = state.exchange
-  const tokens = state.tokens.tokens
+  try {
+    const state = store.getState()
+    const srcTokenAddress = state.exchange.sourceToken;
+    const destTokenAddress = state.exchange.destToken;
+    const srcAmount = state.exchange.sourceAmount;
+    const ethereum = state.connection.ethereum;
 
-  var sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0
-  var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0
-
-  var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
-  var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
-
-  return sourceGasLimit + destGasLimit
-
+    return yield call([ethereum, ethereum.call], "getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* getMaxGasApprove() {
@@ -176,10 +174,7 @@ function* getGasUsed() {
   const ethereum = state.connection.ethereum
   const exchange = state.exchange
   const kyber_address = BLOCKCHAIN_INFO.network
-
-
   const maxGas = yield call(getMaxGasExchange)
-
   const maxGasApprove = yield call(getMaxGasApprove)
   var gas = maxGas
   var gas_approve = 0
@@ -196,7 +191,6 @@ function* getGasUsed() {
   if(specialList.indexOf(sourceTokenSymbol) !== -1 || specialList.indexOf(destTokenSymbol) !== -1){
     return { status: "success", res: { gas: maxGas, gas_approve: maxGasApprove } }
   }
-  
 
   if (tokens[sourceTokenSymbol]) {
     sourceDecimal = tokens[sourceTokenSymbol].decimals
