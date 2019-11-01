@@ -193,8 +193,8 @@ export default class QuoteMarket extends React.Component{
                 </div>
 
                 <div className="table__body">
-                  {list.map(pair => <div key={pair["id"]} className="table__row">
-                    <div className="overlay" onClick={() => this.onPairClick(pair["base"], pair["quote"])}></div>
+                  {list.map(pair => <div key={pair["id"]} className="table__row" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>
+                    <div className="overlay"/>
                     <div className={"c0"} onClick={() => this.props.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
                       <div className={pair["is_favorite"] ? "star active" : "star" } />
                     </div>
