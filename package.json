@@ -111,6 +111,7 @@
   },
   "scripts": {
     "build-ropsten": "NODE_ENV=ropsten node webpack-wrapper.js",
+    "build-kovan": "NODE_ENV=kovan node webpack-wrapper.js",
     "build-production": "NODE_ENV=production node webpack-wrapper.js",
     "build-staging": "NODE_ENV=staging node webpack-wrapper.js",
     "build-dev": "NODE_ENV=dev node webpack-wrapper.js",
@@ -120,6 +121,7 @@
     "staging": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=staging --env.logger=true",
     "production": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=production",
     "ropsten": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=ropsten --env.logger=true",
+    "kovan": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=kovan --env.logger=true",
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=dev --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",

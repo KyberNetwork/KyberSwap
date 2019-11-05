@@ -1,0 +1,91 @@
+{
+    "connections": {
+        "http": [
+            {
+                "endPoint": "https://kovan-cache.knstats.com",
+                "type": "cached"
+            },
+            {
+                "endPoint": "https://kovan.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
+                "type": "prune"
+            }
+        ],
+        "ws": "wss://kovan.kyber.network/ws/"
+    },
+    "min_accept_amount": 0.01,
+    "api_usd": "https://api.coinmarketcap.com",
+    "api_tokens": "https://kovan-api.kyber.network/internal/currencies",
+    "promo_token": "OMG",
+    "priority_tokens": [
+        "ETH",
+        "DAI",
+        "KNC"
+    ],
+    "market_exclude": [
+        "WETH",
+        "PT",
+        "ETH"
+    ],
+    "limitOrder": {
+        "minSupportOrder": 0.001,
+        "maxPercentTriggerRate": 900,
+        "page_size": 50
+    },
+    "wrapETHToken": "WETH",
+    "userdashboard_url": "https://staging-kyberswap.knstats.com",
+    "tokens": {
+        "ETH": {
+            "symbol": "ETH",
+            "name": "Ethereum",
+            "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "decimals": 18,
+            "cg_id": "ethereum",
+            "gasLimit": "0",
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
+        },
+        "WETH": {
+            "symbol": "WETH",
+            "name": "WETH",
+            "address": "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
+            "decimals": 18
+        },
+        "KNC": {
+            "symbol": "KNC",
+            "name": "KNC",
+            "address": "0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2",
+            "decimals": 18
+        },
+        "SAI": {
+            "symbol": "SAI",
+            "name": "SAI",
+            "address": "0xc4375b7de8af5a38a93548eb8453a498222c4ff2",
+            "decimals": 18
+        },
+        "DAI": {
+            "symbol": "DAI",
+            "name": "DAI",
+            "address": "0x1d7e3a1a65a367db1d1d3f51a54ac01a2c4c92ff",
+            "decimals": 18
+        }
+    },
+    "ethScanUrl": "https://kovan.etherscan.io/",
+    "broadcastTx": "https://dev-kovan-broadcast.knstats.com/",
+    "enjinx": "https://kyber.enjinx.io/",
+    "network": "0x692f391bcc85cefce8c237c01e1f636bbd70ea4d",
+    "kyberswapAddress": "0xa33caaed059f0c574c07136a5da9f28dc2fa27c2",
+    "wrapper": "0x7efa0d99f7c8eafeec72604b4a5e0d7155dafa9e",
+    "endpoint": "https://kovan.infura.io/DtzEYY0Km2BA3YwyJcBG",
+    "averageBlockTime": 6000,
+    "networkId": 42,
+    "chainName": "Kovan",
+    "faucet": "https://faucet.kyber.network/",
+    "server_logs": {
+        "url": "kovan.etherscan.io",
+        "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
+    },
+    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
+    "tracker": "https://dev-api.knstats.com",
+    "statEndPoint": "https://kovan-data.kyber.network"
+}

@@ -395,7 +395,8 @@ export default class BaseProvider {
         })
     }
 
-    getAllRates(tokensObj) {
+    getAllRates(tokensObj) {        
+
         var arrayTokenAddress = Object.keys(tokensObj).map((tokenSymbol) => {
             return tokensObj[tokenSymbol].address
         });
@@ -405,7 +406,8 @@ export default class BaseProvider {
 
         //tokens
         var arrayAmount = Object.keys(tokensObj).map((tokenSymbol) => {
-           var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0)
+           var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, tokensObj[tokenSymbol].rateEth)
+           console.log(minAmount)
            var srcAmountEnableFistBit = converters.sumOfTwoNumber(minAmount,  mask)
            srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
            return srcAmountEnableFistBit

@@ -715,7 +715,7 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
     }
 
     return minNumber.toString()
-  }
+  }    
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10, decimal))
   return minSourceAllow.toFixed(0)
 }
