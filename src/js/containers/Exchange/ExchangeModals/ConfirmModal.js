@@ -139,15 +139,18 @@ export default class ConfirmModal extends React.Component {
             destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol
         }
     }
+
     async getGasSwap() {
-        // estimate gas approve
+        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
+        let gas = this.state.gasLimit;
+        const gasApprove = this.state.gas_approve;
+        const gasPrice = this.props.exchange.gasPrice;
+        const ethBalance = this.props.account.balance;
+        
         try {
-            var { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
-            
             if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
-                this.setState({
-                    isFetchGas: false
-                })
+                this.setState({ isFetchGas: false });
+                this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
                 return;
             }
             
@@ -167,22 +170,31 @@ export default class ConfirmModal extends React.Component {
                 value: value
             }
 
+            let estimatedGas = await ethereum.call("estimateGas", txObj);
+            estimatedGas = Math.round(estimatedGas * 120 / 100) + 100000;
 
-            var gas = await ethereum.call("estimateGas", txObj)
-            gas = Math.round(gas * 120 / 100) + 100000
-
-            if (gas < this.state.gasLimit) {
-                this.setState({ gasLimit: gas, isFetchGas: false })
-            }else{
-                this.setState({ isFetchGas: false })
+            if (estimatedGas < gas) {
+                gas = estimatedGas;
+                this.setState({ gasLimit: estimatedGas })
             }
         } catch (err) {
-            console.log(err)
-            this.setState({
-                isFetchGas: false
-            })
+            console.log(err);
         }
+  
+        this.setState({ isFetchGas: false });
+        this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
+    }
 
+    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasApprove, gasPrice) {
+      const isNotEnoughEth = validators.verifyBalanceForTransaction(
+        ethBalance, srcSymbol, srcAmount, gas + gasApprove, gasPrice
+      );
+  
+      if (isNotEnoughEth) {
+        this.setState({
+          err: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        })
+      }
     }
     
     async getMaxGasExchange() {
