@@ -51,8 +51,7 @@ export default class ConfirmModal extends React.Component {
             slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
             startTime: Math.round(new Date().getTime())
         })
-
-        this.getMaxGasExchange();
+      
         this.getSlippageRate()
         this.getGasSwap()
     }
@@ -142,10 +141,11 @@ export default class ConfirmModal extends React.Component {
 
     async getGasSwap() {
         const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
-        let gas = this.state.gasLimit;
         const gasApprove = this.state.gas_approve;
         const gasPrice = this.props.exchange.gasPrice;
         const ethBalance = this.props.account.balance;
+        let gas = await this.getMaxGasExchange();
+        this.setState({ gasLimit: gas });
         
         try {
             if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
@@ -202,24 +202,19 @@ export default class ConfirmModal extends React.Component {
         const destTokenAddress = this.props.exchange.destToken;
         const srcAmount = this.props.exchange.sourceAmount;
         const ethereum = this.props.ethereum;
-        let gasLimit = this.state.gasLimit;
 
         try {
             const gasLimitResult =  await ethereum.call("getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
 
             if (gasLimitResult.error) {
-                gasLimit = this.getMaxGasExchangeFromTokens();
+                return this.getMaxGasExchangeFromTokens();
             } else {
-                gasLimit = gasLimitResult.data;
+                return gasLimitResult.data;
             }
         } catch (err) {
             console.log(err);
-            gasLimit = this.getMaxGasExchangeFromTokens();
+            return this.getMaxGasExchangeFromTokens();
         }
-        
-        this.setState({
-            gasLimit: gasLimit
-        })
     }
     
     getMaxGasExchangeFromTokens() {
