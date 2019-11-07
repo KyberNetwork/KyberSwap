@@ -1,23 +1,17 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
-
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-
-import { getAssetUrl, getParameterByName } from "../../../utils/common";
-
+import { getParameterByName } from "../../../utils/common";
 import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
 import * as web3Package from "../../../services/web3";
-
 import * as accountActions from '../../../actions/accountActions'
 
 @connect((store, props) => {
@@ -30,13 +24,10 @@ import * as accountActions from '../../../actions/accountActions'
 
     return {
         translate, exchange, tokens, account, ethereum, global
-
     }
 })
 
 export default class ConfirmModal extends React.Component {
-
-
     constructor() {
         super()
         this.state = {
@@ -61,8 +52,8 @@ export default class ConfirmModal extends React.Component {
             startTime: Math.round(new Date().getTime())
         })
 
+        this.getMaxGasExchange();
         this.getSlippageRate()
-
         this.getGasSwap()
     }
 
@@ -73,13 +64,11 @@ export default class ConfirmModal extends React.Component {
             return walletId;
         }
         
-        // if (window.web3 && window.web3.kyberID && !validators.verifyAccount(window.web3.kyberID)) {
-        //     return window.web3.kyberID
-        // }
         var refAddr = getParameterByName("ref")
         if (!validators.verifyAccount(refAddr)) {
             return refAddr
         }
+        
         return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
     }
 
@@ -94,8 +83,6 @@ export default class ConfirmModal extends React.Component {
             var ethereum = this.props.ethereum
 
             var rate = await ethereum.call("getRate", source, dest, sourceAmountHex)
-            // console.log("fetch_rate_again")
-            // console.log(rate)
             if (rate.expectedRate == 0 || rate.slippageRate == 0) {
                 this.setState({
                     isFetchRate: false,
@@ -121,7 +108,6 @@ export default class ConfirmModal extends React.Component {
                 isFetchRate: false
             })
         }
-
     }
 
     getFormParams = () => {
@@ -197,6 +183,44 @@ export default class ConfirmModal extends React.Component {
             })
         }
 
+    }
+    
+    async getMaxGasExchange() {
+        const srcTokenAddress = this.props.exchange.sourceToken;
+        const destTokenAddress = this.props.exchange.destToken;
+        const srcAmount = this.props.exchange.sourceAmount;
+        const ethereum = this.props.ethereum;
+        let gasLimit = this.state.gasLimit;
+
+        try {
+            const gasLimitResult =  await ethereum.call("getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
+
+            if (gasLimitResult.error) {
+                gasLimit = this.getMaxGasExchangeFromTokens();
+            } else {
+                gasLimit = gasLimitResult.data;
+            }
+        } catch (err) {
+            console.log(err);
+            gasLimit = this.getMaxGasExchangeFromTokens();
+        }
+        
+        this.setState({
+            gasLimit: gasLimit
+        })
+    }
+    
+    getMaxGasExchangeFromTokens() {
+        const exchange = this.props.exchange;
+        const tokens = this.props.tokens;
+
+        const sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0;
+        const destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0;
+
+        const sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas;
+        const destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas;
+
+        return sourceGasLimit + destGasLimit;
     }
 
     async onSubmit() {
