@@ -55,7 +55,7 @@ export default class ConfirmModal extends React.Component {
         this.setState({
             isFetchGas: true,
             isFetchRate: true,
-            gasLimit: this.getMaxGasExchange(),
+            gasLimit: this.props.exchange.gas,
             expectedRate: this.props.exchange.snapshot.expectedRate,
             slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
             startTime: Math.round(new Date().getTime())
@@ -64,20 +64,6 @@ export default class ConfirmModal extends React.Component {
         this.getSlippageRate()
 
         this.getGasSwap()
-    }
-
-    getMaxGasExchange = () => {
-
-        var exchange = this.props.exchange
-        var tokens = this.props.tokens
-
-        var sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0
-        var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0
-
-        var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
-        var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
-
-        return sourceGasLimit + destGasLimit
     }
 
     getReferAddr = () => {
@@ -170,20 +156,15 @@ export default class ConfirmModal extends React.Component {
     async getGasSwap() {
         // estimate gas approve
         try {
-
-
-            var { ethereum, sourceToken, sourceDecimal, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
-
-            var specialList = ["DAI", "TUSD"]
-
-            if (specialList.indexOf(sourceTokenSymbol) !== -1 || specialList.indexOf(destTokenSymbol) !== -1) {
+            var { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
+            
+            if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
                 this.setState({
                     isFetchGas: false
                 })
+                return;
             }
-
-            // console.log({ethereum, sourceToken, sourceDecimal, sourceAmount, destToken, maxDestAmount, slippageRate, walletId})
-            //const throwOnFailure = "0x0000000000000000000000000000000000000000"
+            
             var data = await ethereum.call("exchangeData", sourceToken, sourceAmount,
                 destToken, this.props.account.address,
                 maxDestAmount, slippageRate, walletId)
@@ -203,7 +184,7 @@ export default class ConfirmModal extends React.Component {
 
             var gas = await ethereum.call("estimateGas", txObj)
             gas = Math.round(gas * 120 / 100) + 100000
-            //console.log("gas ne: " + gas)
+
             if (gas < this.state.gasLimit) {
                 this.setState({ gasLimit: gas, isFetchGas: false })
             }else{
@@ -509,7 +490,6 @@ export default class ConfirmModal extends React.Component {
                                         translate={this.props.translate}
                                         gasPrice={this.props.exchange.snapshot.gasPrice}
                                         gas={this.state.gasLimit}
-                                        isFetchingGas={this.state.isFetchGas}
                                     />
 
                                 {warningLowFee &&
@@ -551,7 +531,5 @@ export default class ConfirmModal extends React.Component {
                 size="medium"
             />
         )
-
-
     }
 }
