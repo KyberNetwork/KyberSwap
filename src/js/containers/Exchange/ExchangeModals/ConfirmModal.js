@@ -234,7 +234,7 @@ export default class ConfirmModal extends React.Component {
         //reset        
         var wallet = getWallet(this.props.account.type)
         var password = ""
-        if (this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+        if (this.state.err || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
         this.setState({
             err: "",
             isConfirmingTx: true
@@ -541,7 +541,7 @@ export default class ConfirmModal extends React.Component {
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}
                             </a>
-                            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                            <a className={"button process-submit " + (this.state.err || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
                         </div>
                     </div>
                 </div>
