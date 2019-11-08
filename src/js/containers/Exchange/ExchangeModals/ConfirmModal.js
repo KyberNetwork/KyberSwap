@@ -1,23 +1,17 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
-
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-
-import { getAssetUrl, getParameterByName } from "../../../utils/common";
-
+import { getParameterByName } from "../../../utils/common";
 import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
 import * as web3Package from "../../../services/web3";
-
 import * as accountActions from '../../../actions/accountActions'
 
 @connect((store, props) => {
@@ -30,13 +24,10 @@ import * as accountActions from '../../../actions/accountActions'
 
     return {
         translate, exchange, tokens, account, ethereum, global
-
     }
 })
 
 export default class ConfirmModal extends React.Component {
-
-
     constructor() {
         super()
         this.state = {
@@ -55,29 +46,14 @@ export default class ConfirmModal extends React.Component {
         this.setState({
             isFetchGas: true,
             isFetchRate: true,
-            gasLimit: this.getMaxGasExchange(),
+            gasLimit: this.props.exchange.gas,
             expectedRate: this.props.exchange.snapshot.expectedRate,
             slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
             startTime: Math.round(new Date().getTime())
         })
-
+      
         this.getSlippageRate()
-
         this.getGasSwap()
-    }
-
-    getMaxGasExchange = () => {
-
-        var exchange = this.props.exchange
-        var tokens = this.props.tokens
-
-        var sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0
-        var destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0
-
-        var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas
-        var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas
-
-        return sourceGasLimit + destGasLimit
     }
 
     getReferAddr = () => {
@@ -87,13 +63,11 @@ export default class ConfirmModal extends React.Component {
             return walletId;
         }
         
-        // if (window.web3 && window.web3.kyberID && !validators.verifyAccount(window.web3.kyberID)) {
-        //     return window.web3.kyberID
-        // }
         var refAddr = getParameterByName("ref")
         if (!validators.verifyAccount(refAddr)) {
             return refAddr
         }
+        
         return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
     }
 
@@ -108,8 +82,6 @@ export default class ConfirmModal extends React.Component {
             var ethereum = this.props.ethereum
 
             var rate = await ethereum.call("getRate", source, dest, sourceAmountHex)
-            // console.log("fetch_rate_again")
-            // console.log(rate)
             if (rate.expectedRate == 0 || rate.slippageRate == 0) {
                 this.setState({
                     isFetchRate: false,
@@ -135,7 +107,6 @@ export default class ConfirmModal extends React.Component {
                 isFetchRate: false
             })
         }
-
     }
 
     getFormParams = () => {
@@ -167,23 +138,22 @@ export default class ConfirmModal extends React.Component {
             destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol
         }
     }
+
     async getGasSwap() {
-        // estimate gas approve
+        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
+        const gasApprove = this.state.gas_approve;
+        const gasPrice = this.props.exchange.gasPrice;
+        const ethBalance = this.props.account.balance;
+        let gas = await this.getMaxGasExchange();
+        this.setState({ gasLimit: gas });
+        
         try {
-
-
-            var { ethereum, sourceToken, sourceDecimal, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
-
-            var specialList = ["DAI", "TUSD"]
-
-            if (specialList.indexOf(sourceTokenSymbol) !== -1 || specialList.indexOf(destTokenSymbol) !== -1) {
-                this.setState({
-                    isFetchGas: false
-                })
+            if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
+                this.setState({ isFetchGas: false });
+                this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
+                return;
             }
-
-            // console.log({ethereum, sourceToken, sourceDecimal, sourceAmount, destToken, maxDestAmount, slippageRate, walletId})
-            //const throwOnFailure = "0x0000000000000000000000000000000000000000"
+            
             var data = await ethereum.call("exchangeData", sourceToken, sourceAmount,
                 destToken, this.props.account.address,
                 maxDestAmount, slippageRate, walletId)
@@ -200,29 +170,71 @@ export default class ConfirmModal extends React.Component {
                 value: value
             }
 
+            let estimatedGas = await ethereum.call("estimateGas", txObj);
+            estimatedGas = Math.round(estimatedGas * 120 / 100) + 100000;
 
-            var gas = await ethereum.call("estimateGas", txObj)
-            gas = Math.round(gas * 120 / 100) + 100000
-            //console.log("gas ne: " + gas)
-            if (gas < this.state.gasLimit) {
-                this.setState({ gasLimit: gas, isFetchGas: false })
-            }else{
-                this.setState({ isFetchGas: false })
+            if (estimatedGas < gas) {
+                gas = estimatedGas;
+                this.setState({ gasLimit: estimatedGas })
             }
         } catch (err) {
-            console.log(err)
-            this.setState({
-                isFetchGas: false
-            })
+            console.log(err);
         }
+  
+        this.setState({ isFetchGas: false });
+        this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
+    }
 
+    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasApprove, gasPrice) {
+      const isNotEnoughEth = validators.verifyBalanceForTransaction(
+        ethBalance, srcSymbol, srcAmount, gas + gasApprove, gasPrice
+      );
+  
+      if (isNotEnoughEth) {
+        this.setState({
+          err: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        })
+      }
+    }
+    
+    async getMaxGasExchange() {
+        const srcTokenAddress = this.props.exchange.sourceToken;
+        const destTokenAddress = this.props.exchange.destToken;
+        const srcAmount = this.props.exchange.sourceAmount;
+        const ethereum = this.props.ethereum;
+
+        try {
+            const gasLimitResult =  await ethereum.call("getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
+
+            if (gasLimitResult.error) {
+                return this.getMaxGasExchangeFromTokens();
+            } else {
+                return gasLimitResult.data;
+            }
+        } catch (err) {
+            console.log(err);
+            return this.getMaxGasExchangeFromTokens();
+        }
+    }
+    
+    getMaxGasExchangeFromTokens() {
+        const exchange = this.props.exchange;
+        const tokens = this.props.tokens;
+
+        const sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0;
+        const destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0;
+
+        const sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas;
+        const destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas;
+
+        return sourceGasLimit + destGasLimit;
     }
 
     async onSubmit() {
         //reset        
         var wallet = getWallet(this.props.account.type)
         var password = ""
-        if (this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+        if (this.state.err || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
         this.setState({
             err: "",
             isConfirmingTx: true
@@ -509,7 +521,6 @@ export default class ConfirmModal extends React.Component {
                                         translate={this.props.translate}
                                         gasPrice={this.props.exchange.snapshot.gasPrice}
                                         gas={this.state.gasLimit}
-                                        isFetchingGas={this.state.isFetchGas}
                                     />
 
                                 {warningLowFee &&
@@ -530,7 +541,7 @@ export default class ConfirmModal extends React.Component {
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}
                             </a>
-                            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                            <a className={"button process-submit " + (this.state.err || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
                         </div>
                     </div>
                 </div>
@@ -551,7 +562,5 @@ export default class ConfirmModal extends React.Component {
                 size="medium"
             />
         )
-
-
     }
 }
