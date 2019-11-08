@@ -237,6 +237,10 @@
       background-image: url($image-path + 'import-account/wallets/private-key.svg');
     }
 
+    &.wallet-link {
+      background-image: url($image-path + 'import-account/wallets/wallet-link.svg');
+    }
+
     &.promo-code,
     &.kyberapp {
       width: 15px;

@@ -7,6 +7,7 @@ import {
   ImportByDeviceWithTrezor,
   ImportByPromoCode
 } from "../../containers/ImportAccount";
+import ImportByWalletLink from "../../containers/ImportAccount/ImportByWalletLink";
 
 const ImportAccountView = (props) => {
   const isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
@@ -45,6 +46,10 @@ const ImportAccountView = (props) => {
         )}
 
         <div className={`import-account__content ${props.isAcceptConnectWallet ? "import-account__content--animation" : ""} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
+          <div className={`import-account__item`}>
+            <ImportByWalletLink/>
+          </div>
+          
           {!isOnMobile &&
             <div className={`import-account__item`}>
               <ImportByMetamask />
