@@ -147,9 +147,10 @@ export function estimateGas() {
   }
 }
 
-export function estimateGasNormal() {
+export function estimateGasNormal(srcAmount) {
   return {
     type: "EXCHANGE.ESTIMATE_GAS_USED_NORMAL",
+    payload: {srcAmount: srcAmount}
   }
 }
 

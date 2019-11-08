@@ -34,7 +34,7 @@ export default class ConfirmModal extends React.Component {
             err: "",
             isFetchGas: true,
             isFetchRate: true,
-            gasLimit: 0,
+            gasLimit: 0,            
             slippageRate: 0,
             expectedRate: 0,
             startTime: 0,
@@ -140,8 +140,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     async getGasSwap() {
-        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
-        const gasApprove = this.state.gas_approve;
+        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()        
         const gasPrice = this.props.exchange.gasPrice;
         const ethBalance = this.props.account.balance;
         let gas = await this.getMaxGasExchange();
@@ -150,7 +149,7 @@ export default class ConfirmModal extends React.Component {
         try {
             if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
                 this.setState({ isFetchGas: false });
-                this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
+                this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
                 return;
             }
             
@@ -182,12 +181,16 @@ export default class ConfirmModal extends React.Component {
         }
   
         this.setState({ isFetchGas: false });
-        this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasApprove, gasPrice);
+        this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
     }
 
-    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasApprove, gasPrice) {
+    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasPrice) {        
+
+      var srcAmount = converter.hexToNumber(srcAmount)        
+      srcAmount = converter.toT(srcAmount, this.props.tokens[srcSymbol].decimal)
+
       const isNotEnoughEth = validators.verifyBalanceForTransaction(
-        ethBalance, srcSymbol, srcAmount, gas + gasApprove, gasPrice
+        ethBalance, srcSymbol, srcAmount, gas, gasPrice
       );
   
       if (isNotEnoughEth) {

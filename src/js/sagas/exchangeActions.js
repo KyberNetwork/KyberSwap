@@ -22,28 +22,25 @@ function* selectToken(action) {
     yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken))
   }
   
-  yield call(estimateGasNormal)
+  yield put(actions.estimateGasNormal(false))
 }
 
 function* updateRatePending(action) {
   var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
-
-
   const state = store.getState();
   const translate = getTranslate(state.locale);
   const tokens = state.tokens.tokens;
   const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
+  const destAmount = state.exchange.destAmount
 
   if (refetchSourceAmount) {
     try {
-      var destAmount = state.exchange.destAmount
      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
     } catch (err) {
       console.log(err);
     }
   }
-
 
   var r = tokens[sourceTokenSymbol].rate
   var defaultRate = 0
@@ -89,14 +86,15 @@ function* updateRatePending(action) {
       yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate))
     }
 
-    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+    const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
+    yield put(actions.estimateGasNormal(calculatedSrcAmount));
 
-  }catch(err){
+    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+  } catch(err) {
     console.log(err)
     if(isManual){      
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-      return
     }
   }
 }
@@ -113,7 +111,8 @@ function* fetchGas() {
   yield put(actions.setEstimateGas(gas, gasApprove))
 }
 
-function* estimateGasNormal() {
+function* estimateGasNormal(action) {
+  const {srcAmount} = action.payload;
   var state = store.getState()
   const exchange = state.exchange
 
@@ -339,6 +338,5 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
   yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
-  yield takeEvery("EXCHANGE.SWAP_TOKEN", estimateGasNormal)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }
