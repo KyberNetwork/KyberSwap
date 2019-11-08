@@ -30,6 +30,20 @@ export default class CachedServerProvider extends React.Component {
     })
   }
 
+  getGasLimit(srcTokenAddress, destTokenAddress, srcAmount) {
+    if (!srcAmount) srcAmount = 0;
+
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch( `${BLOCKCHAIN_INFO.tracker}/gas_limit?source=${srcTokenAddress}&dest=${destTokenAddress}&amount=${srcAmount}`))
+        .then((response) => {
+          resolve(response.json())
+        })
+        .catch((err) => {
+          rejected(err)
+        })
+    })
+  }
+
   checkKyberEnable() {
     return new Promise((resolve, rejected) => {
       this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/kyberEnabled'))

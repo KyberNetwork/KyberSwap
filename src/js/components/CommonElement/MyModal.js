@@ -1,40 +1,58 @@
 import React from "react"
 import Modal from 'react-modal'
+import * as common from "../../utils/common"
 
-const MyModal = (props) => {
-    let customStyles = {
-        overlay: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(11, 15, 26, 0.6)',
-            zIndex: '1005',
-            overflowY: 'auto'
-        },
-        content: {
-            display: 'block',
+export default class MyModal extends React.Component{
+    constructor() {
+        super();
+        this.state = {
+            prevPropsIsOpen: false
+        };
+        this.customStyles = {
+            overlay: {
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(11, 15, 26, 0.6)',
+                zIndex: '1005',
+                overflowY: 'auto'
+            },
+            content: {
+                display: 'block',
+            }
         }
     }
-    return (
-        <Modal
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.isOpen !== state.prevPropsIsOpen) {
+            if (props.isOpen){ common.addCloseModalExecutors(props.onRequestClose) }
+            else { common.removeCloseModalExecutors(props.onRequestClose) }
+
+            return {
+                prevPropsIsOpen: props.isOpen
+            };
+        }
+        return null;
+    }
+
+    render(){
+        return (
+          <Modal
             className={{
-                base: props.className.base + " react-modal",
-                afterOpen: props.className.afterOpen + ' modal-open',
+                base: this.props.className.base + " react-modal",
+                afterOpen: this.props.className.afterOpen + ' modal-open',
                 beforeClose:""
             }}
-            overlayClassName={props.overlayClassName ? props.overlayClassName : ''}
-            style={customStyles}
-            isOpen={props.isOpen}
-            onRequestClose={props.onRequestClose}
-            contentLabel={props.contentLabel}
-        >
-            {props.content}
-        </Modal>
-
-    )
-
+            overlayClassName={this.props.overlayClassName ? this.props.overlayClassName : ''}
+            style={this.customStyles}
+            isOpen={this.props.isOpen}
+            onRequestClose={this.props.onRequestClose}
+            contentLabel={this.props.contentLabel}
+          >
+              {this.props.content}
+          </Modal>
+        )
+    }
 }
-
-export default MyModal

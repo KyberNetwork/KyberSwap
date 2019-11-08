@@ -149,7 +149,6 @@ export default class LimitOrderSubmit extends React.Component {
     } catch (err) {
       console.log(err);
       var title = this.props.translate("error.error_occurred") || "Error occurred"
-      var content = err.toString();
       const content = (
         <span>
           <span>{err.toString()}</span>

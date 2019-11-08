@@ -182,6 +182,14 @@
     }
   }
 
+  .theme__radio-button {
+    background-color: #1f2731;
+
+    &::after {
+      background-color: #1f2731;
+    }
+  }
+
   .theme__dropdown.dropdown--disabled {
     background-color: $dark-color-12;
 

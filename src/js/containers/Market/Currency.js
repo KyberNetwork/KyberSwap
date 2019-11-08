@@ -20,7 +20,6 @@ export default class Currency extends React.Component {
   render() {
     return (
       <div className="market__header-currency">
-        <span className={"market__header-title"}>{this.props.translate("market.market") || "Market"}</span>
         <div className={"market__header-quotes"}>
           {this.props.currency.listItem && (
             this.props.currency.listItem.map((tokenSymbol, key) => {

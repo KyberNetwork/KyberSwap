@@ -239,12 +239,12 @@ class ExchangeBody extends React.Component {
 
     if (this.props.exchange.inputFocus === "source") {
       this.props.dispatch(exchangeActions.focusInput('dest'));
-      this.props.dispatch(exchangeActions.changeAmount('source', ""))
+      this.props.dispatch(exchangeActions.changeAmount('source', destAmount))
       this.props.dispatch(exchangeActions.changeAmount('dest', sourceAmount))
     } else {
       this.props.dispatch(exchangeActions.focusInput('source'));
       this.props.dispatch(exchangeActions.changeAmount('source', destAmount))
-      this.props.dispatch(exchangeActions.changeAmount('dest', ""))
+      this.props.dispatch(exchangeActions.changeAmount('dest', sourceAmount))
     }
 
     this.props.setSrcAndDestToken(destTokenSymbol, sourceTokenSymbol, destAmount);

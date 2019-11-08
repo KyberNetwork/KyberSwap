@@ -51,6 +51,10 @@ function compareNum(sortKey) {
 
       if (tokenSymbol == BLOCKCHAIN_INFO.wrapETHToken) return;
 
+      if (value.buy_price === '0' && value.sell_price === '0') {
+        value.change = -999;
+      }
+
       listTokens.push(value)
     });
 
