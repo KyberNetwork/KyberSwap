@@ -14,8 +14,8 @@
     },
     "min_accept_amount": 0.01,
     "api_usd": "https://api.coinmarketcap.com",
-    "api_tokens": "https://kovan-api.kyber.network/internal/currencies",
-    "promo_token": "OMG",
+    "api_tokens": "https://dev-kovan-api.knstats.com/internal/currencies",
+    "promo_token": "DAI",
     "priority_tokens": [
         "ETH",
         "DAI",
@@ -23,7 +23,7 @@
     ],
     "market_exclude": [
         "WETH",
-        "PT",
+        "DAI",
         "ETH"
     ],
     "limitOrder": {
@@ -39,7 +39,7 @@
             "name": "Ethereum",
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
-            "cg_id": "ethereum",
+            "cg_id": "",
             "gasLimit": "0",
             "sp_limit_order": true,
             "is_quote": true,
@@ -47,27 +47,47 @@
         },
         "WETH": {
             "symbol": "WETH",
-            "name": "WETH",
-            "address": "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-            "decimals": 18
+            "name": "Wrapped Ether",
+            "address": "0xd0a1e359811322d97991e03f863a0c30c2cf029c",
+            "decimals": 18,
+            "cg_id": "",
+            "priority": true,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
-            "name": "KNC",
-            "address": "0xad67cB4d63C9da94AcA37fDF2761AaDF780ff4a2",
-            "decimals": 18
+            "name": "KyberNetwork",
+            "address": "0xb5034418f6cc1fd494535f2d38f770c9827f88a1",
+            "decimals": 18,
+            "cg_id": "",
+            "priority": true,
+            "sp_limit_order": true
         },
         "SAI": {
             "symbol": "SAI",
             "name": "SAI",
             "address": "0xc4375b7de8af5a38a93548eb8453a498222c4ff2",
-            "decimals": 18
+            "decimals": 18,
+            "cg_id": "",
+            "gasLimit": "500000",
+            "priority": true,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3
         },
         "DAI": {
             "symbol": "DAI",
             "name": "DAI",
             "address": "0x1d7e3a1a65a367db1d1d3f51a54ac01a2c4c92ff",
-            "decimals": 18
+            "decimals": 18,
+            "cg_id": "",
+            "gasLimit": "500000",
+            "priority": true,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3
         }
     },
     "ethScanUrl": "https://kovan.etherscan.io/",
@@ -86,6 +106,6 @@
         "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
     },
     "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://dev-api.knstats.com",
+    "tracker": "https://dev-kovan-api.knstats.com",
     "statEndPoint": "https://kovan-data.kyber.network"
 }

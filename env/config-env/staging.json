@@ -64,6 +64,7 @@
             "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
             "decimals": 18,
             "cg_id": "dai",
+            "gasLimit": "500000",
             "sp_limit_order": true
         },
         "OMG": {
@@ -717,6 +718,14 @@
             "address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
             "decimals": 18,
             "cg_id": "paxos-standard"
+        },
+        "MLN": {
+            "symbol": "MLN",
+            "name": "Melon Token",
+            "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
+            "decimals": 18,
+            "cg_id": "melon",
+            "sp_limit_order": true
         }
     },
     "ethScanUrl": "https://etherscan.io/",

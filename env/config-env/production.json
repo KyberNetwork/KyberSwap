@@ -246,13 +246,6 @@
             "decimals": 18,
             "cg_id": "polymath-network"
         },
-        "LBA": {
-            "symbol": "LBA",
-            "name": "Cred",
-            "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
-            "decimals": 18,
-            "cg_id": "libra-credit"
-        },
         "CVC": {
             "symbol": "CVC",
             "name": "Civic",
@@ -498,15 +491,6 @@
             "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
             "decimals": 9,
             "cg_id": "iexec-rlc",
-            "listing_time": 1560258000,
-            "sp_limit_order": true
-        },
-        "NPXS": {
-            "symbol": "NPXS",
-            "name": "Pundi X",
-            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
-            "decimals": 18,
-            "cg_id": "pundi-x",
             "listing_time": 1560258000,
             "sp_limit_order": true
         },

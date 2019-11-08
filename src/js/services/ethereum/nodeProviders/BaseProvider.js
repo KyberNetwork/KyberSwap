@@ -20,6 +20,7 @@ export default class BaseProvider {
 
         this.kyberswapContract = new this.rpc.eth.Contract(constants.KYBER_SWAP_ABI, this.kyberswapAddress)
 
+
         // this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
         // this.getSignatureParameters("0x112b82204e41184696fe6e83e2637870f7922672ecf1dc603815a4c25098bfde1cf6ed4ddc6a76b77cc103f844eddc2e1e39a6062e3e09da4f2b53cfab620c5c1c")
         // this.getMessageHashTest("hello")
@@ -383,7 +384,7 @@ export default class BaseProvider {
                                 type: 'uint256[]',
                                 name: 'slippagePrice'
                             }
-                        ], data)
+                        ], data)                        
                         resolve(dataMapped)
                     } catch (e) {
                         reject(err)
