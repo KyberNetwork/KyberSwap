@@ -43,6 +43,8 @@ export default class ConfirmModal extends React.Component {
     }
 
     componentDidMount = () => {
+        this._isMounted = true;
+        
         this.setState({
             isFetchGas: true,
             isFetchRate: true,
@@ -50,11 +52,20 @@ export default class ConfirmModal extends React.Component {
             expectedRate: this.props.exchange.snapshot.expectedRate,
             slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
             startTime: Math.round(new Date().getTime())
-        })
+        });
       
         this.getSlippageRate()
         this.getGasSwap()
-    }
+    };
+    
+    componentWillUnmount = () => {
+        this._isMounted = false;
+    };
+    
+    setStateOnMounted = (state) => {
+        if (!this._isMounted) return;
+        this.setState(state)
+    };
 
     getReferAddr = () => {
         if (this.props.account.type === "metamask") {
@@ -83,17 +94,17 @@ export default class ConfirmModal extends React.Component {
 
             var rate = await ethereum.call("getRate", source, dest, sourceAmountHex)
             if (rate.expectedRate == 0 || rate.slippageRate == 0) {
-                this.setState({
+                this.setStateOnMounted({
                     isFetchRate: false,
                     rateErr: this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
                 })
             } else {
-                this.setState({
+                this.setStateOnMounted({
                     isFetchRate: false,
                     expectedRate: rate.expectedRate
                 })
                 if (!this.props.exchange.isEditRate) {
-                    this.setState({
+                    this.setStateOnMounted({
                         isFetchRate: false,
                         slippageRate: rate.slippageRate
                     })
@@ -102,7 +113,7 @@ export default class ConfirmModal extends React.Component {
 
         } catch (err) {
             console.log(err)
-            this.setState({
+            this.setStateOnMounted({
                 rateErr: err.toString(),
                 isFetchRate: false
             })
@@ -144,11 +155,11 @@ export default class ConfirmModal extends React.Component {
         const gasPrice = this.props.exchange.gasPrice;
         const ethBalance = this.props.account.balance;
         let gas = await this.getMaxGasExchange();
-        this.setState({ gasLimit: gas });
+        this.setStateOnMounted({ gasLimit: gas });
         
         try {
             if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
-                this.setState({ isFetchGas: false });
+                this.setStateOnMounted({ isFetchGas: false });
                 this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
                 return;
             }
@@ -174,19 +185,19 @@ export default class ConfirmModal extends React.Component {
 
             if (estimatedGas < gas) {
                 gas = estimatedGas;
-                this.setState({ gasLimit: estimatedGas })
+                this.setStateOnMounted({ gasLimit: estimatedGas })
             }
         } catch (err) {
             console.log(err);
         }
   
-        this.setState({ isFetchGas: false });
+        this.setStateOnMounted({ isFetchGas: false });
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
     }
 
     validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasPrice) {        
 
-      var srcAmount = converter.hexToNumber(srcAmount)        
+      srcAmount = converter.hexToNumber(srcAmount)        
       srcAmount = converter.toT(srcAmount, this.props.tokens[srcSymbol].decimal)
 
       const isNotEnoughEth = validators.verifyBalanceForTransaction(
@@ -194,7 +205,7 @@ export default class ConfirmModal extends React.Component {
       );
   
       if (isNotEnoughEth) {
-        this.setState({
+        this.setStateOnMounted({
           err: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
         })
       }
@@ -238,7 +249,7 @@ export default class ConfirmModal extends React.Component {
         var wallet = getWallet(this.props.account.type)
         var password = ""
         if (this.state.err || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
-        this.setState({
+        this.setStateOnMounted({
             err: "",
             isConfirmingTx: true
         })
@@ -296,7 +307,7 @@ export default class ConfirmModal extends React.Component {
             this.props.dispatch(exchangeActions.forwardExchangePath())
         } catch (err) {
             console.log(err)
-            this.setState({ err: err.toString(), isConfirmingTx: false })
+            this.setStateOnMounted({ err: err.toString(), isConfirmingTx: false })
         }
     }
 
