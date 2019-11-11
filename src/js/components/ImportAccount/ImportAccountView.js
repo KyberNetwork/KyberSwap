@@ -5,7 +5,9 @@ import {
   ImportByMetamask,
   ImportByDeviceWithLedger,
   ImportByDeviceWithTrezor,
-  ImportByPromoCode
+  ImportByPromoCode, 
+  ImportByWalletLink,
+  ImportByWalletConnect
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
@@ -106,6 +108,15 @@ const ImportAccountView = (props) => {
               <ImportByPromoCode isOnMobile={isOnMobile} />
             </div>
           }
+          
+          <div className={`import-account__item import-account__item-walletlink`}>
+            <ImportByWalletLink />
+          </div>
+
+          <div className={`import-account__item import-account__item-walletconnect`}>
+            <ImportByWalletConnect />
+          </div>
+          
         </div>
       </div>
       {props.errorModal}
