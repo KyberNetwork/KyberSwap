@@ -164,7 +164,7 @@ class ExchangeBody extends React.Component {
   }
 
   dispatchEstimateGasNormal = () => {
-    this.props.dispatch(exchangeActions.estimateGasNormal())
+    this.props.dispatch(exchangeActions.estimateGasNormal(false))
   }
 
   lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)

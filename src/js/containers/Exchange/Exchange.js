@@ -95,7 +95,7 @@ export default class Exchange extends React.Component {
     if (!this.props.account) {
       return
     }
-    this.props.dispatch(exchangeActions.estimateGasNormal())
+    this.props.dispatch(exchangeActions.estimateGasNormal(false))
   }
 
   async fetchMaxGasPrice(){
