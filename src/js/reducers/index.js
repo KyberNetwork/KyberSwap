@@ -18,11 +18,14 @@ import locale from './languageReducer'
 import market from './marketReducer'
 import { localizeReducer } from 'react-localize-redux';
 
+
+
+
 const rootReducer = combineReducers({
   account: persistReducer({
     key: 'account',
     storage: session,
-    blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error']
+    blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'walletName', 'error', 'wallet']
   }, account),
   limitOrder: persistReducer({
     key: 'limitOrder',

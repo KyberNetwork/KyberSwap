@@ -5,6 +5,7 @@ export { default as Trezor } from './trezor.js'
 export { default as Ledger } from './ledger.js'
 
 export { default as WalletLinkKey } from './walletlink.js'
+export { default as WalletConnectKey } from './walletconnect.js'
 
 export { default as Metamask } from './metamask.js'
 
@@ -31,6 +32,9 @@ export function getWallet(type) {
             break
         case "walletlink":
             keyService = new keys.WalletLinkKey()
+            break
+        case "walletconnect":
+            keyService = new keys.WalletConnectKey()
             break
         default:
             keyService = new keys.KeyStore()

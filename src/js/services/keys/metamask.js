@@ -1,14 +1,36 @@
+import React from 'react';
 import * as keyService from "./baseKey"
 import EthereumTx from "ethereumjs-tx"
 import {newWeb3Instance} from "../web3"
 import * as ethUtils from "ethereumjs-util"
 
-export default class Metamask {
+export default class Metamask extends React.Component{
+
+  constructor(props){
+    super(props)
+    this.web3Service = newWeb3Instance()
+  }
+  
+  getDisconnected(){    
+    var web3 = this.web3Service
+    return new Promise((resolve, reject) => {     
+      web3.getCoinbase().then(address => {
+        var addressInterval = setInterval(function() {
+          web3.getCoinbase().then(updatedAddress => {
+            if (updatedAddress != address){
+              clearInterval(addressInterval)
+              resolve()              
+            }
+          })
+        }, 100)
+      })          
+    })    
+  }  
 
   async signSignature(message, account) {
     try {      
-      var web3Service = newWeb3Instance()
-      var signature = await web3Service.sign(message)
+      // var web3Service = newWeb3Instance()
+      var signature = await this.web3Service.sign(message)
 
       return signature
     }catch(err){
@@ -39,19 +61,17 @@ export default class Metamask {
         })
       })
     })
-    // const { txParams, keystring, password } = keyService[funcName](...args)
-    // return this.sealTx(txParams, keystring, password)
   }
 
   sealTx = (txParams, keystring, password) => {
 
-    var web3Service = newWeb3Instance()
+    // var web3Service = newWeb3Instance()
 
     txParams.gas = txParams.gasLimit
     delete (txParams.gasLimit)
 
     return new Promise((resolve, reject) => {
-      web3Service.web3.eth.sendTransaction(txParams, function (err, transactionHash) {
+      this.web3Service.web3.eth.sendTransaction(txParams, function (err, transactionHash) {
         if (!err) {
           resolve(transactionHash)
         } else {

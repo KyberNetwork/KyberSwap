@@ -1,10 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
-import BLOCKCHAIN_INFO from "../../../../env"
-import * as web3Package from "../../services/web3"
+
+import { importNewAccount, throwError } from "../../actions/accountActions"
+
 import { getTranslate } from 'react-localize-redux'
 
 import {getWallet} from "../../services/keys"
+
+
+const WalletType = "walletlink"
 
 @connect((store, props) => {
     var tokens = store.tokens.tokens
@@ -23,15 +27,24 @@ import {getWallet} from "../../services/keys"
     }
 })
 
+
+
 export default class ImportByWallletLink extends React.Component {
 
     async connect(e){
-        var wallet = getWallet("walletlink")        
+        var wallet = getWallet(WalletType)        
         try {
-            var account = await wallet.getAccount()
-            console.log(account)
+            var address = await wallet.getAddress()            
+
+            this.props.dispatch(importNewAccount(address.toLowerCase(),
+                WalletType,
+                null,
+                this.props.ethereum,
+                this.props.tokens, null, null, "Wallet Link"))
+                
         }catch(err) {
             console.log(err)
+            this.props.dispatch(throwError(err))
         }
 
     }
@@ -42,7 +55,7 @@ export default class ImportByWallletLink extends React.Component {
         return (
             <div className="import-account__block theme__import-button" onClick={(e) => this.connect(e)}>
                 <div className="import-account__icon walletlink" />
-                <div className="import-account__name">WALLETLINK</div>
+                <div className="import-account__name">WALLET LINK</div>
             </div>
         )
     }

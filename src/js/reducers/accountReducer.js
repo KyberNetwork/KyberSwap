@@ -2,10 +2,13 @@ import {REHYDRATE} from 'redux-persist/lib/constants'
 import { clearInterval } from 'timers';
 import {cloneAccount} from "../services/accounts"
 
+import {getWallet} from "../services/keys"
+
 
 const initState = {
   isStoreReady: false,
   account: false,
+  wallet: false,
   loading: false,
   checkTimeImportLedger: false,
   error: {
@@ -31,7 +34,9 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich)
 
-        return {...state, account: updatedAccount}
+        var wallet = getWallet(type)
+
+        return {...state, account: updatedAccount, wallet: wallet}
       }
 
       return {...state}
@@ -46,8 +51,10 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      const {account, walletName} = action.payload      
-      return {...state, account: account, loading: false, isStoreReady: true, walletName: walletName}
+      const {account, wallet, walletName} = action.payload
+          
+
+      return {...state, account: account, wallet: wallet, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
       return {...state, loading: false}
