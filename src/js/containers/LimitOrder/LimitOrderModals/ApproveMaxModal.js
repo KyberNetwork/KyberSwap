@@ -139,10 +139,10 @@ export default class ApproveMaxModal extends React.Component {
                   {this.props.translate("modal.approve_exchange_limit_order", { token: this.props.limitOrder.sourceTokenSymbol })
                   || `You need to grant permission for KyberSwap Limit Order to interact with ${this.props.limitOrder.sourceTokenSymbol} with this address`}
                 </div>
-                <div class="info tx-title">
+                <div class="info tx-title theme__background-222">
                   <div className="address-info">
                     <div>{this.props.translate("modal.address") || "Address"}</div>
-                    <div>{this.props.account.address}</div>
+                    <div className={"theme__text-7"}>{this.props.account.address}</div>
                   </div>
                 </div>
                 <FeeDetail 
@@ -157,7 +157,7 @@ export default class ApproveMaxModal extends React.Component {
 
           </div>
         </div>
-        <div className="overlap">
+        <div className="overlap theme__background-2">
           <div className="input-confirm input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>

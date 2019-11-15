@@ -10,3 +10,8 @@ export { default as ImportByMetamask } from './ImportByMetamask.js';
 
 export { default as ImportByDeviceWithLedger } from './ImportByDeviceWithLedger.js'
 export { default as ImportByDeviceWithTrezor } from './ImportByDeviceWithTrezor.js'
+
+
+export { default as ImportByWalletLink } from './ImportByWalletLink.js';
+export { default as ImportByWalletConnect } from './ImportByWalletConnect.js';
+export { default as ImportByOther } from './ImportByOther.js';

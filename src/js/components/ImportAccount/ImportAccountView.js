@@ -5,7 +5,10 @@ import {
   ImportByMetamask,
   ImportByDeviceWithLedger,
   ImportByDeviceWithTrezor,
-  ImportByPromoCode
+  ImportByPromoCode, 
+  ImportByWalletLink,
+  ImportByWalletConnect,
+  ImportByOther
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
@@ -69,6 +72,18 @@ const ImportAccountView = (props) => {
             </div>
           }
 
+          {(!isLimitOrder || !isOnMobile) &&
+          <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
+            <ImportByPromoCode isOnMobile={isOnMobile} />
+          </div>
+          }
+
+          {!isOnMobile &&
+          <div className={`import-account__item`}>
+            <ImportByOther isOnMobile={isOnMobile} />
+          </div>
+          }
+
           {isOnMobile &&
             <div className="import-account__item download-app">
               <div className={"import-account__block"}>
@@ -97,15 +112,18 @@ const ImportAccountView = (props) => {
             </div>
           }
 
-          <div className={`import-account__item`}>
-            <ImportByPrivateKey isOnMobile={isOnMobile} />
-          </div>
+          {/*<div className={`import-account__item`}>*/}
+          {/*  <ImportByPrivateKey isOnMobile={isOnMobile} />*/}
+          {/*</div>*/}
+          
+          {/*<div className={`import-account__item import-account__item-walletlink`}>*/}
+          {/*  <ImportByWalletLink />*/}
+          {/*</div>*/}
 
-          {(!isLimitOrder || !isOnMobile) &&
-            <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
-              <ImportByPromoCode isOnMobile={isOnMobile} />
-            </div>
-          }
+          {/*<div className={`import-account__item import-account__item-walletconnect`}>*/}
+          {/*  <ImportByWalletConnect />*/}
+          {/*</div>*/}
+          
         </div>
       </div>
       {props.errorModal}

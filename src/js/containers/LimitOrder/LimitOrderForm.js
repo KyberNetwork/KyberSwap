@@ -287,7 +287,7 @@ export default class LimitOrderForm extends React.Component {
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {this.props.limitOrder.errors.rateWarning !== "" && (
+        {(this.props.limitOrder.errors.rateWarning !== "" || true) && (
           <ForceCancelOrderModal
             toggleAgreeSubmit={this.toggleAgreeSubmit}
             getListWarningOrdersComp={this.getListWarningOrdersComp}

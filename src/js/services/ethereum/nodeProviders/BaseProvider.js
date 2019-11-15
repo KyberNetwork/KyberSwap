@@ -732,9 +732,7 @@ export default class BaseProvider {
         //special handle for official reserve
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
-        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
-        // console.log("srcAmountEnableFistBit")
-        // console.log(srcAmountEnableFistBit)
+        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)        
 
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
 
@@ -743,11 +741,8 @@ export default class BaseProvider {
                 to: BLOCKCHAIN_INFO.network,
                 data: data
             }, blockno)
-                .then(result => {
-                    //    console.log({source, dest, srcAmount, blockno})
-                    //     console.log("rate: " + result)
-                    if (result === "0x") {
-                        // reject(new Error("Cannot get rate"))
+                .then(result => {                    
+                    if (result === "0x") {                        
                         resolve({
                             expectedPrice: "0",
                             slippagePrice: "0"
@@ -761,8 +756,7 @@ export default class BaseProvider {
                         }, {
                             type: 'uint256',
                             name: 'slippagePrice'
-                        }], result)
-                        //   console.log(rates)
+                        }], result)                        
                         resolve(rates)
                     } catch (e) {
                         reject(e)

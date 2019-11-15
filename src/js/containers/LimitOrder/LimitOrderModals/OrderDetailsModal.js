@@ -47,7 +47,7 @@ export default class OrderDetailsModal extends Component {
 
     return (
       <div className="limit-order-modal">
-        <div className="limit-order-modal__body">
+        <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
             { `${side_trade ? side_trade : ""} ${base} Order`}
           </div>
@@ -62,7 +62,7 @@ export default class OrderDetailsModal extends Component {
               <span className={`cell-status cell-status--${order.status}`}>{(order.status)}</span>
             </div>
             <div className={"order-table-info"}>
-              <div className={"order-table-info__header"}>
+              <div className={"order-table-info__header theme__background-33 theme__text-6"}>
                 <div>{"Pair"}</div>
                 <div>{"Price"}</div>
                 <div>{"Amount"}</div>

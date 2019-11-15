@@ -183,7 +183,7 @@ export default class ConfirmModal extends React.Component {
 
     return (
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
-        <div className="limit-order-modal__body">
+          <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
             {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
             `Confirm ${["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : ""}${base} Order`}
@@ -230,7 +230,7 @@ export default class ConfirmModal extends React.Component {
         </div>
 
         {(!this.state.isFinish && !this.state.err) &&
-          <div className="limit-order-modal__footer">
+          <div className="limit-order-modal__footer theme__background-2">
             <button
               className={`btn-cancel ${(this.state.isConfirming || this.state.isFetchFee) ? "btn--disabled" : ""}`}
               onClick={this.closeModal}
@@ -247,7 +247,7 @@ export default class ConfirmModal extends React.Component {
         }
 
         {this.state.isFinish &&
-          <div className="limit-order-modal__msg limit-order-modal__msg--success">
+          <div className="limit-order-modal__msg limit-order-modal__msg--success theme__background-8">
             <div className={"limit-order-modal__text"}>
               <div className={"limit-order-modal__text--success"}>
                 <img src={require("../../../../assets/img/limit-order/checkmark_green.svg")}/>
@@ -261,7 +261,7 @@ export default class ConfirmModal extends React.Component {
         }
 
         {this.state.err &&
-          <div className="limit-order-modal__msg limit-order-modal__msg--failed">
+          <div className="limit-order-modal__msg limit-order-modal__msg--failed theme__background-9">
             <div className={"limit-order-modal__text limit-order-modal__text--failed"}>
               <div className={"limit-order-modal__left-content"}>
                 <img src={require("../../../../assets/img/limit-order/error.svg")}/>

@@ -374,7 +374,7 @@ export default class ConfirmModal extends React.Component {
                                 <div className="title-container">
                                     <div className="title-description">
                                         <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                                        <div className="title-description-wallet-address">
+                                        <div className="title-description-wallet-address theme__text-6">
                                             <span>{this.props.account.address.slice(0, 7)}</span>
                                             <span>...</span>
                                             <span>{this.props.account.address.slice(-6)}</span>
@@ -382,7 +382,7 @@ export default class ConfirmModal extends React.Component {
                                     </div>
                                     <div className="title-description">
                                         <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
-                                        <div className="title-description-wallet-address">
+                                        <div className="title-description-wallet-address theme__text-6">
                                             <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
                                             <span>...</span>
                                             <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
@@ -398,7 +398,7 @@ export default class ConfirmModal extends React.Component {
                                 // On mobile
                                 <div className="title-description">
                                     <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                                    <div className="title-description-wallet-address">
+                                    <div className="title-description-wallet-address theme__text-6">
                                         {this.props.account.address}
                                     </div>
                                     {this.props.account.type === "promo" && <div className="title-description-expired-notification">
@@ -408,7 +408,7 @@ export default class ConfirmModal extends React.Component {
                                 </div>
                             )
                         }
-                        <div className="amount">
+                        <div className="amount theme__background-22">
                             <div className="amount-item amount-left">
                                 <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                                 <div className={"rc-info"}>
@@ -508,7 +508,7 @@ export default class ConfirmModal extends React.Component {
         const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
 
         return (
-            <div>
+            <div className="theme__text">
                 <a className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
                 </a>
@@ -539,7 +539,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                         <div>{this.msgHtml()}</div>
                     </div>
-                    <div className="overlap">
+                    <div className="overlap theme__background-2">
                         <div className="input-confirm grid-x">
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}

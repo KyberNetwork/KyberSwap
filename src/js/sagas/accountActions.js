@@ -10,6 +10,7 @@ import constants from "../services/constants"
 import { findNetworkName } from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import { store } from '../store';
+import {getWallet} from "../services/keys"
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -105,7 +106,10 @@ export function* importNewAccount(action) {
 
     yield put(setGasPrice());
     yield put(actions.closeImportLoading())
-    yield put(actions.importNewAccountComplete(account, walletName))
+
+    var wallet = getWallet(account.type)
+
+    yield put(actions.importNewAccountComplete(account, wallet, walletName))
 
     if (isChangingWallet) yield put(closeChangeWallet())
 
@@ -128,6 +132,15 @@ export function* importNewAccount(action) {
     yield put(setBalanceToken(balanceTokens))
 
     if (window.kyberBus) { window.kyberBus.broadcast('wallet.import', address); }
+
+
+    if (wallet.getDisconnected){
+      const subcribeClearSessionTask = yield fork(subcribeWalletDisconnect, wallet)
+      yield take('GLOBAL.CLEAR_SESSION')
+      yield cancel(subcribeClearSessionTask)
+    }
+    
+
   }
   catch (err) {
     console.log(err)
@@ -135,13 +148,13 @@ export function* importNewAccount(action) {
     yield put(actions.closeImportLoading())
   }
 
-  if (type === "metamask") {
-    const { web3Service, address, networkId } = { ...metamask }
-    const watchCoinbaseTask = yield fork(watchCoinbase, web3Service, address, networkId)
 
-    yield take('GLOBAL.CLEAR_SESSION')
-    yield cancel(watchCoinbaseTask)
-  }
+}
+
+function* subcribeWalletDisconnect(wallet){  
+  yield call([wallet, wallet.getDisconnected])  
+  yield put(clearSession())
+  return
 }
 
 export function* importMetamask(action) {
@@ -195,30 +208,6 @@ export function* importMetamask(action) {
   }
 }
 
-
-function* watchCoinbase(web3Service, address, networkId) {
-  while (true) {
-    try {
-      yield call(delay, 500)
-      const coinbase = yield call([web3Service, web3Service.getCoinbase])
-      if (coinbase !== address) {
-        yield put(clearSession())
-        return
-      }
-      const currentId = yield call([web3Service, web3Service.getNetworkId])
-      if (parseInt(currentId, 10) !== networkId) {
-        console.log(currentId)
-        yield put(clearSession())
-        return
-      }
-      //check 
-    } catch (error) {
-      console.log(error)
-      yield put(clearSession())
-      return;
-    }
-  }
-}
 
 export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)

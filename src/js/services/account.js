@@ -1,3 +1,6 @@
+
+// import {getWallet} from "./keys"
+
 export default class Account {
   constructor(address, type, keystring, walletType, info, balance = 0, nonce = 0, manualNonce = 0, maxCap = "infinity", rich= false) {
     this.address = address
@@ -10,13 +13,20 @@ export default class Account {
     this.info = info
     this.maxCap = maxCap
     this.rich = rich
+    // this.wallet = getWallet(type)
   }
 
-  shallowClone() {
+  shallowClone() {    
     return new Account(
       this.address, this.type, this.keystring, this.walletType, this.info,
       this.balance, this.nonce, this.manualNonce, this.maxCap, this.rich)
   }
+  
+  // clearSession () {
+  //   if (this.wallet.clearSession) {
+  //     this.wallet.clearSession()
+  //   }
+  // }
 
   getUsableNonce() {
     var nonceFromNode = this.nonce

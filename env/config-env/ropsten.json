@@ -205,7 +205,8 @@
             "cg_id": "dai",
             "sp_limit_order": true,
             "is_quote": true,
-            "quote_priority": 3
+            "quote_priority": 3,
+            "is_gas_fixed": true
         },
         "LINK": {
             "symbol": "LINK",
@@ -382,6 +383,20 @@
             "address": "0xacbdbc20459d98c902e748b09cfbd5dd98b23cf9",
             "decimals": 18,
             "cg_id": "freldo"
+        },
+        "RAE": {
+            "symbol": "RAE",
+            "name": "Rokfin",
+            "address": "0xc57115e8b62fad7124dfd69daf1f94b70e07663f",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "SAN": {
+            "symbol": "SAN",
+            "name": "Santiment network",
+            "address": "0xa9453029f249358fe563f0cdde3e971521d473b5",
+            "decimals": 18,
+            "cg_id": ""
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

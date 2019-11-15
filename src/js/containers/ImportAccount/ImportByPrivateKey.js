@@ -4,6 +4,7 @@ import { ImportByPKeyView } from "../../components/ImportAccount"
 import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
+import {AccountBalanceLayout} from "../../components/Exchange";
 
 @connect((store) => {
   var tokens = store.tokens.tokens
@@ -57,7 +58,7 @@ export default class ImportByPrivateKey extends React.Component {
 
   }
 
-  render() {
+render() {
     return (
       <ImportByPKeyView
         isOnMobile={this.props.isOnMobile}
@@ -69,6 +70,9 @@ export default class ImportByPrivateKey extends React.Component {
         pKeyError={this.props.account.pKey.error}
         translate={this.props.translate}
         analytics={this.props.analytics}
+        {...(this.props.closeParentModal && {
+          closeParentModal: this.props.closeParentModal
+        })}
       />
     )
   }

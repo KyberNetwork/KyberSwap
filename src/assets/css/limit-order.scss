@@ -1235,6 +1235,8 @@
 
 .limit-order-modal {
   &--mobile {
+    height: 100vh;
+
     .limit-order-modal {
       &__body {
         padding: 0;
@@ -1264,10 +1266,6 @@
       }
     }
 
-    .limit-order-list--table-mobile {
-      background: white;
-    }
-
     .question {
       padding: 0 15px;
       display: block;
@@ -1279,7 +1277,6 @@
   }
 
   &__body {
-    background-color: #f6f7fa;
     padding: 30px 40px 0;
 
     @include screen-max-width(medium) {
@@ -1331,7 +1328,6 @@
   }
 
   &__footer {
-    background-color: #ffffff;
     display: flex;
     justify-content: flex-end;
     padding: 25px 0;
@@ -1530,7 +1526,6 @@
   }
 
   &__msg {
-    color: #222222;
     font-size: 14px;
     padding: 30px 30px;
     font-weight: 500;
@@ -1711,7 +1706,6 @@
     }
     .target-value {
       width: calc(100% - 100px);
-      color: #141927;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1764,6 +1758,7 @@
         font-size: 16px;
         max-width: 150px;
         outline: none;
+        background: none;
       }
     }
     .dest-token{
@@ -1792,7 +1787,7 @@
       }
 
       .token-info {
-        width: 110px;
+        width: 100%;
       }
 
       .token-value {
@@ -2249,12 +2244,10 @@
   margin-top: 18px;
   &__header {
     border-radius: 3px;
-    background-color: #e1e4eb;
     @extend %order-table-info;
     div {
       font-size: 12px;
       font-weight: 500;
-      color: #5a5e67;
     }
   }
 
@@ -2264,7 +2257,6 @@
     div {
       font-size: 14px;
       font-weight: 500;
-      color: #141927;
       text-transform: uppercase;
     }
   }

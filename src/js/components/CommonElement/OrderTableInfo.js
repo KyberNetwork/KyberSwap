@@ -57,7 +57,7 @@ const OrderTableInfo = (props) => {
     
   return (
     <div className={"order-table-info"}>
-      <div className={"order-table-info__header"}>
+      <div className={"order-table-info__header theme__background-33 theme__text-6"}>
         <div>{props.translate("limit_order.pair") || "Pair"}</div>
         <div>{props.translate("limit_order.price") || "Price"}</div>
         <div>{props.translate("limit_order.amount") || "Amount"}</div>
