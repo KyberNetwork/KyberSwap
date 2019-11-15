@@ -137,8 +137,8 @@ export default class ApproveZeroModal extends React.Component {
                   <div className="message">
                     {`You need reset allowance ${this.props.exchange.sourceTokenSymbol} of Kyber Swap with this address`}
                   </div>
-                  <div class="info tx-title">
-                    <div className="address-info">
+                  <div class="info tx-title theme__background-222">
+                    <div className="address-info theme__text-7">
                       <div>{this.props.translate("modal.address") || "Address"}</div>
                       <div>{this.props.account.address}</div>
                     </div>
@@ -156,7 +156,7 @@ export default class ApproveZeroModal extends React.Component {
           </div>
         </div>
        
-        <div className="overlap">
+        <div className="overlap theme__background-2">
           <div className="input-confirm grid-x input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>

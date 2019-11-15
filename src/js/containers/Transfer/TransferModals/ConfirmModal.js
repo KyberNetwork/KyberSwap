@@ -228,19 +228,19 @@ export default class ConfirmModal extends React.Component {
         var { tokenSymbol, destAddress } = this.getFormParams()
         var amount = this.props.transfer.amount.toString()
         return (
-            <div className={"transfer-title"}>
+            <div className={"transfer-title theme__background-2 theme__text-6"}>
                 <div className="recap-sum-up">
                     {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
                 </div>
                 <div className="recap-transfer">
                     <div>
-                        <strong>
+                        <strong className={"theme__text"}>
                             {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}
                         </strong>
                     </div>
                     <div>{this.props.translate("transaction.to") || "to"}</div>
                     <div>
-                        <strong>
+                        <strong className={"theme__text"}>
                             {destAddress.slice(0, 7)}...{destAddress.slice(-5)}
                         </strong>
                     </div>
@@ -276,7 +276,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                         <div>{this.msgHtml()}</div>
                     </div>
-                    <div className="overlap">
+                    <div className="overlap theme__background-2">
                         
                         <div className="input-confirm grid-x">
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>

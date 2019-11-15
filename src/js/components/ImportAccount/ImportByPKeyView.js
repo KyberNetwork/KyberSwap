@@ -28,7 +28,9 @@ const ImportByPKeyView = (props) => {
     }
   }
 
+
   return (
+
     <Fragment>
       {!props.isOnMobile && (
         <div className="import-account__block theme__import-button" onClick={(e) => props.modalOpen()}>
@@ -53,16 +55,21 @@ const ImportByPKeyView = (props) => {
       <Modal
         className={{ base: 'reveal tiny import-modal', afterOpen: 'reveal tiny import-modal' }}
         isOpen={props.isOpen}
-        onRequestClose={() => props.onRequestClose()}
+        onRequestClose={() =>{
+          props.closeParentModal()
+          props.onRequestClose()
+        }}
         content={
           <div className={"import-modal import-modal__private-key"}>
             <div className="import-modal__header">
               <div className="import-modal__header--title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div>
-              <a className="x" onClick={props.onRequestClose}>&times;</a>              
+              <a className="x" onClick={() => {
+                props.closeParentModal()
+                props.onRequestClose()}}>&times;</a>
             </div>
             <div className="import-modal__body">
               <div className="input-reveal">
-                <input className="security" id="private_key"
+                <input className="security theme__background-44 theme__text" id="private_key"
                         type="text"
                         onChange={(e) => props.onChange(e)}
                         onKeyPress={(e) => submit(e)}
@@ -79,7 +86,7 @@ const ImportByPKeyView = (props) => {
               <span className="error-text">{props.pKeyError}</span>
               }
             </div>
-            <div className="import-modal__footer">
+            <div className="import-modal__footer theme__background-2">
               <button className={"import-modal__footer--button"} id="submit_pkey" onClick={() => handldeSubmit()}>
                 {props.translate("modal.import") || "Import"}
               </button>

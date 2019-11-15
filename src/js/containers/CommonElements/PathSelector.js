@@ -109,7 +109,7 @@ export default class PathSelector extends React.Component {
             <div className="token-selector">
                 <Dropdown onShow={(e) => this.showSelector(e)} onHide={(e) => this.hideSelector(e)} active={this.state.open}>
                     <DropdownTrigger className="notifications-toggle">
-                        <div className="focus-item d-flex">
+                        <div className="focus-item d-flex theme__text">
                             <div>
                                 {this.focusItem()}
                             </div>
@@ -120,7 +120,7 @@ export default class PathSelector extends React.Component {
                     </DropdownTrigger>
                     <DropdownContent>
                         <div className="select-item">
-                            <div className="list-item">
+                            <div className="list-item theme__background-44">
                                 {this.getListItem()}
                             </div>
                         </div>

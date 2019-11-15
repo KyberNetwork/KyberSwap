@@ -213,7 +213,7 @@ export default class WrapETHModal extends React.Component {
         const availableWethBalance = converters.roundingNumber(converters.toEther(this.props.availableWethBalance));
 
         return (
-            <div className="wrap-eth-modal">
+            <div className="wrap-eth-modal theme__text">
               <div className="title">{this.props.translate("limit_order.wrap_eth_modal_title") || "Convert ETH to WETH"}</div>
               <a className="x" onClick={this.closeModal}>
                 <img src={require("../../../../assets/img/v3/Close-3.svg")} />
@@ -231,11 +231,11 @@ export default class WrapETHModal extends React.Component {
                           </div>
                           <div className="address-info">
                               <div>
-                                  <label>{this.props.translate("limit_order.your_address") || "Your address:"}</label>{' '}
+                                  <label className={"theme__text-6"}>{this.props.translate("limit_order.your_address") || "Your address:"}</label>{' '}
                                   <span className={"target-value"}>{this.props.account.address}</span>
                               </div>
                               <div>
-                                  <label>{this.props.translate("limit_order.your_balance") || "Your balance:"}</label>{' '}
+                                  <label className={"theme__text-6"}>{this.props.translate("limit_order.your_balance") || "Your balance:"}</label>{' '}
                                   <div className={"target-value balance-info"}>
                                       <div>{converters.roundingNumber(converters.toEther(this.props.tokens["ETH"].balance))} ETH</div>
                                       <div>{availableWethBalance} WETH</div>
@@ -245,12 +245,12 @@ export default class WrapETHModal extends React.Component {
 
                           <div className="illustration">
                               <div className="source-token token-item">
-                                  <div className="token-info">
+                                  <div className="token-info theme__background-333">
                                       <img src={getAssetUrl(`tokens/eth.svg`)} />
                                       <span>ETH</span>
                                   </div>
-                                  <div className="token-value">
-                                      <input value={this.state.amountConvert} id="wrap-input"
+                                  <div className="token-value theme__background-44">
+                                      <input value={this.state.amountConvert} id="wrap-input" className={"theme__text"}
                                           min="0"
                                           step="0.000001"
                                           placeholder="0" 
@@ -264,7 +264,7 @@ export default class WrapETHModal extends React.Component {
                               </div>
 
                               <div className="dest-token token-item">
-                                  <div className="token-info">
+                                  <div className="token-info theme__background-333">
                                       <img src={getAssetUrl(`tokens/${BLOCKCHAIN_INFO.wrapETHToken.toLowerCase()}.svg`)} />
                                       <span>{BLOCKCHAIN_INFO.wrapETHToken}</span>
                                   </div>
@@ -282,7 +282,7 @@ export default class WrapETHModal extends React.Component {
 
                   </div>
               </div>
-              <div className="overlap">
+              <div className="overlap theme__background-2">
                 {this.msgHtml()}
                 <div className="input-confirm grid-x input-confirm--approve">
                 

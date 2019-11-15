@@ -83,6 +83,18 @@ export function closePromoCodeModal() {
   }
 }
 
+export function openOtherConnectModal() {
+  return {
+    type: "ACCOUNT.OPEN_OTHER_CONNECT_MODAL",
+  }
+}
+
+export function closeOtherConnectModal() {
+  return {
+    type: "ACCOUNT.CLOSE_OTHER_CONNECT_MODAL",
+  }
+}
+
 export function throwPromoCodeError(error) {
   return {
     type: "ACCOUNT.PROMO_CODE_ERROR",
