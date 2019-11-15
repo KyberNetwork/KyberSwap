@@ -5,6 +5,7 @@ import { Currency, MarketTable, SearchWord, RateSliderV2 } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { Modal } from "../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../env"
+import { sortBy } from 'underscore';
 
 function compareString() {
   return function (tokenA, tokenB) {
@@ -36,6 +37,7 @@ function compareNum(sortKey) {
   var listTokens = []
   var sortKey = store.market.configs.sortKey
   var sortType = store.market.configs.sortType
+  const tokens = store.tokens.tokens
 
   if (sortedTokens.length > 0) {
     listTokens = sortedTokens
@@ -44,7 +46,10 @@ function compareNum(sortKey) {
       const pairs = value.pair.split("_");
       const tokenSymbol = pairs[1];
       const quoteSymbol = pairs[0];
-
+      const nowTimeStamp = Math.round(new Date().getTime() / 1000);
+  
+      if (tokens[tokenSymbol] && tokens[tokenSymbol].listing_time > nowTimeStamp) return;
+      
       if (!tokenSymbol.toLowerCase().includes(searchWord.toLowerCase())) return;
 
       if (quoteSymbol.toLowerCase() !== currency.toLowerCase()) return;
@@ -53,6 +58,10 @@ function compareNum(sortKey) {
 
       if (value.buy_price === '0' && value.sell_price === '0') {
         value.change = -999;
+      }
+      
+      if (tokens[tokenSymbol] && tokens[tokenSymbol].isNew === true) {
+        value.isNew = true;
       }
 
       listTokens.push(value)
@@ -66,6 +75,10 @@ function compareNum(sortKey) {
 
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
       listTokens.reverse()
+    }
+  
+    if (!sortKey) {
+      listTokens = sortBy(listTokens, 'isNew');
     }
   }
 

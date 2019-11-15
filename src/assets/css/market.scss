@@ -268,39 +268,18 @@
               }
 
               div.token-pair {
-                width: 100%;
                 text-align: left;
                 padding-left: 10px;
                 position: relative;
-                >div{
-                  position: relative;
-                  display: inline-block;
-                }
-                img {
-                  margin-right: 10px;
-                  width: 24px;
-                  height: 24px;
-                  position: relative;
-                  top: -2px;
-                }
-                .new-token {
+
+                &--new:after {
+                  content: '';
                   position: absolute;
-                  top: -20px;
-                  right: 40px;
-                  font-size: 9px;
-                  height: 16px;
-                  width: auto;
-                  color: white;
-                  background: #EE344E;
-                  line-height: 16px;
-                  padding: 0px 5px;
-                  font-weight: 600;
-                  border-radius: 2px;
-                  min-width: 25px;
-                  text-align: center;
-                  @media screen and (max-width: 1296px) {
-                    right: 0;
-                  }
+                  top: -3px;
+                  right: -25px;
+                  background-image: url($image-path + 'icons/new.svg');
+                  width: 22px;
+                  height: 7px;
                 }
               }
             }
