@@ -46,7 +46,10 @@ function compareNum(sortKey) {
       const pairs = value.pair.split("_");
       const tokenSymbol = pairs[1];
       const quoteSymbol = pairs[0];
-
+      const nowTimeStamp = Math.round(new Date().getTime() / 1000);
+  
+      if (tokens[tokenSymbol] && tokens[tokenSymbol].listing_time > nowTimeStamp) return;
+      
       if (!tokenSymbol.toLowerCase().includes(searchWord.toLowerCase())) return;
 
       if (quoteSymbol.toLowerCase() !== currency.toLowerCase()) return;
