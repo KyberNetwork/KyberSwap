@@ -5,6 +5,7 @@ import { Currency, MarketTable, SearchWord, RateSliderV2 } from "../Market"
 import * as marketActions from "../../actions/marketActions"
 import { Modal } from "../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../env"
+import { sortBy } from 'underscore';
 
 function compareString() {
   return function (tokenA, tokenB) {
@@ -74,12 +75,7 @@ function compareNum(sortKey) {
     }
   
     if (!sortKey) {
-      listTokens = listTokens.reduce((list, item) => {
-        if (item.isNew === true) {
-          return [item, ...list];
-        }
-        return [...list, item];
-      }, []);
+      listTokens = sortBy(listTokens, 'isNew');
     }
   }
 
