@@ -1408,6 +1408,10 @@ $divider-color: darken($title-background-color, 5);
   .content{
     >div:first-child{
       text-align: center;
+
+      canvas{
+        border: 10px solid white;
+      }
     }
     .message{
       width: 300px;

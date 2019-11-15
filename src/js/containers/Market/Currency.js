@@ -26,7 +26,7 @@ export default class Currency extends React.Component {
               return (
                 <a
                   key={key}
-                  className={this.props.currentCurrency === tokenSymbol ? 'currency-item active' : 'currency-item'}
+                  className={this.props.currentCurrency === tokenSymbol ? 'theme__text currency-item active' : 'theme__text currency-item'}
                   onClick={()=>this.changeCurrency(tokenSymbol)}
                 >
                   {tokenSymbol}
