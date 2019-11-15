@@ -34,8 +34,8 @@ export default class ImportByWallletLink extends React.Component {
     async connect(e){
         var wallet = getWallet(WalletType)        
         try {
-            var address = await wallet.getAddress()            
-
+            var address = await wallet.getAddress()
+            this.props.closeParentModal();
             this.props.dispatch(importNewAccount(address.toLowerCase(),
                 WalletType,
                 null,

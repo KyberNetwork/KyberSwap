@@ -38,7 +38,6 @@
     &-title {
       font-size: 24px;
       font-weight: 500;
-      color: $light-color-2;
       margin-right: 40px;
     }
 
@@ -60,7 +59,6 @@
         font-size: 14px;
         font-weight: 500;
         border-bottom: solid 2px transparent;
-        color: #5a5e67 !important;
         cursor: pointer;
         margin-right: 20px;
         transition: all .3s;
@@ -70,7 +68,7 @@
         }
 
         &.active {
-          color: $light-color-2 !important;
+          //color: $light-color-2 !important;
           border-bottom-color: #EF8102;
           cursor: initial;
         }
@@ -81,7 +79,6 @@
   .market-table {
     margin-bottom: 25px;
     padding-bottom: 15px;
-    color: #222;
     position: relative;
     .search-space {
       position: absolute;
@@ -170,6 +167,7 @@
             padding: 10px 0;
             border-radius: 3px;
             background-color: #e1e4eb;
+            color: black;
             margin-bottom: 15px;
 
             .rt-th-img {
@@ -217,7 +215,6 @@
         overflow: unset;
         font-size: 14px;
         font-weight: 400;
-        color: $light-color-2;
 
         .rt-tr-group {
           border-bottom: none;
@@ -241,6 +238,9 @@
             &:hover {
               border-color: #e1e4eb;
               background-color: white;
+              .rt-td{
+                color: black;
+              }
             }
 
             div.rt-td {

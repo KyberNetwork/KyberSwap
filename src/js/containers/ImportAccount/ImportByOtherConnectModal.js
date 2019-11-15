@@ -62,7 +62,7 @@ export default class ImportByOtherConnectModal extends React.Component {
                   </div>
 
                   <div className={`import-account__item large import-account__item-walletlink`}>
-                    <ImportByWalletLink />
+                    <ImportByWalletLink closeParentModal={this.closeModal.bind(this)} />
                   </div>
 
                   <div className={`import-account__item large import-account__item-walletconnect`}>

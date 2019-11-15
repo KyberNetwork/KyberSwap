@@ -46,6 +46,8 @@ export default class ImportByWallletConnect extends React.Component {
             this.setState({                
                 isOpen: false                
             })
+            this.props.closeParentModal();
+            this.closeModal();
             this.props.dispatch(importNewAccount(address.toLowerCase(),
                 WalletType,
                 null,
@@ -84,7 +86,7 @@ export default class ImportByWallletConnect extends React.Component {
                   <a className="x" onClick={(e) => {this.props.closeParentModal();this.closeModal()}}>&times;</a>
                   <div className="content with-overlap">
                       <div className="row">
-                          <QRCode size="150" value={this.state.qrCode} />
+                          <QRCode size={300} value={this.state.qrCode} />
                       </div>
                       <div className="message">
                           <div><span className={"theme__background-3"}>1</span> {`Open compatible wallet app`}</div>
