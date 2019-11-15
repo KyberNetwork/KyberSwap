@@ -355,7 +355,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
-    "promo_code": "PROMO CODE"
+    "promo_code": "PROMO CODE",
+    "others": "OTHERS"
   },
   "market": {
     "eth_market": "Ethereum Market",

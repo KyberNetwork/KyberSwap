@@ -87,7 +87,7 @@ export default class ImportKeystore extends React.Component {
         <div className="import-modal__body">
             <div className="input-reveal">
               <input 
-                className="security" 
+                className="security theme__background-44 theme__text"
                 id="keystore-pass" 
                 type="text" 
                 autoComplete="off" 
@@ -102,7 +102,7 @@ export default class ImportKeystore extends React.Component {
               </div>
             )}
         </div>
-        <div className="import-modal__footer">
+        <div className="import-modal__footer theme__background-2">
           <button className={"import-modal__footer--button"} onClick={this.unLock}>
             {this.props.translate("modal.unlock") || "Unlock"}
           </button>

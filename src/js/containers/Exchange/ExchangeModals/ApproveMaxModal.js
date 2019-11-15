@@ -138,10 +138,10 @@ export default class ApproveMaxModal extends React.Component {
                   <div className="message">
                     {`You need approve KyberSwap to use token ${this.props.exchange.sourceTokenSymbol}`}
                   </div>
-                  <div class="info tx-title">
+                  <div class="info tx-title theme__background-222">
                     <div className="address-info">
                       <div>{this.props.translate("modal.address") || "Address"}</div>
-                      <div>{this.props.account.address}</div>
+                      <div className={"theme__text-7"}>{this.props.account.address}</div>
                     </div>
                   </div>
                   <FeeDetail 
@@ -159,8 +159,8 @@ export default class ApproveMaxModal extends React.Component {
             </div>
           </div>
         </div>
-        
-        <div className="overlap">
+
+        <div className="overlap theme__background-2">
           <div className="input-confirm grid-x input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>

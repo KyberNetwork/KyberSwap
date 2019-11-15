@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import { importNewAccount, throwError } from "../../actions/accountActions"
-import { Modal } from "../../components/CommonElement"
+import {FeeDetail, Modal} from "../../components/CommonElement"
 import QRCode from "qrcode.react"
 
 import { getWallet } from "../../services/keys"
@@ -38,8 +38,6 @@ export default class ImportByWallletConnect extends React.Component {
             wallet: false
         }
     }
-
-
 
     async connect(e) {
         var wallet = this.state.wallet
@@ -80,29 +78,44 @@ export default class ImportByWallletConnect extends React.Component {
 
     contentModal = () => {
         return (
-            <QRCode value={this.state.qrCode} />
+          <div className="wallet-connect-qr p-a-20px import-promocode">
+              <div>
+                  <div className="title">Scan QR code</div>
+                  <a className="x" onClick={(e) => {this.props.closeParentModal();this.closeModal()}}>&times;</a>
+                  <div className="content with-overlap">
+                      <div className="row">
+                          <QRCode size="150" value={this.state.qrCode} />
+                      </div>
+                      <div className="message">
+                          <div><span className={"theme__background-3"}>1</span> {`Open compatible wallet app`}</div>
+                          <div><span className={"theme__background-3"}>2</span> {`Find and open the QR scanner`}</div>
+                          <div><span className={"theme__background-3"}>3</span> {`Scan this QR code`}</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         )
     }
 
     render() {
         return (
-            <div className="import-account__block theme__import-button">
-                <div onClick={(e) => this.openQrCode(e)}>
-                    <div className="import-account__icon walletconnect" />
+            <div>
+                <div className="import-account__block theme__import-button" onClick={(e) => this.openQrCode(e)}>
+                    <div className="import-account__icon wallet-connect" />
                     <div className="import-account__name">WALLET CONNECT</div>
                 </div>
                 {this.state.isOpen === true && (
-                    <Modal
-                        className={{
-                            base: 'reveal medium qc-modal',
-                            afterOpen: 'reveal medium qc-modal'
-                        }}
-                        isOpen={true}
-                        onRequestClose={(e) => this.closeModal()}
-                        contentLabel="approve token"
-                        content={this.contentModal()}
-                        size="medium"
-                    />
+                  <Modal
+                    className={{
+                        base: 'reveal tiny',
+                        afterOpen: 'reveal tiny'
+                    }}
+                    isOpen={true}
+                    onRequestClose={(e) => {this.props.closeParentModal();this.closeModal()}}
+                    contentLabel="approve token"
+                    content={this.contentModal()}
+                    size="medium"
+                  />
                 )}
             </div>
         )

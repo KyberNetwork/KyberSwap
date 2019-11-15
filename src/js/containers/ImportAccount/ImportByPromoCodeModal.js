@@ -155,7 +155,7 @@ export default class ImportByPromoCodeModal extends React.Component {
     
   }
 
-  importPromoCode = (promoCode) => {
+  PromoCode = (promoCode) => {
     var check = false
     if (promoCode === "") {
       this.setState({errorPromoCode: this.props.translate("error.promo_code_error") || "Promo code is empty."})
@@ -259,7 +259,7 @@ export default class ImportByPromoCodeModal extends React.Component {
                     <label className={!!this.state.errorPromoCode ? "error" : ""}>
                       <div className="input-reveal">
                         <input
-                          className="text-center" id="promo_code"
+                          className="text-center theme__background-44 theme__text" id="promo_code"
                           type="text"
                           value={this.state.promoCodeValue}
                           onChange={e => this.onPromoCodeChange(e)}
@@ -298,7 +298,7 @@ export default class ImportByPromoCodeModal extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="overlap promo-btn">
+              <div className="overlap promo-btn theme__background-2">
                 <button onClick={this.closeModal.bind(this)} className= {`button accent cur-pointer cancel-buttom`}>
                   {this.props.translate("import.cancel") || "Cancel"}
                 </button>

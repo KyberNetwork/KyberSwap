@@ -1,7 +1,12 @@
 import React from "react"
 import Modal from 'react-modal'
 import * as common from "../../utils/common"
+import {connect} from "react-redux";
+import {getTranslate} from "react-localize-redux";
 
+@connect((store) => {
+    return { theme: store.global.theme }
+})
 export default class MyModal extends React.Component{
     constructor() {
         super();
@@ -51,7 +56,11 @@ export default class MyModal extends React.Component{
             onRequestClose={this.props.onRequestClose}
             contentLabel={this.props.contentLabel}
           >
-              {this.props.content}
+              <div className={`theme theme--${this.props.theme}__bundle theme__text`}>
+                  <div className="theme__background theme__text" style={{border: "solid 1px #5a5e67"}}>
+                    {this.props.content}
+                  </div>
+              </div>
           </Modal>
         )
     }

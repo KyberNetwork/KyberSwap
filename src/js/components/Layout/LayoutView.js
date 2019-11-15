@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import { Processing, InfoModal } from "../../containers/CommonElements/"
 import ImportByPromoCodeModal from "../../containers/ImportAccount/ImportByPromoCodeModal"
+import ImportByOtherConnectModal from "../../containers/ImportAccount/ImportByOtherConnectModal"
 import constants from "../../services/constants"
 import * as common from "../../utils/common"
 import { store } from '../../store'
@@ -84,6 +85,7 @@ const LayoutView = (props) => {
         <section id="modals">
           <InfoModal />
           <ImportByPromoCodeModal/>
+          <ImportByOtherConnectModal/>
         </section>
       </Fragment>
     </ConnectedRouter>

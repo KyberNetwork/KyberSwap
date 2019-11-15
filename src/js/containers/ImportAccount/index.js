@@ -14,3 +14,4 @@ export { default as ImportByDeviceWithTrezor } from './ImportByDeviceWithTrezor.
 
 export { default as ImportByWalletLink } from './ImportByWalletLink.js';
 export { default as ImportByWalletConnect } from './ImportByWalletConnect.js';
+export { default as ImportByOther } from './ImportByOther.js';

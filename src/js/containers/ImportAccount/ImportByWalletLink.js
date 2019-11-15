@@ -54,7 +54,7 @@ export default class ImportByWallletLink extends React.Component {
     render() {
         return (
             <div className="import-account__block theme__import-button" onClick={(e) => this.connect(e)}>
-                <div className="import-account__icon walletlink" />
+                <div className="import-account__icon wallet-link" />
                 <div className="import-account__name">WALLET LINK</div>
             </div>
         )

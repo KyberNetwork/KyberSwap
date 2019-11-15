@@ -137,7 +137,7 @@ class LimitOrderFee extends React.Component {
 
         <div className={"limit-order-fee__total"}>
           <span className={"theme__text-4"}>{this.props.translate("limit_order.total")}:</span>
-          <span className={"theme__text-5"}>{totalText}</span>
+          <span className={"theme__text"}>{totalText}</span>
         </div>
       </div>
     )

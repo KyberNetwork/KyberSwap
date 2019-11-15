@@ -23,6 +23,10 @@ const initState = {
     error: '',
     modalOpen: false
   },
+  otherConnect: {
+    error: '',
+    modalOpen: false
+  },
   walletName: '',
   isOnDAPP: false
 }
@@ -140,6 +144,20 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
     case "ACCOUNT.CLOSE_PROMO_CODE_MODAL": {
       let newState = {...state}
       newState.promoCode.modalOpen = false
+      return newState
+    }
+    case "ACCOUNT.OPEN_OTHER_CONNECT_MODAL": {
+      let newState = {...state}
+      let otherConnect = {
+        error: '',
+        modalOpen: true
+      }
+      newState.otherConnect = otherConnect
+      return newState
+    }
+    case "ACCOUNT.CLOSE_OTHER_CONNECT_MODAL": {
+      let newState = {...state}
+      newState.otherConnect.modalOpen = false
       return newState
     }
     case "GLOBAL.SET_BALANCE_TOKEN":{
