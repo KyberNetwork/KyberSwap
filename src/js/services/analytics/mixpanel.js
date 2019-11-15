@@ -91,10 +91,12 @@ export default class Mixpanel {
     }
   }
   
-  trackWalletVolume(walletType, srcTokenSymbol, srcAmount) {
+  trackWalletVolume(walletType, srcTokenSymbol, srcAmount, destTokenSymbol) {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function') {
       try {
-        mixpanel.track("Swap_WalletVolume", { walletType, srcTokenSymbol, srcAmount })
+        console.log({ walletType, srcTokenSymbol, srcAmount, destTokenSymbol });
+        alert(1);
+        mixpanel.track("Swap_WalletVolume", { walletType, srcTokenSymbol, srcAmount, destTokenSymbol })
       } catch(e) {
         console.log(e)
       }
