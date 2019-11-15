@@ -170,8 +170,8 @@ export default class ConfirmModal extends React.Component {
 
             this.props.global.analytics.callTrack("trackCoinTransfer", tokenSymbol);
             this.props.global.analytics.callTrack("completeTrade", txHash, "kyber", "transfer");
-
-
+            this.props.global.analytics.callTrack("trackWalletVolume", this.props.account.type, tokenSymbol, amount);
+            
             var data = { amount, tokenSymbol, destAddress }
             const tx = new Tx(
                 txHash, address, gas, gasPrice, nonce, "pending", "transfer", data)
