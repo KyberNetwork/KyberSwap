@@ -36,6 +36,7 @@ function compareNum(sortKey) {
   var listTokens = []
   var sortKey = store.market.configs.sortKey
   var sortType = store.market.configs.sortType
+  const tokens = store.tokens.tokens
 
   if (sortedTokens.length > 0) {
     listTokens = sortedTokens
@@ -54,6 +55,10 @@ function compareNum(sortKey) {
       if (value.buy_price === '0' && value.sell_price === '0') {
         value.change = -999;
       }
+      
+      if (tokens[tokenSymbol] && tokens[tokenSymbol].isNew === true) {
+        value.isNew = true;
+      }
 
       listTokens.push(value)
     });
@@ -66,6 +71,15 @@ function compareNum(sortKey) {
 
     if (sortType[sortKey] && sortType[sortKey] === '-sort-desc') {
       listTokens.reverse()
+    }
+  
+    if (!sortKey) {
+      listTokens = listTokens.reduce((list, item) => {
+        if (item.isNew === true) {
+          return [item, ...list];
+        }
+        return [...list, item];
+      }, []);
     }
   }
 

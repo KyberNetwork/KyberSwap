@@ -129,11 +129,11 @@ export default class MarketTable extends React.Component {
     )
   }
 
-  addIcon = (input) => {
-    const pair = input.split('_');
+  addIcon = (tokenPair, isNew) => {
+    const pair = tokenPair.split('_');
 
     return (
-      <div className="token-pair">
+      <div className={`token-pair ${isNew ? 'token-pair--new' : ''}`}>
         {pair[1]}/{pair[0]}
       </div>
     )
@@ -214,7 +214,7 @@ export default class MarketTable extends React.Component {
       {
         Header: this.getSortHeader("Pair", "pair"),
         accessor: 'pair',
-        Cell: props => this.addIcon(props.value),
+        Cell: props => this.addIcon(props.value, props.original.isNew),
         getHeaderProps: () => {
           return {
             className: this.props.sortType["pair"] ?  (this.props.sortType["pair"] + ' -cursor-pointer') :'-cursor-pointer',
