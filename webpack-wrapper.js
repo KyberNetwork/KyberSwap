@@ -67,7 +67,6 @@ var getConfig = env => {
                 new TerserPlugin({
                     parallel: true,
                     terserOptions: {
-                        ecma: 6,
                         compress: {
                             drop_console: true,
                             warnings: false
