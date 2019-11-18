@@ -100,4 +100,8 @@ export default class WalletLinkKey extends React.Component {
             throw err
         }
     }
+    
+    getWalletName = () => {
+        return 'Wallet Link';
+    }
 }

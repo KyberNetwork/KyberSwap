@@ -81,4 +81,8 @@ export default class Metamask extends React.Component{
       })
     })
   }
+  
+  getWalletName = () => {
+    return this.web3Service.getWalletName();
+  }
 }

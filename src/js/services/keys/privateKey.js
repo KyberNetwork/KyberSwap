@@ -63,4 +63,8 @@ export default class PrivateKey {
     tx.sign(privateKey)
     return tx
   }
+  
+  getWalletName = () => {
+    return 'Private Key';
+  }
 }

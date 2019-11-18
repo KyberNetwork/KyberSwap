@@ -133,4 +133,8 @@ export default class WalletConnectKey extends React.Component {
             throw err
         }
     }
+    
+    getWalletName = () => {
+        return 'Wallet Connect';
+    }
 }
