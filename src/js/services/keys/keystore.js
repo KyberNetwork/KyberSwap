@@ -55,7 +55,7 @@ export default class KeyStore {
     return tx
   }
   
-  getWalletName = (isOnDAPP) => {
-    return isOnDAPP ? 'Dapp' : 'Keystore';
+  getWalletName = () => {
+    return 'Keystore';
   }
 }

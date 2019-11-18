@@ -82,7 +82,7 @@ export default class Metamask extends React.Component{
     })
   }
   
-  getWalletName = (isOnDAPP) => {
-    return isOnDAPP ? 'Dapp' : 'Metamask';
+  getWalletName = () => {
+    return this.web3Service.getWalletName();
   }
 }

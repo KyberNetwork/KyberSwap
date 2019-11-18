@@ -18,6 +18,10 @@ export default class DappBrowser {
   getWalletType = () => {
     return "dapp"
   }
+  
+  getWalletName = () => {
+    return 'Dapp';
+  }
 
   getNetworkId = () => {
     return new Promise((resolve, reject) => {

@@ -168,7 +168,7 @@ export default class Trezor extends React.Component {
     })
   }
   
-  getWalletName = (isOnDAPP) => {
-    return isOnDAPP ? 'Dapp' : 'Trezor';
+  getWalletName = () => {
+    return 'Trezor';
   }
 }

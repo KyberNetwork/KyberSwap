@@ -64,7 +64,7 @@ export default class PrivateKey {
     return tx
   }
   
-  getWalletName = (isOnDAPP) => {
-    return isOnDAPP ? 'Dapp' : 'Private Key';
+  getWalletName = () => {
+    return 'Private Key';
   }
 }
