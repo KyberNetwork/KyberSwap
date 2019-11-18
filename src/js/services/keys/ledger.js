@@ -206,4 +206,8 @@ export default class Ledger {
       })
     })
   }
+  
+  getWalletName = () => {
+    return 'Ledger';
+  }
 }

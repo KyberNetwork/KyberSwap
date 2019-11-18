@@ -90,7 +90,16 @@ export default class Mixpanel {
       }
     }
   }
-
+  
+  trackWalletVolume(walletType, srcTokenSymbol, srcAmount, destTokenSymbol) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function') {
+      try {
+        mixpanel.track("Swap_WalletVolume", { walletType, srcTokenSymbol, srcAmount, destTokenSymbol })
+      } catch(e) {
+        console.log(e)
+      }
+    }
+  }
 
   trackCoinTransfer(token){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){

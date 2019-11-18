@@ -167,4 +167,8 @@ export default class Trezor extends React.Component {
         })
     })
   }
+  
+  getWalletName = () => {
+    return 'Trezor';
+  }
 }

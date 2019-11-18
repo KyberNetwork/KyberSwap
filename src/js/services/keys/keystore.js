@@ -54,4 +54,8 @@ export default class KeyStore {
     tx.sign(privKey)
     return tx
   }
+  
+  getWalletName = () => {
+    return 'Keystore';
+  }
 }
