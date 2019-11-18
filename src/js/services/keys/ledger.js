@@ -207,7 +207,7 @@ export default class Ledger {
     })
   }
   
-  getWalletName = () => {
-    return 'Ledger';
+  getWalletName = (isOnDAPP) => {
+    return isOnDAPP ? 'Dapp' : 'Ledger';
   }
 }

@@ -276,9 +276,13 @@ export default class ConfirmModal extends React.Component {
             var data = { sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol }
             this.props.global.analytics.callTrack("trackCoinExchange", data);
             this.props.global.analytics.callTrack("completeTrade", txHash, "kyber", "swap");
-            
-            const walletName = this.props.account.isOnDAPP ? 'Dapp' : wallet.getWalletName();
-            this.props.global.analytics.callTrack("trackWalletVolume", walletName, sourceTokenSymbol, this.props.exchange.snapshot.sourceAmount, destTokenSymbol);
+            this.props.global.analytics.callTrack(
+              "trackWalletVolume",
+              wallet.getWalletName(this.props.account.isOnDAPP),
+              sourceTokenSymbol,
+              this.props.exchange.snapshot.sourceAmount,
+              destTokenSymbol
+            );
 
             // Track swapping time here
             const startTime = this.state.startTime;

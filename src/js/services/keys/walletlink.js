@@ -101,7 +101,7 @@ export default class WalletLinkKey extends React.Component {
         }
     }
     
-    getWalletName = () => {
-        return 'Wallet Link';
+    getWalletName = (isOnDAPP) => {
+        return isOnDAPP ? 'Dapp' : 'Wallet Link';
     }
 }

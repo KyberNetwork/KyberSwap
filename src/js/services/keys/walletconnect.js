@@ -134,7 +134,7 @@ export default class WalletConnectKey extends React.Component {
         }
     }
     
-    getWalletName = () => {
-        return 'Wallet Connect';
+    getWalletName = (isOnDAPP) => {
+        return isOnDAPP ? 'Dapp' : 'Wallet Connect';
     }
 }
