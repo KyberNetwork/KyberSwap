@@ -1,13 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { importNewAccount, throwError } from "../../actions/accountActions"
+import { importNewAccount, importAccountWallet, throwError } from "../../actions/accountActions"
 
 import { getTranslate } from 'react-localize-redux'
 
 import {getWallet} from "../../services/keys"
 
-
+import BLOCKCHAIN_INFO from "../../../../env";
+import {call} from "redux-saga/effects";
 const WalletType = "walletlink"
 
 @connect((store, props) => {
@@ -36,11 +37,23 @@ export default class ImportByWallletLink extends React.Component {
         try {
             var address = await wallet.getAddress()
             this.props.closeParentModal();
-            this.props.dispatch(importNewAccount(address.toLowerCase(),
+            const {translate} = this.props
+            const chainId = await new Promise((resolve, reject) => {
+                wallet.web3.eth.net.getId((error, result) => {
+                    if (error || !result) {
+                        console.log(error)
+                        var error = new Error("Cannot get network id")
+                        reject(error)
+                    } else {
+                        resolve(result)
+                    }
+                })
+            })
+            this.props.dispatch(importAccountWallet(chainId, BLOCKCHAIN_INFO.networkId, address.toLowerCase(),
                 WalletType,
                 null,
                 this.props.ethereum,
-                this.props.tokens, null, null, "Wallet Link"))
+                this.props.tokens, translate, null, null, "Wallet Link"))
                 
         }catch(err) {
             console.log(err)

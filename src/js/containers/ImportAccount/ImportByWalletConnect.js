@@ -1,12 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import { importNewAccount, throwError } from "../../actions/accountActions"
+import {importAccountWallet, importNewAccount, throwError} from "../../actions/accountActions"
 import {FeeDetail, Modal} from "../../components/CommonElement"
 import QRCode from "qrcode.react"
 
 import { getWallet } from "../../services/keys"
-
+import BLOCKCHAIN_INFO from "../../../../env";
 
 
 const WalletType = "walletconnect"
@@ -42,17 +42,26 @@ export default class ImportByWallletConnect extends React.Component {
     async connect(e) {
         var wallet = this.state.wallet
         try {
-            var address = await wallet.getAddress()
+            var {address, chainId} = await wallet.getAddress()
+
             this.setState({                
                 isOpen: false                
             })
             this.props.closeParentModal();
             this.closeModal();
-            this.props.dispatch(importNewAccount(address.toLowerCase(),
-                WalletType,
-                null,
-                this.props.ethereum,
-                this.props.tokens, null, null, "Wallet Connect"))
+
+            const {translate} = this.props
+            this.props.dispatch(importAccountWallet(1, BLOCKCHAIN_INFO.networkId, address.toLowerCase(),
+              WalletType,
+              null,
+              this.props.ethereum,
+              this.props.tokens, translate, null, null, "Wallet Connect"))
+
+            // this.props.dispatch(importNewAccount(address.toLowerCase(),
+            //     WalletType,
+            //     null,
+            //     this.props.ethereum,
+            //     this.props.tokens, translate, null, null, "Wallet Connect"))
         } catch (err) {
             console.log(err)
         }

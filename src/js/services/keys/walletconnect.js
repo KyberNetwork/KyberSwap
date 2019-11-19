@@ -82,7 +82,7 @@ export default class WalletConnectKey extends React.Component {
 
                 // Get provided accounts and chainId
                 const { accounts, chainId } = payload.params[0];
-                resolve(accounts[0])
+                resolve({address: accounts[0], chainId: chainId})
 
             });
         })
