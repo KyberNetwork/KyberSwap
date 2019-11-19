@@ -51,17 +51,11 @@ export default class ImportByWallletConnect extends React.Component {
             this.closeModal();
 
             const {translate} = this.props
-            this.props.dispatch(importAccountWallet(1, BLOCKCHAIN_INFO.networkId, address.toLowerCase(),
+            this.props.dispatch(importAccountWallet(chainId, BLOCKCHAIN_INFO.networkId, address.toLowerCase(),
               WalletType,
               null,
               this.props.ethereum,
               this.props.tokens, translate, null, null, "Wallet Connect"))
-
-            // this.props.dispatch(importNewAccount(address.toLowerCase(),
-            //     WalletType,
-            //     null,
-            //     this.props.ethereum,
-            //     this.props.tokens, translate, null, null, "Wallet Connect"))
         } catch (err) {
             console.log(err)
         }
