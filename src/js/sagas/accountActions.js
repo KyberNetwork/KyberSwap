@@ -208,44 +208,9 @@ export function* importMetamask(action) {
   }
 }
 
-export function* importAccountWallet(action) {
-  const { chainId, networkId, address, type, keystring, ethereum, tokens, translate, walletType, metamask, walletName } = action.payload
-  try {
-    const currentId = chainId
-    if (parseInt(currentId, 10) !== networkId) {
-      var currentName = findNetworkName(parseInt(currentId, 10))
-      var expectedName = findNetworkName(networkId)
-      if (currentName) {
-        yield put(actions.throwError(translate("error.network_not_match_wallet_link", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
-        return
-      } else {
-        yield put(actions.throwError(translate("error.network_not_match_unknow_wallet_link", { expectedName: expectedName }) || "Network is not match"))
-        return
-      }
-    }
-
-    yield put(actions.importNewAccount(
-      address,
-      type,
-      keystring,
-      ethereum,
-      tokens,
-      walletType,
-      metamask,
-      walletName
-    ))
-
-  } catch (e) {
-    console.log(e)
-    yield put(actions.throwError( "Cannot get wallet account."))
-  }
-}
-
-
 export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
-  yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_WALLET", importAccountWallet)
   yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
 }

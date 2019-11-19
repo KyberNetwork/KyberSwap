@@ -1,12 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import {importAccountWallet, importNewAccount, throwError} from "../../actions/accountActions"
+import * as actions from "../../actions/accountActions"
 import {FeeDetail, Modal} from "../../components/CommonElement"
 import QRCode from "qrcode.react"
 
 import { getWallet } from "../../services/keys"
 import BLOCKCHAIN_INFO from "../../../../env";
+import {findNetworkName} from "../../utils/converter";
 
 
 const WalletType = "walletconnect"
@@ -43,25 +44,51 @@ export default class ImportByWallletConnect extends React.Component {
         var wallet = this.state.wallet
         try {
             var {address, chainId} = await wallet.getAddress()
-
-            this.setState({                
+            this.setState({
                 isOpen: false                
             })
             this.props.closeParentModal();
             this.closeModal();
 
-            const {translate} = this.props
-            this.props.dispatch(importAccountWallet(chainId, BLOCKCHAIN_INFO.networkId, address.toLowerCase(),
-              WalletType,
-              null,
-              this.props.ethereum,
-              this.props.tokens, translate, null, null, "Wallet Connect"))
+            const networkId = BLOCKCHAIN_INFO.networkId
+            this.errorHandling(chainId, networkId, () => {
+                this.props.dispatch(actions.importNewAccount(
+                  address.toLowerCase(),
+                  WalletType,
+                  null,
+                  this.props.ethereum,
+                  this.props.tokens,
+                  null,
+                  null,
+                  "Wallet Connect"
+                ))
+            })
         } catch (err) {
             console.log(err)
         }
 
     }
-
+    errorHandling = (chainId, networkId, f) => {
+        const {translate} = this.props
+        try {
+            const currentId = chainId
+            if (parseInt(currentId, 10) !== networkId) {
+                var currentName = findNetworkName(parseInt(currentId, 10))
+                var expectedName = findNetworkName(networkId)
+                if (currentName) {
+                    this.props.dispatch(actions.throwError(translate("error.network_not_match_wallet_link", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
+                    return
+                } else {
+                    this.props.dispatch(actions.throwError(translate("error.network_not_match_unknow_wallet_link", { expectedName: expectedName }) || "Network is not match"))
+                    return
+                }
+            }
+            f();
+        } catch (e) {
+            console.log(e)
+            this.props.dispatch(actions.throwError( "Cannot get wallet account."))
+        }
+    }
     async openQrCode(e) {
         var wallet = getWallet(WalletType)
         try {

@@ -150,13 +150,6 @@ export function importAccountMetamask(web3Service, networkId, ethereum, tokens, 
   }
 }
 
-export function importAccountWallet(chainId, networkId, address, type, keystring, ethereum, tokens, translate, walletType = null, metamask = null, walletName = "") {
-  return {
-    type: "ACCOUNT.IMPORT_ACCOUNT_WALLET",
-    payload: { chainId, networkId, address, type, keystring, ethereum, tokens, translate, walletType, metamask, walletName}
-  }
-}
-
 export function setOnDAPP() {
   return {
     type: "ACCOUNT.SET_ON_DAPP"

@@ -46,6 +46,20 @@ export default class WalletLinkKey extends React.Component {
         })
     }
 
+    getChainId = () => {
+        return new Promise((resolve, reject) => {
+            this.web3.eth.net.getId((error, result) => {
+                if (error || !result) {
+                    console.log(error)
+                    var error = new Error("Cannot get network id")
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        })
+    }
+
     async broadCastTx(funcName, ...args) {
         try {
             var txHash = await this.callSignTransaction(funcName, ...args)
