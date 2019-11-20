@@ -372,6 +372,11 @@
     margin-bottom: 17px;
     transition: all 0.3s;
     cursor: pointer;
+
+    &.disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
 }
 

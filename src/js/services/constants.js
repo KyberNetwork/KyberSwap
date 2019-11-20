@@ -174,7 +174,8 @@ const INIT_TRANSFER_FORM_STATE = {
   isBalanceActive: false,
   isAdvanceActive: false,
   isOpenAdvance: false,
-  isSelectTokenBalance: false
+  isSelectTokenBalance: false,
+  isValidating: false
 }
 
 const LIMIT_ORDER_CONFIG = {

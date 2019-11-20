@@ -820,4 +820,14 @@ export default class BaseProvider {
             resolve({v, r,s})
         })
     }
+    
+    async getAddressFromEthName(destAddress) {
+        return new Promise((resolve, reject) => {
+            this.rpc.eth.ens.getAddress(destAddress).then((address) => {
+                resolve(address)
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+    }
 }

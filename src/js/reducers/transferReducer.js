@@ -1,6 +1,4 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest } from "../utils/converter"
 
 const initFormState = constants.INIT_TRANSFER_FORM_STATE
 const initState = initFormState
@@ -8,10 +6,6 @@ const initState = initFormState
 const transfer = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case REHYDRATE: {
-    //   newState = initState;
-    //   return {...newState};
-    // }
     case "TRANSFER.SET_RANDOM_SELECTED_TOKEN":
       var transfer = { ...state }
       var random = action.payload
@@ -193,6 +187,11 @@ const transfer = (state = initState, action) => {
 
     case "TRANSFER.FORWARD_TRANSFER_PATH":{
       newState.currentPathIndex += 1
+      return newState
+    }
+  
+    case "TRANSFER.SET_IS_VALIDATING": {
+      newState.isValidating = action.payload;
       return newState
     }
   }
