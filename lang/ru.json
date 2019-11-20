@@ -214,6 +214,8 @@
     "check_right_application_selected": "Удостоверьтесь, что выбрано правильное приложение",
     "network_not_match": "Metamask должен быть на <strong>${expectedName}</strong>. </br>В настоящий момент\nна <strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask должен быть на <strong>${expectedName}</strong>",
+    "network_not_match_wallet_link": "кошелька должен быть на <strong>${expectedName}</strong>. </br>В настоящий момент\nна <strong>${currentName}</strong>",
+    "network_not_match_unknow_wallet_link": "кошелька должен быть на <strong>${expectedName}</strong>",
     "not_supported": "не поддерживается",
     "metamask_not_install": "Невозможно подключиться к metamask. Удостоверьтесь, что metamask\nустановлен",
     "browser_not_support_metamask": "Metamask не поддерживается на <strong>${browser}</strong>\nбраузере. </br>Пожалуйста, используйте <strong>Chrome</strong> или <strong>FireFox</strong> вместо него.",

@@ -1,12 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
-
-import { importNewAccount, throwError } from "../../actions/accountActions"
-
 import { getTranslate } from 'react-localize-redux'
-
 import {getWallet} from "../../services/keys"
-
+import * as actions from '../../actions/accountActions'
 
 const WalletType = "walletlink"
 
@@ -26,30 +22,29 @@ const WalletType = "walletlink"
         analytics: store.global.analytics
     }
 })
-
-
-
 export default class ImportByWallletLink extends React.Component {
 
-    async connect(e){
-        var wallet = getWallet(WalletType)        
+    async connect(e) {
+        var wallet = getWallet(WalletType);
         try {
-            var address = await wallet.getAddress()
+            const address = await wallet.getAddress()
             this.props.closeParentModal();
-            this.props.dispatch(importNewAccount(address.toLowerCase(),
-                WalletType,
-                null,
-                this.props.ethereum,
-                this.props.tokens, null, null, "Wallet Link"))
-                
-        }catch(err) {
-            console.log(err)
-            this.props.dispatch(throwError(err))
-        }
-
-    }
-
     
+            this.props.dispatch(actions.importNewAccount(
+              address.toLowerCase(),
+              WalletType,
+              null,
+              this.props.ethereum,
+              this.props.tokens,
+              null,
+              null,
+              "Wallet Link"
+            ))
+        } catch(err) {
+            console.log(err)
+            this.props.dispatch(actions.throwError(err))
+        }
+    }
 
     render() {
         return (

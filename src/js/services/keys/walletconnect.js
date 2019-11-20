@@ -19,6 +19,7 @@ export default class WalletConnectKey extends React.Component {
             bridge: "https://bridge.walletconnect.org" // Required
         });
 
+        this.address = null;
     }
 
     getDisconnected = () => {
@@ -57,18 +58,10 @@ export default class WalletConnectKey extends React.Component {
     }
 
     getAddress = () => {
-        // if (!this.walletConnector.connected) {
-        //     this.walletConnector.createSession().then(() => {
-        //         // get uri for QR Code modal
-        //         const uri = this.walletConnector.uri;
-        //         console.log(uri)
-        //         // display QR Code modal
-        //         WalletConnectQRCodeModal.open(uri, () => {
-        //             console.log("QR Code Modal closed");
-        //         });
-        //     });
-        // }
-
+        return this.address;
+    }
+    
+    getChainId = () => {
         return new Promise((resolve, reject) => {
             // Subscribe to connection events
             this.walletConnector.on("connect", (error, payload) => {
@@ -76,17 +69,15 @@ export default class WalletConnectKey extends React.Component {
                     reject(error)
                     return
                 }
-
-                // Close QR Code Modal
-                // WalletConnectQRCodeModal.close();
-
-                // Get provided accounts and chainId
+            
                 const { accounts, chainId } = payload.params[0];
-                resolve(accounts[0])
-
+                
+                this.address = accounts[0];
+            
+                resolve(chainId)
             });
         })
-    }
+    };
 
     async broadCastTx(funcName, ...args) {
         try {

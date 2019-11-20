@@ -217,6 +217,8 @@
     "check_right_application_selected": "Check if right application is selected",
     "network_not_match": "Metamask should be on <strong>${expectedName}</strong> network. </br>Currently\nit is on <strong>${currentName}</strong> instead",
     "network_not_match_unknow": "Metamask should be on <strong>${expectedName}</strong> network",
+    "network_not_match_wallet_link": "Wallet should be on <strong>${expectedName}</strong> network. </br>Currently\nit is on <strong>${currentName}</strong> instead",
+    "network_not_match_unknow_wallet_link": "Wallet should be on <strong>${expectedName}</strong> network",
     "not_supported": "not supported",
     "metamask_not_install": "Cannot connect to metamask. Please make sure you have metamask\ninstalled",
     "browser_not_support_metamask": "Metamask is not supported on <strong>${browser}</strong>\nbrowser. </br>Please use <strong>Chrome</strong> or <strong>FireFox</strong> instead.",

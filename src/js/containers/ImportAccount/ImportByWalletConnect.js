@@ -1,13 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import { importNewAccount, throwError } from "../../actions/accountActions"
-import {FeeDetail, Modal} from "../../components/CommonElement"
+import * as actions from "../../actions/accountActions"
+import { Modal } from "../../components/CommonElement"
 import QRCode from "qrcode.react"
-
 import { getWallet } from "../../services/keys"
-
-
+import BLOCKCHAIN_INFO from "../../../../env";
+import { findNetworkName } from "../../utils/converter";
 
 const WalletType = "walletconnect"
 
@@ -42,23 +41,56 @@ export default class ImportByWallletConnect extends React.Component {
     async connect(e) {
         var wallet = this.state.wallet
         try {
-            var address = await wallet.getAddress()
-            this.setState({                
+            var chainId = await wallet.getChainId()
+            this.setState({
                 isOpen: false                
             })
             this.props.closeParentModal();
             this.closeModal();
-            this.props.dispatch(importNewAccount(address.toLowerCase(),
-                WalletType,
-                null,
-                this.props.ethereum,
-                this.props.tokens, null, null, "Wallet Connect"))
+
+            const networkId = BLOCKCHAIN_INFO.networkId
+            this.errorHandling(chainId, networkId)
         } catch (err) {
             console.log(err)
         }
-
     }
-
+    
+    errorHandling = (chainId, networkId) => {
+        const {translate} = this.props
+        try {
+            const currentId = parseInt(chainId, 10);
+            
+            if (currentId !== networkId) {
+                var currentName = findNetworkName(currentId)
+                var expectedName = findNetworkName(networkId)
+                
+                if (currentName) {
+                    this.props.dispatch(actions.throwError(translate("error.network_not_match_wallet_link", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
+                    return
+                }
+            
+                this.props.dispatch(actions.throwError(translate("error.network_not_match_unknow_wallet_link", { expectedName: expectedName }) || "Network is not match"))
+                return
+            }
+            
+            const address = this.state.wallet.getAddress();
+            
+            this.props.dispatch(actions.importNewAccount(
+              address.toLowerCase(),
+              WalletType,
+              null,
+              this.props.ethereum,
+              this.props.tokens,
+              null,
+              null,
+              "Wallet Connect"
+            ))
+        } catch (e) {
+            console.log(e)
+            this.props.dispatch(actions.throwError( "Cannot get wallet account."))
+        }
+    }
+    
     async openQrCode(e) {
         var wallet = getWallet(WalletType)
         try {

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import * as keyService from "./baseKey"
 import BLOCKCHAIN_INFO from "../../../../env"
 import WalletLink from "walletlink"
@@ -24,19 +23,8 @@ export default class WalletLinkKey extends React.Component {
 
     }
 
-
-    // clearSession = () => {
-    //     this.walletConnector.killSession()
-    // }
-    
-
     getAddress = () => {
         return new Promise((resolve, reject) => {
-            // this.ethereum.send("eth_requestAccounts").then((accounts) => {
-            //     console.log(`User's address is ${accounts[0]}`)
-              
-            //   })
-
             this.ethereum.enable().then((accounts) => {
                 resolve(accounts[0])
             }).catch(err => {
@@ -71,9 +59,6 @@ export default class WalletLinkKey extends React.Component {
     }
 
     sealTx = (txParams, keystring, password) => {
-
-        // var web3Service = newWeb3Instance()
-
         txParams.gas = txParams.gasLimit
         delete (txParams.gasLimit)
 

@@ -208,7 +208,6 @@ export function* importMetamask(action) {
   }
 }
 
-
 export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
