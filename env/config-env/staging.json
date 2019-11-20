@@ -12,7 +12,7 @@
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
-    "min_accept_amount": 0.00001,
+    "min_accept_amount": 0.01,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
     "priority_tokens": [
         "ETH",
@@ -40,7 +40,9 @@
             "decimals": 18,
             "cg_id": "ethereum",
             "gasLimit": "0",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
         },
         "WETH": {
             "symbol": "WETH",
@@ -48,7 +50,9 @@
             "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "decimals": 18,
             "cg_id": "weth",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
         },
         "KNC": {
             "symbol": "KNC",
@@ -58,13 +62,25 @@
             "cg_id": "kyber-network",
             "sp_limit_order": true
         },
-        "DAI": {
-            "symbol": "DAI",
-            "name": "DAI",
+        "SAI": {
+            "symbol": "SAI",
+            "name": "SAI",
             "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
             "decimals": 18,
             "cg_id": "dai",
-            "sp_limit_order": true
+            "gasLimit": "500000",
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3,
+            "is_gas_fixed": true
+        },
+        "DAI": {
+            "symbol": "DAI",
+            "name": "DAI",
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "decimals": 18,            
+            "gasLimit": "500000",            
+            "is_gas_fixed": true
         },
         "OMG": {
             "symbol": "OMG",
@@ -353,7 +369,10 @@
             "decimals": 18,
             "cg_id": "",
             "gasLimit": "550000",
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3,
+            "is_gas_fixed": true
         },
         "MDS": {
             "symbol": "MDS",
@@ -536,7 +555,9 @@
             "decimals": 8,
             "cg_id": "wrapped-bitcoin",
             "listing_time": 1543375503,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 1
         },
         "ABYSS": {
             "symbol": "ABYSS",
@@ -613,7 +634,9 @@
             "decimals": 6,
             "cg_id": "usd-coin",
             "priority": true,
-            "sp_limit_order": true
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3
         },
         "GEN": {
             "symbol": "GEN",
@@ -681,7 +704,7 @@
             "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
             "decimals": 18,
             "cg_id": "havven",
-            "gasLimit": "500000"
+            "gasLimit": "700000"
         },
         "CND": {
             "symbol": "CND",
@@ -717,6 +740,28 @@
             "address": "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
             "decimals": 18,
             "cg_id": "paxos-standard"
+        },
+        "MLN": {
+            "symbol": "MLN",
+            "name": "Melon Token",
+            "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
+            "decimals": 18,
+            "cg_id": "melon",
+            "sp_limit_order": true
+        },
+        "SUSD": {
+            "symbol": "SUSD",
+            "name": "sUSD",
+            "address": "0x57ab1e02fee23774580c119740129eac7081e9d3",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "RAE": {
+            "symbol": "RAE",
+            "name": "Receive Access Ecosystem",
+            "address": "0xe5a3229ccb22b6484594973a03a3851dcd948756",
+            "decimals": 18,
+            "cg_id": ""
         }
     },
     "ethScanUrl": "https://etherscan.io/",
