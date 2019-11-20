@@ -40,6 +40,7 @@ export default class ConfirmModal extends React.Component {
             startTime: 0,
             isConfirmingTx: false
         }
+        this.confirmingTimer = null;
     }
 
     componentDidMount = () => {
@@ -55,7 +56,11 @@ export default class ConfirmModal extends React.Component {
         this.getSlippageRate()
         this.getGasSwap()
     }
-
+    
+    componentWillUnmount() {
+        clearTimeout(this.confirmingTimer);
+    }
+    
     getReferAddr = () => {
         if (this.props.account.type === "metamask") {
             const web3Service = web3Package.newWeb3Instance();
@@ -234,27 +239,31 @@ export default class ConfirmModal extends React.Component {
     }
 
     async onSubmit() {
-        //reset        
         var wallet = getWallet(this.props.account.type)
         var password = ""
+        
         if (this.state.err || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+        
         this.setState({
             err: "",
             isConfirmingTx: true
-        })
+        });
+        
+        if (this.props.account.type === 'walletconnect') {
+            this.confirmingTimer = setTimeout(() => {
+                this.setState({ isConfirmingTx: false })
+            }, constants.TX_CONFIRMING_TIMEOUT);
+        }
+        
         try {
-
             var { formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount,
                 destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol } = this.getFormParams()
-
             var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
-
             var txHash = await wallet.broadCastTx(callFunc, formId, ethereum, address, sourceToken,
                 sourceAmount, destToken, destAddress,
                 maxDestAmount, slippageRate,
                 waletId, nonce, gas,
                 gasPrice, keystring, type, password)
-
 
             //submit hash to broadcast server
             try {
@@ -288,10 +297,8 @@ export default class ConfirmModal extends React.Component {
 
             this.props.dispatch(accountActions.incManualNonceAccount(address))
             this.props.dispatch(accountActions.updateAccount(ethereum, this.props.account))
-            //   this.props.dispatch(addTx(tx))
             this.props.dispatch(exchangeActions.doTransactionComplete(tx))
             this.props.dispatch(exchangeActions.finishExchange())
-
 
             //go to the next step
             this.props.dispatch(exchangeActions.forwardExchangePath())
@@ -301,7 +308,6 @@ export default class ConfirmModal extends React.Component {
         }
     }
 
-
     msgHtml = () => {
         if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
             return <div className="message-waiting">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
@@ -309,8 +315,6 @@ export default class ConfirmModal extends React.Component {
             return ""
         }
     }
-
-
 
     errorHtml = () => {
         if (this.state.err) {
@@ -331,8 +335,7 @@ export default class ConfirmModal extends React.Component {
         if (this.state.isConfirmingTx) return
         this.props.dispatch(exchangeActions.resetExchangePath())
     }
-
-
+    
     recap = () => {
         // if (!this.props.exchange.snapshot || !Object.keys(this.props.exchange.snapshot).length) return
 
