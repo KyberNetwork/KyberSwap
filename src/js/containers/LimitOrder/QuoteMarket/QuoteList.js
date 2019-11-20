@@ -4,7 +4,7 @@ export default class QuoteList extends React.Component{
   constructor(){
     super()
     this.state = {active: false}
-    this.dropdownQuotes = ["DAI", "TUSD", "USDC"]
+    this.dropdownQuotes = ["SAI", "TUSD", "USDC"]
   }
 
   toggle = () => { this.setState({active: !this.state.active})}
