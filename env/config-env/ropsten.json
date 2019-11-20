@@ -386,7 +386,7 @@
         },
         "RAE": {
             "symbol": "RAE",
-            "name": "Rokfin",
+            "name": "Receive Access Ecosystem",
             "address": "0xc57115e8b62fad7124dfd69daf1f94b70e07663f",
             "decimals": 18,
             "cg_id": ""
