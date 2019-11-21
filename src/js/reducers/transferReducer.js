@@ -189,11 +189,6 @@ const transfer = (state = initState, action) => {
       newState.currentPathIndex += 1
       return newState
     }
-  
-    case "TRANSFER.SET_IS_VALIDATING": {
-      newState.isValidating = action.payload;
-      return newState
-    }
   }
   return state
 }

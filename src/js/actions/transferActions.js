@@ -243,10 +243,3 @@ export function setIsSelectTokenBalance(value) {
     payload: value
   }
 }
-
-export function setIsValidating(isValidating) {
-  return {
-    type: "TRANSFER.SET_IS_VALIDATING",
-    payload: isValidating
-  }
-}

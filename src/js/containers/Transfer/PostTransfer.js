@@ -20,6 +20,14 @@ import TermAndServices from "../CommonElements/TermAndServices";
 
 })
 export default class PostTransfer extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      isValidating: false
+    }
+  }
+  
   async clickTransfer() {
     this.props.global.analytics.callTrack("trackClickTransferButton");
     
@@ -36,11 +44,11 @@ export default class PostTransfer extends React.Component {
       return
     }
   
-    this.props.dispatch(transferActions.setIsValidating(true));
+    this.setState({isValidating: true});
     
     const isTransferValid = await this.validateTransfer();
-    
-    this.props.dispatch(transferActions.setIsValidating(false));
+  
+    this.setState({isValidating: false});
 
     if (isTransferValid) {
       var transferPath = [constants.TRANSFER_CONFIG.transferPath.confirm, constants.TRANSFER_CONFIG.transferPath.broadcast]
@@ -117,8 +125,8 @@ export default class PostTransfer extends React.Component {
         <div>
           {this.props.account !== false &&
             <div>
-              <a className={`${activeButtonClass} ${this.props.transfer.isValidating ? 'disabled' : ''} exchange-button__button theme__button`} onClick={() => this.clickTransfer()} data-open="passphrase-modal">
-                {this.props.transfer.isValidating ? 'Loading...' : this.props.translate("transaction.transfer_now") || "Transfer Now"}
+              <a className={`${activeButtonClass} ${this.state.isValidating ? 'disabled' : ''} exchange-button__button theme__button`} onClick={() => this.clickTransfer()} data-open="passphrase-modal">
+                {this.state.isValidating ? 'Loading...' : this.props.translate("transaction.transfer_now") || "Transfer Now"}
               </a>
               <TermAndServices tradeType="transfer" />
               <div>
