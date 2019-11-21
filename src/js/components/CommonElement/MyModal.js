@@ -57,7 +57,7 @@ export default class MyModal extends React.Component{
             contentLabel={this.props.contentLabel}
           >
               <div className={`theme theme--${this.props.theme}__bundle theme__text`}>
-                  <div className="theme__background theme__text" style={{border: "solid 1px #5a5e67"}}>
+                  <div className="theme__background theme__text custom-modal">
                     {this.props.content}
                   </div>
               </div>
