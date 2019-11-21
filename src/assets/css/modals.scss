@@ -85,7 +85,6 @@ $divider-color: darken($title-background-color, 5);
   background-color: #f6f7fa;
   box-shadow: 0 20px 40px 0 rgba($medium-gray, .2);
   margin: 0 auto;
-  //padding: 0px 10px 30px 10px;
   top: 40%;
   transform: translateY(-50%);
   max-width: 90%;
@@ -98,7 +97,16 @@ $divider-color: darken($title-background-color, 5);
     right: 0;
     transform: none !important;
     min-height: 100vh;
-    max-width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  .custom-modal {
+    border: solid 1px #5a5e67;
+
+    @include screen-max-width(medium) {
+      height: 100vh;
+      border: none;
+    }
   }
 
   .text-center {
