@@ -9,7 +9,7 @@ const TransactionLoadingView = (props) => {
   const isBroadcasting = props.broadcasting;
   const broadcastError = props.error;
   const isTxFailed = props.status === "failed";
-
+  
   if (isBroadcasting) {
     return (
       <div class="content-wrapper">
@@ -50,9 +50,9 @@ const TransactionLoadingView = (props) => {
         </div>
         
         {isTxFailed && (
-        <div className={"tx-actions tx-actions--error"}>
-          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
-        </div>
+          <div className={"tx-actions tx-actions--error theme__background-2"}>
+            <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
+          </div>
         )}
       </div>
     )
@@ -234,7 +234,7 @@ const TransactionLoadingView = (props) => {
         </div>
       )}
       {isTxFailed && (
-        <div className={"tx-actions tx-actions--error"}>
+        <div className={"tx-actions tx-actions--error theme__background-2"}>
           <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
         </div>
       )}
