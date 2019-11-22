@@ -29,33 +29,20 @@ export function* getLatestBlock(action) {
   
 }
 
-// export function* updateHistoryExchange(action) {
-//   try{
-//     const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-//     var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-//     const newLogs = yield call([ethereum, ethereum.call], "getLog")
-//     yield put(actions.updateHistory(newLogs, latestBlock, page, isAutoFetch))
-//   }catch(e){
-//     console.log(e)
-//   }
-// }
-
 export function* goToRoute(action) {
   yield put(push(action.payload));
 }
 
 export function* clearSession(action) {
-
   var state = store.getState()
-  // clear session account
-  var wallet = state.account.wallet  
+  var wallet = state.account.wallet
+  
   if (wallet && wallet.clearSession){
     wallet.clearSession()
   }
 
-
   yield put(actions.clearSessionComplete(action.payload))
-  //yield put(actions.goToRoute(constants.BASE_HOST));
+
   if (window.kyberBus) { window.kyberBus.broadcast('wallet.clear', null); }
 }
 

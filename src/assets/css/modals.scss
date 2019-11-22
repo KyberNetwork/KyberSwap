@@ -251,9 +251,7 @@ $divider-color: darken($title-background-color, 5);
     }
 
     .tx-fee-warning {
-      background-color: #FDFAE5;
       padding: 15px;
-      border-radius: 5px;
       text-align: center;
       font-size: 12px;
       font-weight: 600;
@@ -705,6 +703,11 @@ $divider-color: darken($title-background-color, 5);
         &:hover {
           background-color: #6f6f6f;
         }
+      }
+
+      &.disabled-button {
+        pointer-events: none;
+        opacity: 0.6;
       }
 
       @include screen-max-width(medium){

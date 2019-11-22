@@ -5,22 +5,15 @@ import WalletLink from "walletlink"
 import Web3 from "web3"
 
 export default class WalletLinkKey extends React.Component {
-
     constructor(props) {
         super(props);
 
-        const APP_NAME = "My Awesome App"
-        const APP_LOGO_URL = "https://example.com/logo.png"
-
         this.walletLink = new WalletLink({
-            appName: APP_NAME,
-            appLogoUrl: APP_LOGO_URL
-        })
-
+            appName: 'KyberSwap',
+            appLogoUrl: 'https://kyberswap.com/app/images/Kyber_Swap_Black.svg'
+        });
         this.ethereum = this.walletLink.makeWeb3Provider(BLOCKCHAIN_INFO["connections"]["http"][1]["endPoint"], BLOCKCHAIN_INFO.networkId)
-
-        this.web3 = new Web3(this.ethereum)        
-
+        this.web3 = new Web3(this.ethereum)
     }
 
     getAddress = () => {
