@@ -35,7 +35,7 @@ export default class ForceCancelOrderModal extends Component {
 
     return (
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`} id="cancel-order">
-        <div className="limit-order-modal__body">
+        <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
             {this.props.translate("modal.cancel_order", {sideTrade: ["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : "", symbol: base}) ||
             `Cancel ${["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : ""}${base} Order`}
@@ -73,7 +73,7 @@ export default class ForceCancelOrderModal extends Component {
           </div>
         </div>
 
-        <div className="cancel-order__footer">
+        <div className="cancel-order__footer theme__background-2">
           <label className="cancel-order__confirm">
             <span className="cancel-order__confirm--text">
               {this.props.translate("i_understand") || "I understand"}

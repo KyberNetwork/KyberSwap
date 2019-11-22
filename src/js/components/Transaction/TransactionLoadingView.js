@@ -9,7 +9,7 @@ const TransactionLoadingView = (props) => {
   const isBroadcasting = props.broadcasting;
   const broadcastError = props.error;
   const isTxFailed = props.status === "failed";
-
+  
   if (isBroadcasting) {
     return (
       <div class="content-wrapper">
@@ -50,9 +50,9 @@ const TransactionLoadingView = (props) => {
         </div>
         
         {isTxFailed && (
-        <div className={"tx-actions tx-actions--error"}>
-          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
-        </div>
+          <div className={"tx-actions tx-actions--error theme__background-2"}>
+            <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
+          </div>
         )}
       </div>
     )
@@ -134,12 +134,12 @@ const TransactionLoadingView = (props) => {
           }
         </div>
         <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
-        <div className="content with-overlap">
+        <div className="content with-overlap theme__text-6">
           <div className="row">
-            <div class="info tx-title">
+            <div class="info tx-title theme__background-2">
               <div className="tx-title-text">{props.translate("transaction.transaction") || "Transaction hash"}:</div>
               <div className={`tx-hash ${isTxFailed ? "tx-hash--error" : ""}`}>
-                <a class="text-light" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
+                <a class="text-light theme__text-6" href={BLOCKCHAIN_INFO.ethScanUrl + 'tx/' + props.txHash} target="_blank"
                   title={props.translate("modal.view_on_etherscan") || "View on Etherscan"} onClick={(e) => props.analytics.callTrack("trackClickViewTxOnEtherscan")}>
                   {props.txHash}
                 </a>
@@ -199,9 +199,9 @@ const TransactionLoadingView = (props) => {
                       <div className="failed__container">
                         <div className="failed__icon"/>
                         <div className="failed__description">
-                          <div className="failed__title">{props.translate("transaction.transaction_error") || "Transaction error"}</div>
+                          <div className="failed__title theme__text-6">{props.translate("transaction.transaction_error") || "Transaction error"}</div>
                           {!props.debug.isDebuging && !props.debug.isDebugComplete && <div className="failed__detail" onClick={(e) => handleAnalyze(e)}>{props.translate("details") || "Details"}</div>}
-                          <div className="failed__list-error">
+                          <div className="failed__list-error theme__text-6">
                             {getError()}
                           </div>
                         </div>
@@ -214,7 +214,7 @@ const TransactionLoadingView = (props) => {
               {props.status === "pending" &&
                 <li className={`pending pending--flex-start`}>
                   <div className="common__circle-loading"/>
-                  <div className={"tx-waiting-text"}>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</div>
+                  <div className={"tx-waiting-text theme__text-6"}>{props.translate("transaction.waiting_transaction") || "Waiting for your transaction to be mined"}</div>
                 </li>
               }
             </ul>
@@ -222,7 +222,7 @@ const TransactionLoadingView = (props) => {
         </div>
       </div>
       {!isTxFailed && (
-        <div className="tx-actions">
+        <div className="tx-actions theme__background-2">
           <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
             {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer") : (props.translate("transaction.swap") || "Swap") }
           </a>
@@ -234,7 +234,7 @@ const TransactionLoadingView = (props) => {
         </div>
       )}
       {isTxFailed && (
-        <div className={"tx-actions tx-actions--error"}>
+        <div className={"tx-actions tx-actions--error theme__background-2"}>
           <a className="new-transaction" onClick={() => props.makeNewTransaction()}>{props.translate("transaction.try_again") || "Try Again"}</a>
         </div>
       )}

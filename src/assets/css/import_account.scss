@@ -40,7 +40,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-width: 550px;
+    max-width: 1550px;
     margin: 0 auto;
 
     &--animation {
@@ -149,9 +149,11 @@
   }
 
   &__item {
-    width: 160px;
+    width: 120px;
     margin: 0 0 12px;
-
+    &.large{
+      width: 160px;
+    }
     >div {
       height: 100%;
     }
@@ -184,6 +186,7 @@
   &__block {
     height: 100%;
     display: flex;
+    position: relative;
     padding: 6px 10px;
     align-items: center;
     justify-content: center;
@@ -193,6 +196,18 @@
     border-radius: 3px;
     cursor: pointer;
 
+    &.other{
+      .promo-code{
+        visibility: hidden;
+      }
+
+      span{
+        position: absolute;
+        left: 15px;
+        font-size: 40px;
+        top: -17px;
+      }
+    }
     &:hover {
       background-color: transparent;
 
@@ -205,6 +220,14 @@
 
         &.kyberapp {
           background-position: -51px 0;
+        }
+
+        &.wallet-link {
+          background-position: -26px 2px;
+        }
+
+        &.wallet-connect {
+          background-position: -31px 5px;
         }
       }
     }
@@ -237,10 +260,26 @@
       background-image: url($image-path + 'import-account/wallets/private-key.svg');
     }
 
-    &.promo-code,
+    &.promo-code{
+      width: 15px;
+      background-image: url($image-path + 'import-account/wallets/promo-code.svg');
+    }
+
     &.kyberapp {
       width: 15px;
       background-image: url($image-path + 'import-account/wallets/promo-code.svg');
+    }
+
+    &.wallet-link {
+      background-position: 5px 2px;
+      width: 21px;
+      background-image: url($image-path + 'import-account/wallets/wallet-link.svg');
+    }
+
+    &.wallet-connect {
+      background-position: 0;
+      //width: 28px;
+      background-image: url($image-path + 'import-account/wallets/wallet-connect.svg');
     }
 
     &.kyberapp {
@@ -336,7 +375,7 @@
         display: block;
         width: 16px;
         height: 16px;
-        background-image: url($image-path + 'icon-back.svg');
+        background-image: url($image-path + 'icons/arrow-back.svg');
         position: absolute;
         top: 1px;
         left: 0;
@@ -367,7 +406,6 @@
     font-weight: 600;
     line-height: 1.71;
     letter-spacing: -0.4px;
-    color: #141927;
   }
 
   .content {
@@ -454,7 +492,7 @@
 }
 
 .reimport-modal {
-  padding: 10px; 
+  //padding: 10px;
 
   .title {
     font-size: 18px !important;

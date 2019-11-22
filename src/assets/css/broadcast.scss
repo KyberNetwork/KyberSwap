@@ -10,7 +10,6 @@
 
   .tx-title-text {
     font-size: 14px;
-    color: #5a5e67;
     font-weight: 500;
     margin-bottom: 9px;
   }
@@ -23,7 +22,6 @@
 
   a {
     &:first-child{
-      color: #5a5e67;
       font-size: 14px;
       text-align: left;
       display: inline-block;
@@ -138,13 +136,11 @@ ul.broadcast-steps {
       font-size: 20px;
       font-weight: normal;
       .title{
-        color: #5a5e67;
         text-align: start;
         font-weight: 500;
       }
       .content{
         font-size: 16px;
-        color: #5a5e67;
         text-align: start;
 
         span:first-child {
@@ -403,7 +399,6 @@ ul.broadcast-steps {
   justify-content: flex-start;
   font-size: 14px;
   font-weight: 500;
-  color: #5a5e67;
 
   width: 350px;
   margin-top: 15px;

@@ -23,4 +23,7 @@ export default class MetamaskBrowser extends DappBrowser {
         return "metamask"
     }
 
+    getWalletName = () => {
+        return 'Metamask';
+    }
 }

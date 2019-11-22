@@ -38,7 +38,6 @@
     &-title {
       font-size: 24px;
       font-weight: 500;
-      color: $light-color-2;
       margin-right: 40px;
     }
 
@@ -60,7 +59,6 @@
         font-size: 14px;
         font-weight: 500;
         border-bottom: solid 2px transparent;
-        color: #5a5e67 !important;
         cursor: pointer;
         margin-right: 20px;
         transition: all .3s;
@@ -70,7 +68,7 @@
         }
 
         &.active {
-          color: $light-color-2 !important;
+          //color: $light-color-2 !important;
           border-bottom-color: #EF8102;
           cursor: initial;
         }
@@ -81,7 +79,6 @@
   .market-table {
     margin-bottom: 25px;
     padding-bottom: 15px;
-    color: #222;
     position: relative;
     .search-space {
       position: absolute;
@@ -170,6 +167,7 @@
             padding: 10px 0;
             border-radius: 3px;
             background-color: #e1e4eb;
+            color: black;
             margin-bottom: 15px;
 
             .rt-th-img {
@@ -217,7 +215,6 @@
         overflow: unset;
         font-size: 14px;
         font-weight: 400;
-        color: $light-color-2;
 
         .rt-tr-group {
           border-bottom: none;
@@ -241,6 +238,9 @@
             &:hover {
               border-color: #e1e4eb;
               background-color: white;
+              .rt-td{
+                color: black;
+              }
             }
 
             div.rt-td {
@@ -268,39 +268,18 @@
               }
 
               div.token-pair {
-                width: 100%;
                 text-align: left;
                 padding-left: 10px;
                 position: relative;
-                >div{
-                  position: relative;
-                  display: inline-block;
-                }
-                img {
-                  margin-right: 10px;
-                  width: 24px;
-                  height: 24px;
-                  position: relative;
-                  top: -2px;
-                }
-                .new-token {
+
+                &--new:after {
+                  content: '';
                   position: absolute;
-                  top: -20px;
-                  right: 40px;
-                  font-size: 9px;
-                  height: 16px;
-                  width: auto;
-                  color: white;
-                  background: #EE344E;
-                  line-height: 16px;
-                  padding: 0px 5px;
-                  font-weight: 600;
-                  border-radius: 2px;
-                  min-width: 25px;
-                  text-align: center;
-                  @media screen and (max-width: 1296px) {
-                    right: 0;
-                  }
+                  top: -3px;
+                  right: -25px;
+                  background-image: url($image-path + 'icons/new.svg');
+                  width: 22px;
+                  height: 7px;
                 }
               }
             }

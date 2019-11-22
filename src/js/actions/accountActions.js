@@ -83,6 +83,18 @@ export function closePromoCodeModal() {
   }
 }
 
+export function openOtherConnectModal() {
+  return {
+    type: "ACCOUNT.OPEN_OTHER_CONNECT_MODAL",
+  }
+}
+
+export function closeOtherConnectModal() {
+  return {
+    type: "ACCOUNT.CLOSE_OTHER_CONNECT_MODAL",
+  }
+}
+
 export function throwPromoCodeError(error) {
   return {
     type: "ACCOUNT.PROMO_CODE_ERROR",
@@ -97,10 +109,10 @@ export function importNewAccount(address, type, keystring, ethereum, tokens, wal
   }
 }
 
-export function importNewAccountComplete(account, walletName, isOnMobile = null) {
+export function importNewAccountComplete(account, wallet, walletName, isOnMobile = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
-    payload: {account, walletName, isOnMobile}
+    payload: {account, wallet, walletName, isOnMobile}
   }
 }
 

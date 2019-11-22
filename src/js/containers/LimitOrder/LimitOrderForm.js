@@ -139,7 +139,7 @@ export default class LimitOrderForm extends React.Component {
   };
 
   getListWarningOrdersComp = () => {
-    if (!this.props.account) return null;
+    if (!this.props.account) return [];
 
     let higherRateOrders = [];
     const triggerRate = this.props.limitOrder.sideTrade === "buy" ? converters.divOfTwoNumber(1, this.props.limitOrder.triggerBuyRate) : this.props.limitOrder.triggerRate;
@@ -287,7 +287,7 @@ export default class LimitOrderForm extends React.Component {
           setSubmitHandler={this.props.setSubmitHandler}
         />
 
-        {this.props.limitOrder.errors.rateWarning !== "" && (
+        {(this.props.limitOrder.errors.rateWarning !== "" || true) && (
           <ForceCancelOrderModal
             toggleAgreeSubmit={this.toggleAgreeSubmit}
             getListWarningOrdersComp={this.getListWarningOrdersComp}

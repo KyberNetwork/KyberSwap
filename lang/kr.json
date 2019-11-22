@@ -215,6 +215,8 @@
     "check_right_application_selected": "올바른 응용프로그램이 선택되었는지 확인하십시오",
     "network_not_match": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다. </br>현재 <strong>${currentName}</strong>\n있습니다.",
     "network_not_match_unknow": "Metamask는 <strong>${expectedName}</strong>에 있어야합니다.",
+    "network_not_match_wallet_link": "월렛 k는 <strong>${expectedName}</strong>에 있어야합니다. </br>현재 <strong>${currentName}</strong>\n있습니다.",
+    "network_not_match_unknow_wallet_link": "월렛 는 <strong>${expectedName}</strong>에 있어야합니다.",
     "not_supported": "지원하지 않습니다",
     "metamask_not_install": "메타마스크에 연결할 수 없습니다. 메타마스크가 설치 되어 있는지 확인 해 주세요.",
     "browser_not_support_metamask": "Metamask는 <strong>${browser}</strong> 브라우저에서 지원되지\n않습니다. </br>대신 <strong>Chrome</strong> 또는 <strong>FireFox</strong>를 사용하기를 바랍니다.",

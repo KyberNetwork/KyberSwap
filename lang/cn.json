@@ -215,6 +215,8 @@
     "check_right_application_selected": "检查是否选择了正确的应用",
     "network_not_match": "Metamask需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask需要连接到<strong>${expectedName}</strong>",
+    "network_not_match_wallet_link": "您的钱包需要连接到<strong>${expectedName}</strong>网络，</br>而您现在连接的是<strong>${currentName}</strong>",
+    "network_not_match_unknow_wallet_link": "您的钱包需要连接到<strong>${expectedName}</strong>",
     "not_supported": "不支持",
     "metamask_not_install": "无法连接至metamask。请确认您已经安装了Metamask。",
     "browser_not_support_metamask": "<strong>${browser}</strong>浏览器并不支持Metamask。</br>请使用<strong>谷歌</strong>或者<strong>火狐</strong>浏览器。",

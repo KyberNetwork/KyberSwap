@@ -839,7 +839,6 @@ export function calculateContractNonce(contractNonce, address) {
 }
 
 export function findMaxNumber(arr) {
-  console.log(arr)
   if (arr.length === 0) return false
   var maxNum = arr[0]
   for (var i = 1; i < arr.length; i++) {

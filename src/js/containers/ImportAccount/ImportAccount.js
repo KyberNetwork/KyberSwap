@@ -4,7 +4,7 @@ import { ImportAccountView } from '../../components/ImportAccount'
 import { ErrorModal } from "../ImportAccount"
 import { setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
-import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
+import {closeOtherConnectModal, importAccountMetamask, setOnDAPP} from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
@@ -67,6 +67,10 @@ export default class ImportAccount extends React.Component {
   componentWillUnmount = () => {
     this.props.dispatch(clearAcceptConnectWallet());
   }
+  
+  closeModal() {
+    this.props.dispatch(closeOtherConnectModal());
+  }
 
   acceptTerm = () => {
     if (this.props.isOnDAPP) {
@@ -98,6 +102,7 @@ export default class ImportAccount extends React.Component {
           isAgreedTermOfService={this.props.isAgreedTermOfService}
           isAcceptConnectWallet={this.props.isAcceptConnectWallet}
           errorModal={<ErrorModal />}
+          closeModal={this.closeModal.bind(this)}
           translate={this.props.translate}
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}

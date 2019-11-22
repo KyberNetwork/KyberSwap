@@ -1,7 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import { ImportByPKeyView } from "../../components/ImportAccount"
-import { importNewAccount, throwError, pKeyChange, throwPKeyError, openPkeyModal, closePkeyModal } from "../../actions/accountActions"
+import {
+  importNewAccount,
+  pKeyChange,
+  throwPKeyError,
+  openPkeyModal,
+  closePkeyModal,
+  closeOtherConnectModal
+} from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 
@@ -21,14 +28,13 @@ import { getTranslate } from 'react-localize-redux'
 })
 
 export default class ImportByPrivateKey extends React.Component {
-
   openModal() {
     this.props.dispatch(openPkeyModal());
     this.props.analytics.callTrack("trackClickImportAccount", "private_key");
   }
 
   closeModal() {
-    this.props.dispatch(closePkeyModal());    
+    this.props.dispatch(closePkeyModal());
     this.props.analytics.callTrack("trackClickCloseModal", "import private-key");
   }
 
@@ -43,21 +49,24 @@ export default class ImportByPrivateKey extends React.Component {
           privateKey = privateKey.substring(2)
       }    
       let address = addressFromPrivateKey(privateKey)
-      this.props.dispatch(closePkeyModal());    
-      this.props.dispatch(importNewAccount(address,
+      
+      this.props.dispatch(closePkeyModal());
+      this.props.dispatch(closeOtherConnectModal());
+  
+      this.props.dispatch(importNewAccount(
+        address,
         "privateKey",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "Private Key"))
-    }
-    catch (e) {
+        this.props.tokens, null, null, "Private Key"
+      ))
+    } catch (e) {
       console.log(e)
       this.props.dispatch(throwPKeyError(this.props.translate("error.invalid_private_key") || 'Invalid private key'))
     }
-
   }
 
-  render() {
+render() {
     return (
       <ImportByPKeyView
         isOnMobile={this.props.isOnMobile}
@@ -69,6 +78,9 @@ export default class ImportByPrivateKey extends React.Component {
         pKeyError={this.props.account.pKey.error}
         translate={this.props.translate}
         analytics={this.props.analytics}
+        {...(this.props.closeParentModal && {
+          closeParentModal: this.props.closeParentModal
+        })}
       />
     )
   }

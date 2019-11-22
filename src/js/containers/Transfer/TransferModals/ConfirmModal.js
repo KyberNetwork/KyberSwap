@@ -1,23 +1,15 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as transferActions from "../../../actions/transferActions"
-import constants from "../../../services/constants"
-
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-
-import { getAssetUrl, getParameterByName } from "../../../utils/common";
-
 import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
-
-import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
-
 import * as accountActions from '../../../actions/accountActions'
+import constants from "../../../services/constants";
 
 @connect((store, props) => {
     const account = store.account.account
@@ -29,13 +21,10 @@ import * as accountActions from '../../../actions/accountActions'
 
     return {
         translate, transfer, tokens, account, ethereum, global
-
     }
 })
 
 export default class ConfirmModal extends React.Component {
-
-
     constructor() {
         super()
         this.state = {
@@ -45,6 +34,7 @@ export default class ConfirmModal extends React.Component {
             gasPrice: 0,
             isConfirmingTx: false
         }
+        this.confirmingTimer = null;
     }
 
     componentDidMount = () => {
@@ -57,6 +47,10 @@ export default class ConfirmModal extends React.Component {
 
         this.getGasTransfer()
     }
+    
+    componentWillUnmount() {
+        clearTimeout(this.confirmingTimer);
+    }
 
     getMaxGasTransfer = () => {
         const transfer = this.props.transfer
@@ -66,7 +60,6 @@ export default class ConfirmModal extends React.Component {
             return 250000
         }
     }
-
 
     getFormParams = () => {
         var tokenSymbol = this.props.transfer.tokenSymbol
@@ -89,6 +82,7 @@ export default class ConfirmModal extends React.Component {
             tokenSymbol, address, destAddress, tokenDecimal, amount, tokenAddress, nonce, ethereum, gas, gasPrice, keystring, type, password
         }
     }
+    
     async getGasTransfer() {
         var txObj
         var { tokenSymbol, address, destAddress, tokenDecimal, amount, tokenAddress, ethereum } = this.getFormParams()
@@ -140,14 +134,20 @@ export default class ConfirmModal extends React.Component {
     }
 
     async clickTransfer() {
-        //reset        
         var wallet = getWallet(this.props.account.type)
 
         if (this.state.isConfirmingTx) return
+        
         this.setState({
             err: "",
             isConfirmingTx: true
         })
+    
+        if (this.props.account.type === 'walletconnect') {
+            this.confirmingTimer = setTimeout(() => {
+                this.setState({ isConfirmingTx: false })
+            }, constants.TX_CONFIRMING_TIMEOUT);
+        }
         
         try {
 
@@ -200,8 +200,6 @@ export default class ConfirmModal extends React.Component {
         }
     }
 
-
-
     errorHtml = () => {
         if (this.state.err) {
             let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
@@ -224,30 +222,28 @@ export default class ConfirmModal extends React.Component {
 
 
     recap = () => {
-
         var { tokenSymbol, destAddress } = this.getFormParams()
         var amount = this.props.transfer.amount.toString()
         return (
-            <div className={"transfer-title"}>
+            <div className={"transfer-title theme__background-2 theme__text-6"}>
                 <div className="recap-sum-up">
                     {this.props.translate("transaction.about_to_transfer") || "You are about to transfer"}
                 </div>
                 <div className="recap-transfer">
                     <div>
-                        <strong>
+                        <strong className={"theme__text"}>
                             {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}
                         </strong>
                     </div>
                     <div>{this.props.translate("transaction.to") || "to"}</div>
                     <div>
-                        <strong>
+                        <strong className={"theme__text"}>
                             {destAddress.slice(0, 7)}...{destAddress.slice(-5)}
                         </strong>
                     </div>
                 </div>
             </div>
         )
-
     }
 
     contentModal = () => {
@@ -276,7 +272,7 @@ export default class ConfirmModal extends React.Component {
                         </div>
                         <div>{this.msgHtml()}</div>
                     </div>
-                    <div className="overlap">
+                    <div className="overlap theme__background-2">
                         
                         <div className="input-confirm grid-x">
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
@@ -303,7 +299,5 @@ export default class ConfirmModal extends React.Component {
                 size="medium"
             />
         )
-
-
     }
 }

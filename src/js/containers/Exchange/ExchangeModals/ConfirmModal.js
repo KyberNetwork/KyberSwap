@@ -32,6 +32,7 @@ export default class ConfirmModal extends React.Component {
         super()
         this.state = {
             err: "",
+            restrictError: '',
             isFetchGas: true,
             isFetchRate: true,
             gasLimit: 0,            
@@ -40,6 +41,7 @@ export default class ConfirmModal extends React.Component {
             startTime: 0,
             isConfirmingTx: false
         }
+        this.confirmingTimer = null;
     }
 
     componentDidMount = () => {
@@ -55,7 +57,11 @@ export default class ConfirmModal extends React.Component {
         this.getSlippageRate()
         this.getGasSwap()
     }
-
+    
+    componentWillUnmount() {
+        clearTimeout(this.confirmingTimer);
+    }
+    
     getReferAddr = () => {
         if (this.props.account.type === "metamask") {
             const web3Service = web3Package.newWeb3Instance();
@@ -75,7 +81,6 @@ export default class ConfirmModal extends React.Component {
         try {
             var source = this.props.exchange.sourceToken
             var dest = this.props.exchange.destToken
-            var destTokenSymbol = this.props.exchange.destTokenSymbol
             var sourceAmount = this.props.exchange.snapshot.sourceAmount
             var sourceDecimal = this.props.tokens[this.props.exchange.sourceTokenSymbol].decimals
             var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
@@ -85,7 +90,7 @@ export default class ConfirmModal extends React.Component {
             if (rate.expectedRate == 0 || rate.slippageRate == 0) {
                 this.setState({
                     isFetchRate: false,
-                    rateErr: this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
+                    restrictError: this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
                 })
             } else {
                 this.setState({
@@ -103,7 +108,7 @@ export default class ConfirmModal extends React.Component {
         } catch (err) {
             console.log(err)
             this.setState({
-                rateErr: err.toString(),
+                restrictError: err.toString(),
                 isFetchRate: false
             })
         }
@@ -120,11 +125,8 @@ export default class ConfirmModal extends React.Component {
         var destAmount = this.props.exchange.snapshot.destAmount
         var destTokenSymbol = this.props.exchange.destTokenSymbol
         var destToken = this.props.exchange.destToken
-        // var destAddress = this.props.account.address
-
         var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
         ? this.props.account.info.receiveAddr : this.props.account.address;
-
         var maxDestAmount = converter.biggestNumber()
         var slippageRate = this.state.slippageRate
         var waletId = this.getReferAddr()
@@ -133,6 +135,7 @@ export default class ConfirmModal extends React.Component {
         var gasPrice = converter.numberToHex(converter.gweiToWei(this.props.exchange.snapshot.gasPrice))
         var keystring = this.props.account.keystring
         var type = this.props.account.type
+        
         return {
             formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount,
             destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol
@@ -184,9 +187,8 @@ export default class ConfirmModal extends React.Component {
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
     }
 
-    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasPrice) {        
-
-      var srcAmount = converter.hexToNumber(srcAmount)        
+    validateEthBalance(ethBalance, srcSymbol, srcAmount, gas, gasPrice) {
+      srcAmount = converter.hexToNumber(srcAmount)
       srcAmount = converter.toT(srcAmount, this.props.tokens[srcSymbol].decimal)
 
       const isNotEnoughEth = validators.verifyBalanceForTransaction(
@@ -195,7 +197,7 @@ export default class ConfirmModal extends React.Component {
   
       if (isNotEnoughEth) {
         this.setState({
-          err: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+            restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
         })
       }
     }
@@ -234,27 +236,31 @@ export default class ConfirmModal extends React.Component {
     }
 
     async onSubmit() {
-        //reset        
         var wallet = getWallet(this.props.account.type)
         var password = ""
-        if (this.state.err || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+        
+        if (this.state.restrictError || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+        
         this.setState({
             err: "",
             isConfirmingTx: true
-        })
+        });
+        
+        if (this.props.account.type === 'walletconnect') {
+            this.confirmingTimer = setTimeout(() => {
+                this.setState({ isConfirmingTx: false })
+            }, constants.TX_CONFIRMING_TIMEOUT);
+        }
+        
         try {
-
             var { formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount,
                 destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol } = this.getFormParams()
-
             var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
-
             var txHash = await wallet.broadCastTx(callFunc, formId, ethereum, address, sourceToken,
                 sourceAmount, destToken, destAddress,
                 maxDestAmount, slippageRate,
                 waletId, nonce, gas,
                 gasPrice, keystring, type, password)
-
 
             //submit hash to broadcast server
             try {
@@ -276,6 +282,7 @@ export default class ConfirmModal extends React.Component {
             var data = { sourceAmount, sourceTokenSymbol, destAmount, destTokenSymbol }
             this.props.global.analytics.callTrack("trackCoinExchange", data);
             this.props.global.analytics.callTrack("completeTrade", txHash, "kyber", "swap");
+            this.props.global.analytics.callTrack("trackWalletVolume", wallet.getWalletName(), sourceTokenSymbol, this.props.exchange.snapshot.sourceAmount, destTokenSymbol);
 
             // Track swapping time here
             const startTime = this.state.startTime;
@@ -287,10 +294,8 @@ export default class ConfirmModal extends React.Component {
 
             this.props.dispatch(accountActions.incManualNonceAccount(address))
             this.props.dispatch(accountActions.updateAccount(ethereum, this.props.account))
-            //   this.props.dispatch(addTx(tx))
             this.props.dispatch(exchangeActions.doTransactionComplete(tx))
             this.props.dispatch(exchangeActions.finishExchange())
-
 
             //go to the next step
             this.props.dispatch(exchangeActions.forwardExchangePath())
@@ -300,7 +305,6 @@ export default class ConfirmModal extends React.Component {
         }
     }
 
-
     msgHtml = () => {
         if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
             return <div className="message-waiting">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
@@ -308,8 +312,6 @@ export default class ConfirmModal extends React.Component {
             return ""
         }
     }
-
-
 
     errorHtml = () => {
         if (this.state.err) {
@@ -330,14 +332,11 @@ export default class ConfirmModal extends React.Component {
         if (this.state.isConfirmingTx) return
         this.props.dispatch(exchangeActions.resetExchangePath())
     }
-
-
+    
     recap = () => {
-        // if (!this.props.exchange.snapshot || !Object.keys(this.props.exchange.snapshot).length) return
-
         const isPromoPayment = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment";
-
         let expiredYear;
+        
         if (this.props.account.info) {
             try {
                 expiredYear = new Date(this.props.account.info.expiredDate).getFullYear();
@@ -352,29 +351,21 @@ export default class ConfirmModal extends React.Component {
         var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
         var destDecimal = this.props.tokens[destTokenSymbol].decimal;
         var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
-
         var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-        var sourceIcon = this.props.exchange.sourceIcon
-        var destIcon = this.props.exchange.destIcon
-
         var slippageRate = this.state.slippageRate
         var expectedRate = this.state.expectedRate
-
         const { isOnMobile } = this.props.global;
 
-
-        var slippagePercent = converter.calculatePercentRate(slippageRate, expectedRate)
         return (
             <div className="confirm-exchange-modal">
                 {!isPromoPayment &&
                     <React.Fragment>
                         {!isOnMobile ? (
-                            // On desktop
                             <React.Fragment>
                                 <div className="title-container">
                                     <div className="title-description">
                                         <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                                        <div className="title-description-wallet-address">
+                                        <div className="title-description-wallet-address theme__text-6">
                                             <span>{this.props.account.address.slice(0, 7)}</span>
                                             <span>...</span>
                                             <span>{this.props.account.address.slice(-6)}</span>
@@ -382,7 +373,7 @@ export default class ConfirmModal extends React.Component {
                                     </div>
                                     <div className="title-description">
                                         <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
-                                        <div className="title-description-wallet-address">
+                                        <div className="title-description-wallet-address theme__text-6">
                                             <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
                                             <span>...</span>
                                             <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
@@ -395,29 +386,24 @@ export default class ConfirmModal extends React.Component {
                                 </div>}
                             </React.Fragment>
                         ) : (
-                                // On mobile
-                                <div className="title-description">
-                                    <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                                    <div className="title-description-wallet-address">
-                                        {this.props.account.address}
-                                    </div>
-                                    {this.props.account.type === "promo" && <div className="title-description-expired-notification">
-                                        <img src={require("../../../../assets/img/v3/info_blue.svg")} />{' '}
-                                        <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
-                                    </div>}
+                            <div className="title-description">
+                                <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                                <div className="title-description-wallet-address theme__text-6">
+                                    {this.props.account.address}
                                 </div>
+                                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                                    <img src={require("../../../../assets/img/v3/info_blue.svg")} />{' '}
+                                    <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
+                                </div>}
+                            </div>
                             )
                         }
-                        <div className="amount">
+                        <div className="amount theme__background-22">
                             <div className="amount-item amount-left">
                                 <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                                 <div className={"rc-info"}>
-                                    <div>
-                                        {sourceAmount}
-                                    </div>
-                                    <div>
-                                        {sourceTokenSymbol}
-                                    </div>
+                                    <div>{sourceAmount}</div>
+                                    <div>{sourceTokenSymbol}</div>
                                 </div>
                             </div>
                             <div className="space space--padding"><img src={require("../../../../assets/img/exchange/arrow-right-orange.svg")} /></div>
@@ -427,9 +413,7 @@ export default class ConfirmModal extends React.Component {
                                     <div>
                                         {this.state.isFetchRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : destAmount}
                                     </div>
-                                    <div>
-                                        {destTokenSymbol}
-                                    </div>
+                                    <div>{destTokenSymbol}</div>
                                 </div>
                             </div>
                         </div>
@@ -453,12 +437,8 @@ export default class ConfirmModal extends React.Component {
                             <div className="amount-item amount-left amount-item-promo-balance">
                                 <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                                 <div className={"rc-info rc-info-promo-balance"}>
-                                    <div>
-                                        {sourceAmount}
-                                    </div>
-                                    <div>
-                                        {sourceTokenSymbol}
-                                    </div>
+                                    <div>{sourceAmount}</div>
+                                    <div>{sourceTokenSymbol}</div>
                                 </div>
                             </div>
                             <div className="space-container">
@@ -472,9 +452,7 @@ export default class ConfirmModal extends React.Component {
                                     <div>
                                         {this.state.isFetchRate ? <img src={require('../../../../assets/img/waiting-white.svg')} /> : destAmount}
                                     </div>
-                                    <div>
-                                        {destTokenSymbol}
-                                    </div>
+                                    <div>{destTokenSymbol}</div>
                                 </div>
                             </div>
                             <div className="space-container space-container-grid-align">
@@ -508,7 +486,7 @@ export default class ConfirmModal extends React.Component {
         const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
 
         return (
-            <div>
+            <div className="theme__text">
                 <a className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
                 </a>
@@ -527,7 +505,7 @@ export default class ConfirmModal extends React.Component {
                                     />
 
                                 {warningLowFee &&
-                                    <div className={"tx-fee-warning"}>
+                                    <div className={"tx-fee-warning theme__background-10"}>
                                         <img src={require("../../../../assets/img/warning-triangle.svg")}/>
                                         <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
                                     </div>
@@ -539,12 +517,12 @@ export default class ConfirmModal extends React.Component {
                         </div>
                         <div>{this.msgHtml()}</div>
                     </div>
-                    <div className="overlap">
+                    <div className="overlap theme__background-2">
                         <div className="input-confirm grid-x">
                             <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}
                             </a>
-                            <a className={"button process-submit " + (this.state.err || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                            <a className={"button process-submit " + (this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
                         </div>
                     </div>
                 </div>

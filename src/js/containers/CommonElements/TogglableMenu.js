@@ -44,7 +44,7 @@ export default class ToggleableMenu extends React.Component {
 
   reImportModal = () => {
     return (
-      <div className="reimport-modal">
+      <div className="reimport-modal p-a-20px">
         <a className="x" onClick={this.closeReImport}>&times;</a>
         <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
         <div className="content">

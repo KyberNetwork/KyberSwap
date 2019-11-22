@@ -15,6 +15,10 @@ export default class ModernMetamaskBrowser extends DappBrowser {
   getWalletType = () => {
     return "metamask"
   }
+  
+  getWalletName = () => {
+    return 'Metamask';
+  }
 
   // getNetworkId = () => {
   //   return new Promise((resolve, reject) => {

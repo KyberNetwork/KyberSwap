@@ -17,8 +17,12 @@
     color: $grey-darker;
   }
 
-  .theme__text-5 {
-    color: $light-color-2;
+  .theme__text-6 {
+    color: $grey-darker;
+  }
+
+  .theme__text-7 {
+    color: $grey-darker;
   }
 
   .theme__background {
@@ -29,12 +33,32 @@
     background-color: white;
   }
 
+  .theme__background-22 {
+    background-color: $light-color-8;
+  }
+
+  .theme__background-222 {
+    background-color: $light-color-8;
+  }
+
   .theme__background-3 {
     background-color: $grey-light;
   }
 
+  .theme__background-33 {
+    background-color: $grey-light;
+  }
+
+  .theme__background-333 {
+    background-color: transparent;
+  }
+
   .theme__background-4 {
     background-color: $light-color-1;
+  }
+
+  .theme__background-44 {
+    background-color: transparent;
   }
 
   .theme__background-5 {
@@ -51,6 +75,18 @@
 
   .theme__background-7 {
     background-color: white;
+  }
+
+  .theme__background-8 {
+    background-color: $light-color-6;
+  }
+
+  .theme__background-9 {
+    background-color: $light-color-7;
+  }
+
+  .theme__background-10 {
+    background-color: $light-color-9;
   }
 
   .theme__border {
@@ -195,6 +231,10 @@
     .focus-name {
       color: $dark-color-12;
     }
+  }
+
+  .theme__arrow-icon {
+    background: url($image-path + "icons/arrow-back.svg") no-repeat center;
   }
 }
 

@@ -3,7 +3,7 @@ import { Modal } from "../../components/CommonElement"
 
 const ErrorModalView = (props) => {
     const content = (
-        <div>
+        <div className={"p-a-20px"}>
             <div class="title text-center">{props.title ? props.title : props.translate("error.error_occurred") || "Error occurred"}</div><a class="x" onClick={props.onRequestClose}>&times;</a>
             <div class="content error-modal">                                
                         <center>
