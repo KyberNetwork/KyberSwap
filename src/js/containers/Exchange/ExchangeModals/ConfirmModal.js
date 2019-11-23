@@ -314,14 +314,12 @@ export default class ConfirmModal extends React.Component {
     }
 
     errorHtml = () => {
-        if (this.state.err) {
+        if (this.state.restrictError || this.state.err) {
             let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
             return (
-                <React.Fragment>
-                    <div className={'modal-error custom-scroll ' + metaMaskClass}>
-                        {this.state.err}
-                    </div>
-                </React.Fragment>
+                <div className={`modal-error ${metaMaskClass}`}>
+                    {this.state.restrictError ? this.state.restrictError : this.state.err}
+                </div>
             )
         } else {
             return ""
