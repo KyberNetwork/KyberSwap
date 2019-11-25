@@ -236,5 +236,16 @@
   .theme__arrow-icon {
     background: url($image-path + "icons/arrow-back.svg") no-repeat center;
   }
+
+  .theme__table-row {
+    &:hover {
+      background: white;
+      border-color: $grey-light;
+    }
+  }
+
+  .theme__input {
+    border-color: $grey-light;
+  }
 }
 

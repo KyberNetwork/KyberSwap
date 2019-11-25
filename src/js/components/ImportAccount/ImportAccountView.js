@@ -102,6 +102,7 @@ const ImportAccountView = (props) => {
                   className="import-account__block-right import-account__block-right--download"
                   href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
                   target="_blank"
+                  onClick={() => props.viewKyberSwapApp('IOS')}
                 >
                   {props.translate("address.download") || "Download"}
                 </a>}
@@ -109,6 +110,7 @@ const ImportAccountView = (props) => {
                   className="import-account__block-right import-account__block-right--download"
                   href={"https://play.google.com/store/apps/details?id=com.kyberswap.android"}
                   target="_blank"
+                  onClick={() => props.viewKyberSwapApp('Android')}
                 >
                   {props.translate("address.download") || "Download"}
                 </a>}
