@@ -167,25 +167,24 @@ const TransactionLoadingView = (props) => {
                 <li class={props.status}>
                     {props.type === "swap" &&
                     <div>
-                      <div className="title final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
+                      <div className="final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
                       <div className="content">
-                          <span>
-                            <strong>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</strong>
-                          </span>
-                        <span> {props.translate('transaction.to') || "to"} </span>
-                        <span><strong>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</strong></span>
+                        <div>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</div>
+                        <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
+                        <div>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</div>
                       </div>
                     </div>
                     }
                     {props.type === "transfer" &&
                     <div>
-                      <div className="title final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
+                      <div className="final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
                       <div className="content">
-                              <span>
-                              <strong>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</strong>
-                              </span>
-                        <span> {props.translate('transaction.to') || "to"} </span>
-                        <span><strong>{props.balanceInfo.address.substring(0, 8) + "..." + props.balanceInfo.address.substring(props.balanceInfo.address.length-8, props.balanceInfo.address.length) }</strong></span>
+                        <div>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</div>
+                        <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
+                        <div>
+                          <div>{props.balanceInfo.destEthName}</div>
+                          <div>{props.balanceInfo.address.substring(0, 8) + "..." + props.balanceInfo.address.substring(props.balanceInfo.address.length-8, props.balanceInfo.address.length)}</div>
+                        </div>
                       </div>
                     </div>
                     }

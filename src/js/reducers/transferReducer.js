@@ -44,8 +44,16 @@ const transfer = (state = initState, action) => {
       newState.destAddress = action.payload
       newState.errors.destAddress = {}
       newState.errors.sourceAmount = {}
-      // newState.errors.ethBalanceError = ""
       return newState
+    case "TRANSFER.SET_DEST_ETH_NAME_AND_ADDRESS":
+      const { destEthName, destAddress } = action.payload;
+      newState.destEthName = destEthName;
+      newState.destAddress = destAddress;
+      return newState;
+    case "TRANSFER.CLEAR_TRANSFER_ERROR":
+      newState.errors.destAddress = {};
+      newState.errors.sourceAmount = {};
+      return newState;
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
       newState.errors.destAddress = {}

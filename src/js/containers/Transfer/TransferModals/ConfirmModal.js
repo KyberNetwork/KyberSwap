@@ -65,13 +65,12 @@ export default class ConfirmModal extends React.Component {
         var tokenSymbol = this.props.transfer.tokenSymbol
         var address = this.props.account.address
         var destAddress = this.props.transfer.destAddress
+        var destEthName = this.props.transfer.destEthName;
         var tokenDecimal = this.props.tokens[tokenSymbol].decimals
         var tokenAddress = this.props.tokens[tokenSymbol].address
         var amount = converter.stringToHex(this.props.transfer.amount, tokenDecimal)
-
         var ethereum = this.props.ethereum
         var nonce = this.props.account.getUsableNonce()
-
         var gas = converter.numberToHex(this.state.gasLimit)
         var gasPrice = converter.numberToHex(converter.gweiToWei(this.state.gasPrice))
         var keystring = this.props.account.keystring
@@ -79,7 +78,7 @@ export default class ConfirmModal extends React.Component {
         var password = ""
 
         return {
-            tokenSymbol, address, destAddress, tokenDecimal, amount, tokenAddress, nonce, ethereum, gas, gasPrice, keystring, type, password
+            tokenSymbol, address, destEthName, destAddress, tokenDecimal, amount, tokenAddress, nonce, ethereum, gas, gasPrice, keystring, type, password
         }
     }
     
@@ -222,7 +221,7 @@ export default class ConfirmModal extends React.Component {
 
 
     recap = () => {
-        var { tokenSymbol, destAddress } = this.getFormParams()
+        var { tokenSymbol, destAddress, destEthName } = this.getFormParams()
         var amount = this.props.transfer.amount.toString()
         return (
             <div className={"transfer-title theme__background-2 theme__text-6"}>
@@ -235,11 +234,10 @@ export default class ConfirmModal extends React.Component {
                             {amount.slice(0, 7)}{amount.length > 7 ? '...' : ''} {tokenSymbol}
                         </strong>
                     </div>
-                    <div>{this.props.translate("transaction.to") || "to"}</div>
-                    <div>
-                        <strong className={"theme__text"}>
-                            {destAddress.slice(0, 7)}...{destAddress.slice(-5)}
-                        </strong>
+                    <div className={"recap-transfer__to"}>{this.props.translate("transaction.to") || "to"}</div>
+                    <div className={"theme__text"}>
+                        <div>{destEthName}</div>
+                        <div>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</div>
                     </div>
                 </div>
             </div>

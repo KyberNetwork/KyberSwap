@@ -59,7 +59,14 @@ export default class PostTransfer extends React.Component {
   async validateTransfer() {
     var check = true
     var checkNumber = true
-    const destAddress = this.props.transfer.destAddress.trim();
+    const destAddress = this.props.destAddress.trim();
+  
+    this.props.dispatch(transferActions.setDestEthNameAndAddress(destAddress, ''));
+    
+    if (!destAddress) {
+      this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.dest_address")))
+      return false;
+    }
     
     if (validators.verifyAccount(destAddress) !== null) {
       let { resolvedAddress, isErrorResolvingAddress } = await this.resolveEthNameToAddress(destAddress);
@@ -68,7 +75,7 @@ export default class PostTransfer extends React.Component {
         this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.dest_address")))
         check = false
       } else {
-        this.props.dispatch(transferActions.specifyAddressReceive(resolvedAddress));
+        this.props.dispatch(transferActions.setDestEthNameAndAddress(resolvedAddress, destAddress));
       }
     }
 
