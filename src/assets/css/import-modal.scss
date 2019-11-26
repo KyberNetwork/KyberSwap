@@ -204,14 +204,15 @@
     &--cold-wallet {
       justify-content: space-between !important;
     }
+
     .address-button {
       .address-arrow {
         background-size: contain;
         width: 15px;
         height: 16px;
         opacity: 0.8;
-        background: url($image-path + "icon-back.svg") no-repeat center;
         cursor: pointer;
+
         &-right {
           transform: rotate(180deg);
         }

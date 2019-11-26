@@ -46,9 +46,8 @@ function compareNum(sortKey) {
       const pairs = value.pair.split("_");
       const tokenSymbol = pairs[1];
       const quoteSymbol = pairs[0];
-      const nowTimeStamp = Math.round(new Date().getTime() / 1000);
   
-      if (tokens[tokenSymbol] && tokens[tokenSymbol].listing_time > nowTimeStamp) return;
+      if (!tokens[tokenSymbol]) return;
       
       if (!tokenSymbol.toLowerCase().includes(searchWord.toLowerCase())) return;
 
@@ -129,7 +128,6 @@ export default class Market extends React.Component {
           <MarketTable
             currency={this.props.currency}
             listTokens={this.props.listTokens}
-            originalTokens={this.props.originalTokens}
             searchWord={this.props.searchWord}
             sortType={this.props.sortType}
             searchWordLayout={<SearchWord />}

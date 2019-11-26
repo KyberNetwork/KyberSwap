@@ -85,6 +85,10 @@
     background-color: $light-color-7;
   }
 
+  .theme__background-10 {
+    background-color: $light-color-9;
+  }
+
   .theme__border {
     border-color: $grey-light;
   }
@@ -227,6 +231,21 @@
     .focus-name {
       color: $dark-color-12;
     }
+  }
+
+  .theme__arrow-icon {
+    background: url($image-path + "icons/arrow-back.svg") no-repeat center;
+  }
+
+  .theme__table-row {
+    &:hover {
+      background: white;
+      border-color: $grey-light;
+    }
+  }
+
+  .theme__input {
+    border-color: $grey-light;
   }
 }
 

@@ -4,7 +4,7 @@ import { ImportAccountView } from '../../components/ImportAccount'
 import { ErrorModal } from "../ImportAccount"
 import { setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
-import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
+import {closeOtherConnectModal, importAccountMetamask, setOnDAPP} from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
@@ -67,6 +67,10 @@ export default class ImportAccount extends React.Component {
   componentWillUnmount = () => {
     this.props.dispatch(clearAcceptConnectWallet());
   }
+  
+  closeModal() {
+    this.props.dispatch(closeOtherConnectModal());
+  }
 
   acceptTerm = () => {
     if (this.props.isOnDAPP) {
@@ -80,11 +84,15 @@ export default class ImportAccount extends React.Component {
       this.props.acceptTerm()
     }
     this.props.global.analytics.callTrack("acceptTerm")
-  }
+  };
+  
+  viewKyberSwapApp = (os) => {
+    this.props.global.analytics.callTrack("trackViewingKyberSwapApp", os)
+  };
 
   render() {
     return (
-      <div>
+      <div id={"import-account"}>
         {(!this.props.isAgreedTermOfService && this.props.account === false && this.props.tradeType !== "limit_order") &&
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-button theme__button"} onClick={(e) => this.acceptTerm()}>
@@ -98,10 +106,12 @@ export default class ImportAccount extends React.Component {
           isAgreedTermOfService={this.props.isAgreedTermOfService}
           isAcceptConnectWallet={this.props.isAcceptConnectWallet}
           errorModal={<ErrorModal />}
+          closeModal={this.closeModal.bind(this)}
           translate={this.props.translate}
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}
           isUserLogin={isUserLogin()}
+          viewKyberSwapApp={this.viewKyberSwapApp}
         />}
       </div>
     )

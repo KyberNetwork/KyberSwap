@@ -25,7 +25,6 @@
     color: $dark-color-8;
   }
 
-
   .theme__background {
     background-color: $dark-color-1;
   }
@@ -84,6 +83,10 @@
 
   .theme__background-9 {
     background-color: $dark-color-15;
+  }
+
+  .theme__background-10 {
+    background-color: black;
   }
 
   .theme__border {
@@ -229,6 +232,23 @@
     .focus-name {
       color: $grey-light;
     }
+  }
+
+  .theme__arrow-icon {
+    background: url($image-path + "icons/arrow-back-white.svg") no-repeat center;
+  }
+
+  .theme__table-row {
+    &:hover {
+      background: rgba(225, 228, 235, 0.3);
+      border-color: transparent;
+    }
+  }
+
+  .theme__input {
+    background-color: $dark-color-4;
+    color: $grey-light;
+    border-color: transparent;
   }
 }
 

@@ -96,10 +96,10 @@ const ImportByDeviceView = (props) => {
                 </div>
                 <div className={"import-modal__footer import-modal__footer--cold-wallet theme__background-2"}>
                     <div class={'address-button address-button-previous ' + (props.isFirstList ? 'disabled' : '')} onClick={props.getPreAddress}>
-                        <div className={"address-arrow address-arrow-left"}></div>
+                        <div className={"address-arrow address-arrow-left theme__arrow-icon"}/>
                     </div>
                     <div class="address-button address-button-next" onClick={props.getMoreAddress}>
-                        <div className={"address-arrow address-arrow-right"}></div>
+                        <div className={"address-arrow address-arrow-right theme__arrow-icon"}/>
                     </div>
                 </div>
             </div>
