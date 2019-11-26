@@ -5,9 +5,7 @@ import {
   ImportByMetamask,
   ImportByDeviceWithLedger,
   ImportByDeviceWithTrezor,
-  ImportByPromoCode, 
-  ImportByWalletLink,
-  ImportByWalletConnect,
+  ImportByPromoCode,
   ImportByOther
 } from "../../containers/ImportAccount";
 
@@ -71,11 +69,17 @@ const ImportAccountView = (props) => {
               <ImportKeystore />
             </div>
           }
+  
+          {isOnMobile && (
+            <div className={`import-account__item`}>
+              <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+            </div>
+          )}
 
           {(!isLimitOrder || !isOnMobile) &&
-          <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
-            <ImportByPromoCode isOnMobile={isOnMobile} />
-          </div>
+            <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
+              <ImportByPromoCode isOnMobile={isOnMobile} />
+            </div>
           }
 
           {!isOnMobile &&
@@ -83,7 +87,7 @@ const ImportAccountView = (props) => {
             <ImportByOther isOnMobile={isOnMobile} />
           </div>
           }
-
+          
           {isOnMobile &&
             <div className="import-account__item download-app">
               <div className={"import-account__block"}>
@@ -98,6 +102,7 @@ const ImportAccountView = (props) => {
                   className="import-account__block-right import-account__block-right--download"
                   href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
                   target="_blank"
+                  onClick={() => props.viewKyberSwapApp('IOS')}
                 >
                   {props.translate("address.download") || "Download"}
                 </a>}
@@ -105,25 +110,13 @@ const ImportAccountView = (props) => {
                   className="import-account__block-right import-account__block-right--download"
                   href={"https://play.google.com/store/apps/details?id=com.kyberswap.android"}
                   target="_blank"
+                  onClick={() => props.viewKyberSwapApp('Android')}
                 >
                   {props.translate("address.download") || "Download"}
                 </a>}
               </div>
             </div>
           }
-
-          {/*<div className={`import-account__item`}>*/}
-          {/*  <ImportByPrivateKey isOnMobile={isOnMobile} />*/}
-          {/*</div>*/}
-          
-          {/*<div className={`import-account__item import-account__item-walletlink`}>*/}
-          {/*  <ImportByWalletLink />*/}
-          {/*</div>*/}
-
-          {/*<div className={`import-account__item import-account__item-walletconnect`}>*/}
-          {/*  <ImportByWalletConnect />*/}
-          {/*</div>*/}
-          
         </div>
       </div>
       {props.errorModal}

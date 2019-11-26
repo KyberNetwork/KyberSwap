@@ -12,6 +12,7 @@ export default class MobileChart extends React.Component {
   takeAction  = (sideTrade, baseSymbol, quoteSymbol) => {
     this.props.setFormType(sideTrade, baseSymbol, quoteSymbol);
     this.props.toggleMobileChart()
+    window.scrollTo({top: 0});
   };
 
   getDisplayToken = (token) => {

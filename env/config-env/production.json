@@ -73,17 +73,25 @@
             "priority": true,
             "sp_limit_order": true
         },
-        "DAI": {
-            "symbol": "DAI",
-            "name": "DAI",
+        "SAI": {
+            "symbol": "SAI",
+            "name": "SAI",
             "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
             "decimals": 18,
             "cg_id": "dai",
             "gasLimit": "500000",
-            "priority": true,
             "sp_limit_order": true,
             "is_quote": true,
             "quote_priority": 3,
+            "is_gas_fixed": true
+        },
+        "DAI": {
+            "symbol": "DAI",
+            "name": "DAI",
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "decimals": 18,
+            "cg_id": "",
+            "gasLimit": "500000",            
             "is_gas_fixed": true
         },
         "OMG": {
@@ -585,6 +593,14 @@
             "decimals": 8,
             "cg_id": "tokencard",
             "listing_time": 1569330000
+        },
+        "RAE": {
+            "symbol": "RAE",
+            "name": "Receive Access Ecosystem",
+            "address": "0xe5a3229ccb22b6484594973a03a3851dcd948756",
+            "decimals": 18,
+            "cg_id": "",
+            "listing_time": 1573650000
         }
     },
     "ethScanUrl": "https://etherscan.io/",
