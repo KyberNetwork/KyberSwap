@@ -13,7 +13,6 @@
         "ws": "wss://ropsten.kyber.network/ws/"
     },
     "min_accept_amount": 0.5,
-    "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "promo_token": "OMG",
     "priority_tokens": [
@@ -21,18 +20,12 @@
         "DAI",
         "KNC"
     ],
-    "market_exclude": [
-        "WETH",
-        "PT",
-        "ETH"
-    ],
     "limitOrder": {
         "minSupportOrder": 0.001,
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
     "wrapETHToken": "WETH",
-    "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
             "symbol": "ETH",
@@ -403,20 +396,10 @@
     "broadcastTx": "https://dev-ropsten-broadcast.knstats.com/",
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
-    "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
     "kyberswapAddress": "0xa33caaed059f0c574c07136a5da9f28dc2fa27c2",
+    "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
-    "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
-    "endpoint": "https://ropsten.infura.io/DtzEYY0Km2BA3YwyJcBG",
-    "averageBlockTime": 6000,
     "networkId": 3,
     "chainName": "Ropsten",
-    "faucet": "https://faucet.kyber.network/",
-    "server_logs": {
-        "url": "ropsten.etherscan.io",
-        "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-    },
-    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://dev-api.knstats.com",
-    "statEndPoint": "https://ropsten-data.kyber.network"
+    "tracker": "https://dev-api.knstats.com"
 }

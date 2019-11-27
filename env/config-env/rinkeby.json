@@ -8,7 +8,6 @@
         ],
         "ws": "wss://rinkeby.infura.io/ws/"
     },
-    "api_usd": "https://api.coinmarketcap.com",
     "api_tokens": "https://rinkeby-api.kyber.network/internal/currencies",
     "tokens_gas": {
         "ETH": 0,
@@ -68,19 +67,8 @@
     "enjinx": "https://kyber.enjinx.io/",
     "network": "0x39CC6802cF1625C30548B57D885932CB381EB4a4",
     "wrapper": "0xa4c7c9a74aeda3ffb9737a4fc1895c2cdebd42b8",
-    "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
-    "endpoint": "https://rinkeby.infura.io/DtzEYY0Km2BA3YwyJcBG",
-    "averageBlockTime": 6000,
     "networkId": 4,
     "chainName": "Rinkeby",
-    "faucet": "https://faucet.kyber.network/",
-    "server_logs": {
-        "url": "rinkeby.etherscan.io",
-        "api_key": "D8YAEQ3V4THAPDA9YSB1YGA1QY9KAMHY6M"
-    },
-    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
     "tracker": "https://tracker.kyber.network",
-    "ethermon_wrapper": "0xf1f149ee80118c909d970b5cd39a11b2d5498c6e",
-    "networkName": "rinkeby",
-    "statEndPoint": "https://mainnet-data.kyber.network"
+    "networkName": "rinkeby"
 }

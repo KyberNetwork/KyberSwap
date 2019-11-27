@@ -19,11 +19,6 @@
         "DAI",
         "KNC"
     ],
-    "market_exclude": [
-        "WETH",
-        "PT",
-        "ETH"
-    ],
     "limitOrder": {
         "minSupportOrder": 0.001,
         "maxPercentTriggerRate": 900,
@@ -31,7 +26,6 @@
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
-    "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
             "symbol": "ETH",
@@ -771,12 +765,7 @@
     "network": "0xc14f34233071543e979f6a79aa272b0ab1b4947d",
     "kyberswapAddress": "0x072bfe95e2b8050221de8ab324ab11cc7d66d75b",
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
-    "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
-    "endpoint": "wss://mainnet.infura.io/ws",
-    "averageBlockTime": 15000,
     "networkId": 1,
     "chainName": "Staging",
-    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://staging-api.knstats.com",
-    "statEndPoint": "https://mainnet-data.kyber.network"
+    "tracker": "https://staging-api.knstats.com"
 }

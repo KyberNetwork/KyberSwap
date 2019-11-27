@@ -28,35 +28,41 @@ const WalletType = "walletconnect"
 })
 
 export default class ImportByWallletConnect extends React.Component {
-
-    constructor() {
-        super()
+    constructor(props) {
+        super(props);
+        
         this.state = {
             isOpen: false,
             qrCode: "",
             wallet: false
         }
     }
-
+    
+    componentDidMount() {
+        const wallet = getWallet(WalletType);
+        wallet.clearSession();
+    }
+    
     async connect(e) {
         var wallet = this.state.wallet
         try {
             var chainId = await wallet.getChainId()
-            this.setState({
-                isOpen: false                
-            })
+    
             this.props.closeParentModal();
             this.closeModal();
-
-            const networkId = BLOCKCHAIN_INFO.networkId
-            this.errorHandling(chainId, networkId)
+            
+            if (chainId !== true) {
+                this.errorHandling(chainId, BLOCKCHAIN_INFO.networkId)
+            }
         } catch (err) {
             console.log(err)
         }
     }
     
     errorHandling = (chainId, networkId) => {
-        const {translate} = this.props
+        const {translate} = this.props;
+        const wallet = this.state.wallet;
+        
         try {
             const currentId = parseInt(chainId, 10);
             
@@ -66,14 +72,15 @@ export default class ImportByWallletConnect extends React.Component {
                 
                 if (currentName) {
                     this.props.dispatch(actions.throwError(translate("error.network_not_match_wallet_link", { currentName: currentName, expectedName: expectedName }) || "Network is not match"))
-                    return
+                } else {
+                  this.props.dispatch(actions.throwError(translate("error.network_not_match_unknow_wallet_link", { expectedName: expectedName }) || "Network is not match"))
                 }
-            
-                this.props.dispatch(actions.throwError(translate("error.network_not_match_unknow_wallet_link", { expectedName: expectedName }) || "Network is not match"))
+  
+                wallet.clearSession();
                 return
             }
             
-            const address = this.state.wallet.getAddress();
+            const address = wallet.getAddress();
             
             this.props.dispatch(actions.importNewAccount(
               address.toLowerCase(),
@@ -89,10 +96,11 @@ export default class ImportByWallletConnect extends React.Component {
             console.log(e)
             this.props.dispatch(actions.throwError( "Cannot get wallet account."))
         }
-    }
+    };
     
     async openQrCode(e) {
-        var wallet = getWallet(WalletType)
+        const wallet = getWallet(WalletType);
+        
         try {
             var qrCode = await wallet.requestQrCode()
             this.setState({
