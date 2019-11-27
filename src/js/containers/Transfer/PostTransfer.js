@@ -69,9 +69,9 @@ export default class PostTransfer extends React.Component {
     }
     
     if (validators.verifyAccount(destAddress) !== null) {
-      let { resolvedAddress, isErrorResolvingAddress } = await this.resolveEthNameToAddress(destAddress);
+      let resolvedAddress = await this.resolveEthNameToAddress(destAddress);
       
-      if (!resolvedAddress || isErrorResolvingAddress) {
+      if (!resolvedAddress) {
         this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.dest_address")))
         check = false
       } else {
@@ -108,16 +108,14 @@ export default class PostTransfer extends React.Component {
   
   async resolveEthNameToAddress(destAddress) {
     let resolvedAddress = null;
-    let isErrorResolvingAddress = false;
   
     try {
       resolvedAddress = await this.props.ethereum.call("getAddressFromEthName", destAddress);
     } catch (e) {
       console.log(e);
-      isErrorResolvingAddress = true;
     }
     
-    return { resolvedAddress, isErrorResolvingAddress }
+    return resolvedAddress
   }
 
   render() {
