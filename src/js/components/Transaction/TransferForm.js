@@ -132,7 +132,6 @@ const TransferForm = (props) => {
                         onFocus={props.onFocusAddr}
                         onBlur={props.onBlur}
                       />
-
                     </div>
                     {props.qcCode}
                   </div>
@@ -163,7 +162,7 @@ const TransferForm = (props) => {
       </div>
 
       {props.account !== false &&
-        <PostTransfer/>
+        <PostTransfer destAddress={props.input.destAddress.value}/>
       }
     </div>
   )

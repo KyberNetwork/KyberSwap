@@ -142,16 +142,11 @@ ul.broadcast-steps {
       .content{
         font-size: 16px;
         text-align: start;
+        display: flex;
+        font-weight: 600;
 
-        span:first-child {
-          margin-left: 0;
-        }
-
-        span{
-          margin-left: 5px;
-          strong{
-            font-weight: 600;
-          }
+        &__to {
+          margin: 0 8px;
         }
       }
     }

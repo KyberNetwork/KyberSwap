@@ -137,6 +137,7 @@ const INIT_TRANSFER_FORM_STATE = {
   tokenSymbol: "ETH",
   amount: "",
   destAddress: "",
+  destEthName: "",
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 21000,
   gas_limit: 150000,

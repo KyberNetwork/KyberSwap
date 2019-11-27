@@ -29,10 +29,12 @@ import { TransferAccount } from "../../containers/Transfer"
 })
 
 class Transfer extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
-      focus: "transfer"
+      focus: "transfer",
+      destAddress: ''
     }
   }
 
@@ -98,9 +100,10 @@ class Transfer extends React.Component {
   lazyEstimateGas = debounce(this.dispatchEstimateGas, 500)
 
   onAddressReceiveChange = (event) => {
-    var value = event.target.value
-    this.props.dispatch(transferActions.specifyAddressReceive(value));
-  }
+    var value = event.target.value;
+    this.setState({ destAddress: value })
+    this.props.dispatch(transferActions.clearTransferError())
+  };
 
   onAmountChange = (event, amount) => {
     var value = amount ? amount : event.target.value;
@@ -262,7 +265,7 @@ class Transfer extends React.Component {
 
     var input = {
       destAddress: {
-        value: this.props.transfer.destAddress,
+        value: this.state.destAddress,
         onChange: this.onAddressReceiveChange
       },
       amount: {
@@ -270,6 +273,7 @@ class Transfer extends React.Component {
         onChange: this.onAmountChange
       }
     }
+    
     var errors = {
       destAddress: this.props.transfer.errors.destAddress || '',
       amountTransfer: this.props.transfer.errors.amountTransfer || this.props.transfer.errors.ethBalanceError || ''
