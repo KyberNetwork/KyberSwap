@@ -236,7 +236,9 @@ export default class ConfirmModal extends React.Component {
                     </div>
                     <div className={"recap-transfer__to"}>{this.props.translate("transaction.to") || "to"}</div>
                     <div className={"theme__text"}>
-                        <div>{destEthName}</div>
+                        {destEthName && (
+                          <div>{destEthName}</div>
+                        )}
                         <div>{destAddress.slice(0, 7)}...{destAddress.slice(-5)}</div>
                     </div>
                 </div>

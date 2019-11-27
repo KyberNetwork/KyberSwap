@@ -182,7 +182,9 @@ const TransactionLoadingView = (props) => {
                         <div>{displayRoundingNumber(props.balanceInfo.amount)} {props.balanceInfo.tokenSymbol}</div>
                         <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
                         <div>
-                          <div>{props.balanceInfo.destEthName}</div>
+                          {props.balanceInfo.destEthName && (
+                            <div>{props.balanceInfo.destEthName}</div>
+                          )}
                           <div>{props.balanceInfo.address.substring(0, 8) + "..." + props.balanceInfo.address.substring(props.balanceInfo.address.length-8, props.balanceInfo.address.length)}</div>
                         </div>
                       </div>
