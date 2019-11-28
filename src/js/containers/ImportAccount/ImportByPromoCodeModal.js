@@ -155,7 +155,7 @@ export default class ImportByPromoCodeModal extends React.Component {
     
   }
 
-  PromoCode = (promoCode) => {
+  importPromoCode = (promoCode) => {
     var check = false
     if (promoCode === "") {
       this.setState({errorPromoCode: this.props.translate("error.promo_code_error") || "Promo code is empty."})
