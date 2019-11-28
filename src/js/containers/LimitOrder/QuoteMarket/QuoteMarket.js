@@ -167,14 +167,12 @@ export default class QuoteMarket extends React.Component{
                   <div className="advance-config__option-container">
                     <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                            //  defaultChecked={false}
                              onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
                              checked={!this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>
                     </label>
                     <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                            //  defaultChecked={true}
                              onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
                              checked={this.state.is_volume} />
                       <span className="advance-config__checkmark theme__radio-button"></span>
@@ -199,8 +197,10 @@ export default class QuoteMarket extends React.Component{
                       <div className={pair["is_favorite"] ? "star active" : "star" } />
                     </div>
                     <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
-                    <div className={"c2"} >{pair["price"]}</div>
-                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "up")}`} >{is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["volume"] == "-" ? "-" : `${pair["change"]}%`)}</div>
+                    <div className={"c2"} >{pair["price"] != 0 ? pair["price"] : '-'}</div>
+                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "")} ${is_volume ? "" : (pair["change"] > 0 ? "up" : "")}`}>
+                      {is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["change"] == '-' || pair["price"] == 0) ? '-' : `${pair["change"]}%`}
+                    </div>
                   </div>)}
                 </div>
               </div>
