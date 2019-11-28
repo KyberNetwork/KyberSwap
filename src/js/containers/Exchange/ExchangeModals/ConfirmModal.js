@@ -307,7 +307,7 @@ export default class ConfirmModal extends React.Component {
 
     msgHtml = () => {
         if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
-            return <div className="message-waiting">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
+            return <div className="message-waiting theme__text">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
         } else {
             return ""
         }
@@ -430,8 +430,8 @@ export default class ConfirmModal extends React.Component {
 
                 {isPromoPayment &&
                     <React.Fragment>
-                        <div className="title-description-promo-payment">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
-                        <div className="amount amount-promo-payment">
+                        <div className="title-description-promo-payment theme__text">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
+                        <div className="amount amount-promo-payment theme__background-22">
                             <div className="amount-item amount-left amount-item-promo-balance">
                                 <div className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
                                 <div className={"rc-info rc-info-promo-balance"}>
@@ -439,7 +439,7 @@ export default class ConfirmModal extends React.Component {
                                     <div>{sourceTokenSymbol}</div>
                                 </div>
                             </div>
-                            <div className="space-container">
+                            <div className="space-container theme__text">
                                 <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
                                 <div className="space space-arrow-icon"><img src={require("../../../../assets/img/exchange/arrow-right-orange-long.svg")} /></div>
                                 <div className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>

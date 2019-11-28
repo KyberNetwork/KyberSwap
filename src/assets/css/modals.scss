@@ -176,12 +176,9 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .content {
-
-    // Message container: waiting for confirmation
     .message-waiting {
       padding: 15px 45px;
       font-size: 14px;
-      color: #5a5e67;
 
       @include screen-max-width(medium) {
         padding: 15px 20px;
@@ -315,14 +312,11 @@ $divider-color: darken($title-background-color, 5);
       padding: 0 20px;
     }
   }
-  .amount{
+
+  .amount {
     display: grid;
     grid-template-columns: 1fr 35px 1fr;
     grid-gap: 10px;
-    // justify-content: space-between;
-    background-color: #eaecf2;
-    // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-    // border: solid 0.8px rgba(204, 204, 204, 0.72);
     border-radius: 4px;
     padding: 5px 35px;
 
@@ -335,7 +329,6 @@ $divider-color: darken($title-background-color, 5);
       padding: 10px;
 
       .item-icon {
-        // margin: 5px 0;
         display: flex;
         justify-content: center;
       }
@@ -355,7 +348,6 @@ $divider-color: darken($title-background-color, 5);
       }
       .rc-info {
         font-size: 20px;
-        // font-weight: 600;
         letter-spacing: -0.5px;
         display: flex;
         flex-wrap: wrap;
@@ -550,7 +542,6 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 25px;
       font-size: 14px;
       font-weight: 600;
-      color: #141927;
       padding: 0 45px;
 
       @include screen-max-width(medium) {
