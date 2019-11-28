@@ -34,9 +34,12 @@ function* updateRatePending(action) {
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
   const destAmount = state.exchange.destAmount
 
+  const srcTokenAddress = tokens[sourceTokenSymbol].address;
+  const destTokenAddress = tokens[destTokenSymbol].address;
+
   if (refetchSourceAmount) {
     try {
-     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
+     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
     } catch (err) {
       console.log(err);
     }
