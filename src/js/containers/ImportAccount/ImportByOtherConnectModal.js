@@ -2,10 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { closeOtherConnectModal } from "../../actions/accountActions"
 import { getTranslate } from 'react-localize-redux'
-import * as common from "../../utils/common"
 import { Modal } from '../../components/CommonElement'
-import { QRCode } from "../CommonElements";
-
 import {
   ImportByPrivateKey,
   ImportByWalletLink,
@@ -28,10 +25,6 @@ import {
   }
 })
 export default class ImportByOtherConnectModal extends React.Component {
-  constructor(){
-    super()
-  }
-
   closeModal() {
     this.props.dispatch(closeOtherConnectModal());
   }
@@ -46,12 +39,6 @@ export default class ImportByOtherConnectModal extends React.Component {
           onRequestClose={this.closeModal.bind(this)}
           content={
             <div>
-              {/*<div className="title">*/}
-              {/*  {this.props.translate("import.promo_code") || "Promocode"}*/}
-              {/*</div>*/}
-              {/*<a className="x" onClick={this.closeModal.bind(this)}>*/}
-              {/*  <img src={require("../../../assets/img/v3/Close-3.svg")} />*/}
-              {/*</a>*/}
               <div className="content with-overlap theme__background-2">
                 <div className="title">
                   {this.props.translate("import.connect_other_wallet") || "Connect other wallet"}
