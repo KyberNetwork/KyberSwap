@@ -69,9 +69,7 @@ export default class WalletLinkKey extends React.Component {
 
     async signSignature(message, account) {
         try {                        
-            // console.log(account.address)
-            var signature = await this.web3.eth.sign(message, account.address)
-            console.log(signature)
+            var signature = await this.web3.eth.personal.sign(message, account.address)
             return signature
         } catch (err) {
             console.log(err)
