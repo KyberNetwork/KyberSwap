@@ -355,7 +355,8 @@
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
     "power_by": "Powered by 온체인(On-Chain) 유동성 프로토콜",
-    "promo_code": "PROMO CODE"
+    "promo_code": "PROMO CODE",
+    "others": "OTHERS"
   },
   "market": {
     "eth_market": "이더리움 시장",
