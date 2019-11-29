@@ -262,7 +262,8 @@
     "insufficient_balance_order": "Your balance is insufficent for the order. Please check your ${tokenSymbol} balance and your pending order",
     "insufficient_balance": "Your balance is insufficient for transaction",
     "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
-    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
   },
   "import": {
     "from_metamask": "METAMASK",
