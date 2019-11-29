@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { Exchange } from "../../containers/Exchange"
 import { Transfer } from "../../containers/Transfer"
 import { LimitOrder } from "../../containers/LimitOrder"
-import { ExchangeHistory } from "../../containers/CommonElements/"
 import constanst from "../../services/constants"
 import history from "../../history"
 import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
@@ -110,8 +109,15 @@ export default class Layout extends React.Component {
       window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
       window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
       window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
+      window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
-  }
+  };
+  
+  scrollToImportAccount = () => {
+    const importAccountBlock = document.getElementById('import-account');
+    if (this.props.account.account || !importAccountBlock) return;
+    importAccountBlock.scrollIntoView();
+  };
 
   switchTheme = (theme) => {
     this.props.dispatch(switchTheme(theme));
@@ -151,6 +157,7 @@ export default class Layout extends React.Component {
   setActiveLanguage = (language) => {
     this.props.dispatch(changeLanguage(this.props.ethereumNode, language, this.props.locale))
   }
+  
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
     return (

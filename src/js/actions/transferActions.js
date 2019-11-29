@@ -46,6 +46,19 @@ export function specifyAddressReceive(value) {
   }
 }
 
+export function setDestEthNameAndAddress(destAddress, destEthName) {
+  return {
+    type: "TRANSFER.SET_DEST_ETH_NAME_AND_ADDRESS",
+    payload: { destAddress, destEthName }
+  }
+}
+
+export function clearTransferError() {
+  return {
+    type: "TRANSFER.CLEAR_TRANSFER_ERROR"
+  }
+}
+
 export function specifyAmountTransfer(value) {
   return {
     type: "TRANSFER.TRANSFER_SPECIFY_AMOUNT",

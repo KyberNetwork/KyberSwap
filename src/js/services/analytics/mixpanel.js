@@ -130,6 +130,16 @@ export default class Mixpanel {
       }
     }
   }
+  
+  trackViewingKyberSwapApp(os) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try {
+        mixpanel.track("Step_1_View_KyberSwap_App", {os})
+      } catch(e) {
+        console.log(e)
+      }
+    }
+  }
 
   trackBaseCurrency(currency){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){

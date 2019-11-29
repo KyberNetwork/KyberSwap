@@ -30,9 +30,6 @@ export default class QuoteList extends React.Component{
         </DropdownContent>
       </Dropdown>
       </div>
-      // return <div className={`quote_item ${this.dropdownQuotes.includes(currentQuote) ? "active" :""}`}>
-      //   <select className="theme__text-3" onChange={ (e) => onClick(e.target.value)} value={currentQuote}>{temp.map(i => <option>{i}</option>)}</select>
-      // </div>
     )
 
   }

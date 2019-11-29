@@ -120,15 +120,15 @@ export default class CachedServerProvider extends React.Component {
     })
   }
 
-  getSourceAmount(sourceTokenSymbol, destTokenSymbol, destAmount) {
+  getSourceAmount(sourceTokenAddr, destTokenAddr, destAmount) {
     return new Promise((resolve, reject) => {
-      this.timeout(this.maxRequestTime, fetch(`${this.rpcUrl}/sourceAmount?source=${sourceTokenSymbol}&dest=${destTokenSymbol}&destAmount=${destAmount}`))
+      this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/quote_amount?quote=${sourceTokenAddr}&base=${destTokenAddr}&base_amount=${destAmount}&type=buy`))
         .then((response) => {
           return response.json();
         })
         .then((result) => {
-          if (result.success) {
-            resolve(result.value);
+          if (!result.error) {
+            resolve(result.data);
           } else {
             reject(new Error("Cannot get source amount"));
           }

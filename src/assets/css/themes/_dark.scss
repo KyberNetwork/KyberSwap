@@ -237,5 +237,18 @@
   .theme__arrow-icon {
     background: url($image-path + "icons/arrow-back-white.svg") no-repeat center;
   }
+
+  .theme__table-row {
+    &:hover {
+      background: rgba(225, 228, 235, 0.3);
+      border-color: transparent;
+    }
+  }
+
+  .theme__input {
+    background-color: $dark-color-4;
+    color: $grey-light;
+    border-color: transparent;
+  }
 }
 

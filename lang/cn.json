@@ -263,7 +263,8 @@
     "insufficient_balance_order": "您的余额不足。请检查您的${tokenSymbol}余额和正在缓冲的订单。",
     "insufficient_balance": "您的余额不足以支持这笔交易",
     "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
-    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
+    "not_attached_address": "您还没有将您的钱包地址附加到此域。请在ENS建立您的账户"
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",
@@ -353,7 +354,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "私钥",
-    "promo_code": "活动码"
+    "promo_code": "活动码",
+    "others": "OTHERS"
   },
   "market": {
     "eth_market": "以太坊市场",

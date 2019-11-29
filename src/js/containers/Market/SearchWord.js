@@ -34,7 +34,7 @@ export default class SearchWord extends React.Component {
   render() {
     return (
       <div className="search-input">
-        <input type="text" placeholder={this.props.translate("market.search") || "Search"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onFocus={() => this.props.analytics.callTrack("trackSearchETHMarket")}/>
+        <input className="search-input__input theme__input" type="text" placeholder={this.props.translate("market.search") || "Search"} value={this.props.searchWord} onChange={(e) => this.changeSearch(e)} onFocus={() => this.props.analytics.callTrack("trackSearchETHMarket")}/>
       </div>
     )
   }

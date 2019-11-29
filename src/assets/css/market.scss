@@ -120,12 +120,12 @@
         right: 15px;
       }
 
-      input {
+      &__input {
         width: 250px;
         max-width: 100%;
         outline: none;
         padding: 10px 50px 10px 10px;
-        border: 1px solid #e1e4eb;
+        border: 1px solid;
       }
     }
 
@@ -166,8 +166,6 @@
             box-shadow: none;
             padding: 10px 0;
             border-radius: 3px;
-            background-color: #e1e4eb;
-            color: black;
             margin-bottom: 15px;
 
             .rt-th-img {
@@ -234,14 +232,6 @@
             border: 1px solid transparent;
             cursor: pointer;
             transition: all .3s;
-
-            &:hover {
-              border-color: #e1e4eb;
-              background-color: white;
-              .rt-td{
-                color: black;
-              }
-            }
 
             div.rt-td {
               padding-top: 5px;

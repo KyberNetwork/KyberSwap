@@ -360,14 +360,16 @@ export default class MarketTable extends React.Component {
           minRows = {0}
           defaultPageSize={this.props.listTokens.length}
           getTrProps={(state, rowInfo) => {
-            return { onClick: () => this.onPairClicked(rowInfo) }
+            return {
+              className: 'theme__table-row',
+              onClick: () => this.onPairClicked(rowInfo)
+            }
           }}
-          // getPaginationProps={() => {
-          //   return {
-          //     previousText: (<img src={require("../../../assets/img/market/arrow-left.png")} />),
-          //     nextText:  (<img src={require("../../../assets/img/market/arrow-right.svg")} />)
-          //   }
-          // }}
+          getTheadProps={() => {
+            return {
+              className: 'theme__background-3',
+            }
+          }}
           getNoDataProps={(state, rowInfo) => {
             if(!this.props.listTokens.length) return { style: { border: 'none' ,top:'75%',padding:'0px', backgroundColor:'transparent'} };
             return {};

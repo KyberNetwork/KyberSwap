@@ -19,11 +19,6 @@
         "DAI",
         "KNC"
     ],
-    "market_exclude": [
-        "WETH",
-        "PT",
-        "ETH"
-    ],
     "limitOrder": {
         "minSupportOrder": 0.001,
         "maxPercentTriggerRate": 900,
@@ -31,7 +26,6 @@
     },
     "promo_token": "PT",
     "wrapETHToken": "WETH",
-    "userdashboard_url": "https://staging-kyberswap.knstats.com",
     "tokens": {
         "ETH": {
             "symbol": "ETH",
@@ -78,8 +72,10 @@
             "symbol": "DAI",
             "name": "DAI",
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
-            "decimals": 18,            
-            "gasLimit": "500000",            
+            "decimals": 18,
+            "cg_id": "",
+            "gasLimit": "500000",
+            "priority": true,
             "is_gas_fixed": true
         },
         "OMG": {
@@ -752,14 +748,22 @@
         "SUSD": {
             "symbol": "SUSD",
             "name": "sUSD",
-            "address": "0x57ab1e02fee23774580c119740129eac7081e9d3",
+            "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
             "decimals": 18,
-            "cg_id": ""
+            "cg_id": "",
+            "gasLimit": "500000"
         },
         "RAE": {
             "symbol": "RAE",
             "name": "Receive Access Ecosystem",
             "address": "0xe5a3229ccb22b6484594973a03a3851dcd948756",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "EDO": {
+            "symbol": "EDO",
+            "name": "Eidoo",
+            "address": "0xced4e93198734ddaff8492d525bd258d49eb388e",
             "decimals": 18,
             "cg_id": ""
         }
@@ -771,12 +775,7 @@
     "network": "0x6326dd73e368c036d4c4997053a021cbc52c7367",
     "kyberswapAddress": "0x072bfe95e2b8050221de8ab324ab11cc7d66d75b",
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
-    "trade_topic": "0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
-    "endpoint": "wss://mainnet.infura.io/ws",
-    "averageBlockTime": 15000,
     "networkId": 1,
     "chainName": "Staging",
-    "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-    "tracker": "https://staging-api.knstats.com",
-    "statEndPoint": "https://mainnet-data.kyber.network"
+    "tracker": "https://staging-api.knstats.com"
 }

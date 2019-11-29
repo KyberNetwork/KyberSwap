@@ -126,7 +126,8 @@ export default class BroadCastModal extends React.Component {
     var balanceInfo = {
       amount: this.props.transfer.amount,
       tokenSymbol: this.props.transfer.tokenSymbol,
-      address: this.props.transfer.destAddress
+      address: this.props.transfer.destAddress,
+      destEthName: this.props.transfer.destEthName
     }
 
     var loadingView =

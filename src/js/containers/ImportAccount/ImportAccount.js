@@ -84,11 +84,15 @@ export default class ImportAccount extends React.Component {
       this.props.acceptTerm()
     }
     this.props.global.analytics.callTrack("acceptTerm")
-  }
+  };
+  
+  viewKyberSwapApp = (os) => {
+    this.props.global.analytics.callTrack("trackViewingKyberSwapApp", os)
+  };
 
   render() {
     return (
-      <div>
+      <div id={"import-account"}>
         {(!this.props.isAgreedTermOfService && this.props.account === false && this.props.tradeType !== "limit_order") &&
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-button theme__button"} onClick={(e) => this.acceptTerm()}>
@@ -107,6 +111,7 @@ export default class ImportAccount extends React.Component {
           onMobile={this.props.onMobile}
           tradeType={this.props.tradeType}
           isUserLogin={isUserLogin()}
+          viewKyberSwapApp={this.viewKyberSwapApp}
         />}
       </div>
     )
