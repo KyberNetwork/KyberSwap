@@ -354,7 +354,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "私钥",
-    "promo_code": "活动码"
+    "promo_code": "活动码",
+    "others": "OTHERS"
   },
   "market": {
     "eth_market": "以太坊市场",

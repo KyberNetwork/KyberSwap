@@ -355,7 +355,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
-    "promo_code": "MÃ KHUYẾN MÃI"
+    "promo_code": "MÃ KHUYẾN MÃI",
+    "others": "VÍ KHÁC"
   },
   "market": {
     "eth_market": "Thị trường Ethereum",
