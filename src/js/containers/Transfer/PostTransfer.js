@@ -71,7 +71,10 @@ export default class PostTransfer extends React.Component {
     if (validators.verifyAccount(destAddress) !== null) {
       let resolvedAddress = await this.resolveEthNameToAddress(destAddress);
       
-      if (!resolvedAddress) {
+      if (resolvedAddress === constants.GENESIS_ADDRESS) {
+        this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.not_attached_address")))
+        check = false
+      } else if (!resolvedAddress) {
         this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.dest_address")))
         check = false
       } else {

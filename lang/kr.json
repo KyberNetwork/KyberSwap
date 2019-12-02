@@ -263,7 +263,8 @@
     "insufficient_balance_order": "주문을 위한 잔액이 부족합니다. KNC 잔액과 대기 중인 주문을 확인해주세요",
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
-    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
   },
   "import": {
     "from_metamask": "Metamask",
@@ -354,7 +355,8 @@
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
     "power_by": "Powered by 온체인(On-Chain) 유동성 프로토콜",
-    "promo_code": "PROMO CODE"
+    "promo_code": "PROMO CODE",
+    "others": "OTHERS"
   },
   "market": {
     "eth_market": "이더리움 시장",

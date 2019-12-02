@@ -263,7 +263,8 @@
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
     "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
-    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version."
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
+    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -354,7 +355,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
-    "promo_code": "MÃ KHUYẾN MÃI"
+    "promo_code": "MÃ KHUYẾN MÃI",
+    "others": "VÍ KHÁC"
   },
   "market": {
     "eth_market": "Thị trường Ethereum",
