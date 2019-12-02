@@ -10,13 +10,13 @@ import { getTranslate } from 'react-localize-redux';
 function* getMaxGasTransfer() {
   const state = store.getState();
   const transfer = state.transfer;
-  const specialGasLimitTokens = constants.SPECIAL_TRANSFER_GAS_LIMIT[transfer.tokenSymbol];
+  const specialGasLimit = constants.SPECIAL_TRANSFER_GAS_LIMIT[transfer.tokenSymbol];
   
-  if (!specialGasLimitTokens) {
+  if (!specialGasLimit) {
     return transfer.gas_limit;
   }
   
-  return specialGasLimitTokens;
+  return specialGasLimit;
 }
 
 function* estimateGasUsed(action) {
