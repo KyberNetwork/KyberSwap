@@ -1,28 +1,22 @@
-import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
+import { put, call, takeEvery } from 'redux-saga/effects'
 import * as actions from '../actions/transferActions'
-import * as utilActions from '../actions/utilActions'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import * as ethUtil from 'ethereumjs-util'
-
 import * as common from "./common"
 import * as validators from "../utils/validators"
-import * as analytics from "../utils/analytics"
-
-import Tx from "../services/tx"
-import { updateAccount, incManualNonceAccount } from '../actions/accountActions'
 import { store } from "../store"
 import { getTranslate } from 'react-localize-redux';
 
-
 function* getMaxGasTransfer() {
-  var state = store.getState()
-  const transfer = state.transfer
-  if (transfer.tokenSymbol !== 'DGX') {
-    return transfer.gas_limit
-  } else {
-    return 250000
+  const state = store.getState();
+  const transfer = state.transfer;
+  const specialGasLimitTokens = constants.SPECIAL_TRANSFER_GAS_LIMIT[transfer.tokenSymbol];
+  
+  if (!specialGasLimitTokens) {
+    return transfer.gas_limit;
   }
+  
+  return specialGasLimitTokens;
 }
 
 function* estimateGasUsed(action) {
@@ -42,8 +36,6 @@ function* estimateGasUsed(action) {
 
   yield call(fetchAndSetGas, ethereum, fromAddr, transfer.tokenSymbol, transfer.token, decimals, transfer.amount)
 }
-
-
 
 function* estimateGasUsedWhenSelectToken(action) {
   const { symbol, address } = action.payload
@@ -242,12 +234,10 @@ export function* doAfterAccountImported(action){
 }
 
 export function* watchTransfer() {
-
   yield takeEvery("TRANSFER.ESTIMATE_GAS_USED", estimateGasUsed)
   yield takeEvery("TRANSFER.SELECT_TOKEN", estimateGasUsedWhenSelectToken)
   yield takeEvery("TRANSFER.ESTIMATE_GAS_WHEN_AMOUNT_CHANGE", estimateGasUsedWhenChangeAmount)
   yield takeEvery("TRANSFER.FETCH_GAS_SNAPSHOT", fetchGasSnapshot)
   yield takeEvery("TRANSFER.VERIFY_TRANSFER", verifyTransfer)
-
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }
