@@ -50,23 +50,19 @@ export default class BaseProvider {
         var tokenContract = this.erc20Contract
         tokenContract.options.address = token
         
-
         return new Promise((resolve, reject) => {
             var data = tokenContract.methods.balanceOf(owner).encodeABI()
-
             
-                this.rpc.eth.call({
-                    to: token,
-                    data: data
-                })
-                    .then(result => {
-                        var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
-                        resolve(balance[0])
-                    }).catch((err) => {
-                        console.log(err)
-                        reject(err)
-                    })
-            
+            this.rpc.eth.call({
+                to: token,
+                data: data
+            }).then(result => {
+                var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+                resolve(balance[0])
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 
@@ -80,7 +76,7 @@ export default class BaseProvider {
         })
 
         return new Promise((resolve, reject) => {
-            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+            this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
@@ -110,26 +106,26 @@ export default class BaseProvider {
       })
 
       return new Promise((resolve, reject) => {
-        var data = this.wrapperContract.methods.getBalances(address, listToken).call(
-          {},
-          blockNumber
-        ).then(result => {
-          if (result.length !== listToken.length){
-            console.log("Cannot get balances from node")
-            reject("Cannot get balances from node")
-          }
-          var listTokenBalances = []
-          listSymbol.map((symbol, index) => {
-            listTokenBalances.push({
-              symbol: symbol,
-              balance: result[index] ? result[index]: "0"
-            })
+          this.wrapperContract.methods.getBalances(address, listToken).call(
+            {},
+            blockNumber
+          ).then(result => {
+              if (result.length !== listToken.length){
+                  console.log("Cannot get balances from node")
+                  reject("Cannot get balances from node")
+              }
+              var listTokenBalances = []
+              listSymbol.map((symbol, index) => {
+                  listTokenBalances.push({
+                      symbol: symbol,
+                      balance: result[index] ? result[index]: "0"
+                  })
+              })
+              resolve(listTokenBalances)
+          }).catch(err => {
+              console.log(err)
+              reject(err)
           })
-          resolve(listTokenBalances)
-        }).catch(err => {
-          console.log(err)
-          reject(err)
-        })
       })
     }
 
@@ -159,8 +155,6 @@ export default class BaseProvider {
                     reject(err)
                 })
         })
-
-
     }
 
     getTokenBalanceAtLatestBlock(address, ownerAddr) {
@@ -275,7 +269,6 @@ export default class BaseProvider {
                 reject(err)
             })
         })
-
     }
 
     getRate(source, dest, srcAmount) {
@@ -320,9 +313,7 @@ export default class BaseProvider {
                 })
         })
     }
-
-
-
+    
     getAllRate(sources, dests, quantity) {
         var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
 
@@ -660,7 +651,7 @@ export default class BaseProvider {
         //special handle for official reserve
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
-        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)        
+        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
 
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
 
@@ -669,8 +660,8 @@ export default class BaseProvider {
                 to: BLOCKCHAIN_INFO.network,
                 data: data
             }, blockno)
-                .then(result => {                    
-                    if (result === "0x") {                        
+                .then(result => {
+                    if (result === "0x") {
                         resolve({
                             expectedPrice: "0",
                             slippagePrice: "0"
@@ -684,7 +675,7 @@ export default class BaseProvider {
                         }, {
                             type: 'uint256',
                             name: 'slippagePrice'
-                        }], result)                        
+                        }], result)
                         resolve(rates)
                     } catch (e) {
                         reject(e)
