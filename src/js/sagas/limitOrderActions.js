@@ -32,12 +32,12 @@ function* updateRatePending(action) {
   var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
   try {
-    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
+    var latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
+    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, latestBlock)
+    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, latestBlock)
     var { expectedPrice, slippagePrice } = rate
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, "", destTokenDecimal))
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, latestBlock, isManual, type, "", destTokenDecimal))
   } catch(err) {
     if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",

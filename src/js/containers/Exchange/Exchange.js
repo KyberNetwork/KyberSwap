@@ -120,7 +120,7 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.caculateAmount(sourceTokenDecimals, destTokenDecimals))
   }
 
-  setInvervalProcess = () => {
+  setIntervalProcess = () => {
     this.setInterValGroup( this.checkKyberEnable, 10000)
     this.setInterValGroup( this.fetchRateExchange, 10000)
     this.setInterValGroup( this.fetchGasExchange, 10000)
@@ -147,7 +147,7 @@ export default class Exchange extends React.Component {
   }
 
   componentDidMount = () =>{
-    this.setInvervalProcess()
+    this.setIntervalProcess()
 
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 

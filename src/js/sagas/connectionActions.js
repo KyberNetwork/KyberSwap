@@ -57,7 +57,7 @@ export function* createNewConnection(action) {
   var connectionInstance = new EthereumService()
 
   yield put.resolve(setConnection(connectionInstance))
-  connectionInstance.subcribe()
+  connectionInstance.subscribe()
   yield put.resolve(setMaxGasPrice(connectionInstance))
 
   var web3Service = web3Package.newWeb3Instance()

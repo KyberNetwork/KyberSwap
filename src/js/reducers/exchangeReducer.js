@@ -199,10 +199,6 @@ const exchange = (state = initState, action) => {
 
       return newState
     }
-    // case "EXCHANGE.SET_CAP_EXCHANGE": {
-    //   newState.maxCap = action.payload.maxCap
-    //   return newState
-    // }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
         var { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
