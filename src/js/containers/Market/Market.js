@@ -124,7 +124,7 @@ export default class Market extends React.Component {
         <a className="x" onClick={this.closeModal}>
           <img src={require("../../../assets/img/v3/Close-3.svg")} />
         </a>
-        <div className="market-table">
+        <div className="market-table theme__background">
           <MarketTable
             currency={this.props.currency}
             listTokens={this.props.listTokens}
