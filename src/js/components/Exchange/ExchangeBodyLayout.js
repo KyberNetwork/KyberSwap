@@ -57,6 +57,7 @@ const ExchangeBodyLayout = (props) => {
   
   return (
     <div className={"exchange__form theme__background-2"}>
+      {(props.sourceTokenSymbol == "RLC" || props.destTokenSymbol == "RLC") && <p className={"text-center"}>Trade and win RLC tokens in our trading contest (ends 22 Dec)! Sign In to your KyberSwap account AND Connect your wallet to participate! Click for more details</p>}
       <div>
         {props.account && props.account.type === "promo" && props.account.info.description !== ""
           && <div className={"promo-description theme__text-3"}>
