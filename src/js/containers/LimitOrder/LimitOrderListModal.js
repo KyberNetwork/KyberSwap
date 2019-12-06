@@ -79,7 +79,7 @@ export default class LimitOrderListModal extends Component {
   render() {
     return (
       <div className="limit-order-table theme__background-2">
-        <a className="limit-order-list--title-faq limit-order-list__leaderboard" href="/limit_order_leaderboard" target="_blank"
+        <a className="limit-order-list--title-faq limit-order-list__leaderboard" href="/promo/rlc" target="_blank"
            rel="noreferrer noopener">Limit Order LeaderBoard</a>
         <div className="limit-order-list__title">{this.props.translate("limit_order.order_list_title") || "Manage Your Orders"}</div>
         <div className={"limit-order-list--title-faq"}>
