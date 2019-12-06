@@ -78,8 +78,8 @@ export default class LimitOrderList extends React.Component {
                 </a>
               </div>
             </div>
-            <a className="limit-order-list__leaderboard" href="/promo/rlc" target="_blank"
-               rel="noreferrer noopener">Limit Order LeaderBoard</a>
+            <a className="limit-order-list__leaderboard" href="/promo/rlc#ranking" target="_blank"
+               rel="noreferrer noopener">RLC LeaderBoard</a>
             <div className="limit-order-list__tab-container">
               {this.getOrderTabs()}
             </div>
