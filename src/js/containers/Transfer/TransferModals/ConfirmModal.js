@@ -53,13 +53,15 @@ export default class ConfirmModal extends React.Component {
     }
 
     getMaxGasTransfer = () => {
-        const transfer = this.props.transfer
-        if (transfer.tokenSymbol !== 'DGX') {
-            return transfer.gas_limit
-        } else {
-            return 250000
+        const transfer = this.props.transfer;
+        const specialGasLimit = constants.SPECIAL_TRANSFER_GAS_LIMIT[transfer.tokenSymbol];
+    
+        if (!specialGasLimit) {
+            return transfer.gas_limit;
         }
-    }
+    
+        return specialGasLimit;
+    };
 
     getFormParams = () => {
         var tokenSymbol = this.props.transfer.tokenSymbol
