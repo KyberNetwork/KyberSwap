@@ -390,6 +390,20 @@
             "address": "0xa9453029f249358fe563f0cdde3e971521d473b5",
             "decimals": 18,
             "cg_id": ""
+        },
+        "NEXXO": {
+            "symbol": "NEXXO",
+            "name": "Nexxo",
+            "address": "0x8e7772516a2f5baf09e730714fe04ba2f6b1f6e1",
+            "decimals": 18,
+            "cg_id": ""
+        },
+        "SPIKE": {
+            "symbol": "SPIKE",
+            "name": "Spiking",
+            "address": "0x74f36c172c9fc7952402bbabd10037108390aa8d",
+            "decimals": 10,
+            "cg_id": ""
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

@@ -71,8 +71,9 @@
             "name": "SAI",
             "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
             "decimals": 18,
-            "cg_id": "dai",
+            "cg_id": "",
             "gasLimit": "500000",
+            "priority": true,
             "sp_limit_order": true,
             "is_quote": true,
             "quote_priority": 3,
@@ -84,7 +85,8 @@
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
             "decimals": 18,
             "cg_id": "",
-            "gasLimit": "500000",            
+            "gasLimit": "500000",
+            "priority": true,
             "is_gas_fixed": true
         },
         "OMG": {
@@ -367,7 +369,7 @@
             "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
             "decimals": 18,
             "cg_id": "maker",
-            "gasLimit": "400000",
+            "gasLimit": "500000",
             "priority": true,
             "sp_limit_order": true
         },
@@ -497,6 +499,15 @@
             "listing_time": 1560258000,
             "sp_limit_order": true
         },
+        "NPXS": {
+            "symbol": "NPXS",
+            "name": "Pundi X",
+            "address": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3",
+            "decimals": 18,
+            "cg_id": "pundi-x",
+            "listing_time": 1560258000,
+            "sp_limit_order": true
+        },
         "GNO": {
             "symbol": "GNO",
             "name": "Gnosis",
@@ -594,6 +605,31 @@
             "decimals": 18,
             "cg_id": "",
             "listing_time": 1573650000
+        },
+        "WABI": {
+            "symbol": "WABI",
+            "name": "WaBi",
+            "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
+            "decimals": 18,
+            "cg_id": "",
+            "listing_time": 1574427600
+        },
+        "EDO": {
+            "symbol": "EDO",
+            "name": "Eidoo",
+            "address": "0xced4e93198734ddaff8492d525bd258d49eb388e",
+            "decimals": 18,
+            "cg_id": "",
+            "listing_time": 1574427600
+        },
+        "SUSD": {
+            "symbol": "SUSD",
+            "name": "sUSD",
+            "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+            "decimals": 18,
+            "cg_id": "",
+            "listing_time": 1574686800,
+            "gasLimit": "500000"
         }
     },
     "ethScanUrl": "https://etherscan.io/",
