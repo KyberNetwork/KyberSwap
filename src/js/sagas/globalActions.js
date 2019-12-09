@@ -1,22 +1,13 @@
-import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects'
+import { put, call, takeEvery } from 'redux-saga/effects'
 import * as actions from '../actions/globalActions'
-import * as actionsExchange from '../actions/exchangeActions'
-import * as actionsTransfer from '../actions/transferActions'
-import * as actionsLimitOrder from "../actions/limitOrderActions";
-import * as actionsUtils from '../actions/utilActions'
-import { closeImportLoading } from '../actions/accountActions'
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
 import { getTranslate } from 'react-localize-redux';
-import { getLanguage } from "../services/language"
 import Language from "../../../lang"
-import constants from "../services/constants"
 import * as common from "../utils/common";
-
 import * as converter from "../utils/converter"
 import { store } from '../store'
-import history from "../history";
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -26,7 +17,6 @@ export function* getLatestBlock(action) {
   }catch(e){
     console.log(e)
   }
-  
 }
 
 export function* goToRoute(action) {
@@ -112,21 +102,6 @@ function updateTitleWithRate() {
   document.title = title;
 }
 
-export function* updateRateUSD(action) {
-  const { ethereum } = action.payload
-  try {
-    const rateETHUSD = yield call([ethereum, ethereum.call],"getRateETH")
-    yield put(actions.updateAllRateUSDComplete(rateETHUSD))
-    yield put(actions.showBalanceUSD())     
-  }
-  catch (err) {
-    yield put(actions.updateAllRateUSDComplete(0))
-    yield put(actions.hideBalanceUSD())
-  }
-}
-
-
-
 export function* checkConnection(action) {
   var { ethereum, count, maxCount, isCheck } = action.payload
   try {
@@ -135,26 +110,10 @@ export function* checkConnection(action) {
       yield put(actions.setNetworkError(""))
       yield put(actions.updateCountConnection(0))
     }
-    // if (!isCheck) {
-    //   yield put(actions.updateIsCheck(true))
-    //   yield put(actions.updateCountConnection(0))
-    // }
   }catch(err){
-    console.log(err)
-    //if (isCheck) {
-      // if (count > maxCount) {
-      //   yield put(actions.updateIsCheck(false))
-      //   yield put(actions.updateCountConnection(0))
-      //   return
-      // }
       if (count >= maxCount) {
         let translate = getTranslate(store.getState().locale)
         yield put(actions.setNetworkError(translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'))
-
-        // let titleModal = translate('error.error_occurred') || 'Error occurred'
-        // let contentModal = translate('error.network_error') || 'Cannot connect to node right now. Please check your network!'
-        // yield put(actionsUtils.openInfoModal(titleModal, contentModal))
-        // yield put(closeImportLoading())
         yield put(actions.updateCountConnection(++count))
         return
       }
@@ -162,43 +121,13 @@ export function* checkConnection(action) {
         yield put(actions.updateCountConnection(++count))
         return
       }
-    //}
   }
 }
-
-
-// export function* setMaxGasPrice(action) {
-//   var state = store.getState()
-//   var ethereum = state.connection.ethereum
-//   try {
-//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-//     yield put(actionsExchange.setMaxGasPriceComplete(maxGasPriceGwei))
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
-
-// export function* getMaxGasPrice(action){
-//   var state = store.getState()
-//   var ethereum = state.connection.ethereum
-//   try {
-//     const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice")
-//     var maxGasPriceGwei = converter.weiToGwei(maxGasPrice)
-//     return maxGasPriceGwei
-//   } catch (err) {
-//     console.log(err)
-//     return 50
-//   }
-// }
-
 
 export function* setGasPrice(action) {
   var safeLowGas, standardGas, fastGas, defaultGas, superFastGas
   var state = store.getState();
   var ethereum = state.connection.ethereum;
-  var accountType = state.account.account.type;
-
   var maxGasPrice = state.exchange.maxGasPrice
 
   try {
@@ -235,8 +164,6 @@ export function* setGasPrice(action) {
   }
 }
 
-
-
 export function* changelanguage(action) {
   const { ethereum, lang, locale } = action.payload
 
@@ -260,19 +187,11 @@ export function* changelanguage(action) {
 
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
-
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
-
-  //yield takeEvery("GLOBAL.UPDATE_HISTORY_EXCHANGE", updateHistoryExchange)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
-
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
-  yield takeEvery("GLOBAL.UPDATE_RATE_USD_PENDING", updateRateUSD)
-
-
-  // yield takeEvery("GLOBAL.SET_MAX_GAS_PRICE", setMaxGasPrice)
   yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)
 }

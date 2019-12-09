@@ -343,7 +343,6 @@ class ExchangeBody extends React.Component {
         isAdvanceActive={this.props.exchange.isAdvanceActive}
         minConversionRate={minConversionRate}
         type="exchange"
-        maxGasPrice={this.props.exchange.maxGasPrice}
       />
     )
   };
