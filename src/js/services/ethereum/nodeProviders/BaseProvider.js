@@ -24,7 +24,7 @@ export default class BaseProvider {
     
     isConnectNode() {
         return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlock("latest", false).then((block) => {
+            this.rpc.eth.net.isListening().then(() => {
                 resolve(true)
             }).catch(() => {
                 reject(false)
