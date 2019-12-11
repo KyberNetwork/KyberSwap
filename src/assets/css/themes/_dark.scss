@@ -250,5 +250,19 @@
     color: $grey-light;
     border-color: transparent;
   }
+
+  .theme__table {
+    &-header {
+      background-color: $dark-color-7;
+    }
+
+    &-item {
+      background-color: $dark-color-1;
+
+      &:nth-child(odd) {
+        background-color: $dark-color-2;
+      }
+    }
+  }
 }
 

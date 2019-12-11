@@ -9,80 +9,70 @@ const AccountBalanceLayout = (props) => {
     return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
       .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
   }
+  
   function archiveBalanceZero(tokens){
     return tokens.filter(t =>  (converts.compareTwoNumber(t.balance, 0)))
       .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
   }
+  
   function archiveUnsupported(tokens){
     return tokens.filter(t =>  t.sp_limit_order && props.priorityValid(t)).concat(tokens.filter(t =>  !(t.sp_limit_order && props.priorityValid(t)) ))
   }
+  
   function reorderToken() {
     let tokens = props.tokens;
-
-    // if (props.isLimitOrderTab) {
-    //   tokens = props.getFilteredTokens(props.sortValue);
-    // }
     let res = []
+  
     switch (props.sortType) {
       case "Eth":
-        // if (props.isLimitOrderTab) {
-        //   res = tokens;
-        // } else {
-          if (props.sortValue) {
-            res = converts.sortEthBalance(tokens)
-          } else {
-            res = converts.sortASCEthBalance(tokens)
-          }
-        // }
+        if (props.sortValue) {
+          res = converts.sortEthBalance(tokens)
+        } else {
+          res = converts.sortASCEthBalance(tokens)
+        }
         break;
       case "Name":
-        // if (props.isLimitOrderTab) {
-        //   res = tokens.sort((firstToken, secondToken) => {
-        //     const firstTokenSymbol = firstToken.substituteSymbol ? firstToken.substituteSymbol : firstToken.symbol;
-        //     const secondTokenSymbol = secondToken.substituteSymbol ? secondToken.substituteSymbol : secondToken.symbol;
-
-        //     return !props.sortValue ? firstTokenSymbol.localeCompare(secondTokenSymbol) : secondTokenSymbol.localeCompare(firstTokenSymbol);
-        //   });
-        // } else {
-          if (props.sortValue) {
-            var ordered = []
-            Object.keys(tokens).sort().forEach(function (key) {
-              ordered.push(tokens[key])
-            })
-            res = ordered
-          } else {
-            var ordered = []
-            Object.keys(tokens).sort().reverse().forEach(function (key) {
-              ordered.push(tokens[key])
-            })
-            res = ordered
-          }
-        // }
+        if (props.sortValue) {
+          var ordered = []
+          Object.keys(tokens).sort().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          res = ordered
+        } else {
+          var ordered = []
+          Object.keys(tokens).sort().reverse().forEach(function (key) {
+            ordered.push(tokens[key])
+          })
+          res = ordered
+        }
         break;
       case "Bal":
         res = Object.keys(tokens).map(key => tokens[key])
-          .sort((a, b) => {
-            return (props.sortValue ? -1 : 1) *
-                   (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
-          })
+        .sort((a, b) => {
+          return (props.sortValue ? -1 : 1) *
+            (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
+        })
         break;
       case "USDT":
         res = Object.keys(tokens).map(key => tokens[key])
-          .sort((a, b) => {
-            return (props.sortValue ? -1 : 1) *
-                   (converts.subOfTwoNumber(
-                     converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
-                     converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
-                   ))
-          })
+        .sort((a, b) => {
+          return (props.sortValue ? -1 : 1) *
+            (converts.subOfTwoNumber(
+              converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
+              converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
+            ))
+        })
         break;
     }
-    if (props.isLimitOrderTab){
+    
+    if (props.isLimitOrderTab) {
       res = archiveUnsupported(res)
-    }else {
+    } else {
       res = archiveBalanceZero(res)
     }
+    
     res = archiveMaintain(res)
+    
     return res
   }
 
@@ -134,29 +124,6 @@ const AccountBalanceLayout = (props) => {
     return balances
   }
 
-  function getWalletName() {
-    if (!props.walletName || props.walletName === "") {
-      switch (props.account.type) {
-        case "metamask":
-          return "Metamask"
-        case "keystore":
-          return "Keystore"
-        case "ledger":
-          return "Ledger"
-        case "trezor":
-          return "Trezor"
-        case "privateKey":
-          return "Private key"
-        case "promoCode":
-          return "Promocode"
-        default:
-          return "Wallet"
-      }
-    } else {
-      return props.walletName
-    }
-  }
-
   const onClick = (id, isDsc) => {
     props.onSort(id, isDsc)
     props.analytics.callTrack("trackLimitOrderClickSortOnWalletPanel", id, isDsc)
@@ -200,6 +167,7 @@ const AccountBalanceLayout = (props) => {
                     className="account-balance__content-search theme__search"
                     type="text"
                     placeholder={props.translate("address.search") || "Search by Name"}
+                    onClick={props.clickOnInput}
                     onChange={(e) => props.changeSearchBalance(e)}
                     value={props.searchWord}
                   />

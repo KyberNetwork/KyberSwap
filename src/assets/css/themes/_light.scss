@@ -247,5 +247,19 @@
   .theme__input {
     border-color: $grey-light;
   }
+
+  .theme__table {
+    &-header {
+      background-color: $grey-lighter;
+    }
+
+    &-item {
+      background-color: $light-color-1;
+
+      &:nth-child(odd) {
+        background-color: white;
+      }
+    }
+  }
 }
 

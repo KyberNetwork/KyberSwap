@@ -14,7 +14,6 @@
 @import "import_account";
 @import "transfer";
 @import "slide_down";
-@import '~react-linechart/dist/styles.css';
 @import "slider";
 @import "top-token";
 @import "pagination";
@@ -23,6 +22,7 @@
 @import "components/trading-view";
 @import "themes/index";
 @import "import-modal";
+@import "portfolio";
 
 * {
   box-sizing: border-box;
