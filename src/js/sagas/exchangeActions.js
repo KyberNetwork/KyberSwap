@@ -170,23 +170,17 @@ function* verifyExchange() {
   var tokens = state.tokens.tokens
   var sourceBalance = 0
   var sourceDecimal = 18
-  var sourceName = "Ether"
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimals
-    sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
 
   var destTokenSymbol = exchange.destTokenSymbol
-  var destBalance = 0
   var destDecimal = 18
-  var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
-    destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimals
-    destName = tokens[destTokenSymbol].name
   }
 
   var sourceAmount = exchange.sourceAmount
