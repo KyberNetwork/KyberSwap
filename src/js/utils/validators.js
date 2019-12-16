@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
+import { compareTwoNumber } from "./converter";
 
 export function verifyAccount(addr) {
   var valid = /^0x[0-9a-fA-F]{40}$/.test(addr)
@@ -47,7 +48,7 @@ export function verifyAmount(sourceAmount,
   var delta = estimateValue.minus(epsilon).abs()
   var acceptDetal = new BigNumber(constants.EXCHANGE_CONFIG.MIN_ACCEPT_DELTA)
 
-  if (estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
+  if (compareTwoNumber(rateBig, 0) === 1 && estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
     return "too small"
   }
 
