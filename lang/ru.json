@@ -440,7 +440,6 @@
     "amount": "количество",
     "total": "Всего",
     "volume": "Объем",
-    "change": "change",
     "buy": "Buy ${symbol}",
     "sell": "Sell ${symbol}",
     "type": "Type",
@@ -471,5 +470,6 @@
   "off": "OFF",
   "learn_more": "Учить больше",
   "received": "Получил",
-  "details": "Details"
+  "details": "Details",
+  "change": "change"
 }

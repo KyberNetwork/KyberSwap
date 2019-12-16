@@ -148,9 +148,11 @@
   }
   
   .theme__sort {
-    color: $dark-color-8;
+    color: $grey-dark;
 
     &.active {
+      color: $grey-lighter;
+
       &.asc:after {
         color: #31cb9e;
       }

@@ -5,160 +5,100 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
-  function archiveMaintain(tokens){
-    return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
-      .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
-  }
-  
-  function archiveBalanceZero(tokens){
-    return tokens.filter(t =>  (converts.compareTwoNumber(t.balance, 0)))
-      .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
-  }
-  
-  function archiveUnsupported(tokens){
-    return tokens.filter(t =>  t.sp_limit_order && props.priorityValid(t)).concat(tokens.filter(t =>  !(t.sp_limit_order && props.priorityValid(t)) ))
-  }
-  
-  function reorderToken() {
-    let tokens = props.tokens;
-    let res = []
-  
-    switch (props.sortType) {
-      case "Eth":
-        if (props.sortValue) {
-          res = converts.sortEthBalance(tokens)
-        } else {
-          res = converts.sortASCEthBalance(tokens)
-        }
-        break;
-      case "Name":
-        if (props.sortValue) {
-          var ordered = []
-          Object.keys(tokens).sort().forEach(function (key) {
-            ordered.push(tokens[key])
-          })
-          res = ordered
-        } else {
-          var ordered = []
-          Object.keys(tokens).sort().reverse().forEach(function (key) {
-            ordered.push(tokens[key])
-          })
-          res = ordered
-        }
-        break;
-      case "Bal":
-        res = Object.keys(tokens).map(key => tokens[key])
-        .sort((a, b) => {
-          return (props.sortValue ? -1 : 1) *
-            (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
-        })
-        break;
-      case "USDT":
-        res = Object.keys(tokens).map(key => tokens[key])
-        .sort((a, b) => {
-          return (props.sortValue ? -1 : 1) *
-            (converts.subOfTwoNumber(
-              converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
-              converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
-            ))
-        })
-        break;
-    }
-    
-    if (props.isLimitOrderTab) {
-      res = archiveUnsupported(res)
-    } else {
-      res = archiveBalanceZero(res)
-    }
-    
-    res = archiveMaintain(res)
-    
-    return res
-  }
-
   function getBalances() {
-    var tokens = reorderToken()
-    var balances = tokens
-      .map(token => {
-        var balance = converts.toT(token.balance, token.decimals)
-        var searchWord = props.searchWord.toLowerCase()
-        var symbolL = token.symbol.toLowerCase()
-        var classBalance = "";
-
-        if (token.symbol === props.sourceActive) classBalance += " active"
-        if (!symbolL.includes(searchWord)) classBalance += " hide"
-        if (props.isLimitOrderTab){
-          if (!token.sp_limit_order || !props.priorityValid(token)) classBalance += " disabled unclickable"
-        }else {
-          if (balance == 0) classBalance += " disabled" 
-        }
-        if ((props.isFixedSourceToken && props.screen === "swap")
-          || (token.symbol === "PT" && props.screen === "transfer")) {
-          classBalance += " deactivated";
-        }
-
-        return (
-          <div
-            key={token.symbol}
-            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol == "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
-            className={"account-balance__token-item" + classBalance}
-          >
+    const tokens = props.getCustomizedTokens();
+    console.log(tokens);
+    
+    return tokens.map(token => {
+      var balance = converts.toT(token.balance, token.decimals)
+      var searchWord = props.searchWord.toLowerCase()
+      var symbolL = token.symbol.toLowerCase()
+      let classBalance = "";
+      const noBalance = balance == 0;
+    
+      if (token.symbol === props.sourceActive) classBalance += " active"
+      
+      if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) classBalance += " hide"
+      
+      if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
+        classBalance += " disabled unclickable"
+      } else if (noBalance) {
+        classBalance += " disabled"
+      } else if (props.hideZeroBalance) {
+        classBalance += " unclickable"
+      }
+      
+      if ((props.isFixedSourceToken && props.screen === "swap") || (token.symbol === "PT" && props.screen === "transfer")) {
+        classBalance += " deactivated";
+      }
+    
+      return (
+        <div
+          key={token.symbol}
+          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol == "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
+          className={"account-balance__token-item" + classBalance}
+        >
+          <div className={"account-balance__token-row account-balance__token-info"}>
             <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
             <div>
-              <span className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</span>
+              <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
               <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
             </div>
-            {
-              (token.symbol == "ETH" || converts.compareTwoNumber(token.rate, 0)) ?  
-                (<div id="stable-equivalent">{
-                  props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
-                    (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
-                }</div>) : 
-                (<div id="stable-equivalent">
-                  <span className="error"> maintenance </span>
-                </div>)
-            }
           </div>
-        )
-      })
-    return balances
+          {
+            (token.symbol == "ETH" || converts.compareTwoNumber(token.rate, 0)) ?
+              (<div className="account-balance__token-row stable-equivalent">{
+                props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
+                  (<span>{converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
+              }</div>) :
+              (<div className="account-balance__token-row stable-equivalent">
+                {props.hideZeroBalance && (
+                  <span>0 {props.sortType == "Eth" ? 'E' : '$'}</span>
+                )}
+              
+                {!props.hideZeroBalance && (
+                  <span className="error">maintenance</span>
+                )}
+              </div>)
+          }
+          {props.show24hChange && (
+            <div className="account-balance__token-row">10%</div>
+          )}
+        </div>
+      )
+    });
   }
-
-  const onClick = (id, isDsc) => {
-    props.onSort(id, isDsc)
-    props.analytics.callTrack("trackLimitOrderClickSortOnWalletPanel", id, isDsc)
-  }
+  
+  const isPortfolio = props.screen === 'portfolio';
 
   return (
-    <div className="account-balance">
+    <div className={`account-balance account-balance--${props.screen}`}>
       {props.account !== false && (
         <SlideDown active={true}>
           <SlideDownContent>
-            <div className="balance-header">
-              <div className="slide-down__trigger-container">
-                <div className={"account-balance__address"}>
-                  <div>
+            {!isPortfolio && (
+              <div className="balance-header">
+                <div className="slide-down__trigger-container">
+                  <div className={"account-balance__address"}>
+                    <div className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</div>
                     <div>
-                      <span className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                      onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                      {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
-                    </a>
-                    <span className="account-balance__reimport" onClick={props.openReImport}>
-                      {props.translate("limit_order.change") || "CHANGE"}
+                      <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
+                         onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
+                        {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
+                      </a>
+                      <span className="account-balance__reimport" onClick={props.openReImport}>
+                      {props.translate("change") || "CHANGE"}
                     </span>
+                    </div>
+                    {props.isLimitOrderTab &&
+                      <div className="account-balance__address-text">
+                        {props.translate("limit_order.your_available_balance") || "Tokens Available for Limit Order"}
+                      </div>
+                    }
                   </div>
-                  {props.isLimitOrderTab && 
-                    <div className="account-balance__address-text">
-                      {props.translate("limit_order.your_available_balance") || "Tokens Available for Limit Order"}
-                    </div>}
                 </div>
-
               </div>
-            </div>
+            )}
 
             <div className="account-balance__control-panel">
               <div className="account-balance__search-panel">
@@ -173,17 +113,20 @@ const AccountBalanceLayout = (props) => {
                   />
                 </div>
               </div>
-              <div className="account-balance__sort-panel theme__background-2">
-                <span id="sec-1">
-                  <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => onClick("Name", isDsc)}/>
-                  <span className="theme__separation"> | </span>
-                  <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => onClick("Bal", isDsc)}/>
-                </span>
-                <span id="sec-2">
-                  <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => onClick("Eth", isDsc)}/>
-                  <span className="theme__separation"> | </span>
-                  <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => onClick("USDT", isDsc)}/>
-                </span>
+              <div className="account-balance__sort-panel theme__background-4">
+                <div>
+                  <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => props.onClickSortType("Name", isDsc)}/>
+                  <span className="account-balance__sort-separation theme__separation"> | </span>
+                  <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => props.onClickSortType("Bal", isDsc)}/>
+                </div>
+                <div>
+                  <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => props.onClickSortType("Eth", isDsc)}/>
+                  <span className="account-balance__sort-separation theme__separation"> | </span>
+                  <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => props.onClickSortType("USDT", isDsc)}/>
+                </div>
+                {props.show24hChange && (
+                  <div>{props.translate("change") || "Change"}</div>
+                )}
               </div>
             </div>
 
@@ -201,6 +144,6 @@ const AccountBalanceLayout = (props) => {
       )}
     </div>
   )
-}
+};
 
 export default AccountBalanceLayout

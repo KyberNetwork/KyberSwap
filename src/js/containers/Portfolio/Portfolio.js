@@ -198,7 +198,11 @@ export default class Portfolio extends React.Component {
         </div>
         
         <div className={"portfolio__right portfolio__item theme__background-2"}>
-          <AccountBalance/>
+          <AccountBalance
+            screen="portfolio"
+            hideZeroBalance={true}
+            show24hChange={true}
+          />
         </div>
       </div>
     )

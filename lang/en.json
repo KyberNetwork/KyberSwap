@@ -445,7 +445,6 @@
     "amount": "Amount",
     "total": "Total",
     "volume": "Volume",
-    "change": "Change",
     "buy": "Buy ${symbol}",
     "sell": "Sell ${symbol}",
     "type": "Type",
@@ -477,5 +476,6 @@
   "off": "OFF",
   "learn_more": "Learn More",
   "received": "Received",
-  "details": "Details"
+  "details": "Details",
+  "change": "Change"
 }

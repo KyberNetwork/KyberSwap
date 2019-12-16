@@ -49,32 +49,36 @@
     }
   }
 
-  &__sort-panel{
+  &__sort-panel {
+    font-size: 14px;
     margin: 20px -20px 0 -20px;
     padding: 10px 20px;
     cursor: pointer;
-    #sec-2{
-      float: right;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    span{
-      font-size: 14px;
-    }
-    .active{
+    .active {
+      &.asc:after,
+      &.dsc:after {
+        margin-left: 3px;
+      }
+
       &.asc:after{
         content: '\2191';
-        margin: 5px
       }
 
       &.dsc:after{
         content: '\2193';
-        margin: 5px
       }
     }
   }
 
+  .account-balance__sort-separation {
+    margin: 0 5px;
+  }
+
   &__token-list {
-    /*display: flex;*/
     flex-wrap: wrap;
     align-items: center;
     margin: 10px 0;
@@ -100,12 +104,10 @@
   &__token-item {
     display: flex;
     width: 100%;
-    margin: 0 1.7% 22px 0;
+    margin-bottom: 20px;
     cursor: pointer;
+    font-size: 14px;
 
-    // &:nth-last-child(-n + 4) { // bug 1975
-    //   margin-bottom: 0;
-    // }
     &.disabled{
       opacity: 0.3;
     }
@@ -121,34 +123,42 @@
       pointer-events: none;
     }
 
+    &.unclickable {
+      pointer-events: none;
+      cursor: initial;
+    }
+
     img{
       width: 24px; 
       height: 24px;
       margin-right: 10px
     }
 
-    #stable-equivalent{
+    .stable-equivalent {
       width: 100%;
       text-align: right;
       font-weight: 300;
-      .error{
+
+      .error {
         font-size: 12px;
         color: #f9566d;
       }
     }
   }
 
+  &__token-info {
+    display: flex;
+  }
+
   &__token-symbol {
     font-size: 14px;
-    // font-weight: 600;
     transition: color .3s;
     font-weight: 500;
-    width: 200px;
   }
 
   &__token-balance {
     margin: 5px 0 0 0;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
     transition: color .3s;
   }
@@ -158,7 +168,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    // padding-right: 15px;
   }
 
   &__content-search-container {
@@ -258,11 +267,54 @@
     transition: all 0.3s;
   }
 
-  @include screen-max-width(large) {
-    // &__content {
-    //   padding-left: 20px;
-    // }
+  &--portfolio {
+    .account-balance__content {
+      margin-right: 0;
+    }
 
+    .account-balance__sort-panel {
+      margin: 20px -25px 0 -25px;
+      padding: 10px 25px;
+
+      > div {
+        width: 30%;
+
+        &:nth-child(2) {
+          text-align: center;
+        }
+
+        &:nth-child(3) {
+          width: 20%;
+          text-align: right;
+        }
+      }
+    }
+
+    .account-balance__token-list {
+      max-height: unset;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .account-balance__token-item {
+      justify-content: space-between;
+    }
+
+    .account-balance__token-row {
+      width: 30%;
+
+      &:nth-child(2) {
+        text-align: center;
+      }
+
+      &:nth-child(3) {
+        width: 20%;
+        text-align: right;
+      }
+    }
+  }
+
+  @include screen-max-width(large) {
     &__address-text {
       display: block;
     }
@@ -286,12 +338,6 @@
 
     &__sort-arrow {
       top: 15px;
-    }
-
-    &__token-list {
-    }
-
-    &__token-item {
     }
   }
 }
