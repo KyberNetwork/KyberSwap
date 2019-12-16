@@ -7,10 +7,11 @@ import * as converts from "../../utils/converter";
 
 @connect((store, props) => {
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
+  const marketTokens = store.market.tokens.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
   
   return {
     tokens: store.tokens.tokens,
-    marketTokens: store.market.tokens,
+    marketTokens: marketTokens,
     translate: getTranslate(store.locale),
     showBalance: store.global.showBalance,
     walletType: store.account.account.type,
@@ -69,7 +70,6 @@ export default class AccountBalance extends React.Component {
   
   getCustomizedTokens = () => {
     let tokens = this.props.tokens;
-    console.log(tokens);
     let res = [];
     
     switch (this.state.sortType) {

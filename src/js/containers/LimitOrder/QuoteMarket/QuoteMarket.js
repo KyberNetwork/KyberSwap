@@ -1,10 +1,7 @@
 import React from "react"
-import * as common from "../../../utils/common"
-import * as converter from "../../../utils/converter"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import { SortableComponent } from "../../../components/CommonElement"
-import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import { QuoteList, Search } from "../QuoteMarket"
 import { sortQuotePriority } from "../../../utils/sorters";

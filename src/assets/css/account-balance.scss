@@ -170,6 +170,13 @@
     margin-bottom: 25px;
   }
 
+  &__text-panel {
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    top: 7px;
+  }
+
   &__content-search-container {
     position: relative;
 
@@ -179,7 +186,7 @@
       height: 20px;
       display: block;
       position: absolute;
-      top: 10px;
+      top: 7px;
       right: 10px;
       background-image: url($image-path + 'common/icon-search-gray.svg');
       background-size: contain;
@@ -190,7 +197,7 @@
     width: 100%;
     border: none;
     border-bottom: 1px solid;
-    padding: 15px 35px 10px 0;
+    padding: 15px 35px 7px 0;
     outline: none;
     background-color: transparent !important;
     box-shadow: none !important;
@@ -273,7 +280,7 @@
     }
 
     .account-balance__sort-panel {
-      margin: 20px -25px 0 -25px;
+      margin: 15px -25px 0 -25px;
       padding: 10px 25px;
 
       > div {
@@ -302,6 +309,8 @@
 
     .account-balance__token-row {
       width: 30%;
+      font-size: 12px;
+      font-weight: 500;
 
       &:nth-child(2) {
         text-align: center;
@@ -310,6 +319,14 @@
       &:nth-child(3) {
         width: 20%;
         text-align: right;
+      }
+
+      &--positive {
+        color: $text-green;
+      }
+
+      &--negative {
+        color: $error-color;
       }
     }
   }
