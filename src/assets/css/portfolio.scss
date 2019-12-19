@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   padding-bottom: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
 
   &__left {
     width: 68%;
@@ -20,7 +22,7 @@
 
   &__item {
     padding: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-radius: 3px;
     box-shadow: 0 2px 58px -20px rgba(0, 0, 0, 0.17);
   }
@@ -31,26 +33,106 @@
   }
 
   &__account {
-    width: 55%;
+    width: 52%;
 
     &-top,
     &-bot {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     &-top {
       border-bottom: 1px solid $grey-light;
-      padding-bottom: 25px;
+      padding-bottom: 20px;
+
+      &-item {
+        width: 55%;
+
+        &:first-child {
+          width: 45%;
+        }
+      }
     }
 
     &-bot {
-      padding-top: 25px;
+      padding-top: 20px;
+    }
+
+    &-wallet {
+      display: flex;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &-type {
+      margin-right: 10px;
+    }
+
+    &-address {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-reimport {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: $blue-light;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color .3s;
+
+      &:hover {
+        color: $text-blue;
+      }
+    }
+
+    &-txt {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &-txt-small {
+      font-size: 10px;
+      font-weight: 300;
+      font-style: italic;
+      margin-left: 7px;
+    }
+
+    &-txt-big {
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    &-tag {
+      font-size: 14px;
+      font-weight: 400;
+      border-radius: 3px;
+      padding: 5px 10px;
+      border: 1px solid;
+      margin-left: 15px;
+      position: relative;
+      bottom: 3px;
+    }
+
+    &-change {
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 5px;
+
+      &--positive {
+        color: $text-green;
+      }
+
+      &--negative {
+        color: $error-color;
+      }
     }
   }
 
   &__equity {
-    width: 43%;
+    width: 46%;
   }
 
   &__performance {
@@ -58,7 +140,6 @@
       width: 100%;
     }
   }
-
 
   &__history {
 
@@ -149,5 +230,19 @@
         color: $error-color;
       }
     }
+  }
+
+  &__not-found {
+    font-size: 13px;
+    font-weight: 400;
+    padding: 8px 15px;
+    background-color: $color-swap-light;
+    display: inline-block;
+    color: white;
+    border-radius: 3px;
+  }
+
+  .import-account .container {
+    padding: 0;
   }
 }

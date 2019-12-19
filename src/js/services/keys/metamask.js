@@ -1,8 +1,6 @@
 import React from 'react';
 import * as keyService from "./baseKey"
-import EthereumTx from "ethereumjs-tx"
 import {newWeb3Instance} from "../web3"
-import * as ethUtils from "ethereumjs-util"
 
 export default class Metamask extends React.Component{
 
@@ -29,7 +27,6 @@ export default class Metamask extends React.Component{
 
   async signSignature(message, account) {
     try {      
-      // var web3Service = newWeb3Instance()
       var signature = await this.web3Service.sign(message)
 
       return signature
@@ -64,9 +61,6 @@ export default class Metamask extends React.Component{
   }
 
   sealTx = (txParams, keystring, password) => {
-
-    // var web3Service = newWeb3Instance()
-
     txParams.gas = txParams.gasLimit
     delete (txParams.gasLimit)
 

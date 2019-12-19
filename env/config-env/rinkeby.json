@@ -70,5 +70,6 @@
     "networkId": 4,
     "chainName": "Rinkeby",
     "tracker": "https://tracker.kyber.network",
-    "networkName": "rinkeby"
+    "networkName": "rinkeby",
+    "etherscan": "https://api-ropsten.etherscan.io/api"
 }

@@ -1,20 +1,35 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import ImportAccount from "../ImportAccount/ImportAccount";
 import Chart from 'chart.js';
-import { AccountBalance } from "../TransactionCommon";
+import { getTranslate } from "react-localize-redux";
+import * as globalActions from "../../actions/globalActions";
+import { getFormattedDate } from "../../utils/common";
+import * as etherScanService from "../../services/etherscan/etherScanService";
+import PortfolioView from "./PortfolioView";
+import { groupBy, sortBy } from 'underscore';
 
 @connect((store) => {
+  const address = store.account.account.address || '';
+  
   return {
-    exchange: store.exchange,
+    tokens: store.tokens.tokens,
     account: store.account.account,
+    address: address.toLowerCase(),
+    translate: getTranslate(store.locale),
+    global: store.global
   }
 })
 export default class Portfolio extends React.Component {
   constructor(props) {
     super(props);
+    
     this.equityChart = React.createRef();
     this.performanceChart = React.createRef();
+    
+    this.state = {
+      historyTxs: {},
+      tokenAddresses: {}
+    }
   }
   
   componentDidMount() {
@@ -29,7 +44,10 @@ export default class Portfolio extends React.Component {
       },
       options: {
         legend: {
-          position: 'right'
+          position: 'right',
+          labels: {
+            fontStyle: '400'
+          }
         },
         responsive: false
       }
@@ -55,156 +73,77 @@ export default class Portfolio extends React.Component {
         responsive: false
       }
     });
+    
+    this.setTxHistory();
+    this.setTokenAddresses();
   }
+  
+  componentDidUpdate(prevProps) {
+    if (this.props.address !== prevProps.address) {
+      this.setTxHistory();
+    }
+  }
+  
+  setTokenAddresses() {
+    const tokenAddresses = Object.values(this.props.tokens).reduce((result, token) => {
+      Object.assign(result, {[token.address]: token.symbol});
+      return result
+    }, {});
+
+    this.setState({ tokenAddresses: tokenAddresses });
+  }
+  
+  async setTxHistory() {
+    const address = this.props.address;
+    
+    if (!this.props.address) return;
+    
+    let txs = localStorage.getItem(`historyTxs_${address}`);
+    
+    if (!txs) {
+      const normalTxs = await etherScanService.fetchNormalTransactions(address);
+      const internalTxs = await etherScanService.fetchInternalTransactions(address);
+      const erc20Txs = await etherScanService.fetchERC20Transactions(address);
+      
+      txs = normalTxs.concat(internalTxs).concat(erc20Txs);
+      txs = this.reduceTxs(txs);
+  
+      localStorage.setItem(`historyTxs_${address}`, JSON.stringify(txs));
+    } else {
+      txs = JSON.parse(txs);
+    }
+  
+    this.setState({ historyTxs: txs });
+  }
+  
+  reduceTxs(txs) {
+    const formattedTxs = sortBy(txs, (tx) => {
+      return -tx.blockNumber;
+    });
+    
+    return groupBy(formattedTxs, (tx) => {
+      return getFormattedDate(+tx.timeStamp);
+    });
+  }
+  
+  reImportWallet = () => {
+    this.props.dispatch(globalActions.clearSession());
+    this.props.global.analytics.callTrack("trackClickChangeWallet");
+  };
   
   render() {
     return (
-      <div className={"portfolio common__slide-up theme__text"}>
-        <div className={"portfolio__left"}>
-          <div className={"portfolio__summary"}>
-            <div className={"portfolio__account portfolio__item theme__background-2"}>
-              {!this.props.account && (
-                <ImportAccount
-                  tradeType="portfolio"
-                  noTerm={true}
-                />
-              )}
-  
-              {this.props.account && (
-                <Fragment>
-                  <div className={"portfolio__account-top"}>
-                    <div>
-                      <div>
-                        <span>Balance</span>
-                        <span>Supported tokens</span>
-                      </div>
-                      <div>5,269.13 ETH</div>
-                    </div>
-                    <div>
-                      <div>
-                        <span>24h% change</span>
-                        <span>USD</span>
-                      </div>
-                      <div>-0.877654 ETH 20.87%</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__account-bot"}>
-                    <div>MetaMask: 0xb27frgh782ghuimk54516c…503a</div>
-                    <div>Change</div>
-                  </div>
-                </Fragment>
-              )}
-            </div>
-            
-            <div className={"portfolio__equity portfolio__item theme__background-2"}>
-              <div className={"portfolio__title"}>Equity</div>
-              <canvas width="250" height="200" ref={this.equityChart}/>
-            </div>
-          </div>
-          
-          <div className={"portfolio__performance portfolio__item theme__background-2"}>
-            <div className={"portfolio__title"}>Portfolio Performance</div>
-            <canvas className={"portfolio__performance-chart"} height="200" ref={this.performanceChart}/>
-          </div>
-          <div className={"portfolio__history portfolio__item theme__background-2"}>
-            <div className={"portfolio__title"}>History</div>
-            <div className={"portfolio__history-content"}>
-              <div className={"portfolio__tx"}>
-                <div className={"portfolio__tx-header theme__table-header"}>Today</div>
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--swap"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-bold"}>338.876 KNC ➞ 0.400253 ETH</div>
-                      <div className={"portfolio__tx-light theme__text-7"}>1 KNC = 0.001181 ETH</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Swap</div>
-                    <div className={"portfolio__tx-status portfolio__tx-status--failed"}>Failed</div>
-                  </div>
-                </div>
-  
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--receive"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-bold"}>+ 09,987654532 ETH</div>
-                      <div className={"portfolio__tx-light theme__text-7"}>From: 0xbd57e9499013….441f4</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Receive</div>
-                  </div>
-                </div>
-  
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--limit-order"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-light theme__text-7"}>Limit Order Triggered</div>
-                      <div className={"portfolio__tx-bold"}>1 ETH —> 260.837664 DAI</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Limit Order</div>
-                  </div>
-                </div>
-  
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--approve"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-light theme__text-7"}>Token Approved</div>
-                      <div className={"portfolio__tx-bold"}>USDT is Approved</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Approve</div>
-                  </div>
-                </div>
-  
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--send"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-bold"}>- 02,6784543 ETH</div>
-                      <div className={"portfolio__tx-light theme__text-7"}>To: 0xbd57e9499013….441f4</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Send</div>
-                  </div>
-                </div>
-              </div>
-  
-              <div className={"portfolio__tx"}>
-                <div className={"portfolio__tx-header theme__table-header"}>10 Mar 2019</div>
-                <div className={"portfolio__tx-body theme__table-item"}>
-                  <div className={"portfolio__tx-left"}>
-                    <div className={"portfolio__tx-icon portfolio__tx-icon--swap"}/>
-                    <div className={"portfolio__tx-content"}>
-                      <div className={"portfolio__tx-bold"}>338.876 KNC ➞ 0.400253 ETH</div>
-                      <div className={"portfolio__tx-light theme__text-7"}>1 KNC = 0.001181 ETH</div>
-                    </div>
-                  </div>
-                  <div className={"portfolio__tx-right"}>
-                    <div className={"portfolio__tx-type"}>Swap</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className={"portfolio__item portfolio__right theme__background-2"}>
-          <AccountBalance
-            screen="portfolio"
-            hideZeroBalance={true}
-            show24hChange={true}
-          />
-        </div>
-      </div>
+      <PortfolioView
+        ethereum={this.props.ethereum}
+        account={this.props.account}
+        address={this.props.address}
+        translate={this.props.translate}
+        reImportWallet={this.reImportWallet}
+        equityChart={this.equityChart}
+        performanceChart={this.performanceChart}
+        historyTxs={this.state.historyTxs}
+        tokenAddresses={this.state.tokenAddresses}
+      />
     )
   }
 }

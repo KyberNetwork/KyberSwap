@@ -1,9 +1,7 @@
-// in this package, all number are in 18 decimals precision
-
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
 import BLOCKCHAIN_INFO from "../../../env"
-
+import abiDecoder from "abi-decoder"
 
 export function calculateMinAmount(source, rate) {
   var bigSource = new BigNumber(source)
@@ -872,4 +870,9 @@ export function formatNumberByPrecision(number, precision = 4) {
   const indexOfDecimal = amountString.indexOf('.');
 
   return indexOfDecimal !== -1 ? amountString.slice(0, indexOfDecimal + (precision + 1)) :amountString;
+}
+
+export function decodeTxInput(input, abi) {
+  abiDecoder.addABI(abi);
+  return abiDecoder.decodeMethod(input);
 }

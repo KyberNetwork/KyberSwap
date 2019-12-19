@@ -5,14 +5,25 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
-  function get24ChangeClass(change) {
-    if (change > 0) {
+  function get24ChangeClass(change, isValidRate) {
+    if (isValidRate && change > 0) {
       return 'account-balance__token-row--positive';
-    } else if (change < 0) {
+    } else if (isValidRate && change < 0) {
       return 'account-balance__token-row--negative';
     } else {
       return ''
     }
+  }
+  
+  function get24ChangeValue(sortType, tokenSymbol, isValidRate) {
+    const changeByETH = props.marketTokens[`ETH_${tokenSymbol}`] ? props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
+    const changeByUSD = props.marketTokens[`USDC_${tokenSymbol}`] ? props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
+    
+    if (sortType === 'Eth') {
+      return <div className={`account-balance__token-row ${get24ChangeClass(changeByETH, isValidRate)}`}>{(isValidRate) ? `${changeByETH}%` : '---'}</div>
+    }
+  
+    return <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD, isValidRate)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
   }
   
   function getBalances() {
@@ -24,13 +35,7 @@ const AccountBalanceLayout = (props) => {
       var symbolL = token.symbol.toLowerCase()
       let classBalance = "";
       const noBalance = balance == 0;
-      let changeByETH, changeByUSD
       const isValidRate = token.symbol === "ETH" || converts.compareTwoNumber(token.rate, 0);
-      
-      if (props.show24hChange) {
-        changeByETH = props.marketTokens[`ETH_${token.symbol}`] ? props.marketTokens[`ETH_${token.symbol}`].change : 0;
-        changeByUSD = props.marketTokens[`USDC_${token.symbol}`] ? props.marketTokens[`USDC_${token.symbol}`].change : 0;
-      }
     
       if (token.symbol === props.sourceActive) classBalance += " active"
       
@@ -65,11 +70,11 @@ const AccountBalanceLayout = (props) => {
             (isValidRate) ?
               (<div className="account-balance__token-row stable-equivalent">{
                 props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
-                  (<span>{converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)} $</span>)
+                  (<span>{converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)}$</span>)
               }</div>) :
               (<div className="account-balance__token-row stable-equivalent">
                 {props.hideZeroBalance && (
-                  <span>0 {props.sortType == "Eth" ? 'E' : '$'}</span>
+                  <span>---</span>
                 )}
               
                 {!props.hideZeroBalance && (
@@ -77,12 +82,8 @@ const AccountBalanceLayout = (props) => {
                 )}
               </div>)
           }
-          {(props.show24hChange && props.sortType === 'Eth') && (
-            <div className={`account-balance__token-row ${get24ChangeClass(changeByETH)}`}>{(isValidRate) ? `${changeByETH}%` : '---'}</div>
-          )}
-          {(props.show24hChange && props.sortType === 'USDT') && (
-            <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
-          )}
+          
+          {props.show24hChange && get24ChangeValue(props.sortType, token.symbol, isValidRate)}
         </div>
       )
     });
@@ -106,8 +107,8 @@ const AccountBalanceLayout = (props) => {
                         {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
                       </a>
                       <span className="account-balance__reimport" onClick={props.openReImport}>
-                      {props.translate("change") || "CHANGE"}
-                    </span>
+                        {props.translate("change") || "CHANGE"}
+                      </span>
                     </div>
                     {props.isLimitOrderTab &&
                       <div className="account-balance__address-text">

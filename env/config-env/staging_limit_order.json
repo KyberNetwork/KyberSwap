@@ -641,5 +641,6 @@
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "networkId": 1,
     "chainName": "Mainnet",
-    "tracker": "https://dev-api.knstats.com"
+    "tracker": "https://dev-api.knstats.com",
+    "etherscan": "https://api.etherscan.io/api"
 }
