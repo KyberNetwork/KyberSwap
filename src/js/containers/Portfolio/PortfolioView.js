@@ -3,6 +3,7 @@ import ImportAccount from "../ImportAccount/ImportAccount";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { AccountBalance } from "../TransactionCommon";
 import PortfolioTxHistory from "./PortfolioTxHistory";
+import {roundingNumber} from "../../utils/converter";
 
 const PortfolioView = (props) => {
   return (
@@ -25,15 +26,17 @@ const PortfolioView = (props) => {
                       <span className={"portfolio__account-txt"}>Balance</span>
                       <span className={"portfolio__account-txt-small"}>Supported tokens</span>
                     </div>
-                    <div className={"portfolio__account-txt-big"}>5,269.13 ETH</div>
+                    <div className={"portfolio__account-txt-big"}>{roundingNumber(props.totalETHBalance)} {props.currency}</div>
                   </div>
                   <div className={"portfolio__account-top-item"}>
                     <div className={"common__mb-10"}>
                       <span className={"portfolio__account-txt"}>24h% change</span>
-                      <span className={"portfolio__account-tag theme__tag"}>USD</span>
+                      <span className={"portfolio__account-tag theme__tag"} onClick={() => props.switchCurrency(props.currency)}>
+                        {props.currency === 'ETH' ? 'USD' : 'ETH'}
+                      </span>
                     </div>
                     <div>
-                      <span className={"portfolio__account-txt-big"}>-0.877654 ETH</span>
+                      <span className={"portfolio__account-txt-big"}>0 {props.currency}</span>
                       <span className={"portfolio__account-change portfolio__account-change--negative"}>-20.87%</span>
                     </div>
                   </div>

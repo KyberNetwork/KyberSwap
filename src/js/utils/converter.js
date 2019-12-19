@@ -876,3 +876,7 @@ export function decodeTxInput(input, abi) {
   abiDecoder.addABI(abi);
   return abiDecoder.decodeMethod(input);
 }
+
+export function convertToETHBalance(balance, decimals, symbol, rate) {
+  return toT(multiplyOfTwoNumber(toT(balance, decimals), symbol === "ETH" ? "1000000000000000000" : rate));
+}

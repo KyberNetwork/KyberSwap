@@ -39,7 +39,7 @@ const AccountBalanceLayout = (props) => {
     
       if (token.symbol === props.sourceActive) classBalance += " active"
       
-      if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) classBalance += " hide"
+      if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) return null;
       
       if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
         classBalance += " disabled unclickable"

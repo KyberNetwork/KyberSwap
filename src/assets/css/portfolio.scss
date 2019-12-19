@@ -113,7 +113,10 @@
       border: 1px solid;
       margin-left: 15px;
       position: relative;
-      bottom: 3px;
+      bottom: 6px;
+      cursor: pointer;
+      float: right;
+      transition: all .3s;
     }
 
     &-change {

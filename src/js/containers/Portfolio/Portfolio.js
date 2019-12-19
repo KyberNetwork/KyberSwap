@@ -7,10 +7,10 @@ import { getFormattedDate } from "../../utils/common";
 import * as etherScanService from "../../services/etherscan/etherScanService";
 import PortfolioView from "./PortfolioView";
 import { groupBy, sortBy } from 'underscore';
+import { convertToETHBalance, sumOfTwoNumber } from "../../utils/converter";
 
 @connect((store) => {
   const address = store.account.account.address || '';
-  
   return {
     tokens: store.tokens.tokens,
     account: store.account.account,
@@ -28,11 +28,18 @@ export default class Portfolio extends React.Component {
     
     this.state = {
       historyTxs: {},
-      tokenAddresses: {}
+      tokenAddresses: {},
+      totalETHBalance: 0,
+      availableTokens: [],
+      currency: 'ETH'
     }
   }
   
   componentDidMount() {
+    this.setTxHistory();
+    this.setTokenAddresses();
+    this.setAvailableBalanceTokens();
+    
     new Chart(this.equityChart.current, {
       type: 'pie',
       data: {
@@ -73,9 +80,6 @@ export default class Portfolio extends React.Component {
         responsive: false
       }
     });
-    
-    this.setTxHistory();
-    this.setTokenAddresses();
   }
   
   componentDidUpdate(prevProps) {
@@ -126,9 +130,36 @@ export default class Portfolio extends React.Component {
     });
   }
   
+  setAvailableBalanceTokens() {
+    const tokens = this.props.tokens;
+    
+    let availableTokens = Object.keys(tokens).filter((symbol) => {
+      return tokens[symbol].balance != 0;
+    }).map(function(symbol) {
+      const token = tokens[symbol];
+      token.balance = convertToETHBalance(token.balance, token.decimals, token.symbol, token.rate)
+      return token;
+    });
+  
+    const totalETHBalance = availableTokens.reduce((total, token) => {
+      return +sumOfTwoNumber(total, token.balance);
+    }, 0);
+  
+    availableTokens = sortBy(availableTokens, (token) => -token.balance);
+    
+    this.setState({
+      totalETHBalance: totalETHBalance,
+      availableTokens: availableTokens
+    })
+  }
+  
   reImportWallet = () => {
     this.props.dispatch(globalActions.clearSession());
     this.props.global.analytics.callTrack("trackClickChangeWallet");
+  };
+  
+  switchCurrency = (currency) => {
+    this.setState({ currency: currency === 'ETH' ? 'USD' : 'ETH' })
   };
   
   render() {
@@ -143,6 +174,10 @@ export default class Portfolio extends React.Component {
         performanceChart={this.performanceChart}
         historyTxs={this.state.historyTxs}
         tokenAddresses={this.state.tokenAddresses}
+        availableTokens={this.state.availableTokens}
+        totalETHBalance={this.state.totalETHBalance}
+        currency={this.state.currency}
+        switchCurrency={this.switchCurrency}
       />
     )
   }

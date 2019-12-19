@@ -86,8 +86,6 @@ export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
         break;
       }
     }
-    console.log(receipt)
-    console.log(isTopicValid)
     return isTopicValid;
   } catch (e) {
     console.log(e);
