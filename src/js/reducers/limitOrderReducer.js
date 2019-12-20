@@ -82,7 +82,7 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
-      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg, destTokenDecimals } = action.payload
+      const { rateInit, expectedPrice, slippagePrice, isManual, type, errMsg, destTokenDecimals } = action.payload
   
       if (expectedPrice == "0") {
         newState.errors.rateSystem = errMsg;
@@ -100,7 +100,6 @@ const limitOrder = (state = initState, action) => {
 
       newState.slippageRate = slippageRate
       newState.offeredRate = expectedRate
-      newState.blockNo = blockNo
 
       if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
         newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(',', "");

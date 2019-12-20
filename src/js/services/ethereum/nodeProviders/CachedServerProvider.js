@@ -292,6 +292,28 @@ export default class CachedServerProvider extends React.Component {
         })
     })
   }
+  
+  getExpectedRate(srcToken, destToken, srcAmount) {
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/expectedRate?source=${srcToken}&dest=${destToken}&sourceAmount=${srcAmount}`))
+      .then((response) => {
+        return response.json()
+      })
+      .then((result) => {
+        if (result.error) {
+          rejected(new Error("Cannot fetch expected rate from API"))
+        }
+        
+        resolve({
+          expectedPrice: result.expectedRate,
+          slippagePrice: result.slippageRate
+        });
+      })
+      .catch((err) => {
+        rejected(err)
+      })
+    })
+  }
 
   timeout(ms, promise) {
     return new Promise(function (resolve, reject) {
