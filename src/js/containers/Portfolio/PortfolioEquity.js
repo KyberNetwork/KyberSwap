@@ -3,12 +3,31 @@ import Chart from "chart.js";
 
 export default class PortfolioEquity extends React.Component {
   componentDidMount() {
+    const tokenSymbols = [];
+    const tokenValues = [];
+    const tokenDisplay = 6;
+    
+    this.props.availableTokens.forEach((token, index) => {
+      if (token.balanceInETH === '0') return;
+  
+      let tokenSymbol = token.symbol;
+      let tokenValue = +((token.balanceInETH / this.props.totalBalanceInETH) * 100).toFixed(2);
+      
+      if (index >= tokenDisplay) {
+        tokenSymbols[tokenDisplay] = 'Others';
+        tokenValues[tokenDisplay] = tokenValues[tokenDisplay] ? tokenValues[tokenDisplay] + tokenValue : tokenValue;
+      } else {
+        tokenSymbols.push(tokenSymbol);
+        tokenValues.push(tokenValue);
+      }
+    });
+    
     new Chart(this.props.equityChart.current, {
       type: 'pie',
       data: {
-        labels: ['ETH', 'DAI', 'KNC', 'WAX', 'OMG', 'Other'],
+        labels: tokenSymbols,
         datasets: [{
-          data: [12, 19, 3, 5, 2, 3],
+          data: tokenValues,
           backgroundColor: ['#fb497c', '#ffc760', '#67c22b', '#4fccff', '#4d7bf3', '#214e9f']
         }]
       },
@@ -26,9 +45,7 @@ export default class PortfolioEquity extends React.Component {
   
   render() {
     return (
-      <div className={"portfolio__equity portfolio__item theme__background-2"}>
-        <canvas width="250" height="200" ref={this.props.equityChart}/>
-      </div>
+      <canvas width="250" height="150" ref={this.props.equityChart}/>
     )
   }
 }

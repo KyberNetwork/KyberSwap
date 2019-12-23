@@ -6,13 +6,12 @@ import { getFormattedDate } from "../../utils/common";
 import * as etherScanService from "../../services/etherscan/etherScanService";
 import PortfolioView from "./PortfolioView";
 import { groupBy, sortBy } from 'underscore';
-import { convertToETHBalance, sumOfTwoNumber } from "../../utils/converter";
 
 @connect((store) => {
   const address = store.account.account.address || '';
   return {
     tokens: store.tokens.tokens,
-    account: store.account.account,
+    account: store.account,
     address: address.toLowerCase(),
     translate: getTranslate(store.locale),
     global: store.global
@@ -28,8 +27,6 @@ export default class Portfolio extends React.Component {
     this.state = {
       historyTxs: {},
       tokenAddresses: {},
-      totalETHBalance: 0,
-      availableTokens: [],
       currency: 'ETH'
     }
   }
@@ -37,12 +34,11 @@ export default class Portfolio extends React.Component {
   componentDidMount() {
     this.setTxHistory();
     this.setTokenAddresses();
-    this.setAvailableBalanceTokens();
   }
   
   componentDidUpdate(prevProps) {
     if (this.props.address !== prevProps.address) {
-      this.setTxHistory();
+      this.setTxHistory(true);
     }
   }
   
@@ -55,14 +51,14 @@ export default class Portfolio extends React.Component {
     this.setState({ tokenAddresses: tokenAddresses });
   }
   
-  async setTxHistory() {
+  async setTxHistory(forceUpdate = false) {
     const address = this.props.address;
     
     if (!this.props.address) return;
     
-    let txs = localStorage.getItem(`historyTxs_${address}`);
+    let txs = sessionStorage.getItem(`historyTxs_${address}`);
     
-    if (!txs) {
+    if (!txs || forceUpdate) {
       const normalTxs = await etherScanService.fetchNormalTransactions(address);
       const internalTxs = await etherScanService.fetchInternalTransactions(address);
       const erc20Txs = await etherScanService.fetchERC20Transactions(address);
@@ -70,7 +66,7 @@ export default class Portfolio extends React.Component {
       txs = normalTxs.concat(internalTxs).concat(erc20Txs);
       txs = this.reduceTxs(txs);
   
-      localStorage.setItem(`historyTxs_${address}`, JSON.stringify(txs));
+      sessionStorage.setItem(`historyTxs_${address}`, JSON.stringify(txs));
     } else {
       txs = JSON.parse(txs);
     }
@@ -88,29 +84,6 @@ export default class Portfolio extends React.Component {
     });
   }
   
-  setAvailableBalanceTokens() {
-    const tokens = this.props.tokens;
-    
-    let availableTokens = Object.keys(tokens).filter((symbol) => {
-      return tokens[symbol].balance != 0;
-    }).map(function(symbol) {
-      const token = tokens[symbol];
-      token.balance = convertToETHBalance(token.balance, token.decimals, token.symbol, token.rate)
-      return token;
-    });
-  
-    const totalETHBalance = availableTokens.reduce((total, token) => {
-      return +sumOfTwoNumber(total, token.balance);
-    }, 0);
-  
-    availableTokens = sortBy(availableTokens, (token) => -token.balance);
-    
-    this.setState({
-      totalETHBalance: totalETHBalance,
-      availableTokens: availableTokens
-    })
-  }
-  
   reImportWallet = () => {
     this.props.dispatch(globalActions.clearSession());
     this.props.global.analytics.callTrack("trackClickChangeWallet");
@@ -123,8 +96,10 @@ export default class Portfolio extends React.Component {
   render() {
     return (
       <PortfolioView
+        eth={this.props.tokens.ETH}
         ethereum={this.props.ethereum}
         account={this.props.account}
+        isImported={this.props.account.account}
         address={this.props.address}
         translate={this.props.translate}
         reImportWallet={this.reImportWallet}
@@ -132,8 +107,6 @@ export default class Portfolio extends React.Component {
         performanceChart={this.performanceChart}
         historyTxs={this.state.historyTxs}
         tokenAddresses={this.state.tokenAddresses}
-        availableTokens={this.state.availableTokens}
-        totalETHBalance={this.state.totalETHBalance}
         currency={this.state.currency}
         switchCurrency={this.switchCurrency}
       />

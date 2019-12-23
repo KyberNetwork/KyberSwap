@@ -3,7 +3,7 @@ import ImportAccount from "../ImportAccount/ImportAccount";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { AccountBalance } from "../TransactionCommon";
 import PortfolioTxHistory from "./PortfolioTxHistory";
-import {multiplyOfTwoNumber, roundingNumber} from "../../utils/converter";
+import { multiplyOfTwoNumber, roundingNumber } from "../../utils/converter";
 import PortfolioEquity from "./PortfolioEquity";
 import PortfolioPerformance from "./PortfolioPerformance";
 
@@ -13,11 +13,11 @@ const PortfolioView = (props) => {
       <div className={"portfolio__left"}>
         <div className={"portfolio__summary"}>
           <div className={"portfolio__account portfolio__item theme__background-2"}>
-            {!props.account && (
+            {!props.isImported && (
               <ImportAccount tradeType="portfolio" noTerm={true} />
             )}
           
-            {props.account && (
+            {props.isImported && (
               <Fragment>
                 <div className={"portfolio__account-top"}>
                   <div className={"portfolio__account-top-item"}>
@@ -26,7 +26,7 @@ const PortfolioView = (props) => {
                       <span className={"portfolio__account-txt-small"}>Supported tokens</span>
                     </div>
                     <div className={"portfolio__account-txt-big"}>
-                      {props.currency === 'ETH' ? roundingNumber(props.totalETHBalance) : multiplyOfTwoNumber(props.totalETHBalance, 1)} {props.currency}
+                      {props.currency === 'ETH' ? roundingNumber(props.account.totalBalanceInETH) : roundingNumber(multiplyOfTwoNumber(props.account.totalBalanceInETH, props.eth.rateUSD))} {props.currency}
                     </div>
                   </div>
                   <div className={"portfolio__account-top-item"}>
@@ -38,7 +38,7 @@ const PortfolioView = (props) => {
                     </div>
                     <div>
                       <span className={"portfolio__account-txt-big"}>0 {props.currency}</span>
-                      <span className={"portfolio__account-change portfolio__account-change--negative"}>-20.87%</span>
+                      {/*<span className={"portfolio__account-change portfolio__account-change--negative"}>-20.87%</span>*/}
                     </div>
                   </div>
                 </div>
@@ -55,14 +55,20 @@ const PortfolioView = (props) => {
             )}
           </div>
   
-          {props.account && (
-            <PortfolioEquity equityChart={props.equityChart} />
-          )}
+          <div className={"portfolio__equity portfolio__item theme__background-2"}>
+            {(props.account.availableTokens && props.account.availableTokens.length > 0) && (
+              <PortfolioEquity
+                equityChart={props.equityChart}
+                availableTokens={props.account.availableTokens}
+                totalBalanceInETH={props.account.totalBalanceInETH}
+              />
+            )}
+          </div>
         </div>
   
-        {props.account && (
+        {props.isImported && (
           <Fragment>
-            <PortfolioPerformance  performanceChart={props.performanceChart} />
+            {/*<PortfolioPerformance  performanceChart={props.performanceChart} />*/}
   
             <PortfolioTxHistory
               address={props.address}
@@ -73,7 +79,7 @@ const PortfolioView = (props) => {
         )}
       </div>
   
-      {props.account && (
+      {props.isImported && (
         <div className={"portfolio__item portfolio__right theme__background-2"}>
           <AccountBalance
             screen="portfolio"
