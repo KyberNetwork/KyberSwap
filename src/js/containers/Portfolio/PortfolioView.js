@@ -3,7 +3,9 @@ import ImportAccount from "../ImportAccount/ImportAccount";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { AccountBalance } from "../TransactionCommon";
 import PortfolioTxHistory from "./PortfolioTxHistory";
-import {roundingNumber} from "../../utils/converter";
+import {multiplyOfTwoNumber, roundingNumber} from "../../utils/converter";
+import PortfolioEquity from "./PortfolioEquity";
+import PortfolioPerformance from "./PortfolioPerformance";
 
 const PortfolioView = (props) => {
   return (
@@ -12,10 +14,7 @@ const PortfolioView = (props) => {
         <div className={"portfolio__summary"}>
           <div className={"portfolio__account portfolio__item theme__background-2"}>
             {!props.account && (
-              <ImportAccount
-                tradeType="portfolio"
-                noTerm={true}
-              />
+              <ImportAccount tradeType="portfolio" noTerm={true} />
             )}
           
             {props.account && (
@@ -26,7 +25,9 @@ const PortfolioView = (props) => {
                       <span className={"portfolio__account-txt"}>Balance</span>
                       <span className={"portfolio__account-txt-small"}>Supported tokens</span>
                     </div>
-                    <div className={"portfolio__account-txt-big"}>{roundingNumber(props.totalETHBalance)} {props.currency}</div>
+                    <div className={"portfolio__account-txt-big"}>
+                      {props.currency === 'ETH' ? roundingNumber(props.totalETHBalance) : multiplyOfTwoNumber(props.totalETHBalance, 1)} {props.currency}
+                    </div>
                   </div>
                   <div className={"portfolio__account-top-item"}>
                     <div className={"common__mb-10"}>
@@ -53,33 +54,34 @@ const PortfolioView = (props) => {
               </Fragment>
             )}
           </div>
-        
-          <div className={"portfolio__equity portfolio__item theme__background-2"}>
-            <canvas width="250" height="200" ref={props.equityChart}/>
-          </div>
-        </div>
-      
-        <div className={"portfolio__performance portfolio__item theme__background-2"}>
-          <div className={"portfolio__title"}>Portfolio Performance</div>
-          <canvas className={"portfolio__performance-chart"} height="200" ref={props.performanceChart}/>
+  
+          {props.account && (
+            <PortfolioEquity equityChart={props.equityChart} />
+          )}
         </div>
   
         {props.account && (
-          <PortfolioTxHistory
-            address={props.address}
-            tokenAddresses={props.tokenAddresses}
-            historyTxs={props.historyTxs}
-          />
+          <Fragment>
+            <PortfolioPerformance  performanceChart={props.performanceChart} />
+  
+            <PortfolioTxHistory
+              address={props.address}
+              tokenAddresses={props.tokenAddresses}
+              historyTxs={props.historyTxs}
+            />
+          </Fragment>
         )}
       </div>
-    
-      <div className={"portfolio__item portfolio__right theme__background-2"}>
-        <AccountBalance
-          screen="portfolio"
-          hideZeroBalance={true}
-          show24hChange={true}
-        />
-      </div>
+  
+      {props.account && (
+        <div className={"portfolio__item portfolio__right theme__background-2"}>
+          <AccountBalance
+            screen="portfolio"
+            hideZeroBalance={true}
+            show24hChange={true}
+          />
+        </div>
+      )}
     </div>
   )
 };

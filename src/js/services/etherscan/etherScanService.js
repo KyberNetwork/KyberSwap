@@ -2,7 +2,7 @@ import BLOCKCHAIN_INFO from "../../../../env"
 
 const API_KEY = '4D5BJIK2Q2222M9R53NZMNRGKXREYVIB8K';
 const START_AND_END_BLOCK = 'startblock=0&endblock=9999999999';
-const RECORD_LIMIT = '500';
+const RECORD_LIMIT = '100';
 
 export async function fetchNormalTransactions(address) {
   return await fetchTransactions(address, 'txlist');

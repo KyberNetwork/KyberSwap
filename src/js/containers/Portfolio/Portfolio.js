@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Chart from 'chart.js';
 import { getTranslate } from "react-localize-redux";
 import * as globalActions from "../../actions/globalActions";
 import { getFormattedDate } from "../../utils/common";
@@ -39,47 +38,6 @@ export default class Portfolio extends React.Component {
     this.setTxHistory();
     this.setTokenAddresses();
     this.setAvailableBalanceTokens();
-    
-    new Chart(this.equityChart.current, {
-      type: 'pie',
-      data: {
-        labels: ['ETH', 'DAI', 'KNC', 'WAX', 'OMG', 'Other'],
-        datasets: [{
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: ['#fb497c', '#ffc760', '#67c22b', '#4fccff', '#4d7bf3', '#214e9f']
-        }]
-      },
-      options: {
-        legend: {
-          position: 'right',
-          labels: {
-            fontStyle: '400'
-          }
-        },
-        responsive: false
-      }
-    });
-  
-    new Chart(this.performanceChart.current, {
-      type: 'line',
-      data: {
-        labels: ["Nov 19", "Nov 20", "Nov 21", "Nov 22", "Nov 23", "Nov 24", "Nov 25"],
-        datasets: [{
-          data: [0, 59, 75, 20, 20, 55, 40],
-          backgroundColor: 'rgba(30, 137, 193, 0.3)',
-          borderColor: '#1e89c1'
-        }]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        tooltips: {
-          mode: 'x-axis'
-        },
-        responsive: false
-      }
-    });
   }
   
   componentDidUpdate(prevProps) {
