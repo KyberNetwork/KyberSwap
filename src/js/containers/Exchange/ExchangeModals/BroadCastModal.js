@@ -236,7 +236,7 @@ export default class BroadCastModal extends React.Component {
       }
 
       //Reserve scops
-      var rates = await ethereum.call("getRateAtSpecificBlock", input.source, input.dest, input.srcAmount, blockNumber)
+      var rates = await ethereum.call("getRateAtLatestBlock", input.source, input.dest, input.srcAmount)
       if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
         var reasons = await ethereum.call("wrapperGetReasons", input.reserves[0], input, blockNumber)
         ///reserveIssues["reason"] = reasons

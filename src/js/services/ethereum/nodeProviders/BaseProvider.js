@@ -647,8 +647,7 @@ export default class BaseProvider {
         })
     }
 
-    getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
-        //special handle for official reserve
+    getRateAtLatestBlock(source, dest, srcAmount) {
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
         srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
@@ -659,31 +658,30 @@ export default class BaseProvider {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
-            }, blockno)
-                .then(result => {
-                    if (result === "0x") {
-                        resolve({
-                            expectedPrice: "0",
-                            slippagePrice: "0"
-                        })
-                        return
-                    }
-                    try {
-                        var rates = this.rpc.eth.abi.decodeParameters([{
-                            type: 'uint256',
-                            name: 'expectedPrice'
-                        }, {
-                            type: 'uint256',
-                            name: 'slippagePrice'
-                        }], result)
-                        resolve(rates)
-                    } catch (e) {
-                        reject(e)
-                    }
-                }).catch((err) => {
-                    console.log(err)
-                    reject(err)
-                })
+            }).then(result => {
+                if (result === "0x") {
+                    resolve({
+                        expectedPrice: "0",
+                        slippagePrice: "0"
+                    })
+                    return
+                }
+                try {
+                    var rates = this.rpc.eth.abi.decodeParameters([{
+                        type: 'uint256',
+                        name: 'expectedPrice'
+                    }, {
+                        type: 'uint256',
+                        name: 'slippagePrice'
+                    }], result)
+                    resolve(rates)
+                } catch (e) {
+                    reject(e)
+                }
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 

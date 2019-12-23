@@ -71,14 +71,13 @@ const exchange = (state = initState, action) => {
     }
    
     case "EXCHANGE.UPDATE_RATE_COMPLETE": {
-      const {expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal } = action.payload
+      const {expectedRateInit, expectedPrice, slippagePrice, percentChange, srcTokenDecimal, destTokenDecimal } = action.payload
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(expectedRateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? expectedRateInit : expectedPrice
 
       newState.slippageRate = slippageRate
       newState.expectedRate = expectedRate
-      newState.blockNo = lastestBlock
       newState.percentChange = percentChange
 
       if (newState.sourceAmount !== "") {
