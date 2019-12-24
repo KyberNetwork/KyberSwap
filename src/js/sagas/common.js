@@ -110,11 +110,13 @@ export function* getExpectedRateAndZeroRate(isProceeding, ethereum, tokens, srcT
   let zeroSrcAmount = yield call(getSourceAmountZero, srcTokenSymbol, defaultRate);
   let rate, rateZero;
   let rateFunctionName = 'getRateAtLatestBlock';
-  
+
   if (!isProceeding) {
     rateFunctionName = 'getExpectedRate';
-    refinedSrcAmount = hexToNumber(refinedSrcAmount);
-    zeroSrcAmount = hexToNumber(zeroSrcAmount);
+
+    const mask = converters.maskNumber();
+    refinedSrcAmount = converters.sumOfTwoNumber(refinedSrcAmount, mask);
+    zeroSrcAmount = converters.sumOfTwoNumber(zeroSrcAmount, mask);
   }
 
   try {
