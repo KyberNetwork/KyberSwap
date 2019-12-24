@@ -243,7 +243,7 @@ export default class CachedServerProvider extends React.Component {
   getUserMaxCap(address) {
     if (isUserLogin()){
       return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+        this.timeout(this.maxRequestTime, fetch(`/api/user_stats?address=${address}`))
           .then((response) => {
             return response.json()
           })
