@@ -122,9 +122,11 @@ export default class PostExchange extends React.Component {
     var sourceBalance = this.props.tokens[sourceTokenSymbol].balance
     var sourceDecimal = this.props.tokens[sourceTokenSymbol].decimals
     var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
+    var expectedRate = this.props.exchange.expectedRate;
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var destDecimal = this.props.tokens[destTokenSymbol].decimals
     var maxCap = this.props.account.maxCap
+    const rate = sourceTokenSymbol === 'ETH' ? expectedRate : rateSourceToEth;
 
     if (sourceAmount) {
       var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, sourceTokenSymbol,
@@ -136,7 +138,7 @@ export default class PostExchange extends React.Component {
       }
     }
 
-    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rateSourceToEth, destTokenSymbol, destDecimal, maxCap)
+    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rate, destTokenSymbol, destDecimal, maxCap)
     switch (validateAmount) {
       case "not a number":
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))

@@ -341,6 +341,10 @@ const exchange = (state = initState, action) => {
       newState.errors = errors
       return newState
     }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = {};
+      return newState
+    }
   }
   return state
 }
