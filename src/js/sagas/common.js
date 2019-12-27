@@ -1,9 +1,9 @@
-import { fork, call, put, join, race, cancel } from 'redux-saga/effects'
+import { fork, call, join, race, cancel } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import * as constants from "../services/constants"
-
 import * as converters from "../utils/converter"
 import { store } from '../store'
+import { hexToNumber } from "../utils/converter";
 
 export function* handleRequest(sendRequest, ...args) {
 
@@ -31,8 +31,6 @@ export function* handleRequest(sendRequest, ...args) {
         return { status: "fail", data: res.err }    
     }
 }
-
-
 
 export function* getSourceAmount(sourceTokenSymbol, sourceAmount, defaultRate) {
     var state = store.getState()
@@ -93,4 +91,41 @@ export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
     console.log(e);
     return false;
   }
+}
+
+export function* getExpectedRateAndZeroRate(isProceeding, ethereum, tokens, srcTokenAddress, destTokenAddress, srcAmount, srcTokenSymbol) {
+  if (!ethereum) return;
+  
+  let defaultRate = 0;
+  
+  if(tokens[srcTokenSymbol].rate == 0) {
+    if (["ETH", "WETH"].includes(srcTokenSymbol)) {
+      defaultRate = converters.toTWei(1)
+    } else {
+      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", srcTokenSymbol)
+    }
+  }
+  
+  let refinedSrcAmount = yield call(getSourceAmount, srcTokenSymbol, srcAmount, defaultRate);
+  let zeroSrcAmount = yield call(getSourceAmountZero, srcTokenSymbol, defaultRate);
+  let rate, rateZero;
+  let rateFunctionName = 'getRateAtLatestBlock';
+
+  if (!isProceeding) {
+    rateFunctionName = 'getExpectedRate';
+
+    const mask = converters.maskNumber();
+    refinedSrcAmount = converters.sumOfTwoNumber(refinedSrcAmount, mask);
+    zeroSrcAmount = converters.sumOfTwoNumber(zeroSrcAmount, mask);
+  }
+
+  try {
+    rate = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    rateZero = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, zeroSrcAmount);
+  } catch (e) {
+    rate = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    rateZero = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, zeroSrcAmount);
+  }
+  
+  return { rate, rateZero }
 }

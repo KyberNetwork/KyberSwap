@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  updateBlock, updateRate, updateAllRate, updateAllRateUSD,
-  checkConnection, setGasPrice, setMaxGasPrice
-} from "../../actions/globalActions"
+import { updateAllRate, checkConnection, setGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
-import { updateRateExchange, analyzeError, fetchExchangeEnable, throwErrorHandleAmount } from "../../actions/exchangeActions"
 import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
@@ -33,27 +29,20 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  getNumProvider(){
+  getNumProvider() {
     return this.listProviders.length
   }
 
-  subcribe(callBack) {
-    this.fetchGasprice() // fetch gas price when app load
+  subscribe(callBack) {
+    this.fetchGasPrice();
 
-    // callback 10s
     var callBack_10s = this.fetchData_10s.bind(this)
     callBack_10s()
     this.interval_10s = setInterval(callBack_10s, 10000)
-
-
-    var callBack_5min = this.fetchData_5Min.bind(this)
-    callBack_5min()
-    var interval_5min = setInterval(callBack_5min, 300000)
   }
 
-  clearSubcription() {
-    clearInterval(this.intervalID)
-    clearInterval(this.interval_5min)
+  clearSubscription() {
+    clearInterval(this.interval_10s)
   }
 
   fetchData_10s() {
@@ -63,16 +52,6 @@ export default class EthereumService extends React.Component {
     this.fetchRateData()
     this.fetchMarketData()
   }
-
-  fetchData_5Min(){
-    this.fetchRateUSD()
-  }
-
-  // testAnalize() {
-  //   var state = store.getState()
-  //   var ethereum = state.connection.ethereum
-  //   store.dispatch(analyzeError(ethereum, "0x2a5a08b792c5fd79c498bf75e8433274724e5851f208dddf9e112d1c29256649"))
-  // }
 
   fetchMarketData () {
     store.dispatch(marketActions.fetchMarketData())
@@ -95,13 +74,6 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  fetchRateUSD() {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(updateAllRateUSD(ethereum))
-  }
-
-
   fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
@@ -111,13 +83,7 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  fetchCurrentBlock = () => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(updateBlock(ethereum))
-  }
-
-  fetchGasprice = () => {
+  fetchGasPrice = () => {
     store.dispatch(setGasPrice())
   }
 
@@ -126,22 +92,6 @@ export default class EthereumService extends React.Component {
     var checker = state.global.conn_checker
     var ethereum = state.connection.ethereum
     store.dispatch(checkConnection(ethereum, checker.count, checker.maxCount, checker.isCheck))
-  }
-
-  shuffleArr = (arr) => {
-    for (let i = arr.length - 1; i > 1; i--) {
-      const j = Math.floor((Math.random() * i) + 1);
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  copyArr = (arr) => {
-    var newArr = []
-    arr.forEach(function(ele){
-      newArr.push(ele)
-    })
-    return newArr
   }
 
   promiseOneNode(list, index, fn, callBackSuccess, callBackFail, ...args) {
@@ -164,13 +114,10 @@ export default class EthereumService extends React.Component {
   }
 
   call(fn, ...args) {
-    // var cloneArr =  this.copyArr(this.listProviders)
-    // var shuffleArr = this.shuffleArr(cloneArr)
     return new Promise((resolve, reject) => {
       this.promiseOneNode(this.listProviders, 0, fn, resolve, reject, ...args)
     })
   }
-
 
   promiseMultiNode(list, index, fn, callBackSuccess, callBackFail, results, errors, ...args) {
     if (!list[index]) {
@@ -202,7 +149,6 @@ export default class EthereumService extends React.Component {
 
   callMultiNode(fn, ...args) {
     var errors = []
-    var results = []
     return new Promise((resolve, reject) => {
       this.listProviders.map(val => {
         if (!val[fn]) {
@@ -232,5 +178,4 @@ export default class EthereumService extends React.Component {
       })
     })
   }
-
 }

@@ -13,45 +13,21 @@ export default class BaseProvider {
         this.networkAddress = BLOCKCHAIN_INFO.network
         this.wrapperAddress = BLOCKCHAIN_INFO.wrapper
         this.kyberswapAddress = BLOCKCHAIN_INFO.kyberswapAddress
-        // console.log(BLOCKCHAIN_INFO)
-        // console.log(this.wrapperAddress)
         this.networkContract = new this.rpc.eth.Contract(constants.KYBER_NETWORK, this.networkAddress)
         this.wrapperContract = new this.rpc.eth.Contract(constants.KYBER_WRAPPER, this.wrapperAddress)
-
         this.kyberswapContract = new this.rpc.eth.Contract(constants.KYBER_SWAP_ABI, this.kyberswapAddress)
-
-        // this.getSignatureParameters("0x3ebf9366a33aa9877c339f6b52e6911b583251d1e0139751e4ff0d9e551638274811d1b31a7b7e3b7458559571a906a0996c98f4e95b1d35fbc2a44eb6dd6bcc1c")
-        // this.getSignatureParameters("0x112b82204e41184696fe6e83e2637870f7922672ecf1dc603815a4c25098bfde1cf6ed4ddc6a76b77cc103f844eddc2e1e39a6062e3e09da4f2b53cfab620c5c1c")
-        // this.getMessageHashTest("hello")
-        
-        // console.log(Buffer.from("test").toString("hex"))
-        // var message = "0x6d1ffaf4dc86fa4249bc6a81620bfa187114044dd961cfe6cf8193737a16598a"
-        // console.log(message)
-        // console.log(Buffer.from(message.substring(2)).toString("hex"))
-        // console.log(Buffer.from(message).toString("hex"))
     }
 
     version() {
         return this.rpc.version.api
     }
-
-
+    
     isConnectNode() {
         return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlock("latest", false).then((block) => {
+            this.rpc.eth.net.isListening().then(() => {
                 resolve(true)
-            }).catch((errr) => {
+            }).catch(() => {
                 reject(false)
-            })
-        })
-    }
-
-    getLatestBlock() {
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.getBlockNumber().then((block) => {
-                resolve(block)
-            }).catch((err) => {
-                reject(err)
             })
         })
     }
@@ -74,23 +50,19 @@ export default class BaseProvider {
         var tokenContract = this.erc20Contract
         tokenContract.options.address = token
         
-
         return new Promise((resolve, reject) => {
             var data = tokenContract.methods.balanceOf(owner).encodeABI()
-
             
-                this.rpc.eth.call({
-                    to: token,
-                    data: data
-                })
-                    .then(result => {
-                        var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
-                        resolve(balance[0])
-                    }).catch((err) => {
-                        console.log(err)
-                        reject(err)
-                    })
-            
+            this.rpc.eth.call({
+                to: token,
+                data: data
+            }).then(result => {
+                var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
+                resolve(balance[0])
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 
@@ -104,7 +76,7 @@ export default class BaseProvider {
         })
 
         return new Promise((resolve, reject) => {
-            var data = this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
+            this.wrapperContract.methods.getBalances(address, listToken).call().then(result => {
                 if (result.length !== listToken.length){
                     console.log("Cannot get balances from node")
                     reject("Cannot get balances from node")
@@ -124,8 +96,6 @@ export default class BaseProvider {
         })
     }
 
-    
-
     getAllBalancesTokenAtSpecificBlock(address, tokens, blockNumber) {
       var listToken = []
       var listSymbol = []
@@ -136,26 +106,26 @@ export default class BaseProvider {
       })
 
       return new Promise((resolve, reject) => {
-        var data = this.wrapperContract.methods.getBalances(address, listToken).call(
-          {},
-          blockNumber
-        ).then(result => {
-          if (result.length !== listToken.length){
-            console.log("Cannot get balances from node")
-            reject("Cannot get balances from node")
-          }
-          var listTokenBalances = []
-          listSymbol.map((symbol, index) => {
-            listTokenBalances.push({
-              symbol: symbol,
-              balance: result[index] ? result[index]: "0"
-            })
+          this.wrapperContract.methods.getBalances(address, listToken).call(
+            {},
+            blockNumber
+          ).then(result => {
+              if (result.length !== listToken.length){
+                  console.log("Cannot get balances from node")
+                  reject("Cannot get balances from node")
+              }
+              var listTokenBalances = []
+              listSymbol.map((symbol, index) => {
+                  listTokenBalances.push({
+                      symbol: symbol,
+                      balance: result[index] ? result[index]: "0"
+                  })
+              })
+              resolve(listTokenBalances)
+          }).catch(err => {
+              console.log(err)
+              reject(err)
           })
-          resolve(listTokenBalances)
-        }).catch(err => {
-          console.log(err)
-          reject(err)
-        })
       })
     }
 
@@ -185,8 +155,6 @@ export default class BaseProvider {
                     reject(err)
                 })
         })
-
-
     }
 
     getTokenBalanceAtLatestBlock(address, ownerAddr) {
@@ -301,7 +269,6 @@ export default class BaseProvider {
                 reject(err)
             })
         })
-
     }
 
     getRate(source, dest, srcAmount) {
@@ -321,20 +288,6 @@ export default class BaseProvider {
                 })
         })
     }
-
-    // getRateTest(source, dest, quantity) {
-    //     return new Promise((resolve, reject) => {
-    //         this.networkContract.methods.getExpectedRate(source, dest, quantity).call()
-    //             .then((result) => {
-    //                 if (result != null) {
-    //                    // resolve(result)
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 reject(err)
-    //             })
-    //     })
-    // }
 
     checkKyberEnable() {
         return new Promise((resolve, reject) => {
@@ -360,9 +313,7 @@ export default class BaseProvider {
                 })
         })
     }
-
-
-
+    
     getAllRate(sources, dests, quantity) {
         var dataAbi = this.wrapperContract.methods.getExpectedRates(this.networkAddress, sources, dests, quantity).encodeABI()
 
@@ -372,7 +323,6 @@ export default class BaseProvider {
                 data: dataAbi
             })
                 .then((data) => {
-                   // console.log(data)
                     try {
                         var dataMapped = this.rpc.eth.abi.decodeParameters([
                             {
@@ -403,7 +353,6 @@ export default class BaseProvider {
 
         var mask = converters.maskNumber()
 
-        //tokens
         var arrayAmount = Object.keys(tokensObj).map((tokenSymbol) => {
            var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0)
            var srcAmountEnableFistBit = converters.sumOfTwoNumber(minAmount,  mask)
@@ -411,17 +360,11 @@ export default class BaseProvider {
            return srcAmountEnableFistBit
         });
 
-        //eth 
         var minAmountEth = converters.getSourceAmountZero("ETH", 18, 0)
         var srcAmountETHEnableFistBit = converters.sumOfTwoNumber(minAmountEth,  mask)
         srcAmountETHEnableFistBit = converters.toHex(srcAmountETHEnableFistBit)
-
         var arrayQtyEth = Array(arrayTokenAddress.length).fill(srcAmountETHEnableFistBit)
-
         var arrayQty = arrayAmount.concat(arrayQtyEth)
-
-        // console.log("arrayQty")
-        // console.log(arrayQty)
 
         return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
             var returnData = []
@@ -444,21 +387,6 @@ export default class BaseProvider {
         })
     }
 
-    getMaxGasPrice() {
-        return new Promise((resolve, reject) => {
-            this.networkContract.methods.maxGasPrice().call()
-                .then((result) => {
-                    if (result != null) {
-                        resolve(result)
-                    }
-                })
-                .catch((err) => {
-                    reject(err)
-                })
-        })
-    }
-
-    //--------------------------For debug tx functions
     getTx(txHash) {
         return new Promise((resolve, rejected) => {
             this.rpc.eth.getTransaction(txHash).then((result) => {
@@ -512,13 +440,8 @@ export default class BaseProvider {
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
-                //get trade abi from 
                 var tradeAbi = this.getAbiByName("tradeWithHint", constants.KYBER_NETWORK)
-                //  console.log(tradeAbi)
-                // addABI(tradeAbi)
-                //  console.log(abiDecoder)
                 var decoded = this.decodeMethod(tradeAbi, data);
-                //      console.log(decoded)
                 resolve(decoded.params)
             } catch (e) {
                 reject(e)
@@ -606,11 +529,7 @@ export default class BaseProvider {
             return retData;
         }
     }
-
-
-    //************************ API for prune MODE *******************/
-    //*****
-    //************* */
+    
     getBalanceAtSpecificBlock(address, blockno) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getBalance(address, blockno)
@@ -728,11 +647,10 @@ export default class BaseProvider {
         })
     }
 
-    getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
-        //special handle for official reserve
+    getRateAtLatestBlock(source, dest, srcAmount) {
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
-        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)        
+        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
 
         var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
 
@@ -740,35 +658,30 @@ export default class BaseProvider {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
-            }, blockno)
-                .then(result => {                    
-                    if (result === "0x") {                        
-                        resolve({
-                            expectedPrice: "0",
-                            slippagePrice: "0"
-                        })
-                        return
-                    }
-                    try {
-                        var rates = this.rpc.eth.abi.decodeParameters([{
-                            type: 'uint256',
-                            name: 'expectedPrice'
-                        }, {
-                            type: 'uint256',
-                            name: 'slippagePrice'
-                        }], result)                        
-                        resolve(rates)
-                    } catch (e) {
-                        reject(e)
-                        // resolve({
-                        //     expectedPrice: "0",
-                        //     slippagePrice: "0"
-                        // })
-                    }
-                }).catch((err) => {
-                    console.log(err)
-                    reject(err)
-                })
+            }).then(result => {
+                if (result === "0x") {
+                    resolve({
+                        expectedPrice: "0",
+                        slippagePrice: "0"
+                    })
+                    return
+                }
+                try {
+                    var rates = this.rpc.eth.abi.decodeParameters([{
+                        type: 'uint256',
+                        name: 'expectedPrice'
+                    }, {
+                        type: 'uint256',
+                        name: 'slippagePrice'
+                    }], result)
+                    resolve(rates)
+                } catch (e) {
+                    reject(e)
+                }
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 

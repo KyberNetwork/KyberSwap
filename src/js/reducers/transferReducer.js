@@ -197,6 +197,10 @@ const transfer = (state = initState, action) => {
       newState.currentPathIndex += 1
       return newState
     }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = {};
+      return newState
+    }
   }
   return state
 }

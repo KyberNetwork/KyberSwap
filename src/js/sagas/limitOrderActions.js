@@ -18,27 +18,15 @@ function* updateRatePending(action) {
   const translate = getTranslate(state.locale)
   const tokens = state.tokens.tokens;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
-  var r = tokens[sourceTokenSymbol].rate
-  var defaultRate = 0
-  if(r == 0){
-    if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-      defaultRate = converters.toTWei(1)
-    }else{
-      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
-    }
-  }
-
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
 
   try {
-    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
-    var { expectedPrice, slippagePrice } = rate
+    const isProceeding = !!state.limitOrder.orderPath.length;
+    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol);
+    const { expectedPrice, slippagePrice } = rate;
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, "", destTokenDecimal))
+    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, isManual, type, "", destTokenDecimal))
   } catch(err) {
+    console.log(err);
     if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))

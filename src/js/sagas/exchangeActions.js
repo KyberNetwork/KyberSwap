@@ -26,14 +26,13 @@ function* selectToken(action) {
 }
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount } = action.payload;
   const state = store.getState();
   const translate = getTranslate(state.locale);
   const tokens = state.tokens.tokens;
   const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
   const destAmount = state.exchange.destAmount
-
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
 
@@ -45,26 +44,11 @@ function* updateRatePending(action) {
     }
   }
 
-  var r = tokens[sourceTokenSymbol].rate
-  var defaultRate = 0
-  if(r == 0){
-    if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-      defaultRate = converter.toTWei(1)
-    }else{
-      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
-    }
-  }
-
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
-
-  try{
-    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
-
+  try {
+    const isProceeding = !!state.exchange.exchangePath.length;
+    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol);
+  
     var { expectedPrice, slippagePrice } = rate
-
     var percentChange = 0
     var expectedRateInit = rateZero.expectedPrice
     if(expectedRateInit != 0){
@@ -92,7 +76,7 @@ function* updateRatePending(action) {
     const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
     yield put(actions.estimateGasNormal(calculatedSrcAmount));
 
-    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
   } catch(err) {
     console.log(err)
     if(isManual){      
@@ -170,32 +154,21 @@ function* verifyExchange() {
   var tokens = state.tokens.tokens
   var sourceBalance = 0
   var sourceDecimal = 18
-  var sourceName = "Ether"
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimals
-    sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
-
+  const rate = sourceTokenSymbol === 'ETH' ? expectedRate : rateSourceToEth;
+  
   var destTokenSymbol = exchange.destTokenSymbol
-  var destBalance = 0
   var destDecimal = 18
-  var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
-    destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimals
-    destName = tokens[destTokenSymbol].name
   }
 
   var sourceAmount = exchange.sourceAmount
-
-  let rate = rateSourceToEth;
-  if (destTokenSymbol === 'ETH') {
-    rate = expectedRate;
-  }
-
   if ( sourceAmount === "") {
     return
   }
