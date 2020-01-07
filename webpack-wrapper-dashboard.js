@@ -148,7 +148,7 @@ var getConfig = env => {
 async function getTokenApi(network) {
     var BLOCKCHAIN_INFO = require('./env/config-env/' + (network) + ".json");
     return new Promise((resolve, result) => {
-        fetch(BLOCKCHAIN_INFO.api_tokens, {
+        fetch(BLOCKCHAIN_INFO.api_tokens_integrate, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
