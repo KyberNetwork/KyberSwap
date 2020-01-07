@@ -358,7 +358,7 @@ export default class MarketTable extends React.Component {
           columns={columns}
           showPagination = {false}
           minRows = {0}
-          defaultPageSize={this.props.listTokens.length}
+          defaultPageSize={-1}
           getTrProps={(state, rowInfo) => {
             return {
               className: 'theme__table-row',
@@ -369,10 +369,6 @@ export default class MarketTable extends React.Component {
             return {
               className: 'theme__background-3',
             }
-          }}
-          getNoDataProps={(state, rowInfo) => {
-            if(!this.props.listTokens.length) return { style: { border: 'none' ,top:'75%',padding:'0px', backgroundColor:'transparent'} };
-            return {};
           }}
           sortable={false}
         />
