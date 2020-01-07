@@ -158,13 +158,14 @@ async function getTokenApi(network) {
             return response.json()
         })
             .then((result) => {
+                let tokens = BLOCKCHAIN_INFO.tokens;
                 if (result.success) {
-                    var tokens = {}
+                    tokens = {};
                     result.data.map(val => {
                         tokens[val.symbol] = val
                     })
-                    resolve(tokens)
                 }
+                resolve(tokens)
             }).catch((err) => {
                 console.log(err)
                 var tokens = BLOCKCHAIN_INFO.tokens
