@@ -78,3 +78,6 @@ typings/
 #dist/*
 
 .next
+
+# OS generated files
+.DS_Store
