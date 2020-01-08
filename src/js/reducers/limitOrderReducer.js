@@ -327,7 +327,12 @@ const limitOrder = (state = initState, action) => {
     case 'LIMIT_ORDER.TOOGLE_QUOTE_MARKET':{
       newState.mobileState.showQuoteMarket = action.payload
       return newState
-    }    
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = [];
+      newState.errors.triggerRate = [];
+      return newState
+    }
   }
   return state
 }

@@ -160,7 +160,8 @@ function* verifyExchange() {
     sourceDecimal = tokens[sourceTokenSymbol].decimals
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
-
+  const rate = sourceTokenSymbol === 'ETH' ? expectedRate : rateSourceToEth;
+  
   var destTokenSymbol = exchange.destTokenSymbol
   var destDecimal = 18
   if (tokens[destTokenSymbol]) {
@@ -168,12 +169,6 @@ function* verifyExchange() {
   }
 
   var sourceAmount = exchange.sourceAmount
-
-  let rate = rateSourceToEth;
-  if (destTokenSymbol === 'ETH') {
-    rate = expectedRate;
-  }
-
   if ( sourceAmount === "") {
     return
   }
