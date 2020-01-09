@@ -24,6 +24,9 @@ var getConfig = env => {
         case "staging":
             chain = "staging"
             break
+        case "semi_production":
+            chain = "semi_production"
+            break
         case "ropsten":
             chain = "ropsten"
             break
