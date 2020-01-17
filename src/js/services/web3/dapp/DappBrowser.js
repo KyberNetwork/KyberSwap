@@ -11,11 +11,6 @@ export default class DappBrowser {
     } else if (window.web3) {
       this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider);
     }
-  
-    //for older versions of web3
-    if (this.web3 && this.web3.net && !this.web3.eth.net) {
-      this.web3.eth.net = this.web3.net
-    }
   }
 
   getWalletType = () => {
@@ -87,7 +82,7 @@ export default class DappBrowser {
 
   personalSign = (message, account) => {
     return new Promise((resolve, reject)=>{
-      this.web3.personal.sign(message, account, (error, result)=>{
+      this.web3.eth.personal.sign(message, account, (error, result)=>{
         if(!error){
           resolve(result)
         }else{
