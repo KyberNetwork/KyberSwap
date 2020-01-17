@@ -30,8 +30,7 @@ export default class DappBrowser {
     return new Promise((resolve, reject) => {
       this.web3.eth.net.getId((error, result) => {
         if (error || !result) {
-          console.log(error)
-          var error = new Error("Cannot get network id")
+          error = new Error("Cannot get network id")
           reject(error)
         } else {
           resolve(result)
@@ -76,8 +75,8 @@ export default class DappBrowser {
   }
 
   getWalletId() {
-    if (web3.kyberID && !verifyAccount(web3.kyberID)) {
-      return web3.kyberID
+    if (this.web3.kyberID && !verifyAccount(this.web3.kyberID)) {
+      return this.web3.kyberID
     }
     var refAddr = common.getParameterByName("ref")
     if (!verifyAccount(refAddr)) {
@@ -88,7 +87,7 @@ export default class DappBrowser {
 
   personalSign = (message, account) => {
     return new Promise((resolve, reject)=>{
-      web3.personal.sign(message, account, (error, result)=>{
+      this.web3.personal.sign(message, account, (error, result)=>{
         if(!error){
           resolve(result)
         }else{

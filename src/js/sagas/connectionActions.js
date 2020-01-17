@@ -67,7 +67,7 @@ export function* createNewConnection(action) {
   if (web3Service === false) {
     yield put.resolve(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
-    const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
+    yield fork(watchMetamaskAccount, connectionInstance, web3Service)
   }
 
   var notiService = new NotiService({ type: "session" })
@@ -92,8 +92,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
           yield put(globalActions.clearSession())
           return
         }
-
-      }else{
+      } else {
         return
       }
     } catch (e) {
