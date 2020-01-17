@@ -2,13 +2,17 @@ import Web3 from "web3"
 import * as ethUtil from 'ethereumjs-util'
 import * as common from "../../../utils/common"
 import { verifyAccount } from "../../../utils/validators"
-import * as converters from "../../../utils/converter"
 import * as constants from "../../constants"
 
 export default class DappBrowser {
   constructor() {
-    this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider)
-    //for older verions of web3
+    if (window.ethereum) {
+      this.web3 = new Web3(window.ethereum);
+    } else if (window.web3) {
+      this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider);
+    }
+  
+    //for older versions of web3
     if (this.web3 && this.web3.net && !this.web3.eth.net) {
       this.web3.eth.net = this.web3.net
     }
@@ -40,30 +44,24 @@ export default class DappBrowser {
     if (window.ethereum && isManual) {
       return new Promise((resolve, reject) => {
         window.ethereum.enable().then(() => {
-
           this.web3.eth.getAccounts((error, result) => {
-            // console.log(result)
             if (error || result.length === 0) {
-              var error = new Error("Cannot get coinbase")
+              error = new Error("Cannot get coinbase")
               reject(error)
             } else {
               resolve(result[0])
             }
           })
-
-        }).catch(err => {
+        }).catch(() => {
           var error = new Error("Cannot get coinbase")
           reject(error)
         })
-
       })
     } else {
       return new Promise((resolve, reject) => {
-
         this.web3.eth.getAccounts((error, result) => {
-          // console.log(result)
           if (error || result.length === 0) {
-            var error = new Error("Cannot get coinbase")
+            error = new Error("Cannot get coinbase")
             reject(error)
           } else {
             resolve(result[0])
@@ -72,12 +70,10 @@ export default class DappBrowser {
       })
     }
   }
-
-
+  
   setDefaultAddress(address) {
     this.web3.eth.defaultAccount = address
   }
-
 
   getWalletId() {
     if (web3.kyberID && !verifyAccount(web3.kyberID)) {
