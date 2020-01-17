@@ -26,9 +26,7 @@ export function newWeb3Instance() {
 }
 
 function getWeb3Type() {
-    if (window.ethereum) {
-        return getEthereumBrowser();
-    } else if (window.web3) {
+    if (window.ethereum || window.web3) {
         return getEthereumBrowser();
     }
     
