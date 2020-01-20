@@ -14,6 +14,7 @@
     },
     "min_accept_amount": 0.01,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
+    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
     "priority_tokens": [
         "ETH",
         "DAI",

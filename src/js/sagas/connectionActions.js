@@ -23,8 +23,10 @@ function filterTokens(tokens) {
 }
 
 function getListTokens() {
+  const tokenAPI = process.env.integrate ? BLOCKCHAIN_INFO.api_tokens_integrate : BLOCKCHAIN_INFO.api_tokens;
+
   return new Promise((resolve, reject) => {
-    fetch(BLOCKCHAIN_INFO.api_tokens, {
+    fetch(tokenAPI, {
       method: 'GET',
       headers: {
         'Accept': 'application/json, text/plain, */*',
