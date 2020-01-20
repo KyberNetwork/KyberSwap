@@ -23,8 +23,10 @@ function filterTokens(tokens) {
 }
 
 function getListTokens() {
+  const tokenAPI = process.env.integrate ? BLOCKCHAIN_INFO.api_tokens_integrate : BLOCKCHAIN_INFO.api_tokens;
+
   return new Promise((resolve, reject) => {
-    fetch(BLOCKCHAIN_INFO.api_tokens, {
+    fetch(tokenAPI, {
       method: 'GET',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -65,7 +67,7 @@ export function* createNewConnection(action) {
   if (web3Service === false) {
     yield put.resolve(globalActions.throwErrorMematamask(translate("error.metamask_not_installed") || "Metamask is not installed"))
   } else {
-    const watchMetamask = yield fork(watchMetamaskAccount, connectionInstance, web3Service)
+    yield fork(watchMetamaskAccount, connectionInstance, web3Service)
   }
 
   var notiService = new NotiService({ type: "session" })
@@ -90,8 +92,7 @@ function* watchMetamaskAccount(ethereum, web3Service) {
           yield put(globalActions.clearSession())
           return
         }
-
-      }else{
+      } else {
         return
       }
     } catch (e) {

@@ -129,22 +129,6 @@ export default class BaseProvider {
       })
     }
 
-    getMaxCapAtLatestBlock(address) {
-        var data = this.networkContract.methods.getUserCapInWei(address).encodeABI()
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.call({
-                to: BLOCKCHAIN_INFO.network,
-                data: data
-            })
-                .then(result => {
-                    var cap = this.rpc.eth.abi.decodeParameters(['uint256'], result)
-                    resolve(cap[0])
-                }).catch((err) => {
-                    reject(err)
-                })
-        })
-    }
-
     getNonce(address) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getTransactionCount(address)
@@ -156,28 +140,7 @@ export default class BaseProvider {
                 })
         })
     }
-
-    getTokenBalanceAtLatestBlock(address, ownerAddr) {
-        var instance = this.erc20Contract
-        instance.options.address = address
-
-        var data = instance.methods.balanceOf(ownerAddr).encodeABI()
-
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.call({
-                to: address,
-                data: data
-            })
-                .then(result => {
-                    var balance = this.rpc.eth.abi.decodeParameters(['uint256'], result)
-                    resolve(balance[0])
-                }).catch((err) => {
-                    // console.log(err)
-                    reject(err)
-                })
-        })
-    }
-
+    
     estimateGas(txObj) {
         return new Promise((resolve, reject) => {
             this.rpc.eth.estimateGas(txObj)
@@ -246,18 +209,6 @@ export default class BaseProvider {
                 }).catch((err) => {
                     reject(err)
                 })
-        })
-    }
-
-    getDecimalsOfToken(token) {
-        var tokenContract = this.erc20Contract
-        tokenContract.options.address = token
-        return new Promise((resolve, reject) => {
-            tokenContract.methods.decimals().call().then((result) => {
-                resolve(result)
-            }).catch(err => {
-                reject(err)
-            })
         })
     }
 
@@ -527,18 +478,6 @@ export default class BaseProvider {
             return retData;
         }
     }
-    
-    getBalanceAtSpecificBlock(address, blockno) {
-        return new Promise((resolve, reject) => {
-            this.rpc.eth.getBalance(address, blockno)
-                .then((balance) => {
-                    resolve(balance)
-                })
-                .catch((err) => {
-                    reject(err)
-                })
-        })
-    }
 
     getMaxCapAtSpecificBlock(address, blockno) {
         var data = this.networkContract.methods.getUserCapInWei(address).encodeABI()
@@ -642,8 +581,7 @@ export default class BaseProvider {
         })
     }
 
-    getRateAtSpecificBlock(source, dest, srcAmount, blockno) {
-        //special handle for official reserve
+    getRateAtLatestBlock(source, dest, srcAmount) {
         var mask = converters.maskNumber()
         var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
         srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
@@ -654,42 +592,36 @@ export default class BaseProvider {
             this.rpc.eth.call({
                 to: BLOCKCHAIN_INFO.network,
                 data: data
-            }, blockno)
-                .then(result => {
-                    if (result === "0x") {
-                        resolve({
-                            expectedPrice: "0",
-                            slippagePrice: "0"
-                        })
-                        return
-                    }
-                    try {
-                        var rates = this.rpc.eth.abi.decodeParameters([{
-                            type: 'uint256',
-                            name: 'expectedPrice'
-                        }, {
-                            type: 'uint256',
-                            name: 'slippagePrice'
-                        }], result)
-                        resolve(rates)
-                    } catch (e) {
-                        reject(e)
-                    }
-                }).catch((err) => {
-                    console.log(err)
-                    reject(err)
-                })
+            }).then(result => {
+                if (result === "0x") {
+                    resolve({
+                        expectedPrice: "0",
+                        slippagePrice: "0"
+                    })
+                    return
+                }
+                try {
+                    var rates = this.rpc.eth.abi.decodeParameters([{
+                        type: 'uint256',
+                        name: 'expectedPrice'
+                    }, {
+                        type: 'uint256',
+                        name: 'slippagePrice'
+                    }], result)
+                    resolve(rates)
+                } catch (e) {
+                    reject(e)
+                }
+            }).catch((err) => {
+                console.log(err)
+                reject(err)
+            })
         })
     }
 
     wrapperGetReasons(reserve, input, blockno) {
         return new Promise((resolve) => {
             resolve("Cannot get rate at the moment!")
-        })
-    }
-    wrapperGetChosenReserve(input, blockno) {
-        return new Promise((resolve) => {
-            resolve(BLOCKCHAIN_INFO.reserve)
         })
     }
 
@@ -704,30 +636,11 @@ export default class BaseProvider {
         })
     }
 
-    getMessageHashTest(message){        
-        return new Promise((resolve) => {
-            var signature = this.rpc.utils.soliditySha3(message);     
-            console.log(signature)       
-            resolve(signature)
-        })
-    }
-
     getMessageHash(user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision){        
         return new Promise((resolve) => {
             var signature = this.rpc.utils.soliditySha3({t: 'address', v: user}, {t: 'uint256', v: nonce}, {t: 'address', v: srcToken}, {t: 'uint256', v: srcQty}, {t: 'address', v: destToken},
             {t: 'address', v: destAddress}, {t: 'uint256', v: minConversionRate}, {t: 'uint256', v: feeInPrecision});            
             resolve(signature)
-        })
-    }
-
-    getSignatureParameters(signature){
-        return new Promise((resolve) => {       
-            var {v, r, s} = ethUtil.fromRpcSig(signature)
-            r = ethUtil.bufferToHex(r)    
-            s = ethUtil.bufferToHex(s)    
-
-            console.log({v, s, r})
-            resolve({v, r,s})
         })
     }
     

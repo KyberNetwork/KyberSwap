@@ -45,14 +45,12 @@ export default class ImportAccount extends React.Component {
       const isDapp = (walletType !== "metamask") && (walletType !== "modern_metamask");
       if (isDapp) {
         this.props.dispatch(setOnDAPP());
-
         
         setTimeout(()=>{
           const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
             ethereumService, this.props.tokens, this.props.translate, walletType))
         }, 1000)
-        
       }
     }
     if (web3Service === false) {

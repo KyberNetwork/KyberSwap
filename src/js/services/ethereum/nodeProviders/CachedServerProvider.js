@@ -243,7 +243,7 @@ export default class CachedServerProvider extends React.Component {
   getUserMaxCap(address) {
     if (isUserLogin()){
       return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
+        this.timeout(this.maxRequestTime, fetch(`/api/user_stats?address=${address}`))
           .then((response) => {
             return response.json()
           })
@@ -290,6 +290,28 @@ export default class CachedServerProvider extends React.Component {
           console.log(err)
           rejected(new Error(`Cannot get init token price: ${err.toString}`))
         })
+    })
+  }
+  
+  getExpectedRate(srcToken, destToken, srcAmount) {
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/expectedRate?source=${srcToken}&dest=${destToken}&sourceAmount=${srcAmount}`))
+      .then((response) => {
+        return response.json()
+      })
+      .then((result) => {
+        if (result.error) {
+          rejected(new Error("Cannot fetch expected rate from API"))
+        }
+        
+        resolve({
+          expectedPrice: result.expectedRate,
+          slippagePrice: result.slippageRate
+        });
+      })
+      .catch((err) => {
+        rejected(err)
+      })
     })
   }
 
