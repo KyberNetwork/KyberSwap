@@ -423,13 +423,13 @@
     &__title {
       font-size: 14px;
       font-weight: 500;
-      margin: 0 0 10px 12px;
+      margin-bottom: 15px;
       padding-top: 10px;
       text-align: start;
     }
 
     &__item {
-      width: 115px;
+      width: 19%;
     }
 
     &__name {
@@ -2052,11 +2052,11 @@
 
   &__container {
     &--left {
-      width: calc(100% - 420px);
+      width: calc(100% - 600px);
     }
 
     &--right {
-      width: 400px;
+      width: 580px;
 
       > div {
         box-shadow: 0 2px 15px -6px rgba(0, 0, 0, 0.2)
@@ -2075,19 +2075,8 @@
   }
 
   @include screen-max-width(xxmedium) {
-    // flex-direction: column-reverse;
-
     &__container {
       width: 100%;
-
-      &--left {
-
-      }
-
-      // &--right {
-        // display: flex;
-        // flex-direction: column-reverse;
-      // }
     }
   }
 }

@@ -229,6 +229,10 @@
         &.wallet-connect {
           background-position: -31px 5px;
         }
+
+        &.other {
+          background-position: -31px 9px;
+        }
       }
     }
   }
@@ -278,8 +282,13 @@
 
     &.wallet-connect {
       background-position: 0;
-      //width: 28px;
       background-image: url($image-path + 'import-account/wallets/wallet-connect.svg');
+    }
+
+    &.other {
+      margin-right: 0;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/wallet-other.svg');
     }
 
     &.kyberapp {
@@ -290,8 +299,6 @@
   &__name {
     font-size: 12px;
     font-weight: 500;
-    position: relative;
-    top: 1px;
   }
 
   .column-block {

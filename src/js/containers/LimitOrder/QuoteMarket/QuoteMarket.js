@@ -1,10 +1,7 @@
-import React from "react"
-import * as common from "../../../utils/common"
-import * as converter from "../../../utils/converter"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import { SortableComponent } from "../../../components/CommonElement"
-import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import { QuoteList, Search } from "../QuoteMarket"
 import { sortQuotePriority } from "../../../utils/sorters";
@@ -119,18 +116,20 @@ export default class QuoteMarket extends React.Component{
     let pair = this.props.translate("limit_order.pair") || "Pair"
     let volume = this.props.translate("limit_order.volume") || "Volume"
     let change = this.props.translate("limit_order.change") || "Change"
-    const {is_volume} = this.state
-    return [
-      { html: pair, field: "base" }, 
-      { html: price, field: "price" }, 
+    const {is_volume} = this.state;
+    let headerTitles = [
+      { html: pair, field: "base" },
+      { html: price, field: "price" },
       { html: is_volume ? volume : change, field: is_volume ? "volume" : "change" },
-    ].map((i, index) => (
+    ];
+    
+    return headerTitles.map((i, index) => (
       <div className={`c${index+1}`} key={i["html"]} >
         <SortableComponent 
           Wrapper={"span"}
           text={i["html"]}
           onClick={(is_dsc) => this.onSort(i["field"], is_dsc)}
-          isActive={this.state.current_sort_index == i["field"]} />
+          isActive={this.state.current_sort_index === i["field"]} />
       </div>
     ))
   }
@@ -153,7 +152,8 @@ export default class QuoteMarket extends React.Component{
     const quotes = this.renderQuotes()
     const {is_volume} = this.state
     const { tokens, currentQuote } = this.props
-    const list = Object.keys(quotes).length > 0 ? this.search(quotes) : []
+    const list = Object.keys(quotes).length > 0 ? this.search(quotes) : [];
+    const isOnMobile = this.props.global.isOnMobile;
 
     return (
       <div id="quote-market" className="theme__background-2"> 
@@ -161,31 +161,35 @@ export default class QuoteMarket extends React.Component{
             <div id="container">
               <div id="panel" className="theme__text-4 theme__border">
                 <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
-                {currentQuote == "WETH" && <div className={"instruction"}>{this.props.translate("limit_order.eth_not_support") || "ETH* represents the sum of ETH & WETH for easy reference"}</div>}
-                <Search onSearch={this.onSearch}/>
-                <div className="volume_change_panel">
-                  <div className="advance-config__option-container">
-                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
-                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                             onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
-                             checked={!this.state.is_volume} />
-                      <span className="advance-config__checkmark theme__radio-button"></span>
-                    </label>
-                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
-                      <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                             onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
-                             checked={this.state.is_volume} />
-                      <span className="advance-config__checkmark theme__radio-button"></span>
-                    </label>
-                  </div>
-
-                </div>
-
+                
+                {currentQuote === "WETH" && <div className={"instruction"}>{this.props.translate("limit_order.eth_not_support") || "ETH* represents the sum of ETH & WETH for easy reference"}</div>}
+                
+                {isOnMobile && (
+                  <Fragment>
+                    <Search onSearch={this.onSearch}/>
+                    <div className="volume_change_panel">
+                      <div className="advance-config__option-container">
+                        <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
+                          <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                                 onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
+                                 checked={!this.state.is_volume} />
+                          <span className="advance-config__checkmark theme__radio-button"/>
+                        </label>
+                        <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
+                          <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                                 onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
+                                 checked={this.state.is_volume} />
+                          <span className="advance-config__checkmark theme__radio-button"/>
+                        </label>
+                      </div>
+                    </div>
+                  </Fragment>
+                )}
               </div>
               <div className="table">
                 <div className="table__header">
                   <div className="table__row">
-                    <div className="c0"></div>
+                    <div className="c0"/>
                     {this.renderTh()}
                   </div>
                 </div>

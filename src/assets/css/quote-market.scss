@@ -26,20 +26,11 @@
     border-bottom: none!important;
   }
 
-  div#container {
-    /*height: 100%;
-    overflow-y: auto;*/
-  }
-
   .rate-loading {
     text-align: center;
   }
 
   #panel {
-    //padding-bottom: 0px;
-    //border-bottom-style: solid;
-    //border-bottom-width: 2px;
-    //height: 30px;
     .instruction{
       font-size: 12px;
       font-style: italic;
@@ -47,12 +38,7 @@
       font-weight: 300;
     }
     #quote_panel {
-      width: 100%;
       margin-bottom: 10px;
-
-      @include screen-min-width(medium){
-        width: 80%;
-      }
 
       .quote_item{
         width: 70px;
@@ -84,7 +70,6 @@
       }
 
       .quote_item.active, .quote_item_2.active {
-        //transition: border-bottom .15s ease-in-out;
         border: solid 1px #ff9008;
 
         i {
@@ -125,18 +110,33 @@
     }
   }
 
-  .volume_change_panel{
+  .volume_change_panel {
     width: 50%;
     display: inline-block;
-    .advance-config__option-container{
+
+    .advance-config__option-container {
       display: flex;
       justify-content: flex-end;
-      .advance-config__option{
+
+      .advance-config__option {
         font-size: 12px;
         margin-right: 20px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    @include screen-max-width(mid-small) {
+      .advance-config__option-container {
+        .advance-config__option {
+          margin-right: 10px;
+        }
       }
     }
   }
+
   .table-th {
     margin: 1em 0 5px 30px;
 
