@@ -9,7 +9,7 @@ import PortfolioPerformance from "./PortfolioPerformance";
 
 const PortfolioView = (props) => {
   return (
-    <div className={"portfolio common__slide-up theme__text"}>
+    <div className={`portfolio common__slide-up theme__text ${props.isImported ? '' : 'portfolio--not-imported'}`}>
       <div className={"portfolio__left"}>
         <div className={"portfolio__summary"}>
           <div className={"portfolio__account portfolio__item theme__background-2"}>
@@ -55,15 +55,17 @@ const PortfolioView = (props) => {
             )}
           </div>
   
-          <div className={"portfolio__equity portfolio__item theme__background-2"}>
-            {(props.account.availableTokens && props.account.availableTokens.length > 0) && (
-              <PortfolioEquity
-                equityChart={props.equityChart}
-                availableTokens={props.account.availableTokens}
-                totalBalanceInETH={props.account.totalBalanceInETH}
-              />
-            )}
-          </div>
+          {props.isImported && (
+            <div className={"portfolio__equity portfolio__item theme__background-2"}>
+              {(props.account.availableTokens && props.account.availableTokens.length > 0) && (
+                <PortfolioEquity
+                  equityChart={props.equityChart}
+                  availableTokens={props.account.availableTokens}
+                  totalBalanceInETH={props.account.totalBalanceInETH}
+                />
+              )}
+            </div>
+          )}
         </div>
   
         {props.isImported && (

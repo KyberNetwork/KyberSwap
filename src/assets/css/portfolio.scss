@@ -5,6 +5,19 @@
   max-width: 1200px;
   margin: 0 auto;
 
+  &--not-imported {
+    justify-content: center;
+    margin-top: 100px;
+
+    .portfolio__left {
+      width: initial;
+    }
+
+    .portfolio__account {
+      width: 425px;
+    }
+  }
+
   &__left {
     width: 68%;
   }
