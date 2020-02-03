@@ -358,7 +358,7 @@ export default class MarketTable extends React.Component {
           columns={columns}
           showPagination = {false}
           minRows = {0}
-          defaultPageSize={-1}
+          defaultPageSize={999}
           getTrProps={(state, rowInfo) => {
             return {
               className: 'theme__table-row',
