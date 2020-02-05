@@ -24,7 +24,10 @@
 
   &__right {
     width: 30%;
-    padding-top: 0 !important;
+
+    .slide-down__content {
+      margin-top: 0 !important;
+    }
   }
 
   &__title {
@@ -63,7 +66,7 @@
         width: 55%;
 
         &:first-child {
-          width: 45%;
+          //width: 45%;
         }
       }
     }
@@ -220,6 +223,7 @@
     &-bold,
     &-light {
       font-weight: 500;
+      word-break: break-all;
     }
 
     &-bold {
@@ -260,5 +264,85 @@
 
   .import-account .container {
     padding: 0;
+  }
+
+  &__navigation {
+    display: none;
+  }
+
+  @include screen-max-width(xlarge) {
+    display: block;
+
+    &--not-imported {
+      display: flex;
+    }
+
+    &__left,
+    &__right {
+      width: 100%;
+    }
+
+    &__summary {
+      display: block;
+    }
+
+    &__account,
+    &__equity {
+      width: 100%;
+    }
+
+    &__item {
+      padding: 25px 10px;
+      margin-bottom: 0;
+    }
+
+    &__navigation {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      height: 50px;
+      position: relative;
+      z-index: 1;
+
+      &-item {
+        font-size: 15px;
+        font-weight: 400;
+        margin-right: 45px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &::after {
+          content: '';
+          width: 0;
+          height: 2px;
+          border-radius: 3px;
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          transition: all .3s;
+        }
+
+        &--active {
+          &::after {
+            width: 100%;
+            background-color: $text-orange;
+          }
+        }
+      }
+    }
+  }
+
+  @include screen-max-width(mid-small) {
+    &__account-bot {
+      display: block;
+    }
   }
 }

@@ -176,8 +176,10 @@ const PortfolioTxHistory = (props) => {
   }
   
   return (
-      <div className={"portfolio__history portfolio__item theme__background-2"}>
-        <div className={"portfolio__title"}>Transaction History</div>
+      <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
+        {!props.isOnMobile && (
+          <div className={"portfolio__title"}>Transaction History</div>
+        )}
         <div className={"portfolio__history-content"}>
           {props.historyTxs && renderTransactionHistory()}
         </div>

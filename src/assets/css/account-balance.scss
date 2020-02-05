@@ -279,6 +279,10 @@
       margin-right: 0;
     }
 
+    .account-balance__content-search-container {
+      width: 150px;
+    }
+
     .account-balance__sort-panel {
       margin: 15px -25px 0 -25px;
       padding: 10px 25px;
@@ -300,11 +304,15 @@
     .account-balance__token-list {
       max-height: unset;
       padding: 0;
-      margin: 20px 0;
+      margin: 20px 0 0;
     }
 
     .account-balance__token-item {
       justify-content: space-between;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     .account-balance__token-row {
@@ -327,6 +335,14 @@
 
       &--negative {
         color: $error-color;
+      }
+    }
+  }
+
+  @include screen-max-width(xlarge) {
+    &--portfolio {
+      .account-balance__sort-panel {
+        margin: 15px -10px 0 -10px;
       }
     }
   }

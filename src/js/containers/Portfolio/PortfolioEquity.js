@@ -2,6 +2,11 @@ import React from "react"
 import Chart from "chart.js";
 
 export default class PortfolioEquity extends React.Component {
+  constructor(props) {
+    super(props);
+    this.chart = null;
+  }
+  
   componentDidMount() {
     const tokenSymbols = [];
     const tokenValues = [];
@@ -22,7 +27,7 @@ export default class PortfolioEquity extends React.Component {
       }
     });
     
-    new Chart(this.props.equityChart.current, {
+    this.chart = new Chart(this.props.equityChart.current, {
       type: 'pie',
       data: {
         labels: tokenSymbols,
@@ -38,14 +43,35 @@ export default class PortfolioEquity extends React.Component {
             fontStyle: '400'
           }
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+            }
+          }
+        },
         responsive: false
       }
     });
   }
   
+  componentDidUpdate(prevProps) {
+    if (this.props.theme !== prevProps.theme) {
+      if (this.props.theme === 'dark') {
+        this.chart.options.legend.labels.fontColor = 'white';
+      } else {
+        this.chart.options.legend.labels.fontColor = 'black';
+      }
+  
+      this.chart.update();
+    }
+  }
+  
   render() {
     return (
-      <canvas width="250" height="150" ref={this.props.equityChart}/>
+      <div className={"portfolio__equity portfolio__item theme__background-2"}>
+        <canvas width="250" height="150" ref={this.props.equityChart}/>
+      </div>
     )
   }
 }

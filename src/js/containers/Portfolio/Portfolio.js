@@ -6,6 +6,7 @@ import { getFormattedDate } from "../../utils/common";
 import * as etherScanService from "../../services/etherscan/etherScanService";
 import PortfolioView from "./PortfolioView";
 import { groupBy, sortBy } from 'underscore';
+import { PORTFOLIO_TAB } from "../../services/constants";
 
 @connect((store) => {
   const address = store.account.account.address || '';
@@ -27,7 +28,8 @@ export default class Portfolio extends React.Component {
     this.state = {
       historyTxs: {},
       tokenAddresses: {},
-      currency: 'ETH'
+      currency: 'ETH',
+      mobileTab: PORTFOLIO_TAB.overview
     }
   }
   
@@ -93,6 +95,10 @@ export default class Portfolio extends React.Component {
     this.setState({ currency: currency === 'ETH' ? 'USD' : 'ETH' })
   };
   
+  switchMobileTab = (tab) => {
+    this.setState({ mobileTab: tab })
+  };
+  
   render() {
     return (
       <PortfolioView
@@ -109,6 +115,10 @@ export default class Portfolio extends React.Component {
         tokenAddresses={this.state.tokenAddresses}
         currency={this.state.currency}
         switchCurrency={this.switchCurrency}
+        mobileTab={this.state.mobileTab}
+        switchMobileTab={this.switchMobileTab}
+        isOnMobile={this.props.global.isOnMobile}
+        theme={this.props.global.theme}
       />
     )
   }

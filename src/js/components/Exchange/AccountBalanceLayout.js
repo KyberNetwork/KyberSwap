@@ -92,7 +92,7 @@ const AccountBalanceLayout = (props) => {
   const isPortfolio = props.screen === 'portfolio';
 
   return (
-    <div className={`account-balance account-balance--${props.screen}`}>
+    <div className={`account-balance common__slide-up account-balance--${props.screen}`}>
       {props.account !== false && (
         <SlideDown active={true}>
           <SlideDownContent>
