@@ -449,6 +449,15 @@
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "Đã nhận"
   },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens"
+  },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
   "tracker": "Thông tin",
@@ -473,5 +482,6 @@
   "learn_more": "Tìm hiểu thêm",
   "received": "Đã nhận",
   "details": "Chi tiết",
-  "change": "Thay đổi"
+  "change": "Thay đổi",
+  "send": "Gửi"
 }

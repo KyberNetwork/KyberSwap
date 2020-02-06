@@ -71,7 +71,9 @@ export default class PortfolioTxHistory extends React.Component {
     if (this.state.loadingError) {
       return (
         <div className="portfolio__info">
-          <div className="portfolio__info-text theme__text-7">Something wrong loading your history txs, please try again later.</div>
+          <div className="portfolio__info-text theme__text-7">
+            {this.props.translate('portfolio.error_loading_history') || 'Something wrong loading your history txs, please try again later.'}
+          </div>
         </div>
       )
     }
@@ -79,7 +81,9 @@ export default class PortfolioTxHistory extends React.Component {
     if (isEmpty(txs)) {
       return (
         <div className="portfolio__info">
-          <div className="portfolio__info-text theme__text-7">You do not have any transaction.</div>
+          <div className="portfolio__info-text theme__text-7">
+            {this.props.translate('portfolio.empty_history') || 'You do not have any transaction.'}
+          </div>
           {/*<div className="portfolio__info-button">Start Now</div>*/}
         </div>
       )
@@ -157,11 +161,11 @@ export default class PortfolioTxHistory extends React.Component {
           <div className={"portfolio__tx-icon portfolio__tx-icon--send"}/>
           <div className={"portfolio__tx-content"}>
             <div className={"portfolio__tx-bold"}>- {txValue} {txTokenSymbol}</div>
-            <div className={"portfolio__tx-light theme__text-7"}>To: {txTo}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {txTo}</div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>Send</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('send') || 'Send'}</div>
         </div>
       </div>
     )
@@ -174,11 +178,11 @@ export default class PortfolioTxHistory extends React.Component {
           <div className={"portfolio__tx-icon portfolio__tx-icon--receive"}/>
           <div className={"portfolio__tx-content"}>
             <div className={"portfolio__tx-bold"}>+ {txValue} {txTokenSymbol}</div>
-            <div className={"portfolio__tx-light theme__text-7"}>From: {txFrom}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_from') || 'From'}: {txFrom}</div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>Receive</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('transaction.exchange_receive') || 'Receive'}</div>
         </div>
       </div>
     )
@@ -190,12 +194,14 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--approve"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-light theme__text-7"}>Token Approved</div>
-            <div className={"portfolio__tx-bold"}>{txTokenSymbol} is Approved</div>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('portfolio.token_approved') || 'Token Approved'}</div>
+            <div className={"portfolio__tx-bold"}>
+              {this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>Approve</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('modal.approve') || 'Approve'}</div>
         </div>
       </div>
     )
@@ -216,7 +222,7 @@ export default class PortfolioTxHistory extends React.Component {
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>Swap</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('transaction.swap') || 'Swap'}</div>
         </div>
       </div>
     )
@@ -228,14 +234,14 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--limit-order"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-light theme__text-7"}>Limit Order Triggered</div>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('portfolio.lo_triggered') || 'Limit Order Triggered'}</div>
             <div className={"portfolio__tx-bold"}>
               {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
             </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>Limit Order</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('transaction.limit_order') || 'Limit Order'}</div>
         </div>
       </div>
     )
@@ -245,7 +251,7 @@ export default class PortfolioTxHistory extends React.Component {
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
         {!this.props.isOnMobile && (
-          <div className={"portfolio__title"}>Transaction History</div>
+          <div className={"portfolio__title"}>{this.props.translate('portfolio.tx_history') || 'Transaction History'}</div>
         )}
         <div className={"portfolio__history-content"}>
           {this.state.loadingHistory && (

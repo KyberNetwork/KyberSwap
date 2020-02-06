@@ -8,8 +8,8 @@ const PortfolioOverview = (props) => {
       <div className={"portfolio__account-top"}>
         <div className={"portfolio__account-top-item"}>
           <div className={"common__mb-10"}>
-            <span className={"portfolio__account-txt"}>Balance</span>
-            <span className={"portfolio__account-txt-small"}>Supported tokens</span>
+            <span className={"portfolio__account-txt"}>{props.translate('transaction.balance') || 'Balance'}</span>
+            <span className={"portfolio__account-txt-small"}>{props.translate('portfolio.supported_tokens') || 'Supported tokens'}</span>
           </div>
           <div className={"portfolio__account-txt-big"}>
             {props.currency === 'ETH' ? roundingNumber(props.totalBalanceInETH) : roundingNumber(multiplyOfTwoNumber(props.totalBalanceInETH, props.rateETHInUSD))} {props.currency}

@@ -447,6 +447,15 @@
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "Получил"
   },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens"
+  },
   "home": "Домой",
   "tracker": "Трекер",
   "product_feedback": "Обратная связь",
@@ -471,5 +480,6 @@
   "learn_more": "Учить больше",
   "received": "Получил",
   "details": "Details",
-  "change": "change"
+  "change": "change",
+  "send": "Send"
 }
