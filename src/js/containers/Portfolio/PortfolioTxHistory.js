@@ -16,7 +16,12 @@ const PortfolioTxHistory = (props) => {
     const txs = props.historyTxs;
     
     if (isEmpty(txs)) {
-      return <div className={"portfolio__not-found"}>No Transaction Found...</div>
+      return (
+        <div className={"portfolio__not-found"}>
+          <div>You do not have any transaction.</div>
+          <div>Start Now</div>
+        </div>
+      )
     }
     
     return Object.keys(txs).map((date, index) => {

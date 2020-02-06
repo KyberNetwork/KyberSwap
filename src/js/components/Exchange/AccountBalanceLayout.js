@@ -28,8 +28,9 @@ const AccountBalanceLayout = (props) => {
   
   function getBalances() {
     const tokens = props.getCustomizedTokens();
+    let isEmpty = true;
     
-    return tokens.map(token => {
+    const allBalances = tokens.map(token => {
       var balance = converts.toT(token.balance, token.decimals)
       var searchWord = props.searchWord.toLowerCase()
       var symbolL = token.symbol.toLowerCase()
@@ -40,6 +41,8 @@ const AccountBalanceLayout = (props) => {
       if (token.symbol === props.sourceActive) classBalance += " active"
       
       if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) return null;
+      
+      isEmpty = false;
       
       if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
         classBalance += " disabled unclickable"
@@ -87,9 +90,13 @@ const AccountBalanceLayout = (props) => {
         </div>
       )
     });
+    
+    return !isEmpty ? allBalances : false;
   }
   
+  const allBalances = getBalances();
   const isPortfolio = props.screen === 'portfolio';
+  const isHideAllInfo = props.hideZeroBalance && allBalances === false;
 
   return (
     <div className={`account-balance common__slide-up account-balance--${props.screen}`}>
@@ -125,39 +132,45 @@ const AccountBalanceLayout = (props) => {
                 {props.hideZeroBalance && (
                   <div className="account-balance__text-panel">All Tokens</div>
                 )}
-                <div className="account-balance__content-search-container">
-                  <input
-                    className="account-balance__content-search theme__search"
-                    type="text"
-                    placeholder={props.translate("address.search") || "Search by Name"}
-                    onClick={props.clickOnInput}
-                    onChange={(e) => props.changeSearchBalance(e)}
-                    value={props.searchWord}
-                  />
-                </div>
-              </div>
-              <div className="account-balance__sort-panel theme__background-4">
-                <div>
-                  <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => props.onClickSortType("Name", isDsc)}/>
-                  <span className="account-balance__sort-separation theme__separation"> | </span>
-                  <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => props.onClickSortType("Bal", isDsc)}/>
-                </div>
-                <div>
-                  <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => props.onClickSortType("Eth", isDsc)}/>
-                  <span className="account-balance__sort-separation theme__separation"> | </span>
-                  <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => props.onClickSortType("USDT", isDsc)}/>
-                </div>
-                {props.show24hChange && (
-                  <div>{props.translate("change") || "Change"}</div>
+                
+                {!isHideAllInfo && (
+                  <div className="account-balance__content-search-container">
+                    <input
+                      className="account-balance__content-search theme__search"
+                      type="text"
+                      placeholder={props.translate("address.search") || "Search by Name"}
+                      onClick={props.clickOnInput}
+                      onChange={(e) => props.changeSearchBalance(e)}
+                      value={props.searchWord}
+                    />
+                  </div>
                 )}
               </div>
+  
+              {!isHideAllInfo && (
+                <div className="account-balance__sort-panel theme__background-4">
+                  <div>
+                    <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => props.onClickSortType("Name", isDsc)}/>
+                    <span className="account-balance__sort-separation theme__separation"> | </span>
+                    <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => props.onClickSortType("Bal", isDsc)}/>
+                  </div>
+                  <div>
+                    <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => props.onClickSortType("Eth", isDsc)}/>
+                    <span className="account-balance__sort-separation theme__separation"> | </span>
+                    <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => props.onClickSortType("USDT", isDsc)}/>
+                  </div>
+                  {props.show24hChange && (
+                    <div>{props.translate("change") || "Change"}</div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="account-balance__content">
               <div>
                 <div className="balances custom-radio">
-                  <div className="account-balance__token-list">
-                    {getBalances()}
+                  <div className={`account-balance__token-list ${isHideAllInfo ? 'account-balance__token-list--empty' : ''}`}>
+                    {!isHideAllInfo ? allBalances : '-- % --'}
                   </div>
                 </div>
               </div>

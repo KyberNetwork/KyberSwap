@@ -99,6 +99,14 @@
       border-radius: 8px;
       background-color: rgba(163, 165, 175, 1);
     }
+
+    &--empty {
+      font-size: 14px;
+      font-weight: 400;
+      color: #6a6a6a;
+      margin-top: 30px !important;
+      text-align: center;
+    }
   }
 
   &__token-item {

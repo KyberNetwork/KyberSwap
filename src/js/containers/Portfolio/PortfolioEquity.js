@@ -40,6 +40,7 @@ export default class PortfolioEquity extends React.Component {
         legend: {
           position: 'right',
           labels: {
+            fontColor: `${this.props.theme === 'dark' ? 'white' : 'black'}`,
             fontStyle: '400'
           }
         },
@@ -69,9 +70,7 @@ export default class PortfolioEquity extends React.Component {
   
   render() {
     return (
-      <div className={"portfolio__equity portfolio__item theme__background-2"}>
-        <canvas width="250" height="150" ref={this.props.equityChart}/>
-      </div>
+      <canvas width="250" height="150" ref={this.props.equityChart}/>
     )
   }
 }

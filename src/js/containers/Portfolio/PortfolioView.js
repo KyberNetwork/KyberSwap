@@ -12,7 +12,7 @@ const PortfolioView = (props) => {
   const isOverViewDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.overview : props.isImported;
   const isBalanceDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.balance : props.isImported;
   const isHistoryDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.history : props.isImported;
-  const isEquityDisplayed = isOverViewDisplayed && props.account.availableTokens && props.account.availableTokens.length > 0;
+  const isEquityDisplayed = props.account.availableTokens && props.account.availableTokens.length > 0;
 
   return (
     <div className={`portfolio theme__text ${props.isImported ? '' : 'portfolio--not-imported'}`}>
@@ -23,7 +23,7 @@ const PortfolioView = (props) => {
         />
       )}
       
-      <div className={"portfolio__left"}>
+      <div className={`portfolio__left ${props.isOnMobile ? 'theme__background-11' : ''}`}>
         {(isOverViewDisplayed || !props.isImported) && (
           <div className={"portfolio__summary"}>
             <div className={"portfolio__account portfolio__item theme__background-11"}>
@@ -43,14 +43,22 @@ const PortfolioView = (props) => {
                 />
               )}
             </div>
+  
+            {isOverViewDisplayed && (
+              <div className={"portfolio__equity portfolio__item theme__background-2 common__slide-up"}>
+                {isEquityDisplayed && (
+                  <PortfolioEquity
+                    equityChart={props.equityChart}
+                    availableTokens={props.account.availableTokens}
+                    totalBalanceInETH={props.account.totalBalanceInETH}
+                    theme={props.theme}
+                  />
+                )}
     
-            {isEquityDisplayed && (
-              <PortfolioEquity
-                equityChart={props.equityChart}
-                availableTokens={props.account.availableTokens}
-                totalBalanceInETH={props.account.totalBalanceInETH}
-                theme={props.theme}
-              />
+                {!isEquityDisplayed && (
+                  <div>-- % --</div>
+                )}
+              </div>
             )}
           </div>
         )}
