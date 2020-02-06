@@ -72,6 +72,7 @@ const PortfolioView = (props) => {
               tokenAddresses={props.tokenAddresses}
               historyTxs={props.historyTxs}
               isOnMobile={props.isOnMobile}
+              theme={props.theme}
             />
           </Fragment>
         )}

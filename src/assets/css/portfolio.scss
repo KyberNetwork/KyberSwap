@@ -258,14 +258,32 @@
     }
   }
 
-  &__not-found {
-    font-size: 13px;
-    font-weight: 400;
-    padding: 8px 15px;
-    background-color: $color-swap-light;
-    display: inline-block;
-    color: white;
-    border-radius: 3px;
+  &__info {
+    text-align: center;
+    margin: 50px 0;
+
+    &-text {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    &-button {
+      font-size: 13px;
+      font-weight: 400;
+      padding: 12px 23px;
+      background-color: $swap-color;
+      display: inline-block;
+      color: white;
+      border-radius: 3px;
+      text-transform: uppercase;
+      transition: background-color .3s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-swap-light;
+      }
+    }
   }
 
   .import-account .container {

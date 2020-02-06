@@ -1,25 +1,86 @@
 import React from "react"
 import BLOCKCHAIN_INFO from "../../../../env";
-import { groupBy, isEmpty } from "underscore";
+import { groupBy, isEmpty, sortBy } from "underscore";
 import {decodeTxInput, divOfTwoNumber, roundingNumber, toT} from "../../utils/converter";
 import { ERC20 } from "../../services/constants";
+import * as etherScanService from "../../services/etherscan/etherScanService";
+import { getFormattedDate } from "../../utils/common";
+import InlineLoading from "../../components/CommonElement/InlineLoading";
 
-const PortfolioTxHistory = (props) => {
-  function formatValueAndTokenSymbol(value, tokenSymbol, tokenDecimal) {
+export default class PortfolioTxHistory extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      historyTxs: {},
+      loadingHistory: false,
+      loadingError: false
+    }
+  }
+  
+  componentDidMount() {
+    this.setTxHistory();
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (this.props.address !== prevProps.address) {
+      this.setTxHistory();
+    }
+  }
+  
+  async setTxHistory() {
+    const address = this.props.address;
+    
+    if (!this.props.address) return;
+  
+    this.setState({ loadingHistory: true });
+    
+    const normalTxs = await etherScanService.fetchNormalTransactions(address);
+    const internalTxs = await etherScanService.fetchInternalTransactions(address);
+    const erc20Txs = await etherScanService.fetchERC20Transactions(address);
+    
+    let txs = normalTxs.concat(internalTxs).concat(erc20Txs);
+    txs = this.reduceTxs(txs);
+    
+    this.setState({
+      historyTxs: txs,
+      loadingHistory: false
+    });
+  }
+  
+  reduceTxs(txs) {
+    const formattedTxs = sortBy(txs, (tx) => {
+      return -tx.blockNumber;
+    });
+    
+    return groupBy(formattedTxs, (tx) => {
+      return getFormattedDate(+tx.timeStamp);
+    });
+  }
+  
+  formatValueAndTokenSymbol(value, tokenSymbol, tokenDecimal) {
     return {
       txValue: +toT(value, tokenDecimal ? tokenDecimal : 18, 6),
       txTokenSymbol: tokenSymbol ? tokenSymbol : 'ETH'
     }
   }
   
-  function renderTransactionHistory() {
-    const txs = props.historyTxs;
+  renderTransactionHistory() {
+    const txs = this.state.historyTxs;
+  
+    if (this.state.loadingError) {
+      return (
+        <div className="portfolio__info">
+          <div className="portfolio__info-text theme__text-7">Something wrong loading your history txs, please try again later.</div>
+        </div>
+      )
+    }
     
     if (isEmpty(txs)) {
       return (
-        <div className={"portfolio__not-found"}>
-          <div>You do not have any transaction.</div>
-          <div>Start Now</div>
+        <div className="portfolio__info">
+          <div className="portfolio__info-text theme__text-7">You do not have any transaction.</div>
+          {/*<div className="portfolio__info-button">Start Now</div>*/}
         </div>
       )
     }
@@ -28,13 +89,13 @@ const PortfolioTxHistory = (props) => {
       return (
         <div className={"portfolio__tx"} key={index}>
           <div className={"portfolio__tx-header theme__table-header"}>{date}</div>
-          {renderTxByDate(txs[date])}
+          {this.renderTxByDate(txs[date])}
         </div>
       )
     });
   }
   
-  function renderTxByDate(txs) {
+  renderTxByDate(txs) {
     txs = groupBy(txs, (tx) => {
       return tx.hash;
     });
@@ -42,18 +103,18 @@ const PortfolioTxHistory = (props) => {
     return Object.keys(txs).map((hash, index) => {
       if (txs[hash].length === 1) {
         const tx = txs[hash][0];
-        const { txValue, txTokenSymbol } = formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
+        const { txValue, txTokenSymbol } = this.formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
         
-        if (tx.from === props.address && txValue) {
-          return renderSendTx(txValue, txTokenSymbol, tx.to, index);
-        } else if (tx.to === props.address && txValue) {
-          return renderReceiveTx(txValue, txTokenSymbol, tx.from, index);
-        } else if (tx.from === props.address && !txValue) {
+        if (tx.from === this.props.address && txValue) {
+          return this.renderSendTx(txValue, txTokenSymbol, tx.to, index);
+        } else if (tx.to === this.props.address && txValue) {
+          return this.renderReceiveTx(txValue, txTokenSymbol, tx.from, index);
+        } else if (tx.from === this.props.address && !txValue) {
           const decodedInput = decodeTxInput(tx.input, ERC20);
           
           if (decodedInput && decodedInput.name === 'approve') {
-            const approvedTokenSymbol = props.tokenAddresses[tx.to];
-            if (approvedTokenSymbol) return renderApproveTx(approvedTokenSymbol, index);
+            const approvedTokenSymbol = this.props.tokenAddresses[tx.to];
+            if (approvedTokenSymbol) return this.renderApproveTx(approvedTokenSymbol, index);
           }
         }
         
@@ -63,11 +124,11 @@ const PortfolioTxHistory = (props) => {
       const txData = {};
       
       txs[hash].forEach((tx) => {
-        const { txValue, txTokenSymbol } = formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
+        const { txValue, txTokenSymbol } = this.formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
         
-        if (tx.from === props.address && !txData.send && txValue) {
+        if (tx.from === this.props.address && !txData.send && txValue) {
           txData.send = {txValue, txTokenSymbol, address: tx.to};
-        } else if (tx.to === props.address && !txData.receive && txValue) {
+        } else if (tx.to === this.props.address && !txData.receive && txValue) {
           txData.receive = {txValue, txTokenSymbol, address: tx.from};
         }
       });
@@ -76,20 +137,20 @@ const PortfolioTxHistory = (props) => {
       const sendData = txData.send;
       
       if (!sendData && receiveData) {
-        return renderReceiveTx(receiveData.txValue, receiveData.txTokenSymbol, receiveData.address, index);
+        return this.renderReceiveTx(receiveData.txValue, receiveData.txTokenSymbol, receiveData.address, index);
       } else if (!receiveData && sendData) {
-        return renderSendTx(sendData.txValue, sendData.txTokenSymbol, sendData.address, index);
+        return this.renderSendTx(sendData.txValue, sendData.txTokenSymbol, sendData.address, index);
       } else if (receiveData && sendData) {
         if (sendData.address === BLOCKCHAIN_INFO.kyberswapAddress) {
-          return renderLimitOrderTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
+          return this.renderLimitOrderTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
         }
         
-        return renderSwapTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
+        return this.renderSwapTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
       }
     })
   }
   
-  function renderSendTx(txValue, txTokenSymbol, txTo, index) {
+  renderSendTx(txValue, txTokenSymbol, txTo, index) {
     return (
       <div className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -106,7 +167,7 @@ const PortfolioTxHistory = (props) => {
     )
   }
   
-  function renderReceiveTx(txValue, txTokenSymbol, txFrom, index) {
+  renderReceiveTx(txValue, txTokenSymbol, txFrom, index) {
     return (
       <div className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -123,7 +184,7 @@ const PortfolioTxHistory = (props) => {
     )
   }
   
-  function renderApproveTx(txTokenSymbol, index) {
+  renderApproveTx(txTokenSymbol, index) {
     return (
       <div className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -140,7 +201,7 @@ const PortfolioTxHistory = (props) => {
     )
   }
   
-  function renderSwapTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderSwapTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
     return (
       <div className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -161,7 +222,7 @@ const PortfolioTxHistory = (props) => {
     )
   }
   
-  function renderLimitOrderTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderLimitOrderTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
     return (
       <div className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -180,16 +241,20 @@ const PortfolioTxHistory = (props) => {
     )
   }
   
-  return (
+  render() {
+    return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
-        {!props.isOnMobile && (
+        {!this.props.isOnMobile && (
           <div className={"portfolio__title"}>Transaction History</div>
         )}
         <div className={"portfolio__history-content"}>
-          {props.historyTxs && renderTransactionHistory()}
+          {this.state.loadingHistory && (
+            <InlineLoading theme={this.props.theme}/>
+          )}
+          
+          {!this.state.loadingHistory && this.renderTransactionHistory()}
         </div>
       </div>
-  )
-};
-
-export default PortfolioTxHistory
+    )
+  }
+}

@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import * as globalActions from "../../actions/globalActions";
-import { getFormattedDate } from "../../utils/common";
-import * as etherScanService from "../../services/etherscan/etherScanService";
 import PortfolioView from "./PortfolioView";
-import { groupBy, sortBy } from 'underscore';
 import { PORTFOLIO_TAB } from "../../services/constants";
 
 @connect((store) => {
@@ -26,7 +23,6 @@ export default class Portfolio extends React.Component {
     this.performanceChart = React.createRef();
     
     this.state = {
-      historyTxs: {},
       tokenAddresses: {},
       currency: 'ETH',
       mobileTab: PORTFOLIO_TAB.overview
@@ -34,14 +30,7 @@ export default class Portfolio extends React.Component {
   }
   
   componentDidMount() {
-    this.setTxHistory();
     this.setTokenAddresses();
-  }
-  
-  componentDidUpdate(prevProps) {
-    if (this.props.address !== prevProps.address) {
-      this.setTxHistory(true);
-    }
   }
   
   setTokenAddresses() {
@@ -51,39 +40,6 @@ export default class Portfolio extends React.Component {
     }, {});
 
     this.setState({ tokenAddresses: tokenAddresses });
-  }
-  
-  async setTxHistory(forceUpdate = false) {
-    const address = this.props.address;
-    
-    if (!this.props.address) return;
-    
-    let txs = sessionStorage.getItem(`historyTxs_${address}`);
-    
-    if (!txs || forceUpdate) {
-      const normalTxs = await etherScanService.fetchNormalTransactions(address);
-      const internalTxs = await etherScanService.fetchInternalTransactions(address);
-      const erc20Txs = await etherScanService.fetchERC20Transactions(address);
-      
-      txs = normalTxs.concat(internalTxs).concat(erc20Txs);
-      txs = this.reduceTxs(txs);
-  
-      sessionStorage.setItem(`historyTxs_${address}`, JSON.stringify(txs));
-    } else {
-      txs = JSON.parse(txs);
-    }
-  
-    this.setState({ historyTxs: txs });
-  }
-  
-  reduceTxs(txs) {
-    const formattedTxs = sortBy(txs, (tx) => {
-      return -tx.blockNumber;
-    });
-    
-    return groupBy(formattedTxs, (tx) => {
-      return getFormattedDate(+tx.timeStamp);
-    });
   }
   
   reImportWallet = () => {
@@ -111,7 +67,6 @@ export default class Portfolio extends React.Component {
         reImportWallet={this.reImportWallet}
         equityChart={this.equityChart}
         performanceChart={this.performanceChart}
-        historyTxs={this.state.historyTxs}
         tokenAddresses={this.state.tokenAddresses}
         currency={this.state.currency}
         switchCurrency={this.switchCurrency}
