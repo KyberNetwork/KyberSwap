@@ -86,6 +86,53 @@
   &__text-red {
     color: $alert-color;
   }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 13px;
+    font-weight: 400;
+
+    &-item {
+      cursor: pointer;
+      padding: 10px;
+      transition: color .3s;
+
+      &--disabled {
+        opacity: .6;
+        pointer-events: none;
+        cursor: initial;
+      }
+
+      &--inactive {
+        pointer-events: none;
+        cursor: initial;
+        padding: 10px 0;
+      }
+
+      &--active,
+      &:hover {
+        color: $text-orange;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &--disabled {
+      opacity: 0.6;
+      pointer-events: none;
+      cursor: initial;
+    }
+
+    @include screen-max-width(mid-small) {
+      &-item {
+        padding: 10px 5px;
+      }
+    }
+  }
 }
 
 .text-center {

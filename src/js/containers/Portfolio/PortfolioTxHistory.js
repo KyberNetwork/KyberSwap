@@ -6,6 +6,7 @@ import { ERC20 } from "../../services/constants";
 import * as etherScanService from "../../services/etherscan/etherScanService";
 import { getFormattedDate } from "../../utils/common";
 import InlineLoading from "../../components/CommonElement/InlineLoading";
+import PaginationList from "../../components/CommonElement/PaginationList";
 
 export default class PortfolioTxHistory extends React.Component {
   constructor(props) {
@@ -253,6 +254,7 @@ export default class PortfolioTxHistory extends React.Component {
         {!this.props.isOnMobile && (
           <div className={"portfolio__title"}>{this.props.translate('portfolio.tx_history') || 'Transaction History'}</div>
         )}
+        
         <div className={"portfolio__history-content"}>
           {this.state.loadingHistory && (
             <InlineLoading theme={this.props.theme}/>
@@ -260,6 +262,12 @@ export default class PortfolioTxHistory extends React.Component {
           
           {!this.state.loadingHistory && this.renderTransactionHistory()}
         </div>
+        
+        <PaginationList
+          total={1000}
+          onPageChanged={() => alert(1)}
+          loading={false}
+        />
       </div>
     )
   }
