@@ -28,6 +28,7 @@
     "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Your Wallet",
     "register_beta": "Скоро",
     "or_connect_with": "Or Connect with",
@@ -439,13 +440,21 @@
     "amount": "количество",
     "total": "Всего",
     "volume": "Объем",
-    "change": "change",
     "buy": "Buy ${symbol}",
     "sell": "Sell ${symbol}",
     "type": "Type",
     "available_balance": "Available Balance",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "Получил"
+  },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens"
   },
   "home": "Домой",
   "tracker": "Трекер",
@@ -470,5 +479,8 @@
   "off": "OFF",
   "learn_more": "Учить больше",
   "received": "Получил",
-  "details": "Details"
+  "details": "Details",
+  "change": "change",
+  "send": "Send",
+  "undefined": "Undefined"
 }

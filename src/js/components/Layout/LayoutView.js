@@ -8,6 +8,7 @@ import constants from "../../services/constants"
 import * as common from "../../utils/common"
 import { store } from '../../store'
 import { HeaderTransaction } from "../../containers/TransactionCommon";
+import Portfolio from "../../containers/Portfolio/Portfolio";
 
 function getAllPathToken(listToken){
   var tokens = []
@@ -73,6 +74,7 @@ const LayoutView = (props) => {
           <Switch>
             <Route exact path={constants.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constants.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />
+            <Route exact path={constants.BASE_HOST + `/portfolio`} component={Portfolio} />
             <Redirect from={constants.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constants.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />
             <Route exact path={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/:source${listLimitOrderToken}-:dest${listLimitOrderToken}`} component={props.LimitOrder} />

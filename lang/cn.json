@@ -26,6 +26,7 @@
     "connect_your_wallet_to_swap": "连接您的钱包进行兑换",
     "connect_your_wallet_to_transfer": "连接您的钱包进行转账",
     "connect_your_wallet_to_limit_order": "导入您的钱包并发送订单",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "下载",
     "your_wallet": "您的钱包",
     "register_beta": "敬请期待",
@@ -440,13 +441,21 @@
     "amount": "数量",
     "total": "估值",
     "volume": "交易量",
-    "change": "变化",
     "buy": "购买${symbol}",
     "sell": "出售${symbol}",
     "type": "类型",
     "available_balance": "可用余额",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "收到"
+  },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -471,5 +480,8 @@
   "off": "折扣",
   "learn_more": "学到更多",
   "received": "收到",
-  "details": "Details"
+  "details": "Details",
+  "change": "变化",
+  "send": "发送",
+  "undefined": "未定义"
 }

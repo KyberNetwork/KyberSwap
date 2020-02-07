@@ -1,10 +1,7 @@
 import React from "react"
-import * as common from "../../../utils/common"
-import * as converter from "../../../utils/converter"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import { SortableComponent } from "../../../components/CommonElement"
-import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import { QuoteList, Search } from "../QuoteMarket"
 import { sortQuotePriority } from "../../../utils/sorters";
@@ -118,7 +115,7 @@ export default class QuoteMarket extends React.Component{
     let price = this.props.translate("limit_order.price") || "Price"
     let pair = this.props.translate("limit_order.pair") || "Pair"
     let volume = this.props.translate("limit_order.volume") || "Volume"
-    let change = this.props.translate("limit_order.change") || "Change"
+    let change = this.props.translate("change") || "Change"
     const {is_volume} = this.state
     return [
       { html: pair, field: "base" }, 
@@ -165,7 +162,7 @@ export default class QuoteMarket extends React.Component{
                 <Search onSearch={this.onSearch}/>
                 <div className="volume_change_panel">
                   <div className="advance-config__option-container">
-                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
+                    <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("change") || "Change"}</span>
                       <input className="advance-config__radio" type="radio" name="volumeOrChange"
                              onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
                              checked={!this.state.is_volume} />

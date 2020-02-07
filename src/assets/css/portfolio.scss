@@ -1,0 +1,378 @@
+.portfolio {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &--not-imported {
+    justify-content: center;
+    margin-top: 100px;
+
+    .portfolio__left {
+      width: initial;
+    }
+
+    .portfolio__account {
+      width: 425px;
+    }
+  }
+
+  &__left {
+    width: 68%;
+  }
+
+  &__right {
+    width: 30%;
+
+    .slide-down__content {
+      margin-top: 0 !important;
+    }
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  &__item {
+    padding: 25px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    box-shadow: 0 2px 58px -20px rgba(0, 0, 0, 0.17);
+  }
+
+  &__summary {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__account {
+    width: 52%;
+
+    &-top,
+    &-bot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-top {
+      border-bottom: 1px solid $grey-light;
+      padding-bottom: 20px;
+
+      &-item {
+        width: 55%;
+
+        &:first-child {
+          //width: 45%;
+        }
+      }
+    }
+
+    &-bot {
+      padding-top: 20px;
+    }
+
+    &-wallet {
+      display: flex;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &-type {
+      margin-right: 10px;
+    }
+
+    &-address {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-reimport {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: $blue-light;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color .3s;
+
+      &:hover {
+        color: $text-blue;
+      }
+    }
+
+    &-txt {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &-txt-small {
+      font-size: 10px;
+      font-weight: 300;
+      font-style: italic;
+      margin-left: 7px;
+    }
+
+    &-txt-big {
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    &-tag {
+      font-size: 14px;
+      font-weight: 400;
+      border-radius: 3px;
+      padding: 5px 10px;
+      border: 1px solid;
+      margin-left: 15px;
+      position: relative;
+      bottom: 6px;
+      cursor: pointer;
+      float: right;
+      transition: all .3s;
+    }
+
+    &-change {
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 5px;
+
+      &--positive {
+        color: $text-green;
+      }
+
+      &--negative {
+        color: $error-color;
+      }
+    }
+  }
+
+  &__equity {
+    width: 46%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #6a6a6a;
+  }
+
+  &__performance {
+    &-chart {
+      width: 100%;
+    }
+  }
+
+  &__history {
+
+  }
+
+  &__tx {
+    &-header {
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &-body {
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      color: inherit;
+    }
+
+    &-left {
+      display: flex;
+    }
+
+    &-right {
+
+    }
+
+    &-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &--swap {
+        background-image: url($image-path + 'icons/tx-swap.svg');
+      }
+
+      &--receive {
+        background-image: url($image-path + 'icons/tx-receive.svg');
+      }
+
+      &--send {
+        background-image: url($image-path + 'icons/tx-send.svg');
+      }
+
+      &--limit-order {
+        background-image: url($image-path + 'icons/tx-limit-order.svg');
+      }
+
+      &--approve {
+        background-image: url($image-path + 'icons/tx-approve.svg');
+      }
+    }
+
+    &-content {
+      > div {
+        margin-bottom: 5px;
+      }
+    }
+
+    &-bold,
+    &-light {
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    &-bold {
+      font-size: 14px;
+    }
+
+    &-light {
+      font-size: 12px;
+    }
+
+    &-type,
+    &-status {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    &-type {
+      margin-bottom: 5px;
+    }
+
+    &-status {
+      &--failed {
+        color: $error-color;
+      }
+    }
+  }
+
+  &__info {
+    text-align: center;
+    margin: 50px 0;
+
+    &-text {
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    &-button {
+      font-size: 13px;
+      font-weight: 400;
+      padding: 12px 23px;
+      background-color: $swap-color;
+      display: inline-block;
+      color: white;
+      border-radius: 3px;
+      text-transform: uppercase;
+      transition: background-color .3s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-swap-light;
+      }
+    }
+  }
+
+  .import-account .container {
+    padding: 0;
+  }
+
+  &__navigation {
+    display: none;
+  }
+
+  @include screen-max-width(xlarge) {
+    display: block;
+
+    &--not-imported {
+      display: flex;
+    }
+
+    &__left,
+    &__right {
+      width: 100%;
+    }
+
+    &__summary {
+      display: block;
+    }
+
+    &__account,
+    &__equity {
+      width: 100%;
+    }
+
+    &__equity {
+      justify-content: flex-start;
+    }
+
+    &__item {
+      padding: 25px 10px;
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    &__navigation {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      height: 50px;
+      position: relative;
+      z-index: 1;
+
+      &-item {
+        font-size: 15px;
+        font-weight: 400;
+        margin-right: 45px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &::after {
+          content: '';
+          width: 0;
+          height: 2px;
+          border-radius: 3px;
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          transition: all .3s;
+        }
+
+        &--active {
+          &::after {
+            width: 100%;
+            background-color: $text-orange;
+          }
+        }
+      }
+    }
+  }
+
+  @include screen-max-width(mid-small) {
+    &__account-bot {
+      display: block;
+    }
+  }
+}

@@ -26,6 +26,7 @@
     "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "다운로드",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
@@ -441,13 +442,21 @@
     "amount": "금액",
     "total": "추정 가치",
     "volume": "볼륨",
-    "change": "변동",
     "buy": "${symbol} 구매",
     "sell": "${symbol} 판매",
     "type": "유형",
     "available_balance": "사용 가능한 잔액",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "받았습니다"
+  },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -472,5 +481,8 @@
   "off": "할인",
   "learn_more": "더 알아보기",
   "received": "받았습니다",
-  "details": "자세히보기"
+  "details": "자세히보기",
+  "change": "변동",
+  "send": "보내다",
+  "undefined": "Undefined"
 }
