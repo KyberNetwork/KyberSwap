@@ -10,7 +10,7 @@ export default class PortfolioEquity extends React.Component {
   componentDidMount() {
     const tokenSymbols = [];
     const tokenValues = [];
-    const tokenDisplay = 6;
+    const tokenDisplay = 5;
     
     this.props.availableTokens.forEach((token, index) => {
       if (token.balanceInETH === '0') return;
