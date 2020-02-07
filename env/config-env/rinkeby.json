@@ -9,6 +9,7 @@
         "ws": "wss://rinkeby.infura.io/ws/"
     },
     "api_tokens": "https://rinkeby-api.kyber.network/internal/currencies",
+    "portfolio_api": "https://dev-portfolio.knstats.com",
     "tokens_gas": {
         "ETH": 0,
         "DGX": 750000
@@ -70,6 +71,5 @@
     "networkId": 4,
     "chainName": "Rinkeby",
     "tracker": "https://tracker.kyber.network",
-    "networkName": "rinkeby",
-    "etherscan": "https://api-ropsten.etherscan.io/api"
+    "networkName": "rinkeby"
 }

@@ -15,6 +15,7 @@
     "min_accept_amount": 0.5,
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
+    "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
     "priority_tokens": [
         "ETH",
@@ -381,6 +382,5 @@
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "networkId": 3,
     "chainName": "Ropsten",
-    "tracker": "https://ropsten-api.kyber.network",
-    "etherscan": "https://api-ropsten.etherscan.io/api"
+    "tracker": "https://ropsten-api.kyber.network"
 }

@@ -8,6 +8,7 @@ import InlineLoading from "../../components/CommonElement/InlineLoading";
 import PaginationList from "../../components/CommonElement/PaginationList";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
+import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
   const address = store.account.account.address || '';
@@ -146,9 +147,9 @@ export default class PortfolioTxHistory extends React.Component {
         const transferValue = this.formatTxValue(tx.transfer_token_value, transferTokenDecimal);
         
         if (tx.transfer_from === this.props.address) {
-          return this.renderSendTx(transferValue, transferTokenSymbol, tx.transfer_to, index);
+          return this.renderSendTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_to, index);
         } else if (tx.transfer_to === this.props.address) {
-          return this.renderReceiveTx(transferValue, transferTokenSymbol, tx.transfer_from, index);
+          return this.renderReceiveTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_from, index);
         }
       } else if (tx.type === TX_TYPES.swap) {
         const srcSymbol = this.state.tokenAddresses[tx.swap_source_token.toLowerCase()];
@@ -158,20 +159,20 @@ export default class PortfolioTxHistory extends React.Component {
         const srcValue = this.formatTxValue(tx.swap_source_amount, srcDecimal);
         const destValue = this.formatTxValue(tx.swap_dest_amount, destDecimal);
         
-        return this.renderSwapTx(srcValue, srcSymbol, destValue, destSymbol, index);
+        return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, index);
       } else if (tx.type === TX_TYPES.approve) {
-        return this.renderApproveTx(tx.approve_token_symbol, index);
+        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, index);
       } else if (tx.type === TX_TYPES.undefined) {
-        return this.renderUndefinedTx(tx.from, tx.to, index);
+        return this.renderUndefinedTx(tx.hash, tx.from, tx.to, index);
       }
       
       return null;
     })
   }
   
-  renderSendTx(txValue, txTokenSymbol, txTo, index) {
+  renderSendTx(txHash, txValue, txTokenSymbol, txTo, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--send"}/>
           <div className={"portfolio__tx-content"}>
@@ -182,13 +183,13 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('send') || 'Send'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
-  renderReceiveTx(txValue, txTokenSymbol, txFrom, index) {
+  renderReceiveTx(txHash, txValue, txTokenSymbol, txFrom, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--receive"}/>
           <div className={"portfolio__tx-content"}>
@@ -199,13 +200,13 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.exchange_receive') || 'Receive'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
-  renderApproveTx(txTokenSymbol, index) {
+  renderApproveTx(txHash, txTokenSymbol, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--approve"}/>
           <div className={"portfolio__tx-content"}>
@@ -218,13 +219,13 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('modal.approve') || 'Approve'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
-  renderSwapTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderSwapTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--swap"}/>
           <div className={"portfolio__tx-content"}>
@@ -239,13 +240,13 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.swap') || 'Swap'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
-  renderLimitOrderTx(sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderLimitOrderTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--limit-order"}/>
           <div className={"portfolio__tx-content"}>
@@ -258,13 +259,13 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.limit_order') || 'Limit Order'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
-  renderUndefinedTx(from, to, index) {
+  renderUndefinedTx(txHash, from, to, index) {
     return (
-      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+      <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon"}/>
           <div className={"portfolio__tx-content"}>
@@ -275,7 +276,7 @@ export default class PortfolioTxHistory extends React.Component {
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('undefined') || 'Undefined'}</div>
         </div>
-      </div>
+      </a>
     )
   }
   
