@@ -68,12 +68,7 @@ const PortfolioView = (props) => {
             {/*<PortfolioPerformance  performanceChart={props.performanceChart} />*/}
   
             <PortfolioTxHistory
-              address={props.address}
-              tokenAddresses={props.tokenAddresses}
               historyTxs={props.historyTxs}
-              isOnMobile={props.isOnMobile}
-              theme={props.theme}
-              translate={props.translate}
             />
           </Fragment>
         )}

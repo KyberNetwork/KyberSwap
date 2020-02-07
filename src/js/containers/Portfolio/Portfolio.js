@@ -8,7 +8,7 @@ import { PORTFOLIO_TAB } from "../../services/constants";
 @connect((store) => {
   const address = store.account.account.address || '';
   return {
-    tokens: store.tokens.tokens,
+    ethToken: store.tokens.tokens.ETH,
     account: store.account,
     address: address.toLowerCase(),
     translate: getTranslate(store.locale),
@@ -23,23 +23,9 @@ export default class Portfolio extends React.Component {
     this.performanceChart = React.createRef();
     
     this.state = {
-      tokenAddresses: {},
       currency: 'ETH',
       mobileTab: PORTFOLIO_TAB.overview
     }
-  }
-  
-  componentDidMount() {
-    this.setTokenAddresses();
-  }
-  
-  setTokenAddresses() {
-    const tokenAddresses = Object.values(this.props.tokens).reduce((result, token) => {
-      Object.assign(result, {[token.address]: token.symbol});
-      return result
-    }, {});
-
-    this.setState({ tokenAddresses: tokenAddresses });
   }
   
   reImportWallet = () => {
@@ -58,7 +44,7 @@ export default class Portfolio extends React.Component {
   render() {
     return (
       <PortfolioView
-        eth={this.props.tokens.ETH}
+        eth={this.props.ethToken}
         ethereum={this.props.ethereum}
         account={this.props.account}
         isImported={this.props.account.account}
@@ -67,7 +53,6 @@ export default class Portfolio extends React.Component {
         reImportWallet={this.reImportWallet}
         equityChart={this.equityChart}
         performanceChart={this.performanceChart}
-        tokenAddresses={this.state.tokenAddresses}
         currency={this.state.currency}
         switchCurrency={this.switchCurrency}
         mobileTab={this.state.mobileTab}

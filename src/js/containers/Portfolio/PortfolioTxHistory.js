@@ -1,25 +1,43 @@
 import React from "react"
-import BLOCKCHAIN_INFO from "../../../../env";
 import { groupBy, isEmpty, sortBy } from "underscore";
-import {decodeTxInput, divOfTwoNumber, roundingNumber, toT} from "../../utils/converter";
-import { ERC20 } from "../../services/constants";
-import * as etherScanService from "../../services/etherscan/etherScanService";
+import { divOfTwoNumber, roundingNumber, toT } from "../../utils/converter";
+import { TX_TYPES, PORTFOLIO_TX_LIMIT } from "../../services/constants";
+import * as portfolioService from "../../services/portfolio/portfolioService";
 import { getFormattedDate } from "../../utils/common";
 import InlineLoading from "../../components/CommonElement/InlineLoading";
 import PaginationList from "../../components/CommonElement/PaginationList";
+import { connect } from "react-redux";
+import { getTranslate } from "react-localize-redux";
 
+@connect((store) => {
+  const address = store.account.account.address || '';
+  const global = store.global;
+  
+  return {
+    tokens: store.tokens.tokens,
+    address: address.toLowerCase(),
+    translate: getTranslate(store.locale),
+    theme: global.theme,
+    isOnMobile: global.isOnMobile,
+  }
+})
 export default class PortfolioTxHistory extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
+      tokenAddresses: {},
       historyTxs: {},
       loadingHistory: false,
-      loadingError: false
+      loadingError: false,
+      pageTotal: 1
     }
+    
+    this.fetchingTxsInterval = null
   }
   
   componentDidMount() {
+    this.setTokenAddresses();
     this.setTxHistory();
   }
   
@@ -29,23 +47,42 @@ export default class PortfolioTxHistory extends React.Component {
     }
   }
   
-  async setTxHistory() {
+  componentWillUnmount() {
+    clearInterval(this.fetchingTxsInterval)
+  }
+  
+  setTokenAddresses() {
+    const tokenAddresses = Object.values(this.props.tokens).reduce((result, token) => {
+      Object.assign(result, {[token.address]: token.symbol});
+      return result
+    }, {});
+    
+    this.setState({ tokenAddresses: tokenAddresses });
+  }
+  
+  async setTxHistory(page = 1) {
     const address = this.props.address;
     
     if (!this.props.address) return;
   
     this.setState({ loadingHistory: true });
+    let { data, count, in_queue } = await portfolioService.fetchAddressTxs(address, page);
+
+    if (in_queue) {
+      this.fetchingTxsInterval = setInterval(async () => {
+        await this.setTxHistory();
+      }, 2000);
+      return;
+    }
     
-    const normalTxs = await etherScanService.fetchNormalTransactions(address);
-    const internalTxs = await etherScanService.fetchInternalTransactions(address);
-    const erc20Txs = await etherScanService.fetchERC20Transactions(address);
+    clearInterval(this.fetchingTxsInterval);
     
-    let txs = normalTxs.concat(internalTxs).concat(erc20Txs);
-    txs = this.reduceTxs(txs);
+    data = this.reduceTxs(data);
     
     this.setState({
-      historyTxs: txs,
-      loadingHistory: false
+      historyTxs: data,
+      loadingHistory: false,
+      pageTotal: Math.ceil(count / PORTFOLIO_TX_LIMIT)
     });
   }
   
@@ -59,11 +96,12 @@ export default class PortfolioTxHistory extends React.Component {
     });
   }
   
-  formatValueAndTokenSymbol(value, tokenSymbol, tokenDecimal) {
-    return {
-      txValue: +toT(value, tokenDecimal ? tokenDecimal : 18, 6),
-      txTokenSymbol: tokenSymbol ? tokenSymbol : 'ETH'
-    }
+  formatTxValue(value, tokenDecimal) {
+    return +toT(value, tokenDecimal ? tokenDecimal : 18, 6);
+  }
+  
+  getTokenDecimal(tokenSymbol) {
+    return tokenSymbol && tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
   }
   
   renderTransactionHistory() {
@@ -101,57 +139,33 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   renderTxByDate(txs) {
-    txs = groupBy(txs, (tx) => {
-      return tx.hash;
-    });
-    
-    return Object.keys(txs).map((hash, index) => {
-      if (txs[hash].length === 1) {
-        const tx = txs[hash][0];
-        const { txValue, txTokenSymbol } = this.formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
+    return txs.map((tx, index) => {
+      if (tx.type === TX_TYPES.transfer) {
+        const transferTokenSymbol = tx.transfer_token_symbol;
+        const transferTokenDecimal = this.getTokenDecimal(transferTokenSymbol);
+        const transferValue = this.formatTxValue(tx.transfer_token_value, transferTokenDecimal);
         
-        if (tx.from === this.props.address && txValue) {
-          return this.renderSendTx(txValue, txTokenSymbol, tx.to, index);
-        } else if (tx.to === this.props.address && txValue) {
-          return this.renderReceiveTx(txValue, txTokenSymbol, tx.from, index);
-        } else if (tx.from === this.props.address && !txValue) {
-          const decodedInput = decodeTxInput(tx.input, ERC20);
-          
-          if (decodedInput && decodedInput.name === 'approve') {
-            const approvedTokenSymbol = this.props.tokenAddresses[tx.to];
-            if (approvedTokenSymbol) return this.renderApproveTx(approvedTokenSymbol, index);
-          }
+        if (tx.transfer_from === this.props.address) {
+          return this.renderSendTx(transferValue, transferTokenSymbol, tx.transfer_to, index);
+        } else if (tx.transfer_to === this.props.address) {
+          return this.renderReceiveTx(transferValue, transferTokenSymbol, tx.transfer_from, index);
         }
+      } else if (tx.type === TX_TYPES.swap) {
+        const srcSymbol = this.state.tokenAddresses[tx.swap_source_token.toLowerCase()];
+        const destSymbol = this.state.tokenAddresses[tx.swap_dest_token.toLowerCase()];
+        const srcDecimal = this.getTokenDecimal(srcSymbol);
+        const destDecimal = this.getTokenDecimal(destSymbol);
+        const srcValue = this.formatTxValue(tx.swap_source_amount, srcDecimal);
+        const destValue = this.formatTxValue(tx.swap_dest_amount, destDecimal);
         
-        return null;
+        return this.renderSwapTx(srcValue, srcSymbol, destValue, destSymbol, index);
+      } else if (tx.type === TX_TYPES.approve) {
+        return this.renderApproveTx(tx.approve_token_symbol, index);
+      } else if (tx.type === TX_TYPES.undefined) {
+        return this.renderUndefinedTx(tx.from, tx.to, index);
       }
       
-      const txData = {};
-      
-      txs[hash].forEach((tx) => {
-        const { txValue, txTokenSymbol } = this.formatValueAndTokenSymbol(tx.value, tx.tokenSymbol, tx.tokenDecimal);
-        
-        if (tx.from === this.props.address && !txData.send && txValue) {
-          txData.send = {txValue, txTokenSymbol, address: tx.to};
-        } else if (tx.to === this.props.address && !txData.receive && txValue) {
-          txData.receive = {txValue, txTokenSymbol, address: tx.from};
-        }
-      });
-      
-      const receiveData = txData.receive;
-      const sendData = txData.send;
-      
-      if (!sendData && receiveData) {
-        return this.renderReceiveTx(receiveData.txValue, receiveData.txTokenSymbol, receiveData.address, index);
-      } else if (!receiveData && sendData) {
-        return this.renderSendTx(sendData.txValue, sendData.txTokenSymbol, sendData.address, index);
-      } else if (receiveData && sendData) {
-        if (sendData.address === BLOCKCHAIN_INFO.kyberswapAddress) {
-          return this.renderLimitOrderTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
-        }
-        
-        return this.renderSwapTx(sendData.txValue, sendData.txTokenSymbol, receiveData.txValue, receiveData.txTokenSymbol, index);
-      }
+      return null;
     })
   }
   
@@ -248,6 +262,23 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
+  renderUndefinedTx(from, to, index) {
+    return (
+      <div className={"portfolio__tx-body theme__table-item"} key={index}>
+        <div className={"portfolio__tx-left"}>
+          <div className={"portfolio__tx-icon"}/>
+          <div className={"portfolio__tx-content"}>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_from') || 'From'}: {from}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {to}</div>
+          </div>
+        </div>
+        <div className={"portfolio__tx-right"}>
+          <div className={"portfolio__tx-type"}>{this.props.translate('undefined') || 'Undefined'}</div>
+        </div>
+      </div>
+    )
+  }
+  
   render() {
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
@@ -263,11 +294,13 @@ export default class PortfolioTxHistory extends React.Component {
           {!this.state.loadingHistory && this.renderTransactionHistory()}
         </div>
         
-        <PaginationList
-          total={1000}
-          onPageChanged={() => alert(1)}
-          loading={false}
-        />
+        {(!this.state.loadingError && !isEmpty(this.state.historyTxs) && this.state.pageTotal > 1) && (
+          <PaginationList
+            total={this.state.pageTotal}
+            onPageChanged={(page) => this.setTxHistory(page)}
+            loading={this.state.loadingHistory}
+          />
+        )}
       </div>
     )
   }

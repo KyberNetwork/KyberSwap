@@ -482,5 +482,6 @@
   "received": "收到",
   "details": "Details",
   "change": "变化",
-  "send": "发送"
+  "send": "发送",
+  "undefined": "未定义"
 }

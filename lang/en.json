@@ -487,5 +487,6 @@
   "received": "Received",
   "details": "Details",
   "change": "Change",
-  "send": "Send"
+  "send": "Send",
+  "undefined": "Undefined"
 }

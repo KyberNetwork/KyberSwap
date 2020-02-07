@@ -5,7 +5,7 @@ export default class PaginationList extends React.Component {
     super(props);
     
     this.state = {
-      page: 4
+      page: 1
     };
   }
   
@@ -21,20 +21,20 @@ export default class PaginationList extends React.Component {
   
   changePage(page) {
     this.setState({page});
-    this.props.onPageChanged();
+    this.props.onPageChanged(page);
   }
   
   renderPreviousPages() {
     let pages = [];
     
-    for(let i = 1; i < this.state.page && i <= 2; i++) {
-      pages.push(<div className="common__pagination-item" onClick={() => this.changePage(i)}>{i}</div>)
+    for (let i = 1; i < this.state.page && i <= 2; i++) {
+      pages.push(<div key={i} className="common__pagination-item" onClick={() => this.changePage(i)}>{i}</div>)
     }
   
     if (this.state.page >= 4) {
       const previousPage = this.state.page - 1;
-      pages.push(<div className="common__pagination-item common__pagination-item--inactive">...</div>)
-      pages.push(<div className="common__pagination-item" onClick={() => this.changePage(previousPage)}>{previousPage}</div>)
+      pages.push(<div key='previous-more' className="common__pagination-item common__pagination-item--inactive">...</div>)
+      pages.push(<div key='previous-page' className="common__pagination-item" onClick={() => this.changePage(previousPage)}>{previousPage}</div>)
     }
     
     return pages;
@@ -46,13 +46,13 @@ export default class PaginationList extends React.Component {
     const pageDifference = this.props.total - this.state.page;
     
     if (pageDifference >= 3) {
-      pages.push(<div className="common__pagination-item" onClick={() => this.changePage(nextPages)}>{nextPages}</div>)
-      pages.push(<div className="common__pagination-item common__pagination-item--inactive">...</div>)
+      pages.push(<div key='next-page' className="common__pagination-item" onClick={() => this.changeToNextPage()}>{nextPages}</div>)
+      pages.push(<div key='next-more' className="common__pagination-item common__pagination-item--inactive">...</div>)
       nextPages = this.props.total - 1;
     }
     
-    for(let i = nextPages; i <= this.props.total; i++) {
-      pages.push(<div className="common__pagination-item" onClick={() => this.changePage(i)}>{i}</div>)
+    for (let i = nextPages; i <= this.props.total; i++) {
+      pages.push(<div key={i} className="common__pagination-item" onClick={() => this.changePage(i)}>{i}</div>)
     }
     
     return pages;

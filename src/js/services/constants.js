@@ -369,7 +369,13 @@ const PORTFOLIO_TAB = {
   balance: 2,
   history: 3,
 };
-
+const PORTFOLIO_TX_LIMIT = 20;
+const TX_TYPES = {
+  transfer: 'transfer_token',
+  approve: 'approve_token',
+  swap: 'swap_token',
+  undefined: 'undefined',
+};
 const LIST_PARAMS_SUPPORTED = [{ key: 'lang', default: 'en' }, { key: 'ref' }]
 const CONFIG_ENV_LEDGER_LINK = "https://support.ledgerwallet.com/hc/en-us/articles/115005165269-What-if-Ledger-Wallet-is-not-recognized-on-Linux-"
 const LEDGER_SUPPORT_LINK = "https://support.ledgerwallet.com/hc/en-us"
@@ -392,5 +398,5 @@ module.exports = {
   CONNECTION_CHECKER,CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED,
   TRADE_TOPIC, PERM_HINT, CONNECTION_TIMEOUT, INIT_LIMIT_ORDER_STATE, LIMIT_ORDER_CONFIG, SIGN_OFF_WALLETS, KYBER_SWAP_ABI,
   EXCHANGE_CONFIG, TRANSFER_CONFIG, LIMIT_ORDER_TOPIC, TX_CONFIRMING_TIMEOUT, GENESIS_ADDRESS, SPECIAL_TRANSFER_GAS_LIMIT,
-  PORTFOLIO_TAB
+  PORTFOLIO_TAB, PORTFOLIO_TX_LIMIT, TX_TYPES
 };
