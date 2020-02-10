@@ -7,7 +7,7 @@
 
   &--not-imported {
     justify-content: center;
-    margin-top: 100px;
+    margin: 100px auto;
 
     .portfolio__left {
       width: initial;
@@ -304,7 +304,7 @@
 
     &__left,
     &__right {
-      width: 100%;
+      width: 100% !important;
     }
 
     &__summary {
@@ -313,7 +313,7 @@
 
     &__account,
     &__equity {
-      width: 100%;
+      width: 100% !important;
     }
 
     &__equity {
