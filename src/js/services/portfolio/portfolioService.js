@@ -30,7 +30,7 @@ export async function fetchAddressTxs(address, page) {
 }
 
 function validateResultObject(result) {
-  return result.data && Array.isArray(result.data) && result.count && !isNaN(result.count) &&
+  return result.data && Array.isArray(result.data) && result.count !== undefined && !isNaN(result.count) &&
     result.in_queue !== undefined && result.error === null
 }
 

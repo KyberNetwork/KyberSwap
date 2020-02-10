@@ -108,7 +108,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   getTokenDecimal(tokenSymbol) {
-    return tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
+    return tokenSymbol !== 'ETH' && this.props.tokens[tokenSymbol] ? this.props.tokens[tokenSymbol].decimals : 18;
   }
   
   renderTransactionHistory() {
@@ -286,6 +286,11 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
+  onPageChanged(page) {
+    this.setTxHistory(page);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+  
   render() {
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
@@ -304,7 +309,7 @@ export default class PortfolioTxHistory extends React.Component {
         {(!this.state.loadingError && !isEmpty(this.state.historyTxs) && this.state.pageTotal > 1) && (
           <PaginationList
             total={this.state.pageTotal}
-            onPageChanged={(page) => this.setTxHistory(page)}
+            onPageChanged={this.onPageChanged.bind(this)}
             loading={this.state.loadingHistory}
           />
         )}

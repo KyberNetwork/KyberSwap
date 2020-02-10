@@ -67,4 +67,8 @@ export default class PrivateKey {
   getWalletName = () => {
     return 'Private Key';
   }
+  
+  getMetaName = () => {
+    return 'Software Wallet';
+  }
 }
