@@ -30,9 +30,9 @@ const PortfolioOverview = (props) => {
       </div>
       <div className={"portfolio__account-bot"}>
         <div className={"portfolio__account-wallet"}>
-          <div className={"portfolio__account-type"}>MetaMask:</div>
+          <div className={"portfolio__account-type"}>{props.walletName}:</div>
           <a className={"portfolio__account-address theme__text-3"} target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.address}>
-            {props.address.slice(0, 20)}...{props.address.slice(-4)}
+            {props.address.slice(0, 15)}...{props.address.slice(-4)}
           </a>
         </div>
         <span className={"portfolio__account-reimport"} onClick={props.reImportWallet}>
