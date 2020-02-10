@@ -41,6 +41,7 @@ const PortfolioView = (props) => {
                   reImportWallet={props.reImportWallet}
                   translate={props.translate}
                   walletName={props.account.wallet.getMetaName()}
+                  isOnDapp={props.account.isOnDAPP}
                 />
               )}
             </div>

@@ -91,7 +91,7 @@ const AccountBalanceLayout = (props) => {
       )
     });
     
-    return !isEmpty ? allBalances : false;
+    return !isEmpty || props.searchWord ? allBalances : false;
   }
   
   const allBalances = getBalances();
