@@ -67,9 +67,15 @@ export default class PortfolioTxHistory extends React.Component {
     if (!this.props.address) return;
   
     this.setState({ loadingHistory: true });
-    let { data, count, in_queue } = await portfolioService.fetchAddressTxs(address, page);
+    let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page);
+    
+    this.setState({ loadingError: isError });
+    if (isError) {
+      this.setState({ loadingHistory: false });
+      return;
+    }
 
-    if (in_queue) {
+    if (inQueue) {
       this.fetchingTxsInterval = setInterval(async () => {
         await this.setTxHistory();
       }, 2000);
@@ -83,7 +89,7 @@ export default class PortfolioTxHistory extends React.Component {
     this.setState({
       historyTxs: data,
       loadingHistory: false,
-      pageTotal: Math.ceil(count / PORTFOLIO_TX_LIMIT)
+      pageTotal: Math.ceil(totalTxs / PORTFOLIO_TX_LIMIT)
     });
   }
   
@@ -102,7 +108,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   getTokenDecimal(tokenSymbol) {
-    return tokenSymbol && tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
+    return tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
   }
   
   renderTransactionHistory() {
@@ -233,7 +239,7 @@ export default class PortfolioTxHistory extends React.Component {
               {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
             </div>
             <div className={"portfolio__tx-light theme__text-7"}>
-              1 {sendTokenSymbol} = {roundingNumber(divOfTwoNumber(receiveValue || 0, sendValue || 0))} {receiveTokenSymbol}
+              1 {sendTokenSymbol} = {roundingNumber(divOfTwoNumber(receiveValue, sendValue))} {receiveTokenSymbol}
             </div>
           </div>
         </div>
