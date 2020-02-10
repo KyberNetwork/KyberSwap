@@ -102,7 +102,34 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   getTokenDecimal(tokenSymbol) {
-    return tokenSymbol && tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
+    return tokenSymbol !== 'ETH' ? this.props.tokens[tokenSymbol].decimals : 18;
+  }
+  
+  validateTransferTx(tx) {
+    return tx.transfer_token_symbol && tx.transfer_token_value && tx.transfer_from && tx.transfer_to && tx.hash;
+  }
+  
+  validateSwapTx(tx) {
+    return tx.swap_source_token && tx.swap_dest_token && tx.swap_source_amount && !isNaN(tx.swap_source_amount) && tx.swap_dest_amount && !isNaN(tx.swap_dest_amount) && tx.hash;
+  }
+  
+  validateApproveTx(tx) {
+    return tx.approve_token_symbol && tx.hash;
+  }
+  
+  validateUndefinedTx(tx) {
+    return tx.from && tx.to && tx.hash;
+  }
+  
+  checkValidTxsByDate(txs) {
+    let isValid = false;
+    for (let i = 0; i < txs.length; i++) {
+      if (txs[i] !== null) {
+        isValid = true;
+        break;
+      }
+    }
+    return isValid;
   }
   
   renderTransactionHistory() {
@@ -130,10 +157,14 @@ export default class PortfolioTxHistory extends React.Component {
     }
     
     return Object.keys(txs).map((date, index) => {
+      const txsByDate = this.renderTxByDate(txs[date]);
+      
+      if (!this.checkValidTxsByDate(txsByDate)) return null;
+      
       return (
         <div className={"portfolio__tx"} key={index}>
           <div className={"portfolio__tx-header theme__table-header"}>{date}</div>
-          {this.renderTxByDate(txs[date])}
+          {txsByDate}
         </div>
       )
     });
@@ -142,6 +173,9 @@ export default class PortfolioTxHistory extends React.Component {
   renderTxByDate(txs) {
     return txs.map((tx, index) => {
       if (tx.type === TX_TYPES.transfer) {
+        const isValidTx = this.validateTransferTx(tx);
+        if (!isValidTx) return null;
+        
         const transferTokenSymbol = tx.transfer_token_symbol;
         const transferTokenDecimal = this.getTokenDecimal(transferTokenSymbol);
         const transferValue = this.formatTxValue(tx.transfer_token_value, transferTokenDecimal);
@@ -152,6 +186,9 @@ export default class PortfolioTxHistory extends React.Component {
           return this.renderReceiveTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_from, index);
         }
       } else if (tx.type === TX_TYPES.swap) {
+        const isValidTx = this.validateSwapTx(tx);
+        if (!isValidTx) return null;
+        
         const srcSymbol = this.state.tokenAddresses[tx.swap_source_token.toLowerCase()];
         const destSymbol = this.state.tokenAddresses[tx.swap_dest_token.toLowerCase()];
         const srcDecimal = this.getTokenDecimal(srcSymbol);
@@ -161,8 +198,14 @@ export default class PortfolioTxHistory extends React.Component {
         
         return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, index);
       } else if (tx.type === TX_TYPES.approve) {
+        const isValidTx = this.validateApproveTx(tx);
+        if (!isValidTx) return null;
+        
         return this.renderApproveTx(tx.hash, tx.approve_token_symbol, index);
       } else if (tx.type === TX_TYPES.undefined) {
+        const isValidTx = this.validateUndefinedTx(tx);
+        if (!isValidTx) return null;
+        
         return this.renderUndefinedTx(tx.hash, tx.from, tx.to, index);
       }
       
@@ -233,7 +276,7 @@ export default class PortfolioTxHistory extends React.Component {
               {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
             </div>
             <div className={"portfolio__tx-light theme__text-7"}>
-              1 {sendTokenSymbol} = {roundingNumber(divOfTwoNumber(receiveValue || 0, sendValue || 0))} {receiveTokenSymbol}
+              1 {sendTokenSymbol} = {roundingNumber(divOfTwoNumber(receiveValue, sendValue))} {receiveTokenSymbol}
             </div>
           </div>
         </div>
