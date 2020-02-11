@@ -1,11 +1,12 @@
 import React from "react"
 import { groupBy, isEmpty, sortBy } from "underscore";
 import { divOfTwoNumber, roundingNumber, toT } from "../../utils/converter";
-import { TX_TYPES, PORTFOLIO_TX_LIMIT } from "../../services/constants";
+import { TX_TYPES } from "../../services/constants";
 import * as portfolioService from "../../services/portfolio/portfolioService";
 import { getFormattedDate } from "../../utils/common";
 import InlineLoading from "../../components/CommonElement/InlineLoading";
-import PaginationList from "../../components/CommonElement/PaginationList";
+import PaginationList from "../../components/CommonElement/Pagination/PaginationList";
+import PaginationLimit from "../../components/CommonElement/Pagination/PaginationLimit";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import BLOCKCHAIN_INFO from "../../../../env";
@@ -31,8 +32,11 @@ export default class PortfolioTxHistory extends React.Component {
       historyTxs: {},
       loadingHistory: false,
       loadingError: false,
-      pageTotal: 1
-    }
+      totalTxs: '---',
+      currentPage: 1,
+      pageTotal: 1,
+      limit: 20,
+    };
     
     this.fetchingTxsInterval = null
   }
@@ -40,12 +44,6 @@ export default class PortfolioTxHistory extends React.Component {
   componentDidMount() {
     this.setTokenAddresses();
     this.setTxHistory();
-  }
-  
-  componentDidUpdate(prevProps) {
-    if (this.props.address !== prevProps.address) {
-      this.setTxHistory();
-    }
   }
   
   componentWillUnmount() {
@@ -61,13 +59,13 @@ export default class PortfolioTxHistory extends React.Component {
     this.setState({ tokenAddresses: tokenAddresses });
   }
   
-  async setTxHistory(page = 1) {
+  async setTxHistory(page = 1, limit = 20) {
     const address = this.props.address;
     
     if (!this.props.address) return;
   
     this.setState({ loadingHistory: true });
-    let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page);
+    let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page, limit);
     
     this.setState({ loadingError: isError });
     if (isError) {
@@ -77,7 +75,7 @@ export default class PortfolioTxHistory extends React.Component {
 
     if (inQueue) {
       this.fetchingTxsInterval = setInterval(async () => {
-        await this.setTxHistory();
+        await this.setTxHistory(page, limit);
       }, 2000);
       return;
     }
@@ -85,11 +83,12 @@ export default class PortfolioTxHistory extends React.Component {
     clearInterval(this.fetchingTxsInterval);
     
     data = this.reduceTxs(data);
-    
+
     this.setState({
       historyTxs: data,
       loadingHistory: false,
-      pageTotal: Math.ceil(totalTxs / PORTFOLIO_TX_LIMIT)
+      totalTxs: totalTxs,
+      pageTotal: Math.ceil(totalTxs / limit)
     });
   }
   
@@ -286,17 +285,37 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
-  onPageChanged(page) {
-    this.setTxHistory(page);
+  onPageChanged = (page) => {
+    this.setState({ currentPage: page });
+    this.setTxHistory(page, this.state.limit);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }
+  };
+  
+  onLimitChanged = (limit) => {
+    this.setState({
+      limit: limit,
+      currentPage: 1
+    });
+    this.setTxHistory(1, limit);
+  };
   
   render() {
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
-        {!this.props.isOnMobile && (
-          <div className={"portfolio__title"}>{this.props.translate('portfolio.tx_history') || 'Transaction History'}</div>
-        )}
+        <div className="portfolio__history-header">
+          {!this.props.isOnMobile && (
+            <div className={"portfolio__history-title"}>
+              {this.props.translate('portfolio.tx_history') || 'Transaction History'}
+            </div>
+          )}
+          
+          <PaginationLimit
+            translate={this.props.translate}
+            limit={this.state.limit}
+            onLimitChanged={this.onLimitChanged}
+            totalRecords={this.state.totalTxs}
+          />
+        </div>
         
         <div className={"portfolio__history-content"}>
           {this.state.loadingHistory && (
@@ -309,7 +328,8 @@ export default class PortfolioTxHistory extends React.Component {
         {(!this.state.loadingError && !isEmpty(this.state.historyTxs) && this.state.pageTotal > 1) && (
           <PaginationList
             total={this.state.pageTotal}
-            onPageChanged={this.onPageChanged.bind(this)}
+            currentPage={this.state.currentPage}
+            onPageChanged={this.onPageChanged}
             loading={this.state.loadingHistory}
           />
         )}
