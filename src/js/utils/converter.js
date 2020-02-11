@@ -890,3 +890,7 @@ function addZeroToSingleNumber(number) {
   if (number < 10) number = `0${number}`;
   return number;
 }
+
+export function formatAddress(address, first = 15, last = -4) {
+  return `${address.slice(0, first)}...${address.slice(last)}`;
+}

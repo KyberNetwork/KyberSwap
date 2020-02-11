@@ -456,7 +456,8 @@
     "token_is_approved": "${token} is Approved",
     "lo_triggered": "Limit Order Triggered",
     "tx_history": "Transaction History",
-    "supported_tokens": "Supported tokens"
+    "supported_tokens": "Supported tokens",
+    "interact_contract": "Interact Contract"
   },
   "home": "홈",
   "tracker": "트래커",

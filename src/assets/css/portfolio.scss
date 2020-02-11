@@ -199,7 +199,7 @@
     }
 
     &-right {
-
+      padding-left: 10px;
     }
 
     &-icon {
@@ -260,6 +260,7 @@
 
     &-type {
       margin-bottom: 5px;
+      text-align: right;
     }
 
     &-status {
@@ -377,6 +378,12 @@
           }
         }
       }
+    }
+  }
+
+  @include screen-max-width(xxsmall) {
+    .common__small-text {
+      display: none;
     }
   }
 

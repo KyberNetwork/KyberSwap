@@ -1,6 +1,6 @@
 import React from "react"
 import { groupBy, isEmpty, sortBy } from "underscore";
-import { divOfTwoNumber, roundingNumber, toT } from "../../utils/converter";
+import { divOfTwoNumber, formatAddress, roundingNumber, toT } from "../../utils/converter";
 import { TX_TYPES } from "../../services/constants";
 import * as portfolioService from "../../services/portfolio/portfolioService";
 import { getFormattedDate } from "../../utils/common";
@@ -185,7 +185,9 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"portfolio__tx-bold common__mr-15"}>- {txValue} {txTokenSymbol}</div>
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {txTo}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_to') || 'To'}: {formatAddress(txTo, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
@@ -208,7 +210,9 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"portfolio__tx-bold common__mr-15"}>+ {txValue} {txTokenSymbol}</div>
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_from') || 'From'}: {txFrom}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_from') || 'From'}: {formatAddress(txFrom, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
@@ -228,7 +232,9 @@ export default class PortfolioTxHistory extends React.Component {
           <div className={"portfolio__tx-icon portfolio__tx-icon--approve"}/>
           <div className={"portfolio__tx-content"}>
             <div className="common__flexbox-normal">
-              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>{this.props.translate('portfolio.token_approved') || 'Token Approved'}</div>
+              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>
+                {this.props.translate('portfolio.token_approved') || 'Token Approved'}
+              </div>
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-bold"}>
@@ -305,14 +311,18 @@ export default class PortfolioTxHistory extends React.Component {
           <div className={"portfolio__tx-icon"}/>
           <div className={"portfolio__tx-content"}>
             <div className="common__flexbox-normal">
-              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>{this.props.translate('transaction.exchange_from') || 'From'}: {from}</div>
+              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>
+                {this.props.translate('transaction.exchange_from') || 'From'}: {formatAddress(from, 20)}
+              </div>
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {to}</div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_to') || 'To'}: {formatAddress(to, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>{this.props.translate('undefined') || 'Undefined'}</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('portfolio.interact_contract') || 'Interact Contract'}</div>
           {isError && (
             <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
           )}
