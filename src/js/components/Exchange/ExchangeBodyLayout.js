@@ -57,7 +57,7 @@ const ExchangeBodyLayout = (props) => {
   
   return (
     <div className={"exchange__form theme__background-2"}>
-      {/*{(props.sourceTokenSymbol == "RLC" || props.destTokenSymbol == "RLC") && <p className={"text-center"}>Trade and win RLC tokens in our trading contest (ends 22 Dec)! Sign In to your KyberSwap account AND Connect your wallet to participate! Click <a className="exchange-terms__link" href={"/promo/rlc"} target="_blank">here</a> for more details</p>}*/}
+      {(props.sourceTokenSymbol === "KNC" || props.destTokenSymbol === "KNC") && <p className="common__notification">Win KNC tokens by participating in our trading contest (till 28 Feb). Please login to participate. Click <a className="exchange-terms__link" href={"/promo/knc"} target="_blank">here</a> for more details</p>}
       <div>
         {props.account && props.account.type === "promo" && props.account.info.description !== ""
           && <div className={"promo-description theme__text-3"}>
