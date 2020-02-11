@@ -23,10 +23,10 @@ const PortfolioView = (props) => {
         />
       )}
       
-      <div className={`portfolio__left ${props.isOnMobile ? 'theme__background-11' : ''}`}>
+      <div className={`portfolio__left ${props.isOnMobile ? 'theme__background-2' : ''}`}>
         {(isOverViewDisplayed || !props.isImported) && (
           <div className={"portfolio__summary"}>
-            <div className={"portfolio__account portfolio__item theme__background-11"}>
+            <div className={"portfolio__account portfolio__item theme__background-2"}>
               {!props.isImported && (
                 <ImportAccount tradeType="portfolio" noTerm={true} />
               )}
@@ -77,7 +77,7 @@ const PortfolioView = (props) => {
       </div>
   
       {isBalanceDisplayed && (
-        <div className={"portfolio__item portfolio__right theme__background-11"}>
+        <div className={"portfolio__item portfolio__right theme__background-2"}>
           <AccountBalance
             screen="portfolio"
             hideZeroBalance={true}
