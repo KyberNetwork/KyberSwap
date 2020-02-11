@@ -178,6 +178,12 @@
       font-size: 14px;
       font-weight: 500;
     }
+
+    &-content--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: initial;
+    }
   }
 
   &__tx {
@@ -199,7 +205,7 @@
     }
 
     &-right {
-
+      padding-left: 10px;
     }
 
     &-icon {
@@ -260,6 +266,7 @@
 
     &-type {
       margin-bottom: 5px;
+      text-align: right;
     }
 
     &-status {
@@ -377,6 +384,12 @@
           }
         }
       }
+    }
+  }
+
+  @include screen-max-width(xxsmall) {
+    .common__small-text {
+      display: none;
     }
   }
 

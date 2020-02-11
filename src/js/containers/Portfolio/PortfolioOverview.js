@@ -1,5 +1,5 @@
 import React from "react"
-import { multiplyOfTwoNumber, roundingNumber } from "../../utils/converter";
+import { formatAddress, multiplyOfTwoNumber, roundingNumber } from "../../utils/converter";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { Modal } from "../../components/CommonElement";
 
@@ -50,7 +50,7 @@ export default class PortfolioOverview extends React.Component {
           <div className={"portfolio__account-wallet"}>
             <div className={"portfolio__account-type"}>{this.props.walletName}:</div>
             <a className={"portfolio__account-address theme__text-3"} target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + this.props.address}>
-              {this.props.address.slice(0, 15)}...{this.props.address.slice(-4)}
+              {formatAddress(this.props.address)}
             </a>
           </div>
           {!this.props.isOnDapp && (

@@ -1,6 +1,6 @@
 import React from "react"
 import { groupBy, isEmpty, sortBy } from "underscore";
-import { divOfTwoNumber, roundingNumber, toT } from "../../utils/converter";
+import { divOfTwoNumber, formatAddress, roundingNumber, toT } from "../../utils/converter";
 import { TX_TYPES } from "../../services/constants";
 import * as portfolioService from "../../services/portfolio/portfolioService";
 import { getFormattedDate } from "../../utils/common";
@@ -31,6 +31,7 @@ export default class PortfolioTxHistory extends React.Component {
       tokenAddresses: {},
       historyTxs: {},
       loadingHistory: false,
+      loadingPagination: false,
       loadingError: false,
       totalTxs: '---',
       currentPage: 1,
@@ -68,8 +69,12 @@ export default class PortfolioTxHistory extends React.Component {
     let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page, limit);
     
     this.setState({ loadingError: isError });
+    
     if (isError) {
-      this.setState({ loadingHistory: false });
+      this.setState({
+        loadingHistory: false,
+        loadingPagination: false,
+      });
       return;
     }
 
@@ -87,6 +92,7 @@ export default class PortfolioTxHistory extends React.Component {
     this.setState({
       historyTxs: data,
       loadingHistory: false,
+      loadingPagination: false,
       totalTxs: totalTxs,
       pageTotal: Math.ceil(totalTxs / limit)
     });
@@ -152,9 +158,9 @@ export default class PortfolioTxHistory extends React.Component {
         const transferValue = this.formatTxValue(tx.transfer_token_value, transferTokenDecimal);
         
         if (tx.transfer_from === this.props.address) {
-          return this.renderSendTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_to, index);
+          return this.renderSendTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_to, tx.time, tx.isError, index);
         } else if (tx.transfer_to === this.props.address) {
-          return this.renderReceiveTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_from, index);
+          return this.renderReceiveTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_from, tx.time, tx.isError, index);
         }
       } else if (tx.type === TX_TYPES.swap) {
         const srcSymbol = this.state.tokenAddresses[tx.swap_source_token.toLowerCase()];
@@ -164,58 +170,79 @@ export default class PortfolioTxHistory extends React.Component {
         const srcValue = this.formatTxValue(tx.swap_source_amount, srcDecimal);
         const destValue = this.formatTxValue(tx.swap_dest_amount, destDecimal);
         
-        return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, index);
+        return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.approve) {
-        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, index);
+        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.undefined) {
-        return this.renderUndefinedTx(tx.hash, tx.from, tx.to, index);
+        return this.renderUndefinedTx(tx.hash, tx.from, tx.to, tx.time, tx.isError, index);
       }
       
       return null;
     })
   }
   
-  renderSendTx(txHash, txValue, txTokenSymbol, txTo, index) {
+  renderSendTx(txHash, txValue, txTokenSymbol, txTo, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--send"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-bold"}>- {txValue} {txTokenSymbol}</div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {txTo}</div>
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-bold common__mr-15"}>- {txValue} {txTokenSymbol}</div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
+            </div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_to') || 'To'}: {formatAddress(txTo, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('send') || 'Send'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
-  renderReceiveTx(txHash, txValue, txTokenSymbol, txFrom, index) {
+  renderReceiveTx(txHash, txValue, txTokenSymbol, txFrom, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--receive"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-bold"}>+ {txValue} {txTokenSymbol}</div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_from') || 'From'}: {txFrom}</div>
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-bold common__mr-15"}>+ {txValue} {txTokenSymbol}</div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
+            </div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_from') || 'From'}: {formatAddress(txFrom, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.exchange_receive') || 'Receive'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
-  renderApproveTx(txHash, txTokenSymbol, index) {
+  renderApproveTx(txHash, txTokenSymbol, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--approve"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('portfolio.token_approved') || 'Token Approved'}</div>
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>
+                {this.props.translate('portfolio.token_approved') || 'Token Approved'}
+              </div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
+            </div>
             <div className={"portfolio__tx-bold"}>
               {this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`}
             </div>
@@ -223,19 +250,25 @@ export default class PortfolioTxHistory extends React.Component {
         </div>
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('modal.approve') || 'Approve'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
-  renderSwapTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderSwapTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--swap"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-bold"}>
-              {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-bold common__mr-15"}>
+                {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
+              </div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-light theme__text-7"}>
               1 {sendTokenSymbol} = {roundingNumber(divOfTwoNumber(receiveValue, sendValue))} {receiveTokenSymbol}
@@ -244,18 +277,24 @@ export default class PortfolioTxHistory extends React.Component {
         </div>
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.swap') || 'Swap'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
-  renderLimitOrderTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, index) {
+  renderLimitOrderTx(txHash, sendValue, sendTokenSymbol, receiveValue, receiveTokenSymbol, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon portfolio__tx-icon--limit-order"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('portfolio.lo_triggered') || 'Limit Order Triggered'}</div>
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-light common__mr-15 theme__text-7"}>{this.props.translate('portfolio.lo_triggered') || 'Limit Order Triggered'}</div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
+            </div>
             <div className={"portfolio__tx-bold"}>
               {sendValue} {sendTokenSymbol} ➞ {receiveValue} {receiveTokenSymbol}
             </div>
@@ -263,43 +302,61 @@ export default class PortfolioTxHistory extends React.Component {
         </div>
         <div className={"portfolio__tx-right"}>
           <div className={"portfolio__tx-type"}>{this.props.translate('transaction.limit_order') || 'Limit Order'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
-  renderUndefinedTx(txHash, from, to, index) {
+  renderUndefinedTx(txHash, from, to, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon"}/>
           <div className={"portfolio__tx-content"}>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_from') || 'From'}: {from}</div>
-            <div className={"portfolio__tx-light theme__text-7"}>{this.props.translate('transaction.exchange_to') || 'To'}: {to}</div>
+            <div className="common__flexbox-normal">
+              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>
+                {this.props.translate('transaction.exchange_from') || 'From'}: {formatAddress(from, 20)}
+              </div>
+              <div className={"common__small-text theme__text-7"}>{time}</div>
+            </div>
+            <div className={"portfolio__tx-light theme__text-7"}>
+              {this.props.translate('transaction.exchange_to') || 'To'}: {formatAddress(to, 20)}
+            </div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
-          <div className={"portfolio__tx-type"}>{this.props.translate('undefined') || 'Undefined'}</div>
+          <div className={"portfolio__tx-type"}>{this.props.translate('portfolio.interact_contract') || 'Interact Contract'}</div>
+          {isError && (
+            <div className={"portfolio__tx-type common__error-text"}>{this.props.translate('failed') || 'Failed'}</div>
+          )}
         </div>
       </a>
     )
   }
   
   onPageChanged = (page) => {
-    this.setState({ currentPage: page });
+    this.setState({
+      currentPage: page,
+      loadingPagination: true,
+    });
     this.setTxHistory(page, this.state.limit);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   };
   
   onLimitChanged = (limit) => {
     this.setState({
       limit: limit,
-      currentPage: 1
+      currentPage: 1,
+      loadingPagination: true
     });
     this.setTxHistory(1, limit);
   };
   
   render() {
+    const firstTimeLoading = this.state.loadingHistory && !this.state.loadingPagination;
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
         <div className="portfolio__history-header">
@@ -317,12 +374,12 @@ export default class PortfolioTxHistory extends React.Component {
           />
         </div>
         
-        <div className={"portfolio__history-content"}>
-          {this.state.loadingHistory && (
+        <div className={`portfolio__history-content ${this.state.loadingPagination ? 'portfolio__history-content--disabled' : ''}`}>
+          {firstTimeLoading && (
             <InlineLoading theme={this.props.theme}/>
           )}
           
-          {!this.state.loadingHistory && this.renderTransactionHistory()}
+          {!firstTimeLoading && this.renderTransactionHistory()}
         </div>
         
         {(!this.state.loadingError && !isEmpty(this.state.historyTxs) && this.state.pageTotal > 1) && (
@@ -330,7 +387,7 @@ export default class PortfolioTxHistory extends React.Component {
             total={this.state.pageTotal}
             currentPage={this.state.currentPage}
             onPageChanged={this.onPageChanged}
-            loading={this.state.loadingHistory}
+            loading={this.state.loadingPagination}
           />
         )}
       </div>

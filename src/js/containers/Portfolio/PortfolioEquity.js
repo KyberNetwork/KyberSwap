@@ -19,10 +19,12 @@ export default class PortfolioEquity extends React.Component {
       let tokenValue = +((token.balanceInETH / this.props.totalBalanceInETH) * 100).toFixed(2);
       
       if (index >= tokenDisplay) {
-        tokenSymbols[tokenDisplay] = 'Others';
-        tokenValues[tokenDisplay] = tokenValues[tokenDisplay] ? tokenValues[tokenDisplay] + tokenValue : tokenValue;
+        tokenValue = tokenValues[tokenDisplay] ? tokenValues[tokenDisplay] + tokenValue : tokenValue;
+        tokenValue = +(tokenValue).toFixed(2);
+        tokenSymbols[tokenDisplay] = `Others - ${tokenValue}%`;
+        tokenValues[tokenDisplay] = tokenValue;
       } else {
-        tokenSymbols.push(tokenSymbol);
+        tokenSymbols.push(`${tokenSymbol} - ${tokenValue}%`);
         tokenValues.push(tokenValue);
       }
     });
@@ -41,13 +43,14 @@ export default class PortfolioEquity extends React.Component {
           position: 'right',
           labels: {
             fontColor: `${this.props.theme === 'dark' ? 'white' : 'black'}`,
-            fontStyle: '400'
+            fontStyle: '400',
+            fontSize: 11
           }
         },
         tooltips: {
           callbacks: {
             label: function(tooltipItem, data) {
-              return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+              return data.labels[tooltipItem.index];
             }
           }
         },
@@ -70,7 +73,7 @@ export default class PortfolioEquity extends React.Component {
   
   render() {
     return (
-      <canvas width="250" height="150" ref={this.props.equityChart}/>
+      <canvas width="350" height="150" ref={this.props.equityChart}/>
     )
   }
 }

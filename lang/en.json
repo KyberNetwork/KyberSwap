@@ -460,7 +460,8 @@
     "token_is_approved": "${token} is Approved",
     "lo_triggered": "Limit Order Triggered",
     "tx_history": "Transaction History",
-    "supported_tokens": "Supported tokens"
+    "supported_tokens": "Supported tokens",
+    "interact_contract": "Interact Contract"
   },
   "home": "Home",
   "tracker": "Tracker",
@@ -489,5 +490,6 @@
   "change": "Change",
   "send": "Send",
   "undefined": "Undefined",
-  "show": "Show"
+  "show": "Show",
+  "failed": "Failed"
 }
