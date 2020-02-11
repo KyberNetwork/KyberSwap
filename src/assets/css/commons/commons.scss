@@ -11,6 +11,11 @@
     margin-bottom: 10px;
   }
 
+  &__small-text {
+    font-size: 11px;
+    font-weight: 400;
+  }
+
   &__uppercase {
     text-transform: uppercase;
   }
@@ -34,6 +39,11 @@
   &__flexbox {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  &__flexbox-normal {
+    display: flex;
     align-items: center;
   }
 

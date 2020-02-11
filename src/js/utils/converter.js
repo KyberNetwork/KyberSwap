@@ -880,3 +880,13 @@ export function decodeTxInput(input, abi) {
 export function convertToETHBalance(balance, decimals, symbol, rate) {
   return toT(multiplyOfTwoNumber(toT(balance, decimals), symbol === "ETH" ? "1000000000000000000" : rate));
 }
+
+export function convertTimestampToTime(timestamp) {
+  const date = new Date(timestamp*1000);
+  return `${addZeroToSingleNumber(date.getHours())}:${addZeroToSingleNumber(date.getMinutes())}:${addZeroToSingleNumber(date.getSeconds())}`;
+}
+
+function addZeroToSingleNumber(number) {
+  if (number < 10) number = `0${number}`;
+  return number;
+}

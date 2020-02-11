@@ -1,5 +1,6 @@
 import { TX_TYPES } from '../constants';
 import BLOCKCHAIN_INFO from "../../../../env";
+import { convertTimestampToTime } from "../../utils/converter";
 
 export async function fetchAddressTxs(address, page, limit = 20) {
   const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&page=${page}&limit=${limit}`);
@@ -23,7 +24,10 @@ export async function fetchAddressTxs(address, page, limit = 20) {
       isValidTx = validateUndefinedTx(tx);
     }
   
-    if (isValidTx) txs.push(tx);
+    if (isValidTx) {
+      tx.time = convertTimestampToTime(+tx.timeStamp);
+      txs.push(tx);
+    }
   }
   
   return returnResponseObject(txs, result.count, result.in_queue);
@@ -36,20 +40,20 @@ function validateResultObject(result) {
 
 function validateTransferTx(tx) {
   return tx.transfer_token_symbol && tx.transfer_token_value && !isNaN(tx.transfer_token_value) &&
-    tx.transfer_from && tx.transfer_to && tx.hash;
+    tx.transfer_from && tx.transfer_to && tx.timeStamp && tx.hash;
 }
 
 function validateSwapTx(tx) {
   return tx.swap_source_token && tx.swap_dest_token && tx.swap_source_amount && !isNaN(tx.swap_source_amount) &&
-    tx.swap_dest_amount && !isNaN(tx.swap_dest_amount) && tx.hash;
+    tx.swap_dest_amount && !isNaN(tx.swap_dest_amount) && tx.timeStamp && tx.hash;
 }
 
 function validateApproveTx(tx) {
-  return tx.approve_token_symbol && tx.hash;
+  return tx.approve_token_symbol && tx.timeStamp && tx.hash;
 }
 
 function validateUndefinedTx(tx) {
-  return tx.from && tx.to && tx.hash;
+  return tx.from && tx.to && tx.timeStamp && tx.hash;
 }
 
 function returnResponseObject(txs, totalTxs, inQueue, isError = false) {
