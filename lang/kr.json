@@ -485,5 +485,6 @@
   "change": "변동",
   "send": "보내다",
   "undefined": "Undefined",
-  "show": "Show"
+  "show": "Show",
+  "failed": "Failed"
 }

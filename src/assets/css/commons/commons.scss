@@ -16,6 +16,10 @@
     font-weight: 400;
   }
 
+  &__error-text {
+    color: $error-color;
+  }
+
   &__uppercase {
     text-transform: uppercase;
   }

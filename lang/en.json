@@ -489,5 +489,6 @@
   "change": "Change",
   "send": "Send",
   "undefined": "Undefined",
-  "show": "Show"
+  "show": "Show",
+  "failed": "Failed"
 }
