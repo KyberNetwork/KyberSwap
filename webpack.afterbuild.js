@@ -34,9 +34,7 @@ let view = `
           - elsif request.path.include? "transfer"
               = render "swap/server_rendering/transfer_rendering"    
           - elsif request.path.include? "limit_order"
-              = render "swap/server_rendering/limit_order_rendering"    
-          - else
-              = render "swap/server_rendering/swap_rendering"
+              = render "swap/server_rendering/limit_order_rendering"
     script src="/trading_view/charting_library/charting_library.min.js?v=${now}"
     script src="/trading_view/datafeeds/udf/dist/polyfills.js"
     script src="/trading_view/datafeeds/udf/dist/bundle.js"          
@@ -51,9 +49,7 @@ let view = `
           - elsif request.path.include? "transfer"
               = render "swap/server_rendering/transfer_rendering"    
           - elsif request.path.include? "limit_order"
-              = render "swap/server_rendering/limit_order_rendering"    
-          - else
-              = render "swap/server_rendering/swap_rendering"    
+              = render "swap/server_rendering/limit_order_rendering"   
 `
 
 // let view = `
