@@ -178,6 +178,12 @@
       font-size: 14px;
       font-weight: 500;
     }
+
+    &-content--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: initial;
+    }
   }
 
   &__tx {

@@ -31,6 +31,7 @@ export default class PortfolioTxHistory extends React.Component {
       tokenAddresses: {},
       historyTxs: {},
       loadingHistory: false,
+      loadingPagination: false,
       loadingError: false,
       totalTxs: '---',
       currentPage: 1,
@@ -68,8 +69,12 @@ export default class PortfolioTxHistory extends React.Component {
     let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page, limit);
     
     this.setState({ loadingError: isError });
+    
     if (isError) {
-      this.setState({ loadingHistory: false });
+      this.setState({
+        loadingHistory: false,
+        loadingPagination: false,
+      });
       return;
     }
 
@@ -87,6 +92,7 @@ export default class PortfolioTxHistory extends React.Component {
     this.setState({
       historyTxs: data,
       loadingHistory: false,
+      loadingPagination: false,
       totalTxs: totalTxs,
       pageTotal: Math.ceil(totalTxs / limit)
     });
@@ -332,20 +338,25 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   onPageChanged = (page) => {
-    this.setState({ currentPage: page });
+    this.setState({
+      currentPage: page,
+      loadingPagination: true,
+    });
     this.setTxHistory(page, this.state.limit);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   };
   
   onLimitChanged = (limit) => {
     this.setState({
       limit: limit,
-      currentPage: 1
+      currentPage: 1,
+      loadingPagination: true
     });
     this.setTxHistory(1, limit);
   };
   
   render() {
+    const firstTimeLoading = this.state.loadingHistory && !this.state.loadingPagination;
     return (
       <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
         <div className="portfolio__history-header">
@@ -363,12 +374,12 @@ export default class PortfolioTxHistory extends React.Component {
           />
         </div>
         
-        <div className={"portfolio__history-content"}>
-          {this.state.loadingHistory && (
+        <div className={`portfolio__history-content ${this.state.loadingPagination ? 'portfolio__history-content--disabled' : ''}`}>
+          {firstTimeLoading && (
             <InlineLoading theme={this.props.theme}/>
           )}
           
-          {!this.state.loadingHistory && this.renderTransactionHistory()}
+          {!firstTimeLoading && this.renderTransactionHistory()}
         </div>
         
         {(!this.state.loadingError && !isEmpty(this.state.historyTxs) && this.state.pageTotal > 1) && (
@@ -376,7 +387,7 @@ export default class PortfolioTxHistory extends React.Component {
             total={this.state.pageTotal}
             currentPage={this.state.currentPage}
             onPageChanged={this.onPageChanged}
-            loading={this.state.loadingHistory}
+            loading={this.state.loadingPagination}
           />
         )}
       </div>
