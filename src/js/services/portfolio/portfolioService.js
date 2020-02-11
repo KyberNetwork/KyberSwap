@@ -1,8 +1,8 @@
-import { PORTFOLIO_TX_LIMIT, TX_TYPES } from '../constants';
+import { TX_TYPES } from '../constants';
 import BLOCKCHAIN_INFO from "../../../../env";
 
-export async function fetchAddressTxs(address, page) {
-  const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&page=${page}&limit=${PORTFOLIO_TX_LIMIT}`);
+export async function fetchAddressTxs(address, page, limit = 20) {
+  const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&page=${page}&limit=${limit}`);
   const result = await response.json();
   const isValidResult = validateResultObject(result);
   
@@ -31,7 +31,7 @@ export async function fetchAddressTxs(address, page) {
 
 function validateResultObject(result) {
   return result.data && Array.isArray(result.data) && result.count !== undefined && !isNaN(result.count) &&
-    result.in_queue !== undefined && result.error === null
+    result.in_queue !== undefined && result.error === ""
 }
 
 function validateTransferTx(tx) {

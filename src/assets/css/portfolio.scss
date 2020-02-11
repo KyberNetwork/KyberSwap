@@ -167,7 +167,17 @@
   }
 
   &__history {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
+    &-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 
   &__tx {
