@@ -55,7 +55,6 @@
     &-bot {
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
 
     &-top {
@@ -73,6 +72,7 @@
 
     &-bot {
       padding-top: 20px;
+      align-items: center;
     }
 
     &-wallet {
@@ -119,20 +119,6 @@
     &-txt-big {
       font-size: 20px;
       font-weight: 400;
-    }
-
-    &-tag {
-      font-size: 14px;
-      font-weight: 400;
-      border-radius: 3px;
-      padding: 5px 10px;
-      border: 1px solid;
-      margin-left: 15px;
-      position: relative;
-      bottom: 6px;
-      cursor: pointer;
-      float: right;
-      transition: all .3s;
     }
 
     &-change {
@@ -310,6 +296,47 @@
 
   &__navigation {
     display: none;
+  }
+
+  &__switcher {
+    display: flex;
+    justify-content: flex-end;
+
+    &-item {
+      padding: 3px 5px;
+      position: relative;
+      opacity: 0.6;
+      font-weight: 400;
+      font-size: 14px;
+      cursor: pointer;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &::after {
+        content: '';
+        width: 0;
+        height: 2px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        bottom: 0;
+        background-color: $swap-color;
+        transition: width .3s;
+      }
+
+      &--active {
+        opacity: 1;
+        pointer-events: none;
+        cursor: initial;
+
+        &::after {
+          width: 50%;
+        }
+      }
+    }
   }
 
   @include screen-max-width(xlarge) {

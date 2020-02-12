@@ -47,7 +47,7 @@ const PortfolioView = (props) => {
             </div>
   
             {isOverViewDisplayed && (
-              <div className={"portfolio__equity portfolio__item theme__background-2 common__slide-up"}>
+              <div className={`portfolio__equity portfolio__item common__slide-up theme__background-${props.isOnMobile ? '11' : '2'}`}>
                 {isEquityDisplayed && (
                   <PortfolioEquity
                     equityChart={props.equityChart}

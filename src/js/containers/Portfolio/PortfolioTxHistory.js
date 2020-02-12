@@ -356,7 +356,7 @@ export default class PortfolioTxHistory extends React.Component {
   render() {
     const firstTimeLoading = this.state.loadingHistory && !this.state.loadingPagination;
     return (
-      <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
+      <div className={"portfolio__history portfolio__item common__slide-up theme__background-2"}>
         <div className="portfolio__history-header">
           {!this.props.isOnMobile && (
             <div className={"portfolio__history-title"}>
