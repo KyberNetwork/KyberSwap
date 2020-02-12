@@ -48,7 +48,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   componentWillUnmount() {
-    clearInterval(this.fetchingTxsInterval)
+    this.clearFetchingInterval();
   }
   
   setTokenAddresses() {
@@ -63,7 +63,10 @@ export default class PortfolioTxHistory extends React.Component {
   async setTxHistory(page = 1, limit = 20) {
     const address = this.props.address;
     
-    if (!this.props.address) return;
+    if (!this.props.address) {
+      this.clearFetchingInterval();
+      return;
+    }
   
     this.setState({ loadingHistory: true });
     let { data, totalTxs, inQueue, isError } = await portfolioService.fetchAddressTxs(address, page, limit);
@@ -75,17 +78,21 @@ export default class PortfolioTxHistory extends React.Component {
         loadingHistory: false,
         loadingPagination: false,
       });
+      this.clearFetchingInterval();
       return;
     }
 
     if (inQueue) {
-      this.fetchingTxsInterval = setInterval(async () => {
-        await this.setTxHistory(page, limit);
-      }, 2000);
+      if (this.fetchingTxsInterval === null) {
+        this.fetchingTxsInterval = setInterval(async () => {
+          await this.setTxHistory(page, limit);
+        }, 2000);
+      }
+      
       return;
     }
     
-    clearInterval(this.fetchingTxsInterval);
+    this.clearFetchingInterval();
     
     data = this.reduceTxs(data);
 
@@ -96,6 +103,11 @@ export default class PortfolioTxHistory extends React.Component {
       totalTxs: totalTxs,
       pageTotal: Math.ceil(totalTxs / limit)
     });
+  }
+  
+  clearFetchingInterval() {
+    clearInterval(this.fetchingTxsInterval);
+    this.fetchingTxsInterval = null;
   }
   
   reduceTxs(txs) {
@@ -172,7 +184,7 @@ export default class PortfolioTxHistory extends React.Component {
         
         return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.approve) {
-        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.formattedAllowance, tx.isKyberContract, tx.time, tx.isError, index);
+        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.formattedAllowance, tx.formattedContract, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.undefined) {
         return this.renderUndefinedTx(tx.hash, tx.to, tx.time, tx.isError, index);
       }
@@ -231,7 +243,7 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
-  renderApproveTx(txHash, txTokenSymbol, allowance, isKyberContract, time, isError, index) {
+  renderApproveTx(txHash, txTokenSymbol, allowance, contract, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -244,7 +256,8 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-bold"}>
-              {`${allowance} ${this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`} ${isKyberContract ? this.props.translate('portfolio.for_kyber_contract') || 'for Kyber Contract' : ''}`}
+              <span>{`${allowance} ${this.props.translate('portfolio.token_is_approved', { token: txTokenSymbol }) || `${txTokenSymbol} is Approved`}`}</span>
+              <span> {`${this.props.translate('portfolio.for_contract', { contract: contract }) || `for ${contract}`}`}</span>
             </div>
           </div>
         </div>

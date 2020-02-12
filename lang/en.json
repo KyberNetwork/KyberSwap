@@ -463,7 +463,7 @@
     "supported_tokens": "Supported tokens",
     "interact_contract": "Interact Contract",
     "to_contract": "To Contract",
-    "for_kyber_contract": "for Kyber Contract"
+    "for_contract": "for ${contract}"
   },
   "home": "Home",
   "tracker": "Tracker",

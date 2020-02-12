@@ -1,6 +1,6 @@
 import { TX_TYPES } from '../constants';
 import BLOCKCHAIN_INFO from "../../../../env";
-import { convertTimestampToTime, shortenBigNumber } from "../../utils/converter";
+import { convertTimestampToTime, formatAddress, shortenBigNumber } from "../../utils/converter";
 
 export async function fetchAddressTxs(address, page, limit = 20) {
   const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&page=${page}&limit=${limit}`);
@@ -26,14 +26,15 @@ export async function fetchAddressTxs(address, page, limit = 20) {
   
       if (isValidTx) {
         const allowance = tx.approve_allowance;
-        const isKyberContract = tx.approve_spender.toLowerCase() === kyberContract;
+        const spender = tx.approve_spender.toLowerCase();
+        const isKyberContract = spender === kyberContract;
         let formattedAllowance = allowance;
         
         if (allowance > bigAllowance) {
           formattedAllowance = isKyberContract ? '' : shortenBigNumber(allowance);
         }
         
-        tx.isKyberContract = isKyberContract;
+        tx.formattedContract = isKyberContract ? 'Kyber Contract' : formatAddress(spender, 10);
         tx.formattedAllowance = formattedAllowance;
       }
     } else if (tx.type === TX_TYPES.undefined) {
