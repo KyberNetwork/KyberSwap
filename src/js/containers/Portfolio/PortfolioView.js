@@ -34,7 +34,7 @@ const PortfolioView = (props) => {
               {isOverViewDisplayed && (
                 <PortfolioOverview
                   currency={props.currency}
-                  totalBalanceInETH={props.account.totalBalanceInETH}
+                  totalBalanceInETH={props.account.totalBalanceInETH || 0}
                   rateETHInUSD={props.eth.rateUSD}
                   switchCurrency={props.switchCurrency}
                   address={props.address}
