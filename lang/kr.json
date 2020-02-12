@@ -457,7 +457,8 @@
     "lo_triggered": "Limit Order Triggered",
     "tx_history": "Transaction History",
     "supported_tokens": "Supported tokens",
-    "interact_contract": "Interact Contract"
+    "interact_contract": "Interact Contract",
+    "to_contract": "To Contract"
   },
   "home": "홈",
   "tracker": "트래커",

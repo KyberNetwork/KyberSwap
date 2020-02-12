@@ -53,7 +53,7 @@ function validateApproveTx(tx) {
 }
 
 function validateUndefinedTx(tx) {
-  return tx.from && tx.to && tx.timeStamp && tx.hash;
+  return tx.to && tx.timeStamp && tx.hash;
 }
 
 function returnResponseObject(txs, totalTxs, inQueue, isError = false) {
