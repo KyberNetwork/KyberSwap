@@ -172,7 +172,7 @@ export default class PortfolioTxHistory extends React.Component {
         
         return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.approve) {
-        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.time, tx.isError, index);
+        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.formattedAllowance, tx.isKyberContract, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.undefined) {
         return this.renderUndefinedTx(tx.hash, tx.to, tx.time, tx.isError, index);
       }
@@ -231,7 +231,7 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
-  renderApproveTx(txHash, txTokenSymbol, time, isError, index) {
+  renderApproveTx(txHash, txTokenSymbol, allowance, isKyberContract, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -244,7 +244,7 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-bold"}>
-              {this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`}
+              {`${allowance} ${this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`} ${isKyberContract ? this.props.translate('portfolio.for_kyber_contract') || 'for Kyber Contract' : ''}`}
             </div>
           </div>
         </div>

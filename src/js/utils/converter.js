@@ -894,3 +894,7 @@ function addZeroToSingleNumber(number) {
 export function formatAddress(address, first = 15, last = -4) {
   return `${address.slice(0, first)}...${address.slice(last)}`;
 }
+
+export function shortenBigNumber(amount, exponential = 1) {
+  return Number.parseFloat(amount).toExponential(exponential);
+}
