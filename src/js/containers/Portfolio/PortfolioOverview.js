@@ -36,9 +36,16 @@ export default class PortfolioOverview extends React.Component {
           <div className={"portfolio__account-top-item"}>
             <div className={"common__mb-10"}>
               {/*<span className={"portfolio__account-txt"}>24h% change</span>*/}
-              <span className={"portfolio__account-tag theme__tag"} onClick={() => this.props.switchCurrency(this.props.currency)}>
-              {this.props.currency === 'ETH' ? 'USD' : 'ETH'}
-            </span>
+              <div className="portfolio__switcher">
+                <div
+                  className={`portfolio__switcher-item ${this.props.currency === 'ETH' ? 'portfolio__switcher-item--active' : ''}`}
+                  onClick={() => this.props.switchCurrency('ETH')}
+                >ETH</div>
+                <div
+                  className={`portfolio__switcher-item ${this.props.currency === 'USD' ? 'portfolio__switcher-item--active' : ''}`}
+                  onClick={() => this.props.switchCurrency('USD')}
+                >USD</div>
+              </div>
             </div>
             <div>
               {/*<span className={"portfolio__account-txt-big"}>0 {this.props.currency}</span>*/}

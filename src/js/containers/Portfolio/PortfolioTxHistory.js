@@ -172,9 +172,9 @@ export default class PortfolioTxHistory extends React.Component {
         
         return this.renderSwapTx(tx.hash, srcValue, srcSymbol, destValue, destSymbol, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.approve) {
-        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.time, tx.isError, index);
+        return this.renderApproveTx(tx.hash, tx.approve_token_symbol, tx.formattedAllowance, tx.isKyberContract, tx.time, tx.isError, index);
       } else if (tx.type === TX_TYPES.undefined) {
-        return this.renderUndefinedTx(tx.hash, tx.from, tx.to, tx.time, tx.isError, index);
+        return this.renderUndefinedTx(tx.hash, tx.to, tx.time, tx.isError, index);
       }
       
       return null;
@@ -231,7 +231,7 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
-  renderApproveTx(txHash, txTokenSymbol, time, isError, index) {
+  renderApproveTx(txHash, txTokenSymbol, allowance, isKyberContract, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
@@ -244,7 +244,7 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-bold"}>
-              {this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`}
+              {`${allowance} ${this.props.translate('portfolio.token_is_approved', {token: txTokenSymbol}) || `${txTokenSymbol} is Approved`} ${isKyberContract ? this.props.translate('portfolio.for_kyber_contract') || 'for Kyber Contract' : ''}`}
             </div>
           </div>
         </div>
@@ -310,21 +310,19 @@ export default class PortfolioTxHistory extends React.Component {
     )
   }
   
-  renderUndefinedTx(txHash, from, to, time, isError, index) {
+  renderUndefinedTx(txHash, to, time, isError, index) {
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${txHash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
           <div className={"portfolio__tx-icon"}/>
           <div className={"portfolio__tx-content"}>
             <div className="common__flexbox-normal">
-              <div className={"portfolio__tx-light theme__text-7 common__mr-15"}>
-                {this.props.translate('transaction.exchange_from') || 'From'}: {formatAddress(from, 20)}
+              <div className={"portfolio__tx-bold common__mr-15"}>
+                {this.props.translate('portfolio.to_contract') || 'To Contract'}
               </div>
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
-            <div className={"portfolio__tx-light theme__text-7"}>
-              {this.props.translate('transaction.exchange_to') || 'To'}: {formatAddress(to, 20)}
-            </div>
+            <div className={"portfolio__tx-light theme__text-7"}>{formatAddress(to, 20)}</div>
           </div>
         </div>
         <div className={"portfolio__tx-right"}>
@@ -358,7 +356,7 @@ export default class PortfolioTxHistory extends React.Component {
   render() {
     const firstTimeLoading = this.state.loadingHistory && !this.state.loadingPagination;
     return (
-      <div className={"portfolio__history portfolio__item common__slide-up theme__background-11"}>
+      <div className={"portfolio__history portfolio__item common__slide-up theme__background-2"}>
         <div className="portfolio__history-header">
           {!this.props.isOnMobile && (
             <div className={"portfolio__history-title"}>

@@ -73,7 +73,7 @@ export default class PortfolioEquity extends React.Component {
   
   render() {
     return (
-      <canvas width="350" height="150" ref={this.props.equityChart}/>
+      <canvas width="300" height="150" ref={this.props.equityChart}/>
     )
   }
 }

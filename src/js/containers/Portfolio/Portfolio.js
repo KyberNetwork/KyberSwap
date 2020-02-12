@@ -34,7 +34,7 @@ export default class Portfolio extends React.Component {
   };
   
   switchCurrency = (currency) => {
-    this.setState({ currency: currency === 'ETH' ? 'USD' : 'ETH' })
+    this.setState({ currency })
   };
   
   switchMobileTab = (tab) => {
