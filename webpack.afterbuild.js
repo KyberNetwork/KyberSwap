@@ -25,7 +25,7 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-- if browser.device.mobile? || cookies[:is_visited] == 'true' || (request.path.include? "limit_order")
+- if browser.device.mobile? || cookies[:is_visited] == 'true' || (request.path.include? "limit_order") || (request.path.include? "portfolio")
     link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
     #swap-app onClick="animateSwap()"
         div style="text-align:center"
