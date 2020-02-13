@@ -164,14 +164,14 @@ export default class PortfolioTxHistory extends React.Component {
   
   renderTxByDate(txs) {
     return txs.map((tx, index) => {
-      if (tx.type === TX_TYPES.transfer) {
+      if (tx.type === TX_TYPES.send || tx.type === TX_TYPES.receive) {
         const transferTokenSymbol = tx.transfer_token_symbol;
         const transferTokenDecimal = this.getTokenDecimal(transferTokenSymbol);
         const transferValue = this.formatTxValue(tx.transfer_token_value, transferTokenDecimal);
         
-        if (tx.transfer_from === this.props.address) {
+        if (tx.type === TX_TYPES.send) {
           return this.renderSendTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_to, tx.time, tx.isError, index);
-        } else if (tx.transfer_to === this.props.address) {
+        } else {
           return this.renderReceiveTx(tx.hash, transferValue, transferTokenSymbol, tx.transfer_from, tx.time, tx.isError, index);
         }
       } else if (tx.type === TX_TYPES.swap) {
@@ -256,8 +256,7 @@ export default class PortfolioTxHistory extends React.Component {
               <div className={"common__small-text theme__text-7"}>{time}</div>
             </div>
             <div className={"portfolio__tx-bold"}>
-              <span>{`${allowance} ${this.props.translate('portfolio.token_is_approved', { token: txTokenSymbol }) || `${txTokenSymbol} is Approved`}`}</span>
-              <span> {`${this.props.translate('portfolio.for_contract', { contract: contract }) || `for ${contract}`}`}</span>
+              {`${allowance} ${this.props.translate('portfolio.token_is_approved', { token: txTokenSymbol, contract }) || `${txTokenSymbol} is Approved for ${contract}`}`}
             </div>
           </div>
         </div>
