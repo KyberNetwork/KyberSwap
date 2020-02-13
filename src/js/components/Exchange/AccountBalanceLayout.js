@@ -16,7 +16,10 @@ const AccountBalanceLayout = (props) => {
   }
   
   function get24ChangeValue(sortType, tokenSymbol, isValidRate) {
-    const changeByETH = props.marketTokens[`ETH_${tokenSymbol}`] ? props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
+    let changeByETH = props.marketTokens[`ETH_${tokenSymbol}`] ? props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
+    if (changeByETH === 0) {
+      changeByETH = props.marketTokens[`${tokenSymbol}_ETH`] ? props.marketTokens[`${tokenSymbol}_ETH`].change : 0;
+    }
     const changeByUSD = props.marketTokens[`USDC_${tokenSymbol}`] ? props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
     
     if (sortType === 'Eth') {
