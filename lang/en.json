@@ -457,13 +457,12 @@
     "error_loading_history": "Something wrong loading your history txs, please try again later.",
     "empty_history": "You do not have any transaction.",
     "token_approved": "Token Approved",
-    "token_is_approved": "${token} is Approved",
+    "token_is_approved": "${token} is Approved for ${contract}",
     "lo_triggered": "Limit Order Triggered",
     "tx_history": "Transaction History",
     "supported_tokens": "Supported tokens",
     "interact_contract": "Interact Contract",
-    "to_contract": "To Contract",
-    "for_contract": "for ${contract}"
+    "to_contract": "To Contract"
   },
   "home": "Home",
   "tracker": "Tracker",

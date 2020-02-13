@@ -17,7 +17,7 @@ export async function fetchAddressTxs(address, page, limit = 20) {
     const tx = result.data[i];
     let isValidTx = false;
     
-    if (tx.type === TX_TYPES.transfer) {
+    if (tx.type === TX_TYPES.send || tx.type === TX_TYPES.receive) {
       isValidTx = validateTransferTx(tx);
     } else if (tx.type === TX_TYPES.swap) {
       isValidTx = validateSwapTx(tx);
