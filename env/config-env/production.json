@@ -19,7 +19,7 @@
     "min_accept_amount": 0.5,
     "api_tokens": "https://api.kyber.network/internal/currencies",
     "api_tokens_integrate": "https://kyberswap.com/api/currencies",
-    "portfolio_api": "https://dev-portfolio.knstats.com",
+    "portfolio_api": "https://portfolio.kyber.network",
     "priority_tokens": [
         "ETH",
         "DAI",
