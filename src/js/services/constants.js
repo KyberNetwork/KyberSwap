@@ -370,7 +370,8 @@ const PORTFOLIO_TAB = {
   history: 3,
 };
 const TX_TYPES = {
-  transfer: 'transfer_token',
+  send: 'send_token',
+  receive: 'receive_token',
   approve: 'approve_token',
   swap: 'swap_token',
   undefined: 'undefined',
