@@ -17,18 +17,12 @@ const AccountBalanceLayout = (props) => {
   }
   
   function get24ChangeValue(sortType, tokenSymbol, isValidRate) {
-    let changeByETH = props.marketTokens[`ETH_${tokenSymbol}`] ? props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
-    if (changeByETH === 0) {
-      const changeFromTokenToETH = props.marketTokens[`${tokenSymbol}_ETH`] ? props.marketTokens[`${tokenSymbol}_ETH`].change : 0;
-      const changeFromTokenToETHPercent = changeFromTokenToETH / 100;
-      changeByETH = changeFromTokenToETH ? converts.formatNumber((-changeFromTokenToETHPercent / (1 + changeFromTokenToETHPercent)) * 100, 2) : 0;
-    }
-    const changeByUSD = props.marketTokens[`USDC_${tokenSymbol}`] ? props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
-    
-    if (sortType === 'Eth') {
+    if (sortType === 'ETH') {
+      let changeByETH = props.getChangeByETH(tokenSymbol);
       return <div className={`account-balance__token-row ${get24ChangeClass(changeByETH, isValidRate)}`}>{(isValidRate) ? `${changeByETH}%` : '---'}</div>
     }
-  
+    
+    const changeByUSD = props.getChangeByUSD(tokenSymbol);
     return <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD, isValidRate)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
   }
   
@@ -67,7 +61,7 @@ const AccountBalanceLayout = (props) => {
       return (
         <div
           key={token.symbol}
-          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol == "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
+          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
           className={"account-balance__token-item" + classBalance}
         >
           <div className={"account-balance__token-row account-balance__token-info"}>
@@ -80,7 +74,7 @@ const AccountBalanceLayout = (props) => {
           {
             (isValidRate) ?
               (<div className="account-balance__token-row stable-equivalent">{
-                props.sortType == "Eth" ? `${balanceInETH} E` : `${balanceInUSD}$`
+                props.sortType === "ETH" ? `${balanceInETH} E` : `${balanceInUSD}$`
               }</div>) :
               (<div className="account-balance__token-row stable-equivalent">
                 {props.hideZeroBalance && (
@@ -157,17 +151,44 @@ const AccountBalanceLayout = (props) => {
               {!isHideAllInfo && (
                 <div className="account-balance__sort-panel theme__background-4">
                   <div>
-                    <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => props.onClickSortType("Name", isDsc)}/>
+                    <SortableComponent
+                      text="Name"
+                      Wrapper="span"
+                      isActive={props.sortName === "Name"}
+                      onClick={(isDsc) => props.onClickSort(false, "Name", isDsc)}
+                    />
                     <span className="account-balance__sort-separation theme__separation"> | </span>
-                    <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => props.onClickSortType("Bal", isDsc)}/>
+                    <SortableComponent
+                      text="Bal"
+                      Wrapper="span"
+                      isActive={props.sortName === "Bal"}
+                      onClick={(isDsc) => props.onClickSort(false, "Bal", isDsc)}
+                    />
                   </div>
                   <div>
-                    <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => props.onClickSortType("Eth", isDsc)}/>
+                    <SortableComponent
+                      text="ETH"
+                      Wrapper="span"
+                      isActive={props.sortType === "ETH"}
+                      onClick={(isDsc) => props.onClickSort("ETH", '', isDsc)}
+                      showArrow={props.sortName === ''}
+                    />
                     <span className="account-balance__sort-separation theme__separation"> | </span>
-                    <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => props.onClickSortType("USDT", isDsc)}/>
+                    <SortableComponent
+                      text="USD"
+                      Wrapper="span"
+                      isActive={props.sortType === "USD"}
+                      onClick={(isDsc) => props.onClickSort("USD", '', isDsc)}
+                      showArrow={props.sortName === ''}
+                    />
                   </div>
                   {props.show24hChange && (
-                    <div>{props.translate("change") || "Change"}</div>
+                    <SortableComponent
+                      text={props.translate("change") || "Change"}
+                      Wrapper="span"
+                      isActive={props.sortName === "Change"}
+                      onClick={(isDsc) => props.onClickSort(false, "Change", isDsc)}
+                    />
                   )}
                 </div>
               )}
