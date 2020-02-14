@@ -1,5 +1,6 @@
 import React from "react"
 import Chart from "chart.js";
+import { MINIMUM_DISPLAY_BALANCE } from "../../services/constants";
 
 export default class PortfolioEquity extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class PortfolioEquity extends React.Component {
     const tokenDisplay = 5;
     
     this.props.availableTokens.forEach((token, index) => {
-      if (token.balanceInETH === '0') return;
+      if (token.balanceInETH < MINIMUM_DISPLAY_BALANCE) return;
   
       let tokenSymbol = token.symbol;
       let tokenValue = +((token.balanceInETH / this.props.totalBalanceInETH) * 100).toFixed(2);

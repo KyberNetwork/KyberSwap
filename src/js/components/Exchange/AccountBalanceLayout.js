@@ -1,5 +1,6 @@
 import React from "react"
 import * as converts from "../../utils/converter"
+import { MINIMUM_DISPLAY_BALANCE } from "../../services/constants"
 import BLOCKCHAIN_INFO from "../../../../env"
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
@@ -40,12 +41,14 @@ const AccountBalanceLayout = (props) => {
       let classBalance = "";
       const noBalance = balance == 0;
       const isValidRate = token.symbol === "ETH" || converts.compareTwoNumber(token.rate, 0);
-    
-      if (token.symbol === props.sourceActive) classBalance += " active"
+      const balanceInETH = converts.formatNumber(token.balanceInETH || 0, 6);
+      const balanceInUSD = converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2);
+      const hideZeroBalance = props.hideZeroBalance && (noBalance || balanceInETH < MINIMUM_DISPLAY_BALANCE);
       
-      if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) return null;
-      
+      if (!symbolL.includes(searchWord) || hideZeroBalance) return null;
       isEmpty = false;
+  
+      if (token.symbol === props.sourceActive) classBalance += " active";
       
       if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
         classBalance += " disabled unclickable"
@@ -75,8 +78,7 @@ const AccountBalanceLayout = (props) => {
           {
             (isValidRate) ?
               (<div className="account-balance__token-row stable-equivalent">{
-                props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
-                  (<span>{converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)}$</span>)
+                props.sortType == "Eth" ? `${balanceInETH} E` : `${balanceInUSD}$`
               }</div>) :
               (<div className="account-balance__token-row stable-equivalent">
                 {props.hideZeroBalance && (
