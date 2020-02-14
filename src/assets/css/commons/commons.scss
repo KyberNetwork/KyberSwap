@@ -20,6 +20,7 @@
     padding: 10px 10px 10px 40px;
     border-radius: 3px;
     position: relative;
+    line-height: initial;
 
     &::before {
       content: '';
