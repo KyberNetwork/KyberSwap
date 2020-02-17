@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import { SortableComponent } from "../../../components/CommonElement"
@@ -25,8 +25,7 @@ export default class QuoteMarket extends React.Component{
       favorite_pairs: [],
       current_search: "", 
       current_sort_index: "base", 
-      current_sort_dsc: true,
-      is_volume: false
+      current_sort_dsc: true
     }
   }
 
@@ -112,15 +111,11 @@ export default class QuoteMarket extends React.Component{
   }
 
   renderTh = () => {
-    let price = this.props.translate("limit_order.price") || "Price"
-    let pair = this.props.translate("limit_order.pair") || "Pair"
-    let volume = this.props.translate("limit_order.volume") || "Volume"
-    let change = this.props.translate("change") || "Change"
-    const {is_volume} = this.state;
     let headerTitles = [
-      { html: pair, field: "base" },
-      { html: price, field: "price" },
-      { html: is_volume ? volume : change, field: is_volume ? "volume" : "change" },
+      { html: this.props.translate("limit_order.pair") || "Pair", field: "base" },
+      { html: this.props.translate("limit_order.price") || "Price", field: "price" },
+      { html: this.props.translate("limit_order.volume") || "Volume", field: "volume" },
+      { html: this.props.translate("change") || "Change", field: "change" }
     ];
     
     return headerTitles.map((i, index) => (
@@ -132,25 +127,26 @@ export default class QuoteMarket extends React.Component{
           isActive={this.state.current_sort_index === i["field"]} />
       </div>
     ))
-  }
+  };
 
   onPairClick = (base, quote) => {
-    quote = quote === "ETH" ? "WETH" : quote
+    quote = quote === "ETH" ? "WETH" : quote;
+    
     this.props.selectSourceAndDestToken(quote, base);
     this.props.global.analytics.callTrack("trackLimitOrderClickSelectPair", base + "/" + quote)
     
-    if (this.props.global.isOnMobile){
-      this.props.dispatch(limitOrderActions.toogleQuoteMarket(false))
+    if (this.props.global.isOnMobile) {
+      this.props.dispatch(limitOrderActions.toogleQuoteMarket(false));
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth'
       });
     }
-  }
+  };
+  
   render(){
     const quotes = this.renderQuotes()
-    const {is_volume} = this.state
     const { tokens, currentQuote } = this.props
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : [];
     const isOnMobile = this.props.global.isOnMobile;
@@ -160,30 +156,30 @@ export default class QuoteMarket extends React.Component{
           { Object.keys(tokens).length > 0 ? 
             <div id="container">
               <div id="panel" className="theme__text-4 theme__border">
-                <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
+                <div className="common__flexbox">
+                  <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
+                  <Search onSearch={this.onSearch}/>
+                </div>
                 
                 {currentQuote === "WETH" && <div className={"instruction"}>{this.props.translate("limit_order.eth_not_support") || "ETH* represents the sum of ETH & WETH for easy reference"}</div>}
                 
                 {isOnMobile && (
-                  <Fragment>
-                    <Search onSearch={this.onSearch}/>
-                    <div className="volume_change_panel">
-                      <div className="advance-config__option-container">
-                        <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("change") || "Change"}</span>
-                          <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                                 onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
-                                 checked={!this.state.is_volume} />
-                          <span className="advance-config__checkmark theme__radio-button"/>
-                        </label>
-                        <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
-                          <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                                 onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
-                                 checked={this.state.is_volume} />
-                          <span className="advance-config__checkmark theme__radio-button"/>
-                        </label>
-                      </div>
+                  <div className="volume_change_panel">
+                    <div className="advance-config__option-container">
+                      <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("change") || "Change"}</span>
+                        <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                               onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
+                               checked={!this.state.is_volume} />
+                        <span className="advance-config__checkmark theme__radio-button"/>
+                      </label>
+                      <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
+                        <input className="advance-config__radio" type="radio" name="volumeOrChange"
+                               onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
+                               checked={this.state.is_volume} />
+                        <span className="advance-config__checkmark theme__radio-button"/>
+                      </label>
                     </div>
-                  </Fragment>
+                  </div>
                 )}
               </div>
               <div className="table">
@@ -195,21 +191,27 @@ export default class QuoteMarket extends React.Component{
                 </div>
 
                 <div className="table__body">
-                  {list.map(pair => <div key={pair["id"]} className="table__row" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>
-                    <div className="overlay"/>
-                    <div className={"c0"} onClick={() => this.props.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
-                      <div className={pair["is_favorite"] ? "star active" : "star" } />
+                  {list.map(pair => (
+                    <div key={pair["id"]} className="table__row" onClick={() => this.onPairClick(pair["base"], pair["quote"])}>
+                      <div className="overlay"/>
+                      <div className={"c0"} onClick={() => this.props.onFavoriteClick(pair["base"], pair["quote"], !pair["is_favorite"])}>
+                        <div className={pair["is_favorite"] ? "star active" : "star" } />
+                      </div>
+                      <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
+                      <div className={"c2"} >{pair["price"] != 0 ? pair["price"] : '-'}</div>
+                      <div className={"c3"}>{pair["volume"] === "-" ? "-" : pair["volume"]}</div>
+                      <div className={`c4 ${pair["change"] < 0 ? "down" : "up"}`}>
+                        {pair["change"] === '-' || pair["price"] == 0 ? '-' : `${pair["change"]}%`}
+                      </div>
                     </div>
-                    <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
-                    <div className={"c2"} >{pair["price"] != 0 ? pair["price"] : '-'}</div>
-                    <div className={`c3 ${is_volume ? "" : (pair["change"] < 0 ? "down" : "")} ${is_volume ? "" : (pair["change"] > 0 ? "up" : "")}`}>
-                      {is_volume ? (pair["volume"] == "-" ? "-" : pair["volume"]) : (pair["change"] == '-' || pair["price"] == 0) ? '-' : `${pair["change"]}%`}
-                    </div>
-                  </div>)}
+                  ))}
                 </div>
               </div>
-            </div> : 
-            <div className="rate-loading"> <img src={require(`../../../../assets/img/${this.props.global.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} /></div>}
+            </div> :
+            <div className="rate-loading">
+              <img src={require(`../../../../assets/img/${this.props.global.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)} />
+            </div>
+          }
       </div>
     )
   }

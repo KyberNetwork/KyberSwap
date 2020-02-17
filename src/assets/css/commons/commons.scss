@@ -89,6 +89,12 @@
     align-items: center;
   }
 
+  &__flexbox-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__balance {
     display: flex;
     justify-content: flex-end;
