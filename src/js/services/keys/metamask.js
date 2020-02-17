@@ -20,7 +20,7 @@ export default class Metamask extends React.Component{
               resolve()              
             }
           })
-        }, 100)
+        }, 1000)
       })          
     })    
   }  
