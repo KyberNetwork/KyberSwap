@@ -449,15 +449,15 @@
     "received": "收到"
   },
   "portfolio": {
-    "error_loading_history": "Something wrong loading your history txs, please try again later.",
-    "empty_history": "You do not have any transaction.",
-    "token_approved": "Token Approved",
-    "token_is_approved": "${token} is Approved for ${contract}",
-    "lo_triggered": "Limit Order Triggered",
-    "tx_history": "Transaction History",
-    "supported_tokens": "Supported tokens",
-    "interact_contract": "Interact Contract",
-    "to_contract": "To Contract"
+    "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",
+    "empty_history": "您没有任何交易.",
+    "token_approved": "代币已批准",
+    "token_is_approved": "${token}被批准为${contract}",
+    "lo_triggered": "触发限价订单",
+    "tx_history": "交易历史",
+    "supported_tokens": "支持的代币",
+    "interact_contract": "交互合约",
+    "to_contract": "發送到合约"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -486,6 +486,6 @@
   "change": "变化",
   "send": "发送",
   "undefined": "未定义",
-  "show": "Show",
-  "failed": "Failed"
+  "show": "显示",
+  "failed": "失败"
 }

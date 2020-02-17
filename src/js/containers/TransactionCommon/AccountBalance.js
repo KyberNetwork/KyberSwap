@@ -23,14 +23,14 @@ import * as converts from "../../utils/converter";
     limitOrder : store.limitOrder
   }
 })
-
 export default class AccountBalance extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
       searchWord: "",
-      sortType: 'Eth',
+      sortType: 'ETH',
+      sortName: '',
       sortDESC: true
     }
   }
@@ -38,25 +38,25 @@ export default class AccountBalance extends React.Component {
   changeSearchBalance = (e) => {
     var value = e.target.value
     this.setState({searchWord:value})
-  }
+  };
 
   clickOnInput = () => {
     this.props.global.analytics.callTrack("trackSearchTokenBalanceBoard");
-  }
-
-  onSort = (sortType, isDsc) => {
-    this.setState({sortType: sortType, sortDESC: isDsc})
+  };
+  
+  onClickSort = (sortType, sortName, isDsc) => {
+    this.setState({
+      sortType: sortType !== false ? sortType : this.state.sortType,
+      sortName: sortName,
+      sortDESC: isDsc
+    });
+    
     this.props.global.analytics.callTrack("trackLimitOrderClickSort", sortType, isDsc ? 'dsc' : 'asc')
   };
   
-  onClickSortType = (id, isDsc) => {
-    this.onSort(id, isDsc);
-    this.props.global.analytics.callTrack("trackLimitOrderClickSortOnWalletPanel", id, isDsc)
-  };
-  
   archiveMaintain = (tokens) => {
-    return tokens.filter(t =>  (t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0)))
-    .concat(tokens.filter(t =>  !(t.symbol == "ETH" || converts.compareTwoNumber(t.rate, 0))))
+    return tokens.filter(t =>  (t.symbol === "ETH" || converts.compareTwoNumber(t.rate, 0)))
+    .concat(tokens.filter(t =>  !(t.symbol === "ETH" || converts.compareTwoNumber(t.rate, 0))))
   };
   
   archiveBalanceZero = (tokens) => {
@@ -68,41 +68,35 @@ export default class AccountBalance extends React.Component {
     return tokens.filter(token =>  token.sp_limit_order && this.isValidPriority(token)).concat(tokens.filter(token =>  !(token.sp_limit_order && this.isValidPriority(token))))
   };
   
+  getChangeByETH = (tokenSymbol) => {
+    let changeByETH = this.props.marketTokens[`ETH_${tokenSymbol}`] ? this.props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
+  
+    if (changeByETH === 0) {
+      const changeFromTokenToETH = this.props.marketTokens[`${tokenSymbol}_ETH`] ? this.props.marketTokens[`${tokenSymbol}_ETH`].change : 0;
+      const changeFromTokenToETHPercent = changeFromTokenToETH / 100;
+      changeByETH = changeFromTokenToETH ? converts.formatNumber((-changeFromTokenToETHPercent / (1 + changeFromTokenToETHPercent)) * 100, 2) : 0;
+    }
+  
+    return changeByETH;
+  };
+  
+  getChangeByUSD = (tokenSymbol) => {
+    return this.props.marketTokens[`USDC_${tokenSymbol}`] ? this.props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
+  };
+  
   getCustomizedTokens = () => {
     let tokens = this.props.tokens;
     let res = [];
     
     switch (this.state.sortType) {
-      case "Eth":
+      case "ETH":
         if (this.state.sortDESC) {
           res = converts.sortEthBalance(tokens)
         } else {
           res = converts.sortASCEthBalance(tokens)
         }
         break;
-      case "Name":
-        if (this.state.sortDESC) {
-          var ordered = []
-          Object.keys(tokens).sort().forEach(function (key) {
-            ordered.push(tokens[key])
-          })
-          res = ordered
-        } else {
-          var ordered = []
-          Object.keys(tokens).sort().reverse().forEach(function (key) {
-            ordered.push(tokens[key])
-          })
-          res = ordered
-        }
-        break;
-      case "Bal":
-        res = Object.keys(tokens).map(key => tokens[key])
-        .sort((a, b) => {
-          return (this.state.sortDESC ? -1 : 1) *
-            (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
-        })
-        break;
-      case "USDT":
+      case "USD":
         res = Object.keys(tokens).map(key => tokens[key])
         .sort((a, b) => {
           return (this.state.sortDESC ? -1 : 1) *
@@ -110,7 +104,45 @@ export default class AccountBalance extends React.Component {
               converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
               converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
             ))
-        })
+        });
+        break;
+    }
+    
+    switch (this.state.sortName) {
+      case "Name":
+        let ordered = [];
+        if (this.state.sortDESC) {
+          Object.keys(tokens).sort().forEach(function (key) {
+            ordered.push(tokens[key])
+          });
+          res = ordered
+        } else {
+          Object.keys(tokens).sort().reverse().forEach(function (key) {
+            ordered.push(tokens[key])
+          });
+          res = ordered
+        }
+        break;
+      case "Bal":
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {
+          return (this.state.sortDESC ? -1 : 1) *
+            (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
+        });
+        break;
+      case "Change":
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {
+          let aChange, bChange;
+          
+          if (this.state.sortType === 'ETH') {
+            aChange = this.getChangeByETH(a.symbol);
+            bChange = this.getChangeByETH(b.symbol);
+          } else {
+            aChange = this.getChangeByUSD(a.symbol);
+            bChange = this.getChangeByUSD(b.symbol);
+          }
+      
+          return (this.state.sortDESC ? -1 : 1) * converts.subOfTwoNumber(aChange, bChange);
+        });
         break;
     }
     
@@ -143,6 +175,7 @@ export default class AccountBalance extends React.Component {
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}
         sortType = {this.state.sortType}
+        sortName = {this.state.sortName}
         account={this.props.account}
         screen = {this.props.screen}
         isFixedSourceToken = {this.props.isFixedSourceToken}
@@ -150,12 +183,14 @@ export default class AccountBalance extends React.Component {
         selectBalance = {this.props.selectToken}
         isLimitOrderTab={this.props.isLimitOrderTab}
         openReImport={this.props.openReImport}
-        onClickSortType={this.onClickSortType}
+        onClickSort={this.onClickSort}
         hideZeroBalance={this.props.hideZeroBalance}
         show24hChange={this.props.show24hChange}
         marketTokens={this.props.marketTokens}
         getCustomizedTokens={this.getCustomizedTokens}
         isValidPriority={this.isValidPriority}
+        getChangeByETH={this.getChangeByETH}
+        getChangeByUSD={this.getChangeByUSD}
       />
     )
   }
