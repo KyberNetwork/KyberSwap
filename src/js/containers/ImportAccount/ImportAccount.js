@@ -91,7 +91,7 @@ export default class ImportAccount extends React.Component {
   render() {
     return (
       <div id={"import-account"}>
-        {(!this.props.isAgreedTermOfService && this.props.account === false && this.props.tradeType !== "limit_order") &&
+        {(!this.props.isAgreedTermOfService && this.props.account === false && !this.props.noTerm) &&
           <div className={"exchange-content__accept-term"}>
             <div className={"accept-button theme__button"} onClick={(e) => this.acceptTerm()}>
               {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
@@ -110,6 +110,7 @@ export default class ImportAccount extends React.Component {
           tradeType={this.props.tradeType}
           isUserLogin={isUserLogin()}
           viewKyberSwapApp={this.viewKyberSwapApp}
+          noTerm={this.props.noTerm}
         />}
       </div>
     )

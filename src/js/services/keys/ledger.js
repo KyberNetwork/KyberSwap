@@ -210,4 +210,8 @@ export default class Ledger {
   getWalletName = () => {
     return 'Ledger';
   }
+  
+  getMetaName = () => {
+    return 'Ledger';
+  }
 }

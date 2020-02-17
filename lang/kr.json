@@ -26,6 +26,7 @@
     "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "다운로드",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
@@ -38,6 +39,7 @@
     "exchange": "환전",
     "exchange_from": "보내는 곳",
     "exchange_to": "받는 곳",
+    "exchange_receive": "받다",
     "transfer": "송금",
     "transfer_to_address": "주소로 송금하기",
     "amount": "금액",
@@ -441,13 +443,23 @@
     "amount": "금액",
     "total": "추정 가치",
     "volume": "볼륨",
-    "change": "변동",
     "buy": "${symbol} 구매",
     "sell": "${symbol} 판매",
     "type": "유형",
     "available_balance": "사용 가능한 잔액",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "받았습니다"
+  },
+  "portfolio": {
+    "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",
+    "empty_history": "거래내역이 없습니다",
+    "token_approved": "토큰 승인",
+    "token_is_approved": "${contract}를 위한 토큰 ${token}이 승인되었습니다",
+    "lo_triggered": "리밋 오더 발생됨",
+    "tx_history": "거래 내역",
+    "supported_tokens": "지원하는 토큰",
+    "interact_contract": "컨트랙트 상호작용",
+    "to_contract": "컨트랙트로"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -472,5 +484,10 @@
   "off": "할인",
   "learn_more": "더 알아보기",
   "received": "받았습니다",
-  "details": "자세히보기"
+  "details": "자세히보기",
+  "change": "변동",
+  "send": "보내다",
+  "undefined": "Undefined",
+  "show": "보기",
+  "failed": "실패함"
 }

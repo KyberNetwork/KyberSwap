@@ -19,24 +19,26 @@ const ImportAccountView = (props) => {
     importAccountTitle = props.translate("address.connect_your_wallet_to_transfer") || "Connect your Wallet to Transfer";
   } else if (props.tradeType === "limit_order") {
     importAccountTitle = props.translate("address.connect_your_wallet_to_limit_order") || "You must sign in and import your wallet to submit limit order";
+  } else if (props.tradeType === "portfolio") {
+    importAccountTitle = props.translate("address.connect_your_wallet_to_portfolio") || "Import your Wallet to View Portfolio";
   }
 
   return (
     <div className={`import-account ${isLimitOrder ? 'theme__background-2' : ''}`}>
       <div className="import-account__choose-wallet-container container">
-        {props.isAgreedTermOfService && props.tradeType !== "limit_order" && (
+        {props.isAgreedTermOfService && (
           <h1 className="import-account__title">
             {importAccountTitle}
           </h1>
         )}
 
-        {props.tradeType === "limit_order" && (
+        {props.noTerm && (
           <h1 className="import-account__title">
             {importAccountTitle}
           </h1>
         )}
 
-        {!isLimitOrder && (
+        {(!props.noTerm) && (
           <div className="import-account__title--inactive">
             <div className="import-account__title-separator theme__border-2"/>
             <div className="import-account__title-content theme__background-2 theme__text-4">
