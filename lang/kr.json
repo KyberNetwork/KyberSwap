@@ -451,15 +451,15 @@
     "received": "받았습니다"
   },
   "portfolio": {
-    "error_loading_history": "Something wrong loading your history txs, please try again later.",
-    "empty_history": "You do not have any transaction.",
-    "token_approved": "Token Approved",
-    "token_is_approved": "${token} is Approved for ${contract}",
-    "lo_triggered": "Limit Order Triggered",
-    "tx_history": "Transaction History",
-    "supported_tokens": "Supported tokens",
-    "interact_contract": "Interact Contract",
-    "to_contract": "To Contract"
+    "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",
+    "empty_history": "거래내역이 없습니다",
+    "token_approved": "토큰 승인",
+    "token_is_approved": "${contract}를 위한 토큰 ${token}이 승인되었습니다",
+    "lo_triggered": "리밋 오더 발생됨",
+    "tx_history": "거래 내역",
+    "supported_tokens": "지원하는 토큰",
+    "interact_contract": "컨트랙트 상호작용",
+    "to_contract": "컨트랙트로"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -488,6 +488,6 @@
   "change": "변동",
   "send": "보내다",
   "undefined": "Undefined",
-  "show": "Show",
-  "failed": "Failed"
+  "show": "보기",
+  "failed": "실패함"
 }

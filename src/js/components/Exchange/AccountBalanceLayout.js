@@ -1,5 +1,6 @@
 import React from "react"
 import * as converts from "../../utils/converter"
+import { MINIMUM_DISPLAY_BALANCE } from "../../services/constants"
 import BLOCKCHAIN_INFO from "../../../../env"
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
@@ -16,13 +17,12 @@ const AccountBalanceLayout = (props) => {
   }
   
   function get24ChangeValue(sortType, tokenSymbol, isValidRate) {
-    const changeByETH = props.marketTokens[`ETH_${tokenSymbol}`] ? props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
-    const changeByUSD = props.marketTokens[`USDC_${tokenSymbol}`] ? props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
-    
-    if (sortType === 'Eth') {
+    if (sortType === 'ETH') {
+      let changeByETH = props.getChangeByETH(tokenSymbol);
       return <div className={`account-balance__token-row ${get24ChangeClass(changeByETH, isValidRate)}`}>{(isValidRate) ? `${changeByETH}%` : '---'}</div>
     }
-  
+    
+    const changeByUSD = props.getChangeByUSD(tokenSymbol);
     return <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD, isValidRate)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
   }
   
@@ -37,12 +37,14 @@ const AccountBalanceLayout = (props) => {
       let classBalance = "";
       const noBalance = balance == 0;
       const isValidRate = token.symbol === "ETH" || converts.compareTwoNumber(token.rate, 0);
-    
-      if (token.symbol === props.sourceActive) classBalance += " active"
+      const balanceInETH = converts.formatNumber(token.balanceInETH || 0, 6);
+      const balanceInUSD = converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2);
+      const hideZeroBalance = props.hideZeroBalance && (noBalance || balanceInETH < MINIMUM_DISPLAY_BALANCE);
       
-      if (!symbolL.includes(searchWord) || (props.hideZeroBalance && noBalance)) return null;
-      
+      if (!symbolL.includes(searchWord) || hideZeroBalance) return null;
       isEmpty = false;
+  
+      if (token.symbol === props.sourceActive) classBalance += " active";
       
       if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
         classBalance += " disabled unclickable"
@@ -59,7 +61,7 @@ const AccountBalanceLayout = (props) => {
       return (
         <div
           key={token.symbol}
-          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol == "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
+          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
           className={"account-balance__token-item" + classBalance}
         >
           <div className={"account-balance__token-row account-balance__token-info"}>
@@ -72,8 +74,7 @@ const AccountBalanceLayout = (props) => {
           {
             (isValidRate) ?
               (<div className="account-balance__token-row stable-equivalent">{
-                props.sortType == "Eth" ? (<span>{ converts.toT(converts.multiplyOfTwoNumber(balance, token.symbol == "ETH" ? "1000000000000000000" : token.rate), false, 6)} E</span>) :
-                  (<span>{converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2)}$</span>)
+                props.sortType === "ETH" ? `${balanceInETH} E` : `${balanceInUSD}$`
               }</div>) :
               (<div className="account-balance__token-row stable-equivalent">
                 {props.hideZeroBalance && (
@@ -150,17 +151,44 @@ const AccountBalanceLayout = (props) => {
               {!isHideAllInfo && (
                 <div className="account-balance__sort-panel theme__background-4">
                   <div>
-                    <SortableComponent text="Name" Wrapper="span" isActive={props.sortType == "Name"} onClick={(isDsc) => props.onClickSortType("Name", isDsc)}/>
+                    <SortableComponent
+                      text="Name"
+                      Wrapper="span"
+                      isActive={props.sortName === "Name"}
+                      onClick={(isDsc) => props.onClickSort(false, "Name", isDsc)}
+                    />
                     <span className="account-balance__sort-separation theme__separation"> | </span>
-                    <SortableComponent text="Bal" Wrapper="span" isActive={props.sortType == "Bal"} onClick={(isDsc) => props.onClickSortType("Bal", isDsc)}/>
+                    <SortableComponent
+                      text="Bal"
+                      Wrapper="span"
+                      isActive={props.sortName === "Bal"}
+                      onClick={(isDsc) => props.onClickSort(false, "Bal", isDsc)}
+                    />
                   </div>
                   <div>
-                    <SortableComponent text="ETH" Wrapper="span" isActive={props.sortType == "Eth"} onClick={(isDsc) => props.onClickSortType("Eth", isDsc)}/>
+                    <SortableComponent
+                      text="ETH"
+                      Wrapper="span"
+                      isActive={props.sortType === "ETH"}
+                      onClick={(isDsc) => props.onClickSort("ETH", '', isDsc)}
+                      showArrow={props.sortName === ''}
+                    />
                     <span className="account-balance__sort-separation theme__separation"> | </span>
-                    <SortableComponent text="USD" Wrapper="span" isActive={props.sortType == "USDT"} onClick={(isDsc) => props.onClickSortType("USDT", isDsc)}/>
+                    <SortableComponent
+                      text="USD"
+                      Wrapper="span"
+                      isActive={props.sortType === "USD"}
+                      onClick={(isDsc) => props.onClickSort("USD", '', isDsc)}
+                      showArrow={props.sortName === ''}
+                    />
                   </div>
                   {props.show24hChange && (
-                    <div>{props.translate("change") || "Change"}</div>
+                    <SortableComponent
+                      text={props.translate("change") || "Change"}
+                      Wrapper="span"
+                      isActive={props.sortName === "Change"}
+                      onClick={(isDsc) => props.onClickSort(false, "Change", isDsc)}
+                    />
                   )}
                 </div>
               )}

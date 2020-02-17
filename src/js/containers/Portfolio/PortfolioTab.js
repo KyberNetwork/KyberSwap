@@ -18,7 +18,7 @@ const PortfolioTab = (props) => {
       <div
         className={`portfolio__navigation-item ${props.mobileTab === PORTFOLIO_TAB.history ? 'portfolio__navigation-item--active' : ''}`}
         onClick={() => props.switchMobileTab(PORTFOLIO_TAB.history)}>
-        Histories
+        Tx History
       </div>
     </div>
   )

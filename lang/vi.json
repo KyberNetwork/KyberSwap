@@ -450,15 +450,15 @@
     "received": "Đã nhận"
   },
   "portfolio": {
-    "error_loading_history": "Something wrong loading your history txs, please try again later.",
-    "empty_history": "You do not have any transaction.",
-    "token_approved": "Token Approved",
-    "token_is_approved": "${token} is Approved for ${contract}",
-    "lo_triggered": "Limit Order Triggered",
-    "tx_history": "Transaction History",
-    "supported_tokens": "Supported tokens",
-    "interact_contract": "Interact Contract",
-    "to_contract": "To Contract"
+    "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
+    "empty_history": "Bạn chưa có bất kỳ giao dịch nào",
+    "token_approved": "Cho phép sử dụng token",
+    "token_is_approved": "${token} được cho phép sử dụng cho {contract}",
+    "lo_triggered": "Limit Order được khớp",
+    "tx_history": "Lịch sử giao dịch",
+    "supported_tokens": "Các token được hỗ trợ",
+    "interact_contract": "Tương tác",
+    "to_contract": "Chuyển Tới"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -487,6 +487,6 @@
   "change": "Thay đổi",
   "send": "Gửi",
   "undefined": "Undefined",
-  "show": "Show",
-  "failed": "Failed"
+  "show": "Hiển thị",
+  "failed": "Lỗi"
 }

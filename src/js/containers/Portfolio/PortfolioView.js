@@ -81,7 +81,7 @@ const PortfolioView = (props) => {
           <AccountBalance
             screen="portfolio"
             hideZeroBalance={true}
-            show24hChange={true}
+            show24hChange={false}
           />
         </div>
       )}
