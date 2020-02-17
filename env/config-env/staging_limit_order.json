@@ -23,6 +23,7 @@
     "min_accept_amount": 0.5,
     "api_tokens": "https://staging-limit-order-api.knstats.com/internal/currencies",
     "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
+    "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
         "DAI",

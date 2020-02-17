@@ -1,5 +1,4 @@
 import { take, put, call, fork, takeEvery, cancel } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import * as actions from '../actions/accountActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { getPendingBalancesComplete } from "../actions/limitOrderActions"
@@ -7,10 +6,11 @@ import * as utilActions from '../actions/utilActions'
 import * as common from "./common"
 import * as service from "../services/accounts"
 import constants from "../services/constants"
-import { findNetworkName } from "../utils/converter"
+import { convertToETHBalance, findNetworkName, sumOfTwoNumber } from "../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import { store } from '../store';
-import {getWallet} from "../services/keys"
+import { getWallet } from "../services/keys"
+import { sortBy } from "underscore";
 
 export function* updateAccount(action) {
   const { account, ethereum } = action.payload
@@ -147,8 +147,6 @@ export function* importNewAccount(action) {
     yield put(actions.throwError(translate("error.network_error") || "Cannot connect to node right now. Please check your network!"))
     yield put(actions.closeImportLoading())
   }
-
-
 }
 
 function* subcribeWalletDisconnect(wallet){  
@@ -208,9 +206,31 @@ export function* importMetamask(action) {
   }
 }
 
+export function* setBalanceTokenComplete() {
+  const state = store.getState();
+  const tokens = state.tokens.tokens;
+
+  let availableTokens = Object.keys(tokens).filter((symbol) => {
+    return tokens[symbol].balance != 0;
+  }).map(function(symbol) {
+    const token = tokens[symbol];
+    token.balanceInETH = convertToETHBalance(token.balance, token.decimals, token.symbol, token.rate)
+    return token;
+  });
+
+  const totalBalanceInETH = availableTokens.reduce((total, token) => {
+    return +sumOfTwoNumber(total, token.balanceInETH);
+  }, 0);
+
+  availableTokens = sortBy(availableTokens, (token) => -token.balanceInETH);
+
+  yield put(actions.setTotalBalanceAndAvailableTokens(totalBalanceInETH, availableTokens));
+}
+
 export function* watchAccount() {
   yield takeEvery("ACCOUNT.UPDATE_ACCOUNT_PENDING", updateAccount)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING", importNewAccount)
   yield takeEvery("ACCOUNT.IMPORT_ACCOUNT_METAMASK", importMetamask)
   yield takeEvery("ACCOUNT.UPDATE_TOKEN_BALANCE", updateTokenBalance)
+  yield takeEvery("GLOBAL.SET_BALANCE_TOKEN", setBalanceTokenComplete)
 }

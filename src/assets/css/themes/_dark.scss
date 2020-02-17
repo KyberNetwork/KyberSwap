@@ -89,12 +89,20 @@
     background-color: black;
   }
 
+  .theme__background-11 {
+    background-color: $dark-color-1;
+  }
+
   .theme__border {
     border-color: $dark-color-10;
   }
 
   .theme__border-2 {
     border-color: $dark-color-4;
+  }
+
+  .theme__border-3 {
+    border-color: $dark-color-2;
   }
 
   .theme__border-top {
@@ -143,14 +151,16 @@
   }
 
   .theme__search {
-    border-color: $dark-color-4;
+    border-color: $dark-color-8;
     color: $dark-color-8;
   }
   
   .theme__sort {
-    color: $dark-color-8;
+    color: $grey-dark;
 
     &.active {
+      color: $grey-lighter;
+
       &.asc:after {
         color: #31cb9e;
       }
@@ -249,6 +259,20 @@
     background-color: $dark-color-4;
     color: $grey-light;
     border-color: transparent;
+  }
+
+  .theme__table {
+    &-header {
+      background-color: $dark-color-7;
+    }
+
+    &-item {
+      background-color: $dark-color-1;
+
+      &:nth-child(odd) {
+        background-color: $dark-color-2;
+      }
+    }
   }
 }
 

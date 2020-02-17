@@ -58,4 +58,8 @@ export default class KeyStore {
   getWalletName = () => {
     return 'Keystore';
   }
+  
+  getMetaName = () => {
+    return 'Software Wallet';
+  }
 }

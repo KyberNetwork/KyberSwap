@@ -52,6 +52,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
   var exchangeLink = constanst.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
   var transferLink = constanst.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
   var orderLink = constanst.BASE_HOST + `/${constanst.LIMIT_ORDER_CONFIG.path}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
+  var portfolioLink = `${constanst.BASE_HOST}/portfolio`;
 
   return {
     ethereumNode: store.connection.ethereum,
@@ -66,7 +67,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
     analytics: store.global.analytics,
     langClass: langClass,
     theme: store.global.theme,
-    exchangeLink, transferLink, orderLink,
+    exchangeLink, transferLink, orderLink, portfolioLink
   }
 })
 
@@ -109,6 +110,7 @@ export default class Layout extends React.Component {
       window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
       window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
       window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
+      window.kyberBus.on('go.to.portfolio', () => {history.push(this.props.portfolioLink)});
       window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
   };

@@ -386,8 +386,7 @@ export default class BaseProvider {
 
         })
     }
-
-
+    
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
@@ -397,7 +396,6 @@ export default class BaseProvider {
             } catch (e) {
                 reject(e)
             }
-
         })
     }
 
@@ -522,9 +520,6 @@ export default class BaseProvider {
         return new Promise((resolve, reject) => {
             this.rpc.eth.getGasPrice()
                 .then(result => {
-                    // console.log("gas price")
-                    // console.log(result)
-
                     var gasPrice = parseInt(result, 10)
                     gasPrice = gasPrice / 1000000000
                     if (gasPrice < 1) {

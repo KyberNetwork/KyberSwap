@@ -155,3 +155,10 @@ export function setOnDAPP() {
     type: "ACCOUNT.SET_ON_DAPP"
   }
 }
+
+export function setTotalBalanceAndAvailableTokens(totalBalanceInETH, availableTokens) {
+  return {
+    type: "ACCOUNT.SET_TOTAL_BALANCE_AND_AVAILABLE_TOKENS",
+    payload: { totalBalanceInETH, availableTokens }
+  }
+}

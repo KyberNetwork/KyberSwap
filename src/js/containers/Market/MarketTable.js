@@ -112,7 +112,7 @@ export default class MarketTable extends React.Component {
         return "market.volume"
       }
       case "change_mobile": {
-        return "limit_order.change"
+        return "change"
       }
       case "volume_mobile": {
         return "limit_order.volume"
@@ -340,7 +340,7 @@ export default class MarketTable extends React.Component {
             {this.props.global.isOnMobile && (
               <div className="advance-config__option-container">
                 <label className="advance-config__option">
-                  <span className="advance-config__option-percent">{this.props.translate("limit_order.change") || "Change"}</span>
+                  <span className="advance-config__option-percent">{this.props.translate("change") || "Change"}</span>
                   <input className="advance-config__radio" type="radio" onChange={() => this.changeCustomColumn('change')} checked={this.state.customColumn === 'change'} />
                   <span className="advance-config__checkmark"/>
                 </label>

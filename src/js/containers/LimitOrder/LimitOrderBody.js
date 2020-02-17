@@ -95,8 +95,7 @@ export default class LimitOrderBody extends React.Component {
             <div className={"limit-order-account"}>
               <ImportAccount
                 tradeType="limit_order"
-                isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-                isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+                noTerm={true}
               />
             </div>
           }
@@ -140,8 +139,7 @@ export default class LimitOrderBody extends React.Component {
                 <div className={"limit-order-account"}>
                   <ImportAccount
                     tradeType="limit_order"
-                    isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-                    isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
+                    noTerm={true}
                   />
                 </div>
               }

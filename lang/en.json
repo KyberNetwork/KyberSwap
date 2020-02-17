@@ -27,6 +27,7 @@
     "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
     "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "Download",
     "your_wallet": "Wallet",
     "register_beta": "Coming soon",
@@ -444,7 +445,6 @@
     "amount": "Amount",
     "total": "Total",
     "volume": "Volume",
-    "change": "Change",
     "buy": "Buy ${symbol}",
     "sell": "Sell ${symbol}",
     "type": "Type",
@@ -452,6 +452,17 @@
     "received": "Received",
     "cancel_error": "Something went wrong with cancel order process.",
     "eth_weth_explanation": "ETH* represents the sum of ETH & WETH for easy reference"
+  },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved for ${contract}",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens",
+    "interact_contract": "Interact Contract",
+    "to_contract": "To Contract"
   },
   "home": "Home",
   "tracker": "Tracker",
@@ -476,5 +487,10 @@
   "off": "OFF",
   "learn_more": "Learn More",
   "received": "Received",
-  "details": "Details"
+  "details": "Details",
+  "change": "Change",
+  "send": "Send",
+  "undefined": "Undefined",
+  "show": "Show",
+  "failed": "Failed"
 }
