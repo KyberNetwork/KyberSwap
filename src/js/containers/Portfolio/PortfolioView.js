@@ -82,6 +82,7 @@ const PortfolioView = (props) => {
             screen="portfolio"
             hideZeroBalance={true}
             show24hChange={false}
+            selectToken={props.selectToken}
           />
         </div>
       )}

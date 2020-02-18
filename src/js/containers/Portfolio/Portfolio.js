@@ -40,6 +40,16 @@ export default class Portfolio extends React.Component {
   switchMobileTab = (tab) => {
     this.setState({ mobileTab: tab })
   };
+
+  selectToken=(symbol) => {
+    var path 
+    if (symbol === "ETH") {
+      path = "/swap/eth-knc"
+    }else{
+      path = "/swap/" + symbol.toLowerCase() + "-eth"
+    }    
+    this.props.dispatch(globalActions.goToRoute(path))
+  }
   
   render() {
     return (
@@ -59,6 +69,7 @@ export default class Portfolio extends React.Component {
         switchMobileTab={this.switchMobileTab}
         isOnMobile={this.props.global.isOnMobile}
         theme={this.props.global.theme}
+        selectToken={this.selectToken}
       />
     )
   }
