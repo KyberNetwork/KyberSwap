@@ -1,5 +1,5 @@
 #quote-market {
-  padding: 12px 16px;
+  padding: 12px 15px;
   font-size: 14px;
   font-weight: 500;
   border-radius: 3px;
@@ -183,7 +183,7 @@
 
     .table__body {
       display: block;
-      height: 300px;
+      height: 191px;
       overflow-y: auto;
       overflow-x: hidden;
       width: 100%;
@@ -216,7 +216,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5em;
+      padding: 3px 5px;
       position: relative;
 
       .c0 {
@@ -226,11 +226,22 @@
       }
 
       .c1 {
+        width: 18.75%;
+      }
+
+      .c2 {
+        width: 21.75%;
+      }
+
+      .c3 {
+        width: 30.75%;
+      }
+
+      .c4 {
         width: 23.75%;
       }
 
       .c2, .c3, .c4 {
-        width: 23.75%;
         text-align: right;
       }
 

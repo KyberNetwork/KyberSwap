@@ -446,7 +446,9 @@
     "type": "Type",
     "available_balance": "Available Balance",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Получил"
+    "received": "Получил",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",

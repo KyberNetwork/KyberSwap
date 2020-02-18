@@ -55,7 +55,7 @@ const limitOrder = (state = initState, action) => {
             newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(newState.offeredRate));
             newState.destAmount = converter.caculateDestAmount(state.sourceAmount, converter.roundingRate(rate), destTokenDecimals);
           }
-
+  
           let errors = newState.errors;
           errors.triggerRate = [];
           newState.errors = errors;

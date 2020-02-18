@@ -17,6 +17,7 @@ import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
 import * as constants from "../../services/constants";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
+import LimitOrderForm2 from "./LimitOrderForm2";
 
 @connect((store, props) => {
   const global = store.global;
@@ -36,6 +37,7 @@ export default class LimitOrderBody extends React.Component {
     this.srcInputElementRef = null;
     this.submitHandler = null;
     this.LimitOrderForm = withSourceAndBalance(LimitOrderForm);
+    this.LimitOrderForm2 = withSourceAndBalance(LimitOrderForm2);
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
@@ -82,6 +84,7 @@ export default class LimitOrderBody extends React.Component {
 
   desktopLayout = () => {
     const LimitOrderForm = this.LimitOrderForm
+    const LimitOrderForm2 = this.LimitOrderForm2
     const QuoteMarket = this.QuoteMarket
 
     return (
@@ -100,12 +103,20 @@ export default class LimitOrderBody extends React.Component {
             </div>
           }
           <QuoteMarket />
-          <LimitOrderForm
-            setSrcInputElementRef={this.setSrcInputElementRef}
-            submitHandler={this.submitHandler}
-            setSubmitHandler={this.setSubmitHandler}
-            setFormType={this.setFormType}
-          />
+  
+          <div className="common__flexbox-between">
+            <LimitOrderForm2
+              submitHandler={this.submitHandler}
+              setSubmitHandler={this.setSubmitHandler}
+              formType="buy"
+            />
+    
+            <LimitOrderForm2
+              submitHandler={this.submitHandler}
+              setSubmitHandler={this.setSubmitHandler}
+              formType="sell"
+            />
+          </div>
         </div>
       </div>
     )

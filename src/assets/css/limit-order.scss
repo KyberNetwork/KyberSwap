@@ -35,43 +35,41 @@
   position: relative;
 
   .ReactTable {
-    height: 345px;
     min-height: 100px;
-    margin: 15px 30px 15px 30px;
+    margin: 0 15px 15px;
     border: none;
 
     &--empty {
       height: 260px !important;
+    }
 
-      .rt-thead {
-        //background-color: transparent !important;
-      }
+    .rt-table {
+      padding-bottom: 10px;
+      height: 290px;
+      flex: initial;
     }
 
     .rt-thead {
       overflow-y: auto;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 500;
       box-shadow: none;
-      height: 44px;
       margin-bottom: 5px;
       position: sticky;
       top: 0;
       z-index: 2;
 
       .rt-th {
-        font-weight: 500;
         border: none;
         outline: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 5px 0;
+        padding: 10px 0;
         overflow: visible;
-        line-height: 35px;
 
         > div {
-          padding-left: 10px;
+          padding-left: 5px;
         }
 
         &.-sort-asc, .-sort-asc {
@@ -125,11 +123,10 @@
     .empty-order__message {
       position: absolute;
       top: 70px;
-      // padding: 10px 0 0;
       text-align: center;
       width: 100%;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
 
       .place-order-trigger {
         text-decoration: underline;
@@ -165,6 +162,7 @@
     &-header {
       justify-content: start!important;
       cursor: pointer;
+      padding-left: 15px !important;
     }
   }
 
@@ -621,8 +619,8 @@
   margin-top: 20px;
 
   &__content {
-    margin-bottom: 20px;
-    padding-bottom: 7px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
     border-bottom: 1px solid;
   }
 
@@ -683,6 +681,13 @@
 
 .limit-order-table {
   padding-top: 25px;
+
+  &__sort-icon {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: 2px;
+  }
 
   &__header {
     width: 100%;
@@ -785,7 +790,6 @@
 
 .limit-order-list {
   width: 100%;
-  height: 450px;
   background-color: #ffffff;
   margin: 8px auto 0;
   padding: 1px 0;
@@ -799,11 +803,13 @@
   &--title {
     display: flex;
     justify-content: space-between;
-    margin: 30px 30px 0;
+    align-items: flex-end;
+    margin: 15px 15px 10px;
 
     .title {
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
+      margin-bottom: -2px;
 
       @include screen-max-width(medium) {
         font-size: 20px;
@@ -822,9 +828,12 @@
     &-faq {
       a {
         font-size: 10px;
-        font-weight: 500;
+        font-weight: 400;
         color: $text-orange;
-        text-decoration: underline;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
       @include screen-max-width(xxmedium) {
@@ -917,27 +926,32 @@
 
   &__tab {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     position: relative;
     text-align: center;
 
+    &::after {
+      content: "";
+      height: 2px;
+      width: 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      background-color: $text-orange;
+      z-index: 1;
+      transition: width .3s;
+    }
+
     &--active {
-      font-weight: 600 !important;
+      font-weight: 500 !important;
       cursor: initial;
       pointer-events: none;
 
       &::after {
-        content: "";
-        height: 2px;
-        width: 40%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        background-color: $text-orange;
-        z-index: 1;
+        width: 30%;
       }
     }
   }
@@ -954,8 +968,13 @@
 
     .ReactTable {
       height: 485px;
+
       @include screen-max-width(medium){
         height: auto;
+
+        .rt-table {
+          height: initial;
+        }
       }
       
       margin: 0;
@@ -1137,7 +1156,7 @@
 .status-filter-modal {
   width: 130px;
   height: auto;
-  min-height: 85px;
+  min-height: 60px;
   box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
   background-color: #ffffff;
   position: absolute;
@@ -1153,7 +1172,7 @@
 
   &__option {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-bottom: 10px;
     padding-left: 25px;
@@ -2076,14 +2095,27 @@
 }
 
 .limit-order-form {
+  width: 50%;
   margin-top: 8px;
-  padding: 25px;
+  padding: 25px 15px;
   border-radius: 3px;
 
   &__header {
     display: flex;
     border-bottom: 2px solid;
     margin-bottom: 20px;
+
+    //font-size: 14px;
+    //font-weight: 400;
+    //text-transform: uppercase;
+    //margin-bottom: 12px;
+  }
+
+  &__header-desktop {
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 12px;
   }
 
   &__tab {
@@ -2122,22 +2154,20 @@
   }
 
   &__tag {
-    width: 90px;
-    height: 48px;
-    font-size: 14px;
-    text-transform: uppercase;
+    width: 65px;
+    height: 35px;
+    font-size: 12px;
     padding: 5px 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   &__input {
-    width: calc(100% - 170px);
+    width: calc(100% - 115px);
     font-size: 16px;
-    font-weight: 400;
-    padding: 0 15px;
+    font-weight: 300;
+    padding: 0 5px 0 10px;
     background: none;
     border: none;
     outline: none;
@@ -2145,9 +2175,9 @@
   }
 
   &__symbol {
-    width: 80px;
-    font-size: 16px;
-    padding-right: 15px;
+    width: 50px;
+    font-size: 12px;
+    padding-right: 10px;
     font-weight: 400;
     text-align: right;
   }
@@ -2157,31 +2187,27 @@
     margin: 10px 0 15px;
   }
 
-  &__balance-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 8px 0 25px;
-  }
-
   &__available {
+    width: 45%;
     font-size: 12px;
-    margin-bottom: 3px;
     font-weight: 400;
   }
 
   &__token {
+    width: 55%;
     font-size: 14px;
     font-weight: 400;
+    text-align: right;
+    word-break: break-word;
   }
 }
 
 .limit-order-submit {
   text-align: center;
-  padding: 20px 0 30px;
+  margin-top: 20px;
 
   &__accept-button {
-    margin: 0 auto 15px;
+    margin: 0 auto;
     width: 100%;
     height: 45px;
     line-height: 45px;

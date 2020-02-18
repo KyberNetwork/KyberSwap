@@ -11,6 +11,10 @@
     margin-bottom: 10px;
   }
 
+  &__mt-15 {
+    margin-top: 15px;
+  }
+
   &__notification {
     font-size: 13px;
     font-weight: 400;
@@ -95,28 +99,29 @@
     justify-content: center;
   }
 
+  &__flexbox-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__balance {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 
     &-item {
-      width: 50px;
-      height: 36px;
-      padding: 5px;
-      margin-right: 5px;
+      width: 22%;
+      height: 30px;
       font-size: 12px;
       font-weight: 400;
       border-radius: 3px;
       border: solid 1px;
       cursor: pointer;
-      transition: all .3s;
       display: flex;
       justify-content: center;
       align-items: center;
-
-      &:last-child {
-        margin-right: 0;
-      }
+      transition: all .3s;
     }
   }
 

@@ -402,7 +402,7 @@
     "to": "To",
     "status": "Status",
     "actions": "Actions",
-    "order_list_title": "Manage Your Orders",
+    "order_list_title": "Your Limit Orders",
     "day": "Day",
     "week": "Week",
     "month": "Month",
@@ -424,7 +424,6 @@
     "submit_successfully": "Your order have been submitted sucessfully to server. You can check the order in your order list.",
     "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
     "wrap_eth_modal_title": "Convert ETH to WETH",
-    "login_to_submit": "Login to Submit Order",
     "submit": "Submit",
     "higher_rate": "Your preferred rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current rate.",
     "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current rate.",
@@ -451,7 +450,9 @@
     "available_balance": "Available Balance",
     "received": "Received",
     "cancel_error": "Something went wrong with cancel order process.",
-    "eth_weth_explanation": "ETH* represents the sum of ETH & WETH for easy reference"
+    "eth_weth_explanation": "ETH* represents the sum of ETH & WETH for easy reference",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",

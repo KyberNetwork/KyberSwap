@@ -447,7 +447,9 @@
     "type": "Loại",
     "available_balance": "Số dư khả dụng",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Đã nhận"
+    "received": "Đã nhận",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell"
   },
   "portfolio": {
     "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
