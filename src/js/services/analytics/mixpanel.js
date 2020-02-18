@@ -181,16 +181,6 @@ export default class Mixpanel {
     }
   }
 
-  trackChooseTokenOnBalanceBoard(token){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_3_Click_Choose_Token_Balance_Board", {token : token})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackClickSortBalanceBoard(type, sortType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{

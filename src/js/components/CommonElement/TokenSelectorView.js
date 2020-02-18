@@ -1,5 +1,5 @@
 import React from "react"
-import { toT, roundingNumber } from "../../utils/converter"
+import { compareTwoNumber, caculateEthBalance, toT, roundingNumber } from "../../utils/converter"
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import { getAssetUrl, getTokenBySymbol } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -9,8 +9,15 @@ const TokenSelectorView = (props) => {
   var focusItem = getTokenBySymbol(props.tokens, props.focusItem)
 
   var getListToken = () => {
-    const tokens = props.isLoadAllTokens ? props.tokens : props.tokens.slice(0, props.tokenNumberLimit)
+    var tokens = props.isLoadAllTokens ? props.tokens : props.tokens.slice(0, props.tokenNumberLimit)
     const searchWord = props.searchWord;    
+
+    // sort token by balance
+    tokens.sort((a,b) => {      
+      var aEthBalance = caculateEthBalance(a)
+      var bEthBalance = caculateEthBalance(b)      
+      return bEthBalance - aEthBalance 
+    })
 
     return tokens.map((item, i) => {
       if (item.symbol === props.banToken) return
