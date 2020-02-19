@@ -30,7 +30,7 @@ import { getTranslate } from 'react-localize-redux'
 export default class ImportByPrivateKey extends React.Component {
   openModal() {
     this.props.dispatch(openPkeyModal());
-    this.props.analytics.callTrack("trackClickImportAccount", "private_key");
+    this.props.analytics.callTrack("trackClickImportAccount", "private_key", this.props.tradeType);
   }
 
   closeModal() {

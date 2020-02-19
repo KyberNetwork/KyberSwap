@@ -83,9 +83,10 @@ export function closePromoCodeModal() {
   }
 }
 
-export function openOtherConnectModal() {
+export function openOtherConnectModal(tradeType) {
   return {
     type: "ACCOUNT.OPEN_OTHER_CONNECT_MODAL",
+    payload: tradeType
   }
 }
 

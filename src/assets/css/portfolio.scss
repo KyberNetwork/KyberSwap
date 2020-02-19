@@ -5,6 +5,25 @@
   max-width: 1200px;
   margin: 0 auto;
 
+  &__feedback {
+    &-icon {
+      display: block;
+    margin: 4px 8px;
+    width: 20px;
+    height: 20px;
+    float: left;
+        background: url($image-path + "icons/face.svg") no-repeat center;
+      }
+    p {
+      padding: 5px;
+      margin: 0px 0px 12px 0px;
+      a{
+        color: #ff9008;
+        text-decoration: none;
+      }
+    }
+  }
+
   &--not-imported {
     justify-content: center;
     margin: 100px auto;

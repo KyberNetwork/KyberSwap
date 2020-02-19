@@ -50,43 +50,43 @@ const ImportAccountView = (props) => {
         <div className={`import-account__content ${props.isAcceptConnectWallet ? "import-account__content--animation" : ""} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
             <div className={`import-account__item`}>
-              <ImportByMetamask />
+              <ImportByMetamask tradeType={props.tradeType} />
             </div>
           }
 
           {!isOnMobile &&
             <div className={`import-account__item import-account__item-ledger`}>
-              <ImportByDeviceWithLedger />
+              <ImportByDeviceWithLedger tradeType={props.tradeType}/>
             </div>
           }
           
           {!isOnMobile &&
             <div className={`import-account__item import-account__item-trezor`}>
-              <ImportByDeviceWithTrezor />
+              <ImportByDeviceWithTrezor tradeType={props.tradeType}/>
             </div>
           }
 
           {!isOnMobile &&
             <div className={`import-account__item`}>
-              <ImportKeystore />
+              <ImportKeystore tradeType={props.tradeType}/>
             </div>
           }
   
           {isOnMobile && (
             <div className={`import-account__item`}>
-              <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+              <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={props.closeModal} tradeType={props.tradeType}/>
             </div>
           )}
 
           {(!isLimitOrder || !isOnMobile) &&
             <div className={`import-account__item ${isLimitOrder ? 'import-account__item--disabled' : ''}`}>
-              <ImportByPromoCode isOnMobile={isOnMobile} />
+              <ImportByPromoCode isOnMobile={isOnMobile} tradeType={props.tradeType}/>
             </div>
           }
 
           {!isOnMobile &&
           <div className={`import-account__item`}>
-            <ImportByOther isOnMobile={isOnMobile} />
+            <ImportByOther isOnMobile={isOnMobile} tradeType={props.tradeType}/>
           </div>
           }
           

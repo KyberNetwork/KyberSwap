@@ -45,15 +45,15 @@ export default class ImportByOtherConnectModal extends React.Component {
                 </div>
                 <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
                   <div className={`import-account__item large`}>
-                    <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={this.closeModal.bind(this)} />
+                    <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
 
                   <div className={`import-account__item large import-account__item-walletlink`}>
-                    <ImportByWalletLink closeParentModal={this.closeModal.bind(this)} />
+                    <ImportByWalletLink closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
 
                   <div className={`import-account__item large import-account__item-walletconnect`}>
-                    <ImportByWalletConnect closeParentModal={this.closeModal.bind(this)} />
+                    <ImportByWalletConnect closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
                 </div>
               </div>

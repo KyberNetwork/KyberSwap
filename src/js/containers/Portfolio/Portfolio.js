@@ -42,6 +42,9 @@ export default class Portfolio extends React.Component {
   };
 
   selectToken=(symbol) => {
+
+    this.props.global.analytics.callTrack("trackClickTokenInAccountBalance", symbol, "portfolio");
+
     var path 
     if (symbol === "ETH") {
       path = "/swap/eth-knc"
