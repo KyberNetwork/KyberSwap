@@ -304,7 +304,7 @@
     "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
     "here": "tại đây",
-    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better"
+    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn."
   },
   "footer": {
     "info": "Thông tin",
