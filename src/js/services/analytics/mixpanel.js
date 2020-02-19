@@ -462,7 +462,6 @@ export default class Mixpanel {
   }
 
   trackClickImportAccount(type, screen){
-    console.log("+++++++++++++++++++ trackClickImportAccount", type, screen)
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_2_Connect_wallet_${type}_${screen}`)
@@ -675,6 +674,16 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_2_Click_Top_Token_${screen}_${symbol}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickTokenInAccountBalance(symbol, screen){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Account_balance_Select_Token_${screen}_${symbol}`)
       }catch(e){
         console.log(e)
       }
