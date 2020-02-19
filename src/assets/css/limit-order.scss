@@ -936,7 +936,7 @@
       height: 2px;
       width: 0;
       position: absolute;
-      bottom: 0;
+      bottom: 3px;
       left: 0;
       right: 0;
       margin: 0 auto;
@@ -2179,7 +2179,7 @@
 
   &__prefer-rate {
     font-size: 12px;
-    margin: 10px 0 15px;
+    margin: 10px 0;
   }
 
   &__available {
@@ -2210,8 +2210,6 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    transition: all 0.3s;
-    cursor: pointer;
 
     &.waiting,
     &.disabled {
@@ -2221,10 +2219,6 @@
 
     &.disabled {
       opacity: 0.7;
-    }
-
-    &:active {
-      transform: translateY(2px);
     }
   }
 }

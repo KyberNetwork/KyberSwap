@@ -252,6 +252,29 @@
       }
     }
   }
+
+  &__button {
+    color: white;
+    background-size: auto 150%;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &--green {
+      background-image: $green-gradient;
+    }
+
+    &--red {
+      background-image: $red-gradient
+    }
+
+    &:hover {
+      background-position: 0 100%;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
 }
 
 .text-center {

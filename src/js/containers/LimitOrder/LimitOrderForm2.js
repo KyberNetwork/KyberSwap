@@ -283,6 +283,7 @@ export default class LimitOrderForm2 extends React.Component {
         <LimitOrderFee formType={this.props.formType}/>
         
         <LimitOrderSubmit
+          formType={this.props.formType}
           availableBalanceTokens={this.props.modifiedTokens}
           getOpenOrderAmount={this.props.getOpenOrderAmount}
           setSubmitHandler={this.props.setSubmitHandler}

@@ -25,7 +25,6 @@ import limitOrderServices from "../../services/limit_order";
 
   }
 })
-
 export default class LimitOrderSubmit extends React.Component {
   constructor() {
     super()
@@ -61,7 +60,6 @@ export default class LimitOrderSubmit extends React.Component {
   }
 
   async validateOrder() {
-    // check source amount is zero
     var sourceAmount = parseFloat(this.props.limitOrder.sourceAmount)
     var isValidate = true
     var sourceAmountError = []
@@ -170,8 +168,7 @@ export default class LimitOrderSubmit extends React.Component {
       this.props.dispatch(utilActions.openInfoModal(title, content));
       return;
     }
-
-
+    
     //check if he is agreed submit order
     if (this.state.isAgree) {
       this.findPathOrder()
@@ -378,6 +375,16 @@ export default class LimitOrderSubmit extends React.Component {
   componentDidMount() {
     this.props.setSubmitHandler(this.agreeSubmit);
   }
+  
+  renderButtonText = () => {
+    const isBuyForm = this.props.formType === 'buy';
+    
+    if (isUserLogin()) {
+      return isBuyForm ? this.props.translate("modal.buy") : this.props.translate("modal.sell");
+    }
+    
+    return isBuyForm ? this.props.translate("limit_order.login_buy") : this.props.translate("limit_order.login_sell");
+  };
 
   render() {
     const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
@@ -386,8 +393,11 @@ export default class LimitOrderSubmit extends React.Component {
 
     return (
       <div className={"limit-order-submit"}>
-        <div className={`limit-order-submit__accept-button theme__button ${isDisable ? 'disabled' : ''} ${isWaiting ? "waiting" : ""}`} onClick={this.submitOrder}>
-          {isUserLogin() ? this.props.translate("modal.buy") || "Buy" : this.props.translate("limit_order.login_to_buy") || "Login to Buy"}
+        <div
+          className={`limit-order-submit__accept-button common__button common__button--${this.props.formType === 'buy' ? 'green' : 'red'} ${isDisable ? 'disabled' : ''} ${isWaiting ? "waiting" : ""}`}
+          onClick={this.submitOrder}
+        >
+          {this.renderButtonText()}
         </div>
 
         {!this.props.hideTermAndCondition &&
