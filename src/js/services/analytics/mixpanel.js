@@ -461,10 +461,11 @@ export default class Mixpanel {
     }
   }
 
-  trackClickImportAccount(type){
+  trackClickImportAccount(type, screen){
+    console.log("+++++++++++++++++++ trackClickImportAccount", type, screen)
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
-        mixpanel.track(`Step_2_Connect_wallet_${type}`)
+        mixpanel.track(`Step_2_Connect_wallet_${type}_${screen}`)
       }catch(e){
         console.log(e)
       }

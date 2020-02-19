@@ -120,7 +120,7 @@ export default class ImportKeystore extends React.Component {
   }
 
   onDrop = (files) => {
-    this.props.analytics.callTrack("trackClickImportAccount", "keystore");
+    this.props.analytics.callTrack("trackClickImportAccount", "keystore", this.props.tradeType);
     try {
       var _this = this
       var file = files[0]
