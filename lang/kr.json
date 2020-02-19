@@ -450,7 +450,9 @@
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "받았습니다",
     "login_buy": "Login to Buy",
-    "login_sell": "Login to Sell"
+    "login_sell": "Login to Sell",
+    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
     "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",

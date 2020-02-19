@@ -299,8 +299,6 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
 
-
-
     case 'LIMIT_ORDER.UPDATE_CURRENT_QUOTE':{
       const { quote } =  action.payload;
       newState.currentQuote = quote

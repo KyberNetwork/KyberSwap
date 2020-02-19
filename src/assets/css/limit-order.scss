@@ -2057,7 +2057,7 @@
   }
 }
 
-.limit-order {  
+.limit-order {
   @include screen-min-width(medium){
     display: flex;
     justify-content: space-between;
@@ -2104,11 +2104,6 @@
     display: flex;
     border-bottom: 2px solid;
     margin-bottom: 20px;
-
-    //font-size: 14px;
-    //font-weight: 400;
-    //text-transform: uppercase;
-    //margin-bottom: 12px;
   }
 
   &__header-desktop {
@@ -2166,7 +2161,7 @@
   &__input {
     width: calc(100% - 115px);
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     padding: 0 5px 0 10px;
     background: none;
     border: none;
@@ -2230,6 +2225,35 @@
 
     &:active {
       transform: translateY(2px);
+    }
+  }
+}
+
+.limit-order-notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+  padding: 10px 30px;
+  margin-top: 8px;
+
+  &__text {
+    font-size: 18px;
+  }
+
+  &__button {
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 3px;
+    color: $text-orange;
+    border: solid 1px $text-orange;
+    padding: 7px 25px;
+    cursor: pointer;
+    transition: all .3s;
+
+    &:hover {
+      background-color: $text-orange;
+      color: white;
     }
   }
 }

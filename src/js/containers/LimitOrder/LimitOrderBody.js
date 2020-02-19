@@ -18,6 +18,7 @@ import * as constants from "../../services/constants";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
 import LimitOrderForm2 from "./LimitOrderForm2";
+import LimitOrderNotification from "./LimitOrderNotification";
 
 @connect((store, props) => {
   const global = store.global;
@@ -91,6 +92,7 @@ export default class LimitOrderBody extends React.Component {
       <div className={"limit-order theme__background"}>
         <div className={"limit-order__container limit-order__container--left"}>
           <LimitOrderChart />
+          <LimitOrderNotification translate={this.props.translate} />
           <LimitOrderList srcInputElementRef={this.srcInputElementRef} />
         </div>
         <div className={"limit-order__container limit-order__container--right"}>

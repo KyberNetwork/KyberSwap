@@ -120,7 +120,7 @@ export default class LimitOrderTable extends Component {
       })
     }
   
-    const widths = [120, 130, 60, 90, 150, 130, 120];
+    const widths = [110, 120, 60, 90, 150, 130, 120];
     for (let i = 0; i < desktopColumns.length ; i++) {
       desktopColumns[i]["width"] = widths[i]
     }
