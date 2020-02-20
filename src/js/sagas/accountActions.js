@@ -1,5 +1,6 @@
 import { take, put, call, fork, takeEvery, cancel } from 'redux-saga/effects'
 import * as actions from '../actions/accountActions'
+import * as globalActions from '../actions/globalActions'
 import { clearSession, setGasPrice, setBalanceToken, closeChangeWallet } from "../actions/globalActions"
 import { getPendingBalancesComplete } from "../actions/limitOrderActions"
 import * as utilActions from '../actions/utilActions'
@@ -110,6 +111,7 @@ export function* importNewAccount(action) {
     var wallet = getWallet(account.type)
 
     yield put(actions.importNewAccountComplete(account, wallet, walletName))
+    yield put(globalActions.checkUserEligible(ethereum))
 
     if (isChangingWallet) yield put(closeChangeWallet())
 

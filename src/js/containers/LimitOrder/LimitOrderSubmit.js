@@ -66,6 +66,10 @@ export default class LimitOrderSubmit extends React.Component {
     var isValidate = true
     var sourceAmountError = []
     var rateError = []
+    if (this.props.global.eligibleError){
+      isValidate = false
+    }
+
     if (this.props.limitOrder.errors.rateSystem){
       isValidate = false
     }
