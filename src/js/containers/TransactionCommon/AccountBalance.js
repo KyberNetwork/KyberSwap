@@ -147,7 +147,8 @@ export default class AccountBalance extends React.Component {
     }
     
     if (this.props.isLimitOrderTab) {
-      res = this.archiveUnsupported(res)
+      // res = this.archiveUnsupported(res)
+      res = this.archiveBalanceZero(res)
     } else {
       res = this.archiveBalanceZero(res)
     }
@@ -161,7 +162,7 @@ export default class AccountBalance extends React.Component {
   
   isValidPriority = (token) => {
     const {tokens, limitOrder} = this.props;
-    const quote = limitOrder.sideTrade === "buy" ? tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')] : tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')];
+    const quote = limitOrder.sideTrade === "buy" ? tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')] : tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')];    
     return !("quote_priority" in token) || token.quote_priority < quote.quote_priority;
   };
   
