@@ -1,9 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
 
 import * as actions from '../actions/globalActions'
-import * as exchangeActions from '../actions/exchangeActions'
-import * as transferActions from '../actions/transferActions'
-import * as limitOrdersActions from '../actions/limitOrderActions'
 
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
@@ -200,14 +197,14 @@ export function* checkUserEligible(action) {
     var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
 
     if(result.success && result.eligible){
-      yield put(limitOrdersActions.clearErrorEligible())
+      yield put(actions.clearErrorEligible())
     } else {
       yield put(actions.throwErrorEligible(result.message))
     }
 
   }catch(e){
     console.log(e)
-    yield put(limitOrdersActions.clearErrorEligible())
+    yield put(actions.clearErrorEligible())
   }
 }
 
