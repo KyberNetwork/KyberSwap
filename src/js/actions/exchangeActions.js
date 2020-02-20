@@ -93,6 +93,13 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
+export function fetchUserCap(ethereum) {
+  return {
+    type: "EXCHANGE.FETCH_USER_CAP",
+    payload: { ethereum }
+  }
+}
+
 export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal) {
   return {
     type: "EXCHANGE.UPDATE_RATE_COMPLETE",

@@ -236,16 +236,14 @@ export function* fetchUserCap(action) {
     var state = store.getState()
     var account = state.account.account
     var address = account.address
-    var enabled = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-    if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
-      var translate = getTranslate(state.locale)
-      // var kycLink = "/users/sign_up"
-      var content = translate("error.exceed_daily_volumn") || "You may want to register with us to have higher trade limits."
-      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, content))
-        
-    }else{
+    var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+
+    if(result.success && result.eligible){
       yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
+    } else {
+      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, result.message))
     }
+
   }catch(e){
     console.log(e)
     yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
@@ -254,11 +252,14 @@ export function* fetchUserCap(action) {
 
 export function* doAfterAccountImported(action){
   var {account, walletName} = action.payload
+
+  var state = store.getState()
+  var ethereum = state.connection.ethereum
+  yield put(actions.fetchUserCap(ethereum))
+
   if (account.type === "promo"){
-    var state = store.getState()
     var exchange = state.exchange
     var tokens = state.tokens.tokens
-    var ethereum = state.connection.ethereum
 
     var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
     var promoToken = BLOCKCHAIN_INFO.promo_token
