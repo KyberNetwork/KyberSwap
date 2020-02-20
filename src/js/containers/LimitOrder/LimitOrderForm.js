@@ -220,6 +220,10 @@ export default class LimitOrderForm extends React.Component {
           {this.props.limitOrder.errors.rateSystem &&
             <div className={"exchange__error-item"}>{this.props.limitOrder.errors.rateSystem}</div>
           }
+
+          {this.props.global.eligibleError &&
+            <div className={"exchange__error-item"}>{this.props.global.eligibleError}</div>
+          }
         </div>
 
         <LimitOrderCompareRate triggerRate={triggerRate}/>

@@ -229,35 +229,14 @@ function* verifyExchange() {
   }
 }
 
-
-export function* fetchUserCap(action) {  
-  try{
-    var {ethereum} = action.payload
-    var state = store.getState()
-    var account = state.account.account
-    var address = account.address
-    var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-
-    if(result.success && result.eligible){
-      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-    } else {
-      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, result.message))
-    }
-
-  }catch(e){
-    console.log(e)
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-  }
-}
-
 export function* doAfterAccountImported(action){
   var {account, walletName} = action.payload
 
-  var state = store.getState()
-  var ethereum = state.connection.ethereum
-  yield put(actions.fetchUserCap(ethereum))
+  
 
   if (account.type === "promo"){
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
     var exchange = state.exchange
     var tokens = state.tokens.tokens
 
@@ -313,7 +292,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-  yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

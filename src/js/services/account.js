@@ -65,24 +65,6 @@ export default class Account {
         })
       })
     })
-
-    // promise = promise.then((acc) => {
-    //   return new Promise((resolve, reject) => {
-    //     ethereum.call("getUserMaxCap", acc.address)
-    //     .then((result) => {
-    //       acc.maxCap = result.cap
-    //       acc.rich = result.rich
-    //       resolve(acc)
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //       acc.maxCap = "infinity"
-    //       acc.rich = false          
-    //       resolve(acc)
-    //     })
-    //   })
-    // })
-
     return promise
   }
 
