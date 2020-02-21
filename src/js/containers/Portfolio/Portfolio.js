@@ -54,7 +54,7 @@ export default class Portfolio extends React.Component {
     
     history.push(path);
     
-    if (window.kyberBus) window.kyberBus.broadcast('go.to.swap');
+    if (window.kyberBus) window.kyberBus.broadcast('go.to.swap-path');
   };
   
   render() {
