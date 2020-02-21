@@ -4,6 +4,7 @@ import { getTranslate } from "react-localize-redux";
 import * as globalActions from "../../actions/globalActions";
 import PortfolioView from "./PortfolioView";
 import { PORTFOLIO_TAB } from "../../services/constants";
+import history from "../../history";
 
 @connect((store) => {
   const address = store.account.account.address || '';
@@ -42,18 +43,19 @@ export default class Portfolio extends React.Component {
   };
 
   selectToken=(symbol) => {
-
     this.props.global.analytics.callTrack("trackClickTokenInAccountBalance", symbol, "portfolio");
-
-    var path 
+    let path = '';
+    
     if (symbol === "ETH") {
       path = "/swap/eth-knc"
-    }else{
+    } else {
       path = "/swap/" + symbol.toLowerCase() + "-eth"
-    }    
-    this.props.dispatch(globalActions.goToRoute(path))
-    if (window.kyberBus){ window.kyberBus.broadcast('go.to.swap') }
-  }
+    }
+    
+    history.push(path);
+    
+    if (window.kyberBus) window.kyberBus.broadcast('go.to.swap');
+  };
   
   render() {
     return (
