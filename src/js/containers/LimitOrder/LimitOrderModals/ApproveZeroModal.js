@@ -9,7 +9,7 @@ import { FeeDetail } from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as converter from "../../../utils/converter"
 
-@connect((store, props) => {
+@connect((store) => {
   const account = store.account.account
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
@@ -21,9 +21,9 @@ import * as converter from "../../../utils/converter"
   }
 })
 export default class ApproveZeroModal extends React.Component {
-
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    
     this.state = {
       err: "",
       isFetchGas: false,
@@ -42,7 +42,6 @@ export default class ApproveZeroModal extends React.Component {
   }
 
   async getGasApprove() {
-    // estimate gas approve
     try {
       var ethereum = this.props.ethereum
       var dataApprove = await ethereum.call("approveTokenData", this.props.limitOrder.sourceToken, 0, BLOCKCHAIN_INFO.kyberswapAddress)
@@ -64,7 +63,6 @@ export default class ApproveZeroModal extends React.Component {
         isFetchFee: false
       })
     }
-
   }
 
   async onSubmit() {
@@ -76,21 +74,18 @@ export default class ApproveZeroModal extends React.Component {
       isConfirming: true
     })
 
-    //reset        
     var wallet = getWallet(this.props.account.type)
     var password = ""
+    
     try {
       var nonce = this.props.account.getUsableNonce()
       var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.limitOrder.sourceToken, 0, nonce, this.state.gasLimit,
         converter.toHex(converter.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
 
       this.props.dispatch(limitOrderActions.saveApproveZeroTx(this.props.limitOrder.sourceTokenSymbol, txHash));
-
-      //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
 
-      //go to the next step
-      this.props.dispatch(limitOrderActions.forwardOrderPath())
+      this.props.goToNextPath();
     } catch (err) {
       console.log(err)
       this.setState({ err: err.toString() , isConfirming: false })
@@ -122,7 +117,7 @@ export default class ApproveZeroModal extends React.Component {
 
   closeModal = () => {
     if (this.state.isConfirming) return
-    this.props.dispatch(limitOrderActions.resetOrderPath())
+    this.props.closeModal();
   }
 
   contentModal = () => {

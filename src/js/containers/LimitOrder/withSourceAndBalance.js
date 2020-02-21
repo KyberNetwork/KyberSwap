@@ -151,27 +151,26 @@ const withSourceAndBalance = (Component) => {
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
     }
 
-    selectSourceAndDestToken = (quoteSymbol, baseSymbol) => {
-      const { sideTrade } = this.props.limitOrder;
-      const sourceTokenSymbol = sideTrade === "buy" ? quoteSymbol : baseSymbol;
-      const destTokenSymbol = sideTrade === "buy" ? baseSymbol : quoteSymbol;
+    selectSourceAndDestToken = (baseSymbol, quoteSymbol) => {
+      var sourceToken = this.props.tokens[baseSymbol].address
+      var destToken = this.props.tokens[quoteSymbol].address
+      this.props.dispatch(limitOrderActions.selectToken(baseSymbol, sourceToken, quoteSymbol, destToken, "source"));
+      this.updateGlobal(baseSymbol, sourceToken, quoteSymbol, destToken)
+    };
 
-      var sourceToken = this.props.tokens[sourceTokenSymbol].address
-      var destToken = this.props.tokens[destTokenSymbol].address
-      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
-      this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
-    }
-
-    render(){
-      return <Component {...this.props}
-                        selectSourceToken={this.selectSourceToken}  //for limit order account
-                        selectDestToken={this.selectDestToken}  //for limit order account
-                        selectSourceAndDestToken={this.selectSourceAndDestToken}  //for quote market
-                        availableBalanceTokens={this.getModifiedTokenList}  //for limit order account + form
-                        getOpenOrderAmount={this.getOpenOrderAmount}  //for limit order form
-            />
+    render() {
+      return (
+        <Component
+          {...this.props}
+          selectSourceToken={this.selectSourceToken}  //for limit order account
+          selectDestToken={this.selectDestToken}  //for limit order account
+          selectSourceAndDestToken={this.selectSourceAndDestToken}  //for quote market
+          availableBalanceTokens={this.getModifiedTokenList}  //for limit order account + form
+          getOpenOrderAmount={this.getOpenOrderAmount}  //for limit order form
+        />
+      )
     }
   })
+};
 
-}
 export default withSourceAndBalance;

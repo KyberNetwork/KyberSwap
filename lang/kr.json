@@ -266,7 +266,8 @@
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders"
   },
   "import": {
     "from_metamask": "Metamask",

@@ -11,12 +11,8 @@ import {
   LimitOrderListModal
 } from "../LimitOrder"
 
-import { MobileChart } from "./MobileElements"
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
-import * as constants from "../../services/constants";
-import * as limitOrderActions from "../../actions/limitOrderActions";
-import * as globalActions from "../../actions/globalActions";
 import LimitOrderForm2 from "./LimitOrderForm2";
 import LimitOrderNotification from "./LimitOrderNotification";
 
@@ -43,7 +39,7 @@ export default class LimitOrderBody extends React.Component {
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
     this.state = {
-      mobileOpenChart: true      
+      mobileOpenChart: false
     }
   }
 
@@ -59,32 +55,7 @@ export default class LimitOrderBody extends React.Component {
     this.submitHandler = func;
   };
 
-  setFormType = (type, targetSymbol, quoteSymbol) => {
-    if (this.props.limitOrder.sideTrade === type) return;
-
-    this.props.dispatch(limitOrderActions.setSideTrade(type));
-
-    this.props.dispatch(limitOrderActions.changeFormType(
-      this.props.tokens[this.props.limitOrder.sourceTokenSymbol],
-      this.props.tokens[this.props.limitOrder.destTokenSymbol]
-    ));
-
-    const realQuoteSymbol = quoteSymbol === "ETH*" ? "WETH" : quoteSymbol;
-    const realTargetSymbol = targetSymbol === "ETH*" ? "WETH" : targetSymbol;
-    let path;
-
-    if (type === "buy") {
-      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + realTargetSymbol.toLowerCase();
-    } else {
-      path = constants.BASE_HOST +  "/limit_order/" + realTargetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
-    }
-
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
-  };
-
   desktopLayout = () => {
-    const LimitOrderForm = this.LimitOrderForm
     const LimitOrderForm2 = this.LimitOrderForm2
     const QuoteMarket = this.QuoteMarket
 
@@ -132,21 +103,18 @@ export default class LimitOrderBody extends React.Component {
         <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
 
         {this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
-          <MobileChart
-            toggleMobileChart = {this.toggleMobileChart}
-            setFormType = {this.setFormType}
-          />
+          <LimitOrderChart/>
         )}
 
         {!this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
           <div>
             <div className={"limit-order__container limit-order__container--right"}>
-              <LimitOrderForm
+              {/*<LimitOrderForm
                 setSrcInputElementRef={this.setSrcInputElementRef}
                 submitHandler={this.submitHandler}
                 setSubmitHandler={this.setSubmitHandler}
                 setFormType={this.setFormType}
-              />
+              />*/}
 
               {this.props.account === false &&
                 <div className={"limit-order-account"}>
@@ -157,12 +125,13 @@ export default class LimitOrderBody extends React.Component {
                 </div>
               }
             </div>
-            <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef} />
+            
+            <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
           </div>
         )}
       </div>
     )
-  }
+  };
 
   render() {
     if (this.props.global.isOnMobile) {

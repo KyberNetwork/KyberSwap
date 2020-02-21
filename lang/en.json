@@ -178,8 +178,8 @@
     "address": "Address",
     "approve_token": "Approve Token",
     "cancel": "Cancel",
-    "cancel_order": "Cancel ${sideTrade}${symbol} Order",
-    "order_confirm": "Confirm ${sideTrade}${symbol} Order",
+    "cancel_order": "Cancel ${sideTrade} ${symbol} Order",
+    "order_confirm": "Confirm ${sideTrade} ${symbol} Order",
     "success": "Success",
     "keystore_title": "Type password to unlock your keystore",
     "unlock": "Unlock",
@@ -267,7 +267,8 @@
     "insufficient_balance": "Your balance is insufficient for transaction",
     "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -425,7 +426,7 @@
     "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
     "wrap_eth_modal_title": "Convert ETH to WETH",
     "submit": "Submit",
-    "higher_rate": "Your preferred rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current rate.",
+    "higher_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current rate.",
     "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current rate.",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
     "ineligible_address": "This address has been used by another account. Please place order with other address.",

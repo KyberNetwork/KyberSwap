@@ -632,7 +632,7 @@
 
   .slide-down--active {
     .limit-order-fee__slide-content {
-      padding: 10px 0 5px 40px;
+      padding: 10px 0 5px 31px;
     }
   }
 
@@ -664,6 +664,10 @@
     font-size: 12px;
     font-weight: 400;
     color: $text-orange;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__total {
@@ -2156,6 +2160,7 @@
     display: flex;
     align-items: center;
     font-weight: 400;
+    cursor: pointer;
   }
 
   &__input {
@@ -2178,8 +2183,10 @@
   }
 
   &__prefer-rate {
-    font-size: 12px;
-    margin: 10px 0;
+    min-height: 13px;
+    font-size: 11px;
+    font-weight: 400;
+    margin: 6px 0 10px;
   }
 
   &__available {
@@ -2210,16 +2217,6 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-
-    &.waiting,
-    &.disabled {
-      pointer-events: none;
-      cursor: initial;
-    }
-
-    &.disabled {
-      opacity: 0.7;
-    }
   }
 }
 

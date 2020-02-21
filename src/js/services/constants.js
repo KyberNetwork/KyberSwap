@@ -189,8 +189,7 @@ const LIMIT_ORDER_CONFIG = {
     approveZero: 1,
     approveMax: 2,
     wrapETH: 3,
-    confirmSubmitOrder: 4,
-    submitStatusOrder: 5
+    confirmSubmitOrder: 4
   },
   status: {
     OPEN: "open",
@@ -221,7 +220,10 @@ const INIT_LIMIT_ORDER_STATE = {
   inputFocus: "source",
   maxCap: "infinity",
   minConversionRate: 0,
+  buyRate: 0,
+  sellRate: 0,
   triggerRate: 0,
+  triggerSellRate: 0,
   triggerBuyRate: 0,
   minDestAmount: 0,
   maxDestAmount: 0,
@@ -236,7 +238,6 @@ const INIT_LIMIT_ORDER_STATE = {
   isFetchingRate: false,
   orderFeeErr: "",
   currentPathIndex : -1,
-  orderPath: [],    
   listOrder: [],
   listFavoritePairs: [],
   addressFilter: [],

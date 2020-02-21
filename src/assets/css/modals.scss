@@ -121,6 +121,10 @@ $divider-color: darken($title-background-color, 5);
     width: 600px;
   }
 
+  &.x-medium {
+    width: 700px;
+  }
+
   &.large {
     width: 1200px;
     top: 50px;

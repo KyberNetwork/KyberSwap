@@ -161,7 +161,7 @@ export default class AccountBalance extends React.Component {
   
   isValidPriority = (token) => {
     const {tokens, limitOrder} = this.props;
-    const quote = limitOrder.sideTrade === "buy" ? tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')] : tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')];
+    const quote = tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')];
     return !("quote_priority" in token) || token.quote_priority < quote.quote_priority;
   };
   

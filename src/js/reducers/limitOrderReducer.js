@@ -23,48 +23,6 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
 
-    case "LIMIT_ORDER.INPUT_CHANGE": {
-      const { focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate } = action.payload
-
-      switch(focus) {
-        case "source":
-          newState.sourceAmount = value
-          var errors = newState.errors
-          errors.sourceAmount = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(state.triggerRate)
-          newState.destAmount = converter.caculateDestAmount(value, bigRate, destTokenDecimals)
-          break
-        case "dest":
-          newState.destAmount = value
-          var errors = newState.errors
-          errors.triggerRate = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(state.triggerRate)
-          newState.sourceAmount = converter.caculateSourceAmount(value, bigRate, sourceTokenDecimals);
-          break
-        case "rate":
-          const rate = value.replace(',', '');
-
-          if (newState.sideTrade === 'buy' && isBuyRate) {
-            newState.triggerBuyRate = rate;
-            newState.triggerRate = converter.divOfTwoNumber(1, rate);
-            newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, converter.roundingRate(newState.triggerRate), sourceTokenDecimals);
-          } else {
-            newState.triggerRate = rate;
-            newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(newState.offeredRate));
-            newState.destAmount = converter.caculateDestAmount(state.sourceAmount, converter.roundingRate(rate), destTokenDecimals);
-          }
-  
-          let errors = newState.errors;
-          errors.triggerRate = [];
-          newState.errors = errors;
-
-          break
-      }
-      return newState
-    }
-
     case "LIMIT_ORDER.RESET_FORM_INPUTS": {
       newState.destAmount = "";
       newState.sourceAmount = "";
@@ -82,32 +40,23 @@ const limitOrder = (state = initState, action) => {
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
-      const { rateInit, expectedPrice, slippagePrice, isManual, type, errMsg, destTokenDecimals } = action.payload
+      const { buyRate, sellRate, type } = action.payload;
   
-      if (expectedPrice == "0") {
-        newState.errors.rateSystem = errMsg;
-        if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-          newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        } else {
-          newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        }
+      if (!buyRate || !sellRate) {
+        newState.errors.rateSystem = "This token pair is temporarily under maintenance"
       } else {
         newState.errors.rateSystem = ""
       }
+  
+      newState.isSelectToken = false;
+      newState.buyRate = buyRate;
+      newState.sellRate = sellRate;
 
-      var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
-      var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
-
-      newState.slippageRate = slippageRate
-      newState.offeredRate = expectedRate
-
-      if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
-        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(',', "");
-        newState.triggerBuyRate = converter.roundingRateNumber(converter.convertBuyRate(expectedRate));
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimals)
+      if (type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken) {
+        newState.triggerBuyRate = +buyRate ? converter.roundingRateNumber(converter.divOfTwoNumber(1, converter.toT(buyRate, 18))) : "0";
+        newState.triggerSellRate = converter.roundingRateNumber(converter.toT(sellRate, 18));
       }
-
-      newState.isSelectToken = false
+      
       return newState
     }
 
@@ -137,26 +86,11 @@ const limitOrder = (state = initState, action) => {
 
       return newState
     }
-
     case "LIMIT_ORDER.THROW_ERROR":{
       const { key, msg } = action.payload
       var errors = newState.errors
       errors[key] = msg
       newState.errors = errors
-      return newState
-    }
-    case "LIMIT_ORDER.UPDATE_ORDER_PATH":{
-      const {orderPath, currentPathIndex} = action.payload
-      newState.orderPath = orderPath
-      newState.currentPathIndex = currentPathIndex
-      return newState
-    }
-    case "LIMIT_ORDER.RESET_ORDER_PATH":{
-      newState.currentPathIndex = -1
-      return newState
-    }
-    case "LIMIT_ORDER.FORWARD_ORDER_PATH":{
-      newState.currentPathIndex += 1
       return newState
     }
     case "LIMIT_ORDER.ADD_LIST_ORDER": {

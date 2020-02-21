@@ -8,29 +8,23 @@ const OrderTableInfo = (props) => {
       let source = item.source === "WETH" ? "ETH*" : item.source
       let dest = item.dest === "WETH" ? "ETH*" : item.dest;
       const amount = converters.formatNumber(converters.multiplyOfTwoNumber(item.src_amount, item.min_rate), 6);
-      const total = converters.formatNumber(item.src_amount, 6);
       const formattedMinRate = converters.formatNumber(item.min_rate, 6);
       const formattedSrcAmount = converters.formatNumber(item.src_amount, 6);
 
       switch (item.side_trade) {
         case "buy":
-          let quote = source;
-          let base = dest;
-          let sideTrade = props.translate("modal.buy") || item.side_trade;
-
           return (
             <div key={index} className={"info"}>
-              <div>{`${base}/${quote}`}</div>
-              <div>{+item.min_rate !== 0 ? converters.formatNumber(converters.divOfTwoNumber(1, item.min_rate), 6) : "-"} {quote}</div>
-              <div>{amount} {base}</div>
-              <div>{total} {quote}</div>
-              <div>{fee} {quote}</div>
+              <div>{`${source}/${dest}`}</div>
+              <div>{+item.min_rate !== 0 ? converters.formatNumber(item.min_rate, 6) : "-"} {dest}</div>
+              <div>{converters.formatNumber(converters.divOfTwoNumber(item.src_amount, item.min_rate), 6)} {source}</div>
+              <div>{converters.formatNumber(item.src_amount, 6)} {dest}</div>
+              <div>{fee} {dest}</div>
             </div>
           );
         case "sell":
-          quote = dest;
-          base = source;
-          sideTrade = props.translate("modal.sell") || item.side_trade;
+          let quote = dest;
+          let base = source;
 
           return (
             <div key={index} className={"info"}>
@@ -41,16 +35,6 @@ const OrderTableInfo = (props) => {
               <div>{fee} {base}</div>
             </div>
           );
-        default:
-          return (
-            <div key={index} className={"info"}>
-              <div>{`${source}/${dest}`}</div>
-              <div>{formattedMinRate} {dest}</div>
-              <div>{formattedSrcAmount} {source}</div>
-              <div>{amount} {item.dest}</div>
-              <div>{fee} {item.source}</div>
-            </div>
-          )
       }
     })
   };

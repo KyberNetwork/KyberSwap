@@ -5,24 +5,10 @@ export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, des
   }
 }
 
-export function inputChange(focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate = false) {
-  return {
-    type: "LIMIT_ORDER.INPUT_CHANGE",
-    payload: { focus, value, sourceTokenDecimals, destTokenDecimals, isBuyRate }
-  }
-}
-
 export function setSideTrade(sideTrade) {
   return {
     type: "LIMIT_ORDER.SET_SIDE_TRADE",
     payload: sideTrade
-  }
-}
-
-export function changeFormType(srcToken, destToken) {
-  return {
-    type: "LIMIT_ORDER.CHANGE_FORM_TYPE",
-    payload: { srcToken, destToken }
   }
 }
 
@@ -46,10 +32,10 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateComplete(rateInit, expectedPrice, slippagePrice, isManual, type, errMsg, destTokenDecimals) {
+export function updateRateComplete(buyRate, sellRate, type, destTokenDecimals) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice, isManual, type, errMsg, destTokenDecimals }
+    payload: { buyRate, sellRate, type, destTokenDecimals }
   }
 }
 
@@ -79,26 +65,6 @@ export function throwError(key, msg){
   return {
     type: "LIMIT_ORDER.THROW_ERROR",
     payload: { key, msg }
-  }
-}
-
-
-export function updateOrderPath(orderPath, currentPathIndex){
-  return {
-    type: "LIMIT_ORDER.UPDATE_ORDER_PATH",
-    payload: { orderPath, currentPathIndex }
-  }
-}
-
-export function resetOrderPath() {
-  return {
-    type: "LIMIT_ORDER.RESET_ORDER_PATH"
-  }
-}
-
-export function  forwardOrderPath() {
-  return {
-    type: "LIMIT_ORDER.FORWARD_ORDER_PATH"
   }
 }
 
@@ -319,8 +285,6 @@ export function updateFavorite(base, quote, toFav, isLoggedIn) {
     payload: { base, quote, toFav, isLoggedIn }
   }
 }
-
-
 
 export function toogleQuoteMarket(show){
   return {

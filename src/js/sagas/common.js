@@ -33,37 +33,40 @@ export function* handleRequest(sendRequest, ...args) {
 }
 
 export function* getSourceAmount(sourceTokenSymbol, sourceAmount, defaultRate) {
-    var state = store.getState()
-    var tokens = state.tokens.tokens
+  var state = store.getState()
+  var tokens = state.tokens.tokens
+  var sourceAmountHex = "0x0";
   
-    var sourceAmountHex = "0x0"
-    if (tokens[sourceTokenSymbol]) {
-      var decimals = tokens[sourceTokenSymbol].decimals
-      var rateSell = tokens[sourceTokenSymbol].rate
-      if (rateSell == 0 || rateSell == "0" || rateSell == "" || rateSell == null) {
-        rateSell = defaultRate
-      }
-      sourceAmountHex = converters.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
-    } else {
-      sourceAmountHex = converters.stringToHex(sourceAmount, 18)
+  if (tokens[sourceTokenSymbol]) {
+    var decimals = tokens[sourceTokenSymbol].decimals
+    var rateSell = tokens[sourceTokenSymbol].rate
+    if (rateSell == 0 || rateSell == "0" || rateSell == "" || rateSell == null) {
+      rateSell = defaultRate
     }
-    return sourceAmountHex
+    sourceAmountHex = converters.calculateMinSource(sourceTokenSymbol, sourceAmount, decimals, rateSell)
+  } else {
+    sourceAmountHex = converters.stringToHex(sourceAmount, 18)
   }
   
-  export function getSourceAmountZero(sourceTokenSymbol, defaultRate) {
-    var state = store.getState()
-    var tokens = state.tokens.tokens
-    var sourceAmountHex = "0x0"
-    if (tokens[sourceTokenSymbol]) {
-      var decimals = tokens[sourceTokenSymbol].decimals
-      var rateSell = tokens[sourceTokenSymbol].rate
-      if (rateSell == 0 || rateSell == "0" || rateSell == "" || rateSell == null) {
-        rateSell = defaultRate
-      }
-      sourceAmountHex = converters.toHex(converters.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
+  return sourceAmountHex
+}
+
+export function getSourceAmountZero(sourceTokenSymbol, defaultRate) {
+  var state = store.getState()
+  var tokens = state.tokens.tokens
+  var sourceAmountHex = "0x0"
+  
+  if (tokens[sourceTokenSymbol]) {
+    var decimals = tokens[sourceTokenSymbol].decimals
+    var rateSell = tokens[sourceTokenSymbol].rate
+    if (rateSell == 0 || rateSell == "0" || rateSell == "" || rateSell == null) {
+      rateSell = defaultRate
     }
-    return sourceAmountHex
+    sourceAmountHex = converters.toHex(converters.getSourceAmountZero(sourceTokenSymbol, decimals, rateSell))
   }
+  
+  return sourceAmountHex
+}
 
 export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
   try {
@@ -104,7 +107,8 @@ export function* getExpectedRateAndZeroRate(isProceeding, ethereum, tokens, srcT
     }
   }
   
-  let refinedSrcAmount = yield call(getSourceAmount, srcTokenSymbol, srcAmount, defaultRate);
+  let refinedSrcAmount = 0;
+  if (srcAmount !== false) refinedSrcAmount = yield call(getSourceAmount, srcTokenSymbol, srcAmount, defaultRate);
   let zeroSrcAmount = yield call(getSourceAmountZero, srcTokenSymbol, defaultRate);
   let rate, rateZero;
   let rateFunctionName = 'getRateAtLatestBlock';
@@ -118,10 +122,16 @@ export function* getExpectedRateAndZeroRate(isProceeding, ethereum, tokens, srcT
   }
 
   try {
-    rate = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    if (srcAmount !== false) {
+      rate = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    }
+    
     rateZero = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, zeroSrcAmount);
   } catch (e) {
-    rate = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    if (srcAmount !== false) {
+      rate = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, refinedSrcAmount);
+    }
+    
     rateZero = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, zeroSrcAmount);
   }
   

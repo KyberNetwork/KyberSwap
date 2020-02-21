@@ -100,15 +100,12 @@ export default class EthereumService extends React.Component {
       return
     }
     if (!list[index][fn]) {
-      console.log("Not have " + fn + " in " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
       return
     }
     list[index][fn](...args).then(result => {
-      console.log("Resolve " + fn + "successful in " + list[index].rpcUrl)
       callBackSuccess(result)
     }).catch(err => {
-      console.log(err.message + " -In provider: " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
     })
   }

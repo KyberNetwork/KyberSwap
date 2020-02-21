@@ -106,13 +106,13 @@
 
   &__balance {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    justify-content: flex-end;
 
     &-item {
-      width: 22%;
-      height: 30px;
+      width: 50px;
+      height: 36px;
+      padding: 5px;
+      margin-right: 5px;
       font-size: 12px;
       font-weight: 400;
       border-radius: 3px;
@@ -122,6 +122,23 @@
       justify-content: center;
       align-items: center;
       transition: all .3s;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &--full-width {
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .common__balance-item {
+        padding: 0;
+        margin-right: 0;
+        width: 22%;
+        height: 30px;
+      }
     }
   }
 
@@ -256,8 +273,8 @@
   &__button {
     color: white;
     background-size: auto 150%;
-    transition: all 0.3s;
     cursor: pointer;
+    transition: all 0.3s;
 
     &--green {
       background-image: $green-gradient;
@@ -273,6 +290,12 @@
 
     &:active {
       transform: translateY(2px);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      cursor: initial;
+      opacity: 0.7;
     }
   }
 }

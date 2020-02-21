@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import * as accountActions from "../../../actions/accountActions"
-import constants from "../../../services/constants"
 import * as converter from "../../../utils/converter"
 import { getWallet } from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
@@ -77,7 +76,6 @@ export default class ApproveMaxModal extends React.Component {
       isConfirming: true
     })
 
-    //reset        
     var wallet = getWallet(this.props.account.type)
     var password = ""
     try {
@@ -86,12 +84,9 @@ export default class ApproveMaxModal extends React.Component {
         converter.toHex(converter.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
 
       this.props.dispatch(limitOrderActions.saveApproveMaxTx(this.props.limitOrder.sourceTokenSymbol, txHash));
-
-      //increase account nonce 
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
-
-      //go to the next step
-      this.props.dispatch(limitOrderActions.forwardOrderPath())
+      
+      this.props.goToNextPath();
     } catch (err) {
       console.log(err)
       this.setState({ err: err.toString(), isConfirming: false  })
@@ -123,7 +118,7 @@ export default class ApproveMaxModal extends React.Component {
 
   closeModal = () => {
     if (this.state.isConfirming) return
-    this.props.dispatch(limitOrderActions.resetOrderPath())
+    this.props.closeModal();
   }
 
   contentModal = () => {
