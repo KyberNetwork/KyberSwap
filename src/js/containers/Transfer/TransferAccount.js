@@ -39,7 +39,7 @@ export default class TransferAccount extends React.Component {
   }
   
   clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession(this.props.transfer.gasPrice));
+    this.props.dispatch(globalActions.clearSession());
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 

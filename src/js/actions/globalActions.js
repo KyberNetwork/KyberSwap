@@ -79,10 +79,9 @@ export function clearAcceptConnectWallet() {
   }
 }
 
-export function clearSession(gasPrice) {
+export function clearSession() {
   return {
-    type: "GLOBAL.CLEAR_SESSION",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION"
   }
 }
 
@@ -100,10 +99,9 @@ export function changeLanguage(ethereum, lang, locale) {
   }
 }
 
-export function clearSessionComplete(gasPrice) {
+export function clearSessionComplete() {
   return {
-    type: "GLOBAL.CLEAR_SESSION_FULFILLED",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
   }
 }
 
