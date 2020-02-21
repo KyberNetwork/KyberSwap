@@ -52,6 +52,7 @@ export default class Portfolio extends React.Component {
       path = "/swap/" + symbol.toLowerCase() + "-eth"
     }    
     this.props.dispatch(globalActions.goToRoute(path))
+    if (window.kyberBus){ window.kyberBus.broadcast('go.to.swap') }
   }
   
   render() {
