@@ -64,10 +64,6 @@ export default class AccountBalance extends React.Component {
     .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
   };
   
-  archiveUnsupported = (tokens) => {
-    return tokens.filter(token =>  token.sp_limit_order && this.isValidPriority(token)).concat(tokens.filter(token =>  !(token.sp_limit_order && this.isValidPriority(token))))
-  };
-  
   getChangeByETH = (tokenSymbol) => {
     let changeByETH = this.props.marketTokens[`ETH_${tokenSymbol}`] ? this.props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
   
@@ -147,7 +143,6 @@ export default class AccountBalance extends React.Component {
     }
     
     if (this.props.isLimitOrderTab) {
-      // res = this.archiveUnsupported(res)
       res = this.archiveBalanceZero(res)
     } else {
       res = this.archiveBalanceZero(res)

@@ -64,7 +64,7 @@ export default class ExchangeAccount extends React.Component {
   }
 
   clearSession = () => {
-    this.props.dispatch(globalActions.clearSession(this.props.exchange.gasPrice))
+    this.props.dispatch(globalActions.clearSession())
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
