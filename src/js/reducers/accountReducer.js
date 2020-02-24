@@ -144,7 +144,8 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       let newState = {...state}
       let otherConnect = {
         error: '',
-        modalOpen: true
+        modalOpen: true,
+        tradeType: action.payload
       }
       newState.otherConnect = otherConnect
       return newState

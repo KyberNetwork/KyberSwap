@@ -22,7 +22,7 @@ const PortfolioView = (props) => {
           switchMobileTab={props.switchMobileTab}
         />
       )}
-      
+
       <div className={`portfolio__left ${props.isOnMobile ? 'theme__background-2' : ''}`}>
         {(isOverViewDisplayed || !props.isImported) && (
           <div className={"portfolio__summary"}>
@@ -30,7 +30,7 @@ const PortfolioView = (props) => {
               {!props.isImported && (
                 <ImportAccount tradeType="portfolio" noTerm={true} />
               )}
-      
+
               {isOverViewDisplayed && (
                 <PortfolioOverview
                   currency={props.currency}
@@ -45,7 +45,7 @@ const PortfolioView = (props) => {
                 />
               )}
             </div>
-  
+
             {isOverViewDisplayed && (
               <div className={`portfolio__equity portfolio__item common__slide-up theme__background-${props.isOnMobile ? '11' : '2'}`}>
                 {isEquityDisplayed && (
@@ -56,7 +56,7 @@ const PortfolioView = (props) => {
                     theme={props.theme}
                   />
                 )}
-    
+
                 {!isEquityDisplayed && (
                   <div>-- % --</div>
                 )}
@@ -64,24 +64,30 @@ const PortfolioView = (props) => {
             )}
           </div>
         )}
-  
+
+        {isOverViewDisplayed && <div className="portfolio__feedback">
+          <i class="portfolio__feedback-icon"></i>
+          <p>{props.translate("info.please_give_feedback", { link: "https://docs.google.com/forms/d/e/1FAIpQLSfLUO3O4j6v3CKMtW5yD9auuHbnJY75IM9PLJO9hg1SBRiGaQ/viewform" })}</p>
+        </div>}
+        
         {isHistoryDisplayed && (
           <Fragment>
             {/*<PortfolioPerformance  performanceChart={props.performanceChart} />*/}
-  
+
             <PortfolioTxHistory
               historyTxs={props.historyTxs}
             />
           </Fragment>
         )}
       </div>
-  
+
       {isBalanceDisplayed && (
         <div className={"portfolio__item portfolio__right theme__background-2"}>
           <AccountBalance
             screen="portfolio"
             hideZeroBalance={true}
             show24hChange={false}
+            selectToken={props.selectToken}
           />
         </div>
       )}

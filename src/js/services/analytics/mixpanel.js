@@ -181,16 +181,6 @@ export default class Mixpanel {
     }
   }
 
-  trackChooseTokenOnBalanceBoard(token){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_3_Click_Choose_Token_Balance_Board", {token : token})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackClickSortBalanceBoard(type, sortType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
@@ -471,10 +461,10 @@ export default class Mixpanel {
     }
   }
 
-  trackClickImportAccount(type){
+  trackClickImportAccount(type, screen){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
-        mixpanel.track(`Step_2_Connect_wallet_${type}`)
+        mixpanel.track(`Step_2_Connect_wallet_${type}_${screen}`)
       }catch(e){
         console.log(e)
       }
@@ -684,6 +674,16 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_2_Click_Top_Token_${screen}_${symbol}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickTokenInAccountBalance(symbol, screen){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Account_balance_Select_Token_${screen}_${symbol}`)
       }catch(e){
         console.log(e)
       }

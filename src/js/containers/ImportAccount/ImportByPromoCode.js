@@ -6,13 +6,13 @@ import { getTranslate } from 'react-localize-redux'
 @connect((store) => {
   return {
     translate: getTranslate(store.locale),
-    analytics: store.global.analytics,
+    analytics: store.global.analytics
   }
 })
 export default class ImportByPromoCode extends React.Component {
   openModal() {
     this.props.dispatch(openPromoCodeModal());
-    this.props.analytics.callTrack("trackClickImportAccount", "promo code");
+    this.props.analytics.callTrack("trackClickImportAccount", "promo code", this.props.tradeType);
   }
 
   render() {

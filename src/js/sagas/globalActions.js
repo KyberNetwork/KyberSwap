@@ -1,9 +1,12 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
+
 import * as actions from '../actions/globalActions'
+
 import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage } from 'react-localize-redux';
 import { getTranslate } from 'react-localize-redux';
+import constants from "../services/constants"
 import Language from "../../../lang"
 import * as common from "../utils/common";
 import * as converter from "../utils/converter"
@@ -23,15 +26,15 @@ export function* goToRoute(action) {
   yield put(push(action.payload));
 }
 
-export function* clearSession(action) {
-  var state = store.getState()
-  var wallet = state.account.wallet
+export function* clearSession() {
+  var state = store.getState();
+  var wallet = state.account.wallet;
   
   if (wallet && wallet.clearSession){
     wallet.clearSession()
   }
 
-  yield put(actions.clearSessionComplete(action.payload))
+  yield put(actions.clearSessionComplete());
 
   if (window.kyberBus) { window.kyberBus.broadcast('wallet.clear', null); }
 }
@@ -185,12 +188,34 @@ export function* changelanguage(action) {
   }
 }
 
+export function* checkUserEligible(action) {  
+  try{
+    var {ethereum} = action.payload
+    var state = store.getState()
+    var account = state.account.account
+    var address = account.address
+    var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
+
+    if(result.success && result.eligible){
+      yield put(actions.clearErrorEligible())
+    } else {
+      yield put(actions.throwErrorEligible(result.message))
+    }
+
+  }catch(e){
+    console.log(e)
+    yield put(actions.clearErrorEligible())
+  }
+}
+
+
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
+  yield takeEvery("GLOBAL.CHECK_USER_ELIGIBLE", checkUserEligible)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)

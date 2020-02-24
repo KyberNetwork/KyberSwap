@@ -175,29 +175,20 @@ function merge(left, right, type) {
   return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight))
 }
 
-export function sortEthBalance(tokens) {
-  var sortedTokens = []
-  let removedEth = { ...tokens }
-  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
+export function sortETHBalance(tokens, isDesc, WETHToTop) {
+  var sortedTokens = [];
+  let tokensWithoutETH = { ...tokens };
+  
+  if (WETHToTop && tokensWithoutETH['WETH']) delete tokensWithoutETH['WETH'];
+  if (tokensWithoutETH['ETH']) delete tokensWithoutETH['ETH'];
+  
   if (tokens) {
-    sortedTokens = mergeSort(Object.values(removedEth), 1)
+    sortedTokens = mergeSort(Object.values(tokensWithoutETH), isDesc ? 1 : -1)
   }
-  if (tokens[constants.ETH.symbol]) {
-    sortedTokens.unshift(tokens[constants.ETH.symbol])
-  }
-  return sortedTokens
-}
-
-export function sortASCEthBalance(tokens) {
-  var sortedTokens = []
-  let removedEth = { ...tokens }
-  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
-  if (tokens) {
-    sortedTokens = mergeSort(Object.values(removedEth), -1)
-  }
-  if (tokens[constants.ETH.symbol]) {
-    sortedTokens.unshift(tokens[constants.ETH.symbol])
-  }
+  
+  if (WETHToTop && tokens['WETH']) sortedTokens.unshift(tokens['WETH']);
+  if (tokens['ETH']) sortedTokens.unshift(tokens['ETH']);
+  
   return sortedTokens
 }
 

@@ -46,6 +46,10 @@ export default class PostExchange extends React.Component {
       return
     }
 
+    if (this.props.global.eligibleError) {
+      return
+    }
+
     if (Object.keys(this.props.exchange.errors.sourceAmount).length !== 0) {
       return
     }
