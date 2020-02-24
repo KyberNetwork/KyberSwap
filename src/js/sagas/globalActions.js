@@ -26,15 +26,15 @@ export function* goToRoute(action) {
   yield put(push(action.payload));
 }
 
-export function* clearSession(action) {
-  var state = store.getState()
-  var wallet = state.account.wallet
+export function* clearSession() {
+  var state = store.getState();
+  var wallet = state.account.wallet;
   
   if (wallet && wallet.clearSession){
     wallet.clearSession()
   }
 
-  yield put(actions.clearSessionComplete(action.payload))
+  yield put(actions.clearSessionComplete());
 
   if (window.kyberBus) { window.kyberBus.broadcast('wallet.clear', null); }
 }

@@ -64,10 +64,6 @@ export default class AccountBalance extends React.Component {
     .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
   };
   
-  archiveUnsupported = (tokens) => {
-    return tokens.filter(token =>  token.sp_limit_order && this.isValidPriority(token)).concat(tokens.filter(token =>  !(token.sp_limit_order && this.isValidPriority(token))))
-  };
-  
   getChangeByETH = (tokenSymbol) => {
     let changeByETH = this.props.marketTokens[`ETH_${tokenSymbol}`] ? this.props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
   
@@ -90,11 +86,8 @@ export default class AccountBalance extends React.Component {
     
     switch (this.state.sortType) {
       case "ETH":
-        if (this.state.sortDESC) {
-          res = converts.sortEthBalance(tokens)
-        } else {
-          res = converts.sortASCEthBalance(tokens)
-        }
+        const WETHToTop = !!this.props.isLimitOrderTab;
+        res = converts.sortETHBalance(tokens, this.state.sortDESC, WETHToTop);
         break;
       case "USD":
         res = Object.keys(tokens).map(key => tokens[key])
@@ -146,12 +139,7 @@ export default class AccountBalance extends React.Component {
         break;
     }
     
-    if (this.props.isLimitOrderTab) {
-      // res = this.archiveUnsupported(res)
-      res = this.archiveBalanceZero(res)
-    } else {
-      res = this.archiveBalanceZero(res)
-    }
+    res = this.archiveBalanceZero(res);
     
     if (!this.props.hideZeroBalance) {
       res = this.archiveMaintain(res)
