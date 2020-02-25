@@ -57,12 +57,27 @@ export default class LimitOrderForm extends React.Component {
   }
   
   componentDidUpdate(prevProps) {
+    const isTokenChanged = this.props.baseSymbol !== prevProps.baseSymbol || this.props.quoteSymbol !== prevProps.quoteSymbol;
+    const isFormTypeChanged = this.props.formType !== prevProps.formType;
+    
     if (this.props.isBuyForm && this.props.limitOrder.triggerBuyRate !== prevProps.limitOrder.triggerBuyRate) {
       this.setState({ rate: this.props.limitOrder.triggerBuyRate })
     } else if (!this.props.isBuyForm && this.props.limitOrder.triggerSellRate !== prevProps.limitOrder.triggerSellRate) {
       this.setState({ rate: this.props.limitOrder.triggerSellRate })
+    } else if (isTokenChanged || isFormTypeChanged) {
+      this.resetFormState();
     }
   }
+  
+  resetFormState = () => {
+    this.setState({
+      srcAmount: '',
+      destAmount: '',
+      priceErrors: [],
+      amountErrors: [],
+      rate: this.props.isBuyForm ? this.props.limitOrder.triggerBuyRate : this.props.limitOrder.triggerSellRate,
+    });
+  };
   
   addPriceError = (error) => {
     this.setState({
@@ -300,7 +315,7 @@ export default class LimitOrderForm extends React.Component {
             type="text"
             maxLength="50"
             autoComplete="off"
-            value={this.props.limitOrder.isFetchingRate ? 'Loading...' : this.state.rate}
+            value={this.props.limitOrder.isFetchingRate || this.props.limitOrder.isSelectToken ? 'Loading...' : this.state.rate}
             onChange={this.handleRateChanged}
             disabled={this.props.limitOrder.isFetchingRate}
           />

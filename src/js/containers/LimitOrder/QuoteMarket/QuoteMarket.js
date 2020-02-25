@@ -7,7 +7,7 @@ import { QuoteList, Search } from "../QuoteMarket"
 import { sortQuotePriority } from "../../../utils/sorters";
 import { getTranslate } from 'react-localize-redux'
 
-@connect((store, props) => {
+@connect((store) => {
   const tokens = store.tokens.tokens
   const currentQuote = store.limitOrder.currentQuote
   const translate = getTranslate(store.locale)
@@ -17,15 +17,17 @@ import { getTranslate } from 'react-localize-redux'
   }
 })
 export default class QuoteMarket extends React.Component{
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
       quotes: {},
       pairs: {},
       favorite_pairs: [],
       current_search: "", 
       current_sort_index: "base", 
-      current_sort_dsc: true
+      current_sort_dsc: true,
+      showChangeCol: true
     }
   }
 
@@ -35,15 +37,15 @@ export default class QuoteMarket extends React.Component{
   }
 
   onSearch = (text) => {
-    this.setState((state, props) => ({current_search: text}))
+    this.setState({current_search: text})
   }
 
   onSort = (i, isDsc) => {
-    this.setState((state, props)=>({current_sort_index: i, current_sort_dsc: isDsc}))
+    this.setState({current_sort_index: i, current_sort_dsc: isDsc})
   }
   
   search(quotes){
-    const { current_search, current_sort_index, current_sort_dsc } = this.state
+    const { current_search, current_sort_index } = this.state
     const { currentQuote } = this.props
     const filtered = (
       currentQuote === "FAV" ?
@@ -80,7 +82,6 @@ export default class QuoteMarket extends React.Component{
           const tokenPriority = tokens[key].quote_priority;
 
           if (quotePriority && tokenPriority && quotePriority <= tokenPriority) {
-            // remove from list
             return false;
           }
           return true;
@@ -114,9 +115,20 @@ export default class QuoteMarket extends React.Component{
     let headerTitles = [
       { html: this.props.translate("limit_order.pair") || "Pair", field: "base" },
       { html: this.props.translate("limit_order.price") || "Price", field: "price" },
-      { html: this.props.translate("limit_order.volume") || "Volume", field: "volume" },
-      { html: this.props.translate("change") || "Change", field: "change" }
     ];
+    const volumeCol = { html: this.props.translate("limit_order.volume") || "Volume", field: "volume" };
+    const changeCol = { html: this.props.translate("change") || "Change", field: "change" };
+    
+    if (!this.props.global.isOnMobile) {
+      headerTitles.push(volumeCol);
+      headerTitles.push(changeCol);
+    } else {
+      if (this.state.showChangeCol) {
+        headerTitles.push(changeCol);
+      } else {
+        headerTitles.push(volumeCol);
+      }
+    }
     
     return headerTitles.map((i, index) => (
       <div className={`c${index+1}`} key={i["html"]} >
@@ -145,6 +157,10 @@ export default class QuoteMarket extends React.Component{
     }
   };
   
+  setShowChangeCol = (isShow) => {
+    this.setState({ showChangeCol: isShow })
+  };
+  
   render() {
     const quotes = this.renderQuotes()
     const { tokens, currentQuote } = this.props
@@ -167,15 +183,11 @@ export default class QuoteMarket extends React.Component{
                   <div className="volume_change_panel">
                     <div className="advance-config__option-container">
                       <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("change") || "Change"}</span>
-                        <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                               onChange={() => {if (this.state.is_volume) {this.setState({is_volume: false})}}}
-                               checked={!this.state.is_volume} />
+                        <input className="advance-config__radio" type="radio" name="volumeOrChange" onChange={() => this.setShowChangeCol(true)} checked={this.state.showChangeCol} />
                         <span className="advance-config__checkmark theme__radio-button"/>
                       </label>
                       <label className="advance-config__option"><span className="advance-config__option-percent">{this.props.translate("limit_order.volume") || "Volume"}</span>
-                        <input className="advance-config__radio" type="radio" name="volumeOrChange"
-                               onChange={() => {if (!this.state.is_volume) {this.setState({is_volume: true})}}}
-                               checked={this.state.is_volume} />
+                        <input className="advance-config__radio" type="radio" name="volumeOrChange" onChange={() => this.setShowChangeCol(false)} checked={!this.state.showChangeCol} />
                         <span className="advance-config__checkmark theme__radio-button"/>
                       </label>
                     </div>
@@ -199,10 +211,14 @@ export default class QuoteMarket extends React.Component{
                       </div>
                       <div className={"c1"} >{`${pair["base"]}/${pair["quote"]}`.replace("WETH", "ETH*")}</div>
                       <div className={"c2"} >{pair["price"] != 0 ? pair["price"] : '-'}</div>
-                      <div className={"c3"}>{pair["volume"] === "-" ? "-" : pair["volume"]}</div>
-                      <div className={`c4 ${pair["change"] < 0 ? "down" : "up"}`}>
-                        {pair["change"] === '-' || pair["price"] == 0 ? '-' : `${pair["change"]}%`}
-                      </div>
+                      {(!isOnMobile || !this.state.showChangeCol) && (
+                        <div className={"c3"}>{pair["volume"] === "-" ? "-" : pair["volume"]}</div>
+                      )}
+                      {(!isOnMobile || this.state.showChangeCol) && (
+                        <div className={`c4 ${pair["change"] < 0 ? "down" : "up"}`}>
+                          {pair["change"] === '-' || pair["price"] == 0 ? '-' : `${pair["change"]}%`}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
