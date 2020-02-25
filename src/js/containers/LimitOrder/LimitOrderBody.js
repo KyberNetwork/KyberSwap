@@ -13,7 +13,6 @@ import {
 
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
-import LimitOrderForm2 from "./LimitOrderForm2";
 import LimitOrderNotification from "./LimitOrderNotification";
 
 @connect((store, props) => {
@@ -34,26 +33,30 @@ export default class LimitOrderBody extends React.Component {
     
     this.srcInputElementRef = null;
     this.LimitOrderForm = withSourceAndBalance(LimitOrderForm);
-    this.LimitOrderForm2 = withSourceAndBalance(LimitOrderForm2);
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
     this.state = {
-      mobileOpenChart: false
+      mobileOpenChart: false,
+      mobileFormType: 'buy'
     }
   }
 
   toggleMobileChart = () => {
     this.setState({ mobileOpenChart: !this.state.mobileOpenChart })
-  };  
+  };
+  
+  setMobileFormType = (formType) => {
+    this.setState({ mobileFormType: formType })
+  };
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
   };
 
   desktopLayout = () => {
-    const LimitOrderForm2 = this.LimitOrderForm2
-    const QuoteMarket = this.QuoteMarket
+    const LimitOrderForm = this.LimitOrderForm;
+    const QuoteMarket = this.QuoteMarket;
 
     return (
       <div className={"limit-order theme__background"}>
@@ -71,12 +74,12 @@ export default class LimitOrderBody extends React.Component {
               />
             </div>
           }
+          
           <QuoteMarket />
   
           <div className="common__flexbox-between">
-            <LimitOrderForm2 formType="buy" />
-    
-            <LimitOrderForm2 formType="sell" />
+            <LimitOrderForm formType="buy" />
+            <LimitOrderForm formType="sell" />
           </div>
         </div>
       </div>
@@ -84,8 +87,10 @@ export default class LimitOrderBody extends React.Component {
   };
 
   mobileLayout = () => {
-    const LimitOrderForm = this.LimitOrderForm
-    const LimitOrderMobileHeader = this.LimitOrderMobileHeader
+    const baseSymbol = this.props.limitOrder.sourceTokenSymbol;
+    const LimitOrderForm = this.LimitOrderForm;
+    const LimitOrderMobileHeader = this.LimitOrderMobileHeader;
+    
     return (
       <div className={"limit-order theme__background"}>
         <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
@@ -93,17 +98,23 @@ export default class LimitOrderBody extends React.Component {
         {this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
           <LimitOrderChart/>
         )}
+  
+        <div>
+          <div className="limit-order-form__header theme__background-2 theme__border-2">
+            <div className={`limit-order-form__tab ${this.state.mobileFormType === 'buy' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('buy')}>
+              {this.props.translate("limit_order.buy", { symbol: baseSymbol })}
+            </div>
+            <div className={`limit-order-form__tab ${this.state.mobileFormType === 'sell' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('sell')}>
+              {this.props.translate("limit_order.sell", { symbol: baseSymbol })}
+            </div>
+          </div>
+          
+          <LimitOrderForm formType={this.state.mobileFormType} isMobile />
+        </div>
 
         {!this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
           <div>
             <div className={"limit-order__container limit-order__container--right"}>
-              {/*<LimitOrderForm
-                setSrcInputElementRef={this.setSrcInputElementRef}
-                submitHandler={this.submitHandler}
-                setSubmitHandler={this.setSubmitHandler}
-                setFormType={this.setFormType}
-              />*/}
-
               {this.props.account === false &&
                 <div className={"limit-order-account"}>
                   <ImportAccount

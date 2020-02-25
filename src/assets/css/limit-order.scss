@@ -1281,6 +1281,10 @@
         bottom: 0;
         left: 0;
       }
+
+      &__result--pending {
+        margin: 20px 15px 0;
+      }
     }
 
     .question {
@@ -1799,10 +1803,6 @@
         width: 100%;
       }
 
-      .token-info {
-        width: 100%;
-      }
-
       .token-value {
         width: calc(100% - 110px);
         text-align: right;
@@ -2105,7 +2105,8 @@
   &__header {
     display: flex;
     border-bottom: 2px solid;
-    margin-bottom: 20px;
+    margin: 15px 0 -8px;
+    padding-top: 20px;
   }
 
   &__header-desktop {
@@ -2203,6 +2204,10 @@
     text-align: right;
     word-break: break-word;
   }
+
+  @include screen-max-width(medium) {
+    width: 100%;
+  }
 }
 
 .limit-order-submit {
@@ -2276,9 +2281,11 @@
 
 .order-table-info {
   margin-top: 18px;
+
   &__header {
     border-radius: 3px;
     @extend %order-table-info;
+
     div {
       font-size: 12px;
       font-weight: 500;
@@ -2288,10 +2295,30 @@
   &__body .info {
     @extend %order-table-info;
     margin-top: 8px;
+
     div {
       font-size: 14px;
       font-weight: 500;
       text-transform: uppercase;
+    }
+  }
+
+  @include screen-max-width(medium) {
+    &__header {
+      div {
+        font-size: 10px;
+      }
+    }
+
+    &__body .info {
+      div {
+        font-size: 12px;
+        word-break: break-word;
+
+        &:not(:first-child) {
+          padding-left: 5px;
+        }
+      }
     }
   }
 }

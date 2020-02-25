@@ -59,33 +59,33 @@ const OrderDetails = (props) => {
         <div className={"order-item__row"}>
           <div className={"order-item__column"}>
             {(isFilledOrder && isBuyTrade) &&
-            <Fragment>
-              <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.total') || 'Total'}</div>
-              <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
-            </Fragment>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.total') || 'Total'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
+              </Fragment>
             }
 
             {(!isFilledOrder || !isBuyTrade) &&
-            <Fragment>
-              <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.amount') || 'Amount'}</div>
-              <div className={"theme__text order-item__value"}>{isBuyTrade ? destAmount : sourceAmount} {baseSymbol}</div>
-            </Fragment>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.amount') || 'Amount'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? destAmount : sourceAmount} {baseSymbol}</div>
+              </Fragment>
             }
           </div>
 
           <div className={"order-item__column"}>
             {isFilledOrder &&
-            <Fragment>
-              <div className={"theme__text-3 order-item__title"}>{props.translate('received') || 'Received'}</div>
-              <div className={"theme__text order-item__value"}>{receive} {dest.toUpperCase()}</div>
-            </Fragment>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{props.translate('received') || 'Received'}</div>
+                <div className={"theme__text order-item__value"}>{receive} {dest.toUpperCase()}</div>
+              </Fragment>
             }
 
             {!isFilledOrder &&
-            <Fragment>
-              <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.total') || 'Total'}</div>
-              <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
-            </Fragment>
+              <Fragment>
+                <div className={"theme__text-3 order-item__title"}>{props.translate('limit_order.total') || 'Total'}</div>
+                <div className={"theme__text order-item__value"}>{isBuyTrade ? sourceAmount : destAmount} {quoteSymbol}</div>
+              </Fragment>
             }
           </div>
           <div className={"order-item__column"}>

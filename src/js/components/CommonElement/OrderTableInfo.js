@@ -15,7 +15,7 @@ const OrderTableInfo = (props) => {
         case "buy":
           return (
             <div key={index} className={"info"}>
-              <div>{`${source}/${dest}`}</div>
+              <div>{`${source} / ${dest}`}</div>
               <div>{+item.min_rate !== 0 ? converters.formatNumber(item.min_rate, 6) : "-"} {dest}</div>
               <div>{converters.formatNumber(converters.divOfTwoNumber(item.src_amount, item.min_rate), 6)} {source}</div>
               <div>{converters.formatNumber(item.src_amount, 6)} {dest}</div>
@@ -28,7 +28,7 @@ const OrderTableInfo = (props) => {
 
           return (
             <div key={index} className={"info"}>
-              <div>{`${base}/${quote}`}</div>
+              <div>{`${base} / ${quote}`}</div>
               <div>{formattedMinRate} {quote}</div>
               <div>{formattedSrcAmount} {base}</div>
               <div>{amount} {quote}</div>

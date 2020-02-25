@@ -10,7 +10,6 @@ import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import { OrderTableInfo } from "../../../components/CommonElement";
 import createOrderObject from "../../../utils/convert_object";
-import OrderDetails from "../MobileElements/OrderDetails";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -171,8 +170,10 @@ export default class ConfirmModal extends React.Component {
 
   contentModal = () => {
     const isBuyForm = this.props.isBuyForm;
-    const srcTokenSymbol = this.props.sourceToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.sourceToken.symbol;
-    const destTokenSymbol = this.props.destToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.destToken.symbol;
+    const displaySrcSymbol = this.props.sourceToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.sourceToken.symbol;
+    const displayDestSymbol = this.props.destToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.destToken.symbol;
+    const displayBaseSymbol = isBuyForm ? displayDestSymbol : displaySrcSymbol;
+    const displayQuoteSymbol = isBuyForm ? displaySrcSymbol : displayDestSymbol;
     const formattedTriggerRate = converters.displayNumberWithDot(this.props.triggerRate, 9);
     const compareBaseRateWithQuoteRate = isBuyForm ? '<=' : '>=';
     const orderObject = createOrderObject(
@@ -187,7 +188,7 @@ export default class ConfirmModal extends React.Component {
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
           <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.order_confirm", { sideTrade: this.props.formType, symbol: srcTokenSymbol })}
+            {this.props.translate("modal.order_confirm", { sideTrade: this.props.formType, symbol: displayBaseSymbol })}
           </div>
           <div className="limit-order-modal__close" onClick={this.closeModal}>
             <div className="limit-order-modal__close-wrapper"/>
@@ -195,28 +196,18 @@ export default class ConfirmModal extends React.Component {
           <div className="limit-order-modal__content">
             <div className="limit-order-modal__message limit-order-modal__message--text-small">
               {this.props.translate("limit_order.confirm_order_message", {
-                base: srcTokenSymbol,
-                quote: destTokenSymbol,
+                base: displayBaseSymbol,
+                quote: displayQuoteSymbol,
                 rawRate: this.props.triggerRate,
                 rate: formattedTriggerRate,
                 compare: compareBaseRateWithQuoteRate
               })}
             </div>
 
-            {!this.props.global.isOnMobile && (
-              <OrderTableInfo
-                listOrder={[orderObject]}
-                translate={this.props.translate}
-              />
-            )}
-
-            {this.props.global.isOnMobile && (
-              <OrderDetails
-                order={orderObject}
-                isModal={true}
-                translate={this.props.translate}
-              />
-            )}
+            <OrderTableInfo
+              listOrder={[orderObject]}
+              translate={this.props.translate}
+            />
 
             {this.msgHtml()}
 
