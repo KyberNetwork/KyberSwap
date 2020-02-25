@@ -51,8 +51,12 @@ export default class LimitOrderForm2 extends React.Component {
     }
   }
   
+  componentDidMount(prevProps) {
+    const { triggerBuyRate, triggerSellRate } = this.props.limitOrder;
+    this.setState({ rate: this.props.isBuyForm ? triggerBuyRate : triggerSellRate })
+  }
+  
   componentDidUpdate(prevProps) {
-    // TODO
     if (this.props.isBuyForm && this.props.limitOrder.triggerBuyRate !== prevProps.limitOrder.triggerBuyRate) {
       this.setState({ rate: this.props.limitOrder.triggerBuyRate })
     } else if (!this.props.isBuyForm && this.props.limitOrder.triggerSellRate !== prevProps.limitOrder.triggerSellRate) {
