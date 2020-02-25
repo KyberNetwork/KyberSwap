@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import { filterInputNumber } from "../../utils/validators";
@@ -13,13 +13,12 @@ import * as converters from "../../utils/converter";
   const translate = getTranslate(store.locale);
   const tokens = store.tokens.tokens;
   const limitOrder = store.limitOrder;
-  const ethereum = store.connection.ethereum;
   const modifiedTokens = props.availableBalanceTokens();
   const isBuyForm = props.formType === 'buy';
-  const baseToken = modifiedTokens.find(token => token.symbol === limitOrder.sourceTokenSymbol);
-  const quoteToken = modifiedTokens.find(token => token.symbol === limitOrder.destTokenSymbol);
-  const baseSymbol = limitOrder.sourceTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : limitOrder.sourceTokenSymbol;
-  const quoteSymbol = limitOrder.destTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : limitOrder.destTokenSymbol;
+  const baseSymbol = limitOrder.sourceTokenSymbol;
+  const quoteSymbol = limitOrder.destTokenSymbol;
+  const baseToken = modifiedTokens.find(token => token.symbol === baseSymbol);
+  const quoteToken = modifiedTokens.find(token => token.symbol === quoteSymbol);
   let sourceToken = baseToken;
   let destToken = quoteToken;
   let srcTokenSymbol = baseSymbol;
@@ -33,8 +32,8 @@ import * as converters from "../../utils/converter";
   }
   
   return {
-    translate, limitOrder, tokens, account, ethereum, srcTokenSymbol, destTokenSymbol, baseSymbol, quoteSymbol,
-    global: store.global, sourceToken, destToken, modifiedTokens, isBuyForm
+    translate, limitOrder, tokens, account, srcTokenSymbol, destTokenSymbol,
+    baseSymbol, quoteSymbol, sourceToken, destToken, modifiedTokens, isBuyForm
   }
 })
 export default class LimitOrderForm2 extends React.Component {
@@ -46,10 +45,14 @@ export default class LimitOrderForm2 extends React.Component {
       rate: 'Loading...',
       srcAmount: '',
       destAmount: '',
+      priceErrors: [],
+      amountErrors: [],
+      cancelOrderModal: false
     }
   }
   
   componentDidUpdate(prevProps) {
+    // TODO
     if (this.props.isBuyForm && this.props.limitOrder.triggerBuyRate !== prevProps.limitOrder.triggerBuyRate) {
       this.setState({ rate: this.props.limitOrder.triggerBuyRate })
     } else if (!this.props.isBuyForm && this.props.limitOrder.triggerSellRate !== prevProps.limitOrder.triggerSellRate) {
@@ -57,8 +60,27 @@ export default class LimitOrderForm2 extends React.Component {
     }
   }
   
-  handleFocus = (type) => {
-    this.props.global.analytics.callTrack("trackLimitOrderFocusAmount", type);
+  addPriceError = (error) => {
+    this.setState({
+      priceErrors: [...this.state.priceErrors, error]
+    })
+  };
+  
+  addAmountError = (error) => {
+    this.setState({
+      amountErrors: [...this.state.amountErrors, error]
+    })
+  };
+  
+  clearErrors = () => {
+    this.setState({
+      priceErrors: [],
+      amountErrors: []
+    })
+  };
+  
+  toggleCancelOrderModal = (isOpened) => {
+    this.setState({ cancelOrderModal: isOpened })
   };
   
   getInputValue = (e, refValue) => {
@@ -72,6 +94,8 @@ export default class LimitOrderForm2 extends React.Component {
   };
   
   handleRateChanged = (e) => {
+    this.clearErrors();
+    
     const value = this.getInputValue(e, this.state.rate);
     if (value === false) return;
   
@@ -91,6 +115,8 @@ export default class LimitOrderForm2 extends React.Component {
   };
   
   handleSrcAmountChanged = (e, value) => {
+    this.clearErrors();
+    
     value = value ? value : this.getInputValue(e, this.state.srcAmount);
     if (value === false) return;
   
@@ -105,6 +131,8 @@ export default class LimitOrderForm2 extends React.Component {
   };
   
   handleDestAmountChanged = (e, value) => {
+    this.clearErrors();
+    
     value = value ? value : this.getInputValue(e, this.state.destAmount);
     if (value === false) return;
     
@@ -149,7 +177,7 @@ export default class LimitOrderForm2 extends React.Component {
     
     let sourceAmountByPercentage = converters.getBigNumberValueByPercentage(sourceToken.balance, balancePercentage);
 
-    if (this.props.srcTokenSymbol === constants.WETH_SUBSTITUTE_NAME && balancePercentage === 100) {
+    if (this.props.srcTokenSymbol === 'WETH' && balancePercentage === 100) {
       const ethBalance = this.props.tokens["ETH"].balance;
       const fee = this.calculateMaxFee();
       
@@ -198,16 +226,54 @@ export default class LimitOrderForm2 extends React.Component {
     } else {
       higherRateOrders = this.props.limitOrder.relatedOrders;
     }
+    
     return higherRateOrders
   };
   
   resetToMarketRate = () => {
     const offeredRate = this.props.isBuyForm ? converters.toT(this.props.limitOrder.buyRate) : converters.toT(this.props.limitOrder.sellRate);
+    
+    if (!+offeredRate) {
+      this.setState({ rate: 0 });
+      return;
+    }
+    
     const formattedOfferedRate = this.props.isBuyForm ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
     this.setState({ rate: converters.roundingRateNumber(formattedOfferedRate) });
   };
   
+  renderErrorsAndCompareRate = (errors, renderRateError = false, renderCompareRate = false) => {
+    const rateError = this.props.limitOrder.errors.rateSystem;
+    const isRateError = renderRateError && rateError;
+    const isError = errors.length || rateError;
+    
+    return (
+      <Fragment>
+        {isError && (
+          <div className="exchange__error common__slide-up">
+            {!isRateError && errors.map((error, index) => {
+              return <div className="exchange__error-item" key={index}>{error}</div>
+            })}
+    
+            {isRateError && (
+              <div className="exchange__error-item">{rateError}</div>
+            )}
+          </div>
+        )}
+        
+        {!isError && renderCompareRate && (
+          <LimitOrderCompareRate
+            triggerRate={this.state.rate}
+            isBuyForm={this.props.isBuyForm}
+          />
+        )}
+      </Fragment>
+    )
+  };
+  
   render() {
+    const displayQuoteSymbol = this.props.quoteSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.quoteSymbol;
+    const displaySrcSymbol = this.props.srcTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.srcTokenSymbol;
     const marketText = this.props.translate(`limit_order.${this.props.formType}`, { symbol: this.props.baseSymbol });
     
     return (
@@ -217,7 +283,7 @@ export default class LimitOrderForm2 extends React.Component {
         </div>
         
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
-          <div className={"limit-order-form__tag theme__input-tag"} onClick={this.resetToMarketRate}>
+          <div className={"limit-order-form__tag clickable theme__input-tag"} onClick={this.resetToMarketRate}>
             {this.props.translate("limit_order.price") || "Price"}
           </div>
           <input
@@ -230,28 +296,12 @@ export default class LimitOrderForm2 extends React.Component {
             autoComplete="off"
             value={this.props.limitOrder.isFetchingRate ? 'Loading...' : this.state.rate}
             onChange={this.handleRateChanged}
-            onFocus={() => this.handleFocus("rate")}
             disabled={this.props.limitOrder.isFetchingRate}
           />
-          <div className={"limit-order-form__symbol theme__text-3"}>{this.props.quoteSymbol}</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{displayQuoteSymbol}</div>
         </div>
   
-        {(this.props.limitOrder.errors.triggerRate.length || this.props.limitOrder.errors.rateSystem) && (
-          <div className={"exchange__error"}>
-            {this.props.limitOrder.errors.triggerRate.map((value, index) => {
-              return <span className="exchange__error-item" key={index}>{value}</span>
-            })}
-    
-            {this.props.limitOrder.errors.rateSystem &&
-            <div className={"exchange__error-item"}>{this.props.limitOrder.errors.rateSystem}</div>
-            }
-          </div>
-        )}
-        
-        <LimitOrderCompareRate
-          triggerRate={this.state.rate}
-          formType={this.props.formType}
-        />
+        {this.renderErrorsAndCompareRate(this.state.priceErrors, true, true)}
         
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__input-tag"}>{this.props.translate("limit_order.amount") || "Amount"}</div>
@@ -266,7 +316,6 @@ export default class LimitOrderForm2 extends React.Component {
               autoComplete="off"
               value={this.state.destAmount}
               onChange={this.handleDestAmountChanged}
-              onFocus={() => this.handleFocus("dest")}
             />
           )}
           
@@ -281,19 +330,12 @@ export default class LimitOrderForm2 extends React.Component {
               autoComplete="off"
               value={this.state.srcAmount}
               onChange={this.handleSrcAmountChanged}
-              onFocus={() => this.handleFocus("source")}
             />
           )}
           <div className={"limit-order-form__symbol theme__text-3"}>{this.props.baseSymbol}</div>
         </div>
-        
-        {!!this.props.limitOrder.errors.sourceAmount.length && (
-          <div className={"exchange__error"}>
-            {this.props.limitOrder.errors.sourceAmount.map((value, index) => {
-              return <div className="exchange__error-item" key={index}>{value}</div>
-            })}
-          </div>
-        )}
+  
+        {this.renderErrorsAndCompareRate(this.state.amountErrors)}
         
         {this.props.account &&
           <div className="common__mt-15">
@@ -307,7 +349,7 @@ export default class LimitOrderForm2 extends React.Component {
             <div className={"theme__text-4 common__flexbox"}>
               <div className={"limit-order-form__available"}>{this.props.translate("limit_order.available_balance") || "Available Balance"}:</div>
               <div className={"limit-order-form__token"}>
-                {converters.formatNumber(converters.toT(this.props.sourceToken.balance, this.props.sourceToken.decimals), 6)} {this.props.srcTokenSymbol}
+                {converters.formatNumber(converters.toT(this.props.sourceToken.balance, this.props.sourceToken.decimals), 6)} {displaySrcSymbol}
               </div>
             </div>
           </div>
@@ -319,22 +361,28 @@ export default class LimitOrderForm2 extends React.Component {
           destAmount={this.state.destAmount}
           srcTokenSymbol={this.props.srcTokenSymbol}
           destTokenSymbol={this.props.destTokenSymbol}
-          quoteSymbol={this.props.quoteSymbol}
+          quoteSymbol={displayQuoteSymbol}
         />
         
         <LimitOrderSubmit
-          marketText={marketText}
+          sourceToken={this.props.sourceToken}
+          destToken={this.props.destToken}
+          baseSymbol={this.props.baseSymbol}
+          quoteSymbol={this.props.quoteSymbol}
           sourceAmount={this.state.srcAmount}
           destAmount={this.state.destAmount}
           triggerRate={this.state.rate}
-          formType={this.props.formType}
+          isBuyForm={this.props.isBuyForm}
           availableBalanceTokens={this.props.modifiedTokens}
           getOpenOrderAmount={this.props.getOpenOrderAmount}
-          setSubmitHandler={this.props.setSubmitHandler}
-          hideTermAndCondition
+          addPriceError={this.addPriceError}
+          addAmountError={this.addAmountError}
+          clearErrors={this.clearErrors}
+          toggleCancelOrderModal={this.toggleCancelOrderModal}
+          marketText={marketText}
         />
         
-        {this.props.limitOrder.errors.rateWarning !== "" && (
+        {this.state.cancelOrderModal && (
           <ForceCancelOrderModal
             toggleAgreeSubmit={this.toggleAgreeSubmit}
             getListWarningOrdersComp={this.getListWarningOrdersComp}

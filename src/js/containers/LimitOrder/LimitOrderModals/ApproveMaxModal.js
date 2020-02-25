@@ -19,7 +19,6 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 
   return {
     translate, limitOrder, tokens, account, ethereum, global
-
   }
 })
 export default class ApproveMaxModal extends React.Component {
@@ -46,10 +45,10 @@ export default class ApproveMaxModal extends React.Component {
       // estimate gas approve
       try{
         var ethereum = this.props.ethereum
-        var dataApprove = await ethereum.call("approveTokenData", this.props.limitOrder.sourceToken, converter.biggestNumber(), BLOCKCHAIN_INFO.kyberswapAddress)
+        var dataApprove = await ethereum.call("approveTokenData", this.props.sourceToken.address, converter.biggestNumber(), BLOCKCHAIN_INFO.kyberswapAddress)
         var txObjApprove = {
           from: this.props.account.address,
-          to: this.props.limitOrder.sourceToken,
+          to: this.props.sourceToken.address,
           data: dataApprove,
           value: '0x0',
         }
@@ -69,7 +68,7 @@ export default class ApproveMaxModal extends React.Component {
   }
 
   async onSubmit() {
-    this.props.global.analytics.callTrack("trackLimitOrderClickApprove", "Max", this.props.limitOrder.sourceTokenSymbol);
+    this.props.global.analytics.callTrack("trackLimitOrderClickApprove", "Max", this.props.sourceToken.symbol);
     if (this.state.isConfirming || this.state.isFetchGas) return
     this.setState({
       err: "",
@@ -80,10 +79,10 @@ export default class ApproveMaxModal extends React.Component {
     var password = ""
     try {
       var nonce = this.props.account.getUsableNonce()
-      var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.limitOrder.sourceToken, 0, nonce, this.state.gasLimit,
+      var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.sourceToken.address, 0, nonce, this.state.gasLimit,
         converter.toHex(converter.gweiToWei(this.props.limitOrder.gasPrice)), this.props.account.keystring, password, this.props.account.type, this.props.account.address, BLOCKCHAIN_INFO.kyberswapAddress)
 
-      this.props.dispatch(limitOrderActions.saveApproveMaxTx(this.props.limitOrder.sourceTokenSymbol, txHash));
+      this.props.dispatch(limitOrderActions.saveApproveMaxTx(this.props.sourceToken.symbol, txHash));
       this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
       
       this.props.goToNextPath();
@@ -131,8 +130,8 @@ export default class ApproveMaxModal extends React.Component {
             <div>
               <div>
                 <div className="message">
-                  {this.props.translate("modal.approve_exchange_limit_order", { token: this.props.limitOrder.sourceTokenSymbol })
-                  || `You need to grant permission for KyberSwap Limit Order to interact with ${this.props.limitOrder.sourceTokenSymbol} with this address`}
+                  {this.props.translate("modal.approve_exchange_limit_order", { token: this.props.sourceToken.symbol })
+                  || `You need to grant permission for KyberSwap Limit Order to interact with ${this.props.sourceToken.symbol} with this address`}
                 </div>
                 <div class="info tx-title theme__background-222">
                   <div className="address-info">

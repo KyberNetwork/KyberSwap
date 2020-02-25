@@ -40,7 +40,7 @@ export default class WrapETHModal extends React.Component {
         var minAmountConvert = converters.toEther(convertedEth)
         
         this.setState({ amountConvert: minAmountConvert, minAmountConvert: minAmountConvert })
-    }
+    };
     
     handleChange = (e) => {
         var value = e.target.value
@@ -54,29 +54,25 @@ export default class WrapETHModal extends React.Component {
                 this.setState({ err: "" })
             }
         }
-    }
+    };
     
     getAmountWrapETH = () => {
-        var srcToken = this.props.tokens[this.props.limitOrder.sourceTokenSymbol];
-        var balance = this.props.availableWethBalance;
-        var srcAmount = converters.toTWei(this.props.limitOrder.sourceAmount, srcToken.decimals)
-        var wrapAmount = converters.subOfTwoNumber(srcAmount, balance)
-        return wrapAmount
-    }
+        const srcToken = this.props.sourceToken;
+        const balance = this.props.availableWethBalance;
+        const srcAmount = converters.toTWei(this.props.sourceAmount, srcToken.decimals);
+        
+        return converters.subOfTwoNumber(srcAmount, balance);
+    };
     
     getMaxGasExchange = () => {
-        
         const tokens = this.props.tokens
-        
         var sourceTokenLimit = tokens["ETH"] ? tokens["ETH"].gasLimit : 0
         var destTokenLimit = tokens[BLOCKCHAIN_INFO.wrapETHToken] ? tokens[BLOCKCHAIN_INFO.wrapETHToken].gasLimit : 0
-        
         var sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : this.props.exchange.max_gas
         var destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : this.props.exchange.max_gas
         
         return sourceGasLimit + destGasLimit
-        
-    }
+    };
     
     validateAmount = () => {
         var err = ""
@@ -89,7 +85,7 @@ export default class WrapETHModal extends React.Component {
             err = this.props.translate("error.min_converted_amount", { minAmount: this.state.minAmountConvert }) || `Please enter bigger number. Min converted amount is ${this.state.minAmountConvert}`;
         }
         
-        var gasLimit = this.getMaxGasExchange(this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
+        var gasLimit = this.getMaxGasExchange(this.props.sourceToken.symbol, this.props.destToken.symbol)
         var gasPrice = this.props.limitOrder.gasPrice
         
         var txFee = converters.toTWei(converters.calculateGasFee(gasPrice, gasLimit))
@@ -123,17 +119,13 @@ export default class WrapETHModal extends React.Component {
             var destToken = this.props.tokens[BLOCKCHAIN_INFO.wrapETHToken].address
             var destAddress = this.props.account.address
             var maxDestAmount = converters.biggestNumber()
-            
             var minConversionRate = converters.toHex(Math.pow(10, 18))
             var blockNo = constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-            // var nonce = this.props.account.nonce
             var nonce = this.props.account.getUsableNonce()
-            
             var gas = this.props.limitOrder.max_gas
             var gasPrice =  converters.toHex(converters.gweiToWei(this.props.limitOrder.gasPrice))
             var keystring = this.props.account.keystring
             var type = this.props.account.type
-            
             var password = ""
             
             var txHash = await wallet.broadCastTx("etherToOthersFromAccount", formId, ethereum, address, sourceToken,
@@ -158,26 +150,25 @@ export default class WrapETHModal extends React.Component {
     
     msgHtml = () => {
         if (this.state.isConfirming && this.props.account.type !== 'privateKey') {
-            return <span>{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</span>
-        } else {
-            return ""
+            return <div className="modal-message common__slide-up">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
         }
+        
+        return ""
     }
     
     errorHtml = () => {
         if (this.state.err) {
-            let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
             return (
               <React.Fragment>
-                  <div className={'modal-error custom-scroll ' + metaMaskClass}>
+                  <div className='modal-error common__slide-up'>
                       {this.state.err}
                   </div>
               </React.Fragment>
             )
-        } else {
-            return ""
         }
-    }
+        
+        return ""
+    };
     
     contentModal = () => {
         const availableWethBalance = converters.roundingNumber(converters.toEther(this.props.availableWethBalance));
@@ -236,13 +227,14 @@ export default class WrapETHModal extends React.Component {
                                   </div>
                               </div>
                           </div>
+                          
                           {this.errorHtml()}
+                          {this.msgHtml()}
                       </div>
                   
                   </div>
               </div>
               <div className="overlap theme__background-2">
-                  {this.msgHtml()}
                   <div className="input-confirm grid-x input-confirm--approve">
                       <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
                       <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>

@@ -50,18 +50,12 @@ function filterOrder(result) {
 
 export function getOrders() {
     return new Promise((resolve, rejected) => {
-        // resolve(data);
         const results = data.map((item, index) => {
-            let sideTrade = "buy"
-            if (index % 2 == 0) {
-                sideTrade = "sell"
-            }
             return {
                 ...item,
-                user_address: item.user_address.toLowerCase(),
-                side_trade: sideTrade
+                user_address: item.user_address.toLowerCase()
             }
-        });          
+        });
         resolve(results);
         return;
     })
@@ -69,23 +63,12 @@ export function getOrders() {
 
 function sortOrders(orders, dateSort) {
     let results = sortBy(orders, item => {
-        // return getFormattedDate(item.updated_at, true);
         return item.updated_at;
     });
 
     if (dateSort === "desc") {
         results.reverse();
     }
-
-    // results = _.sortBy(results, item => {
-    //     if (item.status === LIMIT_ORDER_CONFIG.status.IN_PROGRESS) {
-    //         return 0;
-    //     } else if (item.status === LIMIT_ORDER_CONFIG.status.OPEN) {
-    //         return 1;
-    //     } else {
-    //         return 2;
-    //     }
-    // }, ["asc"]);
 
     return results;
 }

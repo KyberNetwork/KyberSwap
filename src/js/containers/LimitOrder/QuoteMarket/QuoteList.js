@@ -12,9 +12,12 @@ export default class QuoteList extends React.Component{
   renderDropdown(){
     const { quotes, currentQuote, onClick } = this.props
     const temp = quotes.filter(i => this.dropdownQuotes.includes(i))
+    
+    if (!temp.length) return '';
+    
     return (
       <div className={`theme__background-55 common__flexbox-center quote_item ${this.dropdownQuotes.includes(currentQuote) ? "active" :""}`}>
-        <Dropdown active={this.state.active} onHide={e => this.toggle()}>
+        <Dropdown active={this.state.active} onHide={this.toggle}>
         <DropdownTrigger onClick={this.toggle}>
           <span>{this.dropdownQuotes.includes(currentQuote) ? currentQuote : temp[0]}</span>
           <span className="drop-down">

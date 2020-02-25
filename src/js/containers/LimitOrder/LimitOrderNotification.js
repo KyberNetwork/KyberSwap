@@ -1,18 +1,21 @@
 import React from "react"
 import constansts from "../../services/constants";
-import { Link } from "react-router-dom";
+import history from "../../history";
 
 const LimitOrderNotification = (props) => {
-  const swapURL = `${constansts.BASE_HOST}/swap/eth-knc`;
+  const goToSwap = () => {
+    history.push(`${constansts.BASE_HOST}/swap/eth-knc`)
+    if (window.kyberBus) { window.kyberBus.broadcast('go.to.swap-path') }
+  };
   
   return (
     <div className="limit-order-notification theme__background-12">
       <div className="limit-order-notification__text">
         {props.translate('limit_order.free_fee') || 'Gas free swaps (No fees) if you hold 2000 KNC in your wallet'}
       </div>
-      <Link className="limit-order-notification__button" to={swapURL}>
+      <div className="limit-order-notification__button" onClick={goToSwap}>
         {props.translate('limit_order.hold_knc') || 'Hold 2000 KNC now'}
-      </Link>
+      </div>
     </div>
   )
 };

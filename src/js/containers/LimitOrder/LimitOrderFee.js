@@ -44,8 +44,8 @@ class LimitOrderFee extends React.Component {
   fetchFee = (shouldLoading = true) => {
     if (this.props.account !== false) {
       const userAddr = this.props.account.address;
-      const src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address;
-      const dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address;
+      const src = this.props.tokens[this.props.srcTokenSymbol].address;
+      const dest = this.props.tokens[this.props.destTokenSymbol].address;
       const srcAmount = this.props.sourceAmount;
       const destAmount = this.props.destAmount;
 
@@ -60,11 +60,11 @@ class LimitOrderFee extends React.Component {
     return `${amount ? converter.formatNumber(amount, 6) : 0} ${this.props.quoteSymbol}`;
   };
   
-  renderFee = (orderFeeAfterDiscount) => {
+  renderFee = (displaySrcSymbol, orderFeeAfterDiscount) => {
     let orderNetFeeText = <img src={require(`../../../assets/img/${this.props.theme === 'dark' ? 'waiting-black' : 'waiting-white'}.svg`)}/>;
     
     if (!this.props.limitOrder.isFetchingFee) {
-      orderNetFeeText = <span>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {this.props.srcTokenSymbol}</span>
+      orderNetFeeText = <span>{converter.formatNumber(orderFeeAfterDiscount, 5, '')} {displaySrcSymbol}</span>
     }
     
     return (
@@ -75,14 +75,14 @@ class LimitOrderFee extends React.Component {
     )
   };
   
-  renderDiscountFee = (displayDiscountInfo, orderFeeDiscountPercentage) => {
+  renderDiscountFee = (displaySrcSymbol, displayDiscountInfo, orderFeeDiscountPercentage) => {
     const orderFee = converter.multiplyOfTwoNumber(this.props.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFee, 100));
     let orderFeeText = '';
     let orderDiscountFeeText = '';
   
     if (!this.props.limitOrder.isFetchingFee && displayDiscountInfo) {
       orderDiscountFeeText = <span>{converter.formatNumber(orderFeeDiscountPercentage, 2)}% {this.props.translate("off") || "OFF"}</span>
-      orderFeeText = <span>{converter.formatNumber(orderFee, 5)} {this.props.srcTokenSymbol}</span>
+      orderFeeText = <span>{converter.formatNumber(orderFee, 5)} {displaySrcSymbol}</span>
     }
     
     return (
@@ -102,13 +102,15 @@ class LimitOrderFee extends React.Component {
   };
 
   render() {
+    const displaySrcSymbol = this.props.srcTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.srcTokenSymbol;
+    const displayDestSymbol = this.props.destTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.destTokenSymbol;
     const orderFeeAfterDiscount = converter.multiplyOfTwoNumber(this.props.sourceAmount, converter.divOfTwoNumber(this.props.limitOrder.orderFeeAfterDiscount, 100));
     const sourceAmountAfterFee = converter.formatNumber(converter.subOfTwoNumber(this.props.sourceAmount, orderFeeAfterDiscount), 6, '');
     const orderFeeDiscountPercentage = this.props.limitOrder.orderFeeDiscountPercentage;
     const isDiscount = converter.compareTwoNumber(orderFeeDiscountPercentage, 0) === 1;
     const displayDiscountInfo = this.props.sourceAmount && isDiscount;
-    
-    const feeText = this.renderFee(orderFeeAfterDiscount);
+    const feeText = this.renderFee(displaySrcSymbol, orderFeeAfterDiscount);
+    const discountFeeText = this.renderDiscountFee(displaySrcSymbol, displayDiscountInfo, orderFeeDiscountPercentage);
     const learnMoreLink = this.renderLearnMoreLink();
 
     return (
@@ -132,16 +134,16 @@ class LimitOrderFee extends React.Component {
             </div>
 
             <SlideDownContent className={"limit-order-fee__slide-content"}>
-              {this.renderDiscountFee(displayDiscountInfo, orderFeeDiscountPercentage)}
+              {discountFeeText}
 
               {this.props.sourceAmount > 0 &&
                 <Fragment>
                   <div className={"limit-order-fee__info"}>
                     {this.props.translate("limit_order.fee_info", {
-                      sourceTokenSymbol: this.props.srcTokenSymbol,
-                      destTokenSymbol: this.props.destTokenSymbol,
+                      sourceTokenSymbol: displaySrcSymbol,
+                      destTokenSymbol: displayDestSymbol,
                       sourceAmount: sourceAmountAfterFee
-                    }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${this.props.srcTokenSymbol} is converted to ${this.props.destTokenSymbol}`}
+                    }) || `Upon execution, fee is deducted from source token and remaining ${sourceAmountAfterFee} ${displaySrcSymbol} is converted to ${displayDestSymbol}`}
                   </div>
     
                   {learnMoreLink}

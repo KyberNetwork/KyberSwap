@@ -1521,7 +1521,7 @@
     &--pending {
       font-size: 14px;
       font-weight: 400;
-      margin: 15px 15px 0;
+      margin: 20px 0 0;
       animation: slideUp 0.3s forwards;
     }
 
@@ -1670,10 +1670,9 @@
 }
 
 .wrap-eth-modal{
-  
-
   .content {
     padding: 0 45px;
+
     @include screen-max-width(medium) {
       padding: 0 20px !important;
     }
@@ -1683,8 +1682,6 @@
     font-size: 24px;
     font-weight: 500;
     text-align: left;
-    // margin-top: 50px;
-    // padding: 0 45px;
     padding-top: 30px;
     line-height: 1.3;
 
@@ -1740,7 +1737,7 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 35px;
-    margin-bottom: 20px;
+
     .token-item{
       border: 1px solid #cfcfcf;
       border-radius: 3px;
@@ -1756,22 +1753,23 @@
         margin-left: 10px;
       }
     }
-    .token-value{
+    .token-value {
+      width: 220px;
+      max-width: 100%;
       font-size: 18px;
       font-weight: 500;
       color: #5a5e67;
-      padding: 14px 20px 14px 40px;
+      padding: 14px 15px 14px 15px;
       background: white;
       border-radius: 0 3px 3px 0;
       border-left: 1px solid #cfcfcf;
 
-      input{
+      input {
+        width: 100%;
         margin: 0;
         border: none;
         box-shadow: none;
-        border-radius: 40px;
         font-size: 16px;
-        max-width: 150px;
         outline: none;
         background: none;
       }
@@ -2160,7 +2158,10 @@
     display: flex;
     align-items: center;
     font-weight: 400;
-    cursor: pointer;
+
+    &.clickable {
+      cursor: pointer;
+    }
   }
 
   &__input {
@@ -2245,6 +2246,16 @@
     &:hover {
       background-color: $text-orange;
       color: white;
+    }
+  }
+
+  @include screen-max-width(mid-medium) {
+    display: block;
+    padding-bottom: 25px;
+
+    &__text {
+      font-size: 14px;
+      margin-bottom: 15px;
     }
   }
 }

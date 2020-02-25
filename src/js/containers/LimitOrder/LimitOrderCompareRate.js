@@ -12,7 +12,7 @@ import * as converters from "../../utils/converter"
 
 export default class LimitOrderCompareRate extends React.Component {
   getPercentChange = () => {
-    const isBuyForm = this.props.formType === 'buy';
+    const isBuyForm = this.props.isBuyForm;
     const offeredRate = isBuyForm ? converters.toT(this.props.limitOrder.buyRate) : converters.toT(this.props.limitOrder.sellRate);
     const formattedOfferedRate = isBuyForm ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
     return offeredRate ? converters.percentChange(this.props.triggerRate, formattedOfferedRate) : 0;

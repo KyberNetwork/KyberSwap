@@ -31,8 +31,8 @@ import LimitOrderNotification from "./LimitOrderNotification";
 export default class LimitOrderBody extends React.Component {
   constructor(props) {
     super(props);
+    
     this.srcInputElementRef = null;
-    this.submitHandler = null;
     this.LimitOrderForm = withSourceAndBalance(LimitOrderForm);
     this.LimitOrderForm2 = withSourceAndBalance(LimitOrderForm2);
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
@@ -49,10 +49,6 @@ export default class LimitOrderBody extends React.Component {
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
-  };
-
-  setSubmitHandler = (func) => {
-    this.submitHandler = func;
   };
 
   desktopLayout = () => {
@@ -78,17 +74,9 @@ export default class LimitOrderBody extends React.Component {
           <QuoteMarket />
   
           <div className="common__flexbox-between">
-            <LimitOrderForm2
-              submitHandler={this.submitHandler}
-              setSubmitHandler={this.setSubmitHandler}
-              formType="buy"
-            />
+            <LimitOrderForm2 formType="buy" />
     
-            <LimitOrderForm2
-              submitHandler={this.submitHandler}
-              setSubmitHandler={this.setSubmitHandler}
-              formType="sell"
-            />
+            <LimitOrderForm2 formType="sell" />
           </div>
         </div>
       </div>

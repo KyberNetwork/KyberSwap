@@ -41,8 +41,8 @@ const limitOrder = (state = initState, action) => {
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
       const { buyRate, sellRate, type } = action.payload;
-  
-      if (!buyRate || !sellRate) {
+      
+      if (!+buyRate || !+sellRate) {
         newState.errors.rateSystem = "This token pair is temporarily under maintenance"
       } else {
         newState.errors.rateSystem = ""
