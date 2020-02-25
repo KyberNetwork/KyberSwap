@@ -11,7 +11,7 @@ import { getTranslate } from 'react-localize-redux'
 })
 export default class ImportByOther extends React.Component {
   openModal() {
-    this.props.dispatch(openOtherConnectModal());
+    this.props.dispatch(openOtherConnectModal(this.props.tradeType));
   }
 
   render() {

@@ -90,7 +90,7 @@ export default class LimitOrderSubmit extends React.Component {
       return;
     }
   
-    if (errors.rateSystem) {
+    if (errors.rateSystem || this.props.global.eligibleError) {
       isValidate = false
     }
     

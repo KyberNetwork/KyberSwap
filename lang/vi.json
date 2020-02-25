@@ -305,7 +305,8 @@
     "kyber_homepage": "Trang chủ Kyber",
     "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
-    "here": "tại đây"
+    "here": "tại đây",
+    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn."
   },
   "footer": {
     "info": "Thông tin",

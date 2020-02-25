@@ -305,7 +305,8 @@
     "kyber_homepage": "Kyber主页",
     "get_free_kovan": "获取免费的",
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
-    "here": "这里"
+    "here": "这里",
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better"
   },
   "footer": {
     "info": "信息",

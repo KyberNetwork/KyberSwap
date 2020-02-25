@@ -114,11 +114,15 @@ const tokens = (state = {tokens: initState()}, action) => {
       return Object.assign({}, state, { tokens: newTokens }) 
     }
     case 'GLOBAL.CLEAR_SESSION_FULFILLED': {
-      let tokens = {...state.tokens}
-      Object.keys(state.tokens).forEach((key) => {
-        tokens[key].balance = 0
-      })
-      state.tokens = tokens
+      let tokens = {...state.tokens};
+      
+      Object.keys(state.tokens).forEach((symbol) => {
+        tokens[symbol].balance = 0;
+        tokens[symbol].balanceInETH = 0;
+      });
+      
+      state.tokens = tokens;
+      
       return state
     }
     case 'EXCHANGE.SET_APPROVE_TX':{

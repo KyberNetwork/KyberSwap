@@ -14,6 +14,7 @@ import * as converters from "../../utils/converter";
   const tokens = store.tokens.tokens;
   const limitOrder = store.limitOrder;
   const modifiedTokens = props.availableBalanceTokens();
+  const eligibleError = store.global.eligibleError;
   const isBuyForm = props.formType === 'buy';
   const baseSymbol = limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.destTokenSymbol;
@@ -32,7 +33,7 @@ import * as converters from "../../utils/converter";
   }
   
   return {
-    translate, limitOrder, tokens, account, srcTokenSymbol, destTokenSymbol,
+    translate, limitOrder, tokens, account, srcTokenSymbol, destTokenSymbol, eligibleError,
     baseSymbol, quoteSymbol, sourceToken, destToken, modifiedTokens, isBuyForm
   }
 })
@@ -261,7 +262,7 @@ export default class LimitOrderForm extends React.Component {
     this.setState({ rate: converters.roundingRateNumber(formattedOfferedRate) });
   };
   
-  renderErrorsAndCompareRate = (errors, renderRateError = false, renderCompareRate = false) => {
+  renderErrorsAndCompareRate = (errors, renderRateError = false, renderCompareRate = false, renderEligibleError = false) => {
     const rateError = this.props.limitOrder.errors.rateSystem;
     const isRateError = renderRateError && rateError;
     const isError = errors.length || rateError;
@@ -286,6 +287,10 @@ export default class LimitOrderForm extends React.Component {
             isBuyForm={this.props.isBuyForm}
           />
         )}
+  
+        {renderEligibleError && this.props.eligibleError &&
+          <div className={"exchange__error-item"}>{this.props.eligibleError}</div>
+        }
       </Fragment>
     )
   };
@@ -322,7 +327,7 @@ export default class LimitOrderForm extends React.Component {
           <div className={"limit-order-form__symbol theme__text-3"}>{displayQuoteSymbol}</div>
         </div>
   
-        {this.renderErrorsAndCompareRate(this.state.priceErrors, true, true)}
+        {this.renderErrorsAndCompareRate(this.state.priceErrors, true, true, true)}
         
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag theme__input-tag"}>{this.props.translate("limit_order.amount") || "Amount"}</div>

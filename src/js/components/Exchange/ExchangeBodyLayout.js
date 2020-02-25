@@ -30,6 +30,11 @@ const ExchangeBodyLayout = (props) => {
     errorSource.push(value)
   });
 
+  if(props.global.eligibleError) {
+    errorExchange = true
+    errorSource.push(props.global.eligibleError)
+  }
+
   const errorShow = errorSource.map((value, index) => {
     return <div className={"exchange__error-item"} key={index}>{value}</div>
   });

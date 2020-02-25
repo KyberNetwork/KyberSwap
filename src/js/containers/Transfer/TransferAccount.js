@@ -1,20 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import { ImportAccount } from "../ImportAccount";
 import { AccountBalance } from "../TransactionCommon";
-import * as transferActions from "../../actions/transferActions";
 import * as globalActions from "../../actions/globalActions";
-import BLOCKCHAIN_INFO from "../../../../env";
-import * as converters from "../../utils/converter";
-import * as constants from "../../services/constants"
 import ToggleableMenu from "../CommonElements/TogglableMenu.js"
 
-import * as common from "../../utils/common"
-import { hideSelectToken } from "../../actions/utilActions"
-import constansts from "../../services/constants"
-
-@connect((store, props) => {
+@connect((store) => {
   const account = store.account.account;
   const translate = getTranslate(store.locale);
   const tokens = store.tokens.tokens;
@@ -39,7 +30,7 @@ export default class TransferAccount extends React.Component {
   }
   
   clearSession = (e) => {
-    this.props.dispatch(globalActions.clearSession(this.props.transfer.gasPrice));
+    this.props.dispatch(globalActions.clearSession());
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 

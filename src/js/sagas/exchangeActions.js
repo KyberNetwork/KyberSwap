@@ -229,36 +229,16 @@ function* verifyExchange() {
   }
 }
 
-
-export function* fetchUserCap(action) {  
-  try{
-    var {ethereum} = action.payload
-    var state = store.getState()
-    var account = state.account.account
-    var address = account.address
-    var enabled = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-    if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
-      var translate = getTranslate(state.locale)
-      // var kycLink = "/users/sign_up"
-      var content = translate("error.exceed_daily_volumn") || "You may want to register with us to have higher trade limits."
-      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, content))
-        
-    }else{
-      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-    }
-  }catch(e){
-    console.log(e)
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-  }
-}
-
 export function* doAfterAccountImported(action){
   var {account, walletName} = action.payload
+
+  
+
   if (account.type === "promo"){
     var state = store.getState()
+    var ethereum = state.connection.ethereum
     var exchange = state.exchange
     var tokens = state.tokens.tokens
-    var ethereum = state.connection.ethereum
 
     var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
     var promoToken = BLOCKCHAIN_INFO.promo_token
@@ -312,7 +292,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.SELECT_TOKEN", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-  yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

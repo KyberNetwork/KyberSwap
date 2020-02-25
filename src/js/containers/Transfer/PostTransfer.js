@@ -36,6 +36,10 @@ export default class PostTransfer extends React.Component {
       return
     }
 
+    if (this.props.global.eligibleError) {
+      return
+    }
+
     if (Object.keys(this.props.transfer.errors.sourceAmount).length !== 0) {
       return
     }

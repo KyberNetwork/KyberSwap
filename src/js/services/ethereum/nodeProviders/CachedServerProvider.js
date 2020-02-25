@@ -241,35 +241,19 @@ export default class CachedServerProvider extends React.Component {
   }
 
   getUserMaxCap(address) {
-    if (isUserLogin()){
-      return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch(`/api/user_stats?address=${address}`))
-          .then((response) => {
-            return response.json()
-          })
-          .then((result) => {
-            resolve(result)
-          })
-          .catch((err) => {
-            console.log(err)
-            rejected(err)
-          })
-      })
-    } else {
-      return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-          .then((response) => {
-            return response.json()
-          })
-          .then((result) => {
-            resolve(result)
-          })
-          .catch((err) => {
-            console.log(err)
-            rejected(err)
-          })
-      })
-    }
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch(`/api/wallet/screening?wallet=${address}`))
+        .then((response) => {
+          return response.json()
+        })
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          console.log(err)
+          rejected(err)
+        })
+    })
   }
 
   getTokenPrice(symbol){

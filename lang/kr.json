@@ -306,7 +306,8 @@
     "kyber_homepage": "카이버 홈페이지",
     "get_free_kovan": "무료 다운로드",
     "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
-    "here": "여기"
+    "here": "여기",
+    "please_give_feedback": "새로운 기능에 대한 <a target='_blank' href='${link}'>피드백</a>을 주시면, 서비스 개선에 도움이 됩니다. 감사합니다."
   },
   "footer": {
     "info": "정보",

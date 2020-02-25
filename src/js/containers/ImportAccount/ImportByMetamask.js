@@ -26,7 +26,7 @@ import { getTranslate } from 'react-localize-redux'
 export default class ImportByMetamask extends React.Component {
 
   connect = (e) => {   
-    this.props.analytics.callTrack("trackClickImportAccount", "metamask");
+    this.props.analytics.callTrack("trackClickImportAccount", "metamask", this.props.tradeType);
 
     var web3Service = web3Package.newWeb3Instance()
 

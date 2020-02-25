@@ -18,7 +18,7 @@ export default class ImportByDeviceWithLedger extends React.Component {
   
   showLoading = (walletType) => {
     this.refs.child.showLoading(walletType)
-    this.props.analytics.callTrack("trackClickImportAccount", walletType);
+    this.props.analytics.callTrack("trackClickImportAccount", walletType, this.props.tradeType);
   }
   
   render = () => {

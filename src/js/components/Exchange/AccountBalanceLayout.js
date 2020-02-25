@@ -50,8 +50,6 @@ const AccountBalanceLayout = (props) => {
         classBalance += " disabled unclickable"
       } else if (noBalance) {
         classBalance += " disabled"
-      } else if (props.hideZeroBalance) {
-        classBalance += " unclickable"
       }
       
       if ((props.isFixedSourceToken && props.screen === "swap") || (token.symbol === "PT" && props.screen === "transfer")) {
