@@ -161,11 +161,6 @@ export default class PortfolioTxHistory extends React.Component {
       )
     });
   }
-
-  renderEtherscanAddressLink(address){
-    return <a href={`${BLOCKCHAIN_INFO.ethScanUrl}address/${address}`} target="_blank">{formatAddress(address, 4, -4)}</a>
-  }
-
   
   renderTxByDate(txs) {
     return txs.map((tx, index) => {
