@@ -1,14 +1,7 @@
-export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
-  }
-}
-
-export function setSideTrade(sideTrade) {
-  return {
-    type: "LIMIT_ORDER.SET_SIDE_TRADE",
-    payload: sideTrade
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken }
   }
 }
 

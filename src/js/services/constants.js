@@ -327,7 +327,6 @@ const INIT_LIMIT_ORDER_STATE = {
   forceSubmitRate: 0,
   favorite_pairs_anonymous: [],
   currentQuote: "WETH",
-  sideTrade: "buy",
   mobileState: {
     showQuoteMarket: false
   }

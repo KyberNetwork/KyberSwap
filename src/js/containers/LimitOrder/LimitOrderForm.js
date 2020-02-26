@@ -267,9 +267,10 @@ export default class LimitOrderForm extends React.Component {
   };
   
   render() {
+    const displayBaseSymbol = this.props.baseSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.baseSymbol;
     const displayQuoteSymbol = this.props.quoteSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.quoteSymbol;
     const displaySrcSymbol = this.props.srcTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.srcTokenSymbol;
-    const marketText = this.props.translate(`limit_order.${this.props.formType}`, { symbol: this.props.baseSymbol });
+    const marketText = this.props.translate(`limit_order.${this.props.formType}`, { symbol: displayBaseSymbol });
     
     return (
       <div className={"limit-order-form theme__background-2"}>
@@ -329,7 +330,7 @@ export default class LimitOrderForm extends React.Component {
               onChange={this.handleSrcAmountChanged}
             />
           )}
-          <div className={"limit-order-form__symbol theme__text-3"}>{this.props.baseSymbol}</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{displayBaseSymbol}</div>
         </div>
   
         {this.renderErrorsAndCompareRate(this.state.amountErrors)}

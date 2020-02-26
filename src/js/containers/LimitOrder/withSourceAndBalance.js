@@ -82,7 +82,6 @@ const withSourceAndBalance = (Component) => {
 
     getAvailableBalanceTokenList = () => {
       const tokens = this.props.tokens;
-      const orderList = this.props.limitOrder.listOrder;
 
       return Object.keys(tokens).map(key => {
         let token = tokens[key];
@@ -122,7 +121,6 @@ const withSourceAndBalance = (Component) => {
 
       if (sourceTokenSymbol === destTokenSymbol){
         this.props.dispatch(limitOrderActions.throwError("sourceAmount", [this.props.translate("error.source_dest_token") || "Source token must be different from dest token"]))
-        // this.props.dispatch(limitOrderActions.throwError)
       }else{
         this.props.dispatch(limitOrderActions.throwError("sourceAmount", []))
       }
@@ -134,7 +132,7 @@ const withSourceAndBalance = (Component) => {
       var sourceToken = this.props.tokens[sourceTokenSymbol].address
       var destTokenSymbol = this.props.limitOrder.destTokenSymbol
       var destToken = this.props.tokens[destTokenSymbol].address
-      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
+      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken));
 
       this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "source", symbol);
@@ -145,7 +143,7 @@ const withSourceAndBalance = (Component) => {
       var sourceToken = this.props.tokens[sourceTokenSymbol].address
       var destTokenSymbol = symbol
       var destToken = this.props.tokens[destTokenSymbol].address
-      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
+      this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken));
 
       this.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
       this.props.global.analytics.callTrack("trackLimitOrderSelectToken", "dest", symbol);
@@ -154,7 +152,7 @@ const withSourceAndBalance = (Component) => {
     selectSourceAndDestToken = (baseSymbol, quoteSymbol) => {
       var sourceToken = this.props.tokens[baseSymbol].address
       var destToken = this.props.tokens[quoteSymbol].address
-      this.props.dispatch(limitOrderActions.selectToken(baseSymbol, sourceToken, quoteSymbol, destToken, "source"));
+      this.props.dispatch(limitOrderActions.selectToken(baseSymbol, sourceToken, quoteSymbol, destToken));
       this.updateGlobal(baseSymbol, sourceToken, quoteSymbol, destToken)
     };
 

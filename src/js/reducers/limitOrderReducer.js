@@ -244,11 +244,6 @@ const limitOrder = (state = initState, action) => {
       newState[field] = newState[field].slice()
       return newState; 
     }
-
-    case 'LIMIT_ORDER.SET_SIDE_TRADE': {
-      newState.sideTrade = action.payload
-      return newState
-    }
     case 'LIMIT_ORDER.TOOGLE_QUOTE_MARKET':{
       newState.mobileState.showQuoteMarket = action.payload
       return newState
