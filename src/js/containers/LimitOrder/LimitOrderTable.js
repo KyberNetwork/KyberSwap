@@ -51,7 +51,7 @@ export default class LimitOrderTable extends Component {
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header",
-      className: "cell-flex-start cell-text-small theme__text-4",
+      className: "cell-flex-start cell-text-small cell-date theme__text-4",
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -79,22 +79,22 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("price"),
       accessor: item => item,
       Cell: props => this.getPriceCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header",
-      className: "cell-flex-start cell-condition theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end theme__text-4",
     }, {
       id: "amount",
       Header: this.getHeader("amount"),
       accessor: item => item,
       Cell: props => this.getAmountCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-from theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end cell-from theme__text-4",
     }, {
       id: "total",
       Header: this.getHeader("total"),
       accessor: item => item,
       Cell: props => this.getTotalCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-to theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end cell-to theme__text-4",
     }, {
       id: "status",
       Header: this.getHeader("status"),
@@ -108,9 +108,8 @@ export default class LimitOrderTable extends Component {
     }];
 
     const {activeOrderTab} = this.props.limitOrder;
-    let widths = [130, 130, 130, 130, 150, 150, 120]
 
-    if (activeOrderTab === "history"){
+    if (activeOrderTab === "history") {
       desktopColumns.splice(desktopColumns.length-2, 0, {
         id: "receive",
         Header: this.getHeader("received"),
@@ -119,16 +118,13 @@ export default class LimitOrderTable extends Component {
         headerClassName: "theme__background",
         maxWidth: 80
       })
-      widths = [120, 120, 100, 120, 140, 140, 80, 120]
     }
-
-    for (let i = 0; i < desktopColumns.length ; i++){
+  
+    const widths = [110, 120, 60, 100, 150, 140, 120];
+    for (let i = 0; i < desktopColumns.length ; i++) {
       desktopColumns[i]["width"] = widths[i]
     }
-
-    // --------------
-    // Mobile columns
-    // --------------
+    
     const mobileColumns = [
       {
         id: "mobile-order",
@@ -141,10 +137,9 @@ export default class LimitOrderTable extends Component {
     if (this.props.screen === "mobile") {
       return mobileColumns;
     } else {
-      // Default render desktop version table
       return desktopColumns;
     }
-  }
+  };
 
   // --------------
   // Render cell
@@ -552,8 +547,8 @@ export default class LimitOrderTable extends Component {
       return (
         <div>
           <span>{(this.props.translate("limit_order.date") || "Date").toUpperCase()}</span>
-          {this.props.limitOrder.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
-          {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "asc" && <img className="limit-order-table__sort-icon" src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "desc" && <img className="limit-order-table__sort-icon" src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
       )
     } else if (title === "condition") {

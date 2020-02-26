@@ -265,7 +265,9 @@
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
     "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS"
+    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -448,7 +450,11 @@
     "type": "Loại",
     "available_balance": "Số dư khả dụng",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Đã nhận"
+    "received": "Đã nhận",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell",
+    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
     "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",

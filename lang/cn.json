@@ -265,7 +265,9 @@
     "insufficient_balance": "您的余额不足以支持这笔交易",
     "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "您还没有将您的钱包地址附加到此域。请在ENS建立您的账户"
+    "not_attached_address": "您还没有将您的钱包地址附加到此域。请在ENS建立您的账户",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders"
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",
@@ -447,7 +449,11 @@
     "type": "类型",
     "available_balance": "可用余额",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "收到"
+    "received": "收到",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell",
+    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
     "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",

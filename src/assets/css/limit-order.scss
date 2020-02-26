@@ -35,43 +35,41 @@
   position: relative;
 
   .ReactTable {
-    height: 345px;
     min-height: 100px;
-    margin: 15px 30px 15px 30px;
+    margin: 0 15px 15px;
     border: none;
 
     &--empty {
       height: 260px !important;
+    }
 
-      .rt-thead {
-        //background-color: transparent !important;
-      }
+    .rt-table {
+      padding-bottom: 10px;
+      height: 290px;
+      flex: initial;
     }
 
     .rt-thead {
       overflow-y: auto;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 500;
       box-shadow: none;
-      height: 44px;
       margin-bottom: 5px;
       position: sticky;
       top: 0;
       z-index: 2;
 
       .rt-th {
-        font-weight: 500;
         border: none;
         outline: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 5px 0;
+        padding: 10px 0;
         overflow: visible;
-        line-height: 35px;
 
         > div {
-          padding-left: 10px;
+          padding-left: 5px;
         }
 
         &.-sort-asc, .-sort-asc {
@@ -125,11 +123,10 @@
     .empty-order__message {
       position: absolute;
       top: 70px;
-      // padding: 10px 0 0;
       text-align: center;
       width: 100%;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
 
       .place-order-trigger {
         text-decoration: underline;
@@ -165,6 +162,7 @@
     &-header {
       justify-content: start!important;
       cursor: pointer;
+      padding-left: 15px !important;
     }
   }
 
@@ -390,7 +388,7 @@
 }
 
 .limit-order-account {
-  margin-bottom: 25px;
+  margin-bottom: 8px;
 
   &__title {
     display: flex;
@@ -423,13 +421,14 @@
     &__title {
       font-size: 14px;
       font-weight: 500;
-      margin: 0 0 10px 12px;
+      margin-bottom: 15px;
+      margin-top: 0;
       padding-top: 10px;
       text-align: start;
     }
 
     &__item {
-      width: 115px;
+      width: 19%;
     }
 
     &__name {
@@ -620,8 +619,8 @@
   margin-top: 20px;
 
   &__content {
-    margin-bottom: 20px;
-    padding-bottom: 7px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
     border-bottom: 1px solid;
   }
 
@@ -633,7 +632,7 @@
 
   .slide-down--active {
     .limit-order-fee__slide-content {
-      padding: 10px 0 5px 40px;
+      padding: 10px 0 5px 31px;
     }
   }
 
@@ -665,6 +664,10 @@
     font-size: 12px;
     font-weight: 400;
     color: $text-orange;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__total {
@@ -682,6 +685,13 @@
 
 .limit-order-table {
   padding-top: 25px;
+
+  &__sort-icon {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: 2px;
+  }
 
   &__header {
     width: 100%;
@@ -784,10 +794,10 @@
 
 .limit-order-list {
   width: 100%;
-  height: 450px;
   background-color: #ffffff;
-  margin: 20px auto;
+  margin: 8px auto 0;
   padding: 1px 0;
+  border-radius: 3px;
 
   &--empty {
     background-color: #e8eff6;
@@ -797,11 +807,13 @@
   &--title {
     display: flex;
     justify-content: space-between;
-    margin: 30px 30px 0;
+    align-items: flex-end;
+    margin: 15px 15px 10px;
 
     .title {
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
+      margin-bottom: -2px;
 
       @include screen-max-width(medium) {
         font-size: 20px;
@@ -820,9 +832,12 @@
     &-faq {
       a {
         font-size: 10px;
-        font-weight: 500;
+        font-weight: 400;
         color: $text-orange;
-        text-decoration: underline;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
       @include screen-max-width(xxmedium) {
@@ -915,27 +930,32 @@
 
   &__tab {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     position: relative;
     text-align: center;
 
+    &::after {
+      content: "";
+      height: 2px;
+      width: 0;
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      background-color: $text-orange;
+      z-index: 1;
+      transition: width .3s;
+    }
+
     &--active {
-      font-weight: 600 !important;
+      font-weight: 500 !important;
       cursor: initial;
       pointer-events: none;
 
       &::after {
-        content: "";
-        height: 2px;
-        width: 40%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        background-color: $text-orange;
-        z-index: 1;
+        width: 30%;
       }
     }
   }
@@ -952,8 +972,13 @@
 
     .ReactTable {
       height: 485px;
+
       @include screen-max-width(medium){
         height: auto;
+
+        .rt-table {
+          height: initial;
+        }
       }
       
       margin: 0;
@@ -1135,7 +1160,7 @@
 .status-filter-modal {
   width: 130px;
   height: auto;
-  min-height: 85px;
+  min-height: 60px;
   box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
   background-color: #ffffff;
   position: absolute;
@@ -1151,7 +1176,7 @@
 
   &__option {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-bottom: 10px;
     padding-left: 25px;
@@ -1187,7 +1212,7 @@
 }
 
 .quote-filter-modal {
-  width: 72px;
+  width: 70px;
   height: auto;
   box-shadow: 0 4px 12px 0 rgba(87, 102, 119, 0.14);
   background-color: #ffffff;
@@ -1255,6 +1280,10 @@
         width: 100%;
         bottom: 0;
         left: 0;
+      }
+
+      &__result--pending {
+        margin: 20px 15px 0;
       }
     }
 
@@ -1496,7 +1525,7 @@
     &--pending {
       font-size: 14px;
       font-weight: 400;
-      margin: 15px 15px 0;
+      margin: 20px 0 0;
       animation: slideUp 0.3s forwards;
     }
 
@@ -1645,10 +1674,9 @@
 }
 
 .wrap-eth-modal{
-  
-
   .content {
     padding: 0 45px;
+
     @include screen-max-width(medium) {
       padding: 0 20px !important;
     }
@@ -1658,8 +1686,6 @@
     font-size: 24px;
     font-weight: 500;
     text-align: left;
-    // margin-top: 50px;
-    // padding: 0 45px;
     padding-top: 30px;
     line-height: 1.3;
 
@@ -1715,7 +1741,7 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 35px;
-    margin-bottom: 20px;
+
     .token-item{
       border: 1px solid #cfcfcf;
       border-radius: 3px;
@@ -1731,22 +1757,23 @@
         margin-left: 10px;
       }
     }
-    .token-value{
+    .token-value {
+      width: 220px;
+      max-width: 100%;
       font-size: 18px;
       font-weight: 500;
       color: #5a5e67;
-      padding: 14px 20px 14px 40px;
+      padding: 14px 15px 14px 15px;
       background: white;
       border-radius: 0 3px 3px 0;
       border-left: 1px solid #cfcfcf;
 
-      input{
+      input {
+        width: 100%;
         margin: 0;
         border: none;
         box-shadow: none;
-        border-radius: 40px;
         font-size: 16px;
-        max-width: 150px;
         outline: none;
         background: none;
       }
@@ -1773,10 +1800,6 @@
       display: block;
 
       .token-item {
-        width: 100%;
-      }
-
-      .token-info {
         width: 100%;
       }
 
@@ -2036,7 +2059,7 @@
   }
 }
 
-.limit-order {  
+.limit-order {
   @include screen-min-width(medium){
     display: flex;
     justify-content: space-between;
@@ -2044,11 +2067,11 @@
 
   &__container {
     &--left {
-      width: calc(100% - 420px);
+      width: calc(100% - 600px);
     }
 
     &--right {
-      width: 400px;
+      width: 580px;
 
       > div {
         box-shadow: 0 2px 15px -6px rgba(0, 0, 0, 0.2)
@@ -2067,31 +2090,30 @@
   }
 
   @include screen-max-width(xxmedium) {
-    // flex-direction: column-reverse;
-
     &__container {
       width: 100%;
-
-      &--left {
-
-      }
-
-      // &--right {
-        // display: flex;
-        // flex-direction: column-reverse;
-      // }
     }
   }
 }
 
 .limit-order-form {
-  margin-top: 15px;
-  padding: 25px;
+  width: 50%;
+  margin-top: 8px;
+  padding: 25px 15px;
+  border-radius: 3px;
 
   &__header {
     display: flex;
     border-bottom: 2px solid;
-    margin-bottom: 20px;
+    margin: 15px 0 -8px;
+    padding-top: 20px;
+  }
+
+  &__header-desktop {
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 12px;
   }
 
   &__tab {
@@ -2130,22 +2152,24 @@
   }
 
   &__tag {
-    width: 90px;
-    height: 48px;
-    font-size: 14px;
-    text-transform: uppercase;
+    width: 65px;
+    height: 35px;
+    font-size: 12px;
     padding: 5px 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: 500;
+    font-weight: 400;
+
+    &.clickable {
+      cursor: pointer;
+    }
   }
 
   &__input {
-    width: calc(100% - 170px);
+    width: calc(100% - 115px);
     font-size: 16px;
     font-weight: 400;
-    padding: 0 15px;
+    padding: 0 5px 0 10px;
     background: none;
     border: none;
     outline: none;
@@ -2153,43 +2177,45 @@
   }
 
   &__symbol {
-    width: 80px;
-    font-size: 16px;
-    padding-right: 15px;
+    width: 50px;
+    font-size: 12px;
+    padding-right: 10px;
     font-weight: 400;
     text-align: right;
   }
 
   &__prefer-rate {
-    font-size: 12px;
-    margin: 10px 0 15px;
-  }
-
-  &__balance-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 8px 0 25px;
+    min-height: 13px;
+    font-size: 11px;
+    font-weight: 400;
+    margin: 6px 0 10px;
   }
 
   &__available {
+    width: 45%;
     font-size: 12px;
-    margin-bottom: 3px;
     font-weight: 400;
   }
 
   &__token {
+    width: 55%;
     font-size: 14px;
     font-weight: 400;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  @include screen-max-width(medium) {
+    width: 100%;
   }
 }
 
 .limit-order-submit {
   text-align: center;
-  padding: 20px 0 30px;
+  margin-top: 20px;
 
   &__accept-button {
-    margin: 0 auto 15px;
+    margin: 0 auto;
     width: 100%;
     height: 45px;
     line-height: 45px;
@@ -2197,21 +2223,44 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    transition: all 0.3s;
+  }
+}
+
+.limit-order-notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+  padding: 10px 30px;
+  margin-top: 8px;
+
+  &__text {
+    font-size: 18px;
+  }
+
+  &__button {
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 3px;
+    color: $text-orange;
+    border: solid 1px $text-orange;
+    padding: 7px 25px;
     cursor: pointer;
+    transition: all .3s;
 
-    &.waiting,
-    &.disabled {
-      pointer-events: none;
-      cursor: initial;
+    &:hover {
+      background-color: $text-orange;
+      color: white;
     }
+  }
 
-    &.disabled {
-      opacity: 0.7;
-    }
+  @include screen-max-width(mid-medium) {
+    display: block;
+    padding-bottom: 25px;
 
-    &:active {
-      transform: translateY(2px);
+    &__text {
+      font-size: 14px;
+      margin-bottom: 15px;
     }
   }
 }
@@ -2232,9 +2281,11 @@
 
 .order-table-info {
   margin-top: 18px;
+
   &__header {
     border-radius: 3px;
     @extend %order-table-info;
+
     div {
       font-size: 12px;
       font-weight: 500;
@@ -2244,10 +2295,30 @@
   &__body .info {
     @extend %order-table-info;
     margin-top: 8px;
+
     div {
       font-size: 14px;
       font-weight: 500;
       text-transform: uppercase;
+    }
+  }
+
+  @include screen-max-width(medium) {
+    &__header {
+      div {
+        font-size: 10px;
+      }
+    }
+
+    &__body .info {
+      div {
+        font-size: 12px;
+        word-break: break-word;
+
+        &:not(:first-child) {
+          padding-left: 5px;
+        }
+      }
     }
   }
 }

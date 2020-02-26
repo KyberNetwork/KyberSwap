@@ -34,7 +34,7 @@
   }
 
   &__count {
-    font-size: 13px;
+    font-size: 12px;
     padding: 0 10px;
   }
 
@@ -44,11 +44,9 @@
   }
 
   &__page-item {
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
+    padding: 2px 4px;
+    font-size: 12px;
     cursor: pointer;
-    text-align: center;
     margin: 0 5px;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -56,18 +54,18 @@
 
   &__button {
     cursor: pointer;
-    padding: 0 10px;
-    &--prev:after{
+    padding: 2px 4px;
+
+    &--prev:after {
       content: '\2039';
       width: 10px;
       height: 10px
     }
-    &--next:after{
+
+    &--next:after {
       content: '\203a';
       width: 10px;
       height: 10px
     }
   }
-
-
 }

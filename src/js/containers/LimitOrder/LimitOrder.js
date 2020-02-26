@@ -10,8 +10,6 @@ import limitOrderServices from "../../services/limit_order";
 import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
-import service from "../../services/limit_order"
-import * as converter from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -19,10 +17,6 @@ import * as converter from "../../utils/converter";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
-  
-  // const paramsValid = tokens[src].is_quote && ((tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority) || (!tokens[dest].is_quote))
-  // if (!paramsValid) history.push(`/${constants.LIMIT_ORDER_CONFIG.path}`)
-
   const src = props.match.params.source.toUpperCase()
   const dest = props.match.params.dest.toUpperCase()
 
@@ -60,8 +54,8 @@ export default class LimitOrder extends React.Component {
     var isManual = false
 
     var ethereum = this.getEthereumInstance()
+    
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
-
   }
 
   fetchCurrentRateInit = () => {
@@ -139,6 +133,7 @@ export default class LimitOrder extends React.Component {
 
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
+  
   async fetchFavoritePairsIfLoggedIn(){
     if (common.isUserLogin()) {
       let res = await limitOrderServices.getFavoritePairs()
@@ -189,17 +184,13 @@ export default class LimitOrder extends React.Component {
 
   componentDidMount = () => {
     this.updatePathOrder()
-
     this.setInvervalProcess()
-
-   
     this.fetchCurrentRateInit()
     this.fetchListOrders()
     this.fetchPendingBalance()
     this.fetchFavoritePairsIfLoggedIn()
   }
-
-
+  
   render() {
     const LimitOrderAccount = this.LimitOrderAccount;
     return (

@@ -11,6 +11,10 @@
     margin-bottom: 10px;
   }
 
+  &__mt-15 {
+    margin-top: 15px;
+  }
+
   &__notification {
     font-size: 13px;
     font-weight: 400;
@@ -89,6 +93,17 @@
     align-items: center;
   }
 
+  &__flexbox-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__flexbox-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__balance {
     display: flex;
     justify-content: flex-end;
@@ -103,13 +118,26 @@
       border-radius: 3px;
       border: solid 1px;
       cursor: pointer;
-      transition: all .3s;
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: all .3s;
 
       &:last-child {
         margin-right: 0;
+      }
+    }
+
+    &--full-width {
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .common__balance-item {
+        padding: 0;
+        margin-right: 0;
+        width: 22%;
+        height: 30px;
       }
     }
   }
@@ -239,6 +267,35 @@
       &-item {
         padding: 10px 5px;
       }
+    }
+  }
+
+  &__button {
+    color: white;
+    background-size: auto 150%;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &--green {
+      background-image: $green-gradient;
+    }
+
+    &--red {
+      background-image: $red-gradient
+    }
+
+    &:hover {
+      background-position: 0 100%;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      cursor: initial;
+      opacity: 0.7;
     }
   }
 }

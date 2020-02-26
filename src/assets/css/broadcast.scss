@@ -5,7 +5,8 @@
   padding: 25px 45px;
 
   @include screen-max-width(medium) {
-    padding: 25px 20px;
+    margin: 0 20px !important;
+    padding: 15px !important;
   }
 
   .tx-title-text {

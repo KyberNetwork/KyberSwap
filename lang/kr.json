@@ -266,7 +266,9 @@
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders"
   },
   "import": {
     "from_metamask": "Metamask",
@@ -449,7 +451,11 @@
     "type": "유형",
     "available_balance": "사용 가능한 잔액",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "받았습니다"
+    "received": "받았습니다",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell",
+    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
     "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",

@@ -72,8 +72,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px!important;
-  height: 8px!important;
+  width: 5px !important;
+  height: 5px !important;
 }
 
 /* Track */
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: $grey-darker;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .color-grey-darker{

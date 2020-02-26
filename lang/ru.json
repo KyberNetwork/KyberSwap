@@ -265,7 +265,9 @@
     "insufficient_balance": "Your balance is insufficient for transaction",
     "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -447,7 +449,11 @@
     "type": "Type",
     "available_balance": "Available Balance",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Получил"
+    "received": "Получил",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell",
+    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",
