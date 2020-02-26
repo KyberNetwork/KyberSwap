@@ -15,7 +15,7 @@ import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
 import LimitOrderNotification from "./LimitOrderNotification";
 
-@connect((store, props) => {
+@connect((store) => {
   const global = store.global;
   const account = store.account.account
   const translate = getTranslate(store.locale)
@@ -93,9 +93,9 @@ export default class LimitOrderBody extends React.Component {
     
     return (
       <div className={"limit-order theme__background"}>
-        <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
+        <LimitOrderMobileHeader toggleMobileChart={this.toggleMobileChart} />
 
-        {this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
+        {this.state.mobileOpenChart && (
           <LimitOrderChart/>
         )}
   
@@ -112,22 +112,20 @@ export default class LimitOrderBody extends React.Component {
           <LimitOrderForm formType={this.state.mobileFormType} isMobile />
         </div>
 
-        {!this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
-          <div>
-            <div className={"limit-order__container limit-order__container--right"}>
-              {this.props.account === false &&
-                <div className={"limit-order-account"}>
-                  <ImportAccount
-                    tradeType="limit_order"
-                    noTerm={true}
-                  />
-                </div>
-              }
-            </div>
-            
-            <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
+        <div>
+          <div className={"limit-order__container limit-order__container--right"}>
+            {this.props.account === false &&
+              <div className={"limit-order-account"}>
+                <ImportAccount
+                  tradeType="limit_order"
+                  noTerm={true}
+                />
+              </div>
+            }
           </div>
-        )}
+          
+          <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
+        </div>
       </div>
     )
   };

@@ -76,9 +76,14 @@ export default class LimitOrderMobileHeader extends React.Component {
           </div>
 
           <div className={"limit-order-header__column"}>
-            <div className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
-                 onClick={() => this.props.onFavoriteClick(this.props.baseSymbol, this.props.quoteSymbol, !isFav)} />
-            <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart}/>
+            <div
+              className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
+              onClick={() => this.props.onFavoriteClick(this.props.baseSymbol, this.props.quoteSymbol, !isFav)}
+            />
+            
+            {!this.props.limitOrder.mobileState.showQuoteMarket && (
+              <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart} />
+            )}
           </div>
         </div>
 

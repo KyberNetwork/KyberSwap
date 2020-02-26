@@ -720,7 +720,6 @@
 }
 
 .limit-order-header {
-
   &__wrapper {
     display: flex;
     justify-content: space-between;
@@ -738,6 +737,7 @@
 
     &:last-child {
       width: 25px;
+      min-height: 58px;
     }
   }
 
