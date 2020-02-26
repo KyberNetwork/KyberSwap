@@ -224,14 +224,14 @@ const TransactionLoadingView = (props) => {
       </div>
       {!isTxFailed && (
         <div className="tx-actions theme__background-2">
-          <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
+          <div className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
             {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer") : (props.translate("transaction.swap") || "Swap") }
-          </a>
-          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>
+          </div>
+          <div className="new-transaction" onClick={() => props.makeNewTransaction()}>
             {props.type === "swap" ?
               props.translate("transaction.new_ex") || "New swap"
               : props.translate("transaction.new_tx") || "New transfer"}
-          </a>
+          </div>
         </div>
       )}
       {isTxFailed && (

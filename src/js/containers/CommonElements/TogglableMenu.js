@@ -48,8 +48,8 @@ export default class ToggleableMenu extends React.Component {
         <a className="x" onClick={this.closeReImport}>&times;</a>
         <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
         <div className="content">
-          <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
-          <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
+          <div className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</div>
+          <div className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</div>
         </div>
       </div>
     )

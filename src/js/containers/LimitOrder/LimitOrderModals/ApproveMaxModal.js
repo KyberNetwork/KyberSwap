@@ -102,17 +102,16 @@ export default class ApproveMaxModal extends React.Component {
 
   errorHtml = () => {
     if (this.state.err) {
-      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+          <div className={'modal-error message-error common__slide-up'}>
             {this.state.err}
           </div>
         </React.Fragment>
       )
-    } else {
-      return ""
     }
+    
+    return ""
   }
 
   closeModal = () => {
@@ -155,9 +154,9 @@ export default class ApproveMaxModal extends React.Component {
           <div className="input-confirm input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>
-              <a className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`} onClick={this.onSubmit.bind(this)}>
+              <div className={`button process-submit next ${this.state.isConfirming ? "btn--disabled" : ""}`} onClick={this.onSubmit.bind(this)}>
                 {this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}
-              </a>
+              </div>
             </div>
           </div>
         </div>
