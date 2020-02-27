@@ -176,9 +176,9 @@ export default class WrapETHModal extends React.Component {
         return (
           <div className="wrap-eth-modal theme__text">
               <div className="title">{this.props.translate("limit_order.wrap_eth_modal_title") || "Convert ETH to WETH"}</div>
-              <a className="x" onClick={this.closeModal}>
+              <div className="x" onClick={this.closeModal}>
                   <img src={require("../../../../assets/img/v3/Close-3.svg")} />
-              </a>
+              </div>
               <div className="content with-overlap">
                   <div className="row">
                       <div>

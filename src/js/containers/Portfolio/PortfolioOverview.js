@@ -77,7 +77,7 @@ export default class PortfolioOverview extends React.Component {
           contentLabel="advance modal"
           content={(
             <div className="reimport-modal p-a-20px">
-              <a className="x" onClick={this.closeReImportModal}>&times;</a>
+              <div className="x" onClick={this.closeReImportModal}>&times;</div>
               <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
               <div className="content">
                 <div className="button confirm-btn" onClick={this.props.reImportWallet}>{this.props.translate("import.yes") || "Yes"}</div>

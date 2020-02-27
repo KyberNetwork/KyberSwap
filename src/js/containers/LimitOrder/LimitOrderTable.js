@@ -100,15 +100,15 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("status"),
       accessor: item => item,
       Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-center-header cell-status-header",
-      className: "cell-flex-center theme__text-4",
+      headerClassName: "cell-flex-end-header cell-status-header",
+      className: "cell-flex-end cell-state theme__text-4",
     }, {
       expander: true,
       show: false
     }];
 
     const {activeOrderTab} = this.props.limitOrder;
-    let columnWidths = [110, 120, 60, 100, 150, 140, 120];
+    let columnWidths = [100, 110, 40, 110, 140, 140, 120];
 
     if (activeOrderTab === "history") {
       desktopColumns.splice(desktopColumns.length-2, 0, {
@@ -121,7 +121,7 @@ export default class LimitOrderTable extends Component {
         maxWidth: 80
       });
   
-      columnWidths = [90, 100, 50, 80, 120, 120, 120, 120];
+      columnWidths = [90, 90, 40, 80, 120, 120, 110, 120];
     }
     
     if (this.props.screen === "mobile") {

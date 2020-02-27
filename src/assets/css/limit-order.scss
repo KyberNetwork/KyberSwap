@@ -152,6 +152,12 @@
 
   .cell-flex-end {
     @include cell-flex(flex-end);
+
+    &-header {
+      > div {
+        padding-right: 5px;
+      }
+    }
   }
 
   .cell-flex-center {
@@ -218,7 +224,7 @@
       .status-info-icon {
         top: 0;
         position: absolute;
-        right: -18px;
+        right: -10px;
 
         &__mobile {
           right: 0 !important;
@@ -272,6 +278,10 @@
     position: relative;
   }
 
+  .cell-state {
+    padding-right: 11px;
+  }
+
   .cell-text-small {
     font-size: 12px;
   }
@@ -285,10 +295,6 @@
   .from-number-cell {
     @extend %number-cell;
     max-width: 100px;
-
-    // @include screen-max-width(medium) {
-    //     max-width: 100px;
-    // }
   }
 
   .to-number-cell {
@@ -307,7 +313,6 @@
       font-size: 9px;
       font-weight: 500;
       color: #ffffff;
-      padding: 0 2px;
       cursor: pointer;
     }
   }

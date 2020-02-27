@@ -74,7 +74,7 @@ const ImportByDeviceView = (props) => {
                     <div className="import-modal__header--title">
                         {props.translate(`modal.select_${props.walletType}_address`) || 'Select address'}
                     </div>
-                    <a class="x" onClick={props.onRequestClose}>&times;</a>
+                    <div class="x" onClick={props.onRequestClose}>&times;</div>
                 </div>
                 <div class="import-modal__body">
                     <div class="cold-wallet__path">

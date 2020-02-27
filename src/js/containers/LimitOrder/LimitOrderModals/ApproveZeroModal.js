@@ -123,7 +123,7 @@ export default class ApproveZeroModal extends React.Component {
     return (
       <div className="approve-modal">
         <div className="title">{this.props.translate("modal.approve_token") || "Approve Token"}</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
+        <div className="x" onClick={this.closeModal}>&times;</div>
         <div className="content with-overlap">
           <div className="row">
             <div>
@@ -132,7 +132,7 @@ export default class ApproveZeroModal extends React.Component {
                   {this.props.translate("modal.approve_zero_limit_order", { token: this.props.sourceToken.symbol })
                   || `You need to reset allowance for ${this.props.sourceToken.symbol} of KyberSwap Limit Order with this address`}
                 </div>
-                <div class="info tx-title">
+                <div class="info tx-title theme__background-222">
                   <div className="address-info">
                     <div>{this.props.translate("modal.address") || "Address"}</div>
                     <div>{this.props.account.address}</div>
@@ -151,7 +151,7 @@ export default class ApproveZeroModal extends React.Component {
 
           </div>
         </div>
-        <div className="overlap">
+        <div className="overlap theme__background-2">
           <div className="input-confirm input-confirm--approve">
             <div>{this.msgHtml()}</div>
             <div>
