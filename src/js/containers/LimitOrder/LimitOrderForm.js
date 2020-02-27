@@ -104,13 +104,11 @@ export default class LimitOrderForm extends React.Component {
   };
   
   getInputValue = (e, refValue) => {
-    const value = e.target.value;
-    
-    const isValueValid = filterInputNumber(e, value, refValue);
+    const isValueValid = filterInputNumber(e, e.target.value, refValue);
 
-    if (!isValueValid || value < 0) return false;
+    if (!isValueValid || e.target.value < 0) return false;
     
-    return value;
+    return e.target.value;
   };
   
   handleRateChanged = (e) => {

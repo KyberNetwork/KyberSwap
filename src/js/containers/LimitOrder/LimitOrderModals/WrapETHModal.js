@@ -43,12 +43,12 @@ export default class WrapETHModal extends React.Component {
     };
     
     handleChange = (e) => {
-        var value = e.target.value
-        var check = filterInputNumber(e, e.target.value, this.state.amountConvert)
+        const check = filterInputNumber(e, e.target.value, this.state.amountConvert);
+        
         if (check) {
-            this.setState({ amountConvert: value })
-            //validate amount
-            if (converters.compareTwoNumber(value, this.state.minAmountConvert) < 0) {
+            this.setState({ amountConvert: e.target.value });
+
+            if (converters.compareTwoNumber(e.target.value, this.state.minAmountConvert) < 0) {
                 this.setState({ err: this.props.translate("error.min_converted_amount", { minAmount: this.state.minAmountConvert }) || `Please enter bigger number. Min converted amount is ${this.state.minAmountConvert}` })
             } else {
                 this.setState({ err: "" })
@@ -207,12 +207,16 @@ export default class WrapETHModal extends React.Component {
                                       <span>ETH</span>
                                   </div>
                                   <div className="token-value theme__background-44">
-                                      <input value={this.state.amountConvert} id="wrap-input" className={"theme__text"}
-                                             min="0"
-                                             step="0.000001"
-                                             placeholder="0"
-                                             type={this.props.global.isOnMobile ? "number" : "text"} maxLength="50" autoComplete="off"
-                                             onChange={(e) => this.handleChange(e)} />
+                                      <input
+                                        value={this.state.amountConvert}
+                                        id="wrap-input" className={"theme__text"}
+                                        min="0"
+                                        step="0.000001"
+                                        placeholder="0"
+                                        type={this.props.global.isOnMobile ? "number" : "text"}
+                                        maxLength="50" autoComplete="off"
+                                        onChange={this.handleChange}
+                                      />
                                   </div>
                               </div>
                               
