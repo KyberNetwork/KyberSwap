@@ -183,7 +183,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   renderSendTx(tx, index) {
-    const transferTokenSymbol = this.state.tokenAddresses[tx.transfer_token_address];
+    const transferTokenSymbol = this.state.tokenAddresses[tx.transfer_token_address.toLowerCase()];
     let transferTokenDecimal, transferValue
 
     if(transferTokenSymbol){
@@ -216,7 +216,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   renderReceiveTx(tx, index) {
-    const transferTokenSymbol = this.state.tokenAddresses[tx.transfer_token_address];
+    const transferTokenSymbol = this.state.tokenAddresses[tx.transfer_token_address.toLowerCase()];
     let transferTokenDecimal, transferValue
 
     if(transferTokenSymbol){
@@ -249,7 +249,7 @@ export default class PortfolioTxHistory extends React.Component {
   }
   
   renderApproveTx(tx, index) {
-    const approveTokenSymbol = this.state.tokenAddresses[tx.approve_token_address];
+    const approveTokenSymbol = this.state.tokenAddresses[tx.approve_token_address.toLowerCase()];
     return (
       <a href={`${BLOCKCHAIN_INFO.ethScanUrl}tx/${tx.hash}`} target="_blank" className={"portfolio__tx-body theme__table-item"} key={index}>
         <div className={"portfolio__tx-left"}>
