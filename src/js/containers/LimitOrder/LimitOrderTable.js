@@ -121,7 +121,7 @@ export default class LimitOrderTable extends Component {
         maxWidth: 80
       });
   
-      columnWidths = [90, 100, 60, 80, 120, 120, 120, 120];
+      columnWidths = [90, 100, 50, 80, 120, 120, 120, 120];
     }
     
     if (this.props.screen === "mobile") {
