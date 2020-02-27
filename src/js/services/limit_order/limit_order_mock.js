@@ -370,7 +370,7 @@ function changeState() {
 
 export function getFavoritePairs(){
   return new Promise((resolve, rejected) => {
-    resolve([{base: "BITX", quote: "WETH"}])
+    resolve([{base: "knc", quote: "weth"}])
   })
 }
 
