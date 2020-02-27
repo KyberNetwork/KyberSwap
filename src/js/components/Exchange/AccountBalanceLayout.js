@@ -25,6 +25,10 @@ const AccountBalanceLayout = (props) => {
     const changeByUSD = props.getChangeByUSD(tokenSymbol);
     return <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD, isValidRate)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
   }
+
+  const allBalances = getBalances();
+  const isPortfolio = props.screen === 'portfolio';
+  const isHideAllInfo = props.hideZeroBalance && allBalances === false;
   
   function getBalances() {
     const tokens = props.getCustomizedTokens();
@@ -57,35 +61,42 @@ const AccountBalanceLayout = (props) => {
       }
     
       return (
-        <div
-          key={token.symbol}
-          {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
-          className={"account-balance__token-item" + classBalance}
-        >
-          <div className={"account-balance__token-row account-balance__token-info"}>
-            <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
-            <div>
-              <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
-              <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
+        <div className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
+          <div
+            key={token.symbol}
+            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
+            className={"account-balance__token-item" + classBalance}
+          >
+            <div className={"account-balance__token-row account-balance__token-info"}>
+              <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
+              <div>
+                <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
+                <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
+              </div>
             </div>
+            {
+              (isValidRate) ?
+                (<div className="account-balance__token-row stable-equivalent">{
+                  props.sortType === "ETH" ? `${balanceInETH} E` : `${balanceInUSD}$`
+                }</div>) :
+                (<div className="account-balance__token-row stable-equivalent">
+                  {props.hideZeroBalance && (
+                    <span>---</span>
+                  )}
+                
+                  {!props.hideZeroBalance && (
+                    <span className="error">maintenance</span>
+                  )}
+                </div>)
+            }  
+            {props.show24hChange && get24ChangeValue(props.sortType, token.symbol, isValidRate)}
           </div>
-          {
-            (isValidRate) ?
-              (<div className="account-balance__token-row stable-equivalent">{
-                props.sortType === "ETH" ? `${balanceInETH} E` : `${balanceInUSD}$`
-              }</div>) :
-              (<div className="account-balance__token-row stable-equivalent">
-                {props.hideZeroBalance && (
-                  <span>---</span>
-                )}
-              
-                {!props.hideZeroBalance && (
-                  <span className="error">maintenance</span>
-                )}
-              </div>)
-          }
-          
-          {props.show24hChange && get24ChangeValue(props.sortType, token.symbol, isValidRate)}
+
+          <div class="account-balance__item-hover-overlay">
+            <button className="buy" onClick={(e) => props.selectBalanceButton("buy", token.symbol)}>BUY</button>
+            <button className="sell" onClick={(e) => props.selectBalanceButton("sell", token.symbol)}>SELL</button>
+            <button className="transfer" onClick={(e) => props.selectBalanceButton("transfer", token.symbol)}>TRANSFER</button>
+          </div>
         </div>
       )
     });
@@ -93,9 +104,7 @@ const AccountBalanceLayout = (props) => {
     return !isEmpty || props.searchWord ? allBalances : false;
   }
   
-  const allBalances = getBalances();
-  const isPortfolio = props.screen === 'portfolio';
-  const isHideAllInfo = props.hideZeroBalance && allBalances === false;
+  
 
   return (
     <div className={`account-balance common__slide-up account-balance--${props.screen}`}>

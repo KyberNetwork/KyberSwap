@@ -170,6 +170,7 @@ export default class AccountBalance extends React.Component {
         isFixedSourceToken = {this.props.isFixedSourceToken}
         analytics={this.props.global.analytics}
         selectBalance = {this.props.selectToken}
+        selectBalanceButton={this.props.selectBalanceButton}
         isLimitOrderTab={this.props.isLimitOrderTab}
         openReImport={this.props.openReImport}
         onClickSort={this.onClickSort}
