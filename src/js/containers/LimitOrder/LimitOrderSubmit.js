@@ -211,11 +211,11 @@ export default class LimitOrderSubmit extends React.Component {
         const isSamePair = sourceToken.symbol === item.source && destToken.symbol === item.dest;
         
         if (isSamePair) {
-          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
+          const formattedRate = this.props.isBuyForm ? converters.formatNumberByPrecision(triggerRate, 18) : triggerRate;
+          const rateComparison = converters.compareTwoNumber(item.min_rate, formattedRate) > 0;
           
           return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-                item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-                rateComparison;
+                item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN && rateComparison;
         } 
         
         return false;
