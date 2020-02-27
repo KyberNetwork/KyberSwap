@@ -71,7 +71,7 @@ export default class Portfolio extends React.Component {
         break;
       
       case "transfer":
-        path = "/transfer/" + + symbol.toLowerCase()
+        path = "/transfer/" + symbol.toLowerCase()
         break;
       default:
         break;
