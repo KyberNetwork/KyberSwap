@@ -123,7 +123,7 @@ export default class ApproveMaxModal extends React.Component {
     return (
       <div className="approve-modal">
         <div className="title">{this.props.translate("modal.approve_token") || "Approve Token"}</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
+        <div className="x" onClick={this.closeModal}>&times;</div>
         <div className="content with-overlap">
           <div className="row">
             <div>

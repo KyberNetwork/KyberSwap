@@ -123,7 +123,7 @@ export default class ImportByWallletConnect extends React.Component {
           <div className="wallet-connect-qr p-a-20px import-promocode">
               <div>
                   <div className="title">Scan QR code</div>
-                  <a className="x" onClick={(e) => {this.props.closeParentModal();this.closeModal()}}>&times;</a>
+                  <div className="x" onClick={(e) => {this.props.closeParentModal();this.closeModal()}}>&times;</div>
                   <div className="content with-overlap">
                       <div className="row">
                           <QRCode size={300} value={this.state.qrCode} />

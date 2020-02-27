@@ -484,9 +484,9 @@ export default class ConfirmModal extends React.Component {
 
         return (
             <div className="theme__text">
-                <a className="x" onClick={this.closeModal}>
+                <div className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
-                </a>
+                </div>
                 <div className="content-wrapper">
                     <div className="content with-overlap">
                         <div className="row">

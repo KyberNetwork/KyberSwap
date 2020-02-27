@@ -127,7 +127,7 @@ export default class ApproveMaxModal extends React.Component {
       <div className="approve-modal content-wrapper">
         <div>
           <div className="title">Approve Token</div>
-          <a className="x" onClick={this.closeModal}>&times;</a>
+          <div className="x" onClick={this.closeModal}>&times;</div>
           <div className="content with-overlap">
             <div className="row">
               <div>

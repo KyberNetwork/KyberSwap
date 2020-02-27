@@ -28,7 +28,7 @@ const TransactionLoadingView = (props) => {
             </div>
             }
           </div>
-          <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
+          <div className="x" onClick={() => props.makeNewTransaction()}>&times;</div>
           <div className="content with-overlap tx-loading">
               <div className="row">
                 <ul class="broadcast-steps">
@@ -133,7 +133,7 @@ const TransactionLoadingView = (props) => {
           </div>
           }
         </div>
-        <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
+        <div className="x" onClick={() => props.makeNewTransaction()}>&times;</div>
         <div className="content with-overlap theme__text-6">
           <div className="row">
             <div class="info tx-title theme__background-2">
