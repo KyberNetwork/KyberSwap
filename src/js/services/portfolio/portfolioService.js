@@ -56,7 +56,7 @@ function validateResultObject(result) {
 }
 
 function validateTransferTx(tx) {
-  return tx.transfer_token_symbol && tx.transfer_token_value && !isNaN(tx.transfer_token_value) &&
+  return tx.transfer_token_address && tx.transfer_token_value && !isNaN(tx.transfer_token_value) &&
     tx.transfer_from && tx.transfer_to && tx.timeStamp && tx.hash;
 }
 
@@ -66,7 +66,7 @@ function validateSwapTx(tx) {
 }
 
 function validateApproveTx(tx) {
-  return tx.approve_token_symbol && tx.approve_spender && tx.approve_allowance && !isNaN(tx.approve_allowance) && tx.timeStamp && tx.hash;
+  return tx.approve_token_address && tx.approve_spender && tx.approve_allowance && !isNaN(tx.approve_allowance) && tx.timeStamp && tx.hash;
 }
 
 function validateUndefinedTx(tx) {
