@@ -108,7 +108,7 @@ export default class LimitOrderTable extends Component {
     }];
 
     const {activeOrderTab} = this.props.limitOrder;
-    let columnWidths = [100, 110, 40, 110, 140, 140, 120];
+    let columnWidths = [100, 110, 40, 120, 140, 140, 120];
 
     if (activeOrderTab === "history") {
       desktopColumns.splice(desktopColumns.length-2, 0, {
@@ -121,7 +121,7 @@ export default class LimitOrderTable extends Component {
         maxWidth: 80
       });
   
-      columnWidths = [90, 90, 40, 80, 120, 120, 110, 120];
+      columnWidths = [90, 90, 40, 90, 120, 120, 110, 120];
     }
     
     if (this.props.screen === "mobile") {
