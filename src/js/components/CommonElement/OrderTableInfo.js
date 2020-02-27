@@ -4,38 +4,47 @@ import * as converters from "../../utils/converter";
 const OrderTableInfo = (props) => {
   var makeOrderInfo = (orders) => {
     return orders.map((item, index) => {
-      let fee = converters.formatNumber(converters.multiplyOfTwoNumber(item.fee, item.src_amount), 5);
-      let source = item.source === "WETH" ? "ETH*" : item.source
-      let dest = item.dest === "WETH" ? "ETH*" : item.dest;
-      const amount = converters.formatNumber(converters.multiplyOfTwoNumber(item.src_amount, item.min_rate), 6);
-      const formattedMinRate = converters.formatNumber(item.min_rate, 6);
-      const formattedSrcAmount = converters.formatNumber(item.src_amount, 6);
-
-      switch (item.side_trade) {
-        case "buy":
-          return (
-            <div key={index} className={"info"}>
-              <div>{`${source} / ${dest}`}</div>
-              <div>{+item.min_rate !== 0 ? converters.formatNumber(item.min_rate, 6) : "-"} {dest}</div>
-              <div>{converters.formatNumber(converters.divOfTwoNumber(item.src_amount, item.min_rate), 6)} {source}</div>
-              <div>{converters.formatNumber(item.src_amount, 6)} {dest}</div>
-              <div>{fee} {dest}</div>
-            </div>
-          );
-        case "sell":
-          let quote = dest;
-          let base = source;
-
-          return (
-            <div key={index} className={"info"}>
-              <div>{`${base} / ${quote}`}</div>
-              <div>{formattedMinRate} {quote}</div>
-              <div>{formattedSrcAmount} {base}</div>
-              <div>{amount} {quote}</div>
-              <div>{fee} {base}</div>
-            </div>
-          );
+      const fee = converters.formatNumber(converters.multiplyOfTwoNumber(item.fee, item.src_amount), 5);
+      const srcSymbol = item.source === "WETH" ? "ETH*" : item.source
+      const destSymbol = item.dest === "WETH" ? "ETH*" : item.dest;
+      const formattedRate = +item.min_rate !== 0 ? converters.formatNumber(item.min_rate, 6) : "-";
+      const total = converters.formatNumber(item.src_amount, 6);
+      const buyAmount = converters.formatNumber(converters.divOfTwoNumber(item.src_amount, item.min_rate), 6);
+      const sellAmount = converters.formatNumber(converters.multiplyOfTwoNumber(item.src_amount, item.min_rate), 6);
+      
+      if (item.side_trade === 'buy' && props.cancelModal) {
+        return (
+          <div key={index} className={"info"}>
+            <div>{`${destSymbol} / ${srcSymbol}`}</div>
+            <div>{converters.formatNumber(converters.divOfTwoNumber(1, item.min_rate), 6)} {destSymbol}</div>
+            <div>{sellAmount} {destSymbol}</div>
+            <div>{total} {srcSymbol}</div>
+            <div>{fee} {srcSymbol}</div>
+          </div>
+        );
+      } else if (item.side_trade === 'buy') {
+        return (
+          <div key={index} className={"info"}>
+            <div>{`${srcSymbol} / ${destSymbol}`}</div>
+            <div>{formattedRate} {destSymbol}</div>
+            <div>{buyAmount} {srcSymbol}</div>
+            <div>{total} {destSymbol}</div>
+            <div>{fee} {destSymbol}</div>
+          </div>
+        );
+      } else if (item.side_trade === 'sell') {
+        return (
+          <div key={index} className={"info"}>
+            <div>{`${srcSymbol} / ${destSymbol}`}</div>
+            <div>{formattedRate} {destSymbol}</div>
+            <div>{total} {srcSymbol}</div>
+            <div>{sellAmount} {destSymbol}</div>
+            <div>{fee} {srcSymbol}</div>
+          </div>
+        );
       }
+      
+      return '';
     })
   };
     

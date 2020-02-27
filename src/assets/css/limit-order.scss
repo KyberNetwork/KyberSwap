@@ -720,7 +720,6 @@
 }
 
 .limit-order-header {
-
   &__wrapper {
     display: flex;
     justify-content: space-between;
@@ -738,6 +737,7 @@
 
     &:last-child {
       width: 25px;
+      min-height: 58px;
     }
   }
 
@@ -1375,7 +1375,7 @@
   &__message {
     font-size: 16px;
     font-weight: normal;
-    margin-bottom: 23px;
+    margin-bottom: 20px;
     line-height: 1.5;
 
     &--text-small {
@@ -2280,7 +2280,7 @@
 }
 
 .order-table-info {
-  margin-top: 18px;
+  margin-top: 10px;
 
   &__header {
     border-radius: 3px;

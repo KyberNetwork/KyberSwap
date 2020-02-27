@@ -323,12 +323,10 @@ const INIT_LIMIT_ORDER_STATE = {
   isOpenAdvance: false,
   isSelectTokenBalance: false,
   swappingTime: 0,
-  isDisableSubmit: false,
   isAgreeForceSubmit: false,
   forceSubmitRate: 0,
   favorite_pairs_anonymous: [],
   currentQuote: "WETH",
-  sideTrade: "buy",
   mobileState: {
     showQuoteMarket: false
   }

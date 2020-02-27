@@ -58,7 +58,7 @@ export default class LimitOrderForm extends React.Component {
   }
   
   componentDidUpdate(prevProps) {
-    const isTokenChanged = this.props.baseSymbol !== prevProps.baseSymbol || this.props.quoteSymbol !== prevProps.quoteSymbol;
+    const isTokenChanged = this.props.limitOrder.isSelectToken !== prevProps.limitOrder.isSelectToken;
     const isFormTypeChanged = this.props.formType !== prevProps.formType;
     
     if (this.props.isBuyForm && this.props.limitOrder.triggerBuyRate !== prevProps.limitOrder.triggerBuyRate) {
@@ -80,15 +80,15 @@ export default class LimitOrderForm extends React.Component {
     });
   };
   
-  addPriceError = (error) => {
+  addPriceErrors = (errors) => {
     this.setState({
-      priceErrors: [...this.state.priceErrors, error]
+      priceErrors: errors
     })
   };
   
-  addAmountError = (error) => {
+  addAmountErrors = (errors) => {
     this.setState({
-      amountErrors: [...this.state.amountErrors, error]
+      amountErrors: errors
     })
   };
   
@@ -216,38 +216,9 @@ export default class LimitOrderForm extends React.Component {
   };
   
   toggleAgreeSubmit = () => {
-    const { isAgreeForceSubmit, isDisableSubmit } = this.props.limitOrder;
-    
-    if (!isAgreeForceSubmit) {
-      this.props.dispatch(limitOrderActions.setForceSubmitRate(this.state.rate));
-    }
-    
-    this.props.dispatch(limitOrderActions.setIsDisableSubmit(!isDisableSubmit));
-    this.props.dispatch(limitOrderActions.setAgreeForceSubmit(!isAgreeForceSubmit));
-  };
-  
-  getListWarningOrdersComp = () => {
-    if (!this.props.account) return [];
-    
-    let higherRateOrders = [];
-    const triggerRate = this.state.rate;
-    
-    if (this.props.limitOrder.filterMode === "client") {
-      higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-        const pairComparison = this.props.baseSymbol === item.source && this.props.quoteSymbol === item.dest;
-        
-        if (pairComparison) {
-          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
-          return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
-            item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
-            rateComparison;
-        }
-      });
-    } else {
-      higherRateOrders = this.props.limitOrder.relatedOrders;
-    }
-    
-    return higherRateOrders
+    this.props.dispatch(limitOrderActions.setForceSubmitRate(this.state.rate));
+    this.props.dispatch(limitOrderActions.setAgreeForceSubmit(true));
+    this.toggleCancelOrderModal(false);
   };
   
   resetToMarketRate = () => {
@@ -296,9 +267,10 @@ export default class LimitOrderForm extends React.Component {
   };
   
   render() {
+    const displayBaseSymbol = this.props.baseSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.baseSymbol;
     const displayQuoteSymbol = this.props.quoteSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.quoteSymbol;
     const displaySrcSymbol = this.props.srcTokenSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.srcTokenSymbol;
-    const marketText = this.props.translate(`limit_order.${this.props.formType}`, { symbol: this.props.baseSymbol });
+    const marketText = this.props.translate(`limit_order.${this.props.formType}`, { symbol: displayBaseSymbol });
     
     return (
       <div className={"limit-order-form theme__background-2"}>
@@ -358,7 +330,7 @@ export default class LimitOrderForm extends React.Component {
               onChange={this.handleSrcAmountChanged}
             />
           )}
-          <div className={"limit-order-form__symbol theme__text-3"}>{this.props.baseSymbol}</div>
+          <div className={"limit-order-form__symbol theme__text-3"}>{displayBaseSymbol}</div>
         </div>
   
         {this.renderErrorsAndCompareRate(this.state.amountErrors)}
@@ -401,8 +373,8 @@ export default class LimitOrderForm extends React.Component {
           isBuyForm={this.props.isBuyForm}
           availableBalanceTokens={this.props.modifiedTokens}
           getOpenOrderAmount={this.props.getOpenOrderAmount}
-          addPriceError={this.addPriceError}
-          addAmountError={this.addAmountError}
+          addPriceErrors={this.addPriceErrors}
+          addAmountErrors={this.addAmountErrors}
           clearErrors={this.clearErrors}
           toggleCancelOrderModal={this.toggleCancelOrderModal}
           marketText={marketText}
@@ -410,8 +382,12 @@ export default class LimitOrderForm extends React.Component {
         
         {this.state.cancelOrderModal && (
           <ForceCancelOrderModal
+            formType={this.props.formType}
+            baseSymbol={this.props.baseSymbol}
+            cancelOrderModal={this.state.cancelOrderModal}
+            toggleCancelOrderModal={this.toggleCancelOrderModal}
             toggleAgreeSubmit={this.toggleAgreeSubmit}
-            getListWarningOrdersComp={this.getListWarningOrdersComp}
+            orders={this.props.limitOrder.relatedOrders}
           />
         )}
       </div>

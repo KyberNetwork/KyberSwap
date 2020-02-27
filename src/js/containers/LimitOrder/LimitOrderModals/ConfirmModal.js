@@ -36,13 +36,14 @@ export default class ConfirmModal extends React.Component {
       isFinish: false,
       fee : constants.LIMIT_ORDER_CONFIG.maxFee,
       feeErr: ""
-    }
+    };
+    
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount = () => {
     this.fetchFee()
-  }
+  };
 
   async fetchFee() {
     var userAddr = this.props.account.address
@@ -70,9 +71,9 @@ export default class ConfirmModal extends React.Component {
       var concatTokenAddresses = converters.concatTokenAddresses(this.props.sourceToken.address, this.props.destToken.address)
       var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
       const biggerContractNonce = converters.calculateContractNonce(nonceContract, BLOCKCHAIN_INFO.kyberswapAddress);
-      var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
-      var validNonce = converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
-      return validNonce
+      const minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress);
+      
+      return converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
     } catch(err) {
       console.log(err)
       throw err

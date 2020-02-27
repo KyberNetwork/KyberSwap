@@ -108,6 +108,7 @@ export default class LimitOrderTable extends Component {
     }];
 
     const {activeOrderTab} = this.props.limitOrder;
+    let columnWidths = [110, 120, 60, 100, 150, 140, 120];
 
     if (activeOrderTab === "history") {
       desktopColumns.splice(desktopColumns.length-2, 0, {
@@ -115,28 +116,28 @@ export default class LimitOrderTable extends Component {
         Header: this.getHeader("received"),
         accessor: item => item,
         Cell: props => this.getReceiveCell(props.value),
-        headerClassName: "theme__background",
+        headerClassName: "cell-flex-end-header theme__background",
+        className: "cell-flex-end theme__text-4",
         maxWidth: 80
-      })
-    }
+      });
   
-    const widths = [110, 120, 60, 100, 150, 140, 120];
-    for (let i = 0; i < desktopColumns.length ; i++) {
-      desktopColumns[i]["width"] = widths[i]
+      columnWidths = [90, 100, 60, 80, 120, 120, 120, 120];
     }
     
-    const mobileColumns = [
-      {
-        id: "mobile-order",
-        Header: this.getHeader("mobile-order"),
-        accessor: item => item,
-        Cell: props => this.getOrderMobileTableCell(props.value),
-      }
-    ];
-
     if (this.props.screen === "mobile") {
-      return mobileColumns;
+      return [
+        {
+          id: "mobile-order",
+          Header: this.getHeader("mobile-order"),
+          accessor: item => item,
+          Cell: props => this.getOrderMobileTableCell(props.value),
+        }
+      ];
     } else {
+      for (let i = 0; i < desktopColumns.length ; i++) {
+        desktopColumns[i]["width"] = columnWidths[i]
+      }
+      
       return desktopColumns;
     }
   };
@@ -228,7 +229,7 @@ export default class LimitOrderTable extends Component {
   getAmountCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
     const amount = side_trade === "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
-    const unit = side_trade === "buy" ? dest.toUpperCase() : source.toUpperCase()
+    const unit = side_trade === "buy" ? dest : source
     return (
       <div>
         <span className="to-number-cell">{amount}</span>{' '}
@@ -253,7 +254,7 @@ export default class LimitOrderTable extends Component {
     const { receive, dest, status} = props;
     return (
       <div>
-        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest.toUpperCase()}` : "-"}</span>
+        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest}` : "-"}</span>
       </div>
     )
   };

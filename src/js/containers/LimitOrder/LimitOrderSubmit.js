@@ -69,23 +69,22 @@ export default class LimitOrderSubmit extends React.Component {
     const sourceAmount = parseFloat(this.props.sourceAmount);
     const isBuyForm = this.props.isBuyForm;
     const { isAgreeForceSubmit, errors } = this.props.limitOrder;
-    const { baseSymbol, quoteSymbol, sourceToken } = this.props;
+    const { baseSymbol, sourceToken, destToken } = this.props;
     const displaySrcSymbol = sourceToken.symbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : sourceToken.symbol;
     let isValidate = true;
     let amountErrors = [];
     let priceErrors = [];
-  
-  
+    
     if (!isUserLogin()) {
       const errorMessage = this.props.translate("error.login_to_submit_order") || "You must login to KyberSwap account to submit limit orders";
-      this.props.addPriceError(errorMessage);
+      this.props.addPriceErrors([errorMessage]);
       this.updateValidatingStatus(false);
       return;
     }
     
     if (!this.props.account) {
       const errorMessage = this.props.translate("error.import_to_submit_order") || "You must import your wallet to submit limit orders";
-      this.props.addPriceError(errorMessage);
+      this.props.addPriceErrors([errorMessage]);
       this.updateValidatingStatus(false);
       return;
     }
@@ -112,9 +111,10 @@ export default class LimitOrderSubmit extends React.Component {
       isValidate = false
     }
 
-    // check rate is zero
-    const triggerRate = isBuyForm ? converters.divOfTwoNumber(1, this.props.triggerRate) : this.props.triggerRate;
-    var triggerRateFloat = parseFloat(triggerRate)
+    const rawTriggerRate = this.props.triggerRate;
+    const triggerRate = isBuyForm ? converters.divOfTwoNumber(1, rawTriggerRate) : rawTriggerRate;
+    const triggerRateFloat = parseFloat(triggerRate)
+    
     if (isNaN(triggerRateFloat)) {
       priceErrors.push(this.props.translate("error.rate_is_not_number") || "Trigger rate is not a number")
       isValidate = false
@@ -126,8 +126,7 @@ export default class LimitOrderSubmit extends React.Component {
     if (initialOfferedRate) {
       const offeredRate = converters.toT(initialOfferedRate);
       const formattedOfferedRate = isBuyForm ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
-      const triggerRate = this.props.triggerRate;
-      const percentChange = converters.percentChange(triggerRate, formattedOfferedRate);
+      const percentChange = converters.percentChange(rawTriggerRate, formattedOfferedRate);
       const maxPercentTriggerRate = BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate;
       const minPercentBuyTriggerRate = BLOCKCHAIN_INFO.limitOrder.maxPercentTriggerRate / 10;
 
@@ -152,18 +151,18 @@ export default class LimitOrderSubmit extends React.Component {
     }
 
     if (amountErrors.length > 0) {
-      this.props.addAmountError(amountErrors);
-    } else {
-      this.props.clearErrors();
+      this.props.addAmountErrors(amountErrors);
     }
 
     if (priceErrors.length > 0) {
-      this.props.addPriceError(priceErrors);
+      this.props.addPriceErrors(priceErrors);
     }
 
     if (!isValidate) {
       this.updateValidatingStatus(false);
       return;
+    } else {
+      this.props.clearErrors();
     }
 
     // check address is eligible
@@ -196,10 +195,9 @@ export default class LimitOrderSubmit extends React.Component {
       this.updateValidatingStatus(false);
       return;
     }
-    
+
     // If user agree force submit order
-    if (isAgreeForceSubmit && triggerRate === this.props.limitOrder.forceSubmitRate) {
-      this.props.toggleCancelOrderModal(false);
+    if (isAgreeForceSubmit && rawTriggerRate === this.props.limitOrder.forceSubmitRate) {
       await this.findPathOrder();
       this.updateValidatingStatus(false);
       return;
@@ -210,10 +208,11 @@ export default class LimitOrderSubmit extends React.Component {
 
     if (this.props.limitOrder.filterMode === "client") {
       higherRateOrders = this.props.limitOrder.listOrder.filter(item => {
-        const pairComparison = baseSymbol === item.source && quoteSymbol === item.dest;
-
-        if (pairComparison) {
-          const rateComparison = converters.compareTwoNumber(item.min_rate, triggerRate) > 0;
+        const isSamePair = sourceToken.symbol === item.source && destToken.symbol === item.dest;
+        
+        if (isSamePair) {
+          const rateComparison = converters.compareTwoNumber(item.min_rate, rawTriggerRate) > 0;
+          
           return item.user_address.toLowerCase() === this.props.account.address.toLowerCase() &&
                 item.status === constants.LIMIT_ORDER_CONFIG.status.OPEN &&
                 rateComparison;
@@ -228,20 +227,12 @@ export default class LimitOrderSubmit extends React.Component {
         triggerRate,
         this.props.account.address
       );
-
-      this.props.dispatch(limitOrderActions.setRelatedOrders(higherRateOrders));
     }
-
+    
     if (higherRateOrders.length > 0) {
+      this.props.dispatch(limitOrderActions.setRelatedOrders(higherRateOrders));
+  
       this.props.toggleCancelOrderModal(true);
-      
-      /**
-       * Check if user agree to force submit order
-       * If not, disable submit button
-       */
-      if (!isAgreeForceSubmit) {
-        this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
-      }
   
       /**
        * Check if current user input rate is smaller than previous saved force submit rate
@@ -249,13 +240,11 @@ export default class LimitOrderSubmit extends React.Component {
        */
       if (triggerRate !== this.props.limitOrder.forceSubmitRate) {
         this.props.dispatch(limitOrderActions.setAgreeForceSubmit(false));
-        this.props.dispatch(limitOrderActions.setIsDisableSubmit(true));
       }
     } else {
-      this.props.toggleCancelOrderModal(false);
       await this.findPathOrder()
     }
-  
+
     this.updateValidatingStatus(false);
   }
 
@@ -322,7 +311,7 @@ export default class LimitOrderSubmit extends React.Component {
         orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.approveMax);
       } else if (allowance != 0 && allowance < Math.pow(10,28)) {
         if (!limit_order_tx_approve_zero) {
-          orderPath.push([constants.LIMIT_ORDER_CONFIG.orderPath.approveZero, constants.LIMIT_ORDER_CONFIG.orderPath.approveMax]);
+          orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.approveZero, constants.LIMIT_ORDER_CONFIG.orderPath.approveMax);
         } else if (limit_order_tx_approve_zero && !limit_order_tx_approve_max) {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.approveMax);
         }
@@ -346,7 +335,7 @@ export default class LimitOrderSubmit extends React.Component {
         });
       } else {
         const message = this.props.translate("error.eth_balance_not_enough_for_fee") || "Your eth balance is not enough for transaction fee";
-        this.props.addAmountError(message);
+        this.props.addAmountErrors([message]);
       }
     } catch (err) {
       console.log(err)

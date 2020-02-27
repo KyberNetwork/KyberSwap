@@ -1,14 +1,7 @@
-export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
-  }
-}
-
-export function setSideTrade(sideTrade) {
-  return {
-    type: "LIMIT_ORDER.SET_SIDE_TRADE",
-    payload: sideTrade
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken }
   }
 }
 
@@ -234,13 +227,6 @@ export function setRelatedOrders(orders) {
   return {
     type: "LIMIT_ORDER.SET_RELATED_ORDERS",
     payload: { orders }
-  }
-}
-
-export function setIsDisableSubmit(isDisable) {
-  return { 
-    type: "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT",
-    payload: { isDisable }
   }
 }
 

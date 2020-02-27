@@ -236,8 +236,8 @@ export default class WrapETHModal extends React.Component {
               </div>
               <div className="overlap theme__background-2">
                   <div className="input-confirm grid-x input-confirm--approve">
-                      <a className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</a>
-                      <a className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</a>
+                      <div className={"button process-submit cancel-process"} onClick={this.closeModal}>{this.props.translate("modal.cancel") || "Cancel"}</div>
+                      <div className={"button process-submit next"} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.convert") || "Convert"}</div>
                   </div>
               </div>
           </div>

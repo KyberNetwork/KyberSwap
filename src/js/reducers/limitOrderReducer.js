@@ -186,19 +186,12 @@ const limitOrder = (state = initState, action) => {
     case "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE": {
       const { pendingBalances, pendingTxs } = action.payload;
       newState.pendingBalances = JSON.parse(JSON.stringify(pendingBalances));
-      // console.log(pendingTxs)
       newState.pendingTxs = JSON.parse(JSON.stringify(pendingTxs));
-      // console.log(newState.pendingTxs)
       return newState;
     }
     case "LIMIT_ORDER.SET_RELATED_ORDERS": {
       const { orders } = action.payload;
       newState.relatedOrders = JSON.parse(JSON.stringify(orders));
-      return newState;
-    }
-    case "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT": {
-      const { isDisable } = action.payload;
-      newState.isDisableSubmit = isDisable;
       return newState;
     }
     case "LIMIT_ORDER.SET_AGREE_FORCE_SUBMIT": {
@@ -250,11 +243,6 @@ const limitOrder = (state = initState, action) => {
       }
       newState[field] = newState[field].slice()
       return newState; 
-    }
-
-    case 'LIMIT_ORDER.SET_SIDE_TRADE': {
-      newState.sideTrade = action.payload
-      return newState
     }
     case 'LIMIT_ORDER.TOOGLE_QUOTE_MARKET':{
       newState.mobileState.showQuoteMarket = action.payload

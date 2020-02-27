@@ -137,7 +137,12 @@ $divider-color: darken($title-background-color, 5);
   }
 
   a {
+    font-size: 14px;
     color: #EF8102;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     &.x {
       display: block;
@@ -180,7 +185,8 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .content {
-    .message-waiting {
+    .message-waiting,
+    .message-error {
       padding: 15px 45px;
       font-size: 14px;
 
@@ -756,6 +762,7 @@ $divider-color: darken($title-background-color, 5);
       @include screen-max-width(medium){
         margin-top: 20px;
       }
+
       .font-w-b{
         font-size: 1rem;
         line-height: 1.03;
@@ -880,15 +887,16 @@ $divider-color: darken($title-background-color, 5);
     }
   }
 
-  .approve-modal{
-    .title{
-      padding-left: 50px;
+  .approve-modal {
+    .title {
       margin-top: 40px;
       text-align: left;
+
       @include screen-max-width(medium) {
         padding-left: 20px;
       }
     }
+
     .message{
       font-size: 14px;
       margin: 1rem 45px 25px;

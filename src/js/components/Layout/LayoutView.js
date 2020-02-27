@@ -39,16 +39,16 @@ function getAllPathLimitOrderToken(listToken){
     if (listToken[key].sp_limit_order && (!lodListingTime || now >= lodListingTime)) {
       if (listToken[key].is_quote) {
         quoteTokens.push(key);
-      } else {
-        baseTokens.push(key);
       }
+      
+      baseTokens.push(key);
     }
   });
-
-  const baseTokenPath = getValidatedTokenPath(baseTokens);
-  const quoteTokenPath = getValidatedTokenPath(quoteTokens);
   
-  return { baseTokenPath, quoteTokenPath }
+  return {
+    baseTokenPath: getValidatedTokenPath(baseTokens),
+    quoteTokenPath: getValidatedTokenPath(quoteTokens)
+  }
 }
 
 function getValidatedTokenPath(tokens) {
@@ -68,12 +68,12 @@ function getValidatedTokenPath(tokens) {
 }
 
 const LayoutView = (props) => {
-  var listToken = getAllPathToken(props.tokens)
-  var { baseTokenPath, quoteTokenPath } = getAllPathLimitOrderToken(props.tokens)
+  const listToken = getAllPathToken(props.tokens)
+  const { baseTokenPath, quoteTokenPath } = getAllPathLimitOrderToken(props.tokens);
 
-  var defaultPathExchange = constants.BASE_HOST + "/swap/eth-knc"
-  var defaultPathTransfer = constants.BASE_HOST + "/transfer/eth"
-  var defaultPathLimitOrder = constants.BASE_HOST + "/" + constants.LIMIT_ORDER_CONFIG.path + "/knc-weth"
+  let defaultPathExchange = constants.BASE_HOST + "/swap/eth-knc"
+  let defaultPathTransfer = constants.BASE_HOST + "/transfer/eth"
+  let defaultPathLimitOrder = constants.BASE_HOST + "/" + constants.LIMIT_ORDER_CONFIG.path + "/knc-weth"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constants.LIST_PARAMS_SUPPORTED)
   defaultPathTransfer = common.getPath(defaultPathTransfer, constants.LIST_PARAMS_SUPPORTED)

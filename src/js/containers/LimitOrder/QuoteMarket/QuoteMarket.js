@@ -75,7 +75,7 @@ export default class QuoteMarket extends React.Component{
       return sortQuotePriority(tokens, first.replace("WETH", "ETH"), second.replace("WETH", "ETH"));
     });
 
-    const result = quotes.reduce((res, quote) => {
+    return quotes.reduce((res, quote) => {
         res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"] && key !== "ETH")).filter(key => {
           // if quote A priority < other quote priorities, remove other quotes from list token of quote A
           const quotePriority = tokens[quote].quote_priority;
@@ -85,30 +85,28 @@ export default class QuoteMarket extends React.Component{
             return false;
           }
           return true;
-        })
-          .reduce((vt, key) =>{
-            const pair = key+"_"+quote
-            const pairReversed = `${quote}_${key}`
-            const isExisted = (pairReversed in pairs)
-            let volume
-            if (isExisted){
-              volume = converters.sumOfTwoNumber(pairs[pairReversed].volume, pairReversed.includes("WETH") ? pairs[pairReversed.replace("WETH", "ETH")].volume : 0)
-              let round = 8 - converters.formatNumber(volume,0,'').toString().length
-              round = round < 0 ? 0 : round
-              volume = converters.formatNumber(volume, round, '')
-            }
-            return key == quote ? vt : vt.concat({
-                id: pair,
-                base: key, quote: quote,
-                price: (isExisted ? converters.roundingRateNumber(pairs[pairReversed].buy_price) : "-"),
-                is_favorite: fav.includes(pair),
-                volume: isExisted ? volume : "-",
-                change: (isExisted ? pairs[pairReversed].change : "-" )
-            });
-          }, []); 
-        return res
+        }).reduce((vt, key) => {
+          const pair = key+"_"+quote
+          const pairReversed = `${quote}_${key}`
+          const isExisted = (pairReversed in pairs)
+          let volume
+          if (isExisted){
+            volume = converters.sumOfTwoNumber(pairs[pairReversed].volume, pairReversed.includes("WETH") ? pairs[pairReversed.replace("WETH", "ETH")].volume : 0)
+            let round = 8 - converters.formatNumber(volume,0,'').toString().length
+            round = round < 0 ? 0 : round
+            volume = converters.formatNumber(volume, round, '')
+          }
+          return key == quote ? vt : vt.concat({
+            id: pair,
+            base: key, quote: quote,
+            price: (isExisted ? converters.roundingRateNumber(pairs[pairReversed].buy_price) : "-"),
+            is_favorite: fav.includes(pair),
+            volume: isExisted ? volume : "-",
+            change: (isExisted ? pairs[pairReversed].change : "-" )
+          });
+        }, []);
+      return res
       },{});
-    return result;
   }
 
   renderTh = () => {
@@ -142,8 +140,6 @@ export default class QuoteMarket extends React.Component{
   };
 
   onPairClick = (base, quote) => {
-    quote = quote === "ETH" ? "WETH" : quote;
-    
     this.props.selectSourceAndDestToken(base, quote);
     this.props.global.analytics.callTrack("trackLimitOrderClickSelectPair", base + "/" + quote);
     
