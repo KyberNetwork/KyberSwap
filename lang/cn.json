@@ -452,7 +452,7 @@
     "received": "收到",
     "login_buy": "Login to Buy",
     "login_sell": "Login to Sell",
-    "free_fee": "Gas free swaps (No fees) if you hold 2000 KNC in your wallet",
+    "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
     "hold_knc": "Hold 2000 KNC now"
   },
   "portfolio": {
