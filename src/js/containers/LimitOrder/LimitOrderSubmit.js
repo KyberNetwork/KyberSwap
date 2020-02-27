@@ -316,8 +316,8 @@ export default class LimitOrderSubmit extends React.Component {
           orderPath.push(constants.LIMIT_ORDER_CONFIG.orderPath.approveMax);
         }
       }
-
-      if (this.props.quoteSymbol === 'WETH' && this.props.isBuyForm) {
+  
+      if (this.props.sourceToken.symbol === 'WETH') {
         const sourceAmount = this.getSourceAmount();
         const WETHBalance = this.getAvailableWethBalance();
 
