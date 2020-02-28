@@ -93,7 +93,7 @@ const AccountBalanceLayout = (props) => {
           </div>
 
           {!props.isOnMobile && <div class="account-balance__item-hover-overlay">
-            <button className="buy" onClick={(e) => props.selectBalanceButton("buy", token.symbol)}>BUY</button>
+            {token.symbol !== "PT" && <button className="buy" onClick={(e) => props.selectBalanceButton("buy", token.symbol)}>BUY</button>}
             <button className="sell" onClick={(e) => props.selectBalanceButton("sell", token.symbol)}>SELL</button>
             {/* <button className="transfer" onClick={(e) => props.selectBalanceButton("transfer", token.symbol)}>TRANSFER</button> */}
           </div>}
