@@ -63,11 +63,19 @@ export default class Portfolio extends React.Component {
 
     switch (type) {
       case "buy":
-        path = "/swap/eth-knc"
+        if (symbol === "ETH") {
+          path = "/swap/dai-eth"
+        } else {
+          path = "/swap/eth-" + symbol.toLowerCase()
+        }
         break;
       
       case "sell":
-        path = "/swap/" + symbol.toLowerCase() + "-eth"
+        if (symbol === "ETH") {
+          path = "/swap/eth-knc"
+        } else {
+          path = "/swap/" + symbol.toLowerCase() + "-eth"
+        }
         break;
       
       case "transfer":
