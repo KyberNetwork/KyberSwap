@@ -6,6 +6,10 @@ import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
 import { SortableComponent } from "../CommonElement"
 
 const AccountBalanceLayout = (props) => {
+  const isPortfolio = props.screen === 'portfolio';
+  const allBalances = getBalances();
+  const isHideAllInfo = props.hideZeroBalance && allBalances === false;
+
   function get24ChangeClass(change, isValidRate) {
     if (isValidRate && change > 0) {
       return 'account-balance__token-row--positive';
@@ -15,25 +19,21 @@ const AccountBalanceLayout = (props) => {
       return ''
     }
   }
-  
+
   function get24ChangeValue(sortType, tokenSymbol, isValidRate) {
     if (sortType === 'ETH') {
       let changeByETH = props.getChangeByETH(tokenSymbol);
       return <div className={`account-balance__token-row ${get24ChangeClass(changeByETH, isValidRate)}`}>{(isValidRate) ? `${changeByETH}%` : '---'}</div>
     }
-    
+
     const changeByUSD = props.getChangeByUSD(tokenSymbol);
     return <div className={`account-balance__token-row ${get24ChangeClass(changeByUSD, isValidRate)}`}>{(isValidRate) ? `${changeByUSD}%` : '---'}</div>
   }
 
-  const allBalances = getBalances();
-  const isPortfolio = props.screen === 'portfolio';
-  const isHideAllInfo = props.hideZeroBalance && allBalances === false;
-  
   function getBalances() {
     const tokens = props.getCustomizedTokens();
     let isEmpty = true;
-    
+
     const allBalances = tokens.map(token => {
       var balance = converts.toT(token.balance, token.decimals)
       var searchWord = props.searchWord.toLowerCase()
@@ -44,31 +44,31 @@ const AccountBalanceLayout = (props) => {
       const balanceInETH = converts.formatNumber(token.balanceInETH || 0, 6);
       const balanceInUSD = converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2);
       const hideZeroBalance = props.hideZeroBalance && (noBalance || balanceInETH < MINIMUM_DISPLAY_BALANCE);
-      
+
       if (!symbolL.includes(searchWord) || hideZeroBalance) return null;
       isEmpty = false;
-  
+
       if (token.symbol === props.sourceActive) classBalance += " active";
-      
+
       if (props.isLimitOrderTab && (!token.sp_limit_order || !props.isValidPriority(token))) {
         classBalance += " disabled unclickable"
       } else if (noBalance) {
         classBalance += " disabled"
       }
-      
+
       if ((props.isFixedSourceToken && props.screen === "swap") || (token.symbol === "PT" && props.screen === "transfer")) {
         classBalance += " deactivated";
       }
-    
+
       return (
         <div className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
           <div
             key={token.symbol}
-            {...(!classBalance.includes('unclickable') && {onClick: (e) => props.selectBalance( props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol))})}
+            {...(!classBalance.includes('unclickable') && { onClick: (e) => props.selectBalance(props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol)) })}
             className={"account-balance__token-item" + classBalance}
           >
             <div className={"account-balance__token-row account-balance__token-info"}>
-              <img src={"https://files.kyber.network/DesignAssets/tokens/"+(token.substituteImage ? token.substituteImage : token.symbol).toLowerCase()+".svg"} />
+              <img src={"https://files.kyber.network/DesignAssets/tokens/" + (token.substituteImage ? token.substituteImage : token.symbol).toLowerCase() + ".svg"} />
               <div>
                 <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
                 <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
@@ -83,28 +83,28 @@ const AccountBalanceLayout = (props) => {
                   {props.hideZeroBalance && (
                     <span>---</span>
                   )}
-                
+
                   {!props.hideZeroBalance && (
                     <span className="error">maintenance</span>
                   )}
                 </div>)
-            }  
+            }
             {props.show24hChange && get24ChangeValue(props.sortType, token.symbol, isValidRate)}
           </div>
 
-          <div class="account-balance__item-hover-overlay">
+          {!props.isOnMobile && <div class="account-balance__item-hover-overlay">
             <button className="buy" onClick={(e) => props.selectBalanceButton("buy", token.symbol)}>BUY</button>
             <button className="sell" onClick={(e) => props.selectBalanceButton("sell", token.symbol)}>SELL</button>
-            <button className="transfer" onClick={(e) => props.selectBalanceButton("transfer", token.symbol)}>TRANSFER</button>
-          </div>
+            {/* <button className="transfer" onClick={(e) => props.selectBalanceButton("transfer", token.symbol)}>TRANSFER</button> */}
+          </div>}
         </div>
       )
     });
-    
+
     return !isEmpty || props.searchWord ? allBalances : false;
   }
-  
-  
+
+
 
   return (
     <div className={`account-balance common__slide-up account-balance--${props.screen}`}>
@@ -118,7 +118,7 @@ const AccountBalanceLayout = (props) => {
                     <div className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</div>
                     <div>
                       <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
-                         onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
+                        onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
                         {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
                       </a>
                       <span className="account-balance__reimport" onClick={props.openReImport}>
@@ -140,7 +140,7 @@ const AccountBalanceLayout = (props) => {
                 {props.hideZeroBalance && (
                   <div className="account-balance__text-panel">All Tokens</div>
                 )}
-                
+
                 {!isHideAllInfo && (
                   <div className="account-balance__content-search-container">
                     <input
@@ -154,7 +154,7 @@ const AccountBalanceLayout = (props) => {
                   </div>
                 )}
               </div>
-  
+
               {!isHideAllInfo && (
                 <div className="account-balance__sort-panel theme__background-4">
                   <div>

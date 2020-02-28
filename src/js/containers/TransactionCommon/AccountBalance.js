@@ -20,7 +20,8 @@ import * as converts from "../../utils/converter";
     sourceActive: props.sourceActive,
     isFixedSourceToken: isFixedSourceToken,
     global: store.global,
-    limitOrder : store.limitOrder
+    limitOrder : store.limitOrder,
+    isOnMobile: store.global.isOnMobile
   }
 })
 export default class AccountBalance extends React.Component {
@@ -181,6 +182,7 @@ export default class AccountBalance extends React.Component {
         isValidPriority={this.isValidPriority}
         getChangeByETH={this.getChangeByETH}
         getChangeByUSD={this.getChangeByUSD}
+        isOnMobile={this.props.isOnMobile}
       />
     )
   }
