@@ -6,6 +6,10 @@
                 "type": "cached"
             },
             {
+                "endPoint": "https://production-cache.kyber.network/node",
+                "type": "prune"
+            },
+            {
                 "endPoint": "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
                 "type": "prune"
             },
@@ -20,9 +24,9 @@
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
-    "min_accept_amount": 0.5,
-    "api_tokens": "https://staging-limit-order-api.knstats.com/internal/currencies",
-    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
+    "min_accept_amount": 0.001,
+    "api_tokens": "https://api.kyber.network/internal/currencies",
+    "api_tokens_integrate": "https://api.kyber.network/internal/currencies",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
@@ -153,13 +157,6 @@
             "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
             "decimals": 18
         },
-        "ENG": {
-            "symbol": "ENG",
-            "name": "Enigma",
-            "address": "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4",
-            "decimals": 8,
-            "sp_limit_order": true
-        },
         "BQX": {
             "symbol": "BQX",
             "name": "Ethos",
@@ -259,6 +256,7 @@
             "name": "Bancor",
             "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
             "decimals": 18,
+            "gasLimit": "650000",
             "sp_limit_order": true
         },
         "TUSD": {
@@ -318,6 +316,7 @@
             "name": "Republic",
             "address": "0x408e41876cccdc0f92210600ef50372656052a38",
             "decimals": 18,
+            "gasLimit": "650000",
             "sp_limit_order": true
         },
         "QKC": {
@@ -511,7 +510,8 @@
             "name": "Tether USD",
             "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
             "decimals": 6,
-            "listing_time": 1565960400
+            "listing_time": 1565960400,
+            "gasLimit": "650000"
         },
         "SNX": {
             "symbol": "SNX",
@@ -577,6 +577,74 @@
             "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
             "decimals": 18,
             "listing_time": 1575896400
+        },
+        "USDS": {
+            "symbol": "USDS",
+            "name": "StableUSD",
+            "address": "0xa4bdb11dc0a2bec88d24a3aa1e6bb17201112ebe",
+            "decimals": 6,
+            "listing_time": 1576328400
+        },
+        "NEXXO": {
+            "symbol": "NEXXO",
+            "name": "Nexxo",
+            "address": "0x278a83b64c3e3e1139f8e8a52d96360ca3c69a3d",
+            "decimals": 18,
+            "listing_time": 1576846800
+        },
+        "EKG": {
+            "symbol": "EKG",
+            "name": "Ekon Gold",
+            "address": "0x6a9b3e36436b7abde8c4e2e2a98ea40455e615cf",
+            "decimals": 18,
+            "listing_time": 1577970000
+        },
+        "ANT": {
+            "symbol": "ANT",
+            "name": "Aragon",
+            "address": "0x960b236a07cf122663c4303350609a66a7b288c0",
+            "decimals": 18,
+            "listing_time": 1578488400,
+            "gasLimit": "520000"
+        },
+        "GDC": {
+            "symbol": "GDC",
+            "name": "Global Digital Content",
+            "address": "0x301c755ba0fca00b1923768fffb3df7f4e63af31",
+            "decimals": 18,
+            "listing_time": 1579611600,
+            "gasLimit": "598000"
+        },
+        "AMPL": {
+            "symbol": "AMPL",
+            "name": "Ampleforth",
+            "address": "0xd46ba6d942050d489dbd938a2c909a5d5039a161",
+            "decimals": 9
+        },
+        "TKX": {
+            "symbol": "TKX",
+            "name": "Tokenize Xchange",
+            "address": "0x667102bd3413bfeaa3dffb48fa8288819e480a88",
+            "decimals": 8
+        },
+        "MET": {
+            "symbol": "MET",
+            "name": "Metronome",
+            "address": "0xa3d58c4e56fedcae3a7c43a725aee9a71f0ece4e",
+            "decimals": 18
+        },
+        "MFG": {
+            "symbol": "MFG",
+            "name": "SyncFab",
+            "address": "0x6710c63432a2de02954fc0f851db07146a6c0312",
+            "decimals": 18,
+            "gasLimit": "585000"
+        },
+        "FXC": {
+            "symbol": "FXC",
+            "name": "Flexacoin",
+            "address": "0x4a57e687b9126435a9b19e4a802113e266adebde",
+            "decimals": 18
         }
     },
     "ethScanUrl": "https://etherscan.io/",
@@ -588,5 +656,5 @@
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "networkId": 1,
     "chainName": "Mainnet",
-    "tracker": "https://dev-api.knstats.com"
+    "tracker": "https://api.kyber.network"
 }
