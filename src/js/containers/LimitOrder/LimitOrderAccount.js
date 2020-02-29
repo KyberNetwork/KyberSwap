@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
-import { ImportAccount } from "../ImportAccount";
 import { AccountBalance } from "../TransactionCommon";
 import * as limitOrderActions from "../../actions/limitOrderActions";
 import * as globalActions from "../../actions/globalActions";
@@ -30,10 +29,6 @@ import ToggleableMenu from "../CommonElements/TogglableMenu.js"
   };
 })
 export default class LimitOrderAccount extends React.Component {
-  constructor() {
-    super();
-  }
-
   selectTokenBalance = () => {
     this.props.dispatch(limitOrderActions.setIsSelectTokenBalance(true));
   };
@@ -65,40 +60,29 @@ export default class LimitOrderAccount extends React.Component {
     var totalFee = converters.totalFee(this.props.limitOrder.gasPrice, totalGas)
     return totalFee
   }
-
+  
   selectToken = (base) => {
     const tokens = this.getFilteredTokens();
-    const {sideTrade}  = this.props.limitOrder
-    if (sideTrade == "buy") { //change dest
-      this.props.selectDestToken(base)
-      const srcToken = tokens.find(token => {
-        return token.symbol === this.props.limitOrder.sourceTokenSymbol;
-      });
-      const destToken = tokens.find(token => {
-        return token.symbol === base;
-      });
-      var destBalance = destToken.balance;
-
-      var destDecimal = this.props.tokens[base].decimals
-      this.props.dispatch(limitOrderActions.inputChange('dest', converters.toT(destBalance, destDecimal), srcToken.decimals, destDecimal))
-      this.props.dispatch(limitOrderActions.focusInput('dest'));
-    }else { //change source
-      this.props.selectSourceToken(base)
-      const srcToken = tokens.find(token => {
-        return token.symbol === base;
-      });
-      const destToken = tokens.find(token => {
-        return token.symbol === this.props.limitOrder.destTokenSymbol;
-      });
-      var sourceBalance = srcToken.balance;
-
-      var sourceDecimal = this.props.tokens[base].decimals
-      this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
-      this.props.dispatch(limitOrderActions.focusInput('source'));
-    }
+    
+    this.props.selectSourceToken(base);
+    
+    const srcToken = tokens.find(token => {
+      return token.symbol === base;
+    });
+    const destToken = tokens.find(token => {
+      return token.symbol === this.props.limitOrder.destTokenSymbol;
+    });
+    
+    var sourceBalance = srcToken.balance;
+    var sourceDecimal = this.props.tokens[base].decimals;
+    
+    this.props.dispatch(limitOrderActions.inputChange('source', converters.toT(sourceBalance, sourceDecimal), sourceDecimal, destToken.decimals))
+    this.props.dispatch(limitOrderActions.focusInput('source'));
+    
     this.selectTokenBalance();
+    
     this.props.global.analytics.callTrack("trackClickToken", base, "limit_order");
-  }
+  };
 
   getFilteredTokens = (orderByDesc = true, itemNumber = false) => {
     
@@ -133,7 +117,7 @@ export default class LimitOrderAccount extends React.Component {
             <AccountBalance
               isLimitOrderTab={true}
               getFilteredTokens={this.getFilteredTokens}
-              sourceActive={this.props.limitOrder.sideTrade == "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol}
+              sourceActive={this.props.limitOrder.sourceTokenSymbol}
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.walletName}
               screen="limit_order"

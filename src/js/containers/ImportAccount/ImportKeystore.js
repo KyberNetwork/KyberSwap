@@ -83,7 +83,7 @@ export default class ImportKeystore extends React.Component {
             {this.props.translate("modal.keystore_title") || "Type password to unlock your keystore"}
           </div>
         </div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
+        <div className="x" onClick={this.closeModal}>&times;</div>
         <div className="import-modal__body">
             <div className="input-reveal">
               <input 

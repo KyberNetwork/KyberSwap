@@ -77,11 +77,11 @@ export default class PortfolioOverview extends React.Component {
           contentLabel="advance modal"
           content={(
             <div className="reimport-modal p-a-20px">
-              <a className="x" onClick={this.closeReImportModal}>&times;</a>
+              <div className="x" onClick={this.closeReImportModal}>&times;</div>
               <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
               <div className="content">
-                <a className="button confirm-btn" onClick={this.props.reImportWallet}>{this.props.translate("import.yes") || "Yes"}</a>
-                <a className="button cancel-btn" onClick={this.closeReImportModal}>{this.props.translate("import.no") || "No"}</a>
+                <div className="button confirm-btn" onClick={this.props.reImportWallet}>{this.props.translate("import.yes") || "Yes"}</div>
+                <div className="button cancel-btn" onClick={this.closeReImportModal}>{this.props.translate("import.no") || "No"}</div>
               </div>
             </div>
           )}

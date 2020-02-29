@@ -35,7 +35,7 @@ export default class ConfirmModal extends React.Component {
             restrictError: '',
             isFetchGas: true,
             isFetchRate: true,
-            gasLimit: 0,            
+            gasLimit: 0,
             slippageRate: 0,
             expectedRate: 0,
             startTime: 0,
@@ -143,7 +143,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     async getGasSwap() {
-        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()        
+        const { ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol } = this.getFormParams()
         const gasPrice = this.props.exchange.gasPrice;
         const ethBalance = this.props.account.balance;
         let gas = await this.getMaxGasExchange();
@@ -307,23 +307,22 @@ export default class ConfirmModal extends React.Component {
 
     msgHtml = () => {
         if (this.state.isConfirmingTx && this.props.account.type !== 'privateKey') {
-            return <div className="message-waiting theme__text">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
-        } else {
-            return ""
+            return <div className="message-waiting theme__text common__slide-up">{this.props.translate("modal.waiting_for_confirmation") || "Waiting for confirmation from your wallet"}</div>
         }
+        
+        return "";
     }
 
     errorHtml = () => {
         if (this.state.restrictError || this.state.err) {
-            let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
             return (
-                <div className={`modal-error ${metaMaskClass}`}>
+                <div className={`modal-error message-error common__slide-up`}>
                     {this.state.restrictError ? this.state.restrictError : this.state.err}
                 </div>
             )
-        } else {
-            return ""
         }
+        
+        return ""
     }
 
     closeModal = () => {
@@ -485,9 +484,9 @@ export default class ConfirmModal extends React.Component {
 
         return (
             <div className="theme__text">
-                <a className="x" onClick={this.closeModal}>
+                <div className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
-                </a>
+                </div>
                 <div className="content-wrapper">
                     <div className="content with-overlap">
                         <div className="row">
@@ -517,10 +516,10 @@ export default class ConfirmModal extends React.Component {
                     </div>
                     <div className="overlap theme__background-2">
                         <div className="input-confirm grid-x">
-                            <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
+                            <div className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}
-                            </a>
-                            <a className={"button process-submit " + (this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</a>
+                            </div>
+                            <div className={"button process-submit " + (this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</div>
                         </div>
                     </div>
                 </div>

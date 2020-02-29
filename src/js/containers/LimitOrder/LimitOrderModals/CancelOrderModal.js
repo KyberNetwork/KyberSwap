@@ -84,8 +84,8 @@ export default class CancelOrderModal extends Component {
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
         <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.cancel_order", {sideTrade: ["buy", "sell"].includes(order.side_trade) ? (order.side_trade + " ") : "" , symbol: baseTokenSymbol}) ||
-            `Cancel ${["buy", "sell"].includes(order.side_trade) ? (order.side_trade + " ") : ""}${baseTokenSymbol} Order`}
+            {this.props.translate("modal.cancel_order", { sideTrade: order.side_trade, symbol: baseTokenSymbol }) ||
+            `Cancel ${order.side_trade} ${baseTokenSymbol} Order`}
           </div>
           <div className="limit-order-modal__close" onClick={this.closeModal}>
             <div className="limit-order-modal__close-wrapper"/>

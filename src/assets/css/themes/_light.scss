@@ -92,6 +92,9 @@
   .theme__background-11 {
     background-color: white;
   }
+  .theme__background-12 {
+    background-color: white;
+  }
 
   .theme__border {
     border-color: $grey-light;
@@ -201,7 +204,7 @@
     color: $light-color-2;
 
     &:hover {
-      background: $light-color-3;
+      background: $light-color-1;
     }
   }
 

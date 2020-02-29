@@ -5,7 +5,8 @@
   padding: 25px 45px;
 
   @include screen-max-width(medium) {
-    padding: 25px 20px;
+    margin: 0 20px !important;
+    padding: 15px !important;
   }
 
   .tx-title-text {
@@ -264,18 +265,16 @@ ul.broadcast-steps {
     justify-content: flex-end;
   }
 
-  a {
+  .new-transaction,
+  .change-path {
     font-size: 14px;
     font-weight: 600;
-
     text-transform: capitalize;
     min-width: 150px;
     border-radius: 3px;
     padding: 14px 30px 14px 30px;
     color: #fff;
-    font-size: 14px;
     background-color: #EF8102;
-    font-weight: bold;
     margin: 0;
     cursor: pointer;
     position: relative;

@@ -2,43 +2,26 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import { Modal, OrderTableInfo } from "../../../components/CommonElement";
-import * as limitOrderActions from "../../../actions/limitOrderActions";
 import OrderDetails from "../MobileElements/OrderDetails";
 
-@connect((store, props) => {
-  const account = store.account.account;
+@connect((store) => {
   const translate = getTranslate(store.locale);
-  const limitOrder = store.limitOrder;
-  const global = store.global;
+  const isOnMobile = store.global.isOnMobile;
+  const isAgreeForceSubmit = store.limitOrder.isAgreeForceSubmit;
 
-  return { translate, limitOrder, account, global };
+  return { translate, isAgreeForceSubmit, isOnMobile };
 })
 export default class ForceCancelOrderModal extends Component {
-
   closeModal = () => {
-    const { isAgreeForceSubmit } = this.props.limitOrder;
-
-    if (!isAgreeForceSubmit) {
-      this.props.dispatch(limitOrderActions.setIsDisableSubmit(false));
-    }
-
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""));
-  };
-
-  agreeForceCancel = () => {
-    this.props.dispatch(limitOrderActions.throwError("rateWarning", ""))
-    this.props.toggleAgreeSubmit()
+    this.props.toggleCancelOrderModal(false);
   };
 
   getCancelOrderModal = () => {
-    const base = this.props.limitOrder.sideTrade === "buy" ? this.props.limitOrder.destTokenSymbol : this.props.limitOrder.sourceTokenSymbol;
-
     return (
-      <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`} id="cancel-order">
+      <div className={`limit-order-modal ${this.props.isOnMobile ? 'limit-order-modal--mobile' : ''}`} id="cancel-order">
         <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.cancel_order", {sideTrade: ["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : "", symbol: base}) ||
-            `Cancel ${["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : ""}${base} Order`}
+            {this.props.translate("modal.cancel_order", { sideTrade: this.props.formType, symbol: this.props.baseSymbol }) || `Cancel ${this.props.formType} ${this.props.baseSymbol} Order`}
           </div>
 
           <div className="limit-order-modal__close" onClick={this.closeModal}>
@@ -52,22 +35,17 @@ export default class ForceCancelOrderModal extends Component {
               {this.props.translate("why") || "Why?"}
             </a>
 
-            {!this.props.global.isOnMobile && (
+            {!this.props.isOnMobile && (
               <OrderTableInfo
-                listOrder={this.props.getListWarningOrdersComp()}
+                listOrder={this.props.orders}
                 translate={this.props.translate}
+                cancelModal
               />
             )}
 
-            {this.props.global.isOnMobile && (
-              this.props.getListWarningOrdersComp().map(order => {
-                return (
-                  <OrderDetails
-                    order = {order}
-                    isModal = {true}
-                    translate = {this.props.translate}
-                  />
-                )
+            {this.props.isOnMobile && (
+              this.props.orders.map(order => {
+                return <OrderDetails order={order} translate={this.props.translate} isModal/>
               })
             )}
           </div>
@@ -80,9 +58,9 @@ export default class ForceCancelOrderModal extends Component {
             </span>
             <input
               type="checkbox"
-              checked={this.props.limitOrder.isAgreeForceSubmit}
+              checked={this.props.isAgreeForceSubmit}
               className="cancel-order__confirm--checkbox"
-              onChange={e => this.agreeForceCancel()}
+              onChange={this.props.toggleAgreeSubmit}
             />
             <span className="cancel-order__confirm--checkmark"/>
           </label>
@@ -95,11 +73,11 @@ export default class ForceCancelOrderModal extends Component {
     return (
       <Modal
         className={{
-          base: 'reveal medium cancel-order-modal',
+          base: 'reveal x-medium cancel-order-modal',
           afterOpen: 'reveal medium'
         }}
         overlayClassName={"cancel-modal"}
-        isOpen={this.props.limitOrder.errors.rateWarning !== ""}
+        isOpen={this.props.cancelOrderModal}
         onRequestClose={this.closeModal}
         contentLabel="Cancel Order"
         content={this.getCancelOrderModal()}

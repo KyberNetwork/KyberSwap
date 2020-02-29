@@ -808,16 +808,6 @@ export default class Mixpanel {
     }
   }
 
-  trackLimitOrderClickChooseSideTrade(sideTrade, base, quote) {
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track(`LimitOrder_Click_Choose_Side_${sideTrade}`, { base: base, quote: quote });
-      }catch(e){
-        console.log(e);
-      }
-    }
-  }
-
   trackLimitOrderClickSelectPair(pair) {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{

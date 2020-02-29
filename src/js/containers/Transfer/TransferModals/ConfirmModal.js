@@ -203,17 +203,16 @@ export default class ConfirmModal extends React.Component {
 
     errorHtml = () => {
         if (this.state.err) {
-            let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
             return (
                 <React.Fragment>
-                    <div className={'modal-error custom-scroll ' + metaMaskClass}>
+                    <div className={'modal-error message-error common__slide-up'}>
                         {this.state.err}
                     </div>
                 </React.Fragment>
             )
-        } else {
-            return ""
         }
+        
+        return ""
     }
 
     closeModal = () => {
@@ -251,9 +250,9 @@ export default class ConfirmModal extends React.Component {
     contentModal = () => {
         return (
             <div>
-                <a className="x" onClick={this.closeModal}>
+                <div className="x" onClick={this.closeModal}>
                     <img src={require("../../../../assets/img/v3/Close-3.svg")} />
-                </a>
+                </div>
                 <div className="content-wrapper">
                     <div className="content with-overlap">
                         <div className="row">
@@ -277,10 +276,10 @@ export default class ConfirmModal extends React.Component {
                     <div className="overlap theme__background-2">
                         
                         <div className="input-confirm grid-x">
-                            <a className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
+                            <div className={"button process-submit cancel-process" + (this.state.isConfirmingTx ? " disabled-button" : "")} onClick={this.closeModal}>
                                 {this.props.translate("modal.cancel" || "Cancel")}
-                            </a>
-                            <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.clickTransfer.bind(this)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</a>
+                            </div>
+                            <div className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirmingTx ? "disabled-button" : "next")} onClick={this.clickTransfer.bind(this)}>{this.props.translate("modal.confirm").toLocaleUpperCase() || "Confirm".toLocaleUpperCase()}</div>
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,8 @@ export default class PortfolioEquity extends React.Component {
         labels: tokenSymbols,
         datasets: [{
           data: tokenValues,
-          backgroundColor: ['#fb497c', '#ffc760', '#67c22b', '#4fccff', '#4d7bf3', '#214e9f']
+          backgroundColor: ['#fb497c', '#ffc760', '#67c22b', '#4fccff', '#4d7bf3', '#214e9f'],
+          borderColor: 'transparent'
         }]
       },
       options: {

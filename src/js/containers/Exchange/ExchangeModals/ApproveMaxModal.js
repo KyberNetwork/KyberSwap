@@ -103,22 +103,19 @@ export default class ApproveMaxModal extends React.Component {
       return this.props.translate("modal.press_approve") || "Press approve to continue";
     }
   }
-
-
-
+  
   errorHtml = () => {
     if (this.state.err) {
-      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+          <div className={'modal-error message-error common__slide-up'}>
             {this.state.err}
           </div>
         </React.Fragment>
       )
-    } else {
-      return ""
     }
+    
+    return ""
   }
 
   closeModal = () => {
@@ -130,7 +127,7 @@ export default class ApproveMaxModal extends React.Component {
       <div className="approve-modal content-wrapper">
         <div>
           <div className="title">Approve Token</div>
-          <a className="x" onClick={this.closeModal}>&times;</a>
+          <div className="x" onClick={this.closeModal}>&times;</div>
           <div className="content with-overlap">
             <div className="row">
               <div>

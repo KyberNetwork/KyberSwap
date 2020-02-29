@@ -12,9 +12,12 @@ export default class QuoteList extends React.Component{
   renderDropdown(){
     const { quotes, currentQuote, onClick } = this.props
     const temp = quotes.filter(i => this.dropdownQuotes.includes(i))
+    
+    if (!temp.length) return '';
+    
     return (
-      <div className={`theme__background-55 quote_item ${this.dropdownQuotes.includes(currentQuote) ? "active" :""}`}>
-        <Dropdown active={this.state.active} onHide={e => this.toggle()}>
+      <div className={`theme__background-55 common__flexbox-center quote_item ${this.dropdownQuotes.includes(currentQuote) ? "active" :""}`}>
+        <Dropdown active={this.state.active} onHide={this.toggle}>
         <DropdownTrigger onClick={this.toggle}>
           <span>{this.dropdownQuotes.includes(currentQuote) ? currentQuote : temp[0]}</span>
           <span className="drop-down">
@@ -31,19 +34,19 @@ export default class QuoteList extends React.Component{
       </Dropdown>
       </div>
     )
-
   }
 
   render() {
     const { currentQuote, quotes, onClick } = this.props
     return (
       <div id="quote_panel">
-        <div className={`theme__background-55 quote_item_2 ${currentQuote === "FAV"  ? "active" : ""}`}><div key={"FAV"} className={`star star--title ${currentQuote === "FAV"  ? "active" : ""}`} onClick={() => onClick("FAV")}/></div>
+        <div className={`theme__background-55 common__flexbox-center quote_item_2 ${currentQuote === "FAV"  ? "active" : ""}`}>
+          <div key={"FAV"} className={`star star--title ${currentQuote === "FAV"  ? "active" : ""}`} onClick={() => onClick(currentQuote === "FAV" ? 'WETH' : 'FAV')}/>
+        </div>
         {this.renderDropdown()}
-        { quotes.filter(i => !this.dropdownQuotes.includes(i)).map(i => {
-              return <span key={i} className={`theme__background-55 text-center quote_item ${currentQuote === i ? "active" :""}`} onClick={() => onClick(i)}>{i.replace("WETH", "ETH*")}</span>
-          })
-        }
+        {quotes.filter(i => !this.dropdownQuotes.includes(i)).map(i => {
+          return <span key={i} className={`theme__background-55 common__flexbox-center quote_item ${currentQuote === i ? "active" :""}`} onClick={() => onClick(i)}>{i.replace("WETH", "ETH*")}</span>
+        })}
       </div>
     )
   }
