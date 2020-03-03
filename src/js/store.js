@@ -6,7 +6,7 @@ import reducer from "./reducers/index"
 import history from "./history"
 import { routerMiddleware } from 'react-router-redux'
 import rootSaga from './sagas'
-import { initLanguage } from "../js/services/language"
+import { initLanguage } from "../js/services/languageService"
 
 const routeMiddleware = routerMiddleware(history)
 

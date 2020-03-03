@@ -24,13 +24,13 @@ export default class Currency extends React.Component {
           {this.props.currency.listItem && (
             this.props.currency.listItem.map((tokenSymbol, key) => {
               return (
-                <a
+                <div
                   key={key}
                   className={this.props.currentCurrency === tokenSymbol ? 'theme__text currency-item active' : 'theme__text currency-item'}
                   onClick={()=>this.changeCurrency(tokenSymbol)}
                 >
                   {tokenSymbol}
-                </a>
+                </div>
               )
             })
           )}

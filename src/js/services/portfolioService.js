@@ -1,6 +1,6 @@
-import { TX_TYPES } from '../constants';
-import BLOCKCHAIN_INFO from "../../../../env";
-import { convertTimestampToTime, formatAddress, shortenBigNumber } from "../../utils/converter";
+import { TX_TYPES } from './constants';
+import BLOCKCHAIN_INFO from "../../../env";
+import { convertTimestampToTime, formatAddress, shortenBigNumber } from "../utils/converter";
 
 export async function fetchAddressTxs(address, page, limit = 20) {
   const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&page=${page}&limit=${limit}`);

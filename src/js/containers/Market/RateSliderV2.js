@@ -4,7 +4,7 @@ import { roundingNumber, sumOfTwoNumber, divOfTwoNumber } from "../../utils/conv
 import BLOCKCHAIN_INFO from "../../../../env";
 
 @connect((store) => {
-  const marketTokens = store.market.tokens.filter(token => {
+  const marketTokens = Object.values(store.market.tokens).filter(token => {
       return !token.pair.includes(BLOCKCHAIN_INFO.wrapETHToken) && (token.buy_price !== "0" || token.sell_price !== "0");
     });
 

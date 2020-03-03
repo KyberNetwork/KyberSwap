@@ -2,7 +2,7 @@ import React from "react"
 import { groupBy, isEmpty, sortBy } from "underscore";
 import { divOfTwoNumber, formatAddress, roundingNumber, toT } from "../../utils/converter";
 import { TX_TYPES } from "../../services/constants";
-import * as portfolioService from "../../services/portfolio/portfolioService";
+import * as portfolioService from "../../services/portfolioService";
 import { getFormattedDate } from "../../utils/common";
 import InlineLoading from "../../components/CommonElement/InlineLoading";
 import PaginationList from "../../components/CommonElement/Pagination/PaginationList";
