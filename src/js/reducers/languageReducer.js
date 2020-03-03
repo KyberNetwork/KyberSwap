@@ -1,8 +1,6 @@
 import { REHYDRATE } from 'redux-persist/lib/constants'
 import { localeReducer } from 'react-localize-redux';
 import constants from '../services/constants';
-import Language from "../../../lang"
-import { getLanguage } from "../services/language"
 
 const locale = (state, action) => {
   switch (action.type) {

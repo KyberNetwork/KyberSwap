@@ -11,7 +11,8 @@ import { getTranslate } from 'react-localize-redux'
   const tokens = store.tokens.tokens
   const currentQuote = store.limitOrder.currentQuote
   const translate = getTranslate(store.locale)
-  const pairs = store.market.tokens.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
+  const pairs = store.market.tokens;
+  
   return {
     tokens, currentQuote, global: store.global, pairs, translate
   }

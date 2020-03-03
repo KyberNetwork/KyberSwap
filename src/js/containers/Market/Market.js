@@ -32,7 +32,7 @@ function compareNum(sortKey) {
   if (typeof searchWord === "undefined") searchWord = ""
 
   var currency = store.market.configs.currency.focus
-  var originalTokens = store.market.tokens
+  var originalTokens = Object.values(store.market.tokens);
   var sortedTokens = store.market.sortedTokens
   var listTokens = []
   var sortKey = store.market.configs.sortKey
