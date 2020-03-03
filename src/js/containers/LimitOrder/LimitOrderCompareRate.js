@@ -24,11 +24,11 @@ export default class LimitOrderCompareRate extends React.Component {
     return (
       <div className={"limit-order-form__prefer-rate theme__text-4"}>
         {!this.props.limitOrder.isFetchingRate && percentChange > 0 && (
-          this.props.translate("limit_order.higher_rate", { percentChange: percentChange }) || `Your preferred rate is <span class="limit-order__percent limit-order__percent--positive">${percentChange}%</span> higher than current rate`
+          this.props.translate("limit_order.higher_rate", { percentChange: percentChange }) || `Your price is <span class="limit-order__percent limit-order__percent--positive">${percentChange}%</span> higher than market price`
         )}
 
         {!this.props.limitOrder.isFetchingRate && percentChange < 0 && percentChange > -100 && (
-          this.props.translate("limit_order.lower_rate", { percentChange: percentChange }) || `Your preferred rate is <span class="limit-order__percent limit-order__percent--negative">${percentChange}%</span> lower than current rate`
+          this.props.translate("limit_order.lower_rate", { percentChange: percentChange }) || `Your price is <span class="limit-order__percent limit-order__percent--negative">${percentChange}%</span> lower than market price`
         )}
       </div>
     )

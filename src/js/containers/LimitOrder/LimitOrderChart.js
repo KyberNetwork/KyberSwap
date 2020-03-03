@@ -3,8 +3,10 @@ import { connect } from "react-redux"
 import { TradingView } from "../Market"
 import { getTokenHighestAndLowestPrice } from "../../services/tokenService";
 import { formatNumber, roundingRateNumber, sumOfTwoNumber } from "../../utils/converter";
+import { getTranslate } from "react-localize-redux";
 
 @connect((store) => {
+  const translate = getTranslate(store.locale);
   const limitOrder = store.limitOrder;
   const baseSymbol = limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.destTokenSymbol;
@@ -24,7 +26,7 @@ import { formatNumber, roundingRateNumber, sumOfTwoNumber } from "../../utils/co
   }
 
   return {
-    baseSymbol, quoteSymbol, lastPrice, token24hChange, tokenVolume, isLoadingData
+    translate, baseSymbol, quoteSymbol, lastPrice, token24hChange, tokenVolume, isLoadingData
   }
 })
 export default class LimitOrderChart extends React.Component {
@@ -34,7 +36,7 @@ export default class LimitOrderChart extends React.Component {
     this.state = {
       highestPrice: 0,
       lowestPrice: 0,
-      loadingHighLowPrice: false
+      loadingHighLowPrice: true
     }
   }
   
@@ -89,31 +91,41 @@ export default class LimitOrderChart extends React.Component {
         <div className={`trading-view__header ${this.getColorClass()}`}>
           <div className="trading-view__header-pair theme__text-8">{this.props.baseSymbol}/{this.props.quoteSymbol}</div>
           <div className="trading-view__header-item">
-            <div className="trading-view__header-title">24h Change</div>
+            <div className="trading-view__header-title">
+              {this.props.translate('limit_order.24h_change') || '24h Change'}
+            </div>
             <div className="trading-view__header-value with-color theme__text-8">
               {isLoading ? '---' : `${this.props.token24hChange}%`}
             </div>
           </div>
           <div className="trading-view__header-item">
-            <div className="trading-view__header-title">Last Price</div>
+            <div className="trading-view__header-title">
+              {this.props.translate('limit_order.last_price') || 'Last Price'}
+            </div>
             <div className="trading-view__header-value with-color theme__text-8">
               {isLoading ? '---' : roundingRateNumber(this.props.lastPrice)}
             </div>
           </div>
           <div className="trading-view__header-item">
-            <div className="trading-view__header-title">24h High</div>
+            <div className="trading-view__header-title">
+              {this.props.translate('limit_order.24h_high') || '24h High'}
+            </div>
             <div className="trading-view__header-value with-color theme__text-8">
               {isLoading ? '---' : this.state.highestPrice}
             </div>
           </div>
           <div className="trading-view__header-item">
-            <div className="trading-view__header-title">24h Low</div>
+            <div className="trading-view__header-title">
+              {this.props.translate('limit_order.24h_low') || '24h Low'}
+            </div>
             <div className="trading-view__header-value with-color theme__text-8">
               {isLoading ? '---' : this.state.lowestPrice}
             </div>
           </div>
           <div className="trading-view__header-item">
-            <div className="trading-view__header-title">24h Volume</div>
+            <div className="trading-view__header-title">
+              {this.props.translate('limit_order.24h_volume') || '24h Volume'}
+            </div>
             <div className="trading-view__header-value theme__text-8">
               {isLoading ? '---' : `${formatNumber(this.props.tokenVolume, 4)} ${this.props.quoteSymbol}`}
             </div>

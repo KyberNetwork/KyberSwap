@@ -451,10 +451,16 @@
     "available_balance": "Số dư khả dụng",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "Đã nhận",
-    "login_buy": "Login to Buy",
-    "login_sell": "Login to Sell",
-    "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
-    "hold_knc": "Hold 2000 KNC now"
+    "login_buy": "Đăng nhập để Mua",
+    "login_sell": "Đăng nhập để Bán",
+    "free_fee": "Lệnh Limit Order miễn phí (10 lệnh LO mỗi ngày) nếu bạn giữ 2000 KNC trong ví",
+    "hold_knc": "Mua 2000 KNC ngay",
+    "top_token": "Token thay đổi nhiều nhất trong 1 giờ",
+    "24h_change": "Thay đổi 24h",
+    "last_price": "Tỉ giá mới nhất",
+    "24h_high": "Mức cao nhất 24h",
+    "24h_low": "Mức thấp nhất 24h",
+    "24h_volume": "Lượng giao dịch trong 24h"
   },
   "portfolio": {
     "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",

@@ -35,7 +35,6 @@
   position: relative;
 
   .ReactTable {
-    min-height: 100px;
     margin: 0 15px 15px;
     border: none;
 
@@ -45,7 +44,8 @@
 
     .rt-table {
       padding-bottom: 10px;
-      height: 290px;
+      max-height: 290px;
+      min-height: 225px;
       flex: initial;
     }
 
@@ -803,6 +803,7 @@
   margin: 8px auto 0;
   padding: 1px 0;
   border-radius: 3px;
+  flex-grow: 1;
 
   &--empty {
     background-color: #e8eff6;
@@ -2070,6 +2071,12 @@
   justify-content: space-between;
 
   &__container {
+    &--right,
+    &--left {
+      display: flex;
+      flex-direction: column;
+    }
+
     &--left {
       width: calc(100% - 600px);
     }
@@ -2421,6 +2428,32 @@
         height: 8px;
         border-width: 0 2px 2px 0;
       }
+    }
+  }
+}
+
+.limit-order-top-token {
+  margin-top: 8px;
+  padding: 25px 15px;
+  border-radius: 3px;
+  flex-grow: 1;
+
+  &__title {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 15px;
+  }
+
+  &__text {
+    font-size: 14px;
+  }
+
+  .rate-item {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    &__percent-change {
+      margin-right: 10px !important;
     }
   }
 }
