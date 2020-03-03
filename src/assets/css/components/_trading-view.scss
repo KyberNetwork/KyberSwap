@@ -34,4 +34,10 @@
       }
     }
   }
+
+  @include screen-max-width(medium) {
+    &__header {
+      display: none;
+    }
+  }
 }
