@@ -132,7 +132,7 @@ export default class TradingView extends React.Component {
 			this.props.datafeedUrl, this.props.updateFrequency);
 		
 		
-		var disabled_features = ['header_compare']
+		var disabled_features = ['header_compare', 'header_symbol_search']
 		var overrides = {
 			'mainSeriesProperties.candleStyle.drawBorder': false,
 		}
