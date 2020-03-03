@@ -86,7 +86,7 @@ export default class LimitOrderBody extends React.Component {
     const LimitOrderMobileHeader = this.LimitOrderMobileHeader;
     
     return (
-      <div className={"limit-order theme__background"}>
+      <div className={"limit-order limit-order--mobile theme__background"}>
         <LimitOrderMobileHeader toggleMobileChart={this.toggleMobileChart} />
 
         {this.state.mobileOpenChart && (
