@@ -12,28 +12,15 @@ import { TermAndServices } from "../../containers/CommonElements";
 import EthereumService from "../../services/ethereum/ethereum";
 import { isUserLogin } from "../../utils/common";
 
-@connect((store, props) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
-
+@connect((store) => {
   return {
     ...store.account,
     translate: getTranslate(store.locale),
-    isVisitFirstTime: store.global.isVisitFirstTime,
-    termOfServiceAccepted: store.global.termOfServiceAccepted,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens,
-    screen: props.screen,
-    tradeType: props.tradeType,
     global: store.global,
-    onMobile: store.global.onMobile,
-    acceptTerm: props.acceptTerm
+    onMobile: store.global.onMobile
   }
 })
-
 export default class ImportAccount extends React.Component {
   componentDidMount = () => {
     var swapPage = document.getElementById("swap-app")
@@ -49,7 +36,7 @@ export default class ImportAccount extends React.Component {
         setTimeout(()=>{
           const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
           this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-            ethereumService, this.props.tokens, this.props.translate, walletType))
+            ethereumService, this.props.translate, walletType))
         }, 1000)
       }
     }
@@ -77,7 +64,7 @@ export default class ImportAccount extends React.Component {
       const ethereumService = this.props.ethereum ? this.props.ethereum : new EthereumService();
 
       this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-        ethereumService, this.props.tokens, this.props.translate, walletType))
+        ethereumService, this.props.translate, walletType))
     } else {
       this.props.acceptTerm()
     }

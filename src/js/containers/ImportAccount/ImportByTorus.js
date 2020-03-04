@@ -6,9 +6,9 @@ import * as actions from '../../actions/accountActions'
 @connect((store) => {
   return { ethereum: store.connection.ethereum }
 })
-export default class ImportByWalletLink extends React.Component {
+export default class ImportByTorus extends React.Component {
   async connect() {
-    const walletType = "walletlink";
+    const walletType = "torus";
     const wallet = getWallet(walletType);
     
     try {
@@ -33,8 +33,8 @@ export default class ImportByWalletLink extends React.Component {
   render() {
     return (
       <div className="import-account__block theme__import-button" onClick={() => this.connect()}>
-        <div className="import-account__icon wallet-link"/>
-        <div className="import-account__name">COINBASE WALLET</div>
+        <div className="import-account__icon torus"/>
+        <div className="import-account__name">Torus</div>
       </div>
     )
   }

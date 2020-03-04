@@ -5,22 +5,12 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError, checkTimeImportLedger, resetCheckTimeImportLedger } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
-import bowser from 'bowser'
 
-@connect((store, props) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
+@connect((store) => {
   return {
     ethereumNode: store.connection.ethereum,
     account: store.account,
-    tokens: supportTokens,
-    deviceService: props.deviceService,
-    content: props.content,
     translate: getTranslate(store.locale),
-    screen: props.screen,
     analytics: store.global.analytics,
     theme: store.global.theme
   }
@@ -29,12 +19,14 @@ import bowser from 'bowser'
 export default class ImportByDevice extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       addresses: [],
       currentAddresses: [],
       modalOpen: false,
       isFirstList: true,
     }
+    
     this.setDeviceState();
 
     this.DPATH = [
@@ -188,7 +180,7 @@ export default class ImportByDevice extends React.Component {
   }
 
   getAddress(data) {
-    this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.tokens, this.props.screen))
+    this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.screen));
     this.closeModal()
   }
 
@@ -217,14 +209,8 @@ export default class ImportByDevice extends React.Component {
   }
 
   showLoading(walletType) {
-    let browser = bowser.name;
     this.props.dispatch(resetCheckTimeImportLedger())
     if (walletType == 'ledger') {
-      // if (!bowser.chrome) {
-      //   let erroMsg = this.props.translate("error.browser_not_support_ledger", { browser: browser }) || `Ledger is not supported on ${browser}, you can use Chrome instead.`
-      //   this.props.dispatch(throwError(erroMsg));
-      //   return;
-      // }
       this.props.dispatch(importLoading());
       this.connectDevice(walletType);
       this.ledgerLoading = setTimeout(() => {
