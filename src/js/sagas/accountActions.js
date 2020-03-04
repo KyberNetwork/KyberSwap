@@ -72,17 +72,16 @@ function* createNewAccount(address, type, keystring, ethereum, walletType, info)
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
   const { address, type, keystring, ethereum, walletType, walletName, info } = action.payload;
-  const store = store.getState();
-  const global = store.global;
-  const tokens = store.tokens.tokens;
-  const translate = getTranslate(store.locale);
+  const state = store.getState();
+  const global = state.global;
+  const tokens = state.tokens.tokens;
+  const translate = getTranslate(state.locale);
   
   try {
     let account;
     const accountRequest = yield call(createNewAccount, address, type, keystring, ethereum, walletType, info);
 
     if (accountRequest.status === "timeout") {
-      let translate = getTranslate(store.getState().locale)
       yield put(actions.closeImportLoading())
       yield put(utilActions.openInfoModal(
         translate("error.error_occurred") || "Error occurred",
@@ -92,7 +91,6 @@ export function* importNewAccount(action) {
     }
     
     if (accountRequest.status === "fail") {
-      let translate = getTranslate(store.getState().locale)
       yield put(actions.closeImportLoading())
       yield put(utilActions.openInfoModal(
         translate("error.error_occurred") || "Error occurred",
@@ -148,7 +146,6 @@ export function* importNewAccount(action) {
 function* subcribeWalletDisconnect(wallet){  
   yield call([wallet, wallet.getDisconnected])  
   yield put(clearSession())
-  return
 }
 
 export function* importMetamask(action) {

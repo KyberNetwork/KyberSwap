@@ -3,12 +3,6 @@ import EthereumTx from "ethereumjs-tx"
 import * as ethUtil from 'ethereumjs-util'
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import Eth from "@ledgerhq/hw-app-eth";
-
-import Web3 from "web3"
-
-
-
-
 import { store } from "../../store"
 import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
@@ -18,7 +12,6 @@ const defaultDPath = "m/44'/60'/0'";
 const ledgerPath = "m/44'/60'/0'";
 
 export default class Ledger {
-
   connectLedger = () => {
     return new Promise((resolve, reject) => {
       TransportU2F.create(20000).then(transport => {
@@ -28,20 +21,8 @@ export default class Ledger {
         console.log(e)
         reject(e)
       })
-
-
-      // ledgerU2f.create_async(time)
-      //     .then((comm) => {
-      //         var eth = new ledgerEth(comm);
-      //         resolve(eth);
-      //     })
-      //     .fail((err) => {
-      //         reject(err);
-      //     });
     });
   }
-
-
 
   signLedgerTransaction = (eth, path, raxTxHex) => {
     return new Promise((resolve, reject) => {
@@ -208,10 +189,6 @@ export default class Ledger {
   }
   
   getWalletName = () => {
-    return 'Ledger';
-  }
-  
-  getMetaName = () => {
     return 'Ledger';
   }
 }

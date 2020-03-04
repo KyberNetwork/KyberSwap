@@ -141,7 +141,7 @@ export default class ImportByWalletConnect extends React.Component {
       <div>
         <div className="import-account__block theme__import-button" onClick={() => this.openQrCode()}>
           <div className="import-account__icon wallet-connect"/>
-          <div className="import-account__name">WALLET CONNECT</div>
+          <div className="import-account__name">WalletConnect</div>
         </div>
         {this.state.isOpen === true && (
           <Modal

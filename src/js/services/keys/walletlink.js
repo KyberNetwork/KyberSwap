@@ -80,8 +80,4 @@ export default class WalletLinkKey extends React.Component {
     getWalletName = () => {
         return 'Wallet Link';
     }
-    
-    getMetaName = () => {
-        return 'Wallet Link';
-    }
 }

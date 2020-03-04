@@ -3,7 +3,6 @@ import * as keyService from "./baseKey"
 import {newWeb3Instance} from "../web3"
 
 export default class Metamask extends React.Component{
-
   constructor(props){
     super(props)
     this.web3Service = newWeb3Instance()
@@ -77,10 +76,6 @@ export default class Metamask extends React.Component{
   }
   
   getWalletName = () => {
-    return this.web3Service.getWalletName();
-  }
-  
-  getMetaName = () => {
     return this.web3Service.getWalletName();
   }
 }

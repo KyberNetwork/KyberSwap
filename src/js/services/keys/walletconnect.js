@@ -128,8 +128,4 @@ export default class WalletConnectKey extends React.Component {
     getWalletName = () => {
         return 'Wallet Connect';
     }
-    
-    getMetaName = () => {
-        return 'Wallet Connect';
-    }
 }
