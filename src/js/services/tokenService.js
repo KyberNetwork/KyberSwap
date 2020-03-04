@@ -1,4 +1,5 @@
 import BLOCKCHAIN_INFO from "../../../env";
+import { sortBy, isEmpty } from "underscore";
 
 export async function getTokenHighestAndLowestPrice(pair, from, to) {
   return new Promise((resolve, reject) => {
@@ -23,6 +24,26 @@ export async function getTokenHighestAndLowestPrice(pair, from, to) {
       }
       
       resolve({ highestPrice, lowestPrice });
+    }).catch((error) => {
+      reject(error);
+    })
+  })
+}
+
+export async function getTopTokensIn1Hour() {
+  return new Promise((resolve, reject) => {
+    const url = `${BLOCKCHAIN_INFO.tracker}/change1h`;
+    
+    fetch(url).then(async (response) => {
+      const tokens = await response.json();
+      
+      if (isEmpty(tokens)) return [];
+      
+      let topTokens = sortBy(tokens, token => {
+        return -Math.abs(token.change_usd_24h);
+      }).slice(0, 5);
+      
+      resolve(topTokens);
     }).catch((error) => {
       reject(error);
     })

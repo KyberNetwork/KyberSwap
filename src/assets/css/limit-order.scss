@@ -35,7 +35,6 @@
   position: relative;
 
   .ReactTable {
-    min-height: 100px;
     margin: 0 15px 15px;
     border: none;
 
@@ -45,7 +44,8 @@
 
     .rt-table {
       padding-bottom: 10px;
-      height: 290px;
+      max-height: 290px;
+      min-height: 225px;
       flex: initial;
     }
 
@@ -803,6 +803,7 @@
   margin: 8px auto 0;
   padding: 1px 0;
   border-radius: 3px;
+  flex-grow: 1;
 
   &--empty {
     background-color: #e8eff6;
@@ -2065,12 +2066,17 @@
 }
 
 .limit-order {
-  @include screen-min-width(medium){
-    display: flex;
-    justify-content: space-between;
-  }
+  min-width: 1200px;
+  display: flex;
+  justify-content: space-between;
 
   &__container {
+    &--right,
+    &--left {
+      display: flex;
+      flex-direction: column;
+    }
+
     &--left {
       width: calc(100% - 600px);
     }
@@ -2094,7 +2100,23 @@
     }
   }
 
-  @include screen-max-width(xxmedium) {
+  &--mobile {
+    display: block;
+    min-width: initial;
+
+    .limit-order__container {
+      width: 100%;
+    }
+
+    .limit-order-form {
+      width: 100%;
+    }
+  }
+
+  @include screen-max-width(medium){
+    display: block;
+    min-width: initial;
+
     &__container {
       width: 100%;
     }
@@ -2240,16 +2262,19 @@
   margin-top: 8px;
 
   &__text {
+    width: calc(100% - 200px);
     font-size: 16px;
   }
 
   &__button {
+    width: 180px;
     font-size: 14px;
     font-weight: 400;
     border-radius: 3px;
     color: $text-orange;
     border: solid 1px $text-orange;
-    padding: 7px 25px;
+    padding: 7px 0;
+    text-align: center;
     cursor: pointer;
     transition: all .3s;
 
@@ -2407,21 +2432,28 @@
   }
 }
 
+.limit-order-top-token {
+  margin-top: 8px;
+  padding: 25px 15px;
+  border-radius: 3px;
+  flex-grow: 1;
 
-.ld-actions{
-  display:  flex;
-  justify-content: center;
-  margin-top: 20px;
-  padding-bottom: 20px;
-  a{
-    background-image: linear-gradient(178deg, #ffb046 -66%, #f52880 371%);
-    background-color: #1a1a1a;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 30px;
-    border-radius: 3px;
-    color: #192029;
-    margin-left: 20px;
-    cursor: pointer;
+  &__title {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 15px;
+  }
+
+  &__text {
+    font-size: 14px;
+  }
+
+  .rate-item {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    &__percent-change {
+      margin-right: 10px !important;
+    }
   }
 }

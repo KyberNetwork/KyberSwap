@@ -452,10 +452,16 @@
     "available_balance": "사용 가능한 잔액",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "받았습니다",
-    "login_buy": "Login to Buy",
-    "login_sell": "Login to Sell",
-    "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
-    "hold_knc": "Hold 2000 KNC now"
+    "login_buy": "구매를 위해 로그인하기",
+    "login_sell": "판매를 위해 로그인하기",
+    "free_fee": "2000KNC 이상을 보유하고 있다면, 리밋오더 시 수수료가 없습니다 (하루 10개 오더까지)",
+    "hold_knc": "지금 바로 2000KNC를 소유해보세요",
+    "top_token": "최근 1시간내 최상위 토큰",
+    "24h_change": "24시간 동안 변동",
+    "last_price": "최근 가격",
+    "24h_high": "24시간 내 최고가",
+    "24h_low": "24시간 내 최저가",
+    "24h_volume": "24시간 내 거래량"
   },
   "portfolio": {
     "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",

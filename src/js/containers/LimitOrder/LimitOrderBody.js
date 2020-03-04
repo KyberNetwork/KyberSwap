@@ -14,6 +14,7 @@ import {
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
 import LimitOrderNotification from "./LimitOrderNotification";
+import LimitOrderTopToken from "./LimitOrderTopToken";
 
 @connect((store) => {
   const account = store.account.account;
@@ -76,6 +77,8 @@ export default class LimitOrderBody extends React.Component {
             <LimitOrderForm formType="buy" />
             <LimitOrderForm formType="sell" />
           </div>
+          
+          <LimitOrderTopToken />
         </div>
       </div>
     )
@@ -86,7 +89,7 @@ export default class LimitOrderBody extends React.Component {
     const LimitOrderMobileHeader = this.LimitOrderMobileHeader;
     
     return (
-      <div className={"limit-order theme__background"}>
+      <div className={"limit-order limit-order--mobile theme__background"}>
         <LimitOrderMobileHeader toggleMobileChart={this.toggleMobileChart} />
 
         {this.state.mobileOpenChart && (
