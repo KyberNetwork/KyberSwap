@@ -40,7 +40,7 @@ export async function getTopTokensIn1Hour() {
       if (isEmpty(tokens)) return [];
       
       let topTokens = sortBy(tokens, token => {
-        return -Math.abs(token.change_usd_1h);
+        return -token.change_usd_1h;
       }).slice(0, 5);
       
       resolve(topTokens);

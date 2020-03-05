@@ -16,7 +16,7 @@ import { getTranslate } from "react-localize-redux";
   
   if (marketToken) {
     token24hChange = marketToken.change;
-    lastPrice = marketToken.buy_price;
+    lastPrice = roundingRateNumber(marketToken.buy_price);
     tokenVolume = marketToken.volume;
   }
   
@@ -24,6 +24,8 @@ import { getTranslate } from "react-localize-redux";
     const ETHPair = store.market.tokens[`ETH_${baseSymbol}`];
     tokenVolume = ETHPair ? sumOfTwoNumber(tokenVolume, ETHPair.volume) : tokenVolume;
   }
+  
+  tokenVolume = formatNumber(tokenVolume, 4);
 
   return {
     translate, baseSymbol, quoteSymbol, lastPrice, token24hChange, tokenVolume, isLoadingData
@@ -83,6 +85,11 @@ export default class LimitOrderChart extends React.Component {
     return '';
   };
   
+  renderHeaderData = (data, postfix = '') => {
+    if (!data) return '---';
+    return `${data}${postfix}`;
+  };
+  
   render() {
     const isLoading = this.props.isLoadingData || this.state.loadingHighLowPrice;
     
@@ -95,7 +102,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.24h_change') || '24h Change'}
             </div>
             <div className="trading-view__header-value with-color theme__text-8">
-              {isLoading ? '---' : `${this.props.token24hChange}%`}
+              {isLoading ? '---' : this.renderHeaderData(this.props.token24hChange, '%')}
             </div>
           </div>
           <div className="trading-view__header-item">
@@ -103,7 +110,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.last_price') || 'Last Price'}
             </div>
             <div className="trading-view__header-value with-color theme__text-8">
-              {isLoading ? '---' : roundingRateNumber(this.props.lastPrice)}
+              {isLoading ? '---' : this.renderHeaderData(this.props.lastPrice)}
             </div>
           </div>
           <div className="trading-view__header-item">
@@ -111,7 +118,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.24h_high') || '24h High'}
             </div>
             <div className="trading-view__header-value with-color theme__text-8">
-              {isLoading ? '---' : this.state.highestPrice}
+              {isLoading ? '---' : this.renderHeaderData(this.state.highestPrice)}
             </div>
           </div>
           <div className="trading-view__header-item">
@@ -119,7 +126,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.24h_low') || '24h Low'}
             </div>
             <div className="trading-view__header-value with-color theme__text-8">
-              {isLoading ? '---' : this.state.lowestPrice}
+              {isLoading ? '---' : this.renderHeaderData(this.state.lowestPrice)}
             </div>
           </div>
           <div className="trading-view__header-item">
@@ -127,7 +134,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.24h_volume') || '24h Volume'}
             </div>
             <div className="trading-view__header-value theme__text-8">
-              {isLoading ? '---' : `${formatNumber(this.props.tokenVolume, 4)} ${this.props.quoteSymbol}`}
+              {isLoading ? '---' : this.renderHeaderData(this.props.tokenVolume, ` ${this.props.quoteSymbol}`)}
             </div>
           </div>
         </div>
