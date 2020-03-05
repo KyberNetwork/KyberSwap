@@ -92,7 +92,7 @@ export default class Layout extends React.Component {
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
     this.props.dispatch(createNewConnectionInstance())
 
-    const analytic = new AnalyticFactory({ listWorker: ['mix'], network: BLOCKCHAIN_INFO.chainName })
+    const analytic = new AnalyticFactory({ listWorker: ['google'], network: BLOCKCHAIN_INFO.chainName })
     this.props.dispatch(initAnalytics(analytic))
   }
 
