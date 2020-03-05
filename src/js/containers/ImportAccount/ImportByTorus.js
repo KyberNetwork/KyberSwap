@@ -1,33 +1,28 @@
 import React from "react"
 import { connect } from "react-redux"
-import { getWallet } from "../../services/keys"
-import * as actions from '../../actions/accountActions'
+import { getWallet } from "../../services/keys";
+import { importNewAccount } from "../../actions/accountActions";
 
 @connect((store) => {
   return { ethereum: store.connection.ethereum }
 })
 export default class ImportByTorus extends React.Component {
   async connect() {
-    const walletType = "torus";
+    const walletType = 'torus';
     const wallet = getWallet(walletType);
+    const address = await wallet.getAddress();
     
-    try {
-      const address = await wallet.getAddress();
-      this.props.closeParentModal();
-      
-      this.props.dispatch(actions.importNewAccount(
-        address.toLowerCase(),
-        walletType,
-        null,
-        this.props.ethereum,
-        null,
-        null,
-        "Wallet Link"
-      ))
-    } catch (err) {
-      console.log(err);
-      this.props.dispatch(actions.throwError(err))
-    }
+    this.props.closeParentModal();
+  
+    this.props.dispatch(importNewAccount(
+      address.toLowerCase(),
+      walletType,
+      null,
+      this.props.ethereum,
+      null,
+      null,
+      "Wallet Link"
+    ));
   }
   
   render() {

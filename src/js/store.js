@@ -9,10 +9,8 @@ import rootSaga from './sagas'
 import { initLanguage } from "../js/services/languageService"
 
 const routeMiddleware = routerMiddleware(history)
-
 const sagaMiddleware = createSagaMiddleware()
-
-var middlewareArray = [sagaMiddleware, routeMiddleware]
+const middlewareArray = [sagaMiddleware, routeMiddleware]
 
 if (process.env && process.env.logger) {
   middlewareArray.push(logger)
@@ -20,14 +18,14 @@ if (process.env && process.env.logger) {
 
 const middleware = applyMiddleware(
   ...middlewareArray
-)
+);
 
-const store = createStore(
-  reducer, undefined, compose(middleware))
-sagaMiddleware.run(rootSaga)
+const store = createStore(reducer, undefined, compose(middleware));
+
+sagaMiddleware.run(rootSaga);
 
 initLanguage(store);
 
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
 export { store, persistor }
