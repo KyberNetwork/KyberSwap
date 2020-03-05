@@ -42,7 +42,7 @@ export default class GoogleTagmanager {
   loginWallet(wallet) {
     if (wallet === 'keystore') wallet = 'json'
 
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
             event: "Swap_LoginWallet",
@@ -56,7 +56,7 @@ export default class GoogleTagmanager {
 
 
   completeTrade(hash, walletType, tradeType) {
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
             event: "Swap_CompleteTrade",
@@ -70,7 +70,7 @@ export default class GoogleTagmanager {
 
 
   trackCoinExchange(data) {
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Swap_Swap",
@@ -83,7 +83,7 @@ export default class GoogleTagmanager {
   }
   
   trackWalletVolume(walletType, srcTokenSymbol, srcAmount, destTokenSymbol) {
-    if (typeof dataLayer !== "undefined") {
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function') {
       try {
         dataLayer.push("Swap_WalletVolume", { walletType, srcTokenSymbol, srcAmount, destTokenSymbol })
       } catch(e) {
@@ -93,7 +93,7 @@ export default class GoogleTagmanager {
   }
 
   trackCoinTransfer(token){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Swap_Transfer",
@@ -106,7 +106,7 @@ export default class GoogleTagmanager {
   }
 
   tokenForCharting(token){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Swap_*_1_Click_ViewChart",
@@ -119,7 +119,7 @@ export default class GoogleTagmanager {
   }
 
   acceptTerm(){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Step_1_Accept_Term"
@@ -131,7 +131,7 @@ export default class GoogleTagmanager {
   }
   
   trackViewingKyberSwapApp(os) {
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try {
         dataLayer.push({
           event: "Step_1_View_KyberSwap_App",
@@ -144,7 +144,7 @@ export default class GoogleTagmanager {
   }
 
   trackBaseCurrency(currency){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Swap_*_2_Click_Currency",
@@ -157,7 +157,7 @@ export default class GoogleTagmanager {
   }
 
   trackMarketSetting(field, value){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
           event: "Swap_*_2_Click_MarketSetting",
@@ -170,7 +170,7 @@ export default class GoogleTagmanager {
   }
 
   trackChooseGas(type, gas, typeGas){
-    if (typeof dataLayer !== "undefined"){
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
             event: `Step_3_select_advance_feature_${type}_choose_gas`,
