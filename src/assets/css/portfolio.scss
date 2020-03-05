@@ -33,7 +33,9 @@
     }
 
     .portfolio__account {
-      width: 425px;
+      width: 100%;
+      max-width: 425px !important;
+      margin: 0 auto;
     }
   }
 
@@ -361,10 +363,6 @@
   @include screen-max-width(xlarge) {
     display: block;
 
-    &--not-imported {
-      display: flex;
-    }
-
     &__left,
     &__right {
       width: 100% !important;
@@ -436,6 +434,15 @@
         width: 16px;
         height: 16px;
         margin-right: 30px;
+      }
+    }
+
+    &--not-imported {
+      margin-top: 0;
+
+      .portfolio__navigation {
+        padding-left: 10px;
+        justify-content: flex-start;
       }
     }
   }
