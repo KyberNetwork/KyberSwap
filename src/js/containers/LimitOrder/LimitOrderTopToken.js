@@ -69,11 +69,11 @@ export default class LimitOrderTopToken extends React.Component {
               {this.state.topTokens.map((token, index) => {
                 return (
                   <div className="rate-item" key={index}>
-                    {this.renderArrowChange(token.change_usd_24h)}
+                    {this.renderArrowChange(token.change_usd_1h)}
                     <div>
                       <div className="pair">{token.token_symbol}</div>
                       <div className="value up">${formatNumber(token.rate_usd_now, 6)}</div>
-                      <div className="percent-change">{token.change_usd_24h}%</div>
+                      <div className="percent-change">{token.change_usd_1h}%</div>
                     </div>
                   </div>
                 )
