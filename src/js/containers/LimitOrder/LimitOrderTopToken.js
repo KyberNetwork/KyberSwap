@@ -60,7 +60,7 @@ export default class LimitOrderTopToken extends React.Component {
     return (
       <div className="limit-order-top-token theme__background-2">
         <div className="limit-order-top-token__title">
-          {this.props.translate('limit_order.top_token') || 'Top Tokens in Last 1 Hour'}
+          {this.props.translate('limit_order.top_token') || 'Top Gainers in Last 1 Hour'}
         </div>
         
         {(!this.state.isLoading && hasData) && (
