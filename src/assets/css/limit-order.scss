@@ -45,7 +45,7 @@
     .rt-table {
       padding-bottom: 10px;
       max-height: 290px;
-      min-height: 225px;
+      min-height: 150px;
       flex: initial;
     }
 
@@ -1229,8 +1229,11 @@
   font-size: 14px;
   font-weight: 500;
 
+  &__advance {
+    padding: 5px 0;
+  }
+
   &__option {
-    color: #5a5e67;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;

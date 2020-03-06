@@ -111,10 +111,10 @@ export default class LimitOrderForm extends React.Component {
     return e.target.value;
   };
   
-  handleRateChanged = (e) => {
+  handleRateChanged = (e, value) => {
     this.clearErrors();
     
-    const value = this.getInputValue(e, this.state.rate);
+    value = value ? value : this.getInputValue(e, this.state.rate);
     if (value === false) return;
   
     this.setState({ rate: value });
@@ -223,12 +223,12 @@ export default class LimitOrderForm extends React.Component {
     const offeredRate = this.props.isBuyForm ? converters.toT(this.props.limitOrder.buyRate) : converters.toT(this.props.limitOrder.sellRate);
     
     if (!+offeredRate) {
-      this.setState({ rate: 0 });
+      this.handleRateChanged(null, 0);
       return;
     }
-    
+
     const formattedOfferedRate = this.props.isBuyForm ? converters.divOfTwoNumber(1, offeredRate) : offeredRate;
-    this.setState({ rate: converters.roundingRateNumber(formattedOfferedRate) });
+    this.handleRateChanged(null, converters.roundingRateNumber(formattedOfferedRate));
   };
   
   renderErrorsAndCompareRate = (errors, renderRateError = false, renderCompareRate = false, renderEligibleError = false) => {
