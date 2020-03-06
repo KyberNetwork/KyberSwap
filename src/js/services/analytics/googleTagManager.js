@@ -68,6 +68,19 @@ export default class GoogleTagmanager {
     }
   }
 
+  txMinedStatus(hash, walletType, tradeType, status, address, accountType) {
+    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
+      try{
+        dataLayer.push({
+            event: "Swap_Tx_Mined",
+            hash, walletType, tradeType, status, address, accountType
+        })
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
 
   trackCoinExchange(data) {
     if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
