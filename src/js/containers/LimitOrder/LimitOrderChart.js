@@ -4,6 +4,7 @@ import { TradingView } from "../Market"
 import { getTokenHighestAndLowestPrice } from "../../services/tokenService";
 import { formatNumber, roundingRateNumber, sumOfTwoNumber } from "../../utils/converter";
 import { getTranslate } from "react-localize-redux";
+import constants from "../../services/constants"
 
 @connect((store) => {
   const translate = getTranslate(store.locale);
@@ -91,12 +92,14 @@ export default class LimitOrderChart extends React.Component {
   };
   
   render() {
+    const displayBaseSymbol = this.props.baseSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.baseSymbol;
+    const displayQuoteSymbol = this.props.quoteSymbol === 'WETH' ? constants.WETH_SUBSTITUTE_NAME : this.props.quoteSymbol;
     const isLoading = this.props.isLoadingData || this.state.loadingHighLowPrice;
     
     return (
       <div className="theme__background-2">
         <div className={`trading-view__header ${this.getColorClass()}`}>
-          <div className="trading-view__header-pair theme__text-8">{this.props.baseSymbol}/{this.props.quoteSymbol}</div>
+          <div className="trading-view__header-pair theme__text-8">{displayBaseSymbol}/{displayQuoteSymbol}</div>
           <div className="trading-view__header-item">
             <div className="trading-view__header-title">
               {this.props.translate('limit_order.24h_change') || '24h Change'}
@@ -134,7 +137,7 @@ export default class LimitOrderChart extends React.Component {
               {this.props.translate('limit_order.24h_volume') || '24h Volume'}
             </div>
             <div className="trading-view__header-value theme__text-8">
-              {isLoading ? '---' : this.renderHeaderData(this.props.tokenVolume, ` ${this.props.quoteSymbol}`)}
+              {isLoading ? '---' : this.renderHeaderData(this.props.tokenVolume, ` ${displayQuoteSymbol}`)}
             </div>
           </div>
         </div>
