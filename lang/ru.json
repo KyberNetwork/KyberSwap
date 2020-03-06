@@ -453,7 +453,13 @@
     "login_buy": "Login to Buy",
     "login_sell": "Login to Sell",
     "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
-    "hold_knc": "Hold 2000 KNC now"
+    "hold_knc": "Hold 2000 KNC now",
+    "top_token": "Top Tokens in Last 1 Hour",
+    "24h_change": "24h Change",
+    "last_price": "Last Price",
+    "24h_high": "24h High",
+    "24h_low": "24h Low",
+    "24h_volume": "24h Volume"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",

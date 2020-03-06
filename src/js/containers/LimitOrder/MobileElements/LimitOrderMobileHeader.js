@@ -16,17 +16,14 @@ import {formatNumber, sumOfTwoNumber} from "../../../utils/converter";
   const limitOrder = store.limitOrder;
   const baseSymbol = limitOrder.sourceTokenSymbol;
   const quoteSymbol = limitOrder.destTokenSymbol;
+  const marketTokens = store.market.tokens;
 
-  const pairToken = store.market.tokens.find(token => {
-    return token.pair === `${quoteSymbol}_${baseSymbol}`;
-  });
+  const pairToken = marketTokens[`${quoteSymbol}_${baseSymbol}`];
 
   let pairVolume = pairToken ? formatNumber(pairToken.volume, 3, ',') : '---';
 
   if (quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-    const ethPairToken = store.market.tokens.find(token => {
-      return token.pair === `ETH_${baseSymbol}`;
-    });
+    const ethPairToken = marketTokens[`ETH_${baseSymbol}`];
     pairVolume = pairToken || ethPairToken ? formatNumber(sumOfTwoNumber(pairToken.volume, ethPairToken.volume), 3, ',') : '---'
   }
 

@@ -428,8 +428,8 @@
     "weth_not_supported_tooltip": "Limit Order only supports ERC20, you have to convert ETH to WETH (ERC20 form of ETH) to use this functionality.",
     "wrap_eth_modal_title": "Convert ETH to WETH",
     "submit": "Submit",
-    "higher_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than current rate.",
-    "lower_rate": "Your rate is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than current rate.",
+    "higher_rate": "Your price is <span class=\"limit-order__percent limit-order__percent--positive\">${percentChange}%</span> higher than market price",
+    "lower_rate": "Your price is <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> lower than market price",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
     "ineligible_address": "This address has been used by another account. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee.",
@@ -457,7 +457,13 @@
     "login_buy": "Login to Buy",
     "login_sell": "Login to Sell",
     "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
-    "hold_knc": "Hold 2000 KNC now"
+    "hold_knc": "Hold 2000 KNC now",
+    "top_token": "Top Gainers in Last 1 Hour",
+    "24h_change": "24h Change",
+    "last_price": "Last Price",
+    "24h_high": "24h High",
+    "24h_low": "24h Low",
+    "24h_volume": "24h Volume"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",

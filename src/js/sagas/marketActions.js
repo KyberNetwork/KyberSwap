@@ -11,6 +11,7 @@ export function* fetchMarketData() {
 
   try {
     let marketData = yield call([ethereum, ethereum.call], "getMarketData");
+    marketData = marketData.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{});
 
     const marketQuotes = Object.keys(tokens)
       .filter((key)=> (tokens[key]["is_quote"] && key !== BLOCKCHAIN_INFO.wrapETHToken))

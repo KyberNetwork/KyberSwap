@@ -1,12 +1,8 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
-
 import * as actions from '../actions/globalActions'
-
-import { Rate } from "../services/rate"
 import { push } from 'react-router-redux';
 import { addTranslationForLanguage, setActiveLanguage } from 'react-localize-redux';
 import { getTranslate } from 'react-localize-redux';
-import constants from "../services/constants"
 import Language from "../../../lang"
 import * as common from "../utils/common";
 import * as converter from "../utils/converter"

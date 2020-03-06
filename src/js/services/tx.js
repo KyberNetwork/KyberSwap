@@ -1,5 +1,4 @@
 import constants from "../services/constants"
-import BLOCKCHAIN_INFO from "../../../env"
 
 export default class Tx {
   constructor(

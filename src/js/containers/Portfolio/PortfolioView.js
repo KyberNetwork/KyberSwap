@@ -16,8 +16,9 @@ const PortfolioView = (props) => {
 
   return (
     <div className={`portfolio theme__text ${props.isImported ? '' : 'portfolio--not-imported'}`}>
-      {(props.isImported && props.isOnMobile) && (
+      {props.isOnMobile && (
         <PortfolioTab
+          isImported={props.isImported}
           mobileTab={props.mobileTab}
           switchMobileTab={props.switchMobileTab}
         />

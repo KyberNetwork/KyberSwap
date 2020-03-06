@@ -7,7 +7,7 @@ import * as converts from "../../utils/converter";
 
 @connect((store, props) => {
   var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
-  const marketTokens = store.market.tokens.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{})
+  const marketTokens = store.market.tokens;
   
   return {
     tokens: store.tokens.tokens,

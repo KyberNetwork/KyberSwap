@@ -23,7 +23,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
   return {
     exchange: store.exchange,
     transfer: store.transfer,
-    account: store.exchange,
+    account: store.account,
     translate: getTranslate(store.locale),
     global: store.global,
     tokens: store.tokens.tokens,
@@ -61,18 +61,21 @@ export default class BroadCastModal extends React.Component {
     try {
       var newTx = await tx.sync(ethereum, tx)
       this.setState({ txStatus: newTx.status })
-      
       switch(newTx.status){
         case "success": 
           const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
 
           const tokens = this.props.tokens
           const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
-          const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
+          const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals 
           this.setState({
             sourceAmount: converter.toT(srcAmount, sourceDecimal),
             destAmount: converter.toT(destAmount, destDecimal)
           })
+          if(this.props.account.account){
+            this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "swap", "success", this.props.account.account.address, this.props.account.account.type);
+          }
+          
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
@@ -84,6 +87,10 @@ export default class BroadCastModal extends React.Component {
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
+
+            if(this.props.account.account){
+              this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "swap", "failed", this.props.account.account.address, this.props.account.account.type);
+            }
           }catch(e){
             console.log(e)
           }

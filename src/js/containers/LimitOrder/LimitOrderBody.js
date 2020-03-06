@@ -14,17 +14,16 @@ import {
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
 import LimitOrderNotification from "./LimitOrderNotification";
+import LimitOrderTopToken from "./LimitOrderTopToken";
 
 @connect((store) => {
-  const global = store.global;
-  const account = store.account.account
-  const translate = getTranslate(store.locale)
-  const tokens = store.tokens.tokens
-  const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum;
+  const account = store.account.account;
+  const translate = getTranslate(store.locale);
+  const baseSymbol = store.limitOrder.sourceTokenSymbol;
+  const isOnMobile = store.global.isOnMobile;
 
   return {
-    translate, limitOrder, tokens, account, ethereum, global
+    translate, account, isOnMobile, baseSymbol
   }
 })
 export default class LimitOrderBody extends React.Component {
@@ -68,10 +67,7 @@ export default class LimitOrderBody extends React.Component {
         <div className={"limit-order__container limit-order__container--right"}>
           {this.props.account === false &&
             <div className={"limit-order-account"}>
-              <ImportAccount
-                tradeType="limit_order"
-                noTerm={true}
-              />
+              <ImportAccount tradeType="limit_order" noTerm />
             </div>
           }
           
@@ -81,31 +77,32 @@ export default class LimitOrderBody extends React.Component {
             <LimitOrderForm formType="buy" />
             <LimitOrderForm formType="sell" />
           </div>
+          
+          <LimitOrderTopToken />
         </div>
       </div>
     )
   };
 
   mobileLayout = () => {
-    const baseSymbol = this.props.limitOrder.sourceTokenSymbol;
     const LimitOrderForm = this.LimitOrderForm;
     const LimitOrderMobileHeader = this.LimitOrderMobileHeader;
     
     return (
-      <div className={"limit-order theme__background"}>
+      <div className={"limit-order limit-order--mobile theme__background"}>
         <LimitOrderMobileHeader toggleMobileChart={this.toggleMobileChart} />
 
         {this.state.mobileOpenChart && (
-          <LimitOrderChart/>
+          <LimitOrderChart />
         )}
   
         <div>
           <div className="limit-order-form__header theme__background-2 theme__border-2">
             <div className={`limit-order-form__tab ${this.state.mobileFormType === 'buy' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('buy')}>
-              {this.props.translate("limit_order.buy", { symbol: baseSymbol })}
+              {this.props.translate("limit_order.buy", { symbol: this.props.baseSymbol })}
             </div>
             <div className={`limit-order-form__tab ${this.state.mobileFormType === 'sell' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('sell')}>
-              {this.props.translate("limit_order.sell", { symbol: baseSymbol })}
+              {this.props.translate("limit_order.sell", { symbol: this.props.baseSymbol })}
             </div>
           </div>
           
@@ -116,10 +113,7 @@ export default class LimitOrderBody extends React.Component {
           <div className={"limit-order__container limit-order__container--right"}>
             {this.props.account === false &&
               <div className={"limit-order-account"}>
-                <ImportAccount
-                  tradeType="limit_order"
-                  noTerm={true}
-                />
+                <ImportAccount tradeType="limit_order" noTerm />
               </div>
             }
           </div>
@@ -131,7 +125,7 @@ export default class LimitOrderBody extends React.Component {
   };
 
   render() {
-    if (this.props.global.isOnMobile) {
+    if (this.props.isOnMobile) {
       return this.mobileLayout()
     } else {
       return this.desktopLayout()

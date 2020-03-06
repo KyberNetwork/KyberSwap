@@ -450,10 +450,16 @@
     "available_balance": "可用余额",
     "cancel_error": "Something went wrong with cancel order process.",
     "received": "收到",
-    "login_buy": "Login to Buy",
-    "login_sell": "Login to Sell",
-    "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
-    "hold_knc": "Hold 2000 KNC now"
+    "login_buy": "登录已进行购买",
+    "login_sell": "登录已进行出售",
+    "free_fee": "如果你有2000个KNC，即可免费使用限价订单(每天最多10个)",
+    "hold_knc": "立即持有2000 KNC",
+    "top_token": "最近1小时的最高代币",
+    "24h_change": "24小时的变化",
+    "last_price": "最近的价格",
+    "24h_high": "24小的最高价格",
+    "24h_low": "24小的最低价格",
+    "24h_volume": "24小时交易量"
   },
   "portfolio": {
     "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",
