@@ -28,10 +28,9 @@ export function* updateTokenBalance(action) {
     const { ethereum, address, tokens } = action.payload;
     const latestBlock = yield call([ethereum, ethereum.call], "getLatestBlock");
     const balanceTokens = yield call([ethereum, ethereum.call], "getAllBalancesTokenAtSpecificBlock", address, tokens, latestBlock)
-
     const limitOrder = store.getState().limitOrder;
+    
     yield call(processLimitOrderPendingBalance, ethereum, limitOrder.pendingBalances, limitOrder.pendingTxs, latestBlock);
-
     yield put(setBalanceToken(balanceTokens))
   }
   catch (err) {
@@ -71,7 +70,7 @@ function* createNewAccount(address, type, keystring, ethereum, walletType, info)
 
 export function* importNewAccount(action) {
   yield put(actions.importLoading())
-  const { address, type, keystring, ethereum, walletType, walletName, info } = action.payload;
+  let { address, type, keystring, ethereum, walletType, walletName, info, wallet } = action.payload;
   const state = store.getState();
   const global = state.global;
   const tokens = state.tokens.tokens;
@@ -106,7 +105,9 @@ export function* importNewAccount(action) {
     yield put(setGasPrice());
     yield put(actions.closeImportLoading());
 
-    const wallet = getWallet(account.type);
+    if (wallet === null) {
+      wallet = getWallet(account.type);
+    }
 
     yield put(actions.importNewAccountComplete(account, wallet, walletName));
     yield put(globalActions.checkUserEligible(ethereum));

@@ -5,7 +5,7 @@ export { default as Ledger } from './ledger.js'
 export { default as WalletLinkKey } from './walletlink.js'
 export { default as WalletConnectKey } from './walletconnect.js'
 export { default as Metamask } from './metamask.js'
-export { default as Torus } from './Torus.js'
+export { default as TorusWallet } from './TorusWallet.js'
 
 import * as keys from "../keys"
 
@@ -36,7 +36,7 @@ export function getWallet(type) {
       keyService = new keys.WalletConnectKey();
       break;
     case "torus":
-      keyService = new keys.Torus();
+      keyService = new keys.TorusWallet();
       break;
     default:
       keyService = new keys.KeyStore();

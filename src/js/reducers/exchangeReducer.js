@@ -1,7 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
 import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
@@ -25,16 +23,13 @@ const exchange = (state = initState, action) => {
       newState.destAmount = ""
       newState.errors = initState.errors
       newState.advanced = false
-      //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       newState.minConversionRate = newState.slippageRate
-
       newState.isEditRate = false
-      //newState.isEditGasPrice = false
-
       newState.isAnalize = false
       newState.isAnalizeComplete = false
+      
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {

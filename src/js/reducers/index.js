@@ -3,8 +3,6 @@ import { persistReducer } from 'redux-persist'
 import session from 'redux-persist/lib/storage/session'
 import storage from 'redux-persist/lib/storage'
 import { routerReducer } from 'react-router-redux'
-import * as BLOCKCHAIN_INFO from "../../../env"
-import constants from "../services/constants"
 import account from './accountReducer'
 import tokens from './tokensReducer'
 import exchange from './exchangeReducer'
@@ -14,12 +12,8 @@ import global from './globalReducer'
 import connection from './connection'
 import utils from './utilsReducer'
 import txs from './txsReducer'
-import locale from './languageReducer'
 import market from './marketReducer'
 import { localizeReducer } from 'react-localize-redux';
-
-
-
 
 const rootReducer = combineReducers({
   account: persistReducer({
@@ -29,7 +23,7 @@ const rootReducer = combineReducers({
   }, account),
   limitOrder: persistReducer({
     key: 'limitOrder',
-    storage: storage,  
+    storage: storage,
     whitelist: ['favorite_pairs_anonymous']
   }, limitOrder),
   locale: localizeReducer,

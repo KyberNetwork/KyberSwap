@@ -103,10 +103,13 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, walletType = null, metamask = null, walletName = "", info = null) {
+export function importNewAccount(
+  address, type, keystring, ethereum, walletType = null,
+  metamask = null, walletName = "", info = null, wallet = null
+) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, walletType, metamask, walletName, info }
+    payload: { address, type, keystring, ethereum, walletType, metamask, walletName, info, wallet }
   }
 }
 
