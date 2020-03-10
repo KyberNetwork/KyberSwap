@@ -4,6 +4,7 @@ import portfolioChartService from "../../services/portfolio_balance";
 import { CHART_RANGE_TYPE } from "../../services/portfolio_balance/portfolioChartUtils";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
+import InlineLoading from "../../components/CommonElement/InlineLoading";
 
 @connect((store) => {
   const address = store.account.account.address || '';
@@ -14,6 +15,7 @@ import { getTranslate } from "react-localize-redux";
     account: store.account,
     address: address.toLowerCase(),
     translate: getTranslate(store.locale),
+    theme: global.theme,
     global: store.global,
     ethereum: ethereum,
     portfolioPerformance: store.account.portfolioPerformance
@@ -28,7 +30,8 @@ export default class PortfolioPerformance extends React.Component {
       tokenAddresses: {},
       renderedChart: false,
       selectedTimeRange: CHART_RANGE_TYPE.SEVEN_DAYS,
-      chartData: null
+      chartData: null,
+      chartLoading: true
     };
     this.chartInstance = null
     this.renderedAtInnitTime = false
@@ -86,6 +89,7 @@ export default class PortfolioPerformance extends React.Component {
 
 
     this.updateChartBalance(chartData)
+    this.setState({chartLoading: false})
   }
 
   clearFetchingInterval() {
@@ -145,7 +149,7 @@ export default class PortfolioPerformance extends React.Component {
               }
             }],
           },
-          responsive: true
+          responsive: false
         }
       });
     }
@@ -183,7 +187,8 @@ export default class PortfolioPerformance extends React.Component {
 
   async selectTimeRange(range){
     this.setState({
-      selectedTimeRange: range
+      selectedTimeRange: range,
+      chartLoading: true
     }, async () => {
       await this.fetchChartData(this.props.address, this.props.ethereum, this.props.tokens)
     })
@@ -216,7 +221,10 @@ export default class PortfolioPerformance extends React.Component {
 
         </div>
 
+        {this.state.chartLoading && <InlineLoading theme={this.props.theme}/>}
+
         <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
+        
       </div>
     )
   }
