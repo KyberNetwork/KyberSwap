@@ -1,4 +1,3 @@
-import { verifyNonce } from "../../utils/validators"
 import { biggestNumber } from "../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../env"
 

@@ -13,15 +13,9 @@ import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 
 @connect((store) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
   return {
     account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens,
     translate: getTranslate(store.locale),
     analytics: store.global.analytics
   }
@@ -58,7 +52,9 @@ export default class ImportByPrivateKey extends React.Component {
         "privateKey",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "Private Key"
+        null,
+        null,
+        "Private Key"
       ))
     } catch (e) {
       console.log(e)

@@ -7,20 +7,13 @@ import {
   ImportByPrivateKey,
   ImportByWalletLink,
   ImportByWalletConnect,
+  ImportByTorus
 } from "../../containers/ImportAccount";
 
 @connect((store) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
   return {
     account: store.account,
-    ethereum: store.connection.ethereum,
-    tokens: supportTokens,
     translate: getTranslate(store.locale),
-    analytics: store.global.analytics,
     global: store.global
   }
 })
@@ -47,13 +40,14 @@ export default class ImportByOtherConnectModal extends React.Component {
                   <div className={`import-account__item large`}>
                     <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
-
-                  <div className={`import-account__item large import-account__item-walletlink`}>
+                  <div className={`import-account__item large`}>
                     <ImportByWalletLink closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
-
-                  <div className={`import-account__item large import-account__item-walletconnect`}>
+                  <div className={`import-account__item large`}>
                     <ImportByWalletConnect closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
+                  </div>
+                  <div className={`import-account__item large`}>
+                    <ImportByTorus closeParentModal={this.closeModal.bind(this)} />
                   </div>
                 </div>
               </div>

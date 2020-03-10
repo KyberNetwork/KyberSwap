@@ -103,10 +103,13 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, walletName = "", info = null) {
+export function importNewAccount(
+  address, type, keystring, ethereum, walletType = null,
+  metamask = null, walletName = "", info = null, wallet = null
+) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, walletName, info }
+    payload: { address, type, keystring, ethereum, walletType, metamask, walletName, info, wallet }
   }
 }
 
@@ -144,10 +147,10 @@ export function incManualNonceAccount(address) {
   }
 }
 
-export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate, walletType = null) {
+export function importAccountMetamask(web3Service, networkId, ethereum, translate, walletType = null) {
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
-    payload: { web3Service, networkId, ethereum, tokens, translate, walletType }
+    payload: { web3Service, networkId, ethereum, translate, walletType }
   }
 }
 
