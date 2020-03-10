@@ -33,6 +33,7 @@ export default class PortfolioPerformance extends React.Component {
     this.chartInstance = null
     this.renderedAtInnitTime = false
     this.fetchingTxsInterval = null
+    this.currency = "ETH"
   }
 
   async componentDidMount() {
@@ -50,6 +51,10 @@ export default class PortfolioPerformance extends React.Component {
       const tokens = this.props.tokens
       const address = nextProps.account.account.address
       await this.fetchChartData(address, ethereum, tokens)
+    }
+    if(nextProps.currency !== this.currency){
+      this.currency = nextProps.currency
+      this.updateChartForNewCurrency()
     }
   }
 
@@ -75,6 +80,10 @@ export default class PortfolioPerformance extends React.Component {
       return;
     }
 
+    this.setState({
+      chartData
+    })
+
 
     this.updateChartBalance(chartData)
   }
@@ -92,8 +101,11 @@ export default class PortfolioPerformance extends React.Component {
           labels: chartData.label,
           datasets: [{
             data: chartData.data.map(d => d.eth),
-            backgroundColor: 'rgba(30, 137, 193, 0.3)',
-            borderColor: '#1e89c1'
+            backgroundColor: 'rgba(250, 101, 102, 0.3)',
+            borderColor: '#fa6566',
+            borderWidth: 0.7,
+            pointRadius: 0,
+            lineTension: 0
           }]
         },
         options: {
@@ -103,10 +115,53 @@ export default class PortfolioPerformance extends React.Component {
           tooltips: {
             mode: 'x-axis'
           },
-          responsive: false
+          scales: {
+            xAxes: [{
+              display: true,
+              gridLines: {
+                display:false
+              },
+              type: 'time',
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 6,
+                maxRotation: 0,
+                minRotation: 0
+              }
+              // time: {
+              //   parser: 'MM/DD/YYYY HH:mm',
+              //   tooltipFormat: 'll HH:mm',
+              //   unit: 'day',
+              //   unitStepSize: 1,
+              //   displayFormats: {
+              //     'day': 'MM/DD/YYYY'
+              //   }
+              // }
+            }],
+            yAxes: [{
+              display: false,
+              gridLines: {
+                display:false
+              }
+            }],
+          },
+          responsive: true
         }
       });
     }
+  }
+
+  updateChartForNewCurrency(){
+    if(!this.state.chartData || !this.chartInstance) return
+    this.chartInstance.data.datasets = [{
+      data: this.state.chartData.data.map(d => d[this.currency.toLowerCase()]),
+      backgroundColor: 'rgba(250, 101, 102, 0.3)',
+      borderColor: '#fa6566',
+      borderWidth: 0.7,
+      pointRadius: 0,
+      lineTension: 0
+    }]
+    this.chartInstance.update()
   }
 
   updateChartBalance(chartData){
@@ -115,9 +170,12 @@ export default class PortfolioPerformance extends React.Component {
     } else {
       this.chartInstance.data.labels = chartData.label
       this.chartInstance.data.datasets = [{
-        data: chartData.data.map(d => d.eth),
-        backgroundColor: 'rgba(30, 137, 193, 0.3)',
-        borderColor: '#1e89c1'
+        data: chartData.data.map(d => d[this.currency.toLowerCase()]),
+        backgroundColor: 'rgba(250, 101, 102, 0.3)',
+        borderColor: '#fa6566',
+        borderWidth: 0.7,
+        pointRadius: 0,
+        lineTension: 0
       }]
       this.chartInstance.update()
     }

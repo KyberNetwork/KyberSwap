@@ -1,6 +1,7 @@
 import { TX_TYPES } from "../constants";
 import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT } from "../../utils/converter";
 
+const POINT_NUMBER = 30
 
 export const CHART_RANGE_TYPE = {
     ONE_DAY: "ONE_DAY",
@@ -11,10 +12,15 @@ export const CHART_RANGE_TYPE = {
 }
 
 export const TIME_RESOLUTION = {
+    FIFTEEN_MINUS: "15",
+    HALF_HOUR: "30",
     HOUR: "60",
+    TWO_HOUR: "120",
+    FOUR_HOUR: "240",
+    HALF_DAY: "720",
     DAY: "D",
-    WEEK: "W",
 }
+
 
 export const CHART_RESOLUTION = {
     HOUR: "H",
@@ -22,7 +28,12 @@ export const CHART_RESOLUTION = {
 }
 
 export const TIME_IN_SECOND = {
+    FIFTEEN_MINUS: 15 * 60,
+    HALF_HOUR: 30 * 60,
     ONE_HOUR: 60 * 60,
+    TWO_HOUR: 120 * 60,
+    FOUR_HOUR: 240 * 60,
+    HALF_DAY: 720 * 60,
     ONE_DAY: 60 * 60 * 24,
     SEVEN_DAYS: 60 * 60 * 24 * 7,
     ONE_MONTH: 60 * 60 * 24 * 30,
@@ -57,27 +68,27 @@ function groupHour(array, fromTime, toTime) {
 
     return byHour
 }
-function groupDay(array, fromTime, toTime) {
-    const startDay = Math.floor(+fromTime / (TIME_IN_SECOND.ONE_DAY));
-    const endDay = Math.floor(+toTime / (TIME_IN_SECOND.ONE_DAY));
-    const txDay = {}
-    const byDay = {}
+function groupByTime(array, fromTime, toTime, res) {
+    const startDay = Math.floor(+fromTime / (res));
+    const endDay = Math.floor(+toTime / (res));
+    const txTime = {}
+    const byTime = {}
 
     array.map(item => {
         if (+item['timeStamp'] >= fromTime) {
-            const d = Math.floor(+item['timeStamp'] / (TIME_IN_SECOND.ONE_DAY));
-            txDay[d] = txDay[d] || [];
-            txDay[d].push(item);
+            const d = Math.floor(+item['timeStamp'] / (res));
+            txTime[d] = txTime[d] || [];
+            txTime[d].push(item);
         }
 
     })
 
     for (let i = startDay + 1; i <= endDay; i++) {
-        if (txDay[i]) byDay[i] = txDay[i]
-        else byDay[i] = []
+        if (txTime[i]) byTime[i] = txTime[i]
+        else byTime[i] = []
     }
 
-    return byDay
+    return byTime
 }
 function groupWeek(array, fromTime, toTime) {
     const startWeek = Math.floor(+fromTime / (TIME_IN_SECOND.SEVEN_DAYS));
@@ -105,16 +116,16 @@ function groupWeek(array, fromTime, toTime) {
 export function getResolutionForTimeRange(rangeType) {
     switch (rangeType) {
         case CHART_RANGE_TYPE.ONE_DAY:
-            return TIME_RESOLUTION.HOUR;
+            return TIME_RESOLUTION.FIFTEEN_MINUS;
 
         case CHART_RANGE_TYPE.SEVEN_DAYS:
-            return TIME_RESOLUTION.DAY;
+            return TIME_RESOLUTION.HOUR;
 
         case CHART_RANGE_TYPE.ONE_MONTH:
-            return TIME_RESOLUTION.DAY;
+            return TIME_RESOLUTION.FOUR_HOUR;
 
         case CHART_RANGE_TYPE.THREE_MONTHS:
-            return TIME_RESOLUTION.DAY;
+            return TIME_RESOLUTION.HALF_DAY;
 
         default:
             return TIME_RESOLUTION.DAY;
@@ -143,12 +154,20 @@ export function getFromTimeForTimeRange(rangeType, now) {
 
 export function parseTxsToTimeFrame(txs, timeResolution, fromTime, toTime) {
     switch (timeResolution) {
+        case TIME_RESOLUTION.FIFTEEN_MINUS:
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.FIFTEEN_MINUS);
+        case TIME_RESOLUTION.HALF_HOUR:
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.HALF_HOUR);
         case TIME_RESOLUTION.HOUR:
-            return groupHour(txs, fromTime, toTime)
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.ONE_HOUR);
+        case TIME_RESOLUTION.TWO_HOUR:
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.TWO_HOUR);
+        case TIME_RESOLUTION.FOUR_HOUR:
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.FOUR_HOUR);
+        case TIME_RESOLUTION.HALF_DAY:
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.HALF_DAY);
         case TIME_RESOLUTION.DAY:
-            return groupDay(txs, fromTime, toTime)
-        case TIME_RESOLUTION.WEEK:
-            return groupWeek(txs, fromTime, toTime)
+            return groupByTime(txs, fromTime, toTime, TIME_IN_SECOND.DAY)
     }
 }
 
@@ -219,6 +238,7 @@ export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
 }
 
 export function mappingTotalBalance(balanceChange, priceInResolution) {
+    console.log("++++++++++++++mappingTotalBalance++++++++++", balanceChange, priceInResolution)
     const returnData = []
     for (let i = 1; i <= balanceChange.length; i++) {
         const epocBalanceObj = balanceChange[balanceChange.length - i]
@@ -276,11 +296,45 @@ export function timelineLabels(start, now, res) {
     let setCall = "setHours"
     let step = 1
     switch (res) {
+        case TIME_RESOLUTION.FIFTEEN_MINUS:
+            labelFormat = "hh:mm"
+            period = TIME_IN_SECOND.FIFTEEN_MINUS * 1000
+            getCall = "getMinutes"
+            setCall = "setMinutes"
+            break;
+        case TIME_RESOLUTION.HALF_HOUR:
+            labelFormat = "hh:mm"
+            period = TIME_IN_SECOND.FIFTEEN_MINUS * 1000
+            getCall = "getMinutes"
+            setCall = "setMinutes"
+            step = 2
+            break;
         case TIME_RESOLUTION.HOUR:
             labelFormat = "dd HH"
             period = TIME_IN_SECOND.ONE_HOUR * 1000
             getCall = "getHours"
             setCall = "setHours"
+            break;
+        case TIME_RESOLUTION.TWO_HOUR:
+            labelFormat = "dd HH"
+            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            getCall = "getHours"
+            setCall = "setHours"
+            step = 2
+            break;
+        case TIME_RESOLUTION.FOUR_HOUR:
+            labelFormat = "dd HH"
+            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            getCall = "getHours"
+            setCall = "setHours"
+            step = 4
+            break;
+        case TIME_RESOLUTION.HALF_DAY:
+            labelFormat = "dd HH"
+            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            getCall = "getHours"
+            setCall = "setHours"
+            step = 12
             break;
         case TIME_RESOLUTION.DAY:
             labelFormat = "dd/MM "
@@ -297,12 +351,14 @@ export function timelineLabels(start, now, res) {
             break;
     }
 
+    console.log("_____________", labelFormat, period, getCall, res)
+
     const startTime = new Date(start * 1000)
     const nowTime = new Date(now * 1000)
-    const numPeriod = Math.round(Math.abs((nowTime - startTime) / period))
+    const numPeriod = Math.round(Math.abs((nowTime - startTime) / (period * step)))
     for (let i = 1; i <= numPeriod; i += 1) {
         startTime[setCall](startTime[getCall]() + step)
-        timeLabels.push(formatDate(startTime, labelFormat));
+        timeLabels.push(new Date(startTime));
     }
     return timeLabels;
 };

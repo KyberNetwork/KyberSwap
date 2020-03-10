@@ -96,6 +96,7 @@ export async function getBalanceTransactionHistoryByTime(address, from) {
   
 
   export async function fetchTradedTokenPrice(fromTime, resolution, arrayTradedTokensSymbol){  
+    console.log("^^^^^^^^^^^^^^^^^fetchTradedTokenPrice^^", fromTime, resolution)
     const now = Math.round(new Date().getTime() / 1000)
     const arraySymbolParams = arrayTradedTokensSymbol.map(symbol => "&symbol=" + symbol).join("")
     const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${now}&resolution=${resolution}&` + arraySymbolParams);

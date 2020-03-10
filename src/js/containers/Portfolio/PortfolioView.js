@@ -73,7 +73,7 @@ const PortfolioView = (props) => {
         
         {isHistoryDisplayed && (
           <Fragment>
-            <PortfolioPerformance  performanceChart={props.performanceChart}  />
+            <PortfolioPerformance  performanceChart={props.performanceChart} currency={props.currency} />
 
             <PortfolioTxHistory
               historyTxs={props.historyTxs}
