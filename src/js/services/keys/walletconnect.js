@@ -1,4 +1,3 @@
-import * as keyService from "./baseKey"
 import WalletConnect from "@walletconnect/browser";
 
 export default class WalletConnectKey {
@@ -76,34 +75,9 @@ export default class WalletConnectKey {
     });
   };
   
-  async broadCastTx(funcName, ...args) {
-    try {
-      var txHash = await this.callSignTransaction(funcName, ...args);
-      return txHash
-    } catch (err) {
-      console.log(err);
-      throw err
-    }
-  }
-  
-  callSignTransaction = (funcName, ...args) => {
-    return new Promise((resolve, reject) => {
-      keyService[funcName](...args).then(result => {
-        const {txParams, keystring, password} = result;
-        this.sealTx(txParams, keystring, password).then(result => {
-          resolve(result)
-        }).catch(e => {
-          console.log(e.message);
-          reject(e)
-        })
-      })
-    })
-  };
-  
-  sealTx = (txParams, keystring, password) => {
+  sealTx = (txParams) => {
     return new Promise((resolve, reject) => {
       this.walletConnector.sendTransaction(txParams).then(transactionHash => {
-        // Returns transaction id (hash)
         resolve(transactionHash)
       }).catch(err => {
         console.log(err);
@@ -114,8 +88,7 @@ export default class WalletConnectKey {
   
   async signSignature(message, account) {
     try {
-      var signature = await this.walletConnector.signPersonalMessage([message, account.address]);
-      return signature
+      return await this.walletConnector.signPersonalMessage([message, account.address]);
     } catch (err) {
       console.log(err);
       throw err

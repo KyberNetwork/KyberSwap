@@ -141,9 +141,6 @@ export default class Ledger {
         })
       })
     })
-    // const { txParams, keystring, } = keyService[funcName](...args)
-    // txParams.address_n = keystring
-    // return this.sealTx(txParams)
   }
 
   getLedgerError(error) {
@@ -169,7 +166,6 @@ export default class Ledger {
     eTx.raw[6] = Buffer.from([params.chainId])
     let txToSign = ethUtil.rlp.encode(eTx.raw)
     return new Promise((resolve, reject) => {
-      //let timeout = 60
       this.connectLedger().then((eth) => {
         this.signLedgerTransaction(eth, params.address_n, txToSign.toString('hex')).then((response) => {
           params.v = "0x" + response['v']

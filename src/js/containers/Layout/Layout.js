@@ -103,6 +103,11 @@ export default class Layout extends React.Component {
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
     }
+    
+    const accountWallet = this.props.account.wallet;
+    if (accountWallet.needToBeInitiated === true) {
+      accountWallet.initiateWallet();
+    }
 
     if (window.kyberBus) {
       window.kyberBus.on('set.theme.light', () => {this.switchTheme('light')});
