@@ -238,7 +238,6 @@ export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
 }
 
 export function mappingTotalBalance(balanceChange, priceInResolution) {
-    console.log("++++++++++++++mappingTotalBalance++++++++++", balanceChange, priceInResolution)
     const returnData = []
     for (let i = 1; i <= balanceChange.length; i++) {
         const epocBalanceObj = balanceChange[balanceChange.length - i]
@@ -350,8 +349,6 @@ export function timelineLabels(start, now, res) {
             step = 7
             break;
     }
-
-    console.log("_____________", labelFormat, period, getCall, res)
 
     const startTime = new Date(start * 1000)
     const nowTime = new Date(now * 1000)
