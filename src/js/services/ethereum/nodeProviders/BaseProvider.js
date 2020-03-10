@@ -104,7 +104,6 @@ export default class BaseProvider {
         listToken.push(token.address)
         listSymbol.push(token.symbol)
       })
-
       return new Promise((resolve, reject) => {
           this.wrapperContract.methods.getBalances(address, listToken).call(
             {},
