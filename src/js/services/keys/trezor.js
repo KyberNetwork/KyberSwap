@@ -1,4 +1,3 @@
-import React from 'react';
 import * as keyService from "./baseKey"
 import TrezorConnect from 'trezor-connect';
 import EthereumTx from "ethereumjs-tx"
@@ -9,10 +8,8 @@ import * as converter from "../../utils/converter"
 
 const defaultDPath = "m/44'/60'/0'/0";
 
-export default class Trezor extends React.Component {
-  constructor(props) {
-    super(props);
-
+export default class Trezor {
+  constructor() {
     TrezorConnect.manifest({
       email: 'andrew@kyber.network',
       appUrl: 'http://kyberswap.com'

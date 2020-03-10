@@ -1,11 +1,13 @@
 import WalletConnect from "@walletconnect/browser";
+import BaseWallet from "./BaseWallet";
 
-export default class WalletConnectKey {
-  constructor() {
+export default class WalletConnectKey extends BaseWallet {
+  constructor(props) {
+    super(props);
+    
     this.walletConnector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org"
     });
-    
     this.address = null;
   }
   
