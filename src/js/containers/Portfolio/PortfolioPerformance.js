@@ -76,7 +76,7 @@ export default class PortfolioPerformance extends React.Component {
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
     console.log("=#############====chartData", chartData)
 
-    if (chartData.isError) {
+    if (!chartData || chartData.isError) {
       this.clearFetchingInterval();
       return;
     }
@@ -111,12 +111,13 @@ export default class PortfolioPerformance extends React.Component {
   }
   renderChartBalance(chartData) {
     if (chartData) {
+      const arrayValue = chartData.data.map(d => d.eth)
       this.chartInstance = new Chart(this.props.performanceChart.current, {
         type: 'line',
         data: {
           labels: chartData.label,
           datasets: [{
-            data: chartData.data.map(d => d.eth),
+            data: arrayValue,
             backgroundColor: 'rgba(250, 101, 102, 0.3)',
             borderColor: '#fa6566',
             borderWidth: 0.7,
@@ -142,13 +143,10 @@ export default class PortfolioPerformance extends React.Component {
                 autoSkip: true,
                 maxTicksLimit: 6,
                 maxRotation: 0,
-                minRotation: 0
+                minRotation: 0,
               },
               time: {
-                // parser: 'MM/DD/YYYY HH:mm',
-                // tooltipFormat: 'll HH:mm',
                 unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-                // unitStepSize: 1,
                 displayFormats: {
                   'day': 'MMM DD',
                   'hour': 'hA'
@@ -156,9 +154,17 @@ export default class PortfolioPerformance extends React.Component {
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               gridLines: {
                 display:false
+              },
+              ticks: {
+                min: chartData["minETH"],
+                max: chartData["maxETH"],
+                maxTicksLimit: 1,
+                mirror: true,
+                // fontColor: "#fff",
+                // fontSize: 18,
               }
             }],
           },
@@ -170,14 +176,29 @@ export default class PortfolioPerformance extends React.Component {
 
   updateChartForNewCurrency(){
     if(!this.state.chartData || !this.chartInstance) return
+    const arrayValue = this.state.chartData.data.map(d => d[this.currency.toLowerCase()])
     this.chartInstance.data.datasets = [{
-      data: this.state.chartData.data.map(d => d[this.currency.toLowerCase()]),
+      data: arrayValue,
       backgroundColor: 'rgba(250, 101, 102, 0.3)',
       borderColor: '#fa6566',
       borderWidth: 0.7,
       pointRadius: 0,
       lineTension: 0
     }]
+    this.chartInstance.options.scales.yAxes = [{
+        display: true,
+        gridLines: {
+          display:false
+        },
+        ticks: {
+          maxTicksLimit: 1,
+          min: this.state.chartData["min" + this.currency.toUpperCase()],
+          max: this.state.chartData["max" + this.currency.toUpperCase()],
+          mirror: true,
+          // fontColor: "#fff",
+          // fontSize: 18,
+        }
+      }]
     this.chartInstance.update()
   }
 
@@ -185,6 +206,7 @@ export default class PortfolioPerformance extends React.Component {
     if(!this.chartInstance) {
       this.renderChartBalance(chartData)
     } else {
+      const arrayValue = chartData.data.map(d => d[this.currency.toLowerCase()])
       this.chartInstance.data.labels = chartData.label
       this.chartInstance.data.datasets = [{
         data: chartData.data.map(d => d[this.currency.toLowerCase()]),
@@ -204,13 +226,10 @@ export default class PortfolioPerformance extends React.Component {
           autoSkip: true,
           maxTicksLimit: 6,
           maxRotation: 0,
-          minRotation: 0
+          minRotation: 0,
         },
         time: {
-          // parser: 'MM/DD/YYYY HH:mm',
-          // tooltipFormat: 'll HH:mm',
           unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-          // unitStepSize: 1,
           displayFormats: {
             'minute': "h:mm a",
             'day': 'MMM DD',
@@ -218,6 +237,21 @@ export default class PortfolioPerformance extends React.Component {
           }
         }
       }]
+      this.chartInstance.options.scales.yAxes = [{
+        display: true,
+        gridLines: {
+          display:false
+        },
+        ticks: {
+          maxTicksLimit: 1,
+          min: chartData["min" + this.currency.toUpperCase()],
+          max: chartData["max" + this.currency.toUpperCase()],
+          mirror: true,
+          // fontColor: "#fff",
+          // fontSize: 18,
+        }
+      }]
+
       this.chartInstance.update()
     }
   }

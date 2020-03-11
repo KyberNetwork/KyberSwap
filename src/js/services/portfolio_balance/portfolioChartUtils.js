@@ -1,5 +1,5 @@
 import { TX_TYPES } from "../constants";
-import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT } from "../../utils/converter";
+import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, compareTwoNumber, roundingNumber, stringToNumber } from "../../utils/converter";
 
 export const TIME_EPSILON = 120
 
@@ -259,11 +259,16 @@ export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
 
 export function mappingTotalBalance(balanceChange, priceInResolution) {
     const returnData = []
+    let minETH = 0
+    let maxETH = 0
+    let minUSD = 0
+    let maxUSD = 0
     for (let i = 1; i <= balanceChange.length; i++) {
         const epocBalanceObj = balanceChange[balanceChange.length - i]
         if (!epocBalanceObj) continue
         let totalEpocETHPBalance = 0
         let totalEpocUSDBalance = 0
+        
         Object.keys(epocBalanceObj).map(tokenSymbol => {
             const tokenPrice = priceInResolution[tokenSymbol]
             if (!tokenPrice) return
@@ -275,15 +280,33 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
             const tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i].toString()
             totalEpocETHPBalance = sumOfTwoNumber(totalEpocETHPBalance, multiplyOfTwoNumber(tokenPriceEth, epocBalanceObj[tokenSymbol]))
             totalEpocUSDBalance = sumOfTwoNumber(totalEpocUSDBalance, multiplyOfTwoNumber(tokenPriceUsd, epocBalanceObj[tokenSymbol]))
-
         })
         returnData.unshift({
-            eth: totalEpocETHPBalance,
-            usd: totalEpocUSDBalance
+            eth: roundingNumber(totalEpocETHPBalance),
+            usd: roundingNumber(totalEpocUSDBalance),
         })
+        if(compareTwoNumber(totalEpocETHPBalance, maxETH) == 1){
+            maxETH = roundingNumber(totalEpocETHPBalance)
+        }
+        if(compareTwoNumber(totalEpocUSDBalance, maxUSD) == 1){
+            maxUSD = roundingNumber(totalEpocUSDBalance)
+        }
+        if(compareTwoNumber(totalEpocETHPBalance, minETH) == -1 || minETH == 0){
+            minETH = roundingNumber(totalEpocETHPBalance)
+        }
+        if(compareTwoNumber(totalEpocUSDBalance, minUSD) == -1 || minUSD == 0){
+            minUSD = roundingNumber(totalEpocUSDBalance)
+        }
     }
 
-    return returnData
+
+    return {
+        data: returnData,
+        maxETH: stringToNumber(maxETH),
+        minETH: stringToNumber(minETH),
+        maxUSD: stringToNumber(maxUSD),
+        minUSD: stringToNumber(minUSD)
+    }
 }
 
 export function getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens){
