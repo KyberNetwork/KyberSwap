@@ -1,7 +1,7 @@
 import React from "react"
 import Chart from "chart.js";
 import portfolioChartService from "../../services/portfolio_balance";
-import { CHART_RANGE_TYPE } from "../../services/portfolio_balance/portfolioChartUtils";
+import { CHART_RANGE_TYPE, getTimeUnitWithTimeRange } from "../../services/portfolio_balance/portfolioChartUtils";
 import { connect } from "react-redux";
 import { getTranslate } from "react-localize-redux";
 import InlineLoading from "../../components/CommonElement/InlineLoading";
@@ -131,16 +131,17 @@ export default class PortfolioPerformance extends React.Component {
                 maxTicksLimit: 6,
                 maxRotation: 0,
                 minRotation: 0
+              },
+              time: {
+                // parser: 'MM/DD/YYYY HH:mm',
+                // tooltipFormat: 'll HH:mm',
+                unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
+                // unitStepSize: 1,
+                displayFormats: {
+                  'day': 'MMM DD',
+                  'hour': 'hA'
+                }
               }
-              // time: {
-              //   parser: 'MM/DD/YYYY HH:mm',
-              //   tooltipFormat: 'll HH:mm',
-              //   unit: 'day',
-              //   unitStepSize: 1,
-              //   displayFormats: {
-              //     'day': 'MM/DD/YYYY'
-              //   }
-              // }
             }],
             yAxes: [{
               display: false,
@@ -149,7 +150,7 @@ export default class PortfolioPerformance extends React.Component {
               }
             }],
           },
-          responsive: false
+          responsive: true
         }
       });
     }
@@ -180,6 +181,30 @@ export default class PortfolioPerformance extends React.Component {
         borderWidth: 0.7,
         pointRadius: 0,
         lineTension: 0
+      }]
+      this.chartInstance.options.scales.xAxes = [{
+        display: true,
+        gridLines: {
+          display:false
+        },
+        type: 'time',
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 6,
+          maxRotation: 0,
+          minRotation: 0
+        },
+        time: {
+          // parser: 'MM/DD/YYYY HH:mm',
+          // tooltipFormat: 'll HH:mm',
+          unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
+          // unitStepSize: 1,
+          displayFormats: {
+            'minute': "h:mm a",
+            'day': 'MMM DD',
+            'hour': 'hA'
+          }
+        }
       }]
       this.chartInstance.update()
     }
