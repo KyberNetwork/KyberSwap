@@ -8,10 +8,10 @@ import constants from "../../../services/constants"
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import { getAssetUrl } from "../../../utils/common"
-import { getWallet } from "../../../services/keys"
 
 @connect((store) => {
     const account = store.account.account
+    const wallet = store.account.wallet
     const translate = getTranslate(store.locale)
     const tokens = store.tokens.tokens
     const limitOrder = store.limitOrder
@@ -19,7 +19,7 @@ import { getWallet } from "../../../services/keys"
     const exchange = store.exchange
     const global = store.global
     return {
-        translate, limitOrder, tokens, account, ethereum, exchange, global
+        translate, limitOrder, tokens, account, ethereum, exchange, global, wallet
     }
 })
 export default class WrapETHModal extends React.Component {
@@ -108,7 +108,7 @@ export default class WrapETHModal extends React.Component {
         
         this.setState({ isConfirming: true, err: "" })
         
-        var wallet = getWallet(this.props.account.type)
+        const wallet = this.props.wallet;
         
         try {
             var formId = "limit_order"

@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import constants from "../../../services/constants"
-import {getWallet} from "../../../services/keys"
 import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
@@ -13,6 +12,7 @@ import createOrderObject from "../../../utils/convert_object";
 
 @connect((store, props) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
@@ -22,7 +22,8 @@ import createOrderObject from "../../../utils/convert_object";
   const convertedTriggerRate = props.isBuyForm ? converters.divOfTwoNumber(1, props.triggerRate) : props.triggerRate;
 
   return {
-    translate, limitOrder, tokens, account, ethereum, global, isOnDAPP: store.account.isOnDAPP, formType, convertedTriggerRate
+    translate, limitOrder, tokens, account, ethereum, global,
+    isOnDAPP: store.account.isOnDAPP, formType, convertedTriggerRate, wallet
   }
 })
 export default class ConfirmModal extends React.Component {
@@ -84,7 +85,7 @@ export default class ConfirmModal extends React.Component {
     this.props.global.analytics.callTrack("trackClickConfirmSubmitOrder");
     if(this.state.isFetchFee) return
 
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
 
     this.setState({
       isConfirming: true,
