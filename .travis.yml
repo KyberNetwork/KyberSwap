@@ -20,9 +20,44 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    upload-dir: swap
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    upload-dir: transfer
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: kyber-swap
     region: ap-southeast-1
-    local_dir: dist
+    local_dir: public
     upload_dir: $TRAVIS_BRANCH
     skip_cleanup: true
     on:
