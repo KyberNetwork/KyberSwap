@@ -23,11 +23,11 @@ export default class ImportByTorus extends React.Component {
       await wallet.initiateWallet();
     } catch (e) {
       const titleModal = this.props.translate('error_text') || 'Error';
-      const contentModal = e.message ? e.message : this.props.translate('error.torus_connect_error') || 'Cannot connect to Torus';
+      const contentModal = this.props.translate('error.torus_connect_error') || 'Cannot connect to Torus';
       this.props.dispatch(openInfoModal(titleModal, contentModal));
       
       this.props.dispatch(closeImportLoading());
-      wallet.clearSession();
+      
       return;
     }
     
