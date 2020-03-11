@@ -6,7 +6,8 @@ import {
   ImportByDeviceWithLedger,
   ImportByDeviceWithTrezor,
   ImportByPromoCode,
-  ImportByOther
+  ImportByOther,
+  ImportByTorus
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
@@ -84,7 +85,11 @@ const ImportAccountView = (props) => {
                   <ImportByPromoCode isOnMobile={isOnMobile} />
                 </div>
               )}
-              
+  
+              <div className={`import-account__item`}>
+                <ImportByTorus isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+              </div>
+  
               <div className="import-account__item download-app">
                 <div className={"import-account__block"}>
                   <div className={"import-account__block-left"}>

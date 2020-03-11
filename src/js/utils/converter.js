@@ -582,6 +582,19 @@ export function findNetworkName(networkId) {
   }
 }
 
+export function findNetworkCode(networkId) {
+  switch (networkId) {
+    case 1:
+      return "mainnet";
+    case 3:
+      return "ropsten";
+    case 4:
+      return "rinkeby";
+    default:
+      return 'mainnet';
+  }
+}
+
 export function sliceErrorMsg(err) {
   if (err.length > 70) {
     err = err.slice(0, 70) + '...'
