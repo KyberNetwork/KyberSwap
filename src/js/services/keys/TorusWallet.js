@@ -32,7 +32,7 @@ export default class TorusWallet extends BaseWallet {
   }
   
   clearSession = () => {
-    this.torus.logout();
+    this.torus.cleanUp();
   };
   
   getWalletName = () => {
