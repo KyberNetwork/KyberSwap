@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { getWallet } from "../../services/keys";
 import { importLoading, closeImportLoading, importNewAccount } from "../../actions/accountActions";
 import { getTranslate } from "react-localize-redux";
+import { openInfoModal } from "../../actions/utilActions";
 
 @connect((store) => {
   return {
@@ -21,7 +22,10 @@ export default class ImportByTorus extends React.Component {
     try {
       await wallet.initiateWallet();
     } catch (e) {
-      console.log(e);
+      const titleModal = this.props.translate('error_text') || 'Error';
+      const contentModal = e.message ? e.message : this.props.translate('error.torus_connect_error') || 'Cannot connect to Torus';
+      this.props.dispatch(openInfoModal(titleModal, contentModal));
+      
       this.props.dispatch(closeImportLoading());
       wallet.clearSession();
       return;
