@@ -305,7 +305,9 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
         maxETH: stringToNumber(maxETH),
         minETH: stringToNumber(minETH),
         maxUSD: stringToNumber(maxUSD),
-        minUSD: stringToNumber(minUSD)
+        minUSD: stringToNumber(minUSD),
+        trendETH: compareTwoNumber(returnData[0].eth, returnData[returnData.length -1 ].eth) == 1 ? "down" : "up",
+        trendUSD: compareTwoNumber(returnData[0].usd, returnData[returnData.length -1 ].usd) == 1 ? "down" : "up"
     }
 }
 

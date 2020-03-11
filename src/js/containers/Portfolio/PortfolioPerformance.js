@@ -118,8 +118,8 @@ export default class PortfolioPerformance extends React.Component {
           labels: chartData.label,
           datasets: [{
             data: arrayValue,
-            backgroundColor: 'rgba(250, 101, 102, 0.3)',
-            borderColor: '#fa6566',
+            backgroundColor: 'rgba(30, 137, 193, 0.3)',
+            borderColor: '#1e89c1',
             borderWidth: 0.7,
             pointRadius: 0,
             lineTension: 0
@@ -179,8 +179,8 @@ export default class PortfolioPerformance extends React.Component {
     const arrayValue = this.state.chartData.data.map(d => d[this.currency.toLowerCase()])
     this.chartInstance.data.datasets = [{
       data: arrayValue,
-      backgroundColor: 'rgba(250, 101, 102, 0.3)',
-      borderColor: '#fa6566',
+      backgroundColor: 'rgba(30, 137, 193, 0.3)',
+      borderColor: '#1e89c1',
       borderWidth: 0.7,
       pointRadius: 0,
       lineTension: 0
@@ -210,8 +210,8 @@ export default class PortfolioPerformance extends React.Component {
       this.chartInstance.data.labels = chartData.label
       this.chartInstance.data.datasets = [{
         data: chartData.data.map(d => d[this.currency.toLowerCase()]),
-        backgroundColor: 'rgba(250, 101, 102, 0.3)',
-        borderColor: '#fa6566',
+        backgroundColor: 'rgba(30, 137, 193, 0.3)',
+        borderColor: '#1e89c1',
         borderWidth: 0.7,
         pointRadius: 0,
         lineTension: 0
