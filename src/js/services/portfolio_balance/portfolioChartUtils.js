@@ -1,7 +1,7 @@
 import { TX_TYPES } from "../constants";
 import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT } from "../../utils/converter";
 
-const POINT_NUMBER = 30
+export const TIME_EPSILON = 120
 
 export const CHART_RANGE_TYPE = {
     ONE_DAY: "ONE_DAY",
@@ -131,6 +131,26 @@ export function getResolutionForTimeRange(rangeType) {
             return TIME_RESOLUTION.DAY;
     }
 }
+
+export function getTimeUnitWithTimeRange(rangeType){
+    switch (rangeType) {
+        case CHART_RANGE_TYPE.ONE_DAY:
+            return "minute";
+
+        case CHART_RANGE_TYPE.SEVEN_DAYS:
+            return "day";
+
+        case CHART_RANGE_TYPE.ONE_MONTH:
+            return "day";
+
+        case CHART_RANGE_TYPE.THREE_MONTHS:
+            return "day";
+
+        default:
+            return "day";
+    }
+}
+
 export function getFromTimeForTimeRange(rangeType, now) {
     switch (rangeType) {
         case CHART_RANGE_TYPE.ONE_DAY:
@@ -266,7 +286,7 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
     return returnData
 }
 
-export function getArrayTradedTokenSymbols(txs, tokenByAddress){
+export function getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens){
     const arrayTradedTokenSymbols = []
     txs.map(tx => {
         switch (tx.type) {
@@ -282,6 +302,12 @@ export function getArrayTradedTokenSymbols(txs, tokenByAddress){
                 if (notExistInArray(arrayTradedTokenSymbols, sourceTokenSymbol)) arrayTradedTokenSymbols.push(sourceTokenSymbol)
                 if (notExistInArray(arrayTradedTokenSymbols, destTokenSymbol)) arrayTradedTokenSymbols.push(destTokenSymbol)
                 break;
+        }
+    })
+
+    balanceTokens.map(token => {
+        if(notExistInArray(arrayTradedTokenSymbols, token.symbol) && +token.balance > 0){
+            arrayTradedTokenSymbols.push(token.symbol)
         }
     })
     return arrayTradedTokenSymbols
@@ -300,13 +326,14 @@ export function timelineLabels(start, now, res) {
             period = TIME_IN_SECOND.FIFTEEN_MINUS * 1000
             getCall = "getMinutes"
             setCall = "setMinutes"
+            step = 15
             break;
         case TIME_RESOLUTION.HALF_HOUR:
             labelFormat = "hh:mm"
-            period = TIME_IN_SECOND.FIFTEEN_MINUS * 1000
+            period = TIME_IN_SECOND.HALF_HOUR * 1000
             getCall = "getMinutes"
             setCall = "setMinutes"
-            step = 2
+            step = 30
             break;
         case TIME_RESOLUTION.HOUR:
             labelFormat = "dd HH"
@@ -316,21 +343,21 @@ export function timelineLabels(start, now, res) {
             break;
         case TIME_RESOLUTION.TWO_HOUR:
             labelFormat = "dd HH"
-            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            period = TIME_IN_SECOND.TWO_HOUR * 1000
             getCall = "getHours"
             setCall = "setHours"
             step = 2
             break;
         case TIME_RESOLUTION.FOUR_HOUR:
             labelFormat = "dd HH"
-            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            period = TIME_IN_SECOND.FOUR_HOUR * 1000
             getCall = "getHours"
             setCall = "setHours"
             step = 4
             break;
         case TIME_RESOLUTION.HALF_DAY:
             labelFormat = "dd HH"
-            period = TIME_IN_SECOND.ONE_HOUR * 1000
+            period = TIME_IN_SECOND.HALF_DAY * 1000
             getCall = "getHours"
             setCall = "setHours"
             step = 12
@@ -352,7 +379,7 @@ export function timelineLabels(start, now, res) {
 
     const startTime = new Date(start * 1000)
     const nowTime = new Date(now * 1000)
-    const numPeriod = Math.round(Math.abs((nowTime - startTime) / (period * step)))
+    const numPeriod = Math.round(Math.abs((nowTime - startTime) / period))
     for (let i = 1; i <= numPeriod; i += 1) {
         startTime[setCall](startTime[getCall]() + step)
         timeLabels.push(new Date(startTime));

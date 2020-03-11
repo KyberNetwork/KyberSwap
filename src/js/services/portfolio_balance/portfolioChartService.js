@@ -6,7 +6,7 @@ import { validateResultObject, returnResponseObject, validateTransferTx, validat
 
 import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame,
      mappingBalanceChange, mappingTotalBalance, getArrayTradedTokenSymbols, timelineLabels,
-     CHART_RANGE_IN_SECOND} from "./portfolioChartUtils"
+     CHART_RANGE_IN_SECOND, TIME_EPSILON} from "./portfolioChartUtils"
 
 
 
@@ -16,11 +16,6 @@ export async function getLastestBalance(ethereum, userAddr, supportTokens) {
 
     return balances
 }
-/// caculate the init block time from chart resolution
-export function getInitBlockTime(rangeType) {
-    return Math.round(new Date().getTime() / 1000) - CHART_RANGE_IN_SECOND[rangeType]
-}
-
 
 function getTokenByAddress(tokens){
     return Object.values(tokens).reduce((result, token) => {
@@ -31,10 +26,10 @@ function getTokenByAddress(tokens){
 
 
 export async function render(ethereum, address, tokens, rangeType) {
-    const now = Math.round(new Date().getTime() / 1000)
-    const innitTime = Math.round(new Date().getTime() / 1000) - CHART_RANGE_IN_SECOND[rangeType]
+    const now = Math.floor(new Date().getTime() / 1000) - TIME_EPSILON
+    const innitTime = now - CHART_RANGE_IN_SECOND[rangeType]
 
-    const addrTxs = await getBalanceTransactionHistoryByTime(address, innitTime)
+    const addrTxs = await getBalanceTransactionHistoryByTime(address, innitTime, now)
     const arrayTxs = addrTxs.data
 
     if (!arrayTxs || !arrayTxs.length) return
@@ -53,10 +48,10 @@ export async function render(ethereum, address, tokens, rangeType) {
     const chartFromTime = getFromTimeForTimeRange(rangeType, now)
 
     const txByResolution = parseTxsToTimeFrame(txs, chartResolution, chartFromTime, now)
-    const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress)
+    const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens)
     const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress)
-
-    const priceInResolution = await fetchTradedTokenPrice(chartFromTime, chartResolution, arrayTradedTokenSymbols)
+    
+    const priceInResolution = await fetchTradedTokenPrice(chartFromTime, now, chartResolution, arrayTradedTokenSymbols)
     const totalBalance = mappingTotalBalance(balanceChange, priceInResolution)
 
     const labelSeries = timelineLabels(chartFromTime, now, chartResolution)
@@ -67,8 +62,8 @@ export async function render(ethereum, address, tokens, rangeType) {
 }
 
 
-export async function getBalanceTransactionHistoryByTime(address, from) {
-    const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&from=${from}`);
+export async function getBalanceTransactionHistoryByTime(address, from, to) {
+    const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&startTime=${from}&endTime=${to}`);
     const result = await response.json();
   
     const isValidResult = validateResultObject(result);
@@ -95,11 +90,9 @@ export async function getBalanceTransactionHistoryByTime(address, from) {
   }
   
 
-  export async function fetchTradedTokenPrice(fromTime, resolution, arrayTradedTokensSymbol){  
-    console.log("^^^^^^^^^^^^^^^^^fetchTradedTokenPrice^^", fromTime, resolution)
-    const now = Math.round(new Date().getTime() / 1000)
+  export async function fetchTradedTokenPrice(fromTime, toTime, resolution, arrayTradedTokensSymbol){  
     const arraySymbolParams = arrayTradedTokensSymbol.map(symbol => "&symbol=" + symbol).join("")
-    const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${now}&resolution=${resolution}&` + arraySymbolParams);
+    const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${toTime}&resolution=${resolution}&` + arraySymbolParams);
     const result = await response.json();
     if(result.error){
       // to do return err
