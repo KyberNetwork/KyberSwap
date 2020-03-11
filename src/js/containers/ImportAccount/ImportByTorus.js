@@ -1,10 +1,14 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import { getWallet } from "../../services/keys";
 import { importLoading, closeImportLoading, importNewAccount } from "../../actions/accountActions";
+import { getTranslate } from "react-localize-redux";
 
 @connect((store) => {
-  return { ethereum: store.connection.ethereum }
+  return {
+    ethereum: store.connection.ethereum,
+    translate: getTranslate(store.locale)
+  }
 })
 export default class ImportByTorus extends React.Component {
   async connect() {
@@ -40,10 +44,31 @@ export default class ImportByTorus extends React.Component {
   
   render() {
     return (
-      <div className="import-account__block theme__import-button" onClick={() => this.connect()}>
-        <div className="import-account__icon torus"/>
-        <div className="import-account__name">Torus</div>
-      </div>
+      <Fragment>
+        {!this.props.isOnMobile && (
+          <div className="import-account__block theme__import-button" onClick={() => this.connect()}>
+            <div className="import-account__icon torus"/>
+            <div className="import-account__name">Torus</div>
+          </div>
+        )}
+        
+        {this.props.isOnMobile && (
+          <div className={"import-account__block theme__import-button"}>
+            <div className={"import-account__block-left"}>
+              <div className="import-account__icon torus"/>
+              <div>
+                <div className="import-account__name">Torus</div>
+                <div className="import-account__desc">
+                  {this.props.translate("address.import_address") || "Access your Wallet"}
+                </div>
+              </div>
+            </div>
+            <div className="import-account__block-right" onClick={() => this.connect()}>
+              {this.props.translate("address.enter") || "Enter"}
+            </div>
+          </div>
+        )}
+      </Fragment>
     )
   }
 }

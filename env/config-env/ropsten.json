@@ -382,5 +382,6 @@
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "networkId": 3,
     "chainName": "Ropsten",
+    "networkName": "ropsten",
     "tracker": "https://ropsten-api.kyber.network"
 }

@@ -17,7 +17,7 @@ export default class TorusWallet extends BaseWallet {
   
     const params = {
       network: {
-        host: BLOCKCHAIN_INFO["connections"]["http"][1]["endPoint"],
+        host: BLOCKCHAIN_INFO.networkName,
         chainId: BLOCKCHAIN_INFO.networkId,
         networkName: BLOCKCHAIN_INFO.chainName
       }
