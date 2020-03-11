@@ -8,10 +8,12 @@ export default class Metamask extends BaseWallet {
   }
   
   getDisconnected() {
+    const web3 = this.web3;
+    
     return new Promise((resolve) => {
-      this.web3.getCoinbase().then(address => {
+      web3.getCoinbase().then(address => {
         var addressInterval = setInterval(function() {
-          this.web3.getCoinbase().then(updatedAddress => {
+          web3.getCoinbase().then(updatedAddress => {
             if (updatedAddress != address){
               clearInterval(addressInterval)
               resolve()

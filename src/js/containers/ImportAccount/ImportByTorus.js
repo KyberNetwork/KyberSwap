@@ -2,7 +2,6 @@ import React from "react"
 import { connect } from "react-redux"
 import { getWallet } from "../../services/keys";
 import { importLoading, closeImportLoading, importNewAccount } from "../../actions/accountActions";
-import { openInfoModal } from "../../actions/utilActions";
 
 @connect((store) => {
   return { ethereum: store.connection.ethereum }
@@ -15,17 +14,17 @@ export default class ImportByTorus extends React.Component {
     this.props.closeParentModal();
     this.props.dispatch(importLoading());
     
-    await wallet.initiateWallet();
-    const address = wallet.address;
-    
-    if (!address) {
+    try {
+      await wallet.initiateWallet();
+    } catch (e) {
+      console.log(e);
       this.props.dispatch(closeImportLoading());
-      
-      const titleModal = this.props.translate('error_text') || 'Error';
-      const contentModal = this.props.translate('error.torus_connect_error') || 'Cannot connect to Torus';
-      this.props.dispatch(openInfoModal(titleModal, contentModal))
+      wallet.clearSession();
+      return;
     }
-  
+    
+    const address = wallet.address;
+
     this.props.dispatch(importNewAccount(
       address,
       walletType,
