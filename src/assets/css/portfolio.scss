@@ -171,10 +171,22 @@
     &-chart {
       width: 100%;
     }
-    &__chart__header {
-      display: flex;
-      justify-content: space-between;
+    &__mobile{
+      max-height: 400px;
+      
+      .portfolio__switcher{
+        justify-content: flex-start;
+      }
     }
+    &__desktop{
+      max-height: 300px;
+      .portfolio__performance__chart__header {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+   
+
   }
 
   &__history {

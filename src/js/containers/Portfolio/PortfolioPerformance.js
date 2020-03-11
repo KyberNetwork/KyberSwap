@@ -35,12 +35,20 @@ export default class PortfolioPerformance extends React.Component {
     };
     this.chartInstance = null
     this.renderedAtInnitTime = false
+    this.intervalRenderAtInitTime = null
     this.fetchingTxsInterval = null
     this.currency = "ETH"
   }
 
   async componentDidMount() {
     await this.fetchChartData(this.props.address, this.props.ethereum, this.props.tokens)
+    this.intervalRenderAtInitTime = setInterval(async () => {
+      if(this.renderedAtInnitTime) {
+        this.clearIntervalRenderAtInitTime()
+      } else {
+        await this.fetchChartData(this.props.address, this.props.ethereum, this.props.tokens)
+      }  
+    }, 4000);
   }
 
   componentWillUnmount() {
@@ -49,12 +57,12 @@ export default class PortfolioPerformance extends React.Component {
   
 
   async componentWillReceiveProps(nextProps){
-    if(nextProps.account.account.address && nextProps.ethereum && !this.renderedAtInnitTime){
-      const ethereum = nextProps.ethereum;
-      const tokens = this.props.tokens
-      const address = nextProps.account.account.address
-      await this.fetchChartData(address, ethereum, tokens)
-    }
+    // if(nextProps.account.account.address && nextProps.ethereum && !this.renderedAtInnitTime){
+    //   const ethereum = nextProps.ethereum;
+    //   const tokens = this.props.tokens
+    //   const address = nextProps.account.account.address
+    //   await this.fetchChartData(address, ethereum, tokens)
+    // }
     if(nextProps.currency !== this.currency){
       this.currency = nextProps.currency
       this.updateChartForNewCurrency()
@@ -62,8 +70,8 @@ export default class PortfolioPerformance extends React.Component {
   }
 
   async fetchChartData(address, ethereum, tokens){
+    console.log("_____________________________ call fetchChartData")
     if(!ethereum || !address || !tokens) return
-    this.renderedAtInnitTime = true
 
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
     console.log("=#############====chartData", chartData)
@@ -87,7 +95,7 @@ export default class PortfolioPerformance extends React.Component {
       chartData
     })
 
-
+    this.renderedAtInnitTime = true
     this.updateChartBalance(chartData)
     this.setState({chartLoading: false})
   }
@@ -97,6 +105,10 @@ export default class PortfolioPerformance extends React.Component {
     this.fetchingTxsInterval = null;
   }
 
+  clearIntervalRenderAtInitTime(){
+    clearInterval(this.intervalRenderAtInitTime);
+    this.intervalRenderAtInitTime = null;
+  }
   renderChartBalance(chartData) {
     if (chartData) {
       this.chartInstance = new Chart(this.props.performanceChart.current, {
@@ -223,7 +235,7 @@ export default class PortfolioPerformance extends React.Component {
   render() {
     this.renderChartBalance()
     return (
-      <div className={"portfolio__performance portfolio__item theme__background-2"}>
+      <div className={"portfolio__performance portfolio__item theme__background-2 " + ("portfolio__performance" + (this.props.isOnMobile ? "__mobile" : "__desktop"))}>
         <div className={"portfolio__performance__chart__header"}>
           <div className={"portfolio__title"}>Portfolio Performance</div>
           <div className="common__mb-10">
