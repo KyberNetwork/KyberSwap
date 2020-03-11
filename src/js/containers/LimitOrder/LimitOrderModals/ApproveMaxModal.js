@@ -5,12 +5,12 @@ import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import * as accountActions from "../../../actions/accountActions"
 import * as converter from "../../../utils/converter"
-import { getWallet } from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
-@connect((store, props) => {
+@connect(store => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
@@ -18,7 +18,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
   const global = store.global
 
   return {
-    translate, limitOrder, tokens, account, ethereum, global
+    translate, limitOrder, tokens, account, ethereum, global, wallet
   }
 })
 export default class ApproveMaxModal extends React.Component {
@@ -75,8 +75,9 @@ export default class ApproveMaxModal extends React.Component {
       isConfirming: true
     })
 
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
     var password = ""
+    
     try {
       var nonce = this.props.account.getUsableNonce()
       var txHash = await wallet.broadCastTx("getAppoveToken", this.props.ethereum, this.props.sourceToken.address, 0, nonce, this.state.gasLimit,

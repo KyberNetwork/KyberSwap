@@ -5,22 +5,21 @@ import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
 import * as converter from "../../../utils/converter"
-import { getWallet } from "../../../services/keys"
 import {FeeDetail} from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
 
 @connect((store) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const exchange = store.exchange
   const ethereum = store.connection.ethereum
   
   return {
-    translate, exchange, tokens, account, ethereum
+    translate, exchange, tokens, account, ethereum, wallet
   }
 })
-
 export default class ApproveMaxModal extends React.Component {
   constructor(props) {
     super(props);
@@ -73,7 +72,7 @@ export default class ApproveMaxModal extends React.Component {
       isConfirming: true
     })
     
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
     var password = ""
     
     try {

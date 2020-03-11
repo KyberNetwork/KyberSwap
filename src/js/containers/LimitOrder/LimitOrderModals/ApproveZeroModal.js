@@ -4,20 +4,20 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import * as accountActions from "../../../actions/accountActions"
-import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as converter from "../../../utils/converter"
 
 @connect((store) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const global = store.global
   const ethereum = store.connection.ethereum
   return {
-    translate, limitOrder, tokens, account, ethereum, global
+    translate, limitOrder, tokens, account, ethereum, global, wallet
   }
 })
 export default class ApproveZeroModal extends React.Component {
@@ -74,7 +74,7 @@ export default class ApproveZeroModal extends React.Component {
       isConfirming: true
     })
 
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
     var password = ""
     
     try {

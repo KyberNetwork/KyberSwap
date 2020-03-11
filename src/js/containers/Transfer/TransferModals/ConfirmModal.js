@@ -5,14 +5,14 @@ import { getTranslate } from 'react-localize-redux'
 import * as transferActions from "../../../actions/transferActions"
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
 import Tx from "../../../services/tx"
 import * as accountActions from '../../../actions/accountActions'
 import constants from "../../../services/constants";
 
-@connect((store, props) => {
+@connect((store) => {
     const account = store.account.account
+    const wallet = store.account.wallet;
     const translate = getTranslate(store.locale)
     const tokens = store.tokens.tokens
     const transfer = store.transfer
@@ -20,10 +20,9 @@ import constants from "../../../services/constants";
     const global = store.global
 
     return {
-        translate, transfer, tokens, account, ethereum, global
+        translate, transfer, tokens, account, ethereum, global, wallet
     }
 })
-
 export default class ConfirmModal extends React.Component {
     constructor() {
         super()
@@ -135,7 +134,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     async clickTransfer() {
-        var wallet = getWallet(this.props.account.type)
+        const wallet = this.props.wallet;
 
         if (this.state.isConfirmingTx) return
         
