@@ -243,7 +243,7 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     
                     const bigSourceAmount = toT(tx.swap_source_amount, sourceData.decimals)
                     const bigDestAmount = toT(tx.swap_dest_amount, destData.decimals)
-                    balanceChange[sourceTokenSymbol] = subOfTwoNumber(balanceChange[sourceTokenSymbol], bigSourceAmount)
+                    balanceChange[sourceTokenSymbol] = sumOfTwoNumber(balanceChange[sourceTokenSymbol], bigSourceAmount)
                     balanceChange[destTokenSymbol] = subOfTwoNumber(balanceChange[destTokenSymbol], bigDestAmount)
                     break;
             }
