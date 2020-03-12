@@ -18,7 +18,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import constants from "../../services/constants"
 import { TransferAccount } from "../../containers/Transfer"
 
-@connect((store, props) => {
+@connect((store) => {
   return {
     transfer: store.transfer,
     account: store.account,
@@ -27,7 +27,6 @@ import { TransferAccount } from "../../containers/Transfer"
     translate: getTranslate(store.locale)
   }
 })
-
 class Transfer extends React.Component {
   constructor(props) {
     super(props);
@@ -146,7 +145,8 @@ class Transfer extends React.Component {
   }
 
   handleScanQRCode = (data) => {
-    this.props.dispatch(transferActions.specifyAddressReceive(data));
+    this.setState({ destAddress: data.trim() });
+    this.props.dispatch(transferActions.clearTransferError())
   }
 
   toggleAdvanceContent = () => {
