@@ -1,4 +1,4 @@
-import React from "react"
+import React,  { Fragment } from "react"
 import Chart from "chart.js";
 import portfolioChartService from "../../services/portfolio_balance";
 import { CHART_RANGE_TYPE, getTimeUnitWithTimeRange } from "../../services/portfolio_balance/portfolioChartUtils";
@@ -31,13 +31,14 @@ export default class PortfolioPerformance extends React.Component {
       renderedChart: false,
       selectedTimeRange: CHART_RANGE_TYPE.SEVEN_DAYS,
       chartData: null,
-      chartLoading: true
+      chartLoading: true,
+      emplyWallet: false
     };
     this.chartInstance = null
     this.renderedAtInnitTime = false
     this.intervalRenderAtInitTime = null
     this.fetchingTxsInterval = null
-    this.currency = "ETH"
+    this.currency = props.currency
   }
 
   async componentDidMount() {
@@ -72,6 +73,8 @@ export default class PortfolioPerformance extends React.Component {
   async fetchChartData(address, ethereum, tokens){
     console.log("_____________________________ call fetchChartData")
     if(!ethereum || !address || !tokens) return
+    this.renderedAtInnitTime = true
+
 
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
     console.log("=#############====chartData", chartData)
@@ -90,12 +93,12 @@ export default class PortfolioPerformance extends React.Component {
       
       return;
     }
+    this.clearFetchingInterval();
 
     this.setState({
       chartData
     })
 
-    this.renderedAtInnitTime = true
     this.updateChartBalance(chartData)
     this.setState({chartLoading: false})
   }
@@ -111,7 +114,8 @@ export default class PortfolioPerformance extends React.Component {
   }
   renderChartBalance(chartData) {
     if (chartData) {
-      const arrayValue = chartData.data.map(d => d.eth)
+      const currentCurrency = this.currency
+      const arrayValue = chartData.data.map(d => d[currentCurrency.toLowerCase()])
       this.chartInstance = new Chart(this.props.performanceChart.current, {
         type: 'line',
         data: {
@@ -130,7 +134,12 @@ export default class PortfolioPerformance extends React.Component {
             display: false
           },
           tooltips: {
-            mode: 'x-axis'
+            mode: 'x-axis',
+            callbacks: {
+              label: function(t, d) {
+                return t.yLabel + " " + currentCurrency.toUpperCase()
+              }
+            }
           },
           scales: {
             xAxes: [{
@@ -159,8 +168,8 @@ export default class PortfolioPerformance extends React.Component {
                 display:false
               },
               ticks: {
-                min: chartData["minETH"],
-                max: chartData["maxETH"],
+                min: chartData["min" + currentCurrency.toUpperCase()],
+                max: chartData["max" + currentCurrency.toUpperCase()],
                 maxTicksLimit: 1,
                 mirror: true,
                 // fontColor: "#fff",
@@ -176,7 +185,8 @@ export default class PortfolioPerformance extends React.Component {
 
   updateChartForNewCurrency(){
     if(!this.state.chartData || !this.chartInstance) return
-    const arrayValue = this.state.chartData.data.map(d => d[this.currency.toLowerCase()])
+    const currentCurrency = this.currency
+    const arrayValue = this.state.chartData.data.map(d => d[currentCurrency.toLowerCase()])
     this.chartInstance.data.datasets = [{
       data: arrayValue,
       backgroundColor: 'rgba(30, 137, 193, 0.3)',
@@ -192,13 +202,22 @@ export default class PortfolioPerformance extends React.Component {
         },
         ticks: {
           maxTicksLimit: 1,
-          min: this.state.chartData["min" + this.currency.toUpperCase()],
-          max: this.state.chartData["max" + this.currency.toUpperCase()],
+          min: this.state.chartData["min" + currentCurrency.toUpperCase()],
+          max: this.state.chartData["max" + currentCurrency.toUpperCase()],
           mirror: true,
           // fontColor: "#fff",
           // fontSize: 18,
         }
       }]
+
+      this.chartInstance.options.tooltips = {
+        mode: 'x-axis',
+        callbacks: {
+          label: function(t, d) {
+            return t.yLabel + " " + currentCurrency.toUpperCase()
+          }
+        }
+      }
     this.chartInstance.update()
   }
 
@@ -206,10 +225,10 @@ export default class PortfolioPerformance extends React.Component {
     if(!this.chartInstance) {
       this.renderChartBalance(chartData)
     } else {
-      const arrayValue = chartData.data.map(d => d[this.currency.toLowerCase()])
+      const currentCurrency = this.currency
       this.chartInstance.data.labels = chartData.label
       this.chartInstance.data.datasets = [{
-        data: chartData.data.map(d => d[this.currency.toLowerCase()]),
+        data: chartData.data.map(d => d[currentCurrency.toLowerCase()]),
         backgroundColor: 'rgba(30, 137, 193, 0.3)',
         borderColor: '#1e89c1',
         borderWidth: 0.7,
@@ -244,13 +263,22 @@ export default class PortfolioPerformance extends React.Component {
         },
         ticks: {
           maxTicksLimit: 1,
-          min: chartData["min" + this.currency.toUpperCase()],
-          max: chartData["max" + this.currency.toUpperCase()],
+          min: chartData["min" + currentCurrency.toUpperCase()],
+          max: chartData["max" + currentCurrency.toUpperCase()],
           mirror: true,
           // fontColor: "#fff",
           // fontSize: 18,
         }
       }]
+
+      this.chartInstance.options.tooltips = {
+        mode: 'x-axis',
+        callbacks: {
+          label: function(t, d) {
+            return t.yLabel + " " + currentCurrency.toUpperCase()
+          }
+        }
+      }
 
       this.chartInstance.update()
     }
@@ -267,7 +295,6 @@ export default class PortfolioPerformance extends React.Component {
   }
 
   render() {
-    this.renderChartBalance()
     return (
       <div className={"portfolio__performance portfolio__item theme__background-2 " + ("portfolio__performance" + (this.props.isOnMobile ? "__mobile" : "__desktop"))}>
         <div className={"portfolio__performance__chart__header"}>
@@ -286,15 +313,27 @@ export default class PortfolioPerformance extends React.Component {
               <div className={"portfolio__switcher-item" + (this.state.selectedTimeRange == CHART_RANGE_TYPE.THREE_MONTHS ? " portfolio__switcher-item--active" : "")} 
               onClick={() => this.selectTimeRange(CHART_RANGE_TYPE.THREE_MONTHS)}>3 Months</div>
 
-              
             </div>
           </div>
 
         </div>
 
-        {this.state.chartLoading && <InlineLoading theme={this.props.theme}/>}
+        
 
-        <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
+        {this.state.chartData && this.state.chartData.isEmpty ? 
+        <div className="portfolio__info">
+          <div className="portfolio__info-text theme__text-7">
+          -- % --
+          </div>
+          {/*<div className="portfolio__info-button">Start Now</div>*/}
+        </div>
+        :
+        <Fragment>
+          {this.state.chartLoading && <InlineLoading theme={this.props.theme}/>}
+          <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
+        </Fragment>
+        
+        }
         
       </div>
     )

@@ -4,7 +4,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, convertTimestampToTime } from "../../utils/converter";
 import { validateResultObject, returnResponseObject, validateTransferTx, validateSwapTx} from "../portfolioService"
 
-import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame,
+import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame, isEmptyWallet,
      mappingBalanceChange, mappingTotalBalance, getArrayTradedTokenSymbols, timelineLabels,
      CHART_RANGE_IN_SECOND, TIME_EPSILON} from "./portfolioChartUtils"
 
@@ -30,7 +30,7 @@ export async function render(ethereum, address, tokens, rangeType) {
     const innitTime = now - CHART_RANGE_IN_SECOND[rangeType]
 
     const addrTxs = await getBalanceTransactionHistoryByTime(address, innitTime, now)
-    
+    const isEmpty = isEmptyWallet(addrTxs)
 
     if (addrTxs.isError || addrTxs.inQueue) {
         // todo handle history no txs
@@ -56,7 +56,8 @@ export async function render(ethereum, address, tokens, rangeType) {
     const labelSeries = timelineLabels(chartFromTime, now, chartResolution)
     return {
         ...totalBalance,
-        label: labelSeries
+        label: labelSeries,
+        isEmpty: isEmpty
     }
 }
 
