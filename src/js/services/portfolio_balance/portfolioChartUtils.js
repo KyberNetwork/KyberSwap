@@ -203,11 +203,10 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         }
     })
     const arrayBalance = [lastestBalance]
-
     let tmpBalance
     const arrayTxsByRes = Object.values(txsByRes)
-    for (let i = arrayTxsByRes.length - 1; i >= 0; i--) {
-        tmpBalance = arrayBalance[0]
+    for (let i = arrayTxsByRes.length - 1; i > 0; i--) {
+        tmpBalance = {...arrayBalance[0]}
 
         const txs = arrayTxsByRes[i]
         const balanceChange = {}
@@ -255,7 +254,7 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         })
         arrayBalance.unshift({...tmpBalance})
     }
-    arrayBalance.pop()  // remove lastestBalance
+    // arrayBalance.pop()  // remove lastestBalance
     return arrayBalance
 }
 
@@ -407,7 +406,7 @@ export function timelineLabels(start, now, res) {
     const startTime = new Date(start * 1000)
     const nowTime = new Date(now * 1000)
     const numPeriod = Math.round(Math.abs((nowTime - startTime) / period))
-    for (let i = 1; i <= numPeriod; i += 1) {
+    for (let i = 0; i <= numPeriod; i += 1) {
         startTime[setCall](startTime[getCall]() + step)
         timeLabels.push(new Date(startTime));
     }
