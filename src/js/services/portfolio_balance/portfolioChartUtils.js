@@ -195,11 +195,12 @@ function notExistInArray(array, item) {
     return array.indexOf(item) < 0 ? true : false
 }
 
-export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
-
+export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, supportToken) {
     const lastestBalance = {}
-    Object.values(tokens).map(t => {
-        lastestBalance[t.symbol] = toT(t.balance, t.decimals)
+    tokensBalance.map(t => {
+        if(supportToken[t.symbol]){
+            lastestBalance[t.symbol] = toT(t.balance, supportToken[t.symbol].decimals)
+        }
     })
     const arrayBalance = [lastestBalance]
 
@@ -217,31 +218,32 @@ export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
                 case TX_TYPES.send:
                 case TX_TYPES.receive:
                     const transferTokenSymbol = tokenByAddress[tx.transfer_token_address]
-                    if (!transferTokenSymbol || !tokens[transferTokenSymbol]) break;
+                    if (!transferTokenSymbol || !supportToken[transferTokenSymbol]) break;
 
-                    const tokenData = tokens[transferTokenSymbol]
+                    const tokenData = supportToken[transferTokenSymbol]
                     const bigTokenAmount = toT(tx.transfer_token_value, tokenData.decimals)
-
+                    
                     if (!balanceChange[transferTokenSymbol]) balanceChange[transferTokenSymbol] = 0
 
-                    if (tx.type == TX_TYPES.send) balanceChange[transferTokenSymbol] = subOfTwoNumber(balanceChange[transferTokenSymbol], bigTokenAmount)
-                    if (tx.type == TX_TYPES.receive) balanceChange[transferTokenSymbol] = sumOfTwoNumber(balanceChange[transferTokenSymbol], bigTokenAmount)
+                    if (tx.type == TX_TYPES.send) balanceChange[transferTokenSymbol] =  sumOfTwoNumber(balanceChange[transferTokenSymbol], bigTokenAmount)
+                    if (tx.type == TX_TYPES.receive) balanceChange[transferTokenSymbol] = subOfTwoNumber(balanceChange[transferTokenSymbol], bigTokenAmount)
                     break;
                 case TX_TYPES.swap:
 
                     const sourceTokenSymbol = tokenByAddress[tx.swap_source_token]
                     const destTokenSymbol = tokenByAddress[tx.swap_dest_token]
 
-                    if (!sourceTokenSymbol || !tokens[sourceTokenSymbol] || !destTokenSymbol || !tokens[destTokenSymbol]) break;
+                    if (!sourceTokenSymbol || !supportToken[sourceTokenSymbol] || !destTokenSymbol || !supportToken[destTokenSymbol]) break;
 
-                    const sourceData = tokens[sourceTokenSymbol]
-                    const destData = tokens[destTokenSymbol]
+                    const sourceData = supportToken[sourceTokenSymbol]
+                    const destData = supportToken[destTokenSymbol]
                     if (!balanceChange[sourceTokenSymbol]) balanceChange[sourceTokenSymbol] = 0
                     if (!balanceChange[destTokenSymbol]) balanceChange[destTokenSymbol] = 0
 
+                    
                     const bigSourceAmount = toT(tx.swap_source_amount, sourceData.decimals)
                     const bigDestAmount = toT(tx.swap_dest_amount, destData.decimals)
-                    balanceChange[sourceTokenSymbol] = subOfTwoNumber(balanceChange[sourceTokenSymbol], bigSourceAmount)
+                    balanceChange[sourceTokenSymbol] = sumOfTwoNumber(balanceChange[sourceTokenSymbol], bigSourceAmount)
                     balanceChange[destTokenSymbol] = subOfTwoNumber(balanceChange[destTokenSymbol], bigDestAmount)
                     break;
             }
@@ -251,7 +253,7 @@ export function mappingBalanceChange(txsByRes, tokens, tokenByAddress) {
             if (!tmpBalance[key]) tmpBalance[key] = 0
             tmpBalance[key] = sumOfTwoNumber(tmpBalance[key], balanceChange[key])
         })
-        arrayBalance.unshift(tmpBalance)
+        arrayBalance.unshift({...tmpBalance})
     }
     arrayBalance.pop()  // remove lastestBalance
     return arrayBalance
