@@ -81,3 +81,9 @@ typings/
 
 # OS generated files
 .DS_Store
+
+
+public
+public/*
+
+utils
