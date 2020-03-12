@@ -148,6 +148,14 @@ export default class PortfolioPerformance extends React.Component {
             }
           }
         },
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 30,
+                bottom: 0
+            }
+        },
         scales: {
           xAxes: [{
             display: true,
@@ -180,6 +188,7 @@ export default class PortfolioPerformance extends React.Component {
               max: chartData["max" + currentCurrency.toUpperCase()],
               maxTicksLimit: 1,
               mirror: true,
+              labelOffset: -13,
               fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
               callback: function(value) {
                 return value + " " + currencyUnit;
