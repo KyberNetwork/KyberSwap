@@ -32,8 +32,6 @@ export async function render(ethereum, address, tokens, rangeType) {
     const addrTxs = await getBalanceTransactionHistoryByTime(address, innitTime, now)
     
 
- 
-
     if (addrTxs.isError || addrTxs.inQueue) {
         // todo handle history no txs
         return { isError: addrTxs.isError, inQueue: addrTxs.inQueue}
@@ -52,7 +50,6 @@ export async function render(ethereum, address, tokens, rangeType) {
     const txByResolution = parseTxsToTimeFrame(txs, chartResolution, chartFromTime, now)
     const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens)
     const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress, tokens)
-    
     const priceInResolution = await fetchTradedTokenPrice(chartFromTime, now, chartResolution, arrayTradedTokenSymbols)
     const totalBalance = mappingTotalBalance(balanceChange, priceInResolution)
 
@@ -97,8 +94,7 @@ export async function getBalanceTransactionHistoryByTime(address, from, to) {
     const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${toTime}&resolution=${resolution}&` + arraySymbolParams);
     const result = await response.json();
     if(result.error){
-      // to do return err
-      return 
+      return {inQueue: true}
     }
   
     return result.data
