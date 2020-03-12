@@ -18,7 +18,8 @@ import InlineLoading from "../../components/CommonElement/InlineLoading";
     theme: global.theme,
     global: store.global,
     ethereum: ethereum,
-    portfolioPerformance: store.account.portfolioPerformance
+    portfolioPerformance: store.account.portfolioPerformance,
+    theme: store.global.theme
   }
 })
 
@@ -39,6 +40,7 @@ export default class PortfolioPerformance extends React.Component {
     this.intervalRenderAtInitTime = null
     this.fetchingTxsInterval = null
     this.currency = props.currency
+    this.theme = props.theme
   }
 
   async componentDidMount() {
@@ -66,8 +68,13 @@ export default class PortfolioPerformance extends React.Component {
     // }
     if(nextProps.currency !== this.currency){
       this.currency = nextProps.currency
-      this.updateChartForNewCurrency()
+      this.updateChartForNewProps()
     }
+    if(nextProps.theme !== this.theme){
+      this.theme = nextProps.theme
+      this.updateChartForNewProps()
+    }
+
   }
 
   async fetchChartData(address, ethereum, tokens){
@@ -99,7 +106,7 @@ export default class PortfolioPerformance extends React.Component {
       chartData
     })
 
-    this.updateChartBalance(chartData)
+    this.renderChartBalance(chartData)
     this.setState({chartLoading: false})
   }
 
@@ -112,176 +119,91 @@ export default class PortfolioPerformance extends React.Component {
     clearInterval(this.intervalRenderAtInitTime);
     this.intervalRenderAtInitTime = null;
   }
+
   renderChartBalance(chartData) {
     if (chartData) {
       const currentCurrency = this.currency
+      const currencyUnit = currentCurrency == "ETH" ? "ETH" : "$"
       const arrayValue = chartData.data.map(d => d[currentCurrency.toLowerCase()])
-      this.chartInstance = new Chart(this.props.performanceChart.current, {
-        type: 'line',
-        data: {
-          labels: chartData.label,
-          datasets: [{
-            data: arrayValue,
-            backgroundColor: 'rgba(30, 137, 193, 0.3)',
-            borderColor: '#1e89c1',
-            borderWidth: 0.7,
-            pointRadius: 0,
-            lineTension: 0
-          }]
+      const chartConfigData = {
+        labels: chartData.label,
+        datasets: [{
+          data: arrayValue,
+          backgroundColor: 'rgba(30, 137, 193, 0.3)',
+          borderColor: '#1e89c1',
+          borderWidth: 0.7,
+          pointRadius: 0,
+          lineTension: 0
+        }]
+      }
+      const chartConfigOptions = {
+        legend: {
+          display: false
         },
-        options: {
-          legend: {
-            display: false
-          },
-          tooltips: {
-            mode: 'x-axis',
-            callbacks: {
-              label: function(t, d) {
-                return t.yLabel + " " + currentCurrency.toUpperCase()
+        tooltips: {
+          mode: 'x-axis',
+          callbacks: {
+            label: function(t, d) {
+              return t.yLabel + " " + currencyUnit
+            }
+          }
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display:false
+            },
+            type: 'time',
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 6,
+              maxRotation: 0,
+              minRotation: 0,
+              fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
+            },
+            time: {
+              unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
+              displayFormats: {
+                'day': 'MMM DD',
+                'hour': 'hA'
               }
             }
-          },
-          scales: {
-            xAxes: [{
-              display: true,
-              gridLines: {
-                display:false
-              },
-              type: 'time',
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 6,
-                maxRotation: 0,
-                minRotation: 0,
-              },
-              time: {
-                unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-                displayFormats: {
-                  'day': 'MMM DD',
-                  'hour': 'hA'
-                }
-              }
-            }],
-            yAxes: [{
-              display: true,
-              gridLines: {
-                display:false
-              },
-              ticks: {
-                min: chartData["min" + currentCurrency.toUpperCase()],
-                max: chartData["max" + currentCurrency.toUpperCase()],
-                maxTicksLimit: 1,
-                mirror: true,
-                // fontColor: "#fff",
-                // fontSize: 18,
-              }
-            }],
-          },
-          responsive: true
-        }
-      });
+          }],
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display:false
+            },
+            ticks: {
+              min: chartData["min" + currentCurrency.toUpperCase()],
+              max: chartData["max" + currentCurrency.toUpperCase()],
+              maxTicksLimit: 1,
+              mirror: true,
+              fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
+            }
+          }],
+        },
+        responsive: true
+      }
+      const chartConfig = {
+        type: 'line',
+        data: chartConfigData,
+        options: chartConfigOptions
+      };
+      if(!this.chartInstance){
+        this.chartInstance = new Chart(this.props.performanceChart.current, chartConfig);
+      } else {
+        this.chartInstance.data = chartConfigData
+        this.chartInstance.options = chartConfigOptions
+        this.chartInstance.update()
+      }
     }
   }
 
-  updateChartForNewCurrency(){
-    if(!this.state.chartData || !this.chartInstance) return
-    const currentCurrency = this.currency
-    const arrayValue = this.state.chartData.data.map(d => d[currentCurrency.toLowerCase()])
-    this.chartInstance.data.datasets = [{
-      data: arrayValue,
-      backgroundColor: 'rgba(30, 137, 193, 0.3)',
-      borderColor: '#1e89c1',
-      borderWidth: 0.7,
-      pointRadius: 0,
-      lineTension: 0
-    }]
-    this.chartInstance.options.scales.yAxes = [{
-        display: true,
-        gridLines: {
-          display:false
-        },
-        ticks: {
-          maxTicksLimit: 1,
-          min: this.state.chartData["min" + currentCurrency.toUpperCase()],
-          max: this.state.chartData["max" + currentCurrency.toUpperCase()],
-          mirror: true,
-          // fontColor: "#fff",
-          // fontSize: 18,
-        }
-      }]
-
-      this.chartInstance.options.tooltips = {
-        mode: 'x-axis',
-        callbacks: {
-          label: function(t, d) {
-            return t.yLabel + " " + currentCurrency.toUpperCase()
-          }
-        }
-      }
-    this.chartInstance.update()
-  }
-
-  updateChartBalance(chartData){
-    if(!this.chartInstance) {
-      this.renderChartBalance(chartData)
-    } else {
-      const currentCurrency = this.currency
-      this.chartInstance.data.labels = chartData.label
-      this.chartInstance.data.datasets = [{
-        data: chartData.data.map(d => d[currentCurrency.toLowerCase()]),
-        backgroundColor: 'rgba(30, 137, 193, 0.3)',
-        borderColor: '#1e89c1',
-        borderWidth: 0.7,
-        pointRadius: 0,
-        lineTension: 0
-      }]
-      this.chartInstance.options.scales.xAxes = [{
-        display: true,
-        gridLines: {
-          display:false
-        },
-        type: 'time',
-        ticks: {
-          autoSkip: true,
-          maxTicksLimit: 6,
-          maxRotation: 0,
-          minRotation: 0,
-        },
-        time: {
-          unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-          displayFormats: {
-            'minute': "h:mm a",
-            'day': 'MMM DD',
-            'hour': 'hA'
-          }
-        }
-      }]
-      this.chartInstance.options.scales.yAxes = [{
-        display: true,
-        gridLines: {
-          display:false
-        },
-        ticks: {
-          maxTicksLimit: 1,
-          min: chartData["min" + currentCurrency.toUpperCase()],
-          max: chartData["max" + currentCurrency.toUpperCase()],
-          mirror: true,
-          // fontColor: "#fff",
-          // fontSize: 18,
-        }
-      }]
-
-      this.chartInstance.options.tooltips = {
-        mode: 'x-axis',
-        callbacks: {
-          label: function(t, d) {
-            return t.yLabel + " " + currentCurrency.toUpperCase()
-          }
-        }
-      }
-
-      this.chartInstance.update()
-    }
+  updateChartForNewProps(){
+    if(!this.state.chartData) return
+    this.renderChartBalance(this.state.chartData)
   }
 
   async selectTimeRange(range){
@@ -325,11 +247,10 @@ export default class PortfolioPerformance extends React.Component {
           <div className="portfolio__info-text theme__text-7">
           -- % --
           </div>
-          {/*<div className="portfolio__info-button">Start Now</div>*/}
         </div>
         :
         <Fragment>
-          {this.state.chartLoading && <InlineLoading theme={this.props.theme}/>}
+          {this.state.chartLoading &&  <div className="portfolio__chart__loading"><InlineLoading theme={this.props.theme}/></div> }
           <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
         </Fragment>
         
