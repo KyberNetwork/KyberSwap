@@ -6,22 +6,18 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
+                "endPoint": "https://production-cache.kyber.network/node",
                 "type": "prune"
-            },
+            },            
             {
                 "endPoint": "https://mainnet.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
                 "type": "prune"
-            },
-            {
-                "endPoint": "https://optionally-pleasant-horse.quiknode.io/9d72a0f8-0d8b-4e4c-aef1-eb529e05cdb9/V1ZsC_tuomfETYotFo4KKA==/",
-                "type": "prune"
-            }
+            }            
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
-    "min_accept_amount": 0.5,
-    "api_tokens": "https://staging-limit-order-api.knstats.com/internal/currencies",
+    "min_accept_amount": 0.001,
+    "api_tokens": "https://api.kyber.network/internal/currencies",
     "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
@@ -588,5 +584,5 @@
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "networkId": 1,
     "chainName": "Mainnet",
-    "tracker": "https://dev-api.knstats.com"
+    "tracker": "https://api.kyber.network"
 }

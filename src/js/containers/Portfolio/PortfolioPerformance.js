@@ -1,4 +1,4 @@
-import React from "react"
+import React,  { Fragment } from "react"
 import Chart from "chart.js";
 import portfolioChartService from "../../services/portfolio_balance";
 import { CHART_RANGE_TYPE, getTimeUnitWithTimeRange } from "../../services/portfolio_balance/portfolioChartUtils";
@@ -18,7 +18,8 @@ import InlineLoading from "../../components/CommonElement/InlineLoading";
     theme: global.theme,
     global: store.global,
     ethereum: ethereum,
-    portfolioPerformance: store.account.portfolioPerformance
+    portfolioPerformance: store.account.portfolioPerformance,
+    theme: store.global.theme
   }
 })
 
@@ -31,13 +32,15 @@ export default class PortfolioPerformance extends React.Component {
       renderedChart: false,
       selectedTimeRange: CHART_RANGE_TYPE.SEVEN_DAYS,
       chartData: null,
-      chartLoading: true
+      chartLoading: true,
+      emplyWallet: false
     };
     this.chartInstance = null
     this.renderedAtInnitTime = false
     this.intervalRenderAtInitTime = null
     this.fetchingTxsInterval = null
-    this.currency = "ETH"
+    this.currency = props.currency
+    this.theme = props.theme
   }
 
   async componentDidMount() {
@@ -65,13 +68,20 @@ export default class PortfolioPerformance extends React.Component {
     // }
     if(nextProps.currency !== this.currency){
       this.currency = nextProps.currency
-      this.updateChartForNewCurrency()
+      this.updateChartForNewProps()
     }
+    if(nextProps.theme !== this.theme){
+      this.theme = nextProps.theme
+      this.updateChartForNewProps()
+    }
+
   }
 
   async fetchChartData(address, ethereum, tokens){
     console.log("_____________________________ call fetchChartData")
     if(!ethereum || !address || !tokens) return
+    this.renderedAtInnitTime = true
+
 
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
     console.log("=#############====chartData", chartData)
@@ -90,13 +100,13 @@ export default class PortfolioPerformance extends React.Component {
       
       return;
     }
+    this.clearFetchingInterval();
 
     this.setState({
       chartData
     })
 
-    this.renderedAtInnitTime = true
-    this.updateChartBalance(chartData)
+    this.renderChartBalance(chartData)
     this.setState({chartLoading: false})
   }
 
@@ -109,151 +119,91 @@ export default class PortfolioPerformance extends React.Component {
     clearInterval(this.intervalRenderAtInitTime);
     this.intervalRenderAtInitTime = null;
   }
+
   renderChartBalance(chartData) {
     if (chartData) {
-      const arrayValue = chartData.data.map(d => d.eth)
-      this.chartInstance = new Chart(this.props.performanceChart.current, {
-        type: 'line',
-        data: {
-          labels: chartData.label,
-          datasets: [{
-            data: arrayValue,
-            backgroundColor: 'rgba(30, 137, 193, 0.3)',
-            borderColor: '#1e89c1',
-            borderWidth: 0.7,
-            pointRadius: 0,
-            lineTension: 0
-          }]
+      const currentCurrency = this.currency
+      const currencyUnit = currentCurrency == "ETH" ? "ETH" : "$"
+      const arrayValue = chartData.data.map(d => d[currentCurrency.toLowerCase()])
+      const chartConfigData = {
+        labels: chartData.label,
+        datasets: [{
+          data: arrayValue,
+          backgroundColor: 'rgba(30, 137, 193, 0.3)',
+          borderColor: '#1e89c1',
+          borderWidth: 0.7,
+          pointRadius: 0,
+          lineTension: 0
+        }]
+      }
+      const chartConfigOptions = {
+        legend: {
+          display: false
         },
-        options: {
-          legend: {
-            display: false
-          },
-          tooltips: {
-            mode: 'x-axis'
-          },
-          scales: {
-            xAxes: [{
-              display: true,
-              gridLines: {
-                display:false
-              },
-              type: 'time',
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 6,
-                maxRotation: 0,
-                minRotation: 0,
-              },
-              time: {
-                unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-                displayFormats: {
-                  'day': 'MMM DD',
-                  'hour': 'hA'
-                }
-              }
-            }],
-            yAxes: [{
-              display: true,
-              gridLines: {
-                display:false
-              },
-              ticks: {
-                min: chartData["minETH"],
-                max: chartData["maxETH"],
-                maxTicksLimit: 1,
-                mirror: true,
-                // fontColor: "#fff",
-                // fontSize: 18,
-              }
-            }],
-          },
-          responsive: true
-        }
-      });
-    }
-  }
-
-  updateChartForNewCurrency(){
-    if(!this.state.chartData || !this.chartInstance) return
-    const arrayValue = this.state.chartData.data.map(d => d[this.currency.toLowerCase()])
-    this.chartInstance.data.datasets = [{
-      data: arrayValue,
-      backgroundColor: 'rgba(30, 137, 193, 0.3)',
-      borderColor: '#1e89c1',
-      borderWidth: 0.7,
-      pointRadius: 0,
-      lineTension: 0
-    }]
-    this.chartInstance.options.scales.yAxes = [{
-        display: true,
-        gridLines: {
-          display:false
-        },
-        ticks: {
-          maxTicksLimit: 1,
-          min: this.state.chartData["min" + this.currency.toUpperCase()],
-          max: this.state.chartData["max" + this.currency.toUpperCase()],
-          mirror: true,
-          // fontColor: "#fff",
-          // fontSize: 18,
-        }
-      }]
-    this.chartInstance.update()
-  }
-
-  updateChartBalance(chartData){
-    if(!this.chartInstance) {
-      this.renderChartBalance(chartData)
-    } else {
-      const arrayValue = chartData.data.map(d => d[this.currency.toLowerCase()])
-      this.chartInstance.data.labels = chartData.label
-      this.chartInstance.data.datasets = [{
-        data: chartData.data.map(d => d[this.currency.toLowerCase()]),
-        backgroundColor: 'rgba(30, 137, 193, 0.3)',
-        borderColor: '#1e89c1',
-        borderWidth: 0.7,
-        pointRadius: 0,
-        lineTension: 0
-      }]
-      this.chartInstance.options.scales.xAxes = [{
-        display: true,
-        gridLines: {
-          display:false
-        },
-        type: 'time',
-        ticks: {
-          autoSkip: true,
-          maxTicksLimit: 6,
-          maxRotation: 0,
-          minRotation: 0,
-        },
-        time: {
-          unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-          displayFormats: {
-            'minute': "h:mm a",
-            'day': 'MMM DD',
-            'hour': 'hA'
+        tooltips: {
+          mode: 'x-axis',
+          callbacks: {
+            label: function(t, d) {
+              return t.yLabel + " " + currencyUnit
+            }
           }
-        }
-      }]
-      this.chartInstance.options.scales.yAxes = [{
-        display: true,
-        gridLines: {
-          display:false
         },
-        ticks: {
-          maxTicksLimit: 1,
-          min: chartData["min" + this.currency.toUpperCase()],
-          max: chartData["max" + this.currency.toUpperCase()],
-          mirror: true,
-          // fontColor: "#fff",
-          // fontSize: 18,
-        }
-      }]
-
-      this.chartInstance.update()
+        scales: {
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display:false
+            },
+            type: 'time',
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 6,
+              maxRotation: 0,
+              minRotation: 0,
+              fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
+            },
+            time: {
+              unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
+              displayFormats: {
+                'day': 'MMM DD',
+                'hour': 'hA'
+              }
+            }
+          }],
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display:false
+            },
+            ticks: {
+              min: chartData["min" + currentCurrency.toUpperCase()],
+              max: chartData["max" + currentCurrency.toUpperCase()],
+              maxTicksLimit: 1,
+              mirror: true,
+              fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
+            }
+          }],
+        },
+        responsive: true
+      }
+      const chartConfig = {
+        type: 'line',
+        data: chartConfigData,
+        options: chartConfigOptions
+      };
+      if(!this.chartInstance){
+        this.chartInstance = new Chart(this.props.performanceChart.current, chartConfig);
+      } else {
+        this.chartInstance.data = chartConfigData
+        this.chartInstance.options = chartConfigOptions
+        this.chartInstance.update()
+      }
     }
+  }
+
+  updateChartForNewProps(){
+    if(!this.state.chartData) return
+    this.renderChartBalance(this.state.chartData)
   }
 
   async selectTimeRange(range){
@@ -267,7 +217,6 @@ export default class PortfolioPerformance extends React.Component {
   }
 
   render() {
-    this.renderChartBalance()
     return (
       <div className={"portfolio__performance portfolio__item theme__background-2 " + ("portfolio__performance" + (this.props.isOnMobile ? "__mobile" : "__desktop"))}>
         <div className={"portfolio__performance__chart__header"}>
@@ -286,15 +235,26 @@ export default class PortfolioPerformance extends React.Component {
               <div className={"portfolio__switcher-item" + (this.state.selectedTimeRange == CHART_RANGE_TYPE.THREE_MONTHS ? " portfolio__switcher-item--active" : "")} 
               onClick={() => this.selectTimeRange(CHART_RANGE_TYPE.THREE_MONTHS)}>3 Months</div>
 
-              
             </div>
           </div>
 
         </div>
 
-        {this.state.chartLoading && <InlineLoading theme={this.props.theme}/>}
+        
 
-        <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
+        {this.state.chartData && this.state.chartData.isEmpty ? 
+        <div className="portfolio__info">
+          <div className="portfolio__info-text theme__text-7">
+          -- % --
+          </div>
+        </div>
+        :
+        <Fragment>
+          {this.state.chartLoading &&  <div className="portfolio__chart__loading"><InlineLoading theme={this.props.theme}/></div> }
+          <canvas className={"portfolio__performance-chart"} height="200" ref={this.props.performanceChart} />
+        </Fragment>
+        
+        }
         
       </div>
     )

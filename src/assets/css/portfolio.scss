@@ -168,6 +168,7 @@
   }
 
   &__performance {
+    position: relative;
     &-chart {
       width: 100%;
     }
@@ -297,6 +298,11 @@
         color: $error-color;
       }
     }
+  }
+
+  &__chart__loading{
+    position: absolute;
+    width: 100%;
   }
 
   &__info {
