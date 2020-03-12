@@ -22,7 +22,8 @@ export default class TorusWallet extends BaseWallet {
         host: findNetworkCode(networkId),
         chainId: networkId,
         networkName: BLOCKCHAIN_INFO.chainName
-      }
+      },
+      showTorusButton: false
     };
   
     await this.torus.init(params);
