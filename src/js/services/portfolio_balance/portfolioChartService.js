@@ -30,19 +30,21 @@ export async function render(ethereum, address, tokens, rangeType) {
     const innitTime = now - CHART_RANGE_IN_SECOND[rangeType]
 
     const addrTxs = await getBalanceTransactionHistoryByTime(address, innitTime, now)
-    const arrayTxs = addrTxs.data
+    
 
-    if (!arrayTxs || !arrayTxs.length) return
+ 
 
     if (addrTxs.isError || addrTxs.inQueue) {
         // todo handle history no txs
         return { isError: addrTxs.isError, inQueue: addrTxs.inQueue}
     }
 
+    const txs = addrTxs.data
+    if (!txs) return {isError: true}
+
     const balanceTokens = await getLastestBalance(ethereum, address, tokens)
     const tokenByAddress = getTokenByAddress(tokens)
-    
-    const txs = addrTxs.data
+  
 
     const chartResolution = getResolutionForTimeRange(rangeType)
     const chartFromTime = getFromTimeForTimeRange(rangeType, now)
@@ -56,7 +58,7 @@ export async function render(ethereum, address, tokens, rangeType) {
 
     const labelSeries = timelineLabels(chartFromTime, now, chartResolution)
     return {
-        data: totalBalance,
+        ...totalBalance,
         label: labelSeries
     }
 }

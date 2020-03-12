@@ -70,15 +70,13 @@ const PortfolioView = (props) => {
           <i class="portfolio__feedback-icon"></i>
           <p>{props.translate("info.please_give_feedback", { link: "https://docs.google.com/forms/d/e/1FAIpQLSfLUO3O4j6v3CKMtW5yD9auuHbnJY75IM9PLJO9hg1SBRiGaQ/viewform" })}</p>
         </div>}
+
+        {isOverViewDisplayed && <PortfolioPerformance  performanceChart={props.performanceChart} currency={props.currency} isOnMobile={props.isOnMobile}/>}
         
         {isHistoryDisplayed && (
-          <Fragment>
-            <PortfolioPerformance  performanceChart={props.performanceChart} currency={props.currency} />
-
             <PortfolioTxHistory
               historyTxs={props.historyTxs}
             />
-          </Fragment>
         )}
       </div>
 
