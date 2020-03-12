@@ -181,6 +181,9 @@ export default class PortfolioPerformance extends React.Component {
               maxTicksLimit: 1,
               mirror: true,
               fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
+              callback: function(value) {
+                return value + " " + currencyUnit;
+              }
             }
           }],
         },

@@ -264,9 +264,9 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
 
 export function mappingTotalBalance(balanceChange, priceInResolution) {
     const returnData = []
-    let minETH = 0
+    let minETH = null
     let maxETH = 0
-    let minUSD = 0
+    let minUSD = null
     let maxUSD = 0
     for (let i = 1; i <= balanceChange.length; i++) {
         const epocBalanceObj = balanceChange[balanceChange.length - i]
@@ -296,10 +296,10 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
         if(compareTwoNumber(totalEpocUSDBalance, maxUSD) == 1){
             maxUSD = roundingNumber(totalEpocUSDBalance)
         }
-        if(compareTwoNumber(totalEpocETHPBalance, minETH) == -1 || minETH == 0){
+        if(minETH == null || compareTwoNumber(totalEpocETHPBalance, minETH) == -1 ){
             minETH = roundingNumber(totalEpocETHPBalance)
         }
-        if(compareTwoNumber(totalEpocUSDBalance, minUSD) == -1 || minUSD == 0){
+        if(minUSD == null || compareTwoNumber(totalEpocUSDBalance, minUSD) == -1 ){
             minUSD = roundingNumber(totalEpocUSDBalance)
         }
     }
