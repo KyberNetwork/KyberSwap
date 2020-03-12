@@ -6,6 +6,7 @@ export { default as WalletLinkKey } from './walletlink.js'
 export { default as WalletConnectKey } from './walletconnect.js'
 export { default as Metamask } from './metamask.js'
 export { default as TorusWallet } from './TorusWallet.js'
+export { default as FortmaticWallet } from './FortmaticWallet.js'
 
 import * as keys from "../keys"
 
@@ -37,6 +38,9 @@ export function getWallet(type) {
       break;
     case "torus":
       keyService = new keys.TorusWallet();
+      break;
+    case "fortmatic":
+      keyService = new keys.FortmaticWallet();
       break;
     default:
       keyService = new keys.KeyStore();

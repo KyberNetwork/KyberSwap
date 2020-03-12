@@ -26,6 +26,7 @@
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
+    "fortmaticKey": "pk_live_EF523DF5F8AC3058",
     "promo_token": "PT",
     "wrapETHToken": "WETH",
     "tokens": {

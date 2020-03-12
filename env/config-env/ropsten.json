@@ -27,6 +27,7 @@
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
+    "fortmaticKey": "pk_test_9F19F59AC9095E40",
     "wrapETHToken": "WETH",
     "tokens": {
         "ETH": {

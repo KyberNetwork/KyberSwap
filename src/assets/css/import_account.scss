@@ -52,6 +52,10 @@
       }
     }
 
+    &--modal {
+      justify-content: flex-start;
+    }
+
     &--mobile {
       display: block;
 
@@ -153,9 +157,16 @@
   &__item {
     width: 120px;
     margin: 0 0 12px;
-    &.large{
+
+    &.large {
       width: 160px;
+      margin: 0 20px 12px 0;
+
+      &:nth-child(3n) {
+        margin-right: 0;
+      }
     }
+
     >div {
       height: 100%;
     }
@@ -236,6 +247,10 @@
           background-position: -23px 3px;
         }
 
+        &.fortmatic {
+          background-position: -23px 4px;
+        }
+
         &.other {
           background-position: -31px 9px;
         }
@@ -295,6 +310,12 @@
       width: 14px;
       background-position: 0;
       background-image: url($image-path + 'import-account/wallets/torus.svg');
+    }
+
+    &.fortmatic {
+      width: 14px;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/fortmatic.svg');
     }
 
     &.other {
