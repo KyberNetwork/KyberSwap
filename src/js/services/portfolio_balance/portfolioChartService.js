@@ -11,10 +11,16 @@ import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame,
 
 
 export async function getLastestBalance(ethereum, userAddr, supportTokens) {
+  try {
     const lastestBlock = await ethereum.call("getLatestBlock", userAddr, supportTokens)
     const balances = await ethereum.call("getAllBalancesTokenAtSpecificBlock", userAddr, supportTokens, lastestBlock)
-
     return balances
+  } catch (error) {
+    return {inQueue: true}
+  }
+   
+
+    
 }
 
 function getTokenByAddress(tokens){
@@ -41,6 +47,10 @@ export async function render(ethereum, address, tokens, rangeType) {
     if (!txs) return {isError: true}
 
     const balanceTokens = await getLastestBalance(ethereum, address, tokens)
+    if(balanceTokens.inQueue){
+      return { inQueue: balanceTokens.inQueue}
+    }
+    
     const tokenByAddress = getTokenByAddress(tokens)
   
 
