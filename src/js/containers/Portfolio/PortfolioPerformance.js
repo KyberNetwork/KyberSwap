@@ -35,12 +35,20 @@ export default class PortfolioPerformance extends React.Component {
     };
     this.chartInstance = null
     this.renderedAtInnitTime = false
+    this.intervalRenderAtInitTime = null
     this.fetchingTxsInterval = null
     this.currency = "ETH"
   }
 
   async componentDidMount() {
     await this.fetchChartData(this.props.address, this.props.ethereum, this.props.tokens)
+    this.intervalRenderAtInitTime = setInterval(async () => {
+      if(this.renderedAtInnitTime) {
+        this.clearIntervalRenderAtInitTime()
+      } else {
+        await this.fetchChartData(this.props.address, this.props.ethereum, this.props.tokens)
+      }  
+    }, 4000);
   }
 
   componentWillUnmount() {
@@ -49,12 +57,12 @@ export default class PortfolioPerformance extends React.Component {
   
 
   async componentWillReceiveProps(nextProps){
-    if(nextProps.account.account.address && nextProps.ethereum && !this.renderedAtInnitTime){
-      const ethereum = nextProps.ethereum;
-      const tokens = this.props.tokens
-      const address = nextProps.account.account.address
-      await this.fetchChartData(address, ethereum, tokens)
-    }
+    // if(nextProps.account.account.address && nextProps.ethereum && !this.renderedAtInnitTime){
+    //   const ethereum = nextProps.ethereum;
+    //   const tokens = this.props.tokens
+    //   const address = nextProps.account.account.address
+    //   await this.fetchChartData(address, ethereum, tokens)
+    // }
     if(nextProps.currency !== this.currency){
       this.currency = nextProps.currency
       this.updateChartForNewCurrency()
@@ -62,13 +70,13 @@ export default class PortfolioPerformance extends React.Component {
   }
 
   async fetchChartData(address, ethereum, tokens){
+    console.log("_____________________________ call fetchChartData")
     if(!ethereum || !address || !tokens) return
-    this.renderedAtInnitTime = true
 
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
     console.log("=#############====chartData", chartData)
 
-    if (chartData.isError) {
+    if (!chartData || chartData.isError) {
       this.clearFetchingInterval();
       return;
     }
@@ -87,7 +95,7 @@ export default class PortfolioPerformance extends React.Component {
       chartData
     })
 
-
+    this.renderedAtInnitTime = true
     this.updateChartBalance(chartData)
     this.setState({chartLoading: false})
   }
@@ -97,16 +105,21 @@ export default class PortfolioPerformance extends React.Component {
     this.fetchingTxsInterval = null;
   }
 
+  clearIntervalRenderAtInitTime(){
+    clearInterval(this.intervalRenderAtInitTime);
+    this.intervalRenderAtInitTime = null;
+  }
   renderChartBalance(chartData) {
     if (chartData) {
+      const arrayValue = chartData.data.map(d => d.eth)
       this.chartInstance = new Chart(this.props.performanceChart.current, {
         type: 'line',
         data: {
           labels: chartData.label,
           datasets: [{
-            data: chartData.data.map(d => d.eth),
-            backgroundColor: 'rgba(250, 101, 102, 0.3)',
-            borderColor: '#fa6566',
+            data: arrayValue,
+            backgroundColor: 'rgba(30, 137, 193, 0.3)',
+            borderColor: '#1e89c1',
             borderWidth: 0.7,
             pointRadius: 0,
             lineTension: 0
@@ -130,13 +143,10 @@ export default class PortfolioPerformance extends React.Component {
                 autoSkip: true,
                 maxTicksLimit: 6,
                 maxRotation: 0,
-                minRotation: 0
+                minRotation: 0,
               },
               time: {
-                // parser: 'MM/DD/YYYY HH:mm',
-                // tooltipFormat: 'll HH:mm',
                 unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-                // unitStepSize: 1,
                 displayFormats: {
                   'day': 'MMM DD',
                   'hour': 'hA'
@@ -144,9 +154,17 @@ export default class PortfolioPerformance extends React.Component {
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               gridLines: {
                 display:false
+              },
+              ticks: {
+                min: chartData["minETH"],
+                max: chartData["maxETH"],
+                maxTicksLimit: 1,
+                mirror: true,
+                // fontColor: "#fff",
+                // fontSize: 18,
               }
             }],
           },
@@ -158,14 +176,29 @@ export default class PortfolioPerformance extends React.Component {
 
   updateChartForNewCurrency(){
     if(!this.state.chartData || !this.chartInstance) return
+    const arrayValue = this.state.chartData.data.map(d => d[this.currency.toLowerCase()])
     this.chartInstance.data.datasets = [{
-      data: this.state.chartData.data.map(d => d[this.currency.toLowerCase()]),
-      backgroundColor: 'rgba(250, 101, 102, 0.3)',
-      borderColor: '#fa6566',
+      data: arrayValue,
+      backgroundColor: 'rgba(30, 137, 193, 0.3)',
+      borderColor: '#1e89c1',
       borderWidth: 0.7,
       pointRadius: 0,
       lineTension: 0
     }]
+    this.chartInstance.options.scales.yAxes = [{
+        display: true,
+        gridLines: {
+          display:false
+        },
+        ticks: {
+          maxTicksLimit: 1,
+          min: this.state.chartData["min" + this.currency.toUpperCase()],
+          max: this.state.chartData["max" + this.currency.toUpperCase()],
+          mirror: true,
+          // fontColor: "#fff",
+          // fontSize: 18,
+        }
+      }]
     this.chartInstance.update()
   }
 
@@ -173,11 +206,12 @@ export default class PortfolioPerformance extends React.Component {
     if(!this.chartInstance) {
       this.renderChartBalance(chartData)
     } else {
+      const arrayValue = chartData.data.map(d => d[this.currency.toLowerCase()])
       this.chartInstance.data.labels = chartData.label
       this.chartInstance.data.datasets = [{
         data: chartData.data.map(d => d[this.currency.toLowerCase()]),
-        backgroundColor: 'rgba(250, 101, 102, 0.3)',
-        borderColor: '#fa6566',
+        backgroundColor: 'rgba(30, 137, 193, 0.3)',
+        borderColor: '#1e89c1',
         borderWidth: 0.7,
         pointRadius: 0,
         lineTension: 0
@@ -192,13 +226,10 @@ export default class PortfolioPerformance extends React.Component {
           autoSkip: true,
           maxTicksLimit: 6,
           maxRotation: 0,
-          minRotation: 0
+          minRotation: 0,
         },
         time: {
-          // parser: 'MM/DD/YYYY HH:mm',
-          // tooltipFormat: 'll HH:mm',
           unit: getTimeUnitWithTimeRange(this.state.selectedTimeRange),
-          // unitStepSize: 1,
           displayFormats: {
             'minute': "h:mm a",
             'day': 'MMM DD',
@@ -206,6 +237,21 @@ export default class PortfolioPerformance extends React.Component {
           }
         }
       }]
+      this.chartInstance.options.scales.yAxes = [{
+        display: true,
+        gridLines: {
+          display:false
+        },
+        ticks: {
+          maxTicksLimit: 1,
+          min: chartData["min" + this.currency.toUpperCase()],
+          max: chartData["max" + this.currency.toUpperCase()],
+          mirror: true,
+          // fontColor: "#fff",
+          // fontSize: 18,
+        }
+      }]
+
       this.chartInstance.update()
     }
   }
@@ -223,7 +269,7 @@ export default class PortfolioPerformance extends React.Component {
   render() {
     this.renderChartBalance()
     return (
-      <div className={"portfolio__performance portfolio__item theme__background-2"}>
+      <div className={"portfolio__performance portfolio__item theme__background-2 " + ("portfolio__performance" + (this.props.isOnMobile ? "__mobile" : "__desktop"))}>
         <div className={"portfolio__performance__chart__header"}>
           <div className={"portfolio__title"}>Portfolio Performance</div>
           <div className="common__mb-10">
