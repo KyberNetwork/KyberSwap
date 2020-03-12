@@ -170,7 +170,11 @@ export function getFromTimeForTimeRange(rangeType, now) {
     }
 }
 
-
+export function isEmptyWallet(txs){
+    if(txs.inQueue) return false
+    if(!txs || txs.totalTxs == 0) return true
+    return false
+}
 
 export function parseTxsToTimeFrame(txs, timeResolution, fromTime, toTime) {
     switch (timeResolution) {
