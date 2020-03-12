@@ -51,7 +51,7 @@ export async function render(ethereum, address, tokens, rangeType) {
 
     const txByResolution = parseTxsToTimeFrame(txs, chartResolution, chartFromTime, now)
     const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens)
-    const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress)
+    const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress, tokens)
     
     const priceInResolution = await fetchTradedTokenPrice(chartFromTime, now, chartResolution, arrayTradedTokenSymbols)
     const totalBalance = mappingTotalBalance(balanceChange, priceInResolution)
