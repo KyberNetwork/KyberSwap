@@ -204,29 +204,6 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, maxGas){
-    var safeLowGas = parseFloat(safeLowGas)
-    var standardGas = parseFloat(standardGas)
-    var fastGas = parseFloat(fastGas)
-    var superFastGas = parseFloat(superFastGas)
-    var defaultGas = parseFloat(defaultGas)
-    var maxGas = parseFloat(maxGas)
-    if (superFastGas > maxGas) {
-        superFastGas = maxGas;
-    }
-
-    if (fastGas > maxGas) {
-        var returnSuggest = {}
-        returnSuggest.fastGas = maxGas
-        returnSuggest.standardGas = maxGas
-        returnSuggest.safeLowGas = maxGas - maxGas * 30 / 100
-        returnSuggest.defaultGas = maxGas
-        return returnSuggest
-    } else {
-        return {safeLowGas, standardGas, fastGas, superFastGas, defaultGas}
-    }
-}
-
 export function findTokenBySymbol(tokens, symbol) {
   return  tokens.find(token => {
     return token.symbol === symbol;

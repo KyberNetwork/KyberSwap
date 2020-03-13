@@ -174,9 +174,9 @@ export function swapToken() {
   }
 }
 
-export function setMaxGasPrice(ethereum) {
+export function fetchMaxGasPrice(ethereum) {
   return {
-    type: "EXCHANGE.SET_MAX_GAS_PRICE",
+    type: "EXCHANGE.FETCH_MAX_GAS_PRICE",
     payload: ethereum
   }
 }
@@ -185,13 +185,6 @@ export function setMaxGasPriceComplete(maxGasPriceGwei) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
-  }
-}
-
-export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas) {
-  return {
-    type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: { safeLowGas, standardGas, defaultGas, fastGas, superFastGas, selectedGas }
   }
 }
 
