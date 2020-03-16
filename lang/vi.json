@@ -31,7 +31,9 @@
     "register_beta": "Register Beta",
     "or_connect_with": "Or Connect with",
     "download": "Tải về",
-    "enter": "Nhập"
+    "enter": "Nhập",
+    "no_wallet": "Nếu bạn chưa có ví",
+    "create_wallet": "Hãy tạo tại đây"
   },
   "transaction": {
     "wallet": "Ví",

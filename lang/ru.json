@@ -32,7 +32,9 @@
     "your_wallet": "Your Wallet",
     "register_beta": "Скоро",
     "or_connect_with": "Or Connect with",
-    "enter": "Enter"
+    "enter": "Enter",
+    "no_wallet": "If you don't have a Wallet",
+    "create_wallet": "Create a new Wallet"
   },
   "transaction": {
     "wallet": "Wallet",

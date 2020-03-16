@@ -76,17 +76,17 @@ const ImportAccountView = (props) => {
           {isOnMobile &&
             <Fragment>
               <div className={`import-account__item`}>
-                <ImportByPrivateKey isOnMobile={true} closeParentModal={props.closeModal}/>
+                <ImportByPrivateKey isOnMobile closeParentModal={props.closeModal}/>
               </div>
   
               {!isLimitOrder && (
                 <div className={`import-account__item`}>
-                  <ImportByPromoCode isOnMobile={true} />
+                  <ImportByPromoCode isOnMobile />
                 </div>
               )}
   
               <div className={`import-account__item`}>
-                <ImportByTorus isOnMobile={true} />
+                <ImportByTorus isOnMobile />
               </div>
   
               <div className="import-account__item download-app">
@@ -120,6 +120,9 @@ const ImportAccountView = (props) => {
           }
         </div>
       </div>
+
+      <ImportByTorus createNew />
+
       {props.errorModal}
     </div>
   )

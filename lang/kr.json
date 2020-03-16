@@ -31,7 +31,9 @@
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
     "or_connect_with": "또는",
-    "enter": "입력"
+    "enter": "입력",
+    "no_wallet": "If you don't have a Wallet",
+    "create_wallet": "Create a new Wallet"
   },
   "transaction": {
     "wallet": "지갑",

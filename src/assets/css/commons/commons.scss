@@ -15,6 +15,15 @@
     margin-top: 15px;
   }
 
+  &__link {
+    color: $swap-color;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   &__notification {
     font-size: 13px;
     font-weight: 400;

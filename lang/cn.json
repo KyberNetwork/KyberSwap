@@ -31,7 +31,9 @@
     "your_wallet": "您的钱包",
     "register_beta": "敬请期待",
     "or_connect_with": "或者连接",
-    "enter": "进入"
+    "enter": "进入",
+    "no_wallet": "If you don't have a Wallet",
+    "create_wallet": "Create a new Wallet"
   },
   "transaction": {
     "wallet": "钱包",

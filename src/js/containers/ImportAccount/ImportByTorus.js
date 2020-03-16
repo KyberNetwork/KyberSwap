@@ -46,16 +46,28 @@ export default class ImportByTorus extends React.Component {
   }
   
   render() {
+    const isOnMobile = this.props.isOnMobile;
+    const createNewMode = this.props.createNew;
+
     return (
       <Fragment>
-        {!this.props.isOnMobile && (
+        {createNewMode && (
+          <div className="import-account__create-wallet">
+            <span>{this.props.translate("address.no_wallet") || "If you don't have a Wallet"}, </span>
+            <span className="common__link" onClick={() => this.connect()}>
+              {this.props.translate("address.create_wallet") || "Create a new Wallet"}
+            </span>
+          </div>
+        )}
+
+        {(!createNewMode && !isOnMobile) && (
           <div className="import-account__block theme__import-button" onClick={() => this.connect()}>
             <div className="import-account__icon torus"/>
             <div className="import-account__name">Torus</div>
           </div>
         )}
         
-        {this.props.isOnMobile && (
+        {(!createNewMode && isOnMobile) && (
           <div className={"import-account__block theme__import-button"}>
             <div className={"import-account__block-left"}>
               <div className="import-account__icon torus"/>
