@@ -11,3 +11,4 @@ export { default as ImportByWalletLink } from './ImportByWalletLink.js';
 export { default as ImportByWalletConnect } from './ImportByWalletConnect.js';
 export { default as ImportByOther } from './ImportByOther.js';
 export { default as ImportByTorus } from './ImportByTorus.js';
+export { default as ImportByPortis } from './ImportByPortis.js';

@@ -7,7 +7,8 @@ import {
   ImportByPrivateKey,
   ImportByWalletLink,
   ImportByWalletConnect,
-  ImportByTorus
+  ImportByTorus,
+  ImportByPortis
 } from "../../containers/ImportAccount";
 
 @connect((store) => {
@@ -48,6 +49,9 @@ export default class ImportByOtherConnectModal extends React.Component {
                   </div>
                   <div className={`import-account__item large`}>
                     <ImportByTorus closeParentModal={this.closeModal.bind(this)} />
+                  </div>
+                  <div className={`import-account__item large`}>
+                    <ImportByPortis closeParentModal={this.closeModal.bind(this)} />
                   </div>
                 </div>
               </div>

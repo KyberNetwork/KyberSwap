@@ -2,6 +2,7 @@ import * as keyService from "./baseKey";
 
 export default class BaseWallet {
   constructor() {
+    this.eth = null;
     this.web3 = null;
     this.needToBeInitiated = false;
   }
@@ -55,4 +56,14 @@ export default class BaseWallet {
       throw err
     }
   }
+  
+  getAddress = () => {
+    return new Promise((resolve, reject) => {
+      this.eth.enable().then((accounts) => {
+        resolve(accounts[0])
+      }).catch(error => {
+        reject(error.message ? error.message : error)
+      })
+    })
+  };
 }

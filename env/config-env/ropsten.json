@@ -16,6 +16,7 @@
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
     "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
     "portfolio_api": "https://dev-portfolio.knstats.com",
+    "portisKey": "78552035-b1c5-4927-8d2f-4eeea42a795c",
     "promo_token": "OMG",
     "priority_tokens": [
         "ETH",

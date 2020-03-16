@@ -6,6 +6,7 @@
   "dependencies": {
     "@ledgerhq/hw-app-eth": "^4.56.0",
     "@ledgerhq/hw-transport-u2f": "^4.56.0",
+    "@portis/web3": "^2.0.0-beta.54",
     "@toruslabs/torus-embed": "^1.1.1",
     "@walletconnect/browser": "^1.0.0-beta.38",
     "abi-decoder": "^2.2.2",
@@ -116,14 +117,12 @@
     "dev": "webpack-dev-server --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3002 --env.chain=dev --env.logger=true",
     "ropstens": "webpack-dev-server --https --content-base src --inline --hot --history-api-fallback --host 0.0.0.0 --port 3003 --env.chain=ropsten --env.logger=true",
     "test": "jest --setupTestFrameworkScriptFile=raf/polyfill",
-
     "build_ieo_dev": "NODE_ENV=dev node webpack-wrapper-dashboard.js",
     "build_ieo_ropsten": "NODE_ENV=ropsten node webpack-wrapper-dashboard.js",
     "build_ieo_production": "NODE_ENV=production node webpack-wrapper-dashboard.js",
     "build_ieo_staging": "NODE_ENV=staging node webpack-wrapper-dashboard.js",
     "build_ieo_staging_limit_order": "NODE_ENV=staging_limit_order node webpack-wrapper-dashboard.js",
     "build_all_ieo": "npm run build_ieo_dev & npm run build_ieo_staging_limit_order & npm run build_ieo_ropsten & npm run build_ieo_production",
-
     "build_auto_dev": "NODE_ENV=dev node webpack-auto.js",
     "build_auto_ropsten": "NODE_ENV=ropsten node webpack-auto.js",
     "build_auto_production": "NODE_ENV=production node webpack-auto.js",

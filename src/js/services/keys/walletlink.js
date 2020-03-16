@@ -12,20 +12,9 @@ export default class WalletLinkKey extends BaseWallet {
       appName: 'KyberSwap',
       appLogoUrl: 'https://kyberswap.com/app/images/Kyber_Swap_Black.svg'
     });
-    this.ethereum = this.walletLink.makeWeb3Provider(BLOCKCHAIN_INFO["connections"]["http"][1]["endPoint"], BLOCKCHAIN_INFO.networkId);
-    this.web3 = new Web3(this.ethereum)
+    this.eth = this.walletLink.makeWeb3Provider(BLOCKCHAIN_INFO["connections"]["http"][1]["endPoint"], BLOCKCHAIN_INFO.networkId);
+    this.web3 = new Web3(this.eth)
   }
-  
-  getAddress = () => {
-    return new Promise((resolve, reject) => {
-      this.ethereum.enable().then((accounts) => {
-        resolve(accounts[0])
-      }).catch(err => {
-        console.log(err);
-        reject(err.message)
-      })
-    })
-  };
   
   getWalletName = () => {
     return 'Wallet Link';

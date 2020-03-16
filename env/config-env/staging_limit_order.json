@@ -34,6 +34,7 @@
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
+    "portisKey": "78552035-b1c5-4927-8d2f-4eeea42a795c",
     "promo_token": "PT",
     "wrapETHToken": "WETH",
     "tokens": {

@@ -236,6 +236,10 @@
           background-position: -23px 3px;
         }
 
+        &.portis {
+          background-position: -23px 3px;
+        }
+
         &.other {
           background-position: -31px 9px;
         }
@@ -295,6 +299,12 @@
       width: 14px;
       background-position: 0;
       background-image: url($image-path + 'import-account/wallets/torus.svg');
+    }
+
+    &.portis {
+      margin-right: 0;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/portis.svg');
     }
 
     &.other {
