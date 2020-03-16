@@ -1,8 +1,8 @@
 
 import { TX_TYPES } from "../constants";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, convertTimestampToTime } from "../../utils/converter";
-import { validateResultObject, returnResponseObject, validateTransferTx, validateSwapTx} from "../portfolioService"
+import { convertTimestampToTime, shortenBigNumber, formatAddress } from "../../utils/converter";
+import { validateResultObject, returnResponseObject, validateTransferTx, validateSwapTx, validateApproveTx, validateUndefinedTx } from "../portfolioService"
 
 import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame, isEmptyWallet,
      mappingBalanceChange, mappingTotalBalance, getArrayTradedTokenSymbols, timelineLabels,
@@ -50,7 +50,7 @@ export async function render(ethereum, address, tokens, rangeType) {
     if(balanceTokens.inQueue){
       return { inQueue: balanceTokens.inQueue}
     }
-    
+
     const tokenByAddress = getTokenByAddress(tokens)
   
 
@@ -59,7 +59,7 @@ export async function render(ethereum, address, tokens, rangeType) {
 
     const txByResolution = parseTxsToTimeFrame(txs, chartResolution, chartFromTime, now)
     const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens)
-    const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress, tokens)
+    const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress, tokens, address)
     const priceInResolution = await fetchTradedTokenPrice(chartFromTime, now, chartResolution, arrayTradedTokenSymbols)
     const totalBalance = mappingTotalBalance(balanceChange, priceInResolution)
 
@@ -75,10 +75,12 @@ export async function render(ethereum, address, tokens, rangeType) {
 export async function getBalanceTransactionHistoryByTime(address, from, to) {
     const response = await fetch(`${BLOCKCHAIN_INFO.portfolio_api}/transactions?address=${address}&startTime=${from}&endTime=${to}`);
     const result = await response.json();
-  
+    
     const isValidResult = validateResultObject(result);
     
     if (!isValidResult) return returnResponseObject([], 0, false, true);
+    const kyberContract = BLOCKCHAIN_INFO.network.toLowerCase();
+    const bigAllowance = 1000000;
     let txs = [];
     
     for (let i = 0; i < result.data.length; i++) {
@@ -89,7 +91,26 @@ export async function getBalanceTransactionHistoryByTime(address, from, to) {
         isValidTx = validateTransferTx(tx);
       } else if (tx.type === TX_TYPES.swap) {
         isValidTx = validateSwapTx(tx);
+      } else if (tx.type === TX_TYPES.approve) {
+        isValidTx = validateApproveTx(tx);
+    
+        if (isValidTx) {
+          const allowance = tx.approve_allowance;
+          const spender = tx.approve_spender.toLowerCase();
+          const isKyberContract = spender === kyberContract;
+          let formattedAllowance = allowance;
+          
+          if (allowance > bigAllowance) {
+            formattedAllowance = isKyberContract ? '' : shortenBigNumber(allowance);
+          }
+          
+          tx.formattedContract = isKyberContract ? 'Kyber Contract' : formatAddress(spender, 10);
+          tx.formattedAllowance = formattedAllowance;
+        }
+      } else if (tx.type === TX_TYPES.undefined) {
+        isValidTx = validateUndefinedTx(tx);
       }
+
       if (isValidTx) {
         tx.time = convertTimestampToTime(+tx.timeStamp);
         txs.push(tx);
