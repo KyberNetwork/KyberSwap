@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import {
-  ImportKeystore,
   ImportByPrivateKey,
   ImportByMetamask,
   ImportByDeviceWithLedger,
@@ -61,15 +60,15 @@ const ImportAccountView = (props) => {
                 <ImportByDeviceWithTrezor />
               </div>
               <div className={`import-account__item`}>
-                <ImportKeystore />
+                <ImportByTorus />
               </div>
               {!isLimitOrder && (
                 <div className={`import-account__item`}>
-                  <ImportByPromoCode isOnMobile={isOnMobile} />
+                  <ImportByPromoCode />
                 </div>
               )}
               <div className={`import-account__item`}>
-                <ImportByOther isOnMobile={isOnMobile} />
+                <ImportByOther />
               </div>
             </Fragment>
           }
@@ -77,17 +76,17 @@ const ImportAccountView = (props) => {
           {isOnMobile &&
             <Fragment>
               <div className={`import-account__item`}>
-                <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+                <ImportByPrivateKey isOnMobile={true} closeParentModal={props.closeModal}/>
               </div>
   
               {!isLimitOrder && (
                 <div className={`import-account__item`}>
-                  <ImportByPromoCode isOnMobile={isOnMobile} />
+                  <ImportByPromoCode isOnMobile={true} />
                 </div>
               )}
   
               <div className={`import-account__item`}>
-                <ImportByTorus isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+                <ImportByTorus isOnMobile={true} />
               </div>
   
               <div className="import-account__item download-app">
