@@ -16,7 +16,6 @@ export default class ImportByTorus extends React.Component {
     const walletType = 'torus';
     const wallet = getWallet(walletType);
     
-    this.props.closeParentModal();
     this.props.dispatch(importLoading());
     
     try {

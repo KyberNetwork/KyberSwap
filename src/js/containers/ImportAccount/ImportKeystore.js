@@ -16,10 +16,10 @@ import { Modal } from "../../components/CommonElement"
     analytics: store.global.analytics
   }
 })
-
 export default class ImportKeystore extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    
     this.state = {
       isOpen: false,
       error: "",
@@ -59,7 +59,9 @@ export default class ImportKeystore extends React.Component {
           "Keystore"
         )
       );
-      this.setState({isOpen: false, error: ""})
+      
+      this.closeModal();
+      this.props.closeParentModal();
     } catch (e) {
       console.log(e);
       this.setState({error: e.toString()})
