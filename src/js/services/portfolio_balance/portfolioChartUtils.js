@@ -1,7 +1,8 @@
 import { TX_TYPES } from "../constants";
 import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, compareTwoNumber, roundingNumber, stringToNumber } from "../../utils/converter";
 
-export const TIME_EPSILON = 120
+export const TIME_EPSILON = 180
+const NUMBER_POINT_NOT_ZERO = 5
 
 export const CHART_RANGE_TYPE = {
     ONE_DAY: "ONE_DAY",
@@ -199,13 +200,14 @@ function notExistInArray(array, item) {
     return array.indexOf(item) < 0 ? true : false
 }
 
-export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, supportToken) {
+export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, supportToken, senderAddress) {
     const lastestBalance = {}
     tokensBalance.map(t => {
         if(supportToken[t.symbol]){
             lastestBalance[t.symbol] = toT(t.balance, supportToken[t.symbol].decimals)
         }
     })
+    const feeWithHashAndFrom = {}
     const arrayBalance = [lastestBalance]
     let tmpBalance
     const arrayTxsByRes = Object.values(txsByRes)
@@ -250,6 +252,21 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     balanceChange[destTokenSymbol] = subOfTwoNumber(balanceChange[destTokenSymbol], bigDestAmount)
                     break;
             }
+
+            if(tx.fee && senderAddress.toLowerCase() == tx.from.toLowerCase()){
+                const feeKey = tx.hash.toLowerCase() + "_" + tx.from.toLowerCase()
+                if(!feeWithHashAndFrom[feeKey]){
+                    const ethFee = toT(tx.fee, 18)
+                    feeWithHashAndFrom[feeKey] = ethFee
+
+                    if (!balanceChange["ETH"]) {
+                        balanceChange["ETH"] = ethFee
+                    } else {
+                        balanceChange["ETH"] = subOfTwoNumber(balanceChange["ETH"], ethFee)
+                    }
+
+                }
+            }
         }
 
         Object.keys(balanceChange).map(key => {
@@ -258,7 +275,6 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         })
         arrayBalance.unshift({...tmpBalance})
     }
-    // arrayBalance.pop()  // remove lastestBalance
     return arrayBalance
 }
 
@@ -281,8 +297,21 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
             const tokenUSDPrice = tokenPrice[1]
             if (!tokenETHPrice || !tokenUSDPrice || !tokenETHPrice.length || !tokenUSDPrice.length || tokenETHPrice.length < i || tokenUSDPrice.length < i) return
 
-            const tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i].toString()
-            const tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i].toString()
+            let tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i].toString()
+            let tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i].toString()
+
+            let tokenPriceETHNotZeroNum  = 0
+            let tokenPriceUSDNotZeroNum  = 0
+        
+            while(tokenPriceEth == "0" && tokenPriceETHNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceETHNotZeroNum < tokenETHPrice.length){
+                tokenPriceETHNotZeroNum++;
+                tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum].toString()
+            }
+            while(compareTwoNumber(tokenPriceUsd, 0) == 0 && tokenPriceUSDNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceUSDNotZeroNum < tokenUSDPrice.length){
+                tokenPriceUSDNotZeroNum++;
+                tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum].toString()
+            }
+
             totalEpocETHPBalance = sumOfTwoNumber(totalEpocETHPBalance, multiplyOfTwoNumber(tokenPriceEth, epocBalanceObj[tokenSymbol]))
             totalEpocUSDBalance = sumOfTwoNumber(totalEpocUSDBalance, multiplyOfTwoNumber(tokenPriceUsd, epocBalanceObj[tokenSymbol]))
         })
@@ -334,6 +363,8 @@ export function getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens){
                 break;
         }
     })
+
+    if (notExistInArray(arrayTradedTokenSymbols, "ETH")) arrayTradedTokenSymbols.push("ETH")
 
     balanceTokens.map(token => {
         if(notExistInArray(arrayTradedTokenSymbols, token.symbol) && +token.balance > 0){
