@@ -1,7 +1,7 @@
 
 import { TX_TYPES } from "../constants";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, convertTimestampToTime, shortenBigNumber } from "../../utils/converter";
+import { convertTimestampToTime, shortenBigNumber, formatAddress } from "../../utils/converter";
 import { validateResultObject, returnResponseObject, validateTransferTx, validateSwapTx, validateApproveTx, validateUndefinedTx } from "../portfolioService"
 
 import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame, isEmptyWallet,

@@ -305,11 +305,31 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
         
             while(tokenPriceEth == "0" && tokenPriceETHNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceETHNotZeroNum < tokenETHPrice.length){
                 tokenPriceETHNotZeroNum++;
-                tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum].toString()
+                
+                if(tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== undefined
+                && tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== 0){
+
+                    tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum].toString()
+
+                } else if (tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum] !== undefined
+                        && tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum] !== 0){
+                    tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum].toString()
+                }
+                
             }
-            while(compareTwoNumber(tokenPriceUsd, 0) == 0 && tokenPriceUSDNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceUSDNotZeroNum < tokenUSDPrice.length){
+            while(tokenPriceUsd == "0" && tokenPriceUSDNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceUSDNotZeroNum < tokenUSDPrice.length){
                 tokenPriceUSDNotZeroNum++;
-                tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum].toString()
+                if(tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum] !== undefined
+                && tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum] !== 0){
+
+                    tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum].toString()
+
+                } else if (tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum] !== undefined
+                     && tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum] !== 0){
+
+                    tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum].toString()
+                }
+                
             }
 
             totalEpocETHPBalance = sumOfTwoNumber(totalEpocETHPBalance, multiplyOfTwoNumber(tokenPriceEth, epocBalanceObj[tokenSymbol]))
