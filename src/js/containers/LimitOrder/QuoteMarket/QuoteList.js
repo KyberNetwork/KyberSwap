@@ -1,15 +1,17 @@
 import React from "react"
 import Dropdown, {DropdownContent, DropdownTrigger} from "react-simple-dropdown";
+
 export default class QuoteList extends React.Component{
-  constructor(){
-    super()
-    this.state = {active: false}
-    this.dropdownQuotes = ["SAI", "TUSD", "USDC"]
+  constructor(props) {
+    super(props);
+
+    this.state = { active: false };
+    this.dropdownQuotes = ["DAI", "USDT", "SAI", "TUSD", "USDC"]
   }
 
   toggle = () => { this.setState({active: !this.state.active})}
   
-  renderDropdown(){
+  renderDropdown() {
     const { quotes, currentQuote, onClick } = this.props
     const temp = quotes.filter(i => this.dropdownQuotes.includes(i))
     
