@@ -67,16 +67,17 @@ export default class QuoteMarket extends React.Component{
     return (current_sort_dsc ? -1 : 1) * converters.compareTwoNumber(a[current_sort_index], b[current_sort_index])
   }
 
-  renderQuotes(){
+  renderQuotes() {
     const { tokens, pairs } = this.props
     const fav = this.props.favorite_pairs
 
-    const quotes = Object.keys(tokens).filter((key)=> (tokens[key]["is_quote"] && key !== "ETH"))
-    .sort((first, second) => {
-      return sortQuotePriority(tokens, first.replace("WETH", "ETH"), second.replace("WETH", "ETH"));
-    });
+    const quoteSymbols = Object.keys(tokens)
+      .filter((key)=> (tokens[key]["is_quote"] && key !== "ETH"))
+      .sort((first, second) => {
+        return sortQuotePriority(tokens, first.replace("WETH", "ETH"), second.replace("WETH", "ETH"));
+      });
 
-    return quotes.reduce((res, quote) => {
+    const quotes = quoteSymbols.reduce((res, quote) => {
         res[quote] = Object.keys(tokens).filter((key)=> (tokens[key]["sp_limit_order"] && key !== "ETH")).filter(key => {
           // if quote A priority < other quote priorities, remove other quotes from list token of quote A
           const quotePriority = tokens[quote].quote_priority;
@@ -107,8 +108,38 @@ export default class QuoteMarket extends React.Component{
           });
         }, []);
       return res
-      },{});
+    },{});
+
+    return {
+      quotes,
+      quoteSymbolsGroupedByPriority: this.getQuoteSymbolsGroupedByPriority(tokens, quoteSymbols),
+    }
   }
+
+  getQuoteSymbolsGroupedByPriority = (tokens, quoteSymbols) => {
+    let quoteSymbolsGroupedByPriority = [];
+
+    for (let i = 0; i < quoteSymbols.length; i++) {
+      const currentPriority = tokens[quoteSymbols[i]].quote_priority;
+      const currentSymbol = quoteSymbols[i];
+
+      if (i === 0) {
+        quoteSymbolsGroupedByPriority[currentPriority] = [currentSymbol];
+        continue;
+      }
+
+      const lastPriority = tokens[quoteSymbols[i - 1]].quote_priority;
+
+      if (currentPriority === lastPriority) {
+        quoteSymbolsGroupedByPriority[currentPriority].push(currentSymbol);
+        continue;
+      }
+
+      quoteSymbolsGroupedByPriority[currentPriority] = [currentSymbol];
+    }
+
+    return quoteSymbolsGroupedByPriority.reverse();
+  };
 
   renderTh = () => {
     let headerTitles = [
@@ -159,8 +190,8 @@ export default class QuoteMarket extends React.Component{
   };
   
   render() {
-    const quotes = this.renderQuotes()
-    const { tokens, currentQuote } = this.props
+    const { quotes, quoteSymbolsGroupedByPriority } = this.renderQuotes();
+    const { tokens, currentQuote } = this.props;
     const list = Object.keys(quotes).length > 0 ? this.search(quotes) : [];
     const isOnMobile = this.props.global.isOnMobile;
 
@@ -170,7 +201,11 @@ export default class QuoteMarket extends React.Component{
             <div id="container">
               <div id="panel" className="theme__text-4 theme__border">
                 <div className="common__flexbox">
-                  <QuoteList onClick={this.onQuoteClick} currentQuote={currentQuote} quotes={Object.keys(quotes)}/>
+                  <QuoteList
+                    onClick={this.onQuoteClick}
+                    currentQuote={currentQuote}
+                    quoteSymbols={quoteSymbolsGroupedByPriority}
+                  />
                   <Search onSearch={this.onSearch}/>
                 </div>
                 
