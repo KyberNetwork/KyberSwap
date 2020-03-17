@@ -111,6 +111,10 @@ export async function getBalanceTransactionHistoryByTime(address, from, to) {
         isValidTx = validateUndefinedTx(tx);
       }
 
+      if(+tx.timeStamp < from || +tx.timeStamp > to){
+        isValidTx = false
+      }
+
       if (isValidTx) {
         tx.time = convertTimestampToTime(+tx.timeStamp);
         txs.push(tx);

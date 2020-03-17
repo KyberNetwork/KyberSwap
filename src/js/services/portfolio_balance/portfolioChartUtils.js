@@ -252,19 +252,16 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     balanceChange[destTokenSymbol] = subOfTwoNumber(balanceChange[destTokenSymbol], bigDestAmount)
                     break;
             }
-
-            if(tx.fee && senderAddress.toLowerCase() == tx.from.toLowerCase()){
+            if(!tx.isError && tx.fee && senderAddress.toLowerCase() == tx.from.toLowerCase()){
                 const feeKey = tx.hash.toLowerCase() + "_" + tx.from.toLowerCase()
                 if(!feeWithHashAndFrom[feeKey]){
                     const ethFee = toT(tx.fee, 18)
                     feeWithHashAndFrom[feeKey] = ethFee
-
                     if (!balanceChange["ETH"]) {
                         balanceChange["ETH"] = ethFee
                     } else {
-                        balanceChange["ETH"] = subOfTwoNumber(balanceChange["ETH"], ethFee)
+                        balanceChange["ETH"] = sumOfTwoNumber(balanceChange["ETH"], ethFee)
                     }
-
                 }
             }
         }
@@ -305,7 +302,7 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
         
             while(tokenPriceEth == "0" && tokenPriceETHNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceETHNotZeroNum < tokenETHPrice.length){
                 tokenPriceETHNotZeroNum++;
-                
+
                 if(tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== undefined
                 && tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== 0){
 
@@ -335,6 +332,7 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
             totalEpocETHPBalance = sumOfTwoNumber(totalEpocETHPBalance, multiplyOfTwoNumber(tokenPriceEth, epocBalanceObj[tokenSymbol]))
             totalEpocUSDBalance = sumOfTwoNumber(totalEpocUSDBalance, multiplyOfTwoNumber(tokenPriceUsd, epocBalanceObj[tokenSymbol]))
         })
+
         returnData.unshift({
             eth: roundingNumber(totalEpocETHPBalance),
             usd: roundingNumber(totalEpocUSDBalance),
