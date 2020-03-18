@@ -28,7 +28,7 @@ export default class TradingView extends React.Component {
 		containerId: 'tv_chart_container',
 		datafeedUrl: BLOCKCHAIN_INFO.tracker + '/chart',
 		updateFrequency: 300000, // 1 minutes
-		libraryPath: '/trading_view/charting_library/',
+		libraryPath: '/assets/libs/trading_view/charting_library/',
 		fullscreen: false,
 		autosize: true,
 		timezone: "Etc/UTC"
