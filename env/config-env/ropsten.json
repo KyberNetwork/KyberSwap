@@ -34,7 +34,6 @@
             "name": "Ethereum",
             "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "decimals": 18,
-            "gasLimit": "0",
             "sp_limit_order": true,
             "is_quote": true,
             "quote_priority": 2
@@ -44,6 +43,9 @@
             "name": "KyberNetwork",
             "address": "0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6",
             "decimals": 18,
+            "listing_time": 1578370140,
+            "gasApprove": 120000,
+            "gasLimit": "400000",
             "sp_limit_order": true
         },
         "OMG": {
@@ -51,19 +53,13 @@
             "name": "OmiseGO",
             "address": "0x4bfba4a8f28755cb2061c413459ee562c6b9c51b",
             "decimals": 18,
+            "listing_time": 1580601600,
             "sp_limit_order": true
         },
         "EOS": {
             "symbol": "EOS",
             "name": "Eos",
             "address": "0xd5b4218b950a53ff07985e2d88346925c335eae7",
-            "decimals": 18,
-            "sp_limit_order": true
-        },
-        "SNT": {
-            "symbol": "SNT",
-            "name": "Status",
-            "address": "0xbf5d8683b9be6c43fca607eb2a6f2626a18837a6",
             "decimals": 18,
             "sp_limit_order": true
         },
@@ -79,27 +75,6 @@
             "name": "Power Ledger",
             "address": "0xa577731515303f0c0d00e236041855a5c4f114dc",
             "decimals": 6,
-            "sp_limit_order": true
-        },
-        "MANA": {
-            "symbol": "MANA",
-            "name": "Mana",
-            "address": "0x72fd6c7c1397040a66f33c2ecc83a0f71ee46d5c",
-            "decimals": 18,
-            "sp_limit_order": true
-        },
-        "BAT": {
-            "symbol": "BAT",
-            "name": "Basic Attention Token",
-            "address": "0xdb0040451f373949a4be60dcd7b6b8d6e42658b6",
-            "decimals": 18,
-            "sp_limit_order": true
-        },
-        "REQ": {
-            "symbol": "REQ",
-            "name": "Request",
-            "address": "0xb43d10bbe7222519da899b72bf2c7f094b6f79d7",
-            "decimals": 18,
             "sp_limit_order": true
         },
         "GTO": {
@@ -121,20 +96,6 @@
             "name": "AppCoins",
             "address": "0x2799f05b55d56be756ca01af40bf7350787f48d4",
             "decimals": 18,
-            "sp_limit_order": true
-        },
-        "ENG": {
-            "symbol": "ENG",
-            "name": "Enigma",
-            "address": "0x95cc8d8f29d0f7fcc425e8708893e759d1599c97",
-            "decimals": 8,
-            "sp_limit_order": true
-        },
-        "SALT": {
-            "symbol": "SALT",
-            "name": "Salt",
-            "address": "0xb47f1a9b121ba114d5e98722a8948e274d0f4042",
-            "decimals": 8,
             "sp_limit_order": true
         },
         "BQX": {
@@ -172,16 +133,6 @@
             "decimals": 12,
             "sp_limit_order": true
         },
-        "DAI": {
-            "symbol": "DAI",
-            "name": "DAI",
-            "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
-            "decimals": 18,
-            "sp_limit_order": true,
-            "is_quote": true,
-            "quote_priority": 3,
-            "is_gas_fixed": true
-        },
         "LINK": {
             "symbol": "LINK",
             "name": "Chain Link",
@@ -194,7 +145,6 @@
             "name": "IOStoken",
             "address": "0x27db28a6c4ac3d82a08d490cfb746e6f02bc467c",
             "decimals": 18,
-            "delist_time": 1540430640,
             "sp_limit_order": true
         },
         "STORM": {
@@ -360,17 +310,61 @@
             "address": "0x74f36c172c9fc7952402bbabd10037108390aa8d",
             "decimals": 10
         },
-        "TKE": {
-            "symbol": "TKE",
-            "name": "Tokenize Emblem",
-            "address": "0x667102bd3413bfeaa3dffb48fa8288819e480a88",
-            "decimals": 8
-        },
         "EKG": {
             "symbol": "EKG",
             "name": "Ekon Gold",
             "address": "0xf6e55516230e4c2a863936ee02377cc9057b1cbd",
             "decimals": 18
+        },
+        "DAI": {
+            "symbol": "DAI",
+            "name": "DAI",
+            "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
+            "decimals": 18,
+            "listing_time": 1578393540,
+            "gasApprove": 210000,
+            "gasLimit": "500000",
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3,
+            "is_gas_fixed": true
+        },
+        "SNT": {
+            "symbol": "SNT",
+            "name": "Status",
+            "address": "0xbf5d8683b9be6c43fca607eb2a6f2626a18837a6",
+            "decimals": 18,
+            "listing_time": 1578466920,
+            "gasApprove": 260000,
+            "gasLimit": "10000000",
+            "quote_priority": 3
+        },
+        "SALT": {
+            "symbol": "SALT",
+            "name": "Salt",
+            "address": "0xb47f1a9b121ba114d5e98722a8948e274d0f4042",
+            "decimals": 8,
+            "listing_time": 1578358800,
+            "sp_limit_order": true
+        },
+        "MANA": {
+            "symbol": "MANA",
+            "name": "Mana",
+            "address": "0x72fd6c7c1397040a66f33c2ecc83a0f71ee46d5c",
+            "decimals": 18,
+            "listing_time": 1578531720,
+            "gasApprove": 80000,
+            "gasLimit": "500000",
+            "sp_limit_order": true,
+            "quote_priority": 2,
+            "is_gas_fixed": true
+        },
+        "TKE": {
+            "symbol": "TKE",
+            "name": "Tokenize Emblem",
+            "address": "0x667102bd3413bfeaa3dffb48fa8288819e480a88",
+            "decimals": 8,
+            "listing_time": 1582800840
         }
     },
     "ethScanUrl": "https://ropsten.etherscan.io/",

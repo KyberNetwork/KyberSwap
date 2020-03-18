@@ -16,7 +16,7 @@ var getConfig = env => {
     var chain 
     switch(env){
         case "staging_limit_order":
-            chain = "production"
+            chain = "staging_limit_order"
             break
         case "production":
             chain = "production"

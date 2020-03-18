@@ -21,8 +21,8 @@
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.001,
-    "api_tokens": "https://api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
+    "api_tokens": "https://staging-limit-order-api.knstats.com/internal/currencies",
+    "api_tokens_integrate": "https://staging-limit-order-api.knstats.com/internal/currencies",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
@@ -84,6 +84,9 @@
             "decimals": 18,
             "gasLimit": "650000",
             "priority": true,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3,
             "is_gas_fixed": true
         },
         "OMG": {
@@ -290,6 +293,7 @@
             "name": "Augur",
             "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
             "decimals": 18,
+            "gasLimit": "650000",
             "priority": true,
             "sp_limit_order": true
         },
@@ -507,7 +511,10 @@
             "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
             "decimals": 6,
             "listing_time": 1565960400,
-            "gasLimit": "650000"
+            "gasLimit": "650000",
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3
         },
         "SNX": {
             "symbol": "SNX",
@@ -641,6 +648,30 @@
             "name": "Flexacoin",
             "address": "0x4a57e687b9126435a9b19e4a802113e266adebde",
             "decimals": 18
+        },
+        "UBT": {
+            "symbol": "UBT",
+            "name": "Unibright",
+            "address": "0x8400d94a5cb0fa0d041a3788e395285d61c9ee5e",
+            "decimals": 8
+        },
+        "LOOM": {
+            "symbol": "LOOM",
+            "name": "Loom Network",
+            "address": "0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0",
+            "decimals": 18
+        },
+        "PBTC": {
+            "symbol": "PBTC",
+            "name": "Provable BTC",
+            "address": "0x5228a22e72ccc52d415ecfd199f99d0665e7733b",
+            "decimals": 18
+        },
+        "OGN": {
+            "symbol": "OGN",
+            "name": "Origin Protocol",
+            "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26",
+            "decimals": 18
         }
     },
     "ethScanUrl": "https://etherscan.io/",
@@ -652,5 +683,5 @@
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "networkId": 1,
     "chainName": "Mainnet",
-    "tracker": "https://api.kyber.network"
+    "tracker": "https://staging-limit-order-api.knstats.com"
 }
