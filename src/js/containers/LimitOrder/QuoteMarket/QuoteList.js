@@ -32,7 +32,7 @@ export default class QuoteList extends React.Component{
   
   renderQuoteDropdown(quotes, currentQuote, onClick, isActive) {
     return (
-      <div className={`theme__background-55 common__flexbox-center quote_item ${isActive ? "active" : ""}`}>
+      <div key={quotes[0]} className={`theme__background-55 common__flexbox-center quote_item ${isActive ? "active" : ""}`}>
         <Dropdown active={this.state.active} onHide={this.toggle}>
         <DropdownTrigger onClick={this.toggle}>
           <span>{isActive ? currentQuote : quotes[0]}</span>
