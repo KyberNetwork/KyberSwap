@@ -55,9 +55,9 @@ export default class LimitOrderSubmit extends React.Component {
       
       return this.props.destAmount
     }
-    
-    const rateBig = converters.toTWei(this.props.tokens[this.props.baseSymbol].rate, 18);
-    
+
+    const rateBig = converters.toTWei(this.props.tokens[this.props.quoteSymbol].rate, 18);
+
     return converters.toEther(converters.calculateDest(this.props.sourceAmount, rateBig, 6));
   };
   
