@@ -6,7 +6,7 @@ import PortfolioEquity from "./PortfolioEquity";
 import PortfolioTab from "./PortfolioTab";
 import PortfolioOverview from "./PortfolioOverview";
 import { PORTFOLIO_TAB } from "../../services/constants";
-// import PortfolioPerformance from "./PortfolioPerformance";
+import PortfolioPerformance from "./PortfolioPerformance";
 
 const PortfolioView = (props) => {
   const isOverViewDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.overview : props.isImported;
@@ -71,7 +71,7 @@ const PortfolioView = (props) => {
           <p>{props.translate("info.please_give_feedback", { link: "https://docs.google.com/forms/d/e/1FAIpQLSfLUO3O4j6v3CKMtW5yD9auuHbnJY75IM9PLJO9hg1SBRiGaQ/viewform" })}</p>
         </div>}
 
-        {/* {isOverViewDisplayed && <PortfolioPerformance  performanceChart={props.performanceChart} currency={props.currency} isOnMobile={props.isOnMobile}/>} */}
+        {isOverViewDisplayed && <PortfolioPerformance  performanceChart={props.performanceChart} currency={props.currency} isOnMobile={props.isOnMobile}/>}
         
         {isHistoryDisplayed && (
             <PortfolioTxHistory

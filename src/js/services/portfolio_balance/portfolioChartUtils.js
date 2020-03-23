@@ -222,8 +222,10 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
             switch (tx.type) {
                 case TX_TYPES.send:
                 case TX_TYPES.receive:
-                    const transferTokenSymbol = tokenByAddress[tx.transfer_token_address]
-                    if (!transferTokenSymbol || !supportToken[transferTokenSymbol]) break;
+                    const transferTokenSymbol = tokenByAddress[tx.transfer_token_address.toLowerCase()]
+                    if (!transferTokenSymbol || !supportToken[transferTokenSymbol]) {
+                        break
+                    };
 
                     const tokenData = supportToken[transferTokenSymbol]
                     const bigTokenAmount = toT(tx.transfer_token_value, tokenData.decimals)
@@ -235,10 +237,12 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     break;
                 case TX_TYPES.swap:
 
-                    const sourceTokenSymbol = tokenByAddress[tx.swap_source_token]
-                    const destTokenSymbol = tokenByAddress[tx.swap_dest_token]
+                    const sourceTokenSymbol = tokenByAddress[tx.swap_source_token.toLowerCase()]
+                    const destTokenSymbol = tokenByAddress[tx.swap_dest_token.toLowerCase()]
 
-                    if (!sourceTokenSymbol || !supportToken[sourceTokenSymbol] || !destTokenSymbol || !supportToken[destTokenSymbol]) break;
+                    if (!sourceTokenSymbol || !supportToken[sourceTokenSymbol] || !destTokenSymbol || !supportToken[destTokenSymbol]) {
+                        break
+                    };
 
                     const sourceData = supportToken[sourceTokenSymbol]
                     const destData = supportToken[destTokenSymbol]
@@ -262,6 +266,8 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     } else {
                         balanceChange["ETH"] = sumOfTwoNumber(balanceChange["ETH"], ethFee)
                     }
+                } else {
+                    console.log(" dupliate ", feeKey)
                 }
             }
         }
