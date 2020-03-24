@@ -218,6 +218,8 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         const balanceChange = {}
         for (let j = 0; j < txs.length; j++) {
             const tx = txs[j]
+            
+            if(tx.isError) continue
 
             switch (tx.type) {
                 case TX_TYPES.send:
