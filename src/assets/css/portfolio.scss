@@ -207,9 +207,26 @@
   }
 
   &__performance {
+    position: relative;
     &-chart {
       width: 100%;
     }
+    &__mobile{
+      max-height: 400px;
+      
+      .portfolio__switcher{
+        justify-content: flex-start;
+      }
+    }
+    &__desktop{
+      max-height: 300px;
+      .portfolio__performance__chart__header {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+   
+
   }
 
   &__history {
@@ -320,6 +337,11 @@
         color: $error-color;
       }
     }
+  }
+
+  &__chart__loading{
+    position: absolute;
+    width: 100%;
   }
 
   &__info {

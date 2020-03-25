@@ -53,8 +53,6 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
       const {account, wallet, walletName} = action.payload
-          
-
       return {...state, account: account, wallet: wallet, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{

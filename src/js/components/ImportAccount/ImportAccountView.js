@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import {
-  ImportKeystore,
   ImportByPrivateKey,
   ImportByMetamask,
   ImportByDeviceWithLedger,
   ImportByDeviceWithTrezor,
   ImportByPromoCode,
-  ImportByOther
+  ImportByOther,
+  ImportByTorus
 } from "../../containers/ImportAccount";
 
 const ImportAccountView = (props) => {
@@ -60,15 +60,15 @@ const ImportAccountView = (props) => {
                 <ImportByDeviceWithTrezor />
               </div>
               <div className={`import-account__item`}>
-                <ImportKeystore />
+                <ImportByTorus />
               </div>
               {!isLimitOrder && (
                 <div className={`import-account__item`}>
-                  <ImportByPromoCode isOnMobile={isOnMobile} />
+                  <ImportByPromoCode />
                 </div>
               )}
               <div className={`import-account__item`}>
-                <ImportByOther isOnMobile={isOnMobile} />
+                <ImportByOther />
               </div>
             </Fragment>
           }
@@ -76,42 +76,48 @@ const ImportAccountView = (props) => {
           {isOnMobile &&
             <Fragment>
               <div className={`import-account__item`}>
-                <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={props.closeModal}/>
+                <ImportByPrivateKey isOnMobile={true} closeParentModal={props.closeModal}/>
               </div>
   
               {!isLimitOrder && (
                 <div className={`import-account__item`}>
-                  <ImportByPromoCode isOnMobile={isOnMobile} />
+                  <ImportByPromoCode isOnMobile={true} />
                 </div>
               )}
-              
-              <div className="import-account__item download-app">
-                <div className={"import-account__block"}>
-                  <div className={"import-account__block-left"}>
-                    <div className="import-account__icon kyberapp" />
-                    <div>
-                      <div className="import-account__name">KYBERSWAP APP</div>
-                      <div className="import-account__desc">Ethereum Wallet & DApp</div>
-                    </div>
-                  </div>
-                  {isIos && <a
-                    className="import-account__block-right import-account__block-right--download"
-                    href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
-                    target="_blank"
-                    onClick={() => props.viewKyberSwapApp('IOS')}
-                  >
-                    {props.translate("address.download") || "Download"}
-                  </a>}
-                  {isAndroid && <a
-                    className="import-account__block-right import-account__block-right--download"
-                    href={"https://play.google.com/store/apps/details?id=com.kyberswap.android"}
-                    target="_blank"
-                    onClick={() => props.viewKyberSwapApp('Android')}
-                  >
-                    {props.translate("address.download") || "Download"}
-                  </a>}
-                </div>
+  
+              <div className={`import-account__item`}>
+                <ImportByTorus isOnMobile={true} />
               </div>
+
+              {!isIos && (
+                <div className="import-account__item download-app">
+                  <div className={"import-account__block"}>
+                    <div className={"import-account__block-left"}>
+                      <div className="import-account__icon kyberapp" />
+                      <div>
+                        <div className="import-account__name">KYBERSWAP APP</div>
+                        <div className="import-account__desc">Ethereum Wallet & DApp</div>
+                      </div>
+                    </div>
+                    {isIos && <a
+                      className="import-account__block-right import-account__block-right--download"
+                      href={"https://itunes.apple.com/us/app/kyberswap/id1453691309?ls=1&mt=8"}
+                      target="_blank"
+                      onClick={() => props.viewKyberSwapApp('IOS')}
+                    >
+                      {props.translate("address.download") || "Download"}
+                    </a>}
+                    {isAndroid && <a
+                      className="import-account__block-right import-account__block-right--download"
+                      href={"https://play.google.com/store/apps/details?id=com.kyberswap.android"}
+                      target="_blank"
+                      onClick={() => props.viewKyberSwapApp('Android')}
+                    >
+                      {props.translate("address.download") || "Download"}
+                    </a>}
+                  </div>
+                </div>
+              )}
             </Fragment>
           }
         </div>

@@ -54,6 +54,7 @@ export default class ToggleableMenu extends React.Component {
       </div>
     )
   }
+  
   render() {
     return (
         <div className={"limit-order-account"}>
@@ -82,5 +83,4 @@ export default class ToggleableMenu extends React.Component {
         </div>
       );
   }
-
 }

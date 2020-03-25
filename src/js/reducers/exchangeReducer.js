@@ -1,7 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
 import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
@@ -25,16 +23,13 @@ const exchange = (state = initState, action) => {
       newState.destAmount = ""
       newState.errors = initState.errors
       newState.advanced = false
-      //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       newState.minConversionRate = newState.slippageRate
-
       newState.isEditRate = false
-      //newState.isEditGasPrice = false
-
       newState.isAnalize = false
       newState.isAnalizeComplete = false
+      
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {
@@ -200,19 +195,16 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
+        const { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
+        let gasPriceSuggest = { ...newState.gasPriceSuggest }
 
-        const gasExchange = common.getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, newState.maxGasPrice);
-
-        var gasPriceSuggest = { ...newState.gasPriceSuggest }
-
-        gasPriceSuggest.superFastGas = Math.round(gasExchange.superFastGas * 10) / 10
-        gasPriceSuggest.fastGas = Math.round(gasExchange.fastGas * 10) / 10
-        gasPriceSuggest.standardGas = Math.round(gasExchange.standardGas * 10) / 10
-        gasPriceSuggest.safeLowGas = Math.round(gasExchange.safeLowGas * 10) / 10
+        gasPriceSuggest.superFastGas = Math.round(superFastGas * 10) / 10
+        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
 
         newState.gasPriceSuggest = { ...gasPriceSuggest }
-        newState.gasPrice = Math.round(gasExchange.defaultGas * 10) / 10
+        newState.gasPrice = Math.round(defaultGas * 10) / 10
 
         newState.selectedGas = selectedGas;
       }

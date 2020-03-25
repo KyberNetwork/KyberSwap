@@ -232,6 +232,10 @@
           background-position: -31px 5px;
         }
 
+        &.torus {
+          background-position: -23px 3px;
+        }
+
         &.other {
           background-position: -31px 9px;
         }
@@ -287,6 +291,12 @@
       background-image: url($image-path + 'import-account/wallets/wallet-connect.svg');
     }
 
+    &.torus {
+      width: 14px;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/torus.svg');
+    }
+
     &.other {
       margin-right: 0;
       background-position: 0;
@@ -301,6 +311,7 @@
   &__name {
     font-size: 12px;
     font-weight: 500;
+    text-transform: uppercase;
   }
 
   .column-block {
