@@ -38,14 +38,10 @@
     margin: 0 15px 15px;
     border: none;
 
-    &--empty {
-      height: 260px !important;
-    }
-
     .rt-table {
       padding-bottom: 10px;
-      max-height: 290px;
-      min-height: 225px;
+      max-height: 230px;
+      min-height: 200px;
       flex: initial;
     }
 
@@ -1229,8 +1225,11 @@
   font-size: 14px;
   font-weight: 500;
 
+  &__advance {
+    padding: 5px 0;
+  }
+
   &__option {
-    color: #5a5e67;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
@@ -2434,7 +2433,7 @@
 
 .limit-order-top-token {
   margin-top: 8px;
-  padding: 25px 15px;
+  padding: 20px 15px;
   border-radius: 3px;
   flex-grow: 1;
 

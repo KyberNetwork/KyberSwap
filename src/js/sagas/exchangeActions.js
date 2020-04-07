@@ -229,48 +229,43 @@ function* verifyExchange() {
   }
 }
 
-export function* doAfterAccountImported(action){
-  var {account, walletName} = action.payload
-
+function* doAfterAccountImported(action){
+  var { account } = action.payload
   
-
   if (account.type === "promo"){
     var state = store.getState()
     var ethereum = state.connection.ethereum
     var exchange = state.exchange
     var tokens = state.tokens.tokens
-
-    var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
     var promoToken = BLOCKCHAIN_INFO.promo_token
 
     if (promoToken && tokens[promoToken]){
       var promoAddr = tokens[promoToken].address
       var promoDecimal = tokens[promoToken].decimals
-
       var destTokenSymbol = exchange.destTokenSymbol
+      
       if (account.info.destToken && tokens[account.info.destToken.toUpperCase()]){
         destTokenSymbol = account.info.destToken.toUpperCase()
       }
+      
       var destAddress = tokens[destTokenSymbol].address
-      // sourceToken = promoToken.toLowerCase()
-      
-      
-
       var path = constants.BASE_HOST + "/swap/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
+      
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      if (window.kyberBus){
+      
+      if (window.kyberBus) {
         window.kyberBus.broadcast('go.to.swap')
       }
+      
       yield put(globalActions.goToRoute(path))
-
       yield put(actions.selectToken(promoToken, promoAddr,destTokenSymbol, destAddress, "promo"))
 
-      try{
+      try {
         var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
         var balance = converter.toT(balanceSource, promoDecimal)
         yield put(actions.inputChange('source', balance, promoDecimal, destTokenSymbol))
         yield put(actions.focusInput('source'));
-      }catch(e){
+      } catch(e) {
         console.log(e)
       }
 
@@ -286,6 +281,19 @@ export function* doAfterAccountImported(action){
   }
 }
 
+function* fetchMaxGasPrice(action) {
+  const ethereum = action.payload;
+  
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice");
+    const maxGasPriceGwei = converter.weiToGwei(maxGasPrice);
+  
+    yield put(actions.setMaxGasPriceComplete(maxGasPriceGwei));
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
@@ -293,5 +301,6 @@ export function* watchExchange() {
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.FETCH_MAX_GAS_PRICE", fetchMaxGasPrice)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

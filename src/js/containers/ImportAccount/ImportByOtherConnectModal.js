@@ -7,7 +7,7 @@ import {
   ImportByPrivateKey,
   ImportByWalletLink,
   ImportByWalletConnect,
-  ImportByTorus
+  ImportKeystore
 } from "../../containers/ImportAccount";
 
 @connect((store) => {
@@ -38,16 +38,16 @@ export default class ImportByOtherConnectModal extends React.Component {
                 </div>
                 <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
                   <div className={`import-account__item large`}>
-                    <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
-                  </div>
-                  <div className={`import-account__item large`}>
                     <ImportByWalletLink closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
                   <div className={`import-account__item large`}>
                     <ImportByWalletConnect closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
                   <div className={`import-account__item large`}>
-                    <ImportByTorus closeParentModal={this.closeModal.bind(this)} />
+                    <ImportKeystore closeParentModal={this.closeModal.bind(this)} />
+                  </div>
+                  <div className={`import-account__item large`}>
+                    <ImportByPrivateKey isOnMobile={isOnMobile} closeParentModal={this.closeModal.bind(this)} tradeType={this.props.account.otherConnect.tradeType}/>
                   </div>
                 </div>
               </div>

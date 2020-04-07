@@ -56,6 +56,40 @@ export default class Portfolio extends React.Component {
     
     if (window.kyberBus) window.kyberBus.broadcast('go.to.swap-path');
   };
+
+  selectBalanceButton=(type, symbol) => {
+    this.props.global.analytics.callTrack("trackClickTokenInAccountBalance", symbol, "portfolio");
+    let path = '';
+
+    switch (type) {
+      case "buy":
+        if (symbol === "ETH") {
+          path = "/swap/dai-eth"
+        } else {
+          path = "/swap/eth-" + symbol.toLowerCase()
+        }
+        break;
+      
+      case "sell":
+        if (symbol === "ETH") {
+          path = "/swap/eth-knc"
+        } else {
+          path = "/swap/" + symbol.toLowerCase() + "-eth"
+        }
+        break;
+      
+      case "transfer":
+        path = "/transfer/" + symbol.toLowerCase()
+        break;
+      default:
+        break;
+    }
+    
+    if(!path) return
+    history.push(path);
+    
+    if (window.kyberBus) window.kyberBus.broadcast('go.to.swap-path');
+  };
   
   render() {
     return (
@@ -76,6 +110,7 @@ export default class Portfolio extends React.Component {
         isOnMobile={this.props.global.isOnMobile}
         theme={this.props.global.theme}
         selectToken={this.selectToken}
+        selectBalanceButton={this.selectBalanceButton}
       />
     )
   }
