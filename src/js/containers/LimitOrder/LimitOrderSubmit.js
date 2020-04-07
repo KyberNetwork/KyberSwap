@@ -48,12 +48,10 @@ export default class LimitOrderSubmit extends React.Component {
   };
 
   calculateETHEquivalent = () => {
-    if (this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-      if (this.props.isBuyForm) {
-        return this.props.sourceAmount
-      }
-      
-      return this.props.destAmount
+    if (this.props.baseSymbol === 'WETH') {
+      return this.props.isBuyForm ? this.props.destAmount : this.props.sourceAmount;
+    } else if (this.props.quoteSymbol === 'WETH') {
+      return this.props.isBuyForm ? this.props.sourceAmount : this.props.destAmount;
     }
     
     const rateBig = converters.toTWei(this.props.tokens[this.props.baseSymbol].rate, 18);
