@@ -62,11 +62,11 @@ const ExchangeBodyLayout = (props) => {
   
   return (
     <div className={"exchange__form theme__background-2"}>
-     {/* {(props.sourceTokenSymbol === "KNC" || props.destTokenSymbol === "KNC") && (
+      {(props.sourceTokenSymbol === "BAND" || props.destTokenSymbol === "BAND") && (
         <div className="common__text-center">
-          <p className="common__notification theme__border-3 theme__background-11">Win KNC tokens by participating in our trading contest (till 28 Feb). Please login to participate. Click <a href={"/promo/knc?utm_source=knc-infobox&utm_medium=notibar&utm_campaign=knc-contest"} target="_blank">here</a> for more details</p>
+          <p className="common__notification theme__border-3 theme__background-11">Win BAND tokens by participating in our trading contest (till 21 April). Please login to participate. Click <a href={"/promo/band?utm_source=band-infobox&utm_medium=notibar&utm_campaign=band-contest"} target="_blank">here</a> for more details</p>
         </div>
-      )}*/}
+      )}
       <div>
         {props.account && props.account.type === "promo" && props.account.info.description !== ""
           && <div className={"promo-description theme__text-3"}>
