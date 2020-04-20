@@ -6,8 +6,8 @@ printf 'Building swap from commit %s' "$TRAVIS_COMMIT"
 if [[ "$TRAVIS_BRANCH" == "develop" ]]; then
   npm run build_auto_dev
   npm run build_auto_ropsten
-if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-  npm run npm run build-ropsten
+elif [[ "$TRAVIS_BRANCH" == "master" ]]; then
+  npm run build-ropsten
 else
     echo "Branch is not set for auto-build."
     exit 0
