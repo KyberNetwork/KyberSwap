@@ -8,15 +8,7 @@
             {
                 "endPoint": "https://production-cache.kyber.network/node",
                 "type": "prune"
-            },
-            {
-                "endPoint": "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7",
-                "type": "prune"
-            },
-            {
-                "endPoint": "https://mainnet.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
-                "type": "prune"
-            }
+            }            
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },

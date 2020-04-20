@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://ropsten.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
+                "endPoint": "https://eth-ropsten.alchemyapi.io/v2/pyaz7njdMA8k7--2e4Hii5GcPjkNAmR7",
                 "type": "prune"
             }
         ],
