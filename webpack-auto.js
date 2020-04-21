@@ -10,6 +10,7 @@ var BLOCKCHAIN_INFO = require("./env")
 const fetch = require("node-fetch");
 var fs = require('fs');
 var sass = require('node-sass');
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 var getConfig = env => {
     var buildFolder = env
@@ -53,6 +54,7 @@ var getConfig = env => {
             favicon: './assets/img/favicon.png',
             inject: 'body'
         }),
+        new FriendlyErrorsWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),   
