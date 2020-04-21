@@ -8,6 +8,7 @@ if [[ "$TRAVIS_BRANCH" == "develop" ]]; then
   npm run build_auto_ropsten
 elif [[ "$TRAVIS_BRANCH" == "master" ]]; then
   npm run build-ropsten
+  npm run build-staging
 else
     echo "Branch is not set for auto-build."
     exit 0

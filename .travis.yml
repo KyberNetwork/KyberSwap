@@ -97,7 +97,7 @@ deploy:
     skip_cleanup: true
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
+      condition: $TRAVIS_BRANCH =~ ^develop|staging$
 
   - provider: script
     script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
