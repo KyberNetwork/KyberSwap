@@ -2,23 +2,23 @@ import * as common from "../../utils/common"
 
 export default class GoogleTagmanager {
   initService(network) {
-    if (typeof dataLayer !== "undefined") {
-        dataLayer = undefined
-    }
+    // if (typeof dataLayer !== "undefined") {
+    //     dataLayer = undefined
+    // }
 
-    if (network === 'Mainnet' || network === 'Production') {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NFK79RR')
-    } else {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-KMWZ7XB')
-    }
+    // if (network === 'Mainnet' || network === 'Production') {
+    //     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    //     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    //     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    //     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    //     })(window,document,'script','dataLayer','GTM-NFK79RR')
+    // } else {
+    //     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    //     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    //     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    //     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    //     })(window,document,'script','dataLayer','GTM-KMWZ7XB')
+    // }
 
     this.addUserIdentity()
   }
