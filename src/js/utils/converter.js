@@ -36,7 +36,7 @@ export function calculateDest(source, rate, precision) {
   return dest
 }
 
-export function caculateSourceAmount(destAmount, offeredRate, precision, roundUp = false) {
+export function caculateSourceAmount(destAmount, offeredRate, precision) {
   if (!destAmount || !offeredRate || acceptableTyping(destAmount) || acceptableTyping(offeredRate)) {
     return ""
   }
@@ -49,15 +49,14 @@ export function caculateSourceAmount(destAmount, offeredRate, precision, roundUp
 
   var bigDest = new BigNumber(destAmount)
   bigOfferedRate = bigOfferedRate.div(1000000000000000000)
-  var result = bigDest.div(bigOfferedRate)
+  let result = bigDest.div(bigOfferedRate);
+  result = sumOfTwoNumber(result, multiplyOfTwoNumber(result, 0.01));
 
-  if (precision && roundUp) {
-    return result.toFixed(precision);
-  } else if (precision) {
+  if (precision) {
     return formatNumberByPrecision(result, precision);
   }
 
-  return result.toString()
+  return result.toString();
 }
 
 export function caculateDestAmount(sourceAmount, offeredRate, precision) {
