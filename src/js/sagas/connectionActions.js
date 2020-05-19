@@ -1,7 +1,6 @@
 import { put, call, fork, takeEvery } from 'redux-saga/effects'
 import EthereumService from "../services/ethereum/ethereum"
 import { setConnection } from "../actions/connectionActions"
-import { setMaxGasPrice } from "../actions/exchangeActions"
 import { initTokens } from "../actions/tokenActions"
 import { delay } from 'redux-saga'
 import { store } from "../store"
@@ -50,7 +49,7 @@ function getListTokens() {
   })
 }
 
-export function* createNewConnection(action) {
+export function* createNewConnection() {
   var tokens = yield call(getListTokens)
 
   yield put.resolve(initTokens(tokens))
@@ -59,8 +58,8 @@ export function* createNewConnection(action) {
   var connectionInstance = new EthereumService()
 
   yield put.resolve(setConnection(connectionInstance))
+  
   connectionInstance.subscribe()
-  yield put.resolve(setMaxGasPrice(connectionInstance))
 
   var web3Service = web3Package.newWeb3Instance()
 

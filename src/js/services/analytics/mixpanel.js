@@ -80,6 +80,16 @@ export default class Mixpanel {
     }
   }
 
+  txMinedStatus(hash, walletType, tradeType, status, address, accountType) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track("Swap_Tx_Mined", {hash, walletType, tradeType, status, address, accountType})
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
 
   trackCoinExchange(data) {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){

@@ -64,6 +64,45 @@
     box-shadow: 0 2px 58px -20px rgba(0, 0, 0, 0.17);
   }
 
+  &__item__no__padding {
+    padding: 25px 0;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    box-shadow: 0 2px 58px -20px rgba(0, 0, 0, 0.17);
+
+    .account-balance{
+      &__control-panel{
+        padding: 0 25px;
+      }
+
+      &__token-wrapper{
+        padding: 1px 0;
+        margin: 0;
+        cursor: default;
+      }
+
+      &__token-item {
+        margin: 15px 10px 15px 25px;
+      }
+
+      &__token-wrapper{
+        &:hover{
+          background-color: rgba(0, 0, 0, 0.24);
+    
+          .stable-equivalent{
+            opacity: 0;
+          }
+          
+    
+          .account-balance__item-hover-overlay{
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+
   &__summary {
     display: flex;
     justify-content: space-between;
@@ -168,6 +207,7 @@
   }
 
   &__performance {
+    position: relative;
     &-chart {
       width: 100%;
     }
@@ -297,6 +337,11 @@
         color: $error-color;
       }
     }
+  }
+
+  &__chart__loading{
+    position: absolute;
+    width: 100%;
   }
 
   &__info {

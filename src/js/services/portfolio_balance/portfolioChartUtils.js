@@ -1,7 +1,8 @@
 import { TX_TYPES } from "../constants";
 import { sumOfTwoNumber, subOfTwoNumber, multiplyOfTwoNumber, toT, compareTwoNumber, roundingNumber, stringToNumber } from "../../utils/converter";
 
-export const TIME_EPSILON = 120
+export const TIME_EPSILON = 180
+const NUMBER_POINT_NOT_ZERO = 5
 
 export const CHART_RANGE_TYPE = {
     ONE_DAY: "ONE_DAY",
@@ -170,7 +171,11 @@ export function getFromTimeForTimeRange(rangeType, now) {
     }
 }
 
-
+export function isEmptyWallet(txs){
+    if(txs.inQueue) return false
+    if(!txs || txs.totalTxs == 0) return true
+    return false
+}
 
 export function parseTxsToTimeFrame(txs, timeResolution, fromTime, toTime) {
     switch (timeResolution) {
@@ -195,13 +200,14 @@ function notExistInArray(array, item) {
     return array.indexOf(item) < 0 ? true : false
 }
 
-export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, supportToken) {
+export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, supportToken, senderAddress) {
     const lastestBalance = {}
     tokensBalance.map(t => {
         if(supportToken[t.symbol]){
             lastestBalance[t.symbol] = toT(t.balance, supportToken[t.symbol].decimals)
         }
     })
+    const feeWithHashAndFrom = {}
     const arrayBalance = [lastestBalance]
     let tmpBalance
     const arrayTxsByRes = Object.values(txsByRes)
@@ -212,12 +218,16 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         const balanceChange = {}
         for (let j = 0; j < txs.length; j++) {
             const tx = txs[j]
+            
+            if(tx.isError) continue
 
             switch (tx.type) {
                 case TX_TYPES.send:
                 case TX_TYPES.receive:
-                    const transferTokenSymbol = tokenByAddress[tx.transfer_token_address]
-                    if (!transferTokenSymbol || !supportToken[transferTokenSymbol]) break;
+                    const transferTokenSymbol = tokenByAddress[tx.transfer_token_address.toLowerCase()]
+                    if (!transferTokenSymbol || !supportToken[transferTokenSymbol]) {
+                        break
+                    };
 
                     const tokenData = supportToken[transferTokenSymbol]
                     const bigTokenAmount = toT(tx.transfer_token_value, tokenData.decimals)
@@ -229,10 +239,12 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     break;
                 case TX_TYPES.swap:
 
-                    const sourceTokenSymbol = tokenByAddress[tx.swap_source_token]
-                    const destTokenSymbol = tokenByAddress[tx.swap_dest_token]
+                    const sourceTokenSymbol = tokenByAddress[tx.swap_source_token.toLowerCase()]
+                    const destTokenSymbol = tokenByAddress[tx.swap_dest_token.toLowerCase()]
 
-                    if (!sourceTokenSymbol || !supportToken[sourceTokenSymbol] || !destTokenSymbol || !supportToken[destTokenSymbol]) break;
+                    if (!sourceTokenSymbol || !supportToken[sourceTokenSymbol] || !destTokenSymbol || !supportToken[destTokenSymbol]) {
+                        break
+                    };
 
                     const sourceData = supportToken[sourceTokenSymbol]
                     const destData = supportToken[destTokenSymbol]
@@ -246,6 +258,20 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
                     balanceChange[destTokenSymbol] = subOfTwoNumber(balanceChange[destTokenSymbol], bigDestAmount)
                     break;
             }
+            if(!tx.isError && tx.fee && senderAddress.toLowerCase() == tx.from.toLowerCase()){
+                const feeKey = tx.hash.toLowerCase() + "_" + tx.from.toLowerCase()
+                if(!feeWithHashAndFrom[feeKey]){
+                    const ethFee = toT(tx.fee, 18)
+                    feeWithHashAndFrom[feeKey] = ethFee
+                    if (!balanceChange["ETH"]) {
+                        balanceChange["ETH"] = ethFee
+                    } else {
+                        balanceChange["ETH"] = sumOfTwoNumber(balanceChange["ETH"], ethFee)
+                    }
+                } else {
+                    console.log(" dupliate ", feeKey)
+                }
+            }
         }
 
         Object.keys(balanceChange).map(key => {
@@ -254,15 +280,14 @@ export function mappingBalanceChange(txsByRes, tokensBalance, tokenByAddress, su
         })
         arrayBalance.unshift({...tmpBalance})
     }
-    // arrayBalance.pop()  // remove lastestBalance
     return arrayBalance
 }
 
 export function mappingTotalBalance(balanceChange, priceInResolution) {
     const returnData = []
-    let minETH = 0
+    let minETH = null
     let maxETH = 0
-    let minUSD = 0
+    let minUSD = null
     let maxUSD = 0
     for (let i = 1; i <= balanceChange.length; i++) {
         const epocBalanceObj = balanceChange[balanceChange.length - i]
@@ -277,11 +302,45 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
             const tokenUSDPrice = tokenPrice[1]
             if (!tokenETHPrice || !tokenUSDPrice || !tokenETHPrice.length || !tokenUSDPrice.length || tokenETHPrice.length < i || tokenUSDPrice.length < i) return
 
-            const tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i].toString()
-            const tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i].toString()
+            let tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i].toString()
+            let tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i].toString()
+
+            let tokenPriceETHNotZeroNum  = 0
+            let tokenPriceUSDNotZeroNum  = 0
+        
+            while(tokenPriceEth == "0" && tokenPriceETHNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceETHNotZeroNum < tokenETHPrice.length){
+                tokenPriceETHNotZeroNum++;
+
+                if(tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== undefined
+                && tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum] !== 0){
+
+                    tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i - tokenPriceETHNotZeroNum].toString()
+
+                } else if (tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum] !== undefined
+                        && tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum] !== 0){
+                    tokenPriceEth = tokenETHPrice[tokenETHPrice.length - i + tokenPriceETHNotZeroNum].toString()
+                }
+                
+            }
+            while(tokenPriceUsd == "0" && tokenPriceUSDNotZeroNum < NUMBER_POINT_NOT_ZERO && i + tokenPriceUSDNotZeroNum < tokenUSDPrice.length){
+                tokenPriceUSDNotZeroNum++;
+                if(tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum] !== undefined
+                && tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum] !== 0){
+
+                    tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i - tokenPriceUSDNotZeroNum].toString()
+
+                } else if (tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum] !== undefined
+                     && tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum] !== 0){
+
+                    tokenPriceUsd = tokenUSDPrice[tokenUSDPrice.length - i + tokenPriceUSDNotZeroNum].toString()
+                }
+                
+            }
+
             totalEpocETHPBalance = sumOfTwoNumber(totalEpocETHPBalance, multiplyOfTwoNumber(tokenPriceEth, epocBalanceObj[tokenSymbol]))
             totalEpocUSDBalance = sumOfTwoNumber(totalEpocUSDBalance, multiplyOfTwoNumber(tokenPriceUsd, epocBalanceObj[tokenSymbol]))
         })
+
         returnData.unshift({
             eth: roundingNumber(totalEpocETHPBalance),
             usd: roundingNumber(totalEpocUSDBalance),
@@ -292,10 +351,10 @@ export function mappingTotalBalance(balanceChange, priceInResolution) {
         if(compareTwoNumber(totalEpocUSDBalance, maxUSD) == 1){
             maxUSD = roundingNumber(totalEpocUSDBalance)
         }
-        if(compareTwoNumber(totalEpocETHPBalance, minETH) == -1 || minETH == 0){
+        if(minETH == null || compareTwoNumber(totalEpocETHPBalance, minETH) == -1 ){
             minETH = roundingNumber(totalEpocETHPBalance)
         }
-        if(compareTwoNumber(totalEpocUSDBalance, minUSD) == -1 || minUSD == 0){
+        if(minUSD == null || compareTwoNumber(totalEpocUSDBalance, minUSD) == -1 ){
             minUSD = roundingNumber(totalEpocUSDBalance)
         }
     }
@@ -330,6 +389,8 @@ export function getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens){
                 break;
         }
     })
+
+    if (notExistInArray(arrayTradedTokenSymbols, "ETH")) arrayTradedTokenSymbols.push("ETH")
 
     balanceTokens.map(token => {
         if(notExistInArray(arrayTradedTokenSymbols, token.symbol) && +token.balance > 0){

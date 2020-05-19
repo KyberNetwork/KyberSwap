@@ -9,7 +9,6 @@ import constants from "../../services/constants"
 import { Market } from "../Market"
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
-import service from "../../services/limit_order"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -23,7 +22,6 @@ import service from "../../services/limit_order"
     params: {...props.match.params},
   }
 })
-
 export default class Exchange extends React.Component {
   constructor(props){
     super(props)
@@ -98,15 +96,9 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.estimateGasNormal(false))
   }
 
-  async fetchMaxGasPrice(){
-    var ethereum = this.getEthereumInstance()
-    try{
-      var gasPrice = await ethereum.call("getMaxGasPrice")
-      var maxGasPriceGwei = converter.weiToGwei(gasPrice)
-      this.props.dispatch(exchangeActions.setMaxGasPriceComplete(maxGasPriceGwei))
-    }catch(err){
-      console.log(err)
-    }
+  fetchMaxGasPrice() {
+    const ethereum = this.getEthereumInstance();
+    this.props.dispatch(exchangeActions.fetchMaxGasPrice(ethereum));
   }
 
   verifyExchange = () => {

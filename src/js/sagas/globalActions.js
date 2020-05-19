@@ -123,20 +123,20 @@ export function* checkConnection(action) {
   }
 }
 
-export function* setGasPrice(action) {
+export function* setGasPrice() {
   var safeLowGas, standardGas, fastGas, defaultGas, superFastGas
   var state = store.getState();
   var ethereum = state.connection.ethereum;
-  var maxGasPrice = state.exchange.maxGasPrice
 
   try {
-    const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice")
-
+    let maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice");
+    maxGasPrice = converter.weiToGwei(maxGasPrice);
+    const gasPrice = yield call([ethereum, ethereum.call], "getGasPrice");
+  
+    fastGas = converter.stringToNumber(gasPrice.fast)
     safeLowGas = converter.stringToNumber(gasPrice.low)
     standardGas = converter.stringToNumber(gasPrice.standard)
     defaultGas = converter.stringToNumber(gasPrice.default)
-    fastGas = converter.stringToNumber(gasPrice.fast)
-   
     
     var selectedGas = 's'
 
@@ -152,13 +152,13 @@ export function* setGasPrice(action) {
     }
 
     if (superFastGas > maxGasPrice) superFastGas = maxGasPrice;
-    if (safeLowGas > maxGasPrice) safeLowGas = maxGasPrice;
-    if (standardGas > maxGasPrice) standardGas = maxGasPrice;
-    if (defaultGas > maxGasPrice) defaultGas = maxGasPrice;
     if (fastGas > maxGasPrice) fastGas = maxGasPrice;
+    if (standardGas > maxGasPrice) standardGas = maxGasPrice;
+    if (safeLowGas > maxGasPrice) safeLowGas = maxGasPrice;
+    if (defaultGas > maxGasPrice) defaultGas = maxGasPrice;
 
     yield put(actions.setGasPriceComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas));
-  }catch (err) {
+  } catch (err) {
     console.log(err.message)
   }
 }

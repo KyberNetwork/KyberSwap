@@ -161,7 +161,7 @@ export default class LimitOrder extends React.Component {
     const isSrcAndDestQuote = tokens[src].is_quote && tokens[dest].is_quote;
     const isSrcLessPriority = tokens[src].quote_priority < tokens[dest].quote_priority;
     const isSrcBiggerPriority = tokens[src].quote_priority > tokens[dest].quote_priority;
-    const isSrcEqualPriority = tokens[src].quote_priority = tokens[dest].quote_priority;
+    const isSrcEqualPriority = tokens[src].quote_priority === tokens[dest].quote_priority;
 
     if (!tokens[src].is_quote && tokens[dest].is_quote) {
       currentQuote = destTokenSymbol

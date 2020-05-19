@@ -1,4 +1,3 @@
-import Torus from "@toruslabs/torus-embed";
 import Web3 from "web3";
 import BLOCKCHAIN_INFO from "../../../../env"
 import BaseWallet from "./BaseWallet";
@@ -15,6 +14,7 @@ export default class TorusWallet extends BaseWallet {
   
   async initiateWallet() {
     this.torus = new Torus();
+
     const networkId = BLOCKCHAIN_INFO.networkId;
   
     const params = {

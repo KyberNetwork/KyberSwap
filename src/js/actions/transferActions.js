@@ -39,13 +39,6 @@ export function toggleAdvance() {
   }
 }
 
-export function specifyAddressReceive(value) {
-  return {
-    type: "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE",
-    payload: value.trim()
-  }
-}
-
 export function setDestEthNameAndAddress(destAddress, destEthName) {
   return {
     type: "TRANSFER.SET_DEST_ETH_NAME_AND_ADDRESS",

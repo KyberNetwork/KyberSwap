@@ -81,12 +81,13 @@ const PortfolioView = (props) => {
       </div>
 
       {isBalanceDisplayed && (
-        <div className={"portfolio__item portfolio__right theme__background-2"}>
+        <div className={"portfolio__item__no__padding portfolio__right theme__background-2 no-padding-aside"}>
           <AccountBalance
             screen="portfolio"
             hideZeroBalance={true}
             show24hChange={false}
             selectToken={props.selectToken}
+            selectBalanceButton={props.selectBalanceButton}
           />
         </div>
       )}
