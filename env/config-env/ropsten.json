@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-ropsten.alchemyapi.io/v2/pyaz7njdMA8k7--2e4Hii5GcPjkNAmR7",
+                "endPoint": "https://ropsten-parity.knstats.com",
                 "type": "prune"
             }
         ],
