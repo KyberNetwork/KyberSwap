@@ -36,7 +36,8 @@ const initState = {
   theme: (() => {
     const cookieTheme = common.getCookie('theme');
     return cookieTheme ? cookieTheme : 'light';
-  })()
+  })(),
+  campaign: null
 }
 
 const global = (state = initState, action) => {
@@ -70,27 +71,6 @@ const global = (state = initState, action) => {
       newState.isAnalizeComplete = true
       return newState
     }
-
-    // case "GLOBAL.UPDATE_HISTORY_EXCHANGE": {
-    //   var history = { ...state.history }
-    //   const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-    //   if (!isAutoFetch) {
-    //     history.isFetching = true
-    //   }      
-    //   return Object.assign({}, state, { history: history })
-    //   break
-    // }
-    // case "GLOBAL.UPDATE_HISTORY": {
-    //   const { logs, latestBlock, page, isAutoFetch } = action.payload
-    //   var history = { ...state.history }
-
-    //   if(logs) history.logs = logs      
-    //   history.currentBlock = latestBlock
-    //   history.page = page
-    //   // history.eventsCount = eventsCount
-    //   history.isFetching = false
-    //   return { ...state,  history: {...history} }
-    // }
     case "GLOBAL.CONNECTION_UPDATE_IS_CHECK": {
       var conn_checker = { ...state.conn_checker }
       conn_checker.isCheck = action.payload
@@ -185,6 +165,12 @@ const global = (state = initState, action) => {
       return {
         ...state,
         theme: action.payload
+      }
+    }
+    case "GLOBAL.SET_CAMPAIGN": {
+      return {
+        ...state,
+        campaign: action.payload
       }
     }
   }

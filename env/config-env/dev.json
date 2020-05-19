@@ -15,6 +15,7 @@
     "min_accept_amount": 0.001,
     "api_tokens": "https://dev-api.knstats.com/internal/currencies",
     "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
+    "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
