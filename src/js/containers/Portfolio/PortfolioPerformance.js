@@ -15,7 +15,6 @@ import InlineLoading from "../../components/CommonElement/InlineLoading";
     account: store.account,
     address: address.toLowerCase(),
     translate: getTranslate(store.locale),
-    theme: global.theme,
     global: store.global,
     ethereum: ethereum,
     portfolioPerformance: store.account.portfolioPerformance,

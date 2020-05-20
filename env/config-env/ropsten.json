@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-ropsten.alchemyapi.io/v2/pyaz7njdMA8k7--2e4Hii5GcPjkNAmR7",
+                "endPoint": "https://ropsten-parity.knstats.com",
                 "type": "prune"
             }
         ],
@@ -14,7 +14,7 @@
     },
     "min_accept_amount": 0.5,
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
+    "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
     "priority_tokens": [
