@@ -14,7 +14,6 @@
     },
     "min_accept_amount": 0.001,
     "api_tokens": "https://api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
     "kyberswap_api": "https://staging-kyberswap.knstats.com/api",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [

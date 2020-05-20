@@ -14,7 +14,6 @@
     },
     "min_accept_amount": 0.5,
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
     "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
