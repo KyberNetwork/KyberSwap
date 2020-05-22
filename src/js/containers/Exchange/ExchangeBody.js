@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import * as converters from "../../utils/converter"
 import { ExchangeBodyLayout } from "../../components/Exchange"
 import { AdvanceConfigLayout, MinConversionRate } from "../../components/TransactionCommon"
-import { Token } from "../CommonElements"
 import { TokenSelector } from "../TransactionCommon"
 import * as validators from "../../utils/validators"
 import * as common from "../../utils/common"
@@ -14,11 +13,10 @@ import constants from "../../services/constants"
 import { getTranslate } from 'react-localize-redux'
 import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
-import { MinRate } from "../Exchange"
 import ReactTooltip from 'react-tooltip';
 import { ExchangeAccount } from "../../containers/Exchange"
 
-@connect((store, props) => {
+@connect((store) => {
   const ethereum = store.connection.ethereum
   const account = store.account
   const exchange = store.exchange
