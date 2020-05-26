@@ -895,6 +895,16 @@ function addZeroToSingleNumber(number) {
   return number;
 }
 
+export function splitArrayToChunks(array, chunk = 8){
+  let i,j,temparray;
+  const returnArray = []
+  for (i=0,j=array.length; i<j; i+=chunk) {
+      temparray = array.slice(i,i+chunk);
+      returnArray.push(temparray)
+  }
+  return returnArray
+}
+
 export function formatAddress(address, first = 15, last = -4) {
   return `${address.slice(0, first)}...${address.slice(last)}`;
 }
