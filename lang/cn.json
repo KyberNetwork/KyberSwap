@@ -307,7 +307,8 @@
     "get_free_kovan": "获取免费的",
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里",
-    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better"
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
+    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
   },
   "footer": {
     "info": "信息",
@@ -441,7 +442,6 @@
     "actual_receive_amount": "实际接收数量:",
     "estimated_amount": "预计数量:",
     "extra_amount": "您获得了额外的数量:",
-    "price": "价格",
     "amount": "数量",
     "total": "估值",
     "volume": "交易量",
@@ -501,5 +501,6 @@
   "send": "发送",
   "undefined": "未定义",
   "show": "显示",
-  "failed": "失败"
+  "failed": "失败",
+  "price": "价格"
 }

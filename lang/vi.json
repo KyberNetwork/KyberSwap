@@ -307,7 +307,8 @@
     "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
     "here": "tại đây",
-    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn."
+    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn.",
+    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
   },
   "footer": {
     "info": "Thông tin",
@@ -442,7 +443,6 @@
     "actual_receive_amount": "Lượng token thực lĩnh:",
     "estimated_amount": "Lượng token dự tính:",
     "extra_amount": "Bạn nhận được thêm:",
-    "price": "Giá",
     "amount": "Số lượng",
     "total": "Tổng giá trị",
     "volume": "Lượng giao dịch",
@@ -502,5 +502,6 @@
   "send": "Gửi",
   "undefined": "Undefined",
   "show": "Hiển thị",
-  "failed": "Lỗi"
+  "failed": "Lỗi",
+  "price": "Giá"
 }
