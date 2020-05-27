@@ -308,7 +308,7 @@
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里",
     "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
-    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
+    "slippage_warning": "滑点很高。为了得到更好的汇率，您可能需要减少兑换金额或分成多次兑换"
   },
   "footer": {
     "info": "信息",

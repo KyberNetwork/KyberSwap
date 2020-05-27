@@ -528,7 +528,7 @@ export default class ConfirmModal extends React.Component {
                           }}
                         />
                       </div>
-                      <div className="modal-content__text-warning">
+                      <div className="modal-content__text-warning theme__background-red">
                         {this.props.translate("info.slippage_warning") || "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."}
                       </div>
                     </div>
