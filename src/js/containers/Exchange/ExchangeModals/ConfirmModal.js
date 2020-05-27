@@ -516,7 +516,7 @@ export default class ConfirmModal extends React.Component {
                 <div>
                   <div className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
                   {this.recap()}
-                  {this.props.exchange.snapshot.percentChange >= constants.HIGH_SLIPPAGE && (
+                  {this.props.exchange.snapshot.percentChange >= BLOCKCHAIN_INFO.highSlippage && (
                     <div className="modal-content common__mt-15">
                       <div className="common__flexbox">
                         <div className="modal-content__title theme__text-5">{this.props.translate("price") || "Price"}</div>
