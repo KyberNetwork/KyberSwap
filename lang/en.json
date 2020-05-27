@@ -310,7 +310,8 @@
     "get_free_kovan": "Get free",
     "warning": "DO NOT send real ethers or tokens to any of the addresses above.<br></br>They\nare testnet addresses only!",
     "here": "here",
-    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better"
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
+    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
   },
   "footer": {
     "info": "Info",
@@ -401,7 +402,6 @@
     "pair": "Pair",
     "pair_not_supported": "This pair is currently not supported by market",
     "condition": "Condition", 
-    "price": "Price",
     "from": "From",
     "to": "To",
     "status": "Status",
@@ -505,5 +505,6 @@
   "send": "Send",
   "undefined": "Undefined",
   "show": "Show",
-  "failed": "Failed"
+  "failed": "Failed",
+  "price": "Price"
 }
