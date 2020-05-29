@@ -460,7 +460,8 @@
     "last_price": "最近的价格",
     "24h_high": "24小的最高价格",
     "24h_low": "24小的最低价格",
-    "24h_volume": "24小时交易量"
+    "24h_volume": "24小时交易量",
+    "price": "价格"
   },
   "portfolio": {
     "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",
