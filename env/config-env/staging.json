@@ -366,5 +366,6 @@
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
     "networkId": 1,
     "chainName": "Staging",
-    "tracker": "https://staging-api.knstats.com"
+    "tracker": "https://staging-api.knstats.com",
+    "highSlippage": 1
 }

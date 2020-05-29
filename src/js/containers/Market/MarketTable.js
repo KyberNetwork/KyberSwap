@@ -103,7 +103,7 @@ export default class MarketTable extends React.Component {
         return "market.buy_price"
       }
       case "buy_price_mobile": {
-        return "limit_order.price"
+        return "price"
       }
       case "change": {
         return "market.change"
