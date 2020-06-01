@@ -51,10 +51,18 @@ function* updateRatePending(action) {
     var percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
     const noExpectedRateInit = expectedRateInit === "0" || expectedRateInit === 0 || expectedRateInit === undefined || expectedRateInit === null;
-    const refExpectedRateInit = noExpectedRateInit ? 0 : rateZero.refExpectedPrice;
+    let refPrice = expectedRateInit;
+    let isRefPriceFromChainLink = false;
 
-    if (expectedRateInit != 0) {
-      percentChange = (expectedRateInit - expectedPrice) / expectedRateInit;
+    if (noExpectedRateInit) {
+      refPrice = 0;
+    } else if (+rateZero.refExpectedPrice) {
+      refPrice = rateZero.refExpectedPrice;
+      isRefPriceFromChainLink = true;
+    }
+
+    if (refPrice != 0 && +sourceAmount) {
+      percentChange = (refPrice - expectedPrice) / refPrice;
       percentChange = Math.round(percentChange * 1000) / 10;
 
       if (percentChange <= 0.1) {
@@ -81,7 +89,7 @@ function* updateRatePending(action) {
     const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
 
     yield put(actions.estimateGasNormal(calculatedSrcAmount));
-    yield put(actions.updateRateExchangeComplete(refExpectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+    yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
   } catch(err) {
     console.log(err)
     if(isManual){      

@@ -96,7 +96,7 @@ export function* checkTxMined(ethereum, txHash, latestBlock, tradeTopic) {
 
 export function* getExpectedRateAndZeroRate(
   isProceeding, ethereum, tokens, srcTokenAddress, destTokenAddress,
-  srcAmount, srcTokenSymbol, destTokenSymbol
+  srcAmount, srcTokenSymbol, destTokenSymbol = null
 ) {
   if (!ethereum) return;
   
@@ -146,7 +146,7 @@ function* getRateZero(
 
   try {
     rateZero = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, zeroSrcAmount);
-    refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol, destTokenSymbol);
+    if (destTokenSymbol) refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol, destTokenSymbol);
   } catch (e) {
     rateZero = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, zeroSrcAmount);
   }

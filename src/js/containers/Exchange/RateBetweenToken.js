@@ -1,10 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import { roundingRateNumber, convertBuyRate } from "../../utils/converter"
-import * as actions from "../../actions/exchangeActions"
 import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
-import * as constants from '../../services/constants'
 import ReactTooltip from 'react-tooltip'
 import BLOCKCHAIN_INFO from "../../../../env"
 
@@ -51,10 +49,14 @@ export default class RateBetweenToken extends React.Component {
     }
 
     var expectedRate = converter.toT(this.props.exchange.expectedRate)
-    var tokens = this.props.tokens
     var change = this.props.exchange.percentChange
     var rateUSD = !!parseFloat(this.props.rateUSD) ? parseFloat(this.props.rateUSD) : 0
     let tokenRateText;
+    let slippageMessage = `Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity`;
+
+    if (this.props.exchange.isRefPriceFromChainLink) {
+      slippageMessage = `Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the Price Reference Data from Chainlink Network`;
+    }
 
     if (isSourceTokenETH) {
       const tokenETHBuyRate = this.props.exchange.expectedRate ? convertBuyRate(this.props.exchange.expectedRate) : 0;
@@ -82,7 +84,7 @@ export default class RateBetweenToken extends React.Component {
           {change}%
           <img src={require('../../../assets/img/v3/arrow-down-red.svg')}/>
         </span>
-        <span className="token-compare__tooltip" data-html={true} data-tip={`<p>Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity</p>`} data-for="info_indicator" currentitem="false">
+        <span className="token-compare__tooltip" data-html={true} data-tip={`<p>${slippageMessage}</p>`} data-for="info_indicator" currentitem="false">
             <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
         </span>
         <ReactTooltip place="top" offset={{left:95}} id="info_indicator" className={"common-tooltip"} type="light" html={true}/>
