@@ -17,8 +17,8 @@ function* updateRatePending(action) {
   const tokens = state.tokens.tokens;
 
   try {
-    const baseToQuoteRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, sourceToken, destToken, false, sourceTokenSymbol);
-    const quoteToBaseRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, destToken, sourceToken, false, destTokenSymbol);
+    const baseToQuoteRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, sourceToken, destToken, false, sourceTokenSymbol, destTokenSymbol);
+    const quoteToBaseRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, destToken, sourceToken, false, destTokenSymbol, sourceTokenSymbol);
     
     const sellRate = baseToQuoteRate.rateZero.expectedPrice;
     const buyRate = quoteToBaseRate.rateZero.expectedPrice;
