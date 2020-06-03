@@ -120,7 +120,7 @@ export default class CachedServerProvider extends React.Component {
     })
   }
 
-  getReferencePrice(baseSymbol, quoteSymbol) {
+  getReferencePrice(baseSymbol, quoteSymbol = 'ETH') {
     return new Promise((resolve, rejected) => {
       fetch(`${this.rpcUrl}/refprice?base=${baseSymbol}&quote=${quoteSymbol}`)
         .then((response) => {
