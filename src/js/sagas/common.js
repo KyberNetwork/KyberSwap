@@ -3,7 +3,7 @@ import { delay } from 'redux-saga'
 import * as constants from "../services/constants"
 import * as converters from "../utils/converter"
 import { store } from '../store'
-import { roundingRate } from "../utils/converter";
+import { divOfTwoNumber, roundingRate } from "../utils/converter";
 
 export function* handleRequest(sendRequest, ...args) {
 
@@ -146,7 +146,18 @@ function* getRateZero(
 
   try {
     rateZero = yield call([ethereum, ethereum.call], rateFunctionName, srcTokenAddress, destTokenAddress, zeroSrcAmount);
-    if (destTokenSymbol) refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol, destTokenSymbol);
+
+    if (destTokenSymbol) {
+      if (srcTokenSymbol === 'ETH' || srcTokenSymbol === 'WETH') {
+        refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
+      } else if (destTokenSymbol === 'ETH' || destTokenSymbol === 'WETH') {
+        refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol);
+      } else {
+        const refRateZeroSrc = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol);
+        const refRateZeroDest = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
+        refRateZero = divOfTwoNumber(refRateZeroSrc, refRateZeroDest);
+      }
+    }
   } catch (e) {
     rateZero = yield call([ethereum, ethereum.call], 'getRateAtLatestBlock', srcTokenAddress, destTokenAddress, zeroSrcAmount);
   }
