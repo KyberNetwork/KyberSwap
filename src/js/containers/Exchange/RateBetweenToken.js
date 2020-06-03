@@ -52,10 +52,10 @@ export default class RateBetweenToken extends React.Component {
     var change = this.props.exchange.percentChange
     var rateUSD = !!parseFloat(this.props.rateUSD) ? parseFloat(this.props.rateUSD) : 0
     let tokenRateText;
-    let slippageMessage = `Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity`;
+    let slippageMessage = `There is a ${change}% difference between the price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity`;
 
     if (this.props.exchange.isRefPriceFromChainLink) {
-      slippageMessage = `Price is dependent on your swap value. There is a ${change}% difference in price for the requested quantity and the Price Reference Data from Chainlink Network`;
+      slippageMessage = `There is a ${change}% difference between the price for the requested quantity and the reference price from external sources (Chainlink Network)`;
     }
 
     if (isSourceTokenETH) {
@@ -84,8 +84,19 @@ export default class RateBetweenToken extends React.Component {
           {change}%
           <img src={require('../../../assets/img/v3/arrow-down-red.svg')}/>
         </span>
-        <span className="token-compare__tooltip" data-html={true} data-tip={`<p>${slippageMessage}</p>`} data-for="info_indicator" currentitem="false">
-            <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
+        <span
+          className="token-compare__tooltip"
+          data-html={true}
+          data-tip={`
+            <div class="info-indicator">
+              <div class="info-indicator__text">${slippageMessage}</div>
+              <div class="info-indicator__note">Note: Price at KyberSwap depends upon quantity.</div>
+            </div>
+          `}
+          data-for="info_indicator"
+          currentitem="false"
+        >
+          <img src={require('../../../assets/img/common/blue-indicator.svg')}/>
         </span>
         <ReactTooltip place="top" offset={{left:95}} id="info_indicator" className={"common-tooltip"} type="light" html={true}/>
       </div>
