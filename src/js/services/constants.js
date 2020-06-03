@@ -109,7 +109,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isBalanceActive: false,
   isAdvanceActive: false,
   isOpenAdvance: false,
-  isSelectTokenBalance: false
+  isSelectTokenBalance: false,
+  isRefPriceFromChainLink: false
 }
 
 const TRANSFER_CONFIG = {

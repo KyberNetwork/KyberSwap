@@ -93,12 +93,17 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal) {
+export function updateRateExchangeComplete(
+  expectedRateInit, expectedPrice, slippagePrice, isManual,
+  percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+) {
   return {
     type: "EXCHANGE.UPDATE_RATE_COMPLETE",
-    payload: { expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal }
+    payload: {
+      expectedRateInit, expectedPrice, slippagePrice, isManual,
+      percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+    }
   }
-
 }
 
 export function finishExchange() {

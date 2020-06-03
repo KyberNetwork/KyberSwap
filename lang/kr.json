@@ -462,7 +462,8 @@
     "last_price": "최근 가격",
     "24h_high": "24시간 내 최고가",
     "24h_low": "24시간 내 최저가",
-    "24h_volume": "24시간 내 거래량"
+    "24h_volume": "24시간 내 거래량",
+    "price": "가격"
   },
   "portfolio": {
     "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",

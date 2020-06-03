@@ -464,7 +464,8 @@
     "last_price": "Last Price",
     "24h_high": "24h High",
     "24h_low": "24h Low",
-    "24h_volume": "24h Volume"
+    "24h_volume": "24h Volume",
+    "price": "Price"
   },
   "portfolio": {
     "error_loading_history": "Something wrong loading your history txs, please try again later.",

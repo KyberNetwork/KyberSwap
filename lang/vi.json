@@ -461,7 +461,8 @@
     "last_price": "Tỉ giá mới nhất",
     "24h_high": "Mức cao nhất 24h",
     "24h_low": "Mức thấp nhất 24h",
-    "24h_volume": "Lượng giao dịch trong 24h"
+    "24h_volume": "Lượng giao dịch trong 24h",
+    "price": "Giá"
   },
   "portfolio": {
     "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
