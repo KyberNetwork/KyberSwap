@@ -65,7 +65,7 @@ function* updateRatePending(action) {
       percentChange = (refPrice - expectedPrice) / refPrice;
       percentChange = Math.round(percentChange * 1000) / 10;
 
-      if (percentChange <= 0.1) {
+      if (percentChange < BLOCKCHAIN_INFO.highSlippage) {
         percentChange = 0
       }
 
