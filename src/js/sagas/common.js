@@ -150,6 +150,7 @@ function* getRateZero(
     if (destTokenSymbol) {
       if (srcTokenSymbol === 'ETH' || srcTokenSymbol === 'WETH') {
         refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
+        refRateZero = divOfTwoNumber(1, refRateZero);
       } else if (destTokenSymbol === 'ETH' || destTokenSymbol === 'WETH') {
         refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol);
       } else {
