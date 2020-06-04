@@ -656,5 +656,5 @@
     "networkId": 1,
     "chainName": "Mainnet",
     "tracker": "https://api.kyber.network",
-    "highSlippage": 10
+    "highSlippage": 5
 }
