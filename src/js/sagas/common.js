@@ -149,14 +149,17 @@ function* getRateZero(
 
     if (destTokenSymbol) {
       if (srcTokenSymbol === 'ETH' || srcTokenSymbol === 'WETH') {
-        refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
-        refRateZero = divOfTwoNumber(1, refRateZero);
+        const refRateZeroResult = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
+        if (refRateZeroResult) refRateZero = divOfTwoNumber(1, refRateZeroResult);
       } else if (destTokenSymbol === 'ETH' || destTokenSymbol === 'WETH') {
         refRateZero = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol);
       } else {
         const refRateZeroSrc = yield call([ethereum, ethereum.call], 'getReferencePrice', srcTokenSymbol);
         const refRateZeroDest = yield call([ethereum, ethereum.call], 'getReferencePrice', destTokenSymbol);
-        refRateZero = divOfTwoNumber(refRateZeroSrc, refRateZeroDest);
+
+        if (refRateZeroSrc && refRateZeroDest) {
+          refRateZero = divOfTwoNumber(refRateZeroSrc, refRateZeroDest);
+        }
       }
     }
   } catch (e) {
