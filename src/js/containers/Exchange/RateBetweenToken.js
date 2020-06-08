@@ -4,7 +4,6 @@ import { roundingRateNumber, convertBuyRate } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux';
 import * as converter from '../../utils/converter'
 import ReactTooltip from 'react-tooltip'
-import BLOCKCHAIN_INFO from "../../../../env"
 
 @connect((store, props) => {
   var tokens = store.tokens.tokens
@@ -52,11 +51,6 @@ export default class RateBetweenToken extends React.Component {
     var change = this.props.exchange.percentChange
     var rateUSD = !!parseFloat(this.props.rateUSD) ? parseFloat(this.props.rateUSD) : 0
     let tokenRateText;
-    let slippageMessage = `There is a ${change}% difference between the price for the requested quantity and the default ${BLOCKCHAIN_INFO.min_accept_amount} ETH quantity`;
-
-    if (this.props.exchange.isRefPriceFromChainLink) {
-      slippageMessage = `There is a ${change}% difference between the price for the requested quantity and the reference price from external sources (Chainlink Network)`;
-    }
 
     if (isSourceTokenETH) {
       const tokenETHBuyRate = this.props.exchange.expectedRate ? convertBuyRate(this.props.exchange.expectedRate) : 0;
@@ -89,8 +83,8 @@ export default class RateBetweenToken extends React.Component {
           data-html={true}
           data-tip={`
             <div class="info-indicator">
-              <div class="info-indicator__text">${slippageMessage}</div>
-              <div class="info-indicator__note">Note: Price at KyberSwap depends upon quantity.</div>
+              <div class="info-indicator__text">There is a ${change}% difference between the market price and reference price for your swap amount</div>
+              <div class="info-indicator__note">Note: Market price depends on your swap amount. Reference price is from Chainlink and Kybernetwork</div>
             </div>
           `}
           data-for="info_indicator"

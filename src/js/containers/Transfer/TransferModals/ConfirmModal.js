@@ -115,8 +115,7 @@ export default class ConfirmModal extends React.Component {
                     to: tokenAddress,
                     data: data
                 }
-                console.log("txObj")
-                console.log(txObj)
+
                 gas = await ethereum.call("estimateGas", txObj)
                 //addition 15k gas for transfer token
                 gas = Math.round((gas + 15000) * 120 / 100)
