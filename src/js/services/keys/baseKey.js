@@ -14,8 +14,7 @@ export const sendEtherFromAccount = (
     to: destAddress,
     value: sourceAmount,
     // EIP 155 chainId - mainnet: 1, ropsten: 3
-    chainId: BLOCKCHAIN_INFO.networkId,
-    data: '0x'
+    chainId: BLOCKCHAIN_INFO.networkId
   }
   return new Promise((resolve, reject) => {
     resolve({ txParams, keystring, password })
