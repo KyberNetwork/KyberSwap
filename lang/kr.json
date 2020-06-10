@@ -432,7 +432,7 @@
     "lower_rate": "원하는 비율이 현재 비율보다 <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> 낮습니다.",
     "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",
     "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
-    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
+    "ineligible_address": "이 주소는 ${account}에 의해 사용되었습니다. 다른 계정으로 주문해주세요.",
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
     "view_tx": "트랜잭션 보기",
     "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",

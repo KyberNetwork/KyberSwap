@@ -163,34 +163,25 @@ export default class LimitOrderSubmit extends React.Component {
       this.props.clearErrors();
     }
 
-    // check address is eligible
-    let isEligible = false;
     try {
-      isEligible = await limitOrderServices.isEligibleAddress(this.props.account.address);
-    } catch (err) {
-      console.log(err);
-      var title = this.props.translate("error.error_occurred") || "Error occurred"
-      const content = (
-        <span>
-          <span>{err.toString()}</span>
-          {this.props.account.type === 'metamask' &&
-            <span className={"modal-info__warning"}>
-              <img src={require("../../../assets/img/v3/info_blue.svg")} />
-              <span>{this.props.translate("error.not_latest_browser_metamask") || "This error may be caused by your browser or Metamask is not the latest version."}</span>
-            </span>
-          }
-        </span>
-      )
-      this.props.dispatch(utilActions.openInfoModal(title, content));
-      this.updateValidatingStatus(false);
-      return;
-    }
+      const eligibleAccount = await limitOrderServices.getEligibleAccount(this.props.account.address);
 
-    if (!isEligible) {
-      var title = this.props.translate("error.error_occurred") || "Error occurred"
-      var content = this.props.translate("limit_order.ineligible_address") || "This address has been used by another account. Please place order with other address.";
-      this.props.dispatch(utilActions.openInfoModal(title, content));
+      if (eligibleAccount) {
+        const errorTitle = this.props.translate("error.error_occurred") || "Error occurred"
+        const errorContent = this.props.translate("limit_order.ineligible_address", { account: eligibleAccount }) || `This address has been used by ${eligibleAccount}. Please place order with other address.`;
+
+        this.props.dispatch(utilActions.openInfoModal(errorTitle, errorContent));
+        this.updateValidatingStatus(false);
+
+        return;
+      }
+    } catch (err) {
+      const errorTitle = this.props.translate("error.error_occurred") || "Error occurred"
+      const errorContent = err.message;
+
+      this.props.dispatch(utilActions.openInfoModal(errorTitle, errorContent));
       this.updateValidatingStatus(false);
+
       return;
     }
 
