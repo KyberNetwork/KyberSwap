@@ -74,8 +74,13 @@ export default class LimitOrderSubmit extends React.Component {
     let priceErrors = [];
     
     if (!isUserLogin()) {
-      const errorMessage = this.props.translate("error.login_to_submit_order") || "You must login to KyberSwap account to submit limit orders";
-      this.props.addPriceErrors([errorMessage]);
+      if (window.kyberBus) {
+        window.kyberBus.broadcast('open.signin.modal')
+      } else {
+        const errorMessage = this.props.translate("error.login_to_submit_order") || "You must login to KyberSwap account to submit limit orders";
+        this.props.addPriceErrors([errorMessage]);
+      }
+
       this.updateValidatingStatus(false);
       return;
     }
