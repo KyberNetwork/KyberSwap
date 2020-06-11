@@ -396,7 +396,7 @@
 }
 
 #info_indicator {
-  max-width: 300px;
+  max-width: 310px;
   padding: 10px 15px;
   background-color: #efefef;
   opacity: 1;
@@ -418,6 +418,7 @@
 
     &__note {
       color: $blue-light;
+      line-height: 1.6;
     }
   }
 
