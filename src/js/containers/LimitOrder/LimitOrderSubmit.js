@@ -72,7 +72,7 @@ export default class LimitOrderSubmit extends React.Component {
     let isValidate = true;
     let amountErrors = [];
     let priceErrors = [];
-    
+
     if (!isUserLogin()) {
       if (window.kyberBus) {
         window.kyberBus.broadcast('open.signin.modal')
@@ -350,11 +350,6 @@ export default class LimitOrderSubmit extends React.Component {
       const content = this.props.translate("limit_order.not_support_promo_code" || "You cannot submit order with promo code. Please use other wallets.");
       this.props.dispatch(utilActions.openInfoModal(title, content));
       this.updateValidatingStatus(false);
-      return;
-    }
-
-    if (!isUserLogin()) {
-      window.location.href = "/users/sign_in";
       return;
     }
 
