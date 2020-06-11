@@ -81,8 +81,13 @@ export default class LimitOrderSubmit extends React.Component {
     }
     
     if (!this.props.account) {
-      const errorMessage = this.props.translate("error.import_to_submit_order") || "You must import your wallet to submit limit orders";
-      this.props.addPriceErrors([errorMessage]);
+      if (window.kyberBus) {
+        window.kyberBus.broadcast('open.signin.modal')
+      } else {
+        const errorMessage = this.props.translate("error.import_to_submit_order") || "You must import your wallet to submit limit orders";
+        this.props.addPriceErrors([errorMessage]);
+      }
+
       this.updateValidatingStatus(false);
       return;
     }
