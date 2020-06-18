@@ -55,7 +55,7 @@ export default class ConfirmModal extends React.Component {
       slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
       startTime: Math.round(new Date().getTime())
     })
-    
+
     this.getSlippageRate()
     this.getGasSwap()
   }
@@ -130,7 +130,7 @@ export default class ConfirmModal extends React.Component {
     var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
       ? this.props.account.info.receiveAddr : this.props.account.address;
     var maxDestAmount = converter.biggestNumber()
-    var slippageRate = this.state.slippageRate
+    var slippageRate = this.state.slippageRate || 0
     var waletId = this.getReferAddr()
     var nonce = this.props.account.getUsableNonce()
     var gas = converter.numberToHex(this.state.gasLimit)
@@ -190,10 +190,10 @@ export default class ConfirmModal extends React.Component {
         data: data,
         value: value
       }
-      
+
       let estimatedGas = await ethereum.call("estimateGas", txObj);
       estimatedGas = Math.round(estimatedGas * 120 / 100) + 100000;
-      
+
       if (estimatedGas < gas) {
         gas = estimatedGas;
         this.setState({gasLimit: estimatedGas})
@@ -310,8 +310,7 @@ export default class ConfirmModal extends React.Component {
       const currentTime = Math.round(new Date().getTime());
       this.props.global.analytics.callTrack("trackBroadcastedTransaction", currentTime - startTime);
       
-      const tx = new Tx(
-        txHash, address, gas, gasPrice, nonce, "pending", "exchange", data)
+      const tx = new Tx(txHash, address, gas, gasPrice, nonce, "pending", "exchange", data);
       
       this.props.dispatch(accountActions.incManualNonceAccount(address))
       this.props.dispatch(accountActions.updateAccount(ethereum, this.props.account))
@@ -371,8 +370,8 @@ export default class ConfirmModal extends React.Component {
     var destDecimal = this.props.tokens[destTokenSymbol].decimal;
     var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var slippageRate = this.state.slippageRate
-    var expectedRate = this.state.expectedRate
+    var slippageRate = this.state.slippageRate || 0
+    var expectedRate = this.state.expectedRate || 0
     const {isOnMobile} = this.props.global;
     
     return (
