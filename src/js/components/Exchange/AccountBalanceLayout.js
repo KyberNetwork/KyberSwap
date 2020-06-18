@@ -68,7 +68,7 @@ const AccountBalanceLayout = (props) => {
             className={"account-balance__token-item" + classBalance}
           >
             <div className={"account-balance__token-row account-balance__token-info"}>
-              <img src={"https://files.kyber.network/DesignAssets/tokens/" + (token.substituteImage ? token.substituteImage : token.symbol).toLowerCase() + ".svg"} />
+              <img src={"https://files.kyberswap.com/DesignAssets/tokens/" + (token.substituteImage ? token.substituteImage : token.symbol).toLowerCase() + ".svg"} />
               <div>
                 <div className="account-balance__token-symbol">{token.substituteSymbol ? token.substituteSymbol : token.symbol}</div>
                 <div className="account-balance__token-balance theme__text-3">{converts.formatNumber(balance, 5)}</div>
