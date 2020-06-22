@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://ropsten.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
+                "endPoint": "https://ropsten-parity.knstats.com",
                 "type": "prune"
             }
         ],
@@ -14,7 +14,7 @@
     },
     "min_accept_amount": 0.5,
     "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
+    "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
     "priority_tokens": [
@@ -376,5 +376,6 @@
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "networkId": 3,
     "chainName": "Ropsten",
-    "tracker": "https://ropsten-api.kyber.network"
+    "tracker": "https://ropsten-api.kyber.network",
+    "highSlippage": 1
 }

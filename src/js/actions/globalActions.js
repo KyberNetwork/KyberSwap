@@ -273,3 +273,10 @@ export function switchTheme(theme) {
     payload: theme
   }
 }
+
+export function setCampaign(campaign) {
+  return {
+    type: "GLOBAL.SET_CAMPAIGN",
+    payload: campaign
+  }
+}

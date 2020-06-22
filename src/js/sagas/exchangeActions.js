@@ -46,25 +46,38 @@ function* updateRatePending(action) {
 
   try {
     const isProceeding = !!state.exchange.exchangePath.length;
-    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol);
-  
+    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol, destTokenSymbol);
     var { expectedPrice, slippagePrice } = rate
     var percentChange = 0
-    var expectedRateInit = rateZero.expectedPrice
-    if(expectedRateInit != 0){
-      percentChange = (expectedRateInit - expectedPrice) / expectedRateInit
-      percentChange = Math.round(percentChange * 1000) / 10    
-      if(percentChange <= 0.1) {
+    const expectedRateInit = rateZero.expectedPrice;
+    const noExpectedRateInit = expectedRateInit === "0" || expectedRateInit === 0 || expectedRateInit === undefined || expectedRateInit === null;
+    let refPrice = expectedRateInit;
+    let isRefPriceFromChainLink = false;
+
+    if (noExpectedRateInit) {
+      refPrice = 0;
+    } else if (+rateZero.refExpectedPrice) {
+      refPrice = rateZero.refExpectedPrice;
+      isRefPriceFromChainLink = true;
+    }
+
+    if (refPrice != 0 && +sourceAmount) {
+      percentChange = (refPrice - expectedPrice) / refPrice;
+      percentChange = Math.round(percentChange * 1000) / 10;
+
+      if (percentChange < BLOCKCHAIN_INFO.highSlippage) {
         percentChange = 0
       }
-      if(percentChange >= 100){
+
+      if (percentChange >= 100) {
         percentChange = 0
         expectedPrice = 0
         slippagePrice = 0
       }
     }
+
     if (expectedPrice == "0") {
-      if (expectedRateInit == "0" || expectedRateInit == 0 || expectedRateInit === undefined || expectedRateInit === null) {
+      if (noExpectedRateInit) {
         yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.kyber_maintain")))
       } else {
         yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.handle_amount")))
@@ -74,9 +87,9 @@ function* updateRatePending(action) {
     }
 
     const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
-    yield put(actions.estimateGasNormal(calculatedSrcAmount));
 
-    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+    yield put(actions.estimateGasNormal(calculatedSrcAmount));
+    yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
   } catch(err) {
     console.log(err)
     if(isManual){      

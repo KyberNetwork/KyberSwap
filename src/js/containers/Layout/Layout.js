@@ -5,7 +5,14 @@ import { Transfer } from "../../containers/Transfer"
 import { LimitOrder } from "../../containers/LimitOrder"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
+import {
+  clearSession,
+  changeLanguage,
+  setOnMobileOnly,
+  initAnalytics,
+  switchTheme,
+  setCampaign
+} from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
 import { createNewConnectionInstance } from "../../actions/connectionActions"
 import { throttle } from 'underscore';
@@ -16,6 +23,7 @@ import {isMobile} from '../../utils/common'
 import Language from "../../../../lang"
 import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
+import { fetchActiveCampaign } from "../../services/kyberSwapService";
 
 @connect((store) => {
   var locale = store.locale
@@ -96,7 +104,7 @@ export default class Layout extends React.Component {
     this.props.dispatch(initAnalytics(analytic))
   }
 
-  componentDidMount = () => {
+  async componentDidMount() {
     this.props.analytics.callTrack("trackAccessToSwap");
 
     window.addEventListener("beforeunload", this.handleCloseWeb)
@@ -118,6 +126,9 @@ export default class Layout extends React.Component {
       window.kyberBus.on('go.to.portfolio', () => {history.push(this.props.portfolioLink)});
       window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
+
+    const campaign = await fetchActiveCampaign();
+    if (campaign) this.props.dispatch(setCampaign(campaign));
   };
   
   scrollToImportAccount = () => {

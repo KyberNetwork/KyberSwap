@@ -1,6 +1,6 @@
 import React from 'react';
 import Mixpanel from "./mixpanel"
-import GoogleTagmanager from "./googleTagmanager"
+import GoogleTagmanager from "./googleTagManager"
 
 export default class AnalyticFactory extends React.Component{
   constructor(props) {

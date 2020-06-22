@@ -6,15 +6,15 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://mainnet.infura.io/v3/c1d32946e55e45b78c330954cf543fc7",
+                "endPoint": "https://eth-mainnet.alchemyapi.io/v2/hbczkGAuZuTyvrPC7tqXbvSeFzYBCQ-G",
                 "type": "prune"
-            }
+            }    
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.01,
     "api_tokens": "https://staging-api.knstats.com/internal/currencies",
-    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
+    "kyberswap_api": "https://staging-kyberswap.knstats.com/api",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
@@ -366,5 +366,6 @@
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
     "networkId": 1,
     "chainName": "Staging",
-    "tracker": "https://staging-api.knstats.com"
+    "tracker": "https://staging-api.knstats.com",
+    "highSlippage": 1
 }

@@ -61,7 +61,7 @@
     "simple-node-logger": "^0.93.33",
     "sqlite3": "^4.0.4",
     "terser-webpack-plugin": "^1.1.0",
-    "trezor-connect": "^7.0.3",
+    "trezor-connect": "^8.1.1",
     "underscore": "^1.8.3",
     "walletlink": "^1.0.0",
     "web3": "^1.2.6",
@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",

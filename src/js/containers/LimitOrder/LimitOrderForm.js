@@ -280,7 +280,7 @@ export default class LimitOrderForm extends React.Component {
         
         <div className={"limit-order-form__item theme__background-4 theme__text-2"}>
           <div className={"limit-order-form__tag clickable theme__input-tag"} onClick={this.resetToMarketRate}>
-            {this.props.translate("limit_order.price") || "Price"}
+            {this.props.translate("price") || "Price"}
           </div>
           <input
             className={"limit-order-form__input theme__text-2"}

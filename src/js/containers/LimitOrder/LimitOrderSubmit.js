@@ -48,12 +48,10 @@ export default class LimitOrderSubmit extends React.Component {
   };
 
   calculateETHEquivalent = () => {
-    if (this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-      if (this.props.isBuyForm) {
-        return this.props.sourceAmount
-      }
-      
-      return this.props.destAmount
+    if (this.props.baseSymbol === 'WETH') {
+      return this.props.isBuyForm ? this.props.destAmount : this.props.sourceAmount;
+    } else if (this.props.quoteSymbol === 'WETH') {
+      return this.props.isBuyForm ? this.props.sourceAmount : this.props.destAmount;
     }
 
     const rateBig = converters.toTWei(this.props.tokens[this.props.sourceToken.symbol].rate, 18);
@@ -74,10 +72,15 @@ export default class LimitOrderSubmit extends React.Component {
     let isValidate = true;
     let amountErrors = [];
     let priceErrors = [];
-    
+
     if (!isUserLogin()) {
-      const errorMessage = this.props.translate("error.login_to_submit_order") || "You must login to KyberSwap account to submit limit orders";
-      this.props.addPriceErrors([errorMessage]);
+      if (window.kyberBus) {
+        window.kyberBus.broadcast('open.signin.modal')
+      } else {
+        const errorMessage = this.props.translate("error.login_to_submit_order") || "You must login to KyberSwap account to submit limit orders";
+        this.props.addPriceErrors([errorMessage]);
+      }
+
       this.updateValidatingStatus(false);
       return;
     }
@@ -165,34 +168,25 @@ export default class LimitOrderSubmit extends React.Component {
       this.props.clearErrors();
     }
 
-    // check address is eligible
-    let isEligible = false;
     try {
-      isEligible = await limitOrderServices.isEligibleAddress(this.props.account.address);
-    } catch (err) {
-      console.log(err);
-      var title = this.props.translate("error.error_occurred") || "Error occurred"
-      const content = (
-        <span>
-          <span>{err.toString()}</span>
-          {this.props.account.type === 'metamask' &&
-            <span className={"modal-info__warning"}>
-              <img src={require("../../../assets/img/v3/info_blue.svg")} />
-              <span>{this.props.translate("error.not_latest_browser_metamask") || "This error may be caused by your browser or Metamask is not the latest version."}</span>
-            </span>
-          }
-        </span>
-      )
-      this.props.dispatch(utilActions.openInfoModal(title, content));
-      this.updateValidatingStatus(false);
-      return;
-    }
+      const eligibleAccount = await limitOrderServices.getEligibleAccount(this.props.account.address);
 
-    if (!isEligible) {
-      var title = this.props.translate("error.error_occurred") || "Error occurred"
-      var content = this.props.translate("limit_order.ineligible_address") || "This address has been used by another account. Please place order with other address.";
-      this.props.dispatch(utilActions.openInfoModal(title, content));
+      if (eligibleAccount) {
+        const errorTitle = this.props.translate("error.error_occurred") || "Error occurred"
+        const errorContent = this.props.translate("limit_order.ineligible_address", { account: eligibleAccount }) || `This address has been used by ${eligibleAccount}. Please place order with other address.`;
+
+        this.props.dispatch(utilActions.openInfoModal(errorTitle, errorContent));
+        this.updateValidatingStatus(false);
+
+        return;
+      }
+    } catch (err) {
+      const errorTitle = this.props.translate("error.error_occurred") || "Error occurred"
+      const errorContent = err.message;
+
+      this.props.dispatch(utilActions.openInfoModal(errorTitle, errorContent));
       this.updateValidatingStatus(false);
+
       return;
     }
 
@@ -356,11 +350,6 @@ export default class LimitOrderSubmit extends React.Component {
       const content = this.props.translate("limit_order.not_support_promo_code" || "You cannot submit order with promo code. Please use other wallets.");
       this.props.dispatch(utilActions.openInfoModal(title, content));
       this.updateValidatingStatus(false);
-      return;
-    }
-
-    if (!isUserLogin()) {
-      window.location.href = "/users/sign_in";
       return;
     }
 

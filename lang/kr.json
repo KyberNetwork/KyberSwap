@@ -308,7 +308,8 @@
     "get_free_kovan": "무료 다운로드",
     "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
     "here": "여기",
-    "please_give_feedback": "새로운 기능에 대한 <a target='_blank' href='${link}'>피드백</a>을 주시면, 서비스 개선에 도움이 됩니다. 감사합니다."
+    "please_give_feedback": "새로운 기능에 대한 <a target='_blank' href='${link}'>피드백</a>을 주시면, 서비스 개선에 도움이 됩니다. 감사합니다.",
+    "slippage_warning": "슬리피지(손해)가 높습니다. 더 나은 비율을 갖기 위해 교환할 양을 줄이거나 여러번에 나눠서 교환하는 게 좋습니다."
   },
   "footer": {
     "info": "정보",
@@ -431,7 +432,7 @@
     "lower_rate": "원하는 비율이 현재 비율보다 <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> 낮습니다.",
     "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",
     "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
-    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
+    "ineligible_address": "이 주소는 ${account}에 의해 사용되었습니다. 다른 계정으로 주문해주세요.",
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
     "view_tx": "트랜잭션 보기",
     "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",
@@ -443,7 +444,6 @@
     "actual_receive_amount": "실제로 받는 토큰의 양:",
     "estimated_amount": "예상 토큰의 양:",
     "extra_amount": "추가로 받은 토큰의 양:",
-    "price": "가격",
     "amount": "금액",
     "total": "추정 가치",
     "volume": "볼륨",
@@ -462,7 +462,8 @@
     "last_price": "최근 가격",
     "24h_high": "24시간 내 최고가",
     "24h_low": "24시간 내 최저가",
-    "24h_volume": "24시간 내 거래량"
+    "24h_volume": "24시간 내 거래량",
+    "price": "가격"
   },
   "portfolio": {
     "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",
@@ -503,5 +504,6 @@
   "send": "보내다",
   "undefined": "Undefined",
   "show": "보기",
-  "failed": "실패함"
+  "failed": "실패함",
+  "price": "가격"
 }

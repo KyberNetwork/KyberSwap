@@ -11,6 +11,8 @@ import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
 import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
+import * as converters from "../../../utils/converter";
+import { RateBetweenToken } from "../../../containers/Exchange/index";
 
 @connect((store) => {
   const account = store.account.account
@@ -437,16 +439,6 @@ export default class ConfirmModal extends React.Component {
               </div>
             </div>
           </div>
-          
-          
-          {this.props.exchange.snapshot.percentChange >= 10 &&
-          <div className="description error">
-                                <span className="error-text">
-                                    {this.props.translate("error.percent_change_error", {percentChange: this.props.exchange.percentChange}) || `There is a ${this.props.exchange.percentChange}% difference in price for the requested quantity and the default 0.5 ETH quantity.`}
-                                </span>
-          </div>
-          }
-        
         </React.Fragment>
         }
         
@@ -522,23 +514,36 @@ export default class ConfirmModal extends React.Component {
             <div className="row">
               <div>
                 <div>
-                  <div
-                    className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
+                  <div className="title">{this.props.translate("modal.confirm_swap") || "Swap Confirm"}</div>
                   {this.recap()}
-                  
+                  {this.props.exchange.snapshot.percentChange >= BLOCKCHAIN_INFO.highSlippage && (
+                    <div className="modal-content common__mt-15">
+                      <div className="common__flexbox">
+                        <div className="modal-content__title theme__text-5">{this.props.translate("price") || "Price"}</div>
+                        <RateBetweenToken
+                          exchangeRate={{
+                            sourceToken: this.props.exchange.sourceTokenSymbol,
+                            rate: converters.toT(this.props.exchange.expectedRate),
+                            destToken: this.props.exchange.destTokenSymbol
+                          }}
+                        />
+                      </div>
+                      <div className="modal-content__text-warning theme__background-red">
+                        {this.props.translate("info.slippage_warning") || "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."}
+                      </div>
+                    </div>
+                  )}
                   <FeeDetail
                     translate={this.props.translate}
                     gasPrice={this.props.exchange.snapshot.gasPrice}
                     gas={this.state.gasLimit}
                   />
-                  
-                  {warningLowFee &&
-                  <div className={"tx-fee-warning theme__background-10"}>
-                    <img src={require("../../../../assets/img/warning-triangle.svg")}/>
-                    <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
-                  </div>
-                  }
-                
+                  {warningLowFee && (
+                    <div className={"tx-fee-warning theme__background-10"}>
+                      <img src={require("../../../../assets/img/warning-triangle.svg")}/>
+                      <span>{this.props.translate("transaction.tx_fee_warning") || 'After this swap, you will not have enough ETH as fee for further transactions.'}</span>
+                    </div>
+                  )}
                 </div>
                 {this.errorHtml()}
               </div>

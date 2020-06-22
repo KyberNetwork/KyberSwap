@@ -307,7 +307,8 @@
     "get_free_kovan": "获取免费的",
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里",
-    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better"
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
+    "slippage_warning": "滑点很高。为了得到更好的汇率，您可能需要减少兑换金额或分成多次兑换"
   },
   "footer": {
     "info": "信息",
@@ -429,7 +430,7 @@
     "lower_rate": "您期望的汇率比当前汇率低<span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span>。",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
     "pair_not_supported": "该交易对目前市场并不支持",
-    "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
+    "ineligible_address": "${account}已使用该地址。请使用其他地址下单。",
     "fetch_fee_err": "无法获取费用",
     "view_tx": "查看交易",
     "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单：",
@@ -441,7 +442,6 @@
     "actual_receive_amount": "实际接收数量:",
     "estimated_amount": "预计数量:",
     "extra_amount": "您获得了额外的数量:",
-    "price": "价格",
     "amount": "数量",
     "total": "估值",
     "volume": "交易量",
@@ -460,7 +460,8 @@
     "last_price": "最近的价格",
     "24h_high": "24小的最高价格",
     "24h_low": "24小的最低价格",
-    "24h_volume": "24小时交易量"
+    "24h_volume": "24小时交易量",
+    "price": "价格"
   },
   "portfolio": {
     "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",
@@ -501,5 +502,6 @@
   "send": "发送",
   "undefined": "未定义",
   "show": "显示",
-  "failed": "失败"
+  "failed": "失败",
+  "price": "价格"
 }

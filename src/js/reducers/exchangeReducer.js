@@ -66,7 +66,10 @@ const exchange = (state = initState, action) => {
     }
    
     case "EXCHANGE.UPDATE_RATE_COMPLETE": {
-      const {expectedRateInit, expectedPrice, slippagePrice, percentChange, srcTokenDecimal, destTokenDecimal } = action.payload
+      const {
+        expectedRateInit, expectedPrice, slippagePrice,
+        percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+      } = action.payload
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(expectedRateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? expectedRateInit : expectedPrice
@@ -92,7 +95,9 @@ const exchange = (state = initState, action) => {
         newState.minConversionRate = slippageRate
       }
 
-      newState.isSelectToken = false
+      newState.isSelectToken = false;
+      newState.isRefPriceFromChainLink = isRefPriceFromChainLink;
+
       return newState
     }
     

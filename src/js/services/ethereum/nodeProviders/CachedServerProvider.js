@@ -120,6 +120,25 @@ export default class CachedServerProvider extends React.Component {
     })
   }
 
+  getReferencePrice(baseSymbol, quoteSymbol = 'ETH') {
+    return new Promise((resolve, rejected) => {
+      fetch(`${this.rpcUrl}/refprice?base=${baseSymbol}&quote=${quoteSymbol}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then(result => {
+          if (result.success && result.value) {
+            resolve(result.value)
+          } else {
+            resolve(0)
+          }
+        })
+        .catch((err) => {
+          rejected(err)
+        })
+    })
+  }
+
   getSourceAmount(sourceTokenAddr, destTokenAddr, destAmount) {
     return new Promise((resolve, reject) => {
       this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/quote_amount?quote=${sourceTokenAddr}&base=${destTokenAddr}&base_amount=${destAmount}&type=buy`))
