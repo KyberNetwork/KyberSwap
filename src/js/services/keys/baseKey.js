@@ -13,7 +13,6 @@ export const sendEtherFromAccount = (
     gasLimit: gas,
     to: destAddress,
     value: sourceAmount,
-    // EIP 155 chainId - mainnet: 1, ropsten: 3
     chainId: BLOCKCHAIN_INFO.networkId
   }
   return new Promise((resolve, reject) => {
@@ -36,7 +35,6 @@ export const sendTokenFromAccount = (
         to: sourceToken,
         value: '0x0',
         data: result,
-        // EIP 155 chainId - mainnet: 1, ropsten: 3
         chainId: BLOCKCHAIN_INFO.networkId
       }
       resolve({ txParams, keystring, password })
@@ -49,7 +47,6 @@ export const etherToOthersFromAccount = (
   destAddress, maxDestAmount, minConversionRate,
   throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
   password) => {
-   // var throwOnFailure = "0x0000000000000000000000000000000000000000"
   return new Promise((resolve, reject) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
@@ -62,7 +59,6 @@ export const etherToOthersFromAccount = (
           to: BLOCKCHAIN_INFO.network,
           value: sourceAmount,
           data: result,
-          // EIP 155 chainId - mainnet: 1, ropsten: 3
           chainId: BLOCKCHAIN_INFO.networkId
         }
         resolve({ txParams, keystring, password })
@@ -83,7 +79,6 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
         to: sourceToken,
         value: '0x0',
         data: result,
-        // EIP 155 chainId - mainnet: 1, ropsten: 3
         chainId: BLOCKCHAIN_INFO.networkId
       }
       resolve({ txParams, keystring, password })
@@ -104,7 +99,6 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
         to: sourceToken,
         value: '0x0',
         data: result,
-        // EIP 155 chainId - mainnet: 1, ropsten: 3
         chainId: BLOCKCHAIN_INFO.networkId
       }
       resolve({ txParams, keystring, password })
@@ -112,29 +106,28 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
   })
 }
 
-
 export const tokenToOthersFromAccount = (
-  id, ethereum, account, sourceToken, sourceAmount, destToken,
-  destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
-  password) => {
-  return new Promise((resolve, reject) => {
+  id, ethereum, account, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
+  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password
+) => {
+  return new Promise((resolve) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).then(result => {
-        const txParams = {
-          from: account,
-          nonce: nonce,
-          gasPrice: gasPrice,
-          gasLimit: gas,
-          to: BLOCKCHAIN_INFO.network,
-          value: '0x0',
-          data: result,
-          // EIP 155 chainId - mainnet: 1, ropsten: 3
-          chainId: BLOCKCHAIN_INFO.networkId
-        }
-        resolve({ txParams, keystring, password })
-      })
+      maxDestAmount, minConversionRate, walletId
+    ).then(result => {
+      const txParams = {
+        from: account,
+        nonce: nonce,
+        gasPrice: gasPrice,
+        gasLimit: gas,
+        to: BLOCKCHAIN_INFO.network,
+        value: '0x0',
+        data: result,
+        chainId: BLOCKCHAIN_INFO.networkId
+      };
+
+      resolve({ txParams, keystring, password });
+    })
   })
 }
 

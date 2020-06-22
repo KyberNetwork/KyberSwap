@@ -118,10 +118,6 @@ export function* getExpectedRateAndZeroRate(
 
   if (!isProceeding) {
     rateFunctionName = 'getExpectedRate';
-
-    const mask = converters.maskNumber();
-    refinedSrcAmount = converters.sumOfTwoNumber(refinedSrcAmount, mask);
-    zeroSrcAmount = converters.sumOfTwoNumber(zeroSrcAmount, mask);
   }
 
   if (srcAmount !== false) {

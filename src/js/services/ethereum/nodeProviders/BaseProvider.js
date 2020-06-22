@@ -156,20 +156,19 @@ export default class BaseProvider {
         })
     }
 
-    exchangeData(sourceToken, sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate, walletId) {
+    exchangeData(sourceToken, sourceAmount, destToken, destAddress, maxDestAmount, minConversionRate, walletId) {
+      if (!this.rpc.utils.isAddress(walletId)) {
+        walletId = "0x" + Array(41).join("0")
+      }
 
-        if (!this.rpc.utils.isAddress(walletId)) {
-            walletId = "0x" + Array(41).join("0")
-        }
-        var hint = this.rpc.utils.utf8ToHex(constants.PERM_HINT)
-        var data = this.networkContract.methods.tradeWithHint(
-            sourceToken, sourceAmount, destToken, destAddress,
-            maxDestAmount, minConversionRate, walletId, hint).encodeABI()
+      const data = this.networkContract.methods.tradeWithHintAndFee(
+        sourceToken, sourceAmount, destToken, destAddress,
+        maxDestAmount, minConversionRate, walletId, '0x0', '0x'
+      ).encodeABI();
 
-        return new Promise((resolve, reject) => {
-            resolve(data)
-        })
+      return new Promise((resolve) => {
+        resolve(data)
+      })
     }
 
     approveTokenData(sourceToken, sourceAmount, delegator = this.networkAddress) {
@@ -222,12 +221,8 @@ export default class BaseProvider {
     }
 
     getRate(source, dest, srcAmount) {
-        var mask = converters.maskNumber()
-        var srcAmountEnableFirstBit = converters.sumOfTwoNumber(srcAmount,  mask)
-        srcAmountEnableFirstBit = converters.toHex(srcAmountEnableFirstBit)
-
         return new Promise((resolve, reject) => {
-            this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFirstBit).call()
+            this.networkContract.methods.getExpectedRate(source, dest, srcAmount).call()
                 .then((result) => {
                     if (result != null) {
                         resolve(result)
@@ -301,19 +296,12 @@ export default class BaseProvider {
         });
         var arrayEthAddress = Array(arrayTokenAddress.length).fill(constants.ETH.address)
 
-        var mask = converters.maskNumber()
-
         var arrayAmount = Object.keys(tokensObj).map((tokenSymbol) => {
-           var minAmount = converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0)
-           var srcAmountEnableFistBit = converters.sumOfTwoNumber(minAmount,  mask)
-           srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
-           return srcAmountEnableFistBit
+           return converters.getSourceAmountZero(tokenSymbol, tokensObj[tokenSymbol].decimals, 0)
         });
 
         var minAmountEth = converters.getSourceAmountZero("ETH", 18, 0)
-        var srcAmountETHEnableFistBit = converters.sumOfTwoNumber(minAmountEth,  mask)
-        srcAmountETHEnableFistBit = converters.toHex(srcAmountETHEnableFistBit)
-        var arrayQtyEth = Array(arrayTokenAddress.length).fill(srcAmountETHEnableFistBit)
+        var arrayQtyEth = Array(arrayTokenAddress.length).fill(minAmountEth)
         var arrayQty = arrayAmount.concat(arrayQtyEth)
 
         return this.getAllRate(arrayTokenAddress.concat(arrayEthAddress), arrayEthAddress.concat(arrayTokenAddress), arrayQty).then((result) => {
@@ -389,7 +377,7 @@ export default class BaseProvider {
     exactTradeData(data) {
         return new Promise((resolve, reject) => {
             try {
-                var tradeAbi = this.getAbiByName("tradeWithHint", constants.KYBER_NETWORK)
+                var tradeAbi = this.getAbiByName("tradeWithHintAndFee", constants.KYBER_NETWORK)
                 var decoded = this.decodeMethod(tradeAbi, data);
                 resolve(decoded.params)
             } catch (e) {
@@ -581,11 +569,7 @@ export default class BaseProvider {
     }
 
     getRateAtLatestBlock(source, dest, srcAmount) {
-        var mask = converters.maskNumber()
-        var srcAmountEnableFistBit = converters.sumOfTwoNumber(srcAmount,  mask)
-        srcAmountEnableFistBit = converters.toHex(srcAmountEnableFistBit)
-
-        var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmountEnableFistBit).encodeABI()
+        var data = this.networkContract.methods.getExpectedRate(source, dest, srcAmount).encodeABI()
 
         return new Promise((resolve, reject) => {
             this.rpc.eth.call({
