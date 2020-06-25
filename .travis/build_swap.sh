@@ -9,6 +9,7 @@ if [[ "$TRAVIS_BRANCH" == "develop" ]]; then
 elif [[ "$TRAVIS_BRANCH" == "staging" ]]; then
   npm run build_auto_staging_limit_order
 elif [[ "$TRAVIS_BRANCH" == "master" ]]; then
+  npm run build_auto_ropsten
   npm run build-ropsten
   npm run build-staging
 else

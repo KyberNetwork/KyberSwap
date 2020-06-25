@@ -342,9 +342,7 @@
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
     "to_get_started": "để bắt đầu",
-    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ${term}",
-    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}",
-    "description_term_limit_order": "Bằng việc đặt lệnh, bạn đồng ý với ${term}"
+    "description_term": "Bằng việc sử dụng KyberSwap, bạn đồng ý với ${term}"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",
