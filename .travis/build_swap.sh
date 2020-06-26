@@ -11,6 +11,7 @@ elif [[ "$TRAVIS_BRANCH" == "staging" ]]; then
   npm run build_auto_ropsten
 elif [[ "$TRAVIS_BRANCH" == "master" ]]; then
   npm run build_auto_ropsten
+  npm run build_auto_production
   npm run build-ropsten
   npm run build-staging
 else
