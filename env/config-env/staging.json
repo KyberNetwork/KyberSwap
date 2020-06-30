@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-mainnet.alchemyapi.io/v2/hbczkGAuZuTyvrPC7tqXbvSeFzYBCQ-G",
+                "endPoint": "https://geth.knstats.com",
                 "type": "prune"
             }    
         ],
