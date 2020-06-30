@@ -13,7 +13,6 @@
         "ws": "wss://ropsten.kyber.network/ws/"
     },
     "min_accept_amount": 0.5,
-    "api_tokens": "https://dev-api.knstats.com/internal/currencies",
     "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
@@ -372,7 +371,7 @@
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
     "kyberswapAddress": "0xa33caaed059f0c574c07136a5da9f28dc2fa27c2",
-    "network": "0xa16Fc6e9b5D359797999adA576F7f4a4d57E8F75",
+    "network": "0xd719c34261e099Fdb33030ac8909d5788D3039C4",
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "networkId": 3,
     "chainName": "Ropsten",
