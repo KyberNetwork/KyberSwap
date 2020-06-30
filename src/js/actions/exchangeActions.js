@@ -351,3 +351,10 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
     payload: { sourceTokenSymbol, txHash }
   }
 }
+
+export function setPlatformFee(fee) {
+  return {
+    type: "EXCHANGE.SET_PLATFORM_FEE",
+    payload: fee
+  }
+}

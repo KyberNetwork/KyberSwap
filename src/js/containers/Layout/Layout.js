@@ -14,7 +14,8 @@ import {
   setCampaign
 } from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
-import { createNewConnectionInstance } from "../../actions/connectionActions"
+import { createNewConnectionInstance } from "../../actions/connectionActions";
+import { setPlatformFee } from "../../actions/exchangeActions";
 import { throttle } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
@@ -23,7 +24,7 @@ import {isMobile} from '../../utils/common'
 import Language from "../../../../lang"
 import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
-import { fetchActiveCampaign } from "../../services/kyberSwapService";
+import { fetchActiveCampaign, fetchPlatformFee } from "../../services/kyberSwapService";
 
 @connect((store) => {
   var locale = store.locale
@@ -127,9 +128,16 @@ export default class Layout extends React.Component {
       window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
 
+    await this.initiateData();
+  };
+
+  initiateData = async () => {
     const campaign = await fetchActiveCampaign();
     if (campaign) this.props.dispatch(setCampaign(campaign));
-  };
+
+    const fee = await fetchPlatformFee();
+    this.props.dispatch(setPlatformFee(fee));
+  }
   
   scrollToImportAccount = () => {
     const importAccountBlock = document.getElementById('import-account');

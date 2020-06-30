@@ -10,6 +10,7 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
+import { calculateExpectedRateWithFee } from "../utils/converter";
 
 function* selectToken(action) {
   const { sourceTokenSymbol, destTokenSymbol } = action.payload
@@ -32,9 +33,10 @@ function* updateRatePending(action) {
   const tokens = state.tokens.tokens;
   const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
-  const destAmount = state.exchange.destAmount
+  const destAmount = state.exchange.destAmount;
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
+  const platformFee = state.exchange.platformFee;
 
   if (refetchSourceAmount) {
     try {
@@ -47,8 +49,11 @@ function* updateRatePending(action) {
   try {
     const isProceeding = !!state.exchange.exchangePath.length;
     const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol, destTokenSymbol);
-    var { expectedPrice, slippagePrice } = rate
-    var percentChange = 0
+
+    let { expectedPrice, slippagePrice } = rate;
+    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+
+    let percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
     const noExpectedRateInit = expectedRateInit === "0" || expectedRateInit === 0 || expectedRateInit === undefined || expectedRateInit === null;
     let refPrice = expectedRateInit;

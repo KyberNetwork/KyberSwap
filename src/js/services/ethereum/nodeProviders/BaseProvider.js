@@ -156,14 +156,17 @@ export default class BaseProvider {
         })
     }
 
-    exchangeData(sourceToken, sourceAmount, destToken, destAddress, maxDestAmount, minConversionRate, walletId) {
+    exchangeData(
+      sourceToken, sourceAmount, destToken, destAddress,
+      maxDestAmount, minConversionRate, walletId, platformFee
+    ) {
       if (!this.rpc.utils.isAddress(walletId)) {
         walletId = "0x" + Array(41).join("0")
       }
 
       const data = this.networkContract.methods.tradeWithHintAndFee(
         sourceToken, sourceAmount, destToken, destAddress,
-        maxDestAmount, minConversionRate, walletId, '0x0', '0x'
+        maxDestAmount, minConversionRate, walletId, platformFee, '0x'
       ).encodeABI();
 
       return new Promise((resolve) => {
@@ -351,26 +354,34 @@ export default class BaseProvider {
     }
 
     extractExchangeEventData(data) {
-        return new Promise((resolve, rejected) => {
+        return new Promise((resolve) => {
             try {
-                const { src, dest, srcAmount, destAmount } = this.rpc.eth.abi.decodeParameters([{
-                    type: "address",
-                    name: "src"
-                }, {
-                    type: "address",
-                    name: "dest"
-                }, {
-                    type: "uint256",
-                    name: "srcAmount"
-                }, {
-                    type: "uint256",
-                    name: "destAmount"
-                }], data)
-                resolve({ src, dest, srcAmount, destAmount })
+                const { src, dest, destAddress, srcAmount, destAmount } = this.rpc.eth.abi.decodeParameters([
+                    {
+                        type: "address",
+                        name: "src"
+                    },
+                    {
+                        type: "address",
+                        name: "dest"
+                    },
+                    {
+                        type: "address",
+                        name: "destAddress"
+                    },
+                    {
+                        type: "uint256",
+                        name: "srcAmount"
+                    },
+                    {
+                        type: "uint256",
+                        name: "destAmount"
+                    }
+                ], data)
+                resolve({ src, dest, destAddress, srcAmount, destAmount })
             } catch (e) {
                 reject(e)
             }
-
         })
     }
     

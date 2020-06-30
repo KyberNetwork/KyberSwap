@@ -7,6 +7,7 @@ const KYBER_SWAP_ABI = [{"constant":false,"inputs":[],"name":"enableTrade","outp
 const TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 const ETHER_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 
+const DEFAULT_BPS_FEE = 8;
 var secondKey = "KNC"
 
 const EXCHANGE_CONFIG = {
@@ -64,8 +65,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   blockNo: 0,
   percentChange: 0,
   throwOnFailure: "0x0000000000000000000000000000000000000000",
-  gas: 520000,
-  max_gas: 520000,
+  gas: 850000,
+  max_gas: 850000,
   gas_approve: 0,
   max_gas_approve: 160000,
   isFetchingGas: false,
@@ -110,7 +111,8 @@ const INIT_EXCHANGE_FORM_STATE = {
   isAdvanceActive: false,
   isOpenAdvance: false,
   isSelectTokenBalance: false,
-  isRefPriceFromChainLink: false
+  isRefPriceFromChainLink: false,
+  platformFee: DEFAULT_BPS_FEE
 }
 
 const TRANSFER_CONFIG = {
@@ -398,5 +400,5 @@ module.exports = {
   CONNECTION_CHECKER,CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK, TRANSFER_TOPIC, BASE_HOST, LIST_PARAMS_SUPPORTED,
   TRADE_TOPIC, CONNECTION_TIMEOUT, INIT_LIMIT_ORDER_STATE, LIMIT_ORDER_CONFIG, SIGN_OFF_WALLETS, KYBER_SWAP_ABI,
   EXCHANGE_CONFIG, TRANSFER_CONFIG, LIMIT_ORDER_TOPIC, TX_CONFIRMING_TIMEOUT, GENESIS_ADDRESS, SPECIAL_TRANSFER_GAS_LIMIT,
-  PORTFOLIO_TAB, TX_TYPES, MINIMUM_DISPLAY_BALANCE
+  PORTFOLIO_TAB, TX_TYPES, MINIMUM_DISPLAY_BALANCE, DEFAULT_BPS_FEE
 };
