@@ -343,9 +343,7 @@
     "accept": "시작하려면",
     "terms_and_condition": " 이용 약관 ",
     "to_get_started": "에 동의하십시오!",
-    "description_term_swap": "환전을 하면 ${term}에 동의하는 것입니다.",
-    "description_term_transfer": "송금을 하면 ${term}에 동의하는 것입니다.",
-    "description_term_limit_order": "오더 시 ${term} 자동으로 동의하게 됩니다."
+    "description_term": "카이버스왑을 사용함으로써, ${term}에 동의합니다."
   },
   "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",

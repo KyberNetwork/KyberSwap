@@ -341,9 +341,7 @@
     "accept": "接受",
     "terms_and_condition": "条款和条件",
     "to_get_started": "以开始",
-    "description_term_swap": "通过兑换，您同意${term}",
-    "description_term_transfer": "通过转账，您同意${term}",
-    "description_term_limit_order": "提交即代表您同意${term}"
+    "description_term": "通过使用KyberSwap兑换，您同意${term}"
   },
   "landing_page": {
     "title": "以太坊代币的去中心化交易",
