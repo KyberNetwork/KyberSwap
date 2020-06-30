@@ -912,3 +912,13 @@ export function formatAddress(address, first = 15, last = -4) {
 export function shortenBigNumber(amount, exponential = 1) {
   return Number.parseFloat(amount).toExponential(exponential);
 }
+
+export function calculateExpectedRateWithFee(expectedRate, fee) {
+  const pow = Math.pow(10, 18);
+  const feeInPercentage = fee / 10000;
+  const bigExpectedRate = new BigNumber(expectedRate).div(pow);
+  const feeInNumber = multiplyOfTwoNumber(bigExpectedRate, feeInPercentage);
+  const rateWithFee = new BigNumber(subOfTwoNumber(bigExpectedRate, feeInNumber));
+
+  return rateWithFee.times(pow).toString();
+}

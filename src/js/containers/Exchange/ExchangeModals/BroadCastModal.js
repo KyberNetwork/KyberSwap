@@ -49,7 +49,7 @@ export default class BroadCastModal extends React.Component {
       this.setState({ txStatus: newTx.status })
       switch(newTx.status){
         case "success": 
-          const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
+          const { srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
 
           const tokens = this.props.tokens
           const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals

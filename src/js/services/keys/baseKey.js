@@ -43,14 +43,14 @@ export const sendTokenFromAccount = (
 }
 
 export const etherToOthersFromAccount = (
-  id, ethereum, account, sourceToken, sourceAmount, destToken,
-  destAddress, maxDestAmount, minConversionRate,
-  throwOnFailure, nonce, gas, gasPrice, keystring, accountType,
-  password) => {
-  return new Promise((resolve, reject) => {
+  id, ethereum, account, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
+  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee
+) => {
+  return new Promise((resolve) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, throwOnFailure).then(result => {
+      maxDestAmount, minConversionRate, walletId, platformFee
+    ).then(result => {
         const txParams = {
           from: account,
           nonce: nonce,
@@ -88,8 +88,7 @@ export const getAppoveToken = (ethereum, sourceToken, sourceAmount, nonce, gas, 
 
 export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, gas, gasPrice,
   keystring, password, accountType, account, delegator) => {
-  //const approvalData = ethereum.approveTokenData(sourceToken, sourceAmount)  
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     ethereum.call("approveTokenData", sourceToken, 0, delegator).then(result => {
       const txParams = {
         from: account,
@@ -108,12 +107,12 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
 
 export const tokenToOthersFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password
+  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee
 ) => {
   return new Promise((resolve) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, walletId
+      maxDestAmount, minConversionRate, walletId, platformFee
     ).then(result => {
       const txParams = {
         from: account,
