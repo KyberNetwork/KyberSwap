@@ -339,6 +339,10 @@ export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
 }
 
+export function hexToString(hex) {
+  return new BigNumber(hex).toString()
+}
+
 export function hexToBigNumber(hex) {
   return new BigNumber(hex)
 }
@@ -682,7 +686,6 @@ export function getMinrate(rate, minRate) {
 
 
 export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell) {
-  // console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
   var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
@@ -921,4 +924,11 @@ export function calculateExpectedRateWithFee(expectedRate, fee) {
   const rateWithFee = new BigNumber(subOfTwoNumber(bigExpectedRate, feeInNumber));
 
   return rateWithFee.times(pow).toString();
+}
+
+export function calculateSrcAmountWithFee(srcAmount, fee) {
+  const feeInPercentage = fee / 10000;
+  const feeInNumber = multiplyOfTwoNumber(srcAmount, feeInPercentage);
+
+  return sumOfTwoNumber(srcAmount, feeInNumber);
 }

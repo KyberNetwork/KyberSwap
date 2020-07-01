@@ -13,7 +13,7 @@ import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
-import { calculateExpectedRateWithFee } from "../../../utils/converter";
+import { getBigNumberValueByPercentage } from "../../../utils/converter";
 
 @connect((store) => {
   const account = store.account.account
@@ -57,7 +57,7 @@ export default class ConfirmModal extends React.Component {
       startTime: Math.round(new Date().getTime())
     })
 
-    this.getSlippageRate()
+    this.getLatestRate()
     this.getGasSwap()
   }
   
@@ -80,20 +80,13 @@ export default class ConfirmModal extends React.Component {
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
   
-  async getSlippageRate() {
+  async getLatestRate() {
     try {
-      var source = this.props.exchange.sourceToken
-      var dest = this.props.exchange.destToken
-      var sourceAmount = this.props.exchange.snapshot.sourceAmount
-      var sourceDecimal = this.props.tokens[this.props.exchange.sourceTokenSymbol].decimals
-      var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
-      var ethereum = this.props.ethereum;
-      const platformFee = this.props.exchange.platformFee;
+      const { ethereum, sourceToken, destToken, sourceAmount, platformFee, slippagePercentage } = this.getFormParams();
 
-      let rate = await ethereum.call("getRate", source, dest, sourceAmountHex);
-      rate.expectedRate = calculateExpectedRateWithFee(rate.expectedRate, platformFee);
+      let expectedRate = await ethereum.call("getExpectedRateAfterFee", sourceToken, destToken, sourceAmount, platformFee);
 
-      if (rate.expectedRate == 0 || rate.slippageRate == 0) {
+      if (!expectedRate) {
         this.setState({
           isFetchRate: false,
           restrictError: this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
@@ -101,13 +94,12 @@ export default class ConfirmModal extends React.Component {
       } else {
         this.setState({
           isFetchRate: false,
-          expectedRate: rate.expectedRate
+          expectedRate: expectedRate
         })
+
         if (!this.props.exchange.isEditRate) {
-          this.setState({
-            isFetchRate: false,
-            slippageRate: rate.worstRate
-          })
+          const slippageRate = getBigNumberValueByPercentage(expectedRate, slippagePercentage).toFixed(0);
+          this.setState({ slippageRate: slippageRate })
         }
       }
       
@@ -141,29 +133,13 @@ export default class ConfirmModal extends React.Component {
     var gasPrice = converter.numberToHex(converter.gweiToWei(this.props.exchange.snapshot.gasPrice))
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
-    const platformFee = converters.toHex(this.props.exchange.platformFee);
-    
+    const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
+    let platformFee = converters.toHex(this.props.exchange.platformFee);
+
     return {
-      formId,
-      address,
-      ethereum,
-      sourceToken,
-      sourceTokenSymbol,
-      sourceDecimal,
-      sourceAmount,
-      destToken,
-      destAddress,
-      maxDestAmount,
-      slippageRate,
-      waletId,
-      nonce,
-      gas,
-      gasPrice,
-      keystring,
-      type,
-      destAmount,
-      destTokenSymbol,
-      platformFee
+      formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
+      destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount,
+      destTokenSymbol, platformFee, slippagePercentage
     }
   }
   
@@ -379,10 +355,10 @@ export default class ConfirmModal extends React.Component {
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
     var destDecimal = this.props.tokens[destTokenSymbol].decimal;
-    var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
+    var expectedRate = this.state.expectedRate
+    var destAmount = converter.caculateDestAmount(sourceAmount, expectedRate, destDecimal)
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     var slippageRate = this.state.slippageRate
-    var expectedRate = this.state.expectedRate
     const {isOnMobile} = this.props.global;
 
     return (
@@ -533,7 +509,7 @@ export default class ConfirmModal extends React.Component {
                         <RateBetweenToken
                           exchangeRate={{
                             sourceToken: this.props.exchange.sourceTokenSymbol,
-                            rate: converters.toT(this.props.exchange.expectedRate),
+                            rate: converters.toT(this.state.expectedRate),
                             destToken: this.props.exchange.destTokenSymbol
                           }}
                         />

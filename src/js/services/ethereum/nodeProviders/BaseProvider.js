@@ -223,9 +223,9 @@ export default class BaseProvider {
         })
     }
 
-    getRate(source, dest, srcAmount) {
+    getExpectedRateAfterFee(source, dest, srcAmount, platformFee) {
         return new Promise((resolve, reject) => {
-            this.networkContract.methods.getExpectedRate(source, dest, srcAmount).call()
+            this.networkContract.methods.getExpectedRateAfterFee(source, dest, srcAmount, platformFee, '0x').call()
                 .then((result) => {
                     if (result != null) {
                         resolve(result)
