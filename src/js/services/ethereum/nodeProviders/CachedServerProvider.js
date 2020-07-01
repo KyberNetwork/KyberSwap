@@ -297,7 +297,7 @@ export default class CachedServerProvider extends React.Component {
   }
   
   getExpectedRate(srcToken, destToken, srcAmount) {
-    srcAmount = converters.hexToNumber(srcAmount);
+    srcAmount = converters.hexToString(srcAmount);
 
     return new Promise((resolve, rejected) => {
       this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/expectedRate?source=${srcToken}&dest=${destToken}&sourceAmount=${srcAmount}`))

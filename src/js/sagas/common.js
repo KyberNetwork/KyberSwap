@@ -35,7 +35,7 @@ export function* handleRequest(sendRequest, ...args) {
 export function getSourceAmount(sourceTokenSymbol, sourceAmount, defaultRate) {
   var state = store.getState()
   var tokens = state.tokens.tokens
-  var sourceAmountHex = "0x0";
+  let sourceAmountHex;
   
   if (tokens[sourceTokenSymbol]) {
     var decimals = tokens[sourceTokenSymbol].decimals

@@ -10,7 +10,7 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
-import { calculateExpectedRateWithFee } from "../utils/converter";
+import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
 
 function* selectToken(action) {
   const { sourceTokenSymbol, destTokenSymbol } = action.payload
@@ -37,10 +37,12 @@ function* updateRatePending(action) {
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
   const platformFee = state.exchange.platformFee;
+  const isEthSwapped = (sourceTokenSymbol === 'ETH' && destTokenSymbol === 'WETH') || (sourceTokenSymbol === 'WETH' && destTokenSymbol === 'ETH');
 
   if (refetchSourceAmount) {
     try {
-     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
+      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
+      if (!isEthSwapped) sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
     } catch (err) {
       console.log(err);
     }
@@ -51,7 +53,8 @@ function* updateRatePending(action) {
     const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol, destTokenSymbol);
 
     let { expectedPrice, slippagePrice } = rate;
-    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+
+    if (!isEthSwapped) expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
 
     let percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
@@ -116,8 +119,7 @@ function* fetchGas() {
   yield put(actions.setEstimateGas(gas, gasApprove))
 }
 
-function* estimateGasNormal(action) {
-  const {srcAmount} = action.payload;
+function* estimateGasNormal() {
   var state = store.getState()
   const exchange = state.exchange
 
@@ -148,7 +150,6 @@ function* getMaxGasApprove() {
 
 function* checkKyberEnable(action) {
   const {ethereum} = action.payload
-  var state = store.getState()
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
     if (enabled){
