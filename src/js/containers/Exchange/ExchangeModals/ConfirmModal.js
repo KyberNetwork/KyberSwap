@@ -147,9 +147,14 @@ export default class ConfirmModal extends React.Component {
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-
+    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
     var {waletId, platformFee} = this.getCommissionData()
-    platformFee = converters.toHex(platformFee);
+
+    if (!isEthSwapped) {
+      platformFee = converters.toHex(platformFee);
+    } else {
+      platformFee = '0x0';
+    }
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,

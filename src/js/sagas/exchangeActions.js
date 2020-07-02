@@ -37,11 +37,12 @@ function* updateRatePending(action) {
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
   const platformFee = state.exchange.platformFee;
+  const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
 
   if (refetchSourceAmount) {
     try {
       sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
-      sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
+      if (!isEthSwapped) sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +54,7 @@ function* updateRatePending(action) {
 
     let { expectedPrice, slippagePrice } = rate;
 
-    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+    if (!isEthSwapped) expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
 
     let percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
