@@ -75,7 +75,7 @@ export default class ConfirmModal extends React.Component {
     var refAddr = getParameterByName("ref")
     if (!validators.verifyAccount(refAddr)) {
       return refAddr
-    }
+    }    
     
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
@@ -148,7 +148,7 @@ export default class ConfirmModal extends React.Component {
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
     const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
-    var {waletId, platformFee} = this.getCommissionData()
+    var {walletId, platformFee} = this.getCommissionData()
 
     if (!isEthSwapped) {
       platformFee = converters.toHex(platformFee);
@@ -158,7 +158,7 @@ export default class ConfirmModal extends React.Component {
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
-      destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount,
+      destAddress, maxDestAmount, slippageRate, walletId, nonce, gas, gasPrice, keystring, type, destAmount,
       destTokenSymbol, platformFee, slippagePercentage
     }
   }
@@ -282,13 +282,13 @@ export default class ConfirmModal extends React.Component {
     try {
       var {
         formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceAmount,
-        destToken, destAddress,maxDestAmount, slippageRate, waletId, nonce, gas,
+        destToken, destAddress,maxDestAmount, slippageRate, walletId, nonce, gas,
         gasPrice, keystring, type, destAmount, destTokenSymbol, platformFee
       } = this.getFormParams()
       var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
       var txHash = await wallet.broadCastTx(
         callFunc, formId, ethereum, address, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-        slippageRate, waletId, nonce, gas, gasPrice, keystring, type, password, platformFee
+        slippageRate, walletId, nonce, gas, gasPrice, keystring, type, password, platformFee
       )
       
       //submit hash to broadcast server
