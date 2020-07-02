@@ -79,6 +79,19 @@ export default class ConfirmModal extends React.Component {
     
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
+
+  getCommissionData = () => {
+      var walletId = this.getReferAddr()
+      var platformFee      
+      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
+        platformFee = constants.DEFAULT_BPS_FEE
+      }else{
+        platformFee = this.props.exchange.platformFee
+      } 
+      return {
+        walletId, platformFee
+      }
+  }
   
   async getLatestRate() {
     try {
@@ -126,15 +139,17 @@ export default class ConfirmModal extends React.Component {
     var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
       ? this.props.account.info.receiveAddr : this.props.account.address;
     var maxDestAmount = converter.biggestNumber()
-    var slippageRate = this.state.slippageRate
-    var waletId = this.getReferAddr()
+    var slippageRate = this.state.slippageRate      
+
     var nonce = this.props.account.getUsableNonce()
     var gas = converter.numberToHex(this.state.gasLimit)
     var gasPrice = converter.numberToHex(converter.gweiToWei(this.props.exchange.snapshot.gasPrice))
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-    let platformFee = converters.toHex(this.props.exchange.platformFee);
+
+    var {waletId, platformFee} = this.getCommissionData()
+    platformFee = converters.toHex(platformFee);
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
@@ -148,6 +163,7 @@ export default class ConfirmModal extends React.Component {
       ethereum, sourceToken, sourceAmount, destToken, maxDestAmount,
       slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee
     } = this.getFormParams()
+    
     const gasPrice = this.props.exchange.gasPrice;
     const ethBalance = this.props.account.balance;
 
