@@ -6,14 +6,13 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://eth-mainnet.alchemyapi.io/v2/hbczkGAuZuTyvrPC7tqXbvSeFzYBCQ-G",
+                "endPoint": "https://geth.knstats.com",
                 "type": "prune"
             }    
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.01,
-    "api_tokens": "https://staging-api.knstats.com/internal/currencies",
     "kyberswap_api": "https://staging-kyberswap.knstats.com/api",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
@@ -361,7 +360,7 @@
     "broadcastTx": "https://staging-broadcast.knstats.com/",
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
-    "network": "0x6326dd73e368c036d4c4997053a021cbc52c7367",
+    "network": "0xc153eeAD19e0DBbDb3462Dcc2B703cC6D738A37c",
     "kyberswapAddress": "0x072bfe95e2b8050221de8ab324ab11cc7d66d75b",
     "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",
     "networkId": 1,

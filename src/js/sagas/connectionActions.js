@@ -22,7 +22,7 @@ function filterTokens(tokens) {
 }
 
 function getListTokens() {
-  const tokenAPI = process.env.integrate ? `${BLOCKCHAIN_INFO.kyberswap_api}/currencies` : BLOCKCHAIN_INFO.api_tokens;
+  const tokenAPI = process.env.integrate ? `${BLOCKCHAIN_INFO.kyberswap_api}/currencies` : `${BLOCKCHAIN_INFO.tracker}/internal/currencies`;
 
   return new Promise((resolve, reject) => {
     fetch(tokenAPI, {
