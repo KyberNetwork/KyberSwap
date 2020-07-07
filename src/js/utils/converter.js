@@ -322,7 +322,7 @@ export function numberToHexAddress(number) {
 
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
-  return "0x" + (initNumber.pow(255).toString(16))
+  return "0x" + (initNumber.pow(256).minus(1).toString(16))
 }
 
 export function maskNumber() {
