@@ -13,6 +13,7 @@ import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
+import { getBigNumberValueByPercentage } from "../../../utils/converter";
 
 @connect((store) => {
   const account = store.account.account
@@ -55,8 +56,8 @@ export default class ConfirmModal extends React.Component {
       slippageRate: converter.toTWei(this.props.exchange.snapshot.minConversionRate, 18),
       startTime: Math.round(new Date().getTime())
     })
-    
-    this.getSlippageRate()
+
+    this.getLatestRate()
     this.getGasSwap()
   }
   
@@ -74,22 +75,31 @@ export default class ConfirmModal extends React.Component {
     var refAddr = getParameterByName("ref")
     if (!validators.verifyAccount(refAddr)) {
       return refAddr
-    }
+    }    
     
     return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
+
+  getCommissionData = () => {
+      var walletId = this.getReferAddr()
+      var platformFee      
+      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
+        platformFee = constants.DEFAULT_BPS_FEE
+      }else{
+        platformFee = this.props.exchange.platformFee
+      } 
+      return {
+        walletId, platformFee
+      }
+  }
   
-  async getSlippageRate() {
+  async getLatestRate() {
     try {
-      var source = this.props.exchange.sourceToken
-      var dest = this.props.exchange.destToken
-      var sourceAmount = this.props.exchange.snapshot.sourceAmount
-      var sourceDecimal = this.props.tokens[this.props.exchange.sourceTokenSymbol].decimals
-      var sourceAmountHex = converter.stringToHex(sourceAmount, sourceDecimal)
-      var ethereum = this.props.ethereum
-      
-      var rate = await ethereum.call("getRate", source, dest, sourceAmountHex)
-      if (rate.expectedRate == 0 || rate.slippageRate == 0) {
+      const { ethereum, sourceToken, destToken, sourceAmount, platformFee, slippagePercentage } = this.getFormParams();
+
+      let expectedRate = await ethereum.call("getExpectedRateAfterFee", sourceToken, destToken, sourceAmount, platformFee);
+
+      if (!expectedRate) {
         this.setState({
           isFetchRate: false,
           restrictError: this.props.translate("error.node_error") || "There are some problems with nodes. Please try again in a while."
@@ -97,13 +107,12 @@ export default class ConfirmModal extends React.Component {
       } else {
         this.setState({
           isFetchRate: false,
-          expectedRate: rate.expectedRate
+          expectedRate: expectedRate
         })
+
         if (!this.props.exchange.isEditRate) {
-          this.setState({
-            isFetchRate: false,
-            slippageRate: rate.slippageRate
-          })
+          const slippageRate = getBigNumberValueByPercentage(expectedRate, slippagePercentage).toFixed(0);
+          this.setState({ slippageRate: slippageRate })
         }
       }
       
@@ -130,54 +139,53 @@ export default class ConfirmModal extends React.Component {
     var destAddress = this.props.account.type === "promo" && this.props.account.info && this.props.account.info.promoType === "payment"
       ? this.props.account.info.receiveAddr : this.props.account.address;
     var maxDestAmount = converter.biggestNumber()
-    var slippageRate = this.state.slippageRate
-    var waletId = this.getReferAddr()
+    var slippageRate = this.state.slippageRate      
+
     var nonce = this.props.account.getUsableNonce()
     var gas = converter.numberToHex(this.state.gasLimit)
     var gasPrice = converter.numberToHex(converter.gweiToWei(this.props.exchange.snapshot.gasPrice))
     var keystring = this.props.account.keystring
-    var type = this.props.account.type
-    
+    var type = this.props.account.type;
+    const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
+    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
+    var {walletId, platformFee} = this.getCommissionData()
+
+    if (!isEthSwapped) {
+      platformFee = converters.toHex(platformFee);
+    } else {
+      platformFee = '0x0';
+    }
+
     return {
-      formId,
-      address,
-      ethereum,
-      sourceToken,
-      sourceTokenSymbol,
-      sourceDecimal,
-      sourceAmount,
-      destToken,
-      destAddress,
-      maxDestAmount,
-      slippageRate,
-      waletId,
-      nonce,
-      gas,
-      gasPrice,
-      keystring,
-      type,
-      destAmount,
-      destTokenSymbol
+      formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
+      destAddress, maxDestAmount, slippageRate, walletId, nonce, gas, gasPrice, keystring, type, destAmount,
+      destTokenSymbol, platformFee, slippagePercentage
     }
   }
   
   async getGasSwap() {
-    const {ethereum, sourceToken, sourceAmount, destToken, maxDestAmount, slippageRate, walletId, destTokenSymbol, sourceTokenSymbol} = this.getFormParams()
+    const {
+      ethereum, sourceToken, sourceAmount, destToken, maxDestAmount,
+      slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee
+    } = this.getFormParams()
+    
     const gasPrice = this.props.exchange.gasPrice;
     const ethBalance = this.props.account.balance;
+
     let gas = await this.getMaxGasExchange();
     this.setState({gasLimit: gas});
-    
+
     try {
       if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
         this.setState({isFetchGas: false});
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
         return;
       }
-      
-      var data = await ethereum.call("exchangeData", sourceToken, sourceAmount,
-        destToken, this.props.account.address,
-        maxDestAmount, slippageRate, walletId)
+
+      var data = await ethereum.call(
+        "exchangeData", sourceToken, sourceAmount, destToken, this.props.account.address,
+        maxDestAmount, slippageRate, walletId, platformFee
+      );
       
       var value = '0x0'
       if (sourceTokenSymbol === 'ETH') {
@@ -190,10 +198,10 @@ export default class ConfirmModal extends React.Component {
         data: data,
         value: value
       }
-      
+
       let estimatedGas = await ethereum.call("estimateGas", txObj);
       estimatedGas = Math.round(estimatedGas * 120 / 100) + 100000;
-      
+
       if (estimatedGas < gas) {
         gas = estimatedGas;
         this.setState({gasLimit: estimatedGas})
@@ -274,14 +282,14 @@ export default class ConfirmModal extends React.Component {
     try {
       var {
         formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceAmount,
-        destToken, destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount, destTokenSymbol
+        destToken, destAddress,maxDestAmount, slippageRate, walletId, nonce, gas,
+        gasPrice, keystring, type, destAmount, destTokenSymbol, platformFee
       } = this.getFormParams()
       var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
-      var txHash = await wallet.broadCastTx(callFunc, formId, ethereum, address, sourceToken,
-        sourceAmount, destToken, destAddress,
-        maxDestAmount, slippageRate,
-        waletId, nonce, gas,
-        gasPrice, keystring, type, password)
+      var txHash = await wallet.broadCastTx(
+        callFunc, formId, ethereum, address, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
+        slippageRate, walletId, nonce, gas, gasPrice, keystring, type, password, platformFee
+      )
       
       //submit hash to broadcast server
       try {
@@ -310,8 +318,7 @@ export default class ConfirmModal extends React.Component {
       const currentTime = Math.round(new Date().getTime());
       this.props.global.analytics.callTrack("trackBroadcastedTransaction", currentTime - startTime);
       
-      const tx = new Tx(
-        txHash, address, gas, gasPrice, nonce, "pending", "exchange", data)
+      const tx = new Tx(txHash, address, gas, gasPrice, nonce, "pending", "exchange", data);
       
       this.props.dispatch(accountActions.incManualNonceAccount(address))
       this.props.dispatch(accountActions.updateAccount(ethereum, this.props.account))
@@ -369,12 +376,12 @@ export default class ConfirmModal extends React.Component {
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var sourceAmount = this.props.exchange.snapshot.sourceAmount.toString();
     var destDecimal = this.props.tokens[destTokenSymbol].decimal;
-    var destAmount = converter.caculateDestAmount(sourceAmount, this.state.expectedRate, destDecimal)
+    var expectedRate = this.state.expectedRate
+    var destAmount = converter.caculateDestAmount(sourceAmount, expectedRate, destDecimal)
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     var slippageRate = this.state.slippageRate
-    var expectedRate = this.state.expectedRate
     const {isOnMobile} = this.props.global;
-    
+
     return (
       <div className="confirm-exchange-modal">
         {!isPromoPayment &&
@@ -489,13 +496,13 @@ export default class ConfirmModal extends React.Component {
         </React.Fragment>
         }
         
-        {!this.state.isFetchRate && converter.compareTwoNumber(slippageRate, expectedRate) === 1 &&
-        <div className="description error">
-                        <span className="error-text">
-                            {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"}
-                        </span>
-        </div>
-        }
+        {!this.state.isFetchRate && converter.compareTwoNumber(slippageRate, expectedRate) === 1 && (
+          <div className="description error">
+            <span className="error-text">
+              {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"}
+            </span>
+          </div>
+        )}
       </div>
     )
     
@@ -523,7 +530,7 @@ export default class ConfirmModal extends React.Component {
                         <RateBetweenToken
                           exchangeRate={{
                             sourceToken: this.props.exchange.sourceTokenSymbol,
-                            rate: converters.toT(this.props.exchange.expectedRate),
+                            rate: converters.toT(this.state.expectedRate),
                             destToken: this.props.exchange.destTokenSymbol
                           }}
                         />

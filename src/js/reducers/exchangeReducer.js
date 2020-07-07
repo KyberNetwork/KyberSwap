@@ -1,6 +1,5 @@
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
 initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
@@ -340,6 +339,10 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.CLEAR_SESSION_FULFILLED": {
       newState.errors.sourceAmount = {};
+      return newState
+    }
+    case "EXCHANGE.SET_PLATFORM_FEE": {
+      newState.platformFee = action.payload;
       return newState
     }
   }
