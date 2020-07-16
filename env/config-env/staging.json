@@ -8,7 +8,7 @@
             {
                 "endPoint": "https://geth.knstats.com",
                 "type": "prune"
-            }    
+            }
         ],
         "ws": "wss://mainnet.infura.io/ws"
     },

@@ -15,6 +15,17 @@
     "min_accept_amount": 0.5,
     "kyberswap_api": "https://kyberswap.com/api",
     "portfolio_api": "https://portfolio.kyberswap.com",
+    "ethScanUrl": "https://etherscan.io/",
+    "broadcastTx": "https://broadcast.kyber.network/",
+    "enjinx": "https://kyber.enjinx.io/",
+    "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+    "network": "0x9aab3f75489902f3a48495025729a0af77d4b11e",
+    "kyberswapAddress": "0x52d35e8f0ffa18337b093aec3dfff40445d8f4f4",    
+    "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
+    "networkId": 1,
+    "chainName": "Mainnet",
+    "tracker": "https://api.kyber.network",
+    "highSlippage": 5,
     "priority_tokens": [
         "ETH",
         "DAI",
@@ -644,16 +655,5 @@
             "decimals": 18,
             "listing_time": 1584018000
         }
-    },
-    "ethScanUrl": "https://etherscan.io/",
-    "broadcastTx": "https://broadcast.kyber.network/",
-    "enjinx": "https://kyber.enjinx.io/",
-    "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-    "network": "0x9aab3f75489902f3a48495025729a0af77d4b11e",
-    "kyberswapAddress": "0x52d35e8f0ffa18337b093aec3dfff40445d8f4f4",    
-    "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
-    "networkId": 1,
-    "chainName": "Mainnet",
-    "tracker": "https://api.kyber.network",
-    "highSlippage": 5
+    }
 }
