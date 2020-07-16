@@ -206,8 +206,6 @@ export default class BroadCastModal extends React.Component {
         var reasons = await ethereum.call("wrapperGetReasons", input.reserves[0], input, blockNumber)
         networkIssues["rateError"] = reasons
       } else {
-        console.log(rates)
-        console.log(input.minConversionRate)
         if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
           networkIssues["rateZero"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
         }
