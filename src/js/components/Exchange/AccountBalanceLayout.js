@@ -61,9 +61,8 @@ const AccountBalanceLayout = (props) => {
       }
 
       return (
-        <div className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
+        <div key={token.symbol} className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
           <div
-            key={token.symbol}
             {...(!classBalance.includes('unclickable') && { onClick: (e) => props.selectBalance(props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol)) })}
             className={"account-balance__token-item" + classBalance}
           >
@@ -103,8 +102,6 @@ const AccountBalanceLayout = (props) => {
 
     return !isEmpty || props.searchWord ? allBalances : false;
   }
-
-
 
   return (
     <div className={`account-balance common__slide-up account-balance--${props.screen}`}>
