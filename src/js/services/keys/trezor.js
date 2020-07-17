@@ -6,8 +6,6 @@ import EthereumService from "../ethereum/ethereum"
 import { store } from "../../store"
 import * as converter from "../../utils/converter"
 
-const defaultDPath = "m/44'/60'/0'/0";
-
 export default class Trezor {
   constructor() {
     TrezorConnect.manifest({
@@ -16,7 +14,7 @@ export default class Trezor {
     });
   }
 
-  getPublicKey = (path = defaultDPath) => {
+  getPublicKey = (path) => {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       TrezorConnect.getPublicKey({ path }).then(function (result) {

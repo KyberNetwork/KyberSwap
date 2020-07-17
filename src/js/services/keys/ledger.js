@@ -8,9 +8,6 @@ import { CONFIG_ENV_LEDGER_LINK, LEDGER_SUPPORT_LINK } from "../constants"
 import { getTranslate } from 'react-localize-redux'
 import EthereumService from "../ethereum/ethereum"
 
-const defaultDPath = "m/44'/60'/0'";
-const ledgerPath = "m/44'/60'/0'";
-
 export default class Ledger {
   connectLedger = () => {
     return new Promise((resolve, reject) => {
@@ -38,32 +35,28 @@ export default class Ledger {
     });
   }
 
-  getLedgerPublicKey = (eth, path = ledgerPath) => {
+  getLedgerPublicKey = (eth, path) => {
     return new Promise((resolve, reject) => {
       eth.getAddress(path, false, true)
         .then((result) => {
-          result.dPath = path;
           resolve(result)
         })
         .catch((err) => {
-          console.log(err)
           reject(err)
         });
     });
   }
 
-  getPublicKey = (path = defaultDPath, isOpenModal) => {
+  getPublicKey = (path, isOpenModal) => {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       this.connectLedger().then((eth) => {
         this.getLedgerPublicKey(eth, path)
-          //  eth.getAddress_async(path, false, true)
           .then((result) => {
             result.dPath = path;
             resolve(result);
           })
           .catch((err) => {
-            console.log(err)
             let errorMsg
             switch (err.statusCode) {
               case 26625:
@@ -73,10 +66,6 @@ export default class Ledger {
                   errorMsg = translate("error.ledger_time_out") || 'Your session on Ledger is expired. Please log in  again to continue.'
                 }
                 break
-              // case 'Invalid status 6a80':
-              // case 'Invalid status 6804':
-              //   errorMsg = translate("error.path_is_invalid") || 'Invalid path. Please choose another one.'
-              //   break
               default:
                 if (err.errorCode == 1) {
                   errorMsg = translate("error.need_to_config_env_ledger", { link: CONFIG_ENV_LEDGER_LINK })
@@ -109,7 +98,6 @@ export default class Ledger {
       throw err
     }
   }
-
 
   async broadCastTx(funcName, ...args) {
     try {
@@ -151,7 +139,6 @@ export default class Ledger {
         return translate('error.ledger_not_enable_contract', { link: link })
       }
       case 27013: {
-        //user denied
         return ""
       }
       default: {
