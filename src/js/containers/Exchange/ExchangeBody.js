@@ -25,16 +25,17 @@ import { ExchangeAccount } from "../../containers/Exchange"
   const global = store.global
   const sourceToken = tokens[exchange.sourceTokenSymbol]
   const destToken = tokens[exchange.destTokenSymbol]
+  const defaultGasLimit = exchange.max_gas;
 
   return {
     account, ethereum, tokens, translate, 
-    global, exchange, sourceToken, destToken
+    global, exchange, sourceToken, destToken, defaultGasLimit
   }
 })
 
 class ExchangeBody extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
 
     this.state = {
       focus: "",
@@ -107,25 +108,25 @@ class ExchangeBody extends React.Component {
 
   lazyValidateTransactionFee = debounce(this.validateTxFee, 500)
 
-  selectSourceToken = (symbol) => {        
-    var sourceTokenSymbol = symbol
-    var sourceToken = this.props.tokens[sourceTokenSymbol].address
-    var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var destToken = this.props.tokens[destTokenSymbol].address
-    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "source"));
+  selectSourceToken = (symbol) => {
+    const sourceTokenSymbol = symbol
+    const destTokenSymbol = this.props.exchange.destTokenSymbol
+    const srcTokenAddress = this.props.sourceToken.address
+    const destTokenAddress = this.props.destToken.address
 
-    this.props.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress, "source"));
+    this.props.updateGlobal(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress);
     this.props.global.analytics.callTrack("trackChooseToken", "from", symbol);
   }
 
   selectDestToken = (symbol) => {
-    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var sourceToken = this.props.tokens[sourceTokenSymbol].address
-    var destTokenSymbol = symbol
-    var destToken = this.props.tokens[destTokenSymbol].address
-    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "dest"));
+    const destTokenSymbol = symbol
+    const sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
+    const srcTokenAddress = this.props.sourceToken.address
+    const destTokenAddress = this.props.destToken.address
 
-    this.props.updateGlobal(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken)
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress, "dest"));
+    this.props.updateGlobal(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress);
     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
   }
 
@@ -334,6 +335,7 @@ class ExchangeBody extends React.Component {
 
     return (
       <AdvanceConfigLayout
+        gasLimit={this.props.defaultGasLimit}
         selectedGas={this.props.exchange.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
