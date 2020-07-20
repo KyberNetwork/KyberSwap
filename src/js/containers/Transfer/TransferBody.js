@@ -20,7 +20,7 @@ import { TransferAccount } from "../../containers/Transfer"
 
 @connect((store) => {
   const transfer = store.transfer;
-  const defaultGasLimit = transfer.gas_limit;
+  const defaultGasLimit = transfer.tokenSymbol === 'ETH' ? transfer.gas : transfer.gas_limit;
 
   return {
     transfer: transfer,
@@ -182,7 +182,7 @@ class Transfer extends React.Component {
   getAdvanceLayout = () => {
     return (
       <AdvanceConfigLayout
-        gasLimit={this.props.defaultGasLimit}
+        gasLimit={this.props.transfer.tokenSymbol === 'ETH' ? this.props.transfer.gas : this.props.defaultGasLimit}
         selectedGas={this.props.transfer.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}
