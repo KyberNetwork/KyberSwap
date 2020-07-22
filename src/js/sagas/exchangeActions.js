@@ -239,7 +239,7 @@ function* verifyExchange() {
 
   const account = state.account.account
   var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
-    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+    sourceAmount, exchange.gas, exchange.gasPrice)
 
   if (validateWithFee) {
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))

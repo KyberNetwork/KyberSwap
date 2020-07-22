@@ -230,7 +230,7 @@ export default class ConfirmModal extends React.Component {
     
     if (isNotEnoughEth) {
       this.setState({
-        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough to pay for the transaction fees"
       })
     }
   }
