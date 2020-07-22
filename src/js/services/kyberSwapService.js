@@ -18,9 +18,9 @@ export async function fetchActiveCampaign() {
   }
 }
 
-export async function fetchPlatformFee() {
+export async function fetchPlatformFee(srcAddress, destAddress) {
   try {
-    const response = await fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/swap_fee`);
+    const response = await fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/swap_fee?src=${srcAddress}&dst=${destAddress}`);
     const result = await response.json();
     const isValidResult = result && result.success === true && result.fee;
 

@@ -11,19 +11,24 @@ import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
 import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
+import { fetchPlatformFee } from "../services/kyberSwapService";
 
 function* selectToken(action) {
-  const { sourceTokenSymbol, destTokenSymbol } = action.payload
+  const { sourceTokenSymbol, destTokenSymbol, sourceToken, destToken } = action.payload;
+
+  yield put(actions.estimateGasNormal(false))
 
   if (sourceTokenSymbol === destTokenSymbol){
     var state = store.getState()
     var translate = getTranslate(state.locale)
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
-  } else {
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken))
+    return;
   }
-  
-  yield put(actions.estimateGasNormal(false))
+
+  yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
+
+  const fee = yield call(fetchPlatformFee, sourceToken, destToken);
+  yield put(actions.setPlatformFee(fee))
 }
 
 function* updateRatePending(action) {
