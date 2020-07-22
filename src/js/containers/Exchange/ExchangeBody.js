@@ -70,7 +70,8 @@ class ExchangeBody extends React.Component {
   }
 
   updateTitle = (pathname) => {
-    let title = this.props.global.documentTitle;
+    let title = 'KyberSwap | Instant Exchange | No Fees';
+
     if (common.isAtSwapPage(pathname)) {
       let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
       sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
@@ -82,11 +83,7 @@ class ExchangeBody extends React.Component {
         } else {
           title = `${sourceTokenSymbol}/${destTokenSymbol} | Swap ${sourceTokenSymbol}-${destTokenSymbol} | KyberSwap`;
         }
-      } else {
-        title = "Kyber Network | Instant Exchange | No Fees";
       }
-    } else {
-      title = "Kyber Network | Instant Exchange | No Fees";
     }
 
     document.title = title;
@@ -97,12 +94,12 @@ class ExchangeBody extends React.Component {
     if (this.props.account.account === false) {
       return
     }
+
     var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, this.props.exchange.sourceTokenSymbol,
-      this.props.exchange.sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, gasPrice)
+      this.props.exchange.sourceAmount, this.props.exchange.gas, gasPrice)
 
     if (validateWithFee) {
-      this.props.dispatch(exchangeActions.thowErrorEthBalance("error.eth_balance_not_enough_for_fee"))
-      return
+      this.props.dispatch(exchangeActions.throwErrorSourceAmount("error.eth_balance_not_enough_for_fee"))
     }
   }
 
@@ -111,7 +108,7 @@ class ExchangeBody extends React.Component {
   selectSourceToken = (symbol) => {
     const sourceTokenSymbol = symbol
     const destTokenSymbol = this.props.exchange.destTokenSymbol
-    const srcTokenAddress = this.props.sourceToken.address
+    const srcTokenAddress = this.props.tokens[sourceTokenSymbol].address;
     const destTokenAddress = this.props.destToken.address
 
     this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress, "source"));
@@ -123,7 +120,7 @@ class ExchangeBody extends React.Component {
     const destTokenSymbol = symbol
     const sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     const srcTokenAddress = this.props.sourceToken.address
-    const destTokenAddress = this.props.destToken.address
+    const destTokenAddress = this.props.tokens[destTokenSymbol].address;
 
     this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress, "dest"));
     this.props.updateGlobal(sourceTokenSymbol, srcTokenAddress, destTokenSymbol, destTokenAddress);
@@ -131,7 +128,6 @@ class ExchangeBody extends React.Component {
   }
 
   dispatchUpdateRateExchange = (sourceAmount, refetchSourceAmount) => {
-    var sourceDecimal = 18
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     
     if (sourceTokenSymbol === "ETH") {
@@ -141,23 +137,9 @@ class ExchangeBody extends React.Component {
       }
     } 
 
-    var tokens = this.props.tokens
-    if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimals
-    }
-
-    var ethereum = this.props.ethereum
     var sourceToken = this.props.exchange.sourceToken
     var destToken = this.props.exchange.destToken
     var destTokenSymbol = this.props.exchange.destTokenSymbol
-    var rateInit = 0
-
-    if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-      rateInit = this.props.tokens[destTokenSymbol].minRateEth
-    }
-    if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-      rateInit = this.props.tokens[sourceTokenSymbol].minRate
-    }
 
     this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
   }

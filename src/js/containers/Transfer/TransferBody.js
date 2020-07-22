@@ -43,7 +43,7 @@ class Transfer extends React.Component {
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
-    document.title = "Kyber Network | Instant Exchange | No Fees";
+    document.title = "KyberSwap | Instant Exchange | No Fees";
 
 
     if (Object.keys(this.props.transfer.errors.sourceAmount).length > 0){

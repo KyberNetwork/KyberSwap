@@ -32,7 +32,7 @@ const initState = {
   analytics: {
     callTrack: () => { return }
   },
-  documentTitle: "Kyber Network | Instant Exchange | No Fees",
+  documentTitle: "KyberSwap | Instant Exchange | No Fees",
   theme: (() => {
     const cookieTheme = common.getCookie('theme');
     return cookieTheme ? cookieTheme : 'light';

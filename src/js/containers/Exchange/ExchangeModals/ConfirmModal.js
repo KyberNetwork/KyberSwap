@@ -6,10 +6,9 @@ import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-import { getParameterByName } from "../../../utils/common";
+import { getReferAddress } from "../../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
-import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
@@ -66,34 +65,6 @@ export default class ConfirmModal extends React.Component {
     clearTimeout(this.confirmingTimer);
   }
   
-  getReferAddr = () => {
-    if (this.props.account.type === "metamask") {
-      const web3Service = web3Package.newWeb3Instance();
-      const walletId = web3Service.getWalletId();
-      return walletId;
-    }
-    
-    var refAddr = getParameterByName("ref")
-    if (!validators.verifyAccount(refAddr)) {
-      return refAddr
-    }    
-    
-    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-  }
-
-  getCommissionData = () => {
-      var walletId = this.getReferAddr()
-      var platformFee      
-      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
-        platformFee = constants.DEFAULT_BPS_FEE
-      }else{
-        platformFee = this.props.exchange.platformFee
-      } 
-      return {
-        walletId, platformFee
-      }
-  }
-  
   async getLatestRate() {
     try {
       const { ethereum, sourceToken, destToken, sourceAmount, platformFee, slippagePercentage } = this.getFormParams();
@@ -148,14 +119,8 @@ export default class ConfirmModal extends React.Component {
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
-    var {walletId, platformFee} = this.getCommissionData()
-
-    if (!isEthSwapped) {
-      platformFee = converters.toHex(platformFee);
-    } else {
-      platformFee = '0x0';
-    }
+    const platformFee = converters.toHex(this.props.exchange.platformFee);
+    const walletId = getReferAddress(this.props.account.type);
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
@@ -230,7 +195,7 @@ export default class ConfirmModal extends React.Component {
     
     if (isNotEnoughEth) {
       this.setState({
-        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough to pay for the transaction fees"
       })
     }
   }
