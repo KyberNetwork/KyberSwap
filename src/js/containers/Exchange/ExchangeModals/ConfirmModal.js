@@ -6,10 +6,9 @@ import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-import { getParameterByName } from "../../../utils/common";
+import { getReferAddress } from "../../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
-import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
@@ -66,34 +65,6 @@ export default class ConfirmModal extends React.Component {
     clearTimeout(this.confirmingTimer);
   }
   
-  getReferAddr = () => {
-    if (this.props.account.type === "metamask") {
-      const web3Service = web3Package.newWeb3Instance();
-      const walletId = web3Service.getWalletId();
-      return walletId;
-    }
-    
-    var refAddr = getParameterByName("ref")
-    if (!validators.verifyAccount(refAddr)) {
-      return refAddr
-    }
-    
-    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-  }
-
-  getCommissionData = () => {
-      var walletId = this.getReferAddr()
-      var platformFee      
-      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
-        platformFee = constants.DEFAULT_BPS_FEE
-      }else{
-        platformFee = this.props.exchange.platformFee
-      } 
-      return {
-        walletId, platformFee
-      }
-  }
-  
   async getLatestRate() {
     try {
       const { ethereum, sourceToken, destToken, sourceAmount, platformFee, slippagePercentage } = this.getFormParams();
@@ -148,18 +119,12 @@ export default class ConfirmModal extends React.Component {
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
-    var {waletId, platformFee} = this.getCommissionData()
-
-    if (!isEthSwapped) {
-      platformFee = converters.toHex(platformFee);
-    } else {
-      platformFee = '0x0';
-    }
+    const platformFee = converters.toHex(this.props.exchange.platformFee);
+    const walletId = getReferAddress(this.props.account.type);
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
-      destAddress, maxDestAmount, slippageRate, waletId, nonce, gas, gasPrice, keystring, type, destAmount,
+      destAddress, maxDestAmount, slippageRate, walletId, nonce, gas, gasPrice, keystring, type, destAmount,
       destTokenSymbol, platformFee, slippagePercentage
     }
   }
@@ -255,13 +220,13 @@ export default class ConfirmModal extends React.Component {
     try {
       var {
         formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceAmount,
-        destToken, destAddress,maxDestAmount, slippageRate, waletId, nonce, gas,
+        destToken, destAddress,maxDestAmount, slippageRate, walletId, nonce, gas,
         gasPrice, keystring, type, destAmount, destTokenSymbol, platformFee
       } = this.getFormParams()
       var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
       var txHash = await wallet.broadCastTx(
         callFunc, formId, ethereum, address, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-        slippageRate, waletId, nonce, gas, gasPrice, keystring, type, password, platformFee
+        slippageRate, walletId, nonce, gas, gasPrice, keystring, type, password, platformFee
       )
       
       //submit hash to broadcast server

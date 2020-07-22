@@ -12,23 +12,21 @@ import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
 import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
 import { fetchPlatformFee } from "../services/kyberSwapService";
+import { calculateFeeByWalletId } from "../utils/common";
 
 function* selectToken(action) {
-  const { sourceTokenSymbol, destTokenSymbol, sourceToken, destToken } = action.payload;
+  const { sourceTokenSymbol, destTokenSymbol } = action.payload;
 
   yield put(actions.estimateGasNormal(false))
 
-  if (sourceTokenSymbol === destTokenSymbol){
-    var state = store.getState()
-    var translate = getTranslate(state.locale)
+  if (sourceTokenSymbol === destTokenSymbol) {
+    const state = store.getState();
+    const translate = getTranslate(state.locale);
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
     return;
   }
 
   yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
-
-  const fee = yield call(fetchPlatformFee, sourceToken, destToken);
-  yield put(actions.setPlatformFee(fee))
 }
 
 function* updateRatePending(action) {
@@ -41,13 +39,17 @@ function* updateRatePending(action) {
   const destAmount = state.exchange.destAmount;
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
-  const platformFee = state.exchange.platformFee;
-  const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
+
+  yield put(globalActions.updateTitleWithRate())
+
+  let platformFee = yield call(fetchPlatformFee, sourceToken, destToken);
+  platformFee = calculateFeeByWalletId(platformFee, state.account.type);
+  yield put(actions.setPlatformFee(platformFee))
 
   if (refetchSourceAmount) {
     try {
       sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
-      if (!isEthSwapped) sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
+      sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +61,7 @@ function* updateRatePending(action) {
 
     let { expectedPrice, slippagePrice } = rate;
 
-    if (!isEthSwapped) expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
 
     let percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
@@ -103,6 +105,7 @@ function* updateRatePending(action) {
 
     yield put(actions.estimateGasNormal(calculatedSrcAmount));
     yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
+    yield put(globalActions.updateTitleWithRate())
   } catch(err) {
     console.log(err)
     if(isManual){      

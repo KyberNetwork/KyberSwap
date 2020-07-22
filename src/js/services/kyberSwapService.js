@@ -22,11 +22,13 @@ export async function fetchPlatformFee(srcAddress, destAddress) {
   try {
     const response = await fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/swap_fee?src=${srcAddress}&dst=${destAddress}`);
     const result = await response.json();
-    const isValidResult = result && result.success === true && result.fee;
 
-    if (!isValidResult) return DEFAULT_BPS_FEE;
+    const isValidResult = result && result.success === true;
+    let platformFee = DEFAULT_BPS_FEE;
 
-    return result.fee;
+    if (isValidResult) platformFee = result.fee;
+
+    return platformFee;
   } catch(e) {
     return DEFAULT_BPS_FEE;
   }
