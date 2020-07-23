@@ -134,7 +134,7 @@ export default class PostExchange extends React.Component {
 
     if (sourceAmount) {
       var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, sourceTokenSymbol,
-        sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
+        sourceAmount, this.props.exchange.gas, this.props.exchange.gasPrice)
 
       if (validateWithFee) {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, this.props.translate("error.eth_balance_not_enough_for_fee")))

@@ -1,7 +1,7 @@
 import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
-import {isUserLogin} from "../../../utils/common"
+import { isUserLogin } from "../../../utils/common"
 import * as converters from "../../../utils/converter";
 
 export default class CachedServerProvider extends React.Component {
@@ -26,20 +26,6 @@ export default class CachedServerProvider extends React.Component {
         .catch((err) => {
           console.log(err.message)
           rejected(new Error("Cannot get gas price from server"))
-        })
-    })
-  }
-
-  getGasLimit(srcTokenAddress, destTokenAddress, srcAmount) {
-    if (!srcAmount) srcAmount = 0;
-
-    return new Promise((resolve, rejected) => {
-      this.timeout(this.maxRequestTime, fetch( `${BLOCKCHAIN_INFO.tracker}/gas_limit?source=${srcTokenAddress}&dest=${destTokenAddress}&amount=${srcAmount}`))
-        .then((response) => {
-          resolve(response.json())
-        })
-        .catch((err) => {
-          rejected(err)
         })
     })
   }

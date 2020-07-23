@@ -6,14 +6,14 @@ import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-import { getParameterByName } from "../../../utils/common";
+import { getReferAddress } from "../../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
-import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
 import { getBigNumberValueByPercentage } from "../../../utils/converter";
+import { fetchGasLimit } from "../../../services/cachedServerService";
 
 @connect((store) => {
   const account = store.account.account
@@ -63,34 +63,6 @@ export default class ConfirmModal extends React.Component {
   
   componentWillUnmount() {
     clearTimeout(this.confirmingTimer);
-  }
-  
-  getReferAddr = () => {
-    if (this.props.account.type === "metamask") {
-      const web3Service = web3Package.newWeb3Instance();
-      const walletId = web3Service.getWalletId();
-      return walletId;
-    }
-    
-    var refAddr = getParameterByName("ref")
-    if (!validators.verifyAccount(refAddr)) {
-      return refAddr
-    }    
-    
-    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-  }
-
-  getCommissionData = () => {
-      var walletId = this.getReferAddr()
-      var platformFee      
-      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
-        platformFee = constants.DEFAULT_BPS_FEE
-      }else{
-        platformFee = this.props.exchange.platformFee
-      } 
-      return {
-        walletId, platformFee
-      }
   }
   
   async getLatestRate() {
@@ -147,14 +119,8 @@ export default class ConfirmModal extends React.Component {
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
-    var {walletId, platformFee} = this.getCommissionData()
-
-    if (!isEthSwapped) {
-      platformFee = converters.toHex(platformFee);
-    } else {
-      platformFee = '0x0';
-    }
+    const platformFee = converters.toHex(this.props.exchange.platformFee);
+    const walletId = getReferAddress(this.props.account.type);
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
@@ -171,12 +137,16 @@ export default class ConfirmModal extends React.Component {
     
     const gasPrice = this.props.exchange.gasPrice;
     const ethBalance = this.props.account.balance;
+    const tokens = this.props.tokens;
+    const srcToken = tokens[sourceTokenSymbol];
+    const desToken = tokens[destTokenSymbol];
+    const maxGasLimit = this.props.exchange.max_gas;
+    const srcAmountNumber = this.props.exchange.sourceAmount;
 
-    let gas = await this.getMaxGasExchange();
-    this.setState({gasLimit: gas});
+    let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
 
     try {
-      if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
+      if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
         this.setState({isFetchGas: false});
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
         return;
@@ -204,8 +174,9 @@ export default class ConfirmModal extends React.Component {
 
       if (estimatedGas < gas) {
         gas = estimatedGas;
-        this.setState({gasLimit: estimatedGas})
       }
+
+      this.setState({ gasLimit: estimatedGas })
     } catch (err) {
       console.log(err);
     }
@@ -224,42 +195,9 @@ export default class ConfirmModal extends React.Component {
     
     if (isNotEnoughEth) {
       this.setState({
-        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough to pay for the transaction fees"
       })
     }
-  }
-  
-  async getMaxGasExchange() {
-    const srcTokenAddress = this.props.exchange.sourceToken;
-    const destTokenAddress = this.props.exchange.destToken;
-    const srcAmount = this.props.exchange.sourceAmount;
-    const ethereum = this.props.ethereum;
-    
-    try {
-      const gasLimitResult = await ethereum.call("getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
-      
-      if (gasLimitResult.error) {
-        return this.getMaxGasExchangeFromTokens();
-      } else {
-        return gasLimitResult.data;
-      }
-    } catch (err) {
-      console.log(err);
-      return this.getMaxGasExchangeFromTokens();
-    }
-  }
-  
-  getMaxGasExchangeFromTokens() {
-    const exchange = this.props.exchange;
-    const tokens = this.props.tokens;
-    
-    const sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0;
-    const destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0;
-    
-    const sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas;
-    const destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas;
-    
-    return sourceGasLimit + destGasLimit;
   }
   
   async onSubmit() {

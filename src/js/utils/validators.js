@@ -151,7 +151,3 @@ export function filterInputNumber(event, value, preVal) {
   if (preVal === str) return false
   return true
 }
-
-export function checkSwapEth(srcSymbol, destSymbol) {
-  return (srcSymbol === 'ETH' && destSymbol === 'WETH') || (srcSymbol === 'WETH' && destSymbol === 'ETH');
-}
