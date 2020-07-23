@@ -144,6 +144,7 @@ export default class ConfirmModal extends React.Component {
     const srcAmountNumber = this.props.exchange.sourceAmount;
 
     let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
+    this.setState({ gasLimit: gas });
 
     try {
       if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
@@ -174,9 +175,8 @@ export default class ConfirmModal extends React.Component {
 
       if (estimatedGas < gas) {
         gas = estimatedGas;
+        this.setState({ gasLimit: gas })
       }
-
-      this.setState({ gasLimit: estimatedGas })
     } catch (err) {
       console.log(err);
     }
