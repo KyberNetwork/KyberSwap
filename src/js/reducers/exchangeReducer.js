@@ -175,6 +175,10 @@ const exchange = (state = initState, action) => {
       newState.gas_approve = gas_approve
       return newState
     }
+    case "EXCHANGE.SET_ESTIMATED_GAS_LIMIT": {
+      newState.estimatedGasLimit = action.payload
+      return newState
+    }
     case "EXCHANGE.SET_GAS_USED_SNAPSHOT": {
       const { gas, gas_approve } = action.payload
       newState.snapshot.gas = gas

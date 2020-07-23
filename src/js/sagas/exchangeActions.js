@@ -13,20 +13,26 @@ import * as commonUtils from "../utils/common"
 import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
 import { fetchPlatformFee } from "../services/kyberSwapService";
 import { calculateFeeByWalletId } from "../utils/common";
+import { fetchGasLimit } from "../services/cachedServerService";
 
 function* selectToken(action) {
+  const state = store.getState();
+  const translate = getTranslate(state.locale);
+  const tokens = state.tokens.tokens;
+  const maxGas = state.exchange.max_gas;
   const { sourceTokenSymbol, destTokenSymbol } = action.payload;
 
   yield put(actions.estimateGasNormal(false))
 
   if (sourceTokenSymbol === destTokenSymbol) {
-    const state = store.getState();
-    const translate = getTranslate(state.locale);
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
     return;
   }
 
   yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
+
+  const gasLimit = yield call(fetchGasLimit, tokens[sourceTokenSymbol], tokens[destTokenSymbol], maxGas);
+  yield put(actions.setEstimatedGasLimit(gasLimit));
 }
 
 function* updateRatePending(action) {
