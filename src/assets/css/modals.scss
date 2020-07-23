@@ -113,6 +113,10 @@ $divider-color: darken($title-background-color, 5);
     text-align: center;
   }
 
+  &.small {
+    width: 300px;
+  }
+
   &.tiny {
     width: 450px;
   }
