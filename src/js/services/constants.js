@@ -67,7 +67,6 @@ const INIT_EXCHANGE_FORM_STATE = {
   throwOnFailure: "0x0000000000000000000000000000000000000000",
   gas: 850000,
   max_gas: 850000,
-  estimatedGasLimit: 850000,
   gas_approve: 0,
   max_gas_approve: 160000,
   isFetchingGas: false,

@@ -52,13 +52,6 @@ export function throwErrorSlippageRate(key, message) {
   }
 }
 
-export function setEstimatedGasLimit(gasLimit) {
-  return {
-    type: "EXCHANGE.SET_ESTIMATED_GAS_LIMIT",
-    payload: gasLimit
-  }
-}
-
 export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
