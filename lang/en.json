@@ -31,7 +31,7 @@
     "download": "Download",
     "your_wallet": "Wallet",
     "register_beta": "Coming soon",
-    "or_connect_with": "Or Connect with",
+    "or_connect_with": "Connect with",
     "enter": "Enter"
   },
   "transaction": {
@@ -244,12 +244,12 @@
     "invalid_path_or_session_expired": "Cannot get address from this path. Please check\nyour path is valid or Ledger is connected.",
     "path_is_invalid": "Invalid path. Please choose another one.",
     "ledger_time_out": "Your session on Ledger is expired. Please log in  again to continue.",
-    "eth_balance_not_enough_for_fee": "Your ETH balance is not enough for the transaction fee",
+    "eth_balance_not_enough_for_fee": "Your ETH balance is not enough to pay for the transaction fees",
     "handle_amount": "Kyber cannot handle your amount at the moment, please reduce your amount",
     "kyber_maintain": "This token pair is temporarily under maintenance",
     "get_rate": "Cannot get swap rates from Ethereum nodes",
     "exchange_enable": "You have exceeded your daily swapping limit! You might trade again tomorrow\nat 00:00 UTC+0",
-    "min_rate_greater_expected_rate": "Your configured minimal rate is higher\nthan what is recommended by KyberNetwork. Your swap has high chance to fail",
+    "min_rate_greater_expected_rate": "Your configured minimal rate is higher than what is recommended by KyberNetwork. Your swap has high chance to fail",
     "exceed_daily_volumn": "You may want to register with us to have higher swap limits",
     "broadcast_tx": "Potentially Failed! We likely couldn't broadcast the transaction to\nthe blockchain. Please check on <a target='_blank' href='${link}'>Etherscan</a>\nto verify.",
     "invalid_json_file": "Your uploaded JSON file is invalid. Please upload a correct JSON keystore.",

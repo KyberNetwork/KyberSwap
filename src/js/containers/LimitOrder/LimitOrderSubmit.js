@@ -328,7 +328,7 @@ export default class LimitOrderSubmit extends React.Component {
           currentPath: orderPath[0]
         });
       } else {
-        const message = this.props.translate("error.eth_balance_not_enough_for_fee") || "Your eth balance is not enough for transaction fee";
+        const message = this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough to pay for transaction fees";
         this.props.addAmountErrors([message]);
       }
     } catch (err) {

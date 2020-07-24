@@ -6,14 +6,14 @@ import * as exchangeActions from "../../../actions/exchangeActions"
 import constants from "../../../services/constants"
 import * as converter from "../../../utils/converter"
 import * as validators from "../../../utils/validators"
-import { getParameterByName } from "../../../utils/common";
+import { getReferAddress } from "../../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../../env"
 import Tx from "../../../services/tx"
-import * as web3Package from "../../../services/web3";
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
 import { getBigNumberValueByPercentage } from "../../../utils/converter";
+import { fetchGasLimit } from "../../../services/cachedServerService";
 
 @connect((store) => {
   const account = store.account.account
@@ -63,34 +63,6 @@ export default class ConfirmModal extends React.Component {
   
   componentWillUnmount() {
     clearTimeout(this.confirmingTimer);
-  }
-  
-  getReferAddr = () => {
-    if (this.props.account.type === "metamask") {
-      const web3Service = web3Package.newWeb3Instance();
-      const walletId = web3Service.getWalletId();
-      return walletId;
-    }
-    
-    var refAddr = getParameterByName("ref")
-    if (!validators.verifyAccount(refAddr)) {
-      return refAddr
-    }    
-    
-    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
-  }
-
-  getCommissionData = () => {
-      var walletId = this.getReferAddr()
-      var platformFee      
-      if (walletId !== constants.EXCHANGE_CONFIG.COMMISSION_ADDR) {
-        platformFee = constants.DEFAULT_BPS_FEE
-      }else{
-        platformFee = this.props.exchange.platformFee
-      } 
-      return {
-        walletId, platformFee
-      }
   }
   
   async getLatestRate() {
@@ -147,14 +119,8 @@ export default class ConfirmModal extends React.Component {
     var keystring = this.props.account.keystring
     var type = this.props.account.type;
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
-    const isEthSwapped = validators.checkSwapEth(sourceTokenSymbol, destTokenSymbol);
-    var {walletId, platformFee} = this.getCommissionData()
-
-    if (!isEthSwapped) {
-      platformFee = converters.toHex(platformFee);
-    } else {
-      platformFee = '0x0';
-    }
+    const platformFee = converters.toHex(this.props.exchange.platformFee);
+    const walletId = getReferAddress(this.props.account.type);
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
@@ -171,12 +137,17 @@ export default class ConfirmModal extends React.Component {
     
     const gasPrice = this.props.exchange.gasPrice;
     const ethBalance = this.props.account.balance;
+    const tokens = this.props.tokens;
+    const srcToken = tokens[sourceTokenSymbol];
+    const desToken = tokens[destTokenSymbol];
+    const maxGasLimit = this.props.exchange.max_gas;
+    const srcAmountNumber = this.props.exchange.sourceAmount;
 
-    let gas = await this.getMaxGasExchange();
-    this.setState({gasLimit: gas});
+    let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
+    this.setState({ gasLimit: gas });
 
     try {
-      if (this.props.tokens[sourceTokenSymbol].is_gas_fixed || this.props.tokens[destTokenSymbol].is_gas_fixed) {
+      if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
         this.setState({isFetchGas: false});
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
         return;
@@ -204,7 +175,7 @@ export default class ConfirmModal extends React.Component {
 
       if (estimatedGas < gas) {
         gas = estimatedGas;
-        this.setState({gasLimit: estimatedGas})
+        this.setState({ gasLimit: gas })
       }
     } catch (err) {
       console.log(err);
@@ -224,42 +195,9 @@ export default class ConfirmModal extends React.Component {
     
     if (isNotEnoughEth) {
       this.setState({
-        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough for the transaction fee"
+        restrictError: this.props.translate("error.eth_balance_not_enough_for_fee") || "Your ETH balance is not enough to pay for the transaction fees"
       })
     }
-  }
-  
-  async getMaxGasExchange() {
-    const srcTokenAddress = this.props.exchange.sourceToken;
-    const destTokenAddress = this.props.exchange.destToken;
-    const srcAmount = this.props.exchange.sourceAmount;
-    const ethereum = this.props.ethereum;
-    
-    try {
-      const gasLimitResult = await ethereum.call("getGasLimit", srcTokenAddress, destTokenAddress, srcAmount);
-      
-      if (gasLimitResult.error) {
-        return this.getMaxGasExchangeFromTokens();
-      } else {
-        return gasLimitResult.data;
-      }
-    } catch (err) {
-      console.log(err);
-      return this.getMaxGasExchangeFromTokens();
-    }
-  }
-  
-  getMaxGasExchangeFromTokens() {
-    const exchange = this.props.exchange;
-    const tokens = this.props.tokens;
-    
-    const sourceTokenLimit = tokens[exchange.sourceTokenSymbol] ? tokens[exchange.sourceTokenSymbol].gasLimit : 0;
-    const destTokenLimit = tokens[exchange.destTokenSymbol] ? tokens[exchange.destTokenSymbol].gasLimit : 0;
-    
-    const sourceGasLimit = sourceTokenLimit ? parseInt(sourceTokenLimit) : exchange.max_gas;
-    const destGasLimit = destTokenLimit ? parseInt(destTokenLimit) : exchange.max_gas;
-    
-    return sourceGasLimit + destGasLimit;
   }
   
   async onSubmit() {
@@ -379,133 +317,123 @@ export default class ConfirmModal extends React.Component {
     var expectedRate = this.state.expectedRate
     var destAmount = converter.caculateDestAmount(sourceAmount, expectedRate, destDecimal)
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    var slippageRate = this.state.slippageRate
     const {isOnMobile} = this.props.global;
 
     return (
       <div className="confirm-exchange-modal">
         {!isPromoPayment &&
-        <React.Fragment>
-          {!isOnMobile ? (
-            <React.Fragment>
-              <div className="title-container">
-                <div className="title-description">
-                  <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-                  <div className="title-description-wallet-address theme__text-6">
-                    <span>{this.props.account.address.slice(0, 7)}</span>
-                    <span>...</span>
-                    <span>{this.props.account.address.slice(-6)}</span>
+          <React.Fragment>
+            {!isOnMobile ? (
+              <React.Fragment>
+                <div className="title-container">
+                  <div className="title-description">
+                    <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                    <div className="title-description-wallet-address theme__text-6">
+                      <span>{this.props.account.address.slice(0, 7)}</span>
+                      <span>...</span>
+                      <span>{this.props.account.address.slice(-6)}</span>
+                    </div>
+                  </div>
+                  <div className="title-description">
+                    <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
+                    <div className="title-description-wallet-address theme__text-6">
+                      <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
+                      <span>...</span>
+                      <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="title-description">
-                  <div>{this.props.translate("transaction.kyber_network_proxy") || "Kyber Network Proxy"}</div>
-                  <div className="title-description-wallet-address theme__text-6">
-                    <span>{BLOCKCHAIN_INFO.network.slice(0, 7)}</span>
-                    <span>...</span>
-                    <span>{BLOCKCHAIN_INFO.network.slice(-6)}</span>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                  <img src={require("../../../../assets/img/v3/info_blue.svg")}/>{' '}
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
+                </div>}
+              </React.Fragment>
+            ) : (
+              <div className="title-description">
+                <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
+                <div className="title-description-wallet-address theme__text-6">
+                  {this.props.account.address}
+                </div>
+                {this.props.account.type === "promo" && <div className="title-description-expired-notification">
+                  <img src={require("../../../../assets/img/v3/info_blue.svg")}/>{' '}
+                  <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
+                </div>}
+              </div>
+            )
+            }
+            <div className="amount theme__background-22">
+              <div className="amount-item amount-left">
+                <div
+                  className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
+                <div className={"rc-info"}>
+                  <div>{sourceAmount}</div>
+                  <div>{sourceTokenSymbol}</div>
+                </div>
+              </div>
+              <div className="space space--padding"><img
+                src={require("../../../../assets/img/exchange/arrow-right-orange.svg")}/></div>
+              <div className="amount-item amount-right">
+                <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
+                <div className={"rc-info"}>
+                  <div>
+                    {this.state.isFetchRate ?
+                      <img src={require('../../../../assets/img/waiting-white.svg')}/> : destAmount}
                   </div>
+                  <div>{destTokenSymbol}</div>
                 </div>
               </div>
-              {this.props.account.type === "promo" && <div className="title-description-expired-notification">
-                <img src={require("../../../../assets/img/v3/info_blue.svg")}/>{' '}
-                <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
-              </div>}
-            </React.Fragment>
-          ) : (
-            <div className="title-description">
-              <div>{this.props.translate("address.your_wallet") || "Your Wallet"}</div>
-              <div className="title-description-wallet-address theme__text-6">
-                {this.props.account.address}
-              </div>
-              {this.props.account.type === "promo" && <div className="title-description-expired-notification">
-                <img src={require("../../../../assets/img/v3/info_blue.svg")}/>{' '}
-                <span>{`${this.props.translate("transaction.promo_expired_notification") || "After swapping please transfer your token to your personal wallet before"} ${expiredYear}`}</span>
-              </div>}
             </div>
-          )
-          }
-          <div className="amount theme__background-22">
-            <div className="amount-item amount-left">
-              <div
-                className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-              <div className={"rc-info"}>
-                <div>{sourceAmount}</div>
-                <div>{sourceTokenSymbol}</div>
-              </div>
-            </div>
-            <div className="space space--padding"><img
-              src={require("../../../../assets/img/exchange/arrow-right-orange.svg")}/></div>
-            <div className="amount-item amount-right">
-              <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-              <div className={"rc-info"}>
-                <div>
-                  {this.state.isFetchRate ?
-                    <img src={require('../../../../assets/img/waiting-white.svg')}/> : destAmount}
-                </div>
-                <div>{destTokenSymbol}</div>
-              </div>
-            </div>
-          </div>
-        </React.Fragment>
+          </React.Fragment>
         }
         
         {isPromoPayment &&
-        <React.Fragment>
-          <div
-            className="title-description-promo-payment theme__text">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
-          <div className="amount amount-promo-payment theme__background-22">
-            <div className="amount-item amount-left amount-item-promo-balance">
-              <div
-                className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
-              <div className={"rc-info rc-info-promo-balance"}>
-                <div>{sourceAmount}</div>
-                <div>{sourceTokenSymbol}</div>
-              </div>
-            </div>
-            <div className="space-container theme__text">
-              <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
-              <div className="space space-arrow-icon"><img
-                src={require("../../../../assets/img/exchange/arrow-right-orange-long.svg")}/></div>
-              <div
-                className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
-            </div>
-            <div className="amount-item amount-right amount-item-promo-balance">
-              <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
-              <div className={"rc-info rc-info-promo-balance"}>
-                <div>
-                  {this.state.isFetchRate ?
-                    <img src={require('../../../../assets/img/waiting-white.svg')}/> : destAmount}
-                </div>
-                <div>{destTokenSymbol}</div>
-              </div>
-            </div>
-            <div className="space-container space-container-grid-align">
-              <div className="space space-arrow-icon"><img
-                src={require("../../../../assets/img/exchange/arrow-right-orange-long.svg")}/></div>
-            </div>
-            <div className="amount-item amount-right">
-              <div>
+          <React.Fragment>
+            <div
+              className="title-description-promo-payment theme__text">{this.props.translate("transaction.swap_for_gift") || "You are swapping to receive a gift"}</div>
+            <div className="amount amount-promo-payment theme__background-22">
+              <div className="amount-item amount-left amount-item-promo-balance">
                 <div
-                  className={"rc-label"}>{this.props.translate("transaction.exchange_receive") || "Receive"}</div>
-                <div className={"rc-info"}>
-                  1 {this.props.translate("transaction.gift") || "Gift"}
+                  className={"rc-label"}>{this.props.translate("transaction.exchange_from") || "From"}</div>
+                <div className={"rc-info rc-info-promo-balance"}>
+                  <div>{sourceAmount}</div>
+                  <div>{sourceTokenSymbol}</div>
+                </div>
+              </div>
+              <div className="space-container theme__text">
+                <div className="text-above">{this.props.translate("transaction.swap") || "Swap"}</div>
+                <div className="space space-arrow-icon"><img
+                  src={require("../../../../assets/img/exchange/arrow-right-orange-long.svg")}/></div>
+                <div
+                  className="text-below">{this.props.translate("transaction.send_to_organizer") || "Send to the Organizer"}</div>
+              </div>
+              <div className="amount-item amount-right amount-item-promo-balance">
+                <div className={"rc-label"}>{this.props.translate("transaction.exchange_to") || "To"}</div>
+                <div className={"rc-info rc-info-promo-balance"}>
+                  <div>
+                    {this.state.isFetchRate ?
+                      <img src={require('../../../../assets/img/waiting-white.svg')}/> : destAmount}
+                  </div>
+                  <div>{destTokenSymbol}</div>
+                </div>
+              </div>
+              <div className="space-container space-container-grid-align">
+                <div className="space space-arrow-icon"><img
+                  src={require("../../../../assets/img/exchange/arrow-right-orange-long.svg")}/></div>
+              </div>
+              <div className="amount-item amount-right">
+                <div>
+                  <div
+                    className={"rc-label"}>{this.props.translate("transaction.exchange_receive") || "Receive"}</div>
+                  <div className={"rc-info"}>
+                    1 {this.props.translate("transaction.gift") || "Gift"}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </React.Fragment>
+          </React.Fragment>
         }
-        
-        {!this.state.isFetchRate && converter.compareTwoNumber(slippageRate, expectedRate) === 1 && (
-          <div className="description error">
-            <span className="error-text">
-              {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal exchange rate is higher than what is recommended by KyberNetwork. Your exchange has high chance to fail"}
-            </span>
-          </div>
-        )}
       </div>
     )
-    
   }
   
   contentModal = () => {
@@ -537,6 +465,13 @@ export default class ConfirmModal extends React.Component {
                       </div>
                       <div className="modal-content__text-warning theme__background-red">
                         {this.props.translate("info.slippage_warning") || "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."}
+                      </div>
+                    </div>
+                  )}
+                  {!this.state.isFetchRate && converter.compareTwoNumber(this.state.slippageRate, this.state.expectedRate) === 1 && (
+                    <div className="modal-content common__mt-15">
+                      <div className="modal-content__text-warning theme__background-red">
+                          {this.props.translate("error.min_rate_greater_expected_rate") || "Your configured minimal rate is higher than what is recommended by KyberNetwork. Your swap has high chance to fail"}
                       </div>
                     </div>
                   )}
