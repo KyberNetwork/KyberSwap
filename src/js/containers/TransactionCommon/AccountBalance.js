@@ -32,7 +32,9 @@ export default class AccountBalance extends React.Component {
       searchWord: "",
       sortType: 'ETH',
       sortName: '',
-      sortDESC: true
+      sortDESC: true,
+      isAddressCopied: false,
+      isAddressQROpened: false
     }
   }
 
@@ -44,6 +46,14 @@ export default class AccountBalance extends React.Component {
   clickOnInput = () => {
     this.props.global.analytics.callTrack("trackSearchTokenBalanceBoard");
   };
+
+  setIsAddressCopied = (isCopied) => {
+    this.setState({ isAddressCopied: isCopied });
+  }
+
+  setIsAddressQROpened = (isOpened) => {
+    this.setState({ isAddressQROpened: isOpened });
+  }
   
   onClickSort = (sortType, sortName, isDsc) => {
     this.setState({
@@ -183,6 +193,10 @@ export default class AccountBalance extends React.Component {
         getChangeByETH={this.getChangeByETH}
         getChangeByUSD={this.getChangeByUSD}
         isOnMobile={this.props.isOnMobile}
+        isAddressCopied={this.state.isAddressCopied}
+        setIsAddressCopied={this.setIsAddressCopied}
+        isAddressQROpened={this.state.isAddressQROpened}
+        setIsAddressQROpened={this.setIsAddressQROpened}
       />
     )
   }

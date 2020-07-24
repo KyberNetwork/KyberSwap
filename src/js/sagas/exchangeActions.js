@@ -15,13 +15,13 @@ import { fetchPlatformFee } from "../services/kyberSwapService";
 import { calculateFeeByWalletId } from "../utils/common";
 
 function* selectToken(action) {
+  const state = store.getState();
+  const translate = getTranslate(state.locale);
   const { sourceTokenSymbol, destTokenSymbol } = action.payload;
 
   yield put(actions.estimateGasNormal(false))
 
   if (sourceTokenSymbol === destTokenSymbol) {
-    const state = store.getState();
-    const translate = getTranslate(state.locale);
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
     return;
   }

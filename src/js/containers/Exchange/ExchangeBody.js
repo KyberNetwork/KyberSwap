@@ -25,11 +25,10 @@ import { ExchangeAccount } from "../../containers/Exchange"
   const global = store.global
   const sourceToken = tokens[exchange.sourceTokenSymbol]
   const destToken = tokens[exchange.destTokenSymbol]
-  const defaultGasLimit = exchange.max_gas;
 
   return {
     account, ethereum, tokens, translate, 
-    global, exchange, sourceToken, destToken, defaultGasLimit
+    global, exchange, sourceToken, destToken
   }
 })
 
@@ -317,7 +316,6 @@ class ExchangeBody extends React.Component {
 
     return (
       <AdvanceConfigLayout
-        gasLimit={this.props.defaultGasLimit}
         selectedGas={this.props.exchange.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}

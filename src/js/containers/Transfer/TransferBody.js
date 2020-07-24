@@ -182,7 +182,6 @@ class Transfer extends React.Component {
   getAdvanceLayout = () => {
     return (
       <AdvanceConfigLayout
-        gasLimit={this.props.transfer.tokenSymbol === 'ETH' ? this.props.transfer.gas : this.props.defaultGasLimit}
         selectedGas={this.props.transfer.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.transfer.gasPriceSuggest}

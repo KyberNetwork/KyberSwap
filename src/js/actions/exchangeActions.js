@@ -52,13 +52,6 @@ export function throwErrorSlippageRate(key, message) {
   }
 }
 
-export function specifyGas(value) {
-  return {
-    type: "EXCHANGE.SPECIFY_GAS",
-    payload: value
-  }
-}
-
 export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
