@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
-import { calculateGasFee } from "../../utils/converter";
 
 export default class AdvanceConfigLayout extends Component {
   render() {
@@ -21,11 +20,8 @@ export default class AdvanceConfigLayout extends Component {
                 {gasOptions.map((item, index) => {
                   return (
                     <label className="advance-config__option advance-config__option--gas" key={index}>
-                      <div className="common__flexbox-normal">
-                        <div className="advance-config__gas-amount">{item.value}</div>
-                        <div className="advance-config__gas-mode">{item.text}</div>
-                      </div>
-                      <div className="advance-config__gas-fee">~ {calculateGasFee(item.value, this.props.gasLimit)} ETH</div>
+                      <div className="advance-config__gas-amount">{item.value}</div>
+                      <div className="advance-config__gas-mode">{item.text}</div>
                       <input
                         className="advance-config__radio"
                         type="radio"

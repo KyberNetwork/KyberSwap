@@ -316,7 +316,6 @@ class ExchangeBody extends React.Component {
 
     return (
       <AdvanceConfigLayout
-        gasLimit={this.props.exchange.estimatedGasLimit}
         selectedGas={this.props.exchange.selectedGas}
         selectedGasHandler={this.selectedGasHandler}
         gasPriceSuggest={this.props.exchange.gasPriceSuggest}
