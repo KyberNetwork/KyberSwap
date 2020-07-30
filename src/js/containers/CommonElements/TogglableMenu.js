@@ -2,26 +2,37 @@ import React from 'react'
 import { connect } from "react-redux";
 import { Modal } from "../../components/CommonElement"
 import { getTranslate } from "react-localize-redux";
-@connect((store, props) => {
+import { formatAddress, multiplyOfTwoNumber, roundingNumber } from "../../utils/converter";
+
+@connect((store) => {
   const translate = getTranslate(store.locale);
+  const account = store.account;
+  const address = account.account.address;
+  const rateETHInUSD = store.tokens.tokens.ETH.rateUSD;
+  let totalBalanceInETH = account.totalBalanceInETH;
+  const totalBalanceInUSD = totalBalanceInETH ? roundingNumber(multiplyOfTwoNumber(totalBalanceInETH, rateETHInUSD)): 0;
+  totalBalanceInETH = roundingNumber(totalBalanceInETH);
 
   return {
-    translate,
-    global: store.global
+    translate, global: store.global,
+    address, totalBalanceInETH, totalBalanceInUSD
   };
 })
 export default class ToggleableMenu extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       isAdvanceTokenVisible: false,
       isReimport: false
     }
+
     if (window.kyberBus) {
       window.kyberBus.on('wallet.view', () => {this.setState({isAdvanceTokenVisible: true})});
       window.kyberBus.on('wallet.change', () => {this.setState({isAdvanceTokenVisible: true, isReImport: true})});
     }
   }
+
   toggleAdvanceTokeBalance = () => {
     this.setState({
       isAdvanceTokenVisible: !this.state.isAdvanceTokenVisible
@@ -58,7 +69,16 @@ export default class ToggleableMenu extends React.Component {
   render() {
     return (
         <div className={"limit-order-account"}>
-          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible || this.props.global.isOnMobile ? "hide" : "")}>Wallet</p>
+          <div
+            onClick={this.toggleAdvanceTokeBalance}
+            className={"right-slide-panel" + (this.state.isAdvanceTokenVisible || this.props.global.isOnMobile ? "hide" : "")}
+          >
+            <div className="right-slide-panel__title theme__background theme__text">More</div>
+            <div className="right-slide-panel__container theme__background-5">
+              <div className="right-slide-panel__address">{formatAddress(this.props.address, 5, -3)}</div>
+              <div className="right-slide-panel__balance">{this.props.totalBalanceInETH} ETH</div>
+            </div>
+          </div>
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="limit-order-account__advance--bg" onClick={() => this.setState({isAdvanceTokenVisible: false})}> </div>
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
