@@ -13,41 +13,34 @@ const ImportAccountView = (props) => {
   const isOnMobile = props.onMobile.isIOS || props.onMobile.isAndroid;
   const { isIOS: isIos, isAndroid } = props.onMobile;
   const isLimitOrder = props.tradeType === "limit_order";
+  const isPortfolio = props.tradeType === "portfolio";
 
-  let importAccountTitle = props.translate("address.connect_your_wallet_to_swap") || "Connect your Wallet to Swap";
-  if (props.tradeType === "transfer") {
-    importAccountTitle = props.translate("address.connect_your_wallet_to_transfer") || "Connect your Wallet to Transfer";
-  } else if (props.tradeType === "limit_order") {
+  let importAccountTitle = props.translate("import.connect_wallet") || "Connect Wallet";
+  if (isLimitOrder) {
     importAccountTitle = props.translate("address.connect_your_wallet_to_limit_order") || "You must sign in and import your wallet to submit limit order";
-  } else if (props.tradeType === "portfolio") {
+  } else if (isPortfolio) {
     importAccountTitle = props.translate("address.connect_your_wallet_to_portfolio") || "Import your Wallet to View Portfolio";
   }
 
   return (
     <div className={`import-account ${isLimitOrder ? 'theme__background-2' : ''}`}>
       <div className="import-account__choose-wallet-container container">
-        {props.isAgreedTermOfService && (
-          <h1 className="import-account__title">
+        {(isLimitOrder || isPortfolio) && (
+          <div className="import-account__title">
             {importAccountTitle}
-          </h1>
+          </div>
         )}
 
-        {props.noTerm && (
-          <h1 className="import-account__title">
-            {importAccountTitle}
-          </h1>
-        )}
-
-        {(!props.noTerm && !props.isAgreedTermOfService) && (
-          <div className="import-account__title--inactive">
+        {(!isLimitOrder && !isPortfolio) && (
+          <div className="import-account__title">
             <div className="import-account__title-separator theme__border-2"/>
-            <div className="import-account__title-content theme__background-2 theme__text-4">
-              {props.translate("address.or_connect_with") || "Connect with"}
+            <div className="import-account__title-content theme__background-2">
+              {importAccountTitle}
             </div>
           </div>
         )}
 
-        <div className={`import-account__content ${props.isAcceptConnectWallet ? "import-account__content--animation" : ""} ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
+        <div className={`import-account__content ${isOnMobile ? ' import-account__content--mobile' : ''}`}>
           {!isOnMobile &&
             <Fragment>
               <div className={`import-account__item`}>
