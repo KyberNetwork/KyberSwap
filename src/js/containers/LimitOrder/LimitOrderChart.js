@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { TradingView } from "../Market"
+import TradingView from "./TradingView"
 import { getTokenHighestAndLowestPrice } from "../../services/tokenService";
 import { formatNumber, roundingRateNumber, sumOfTwoNumber } from "../../utils/converter";
 import { getTranslate } from "react-localize-redux";
