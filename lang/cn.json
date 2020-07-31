@@ -23,8 +23,6 @@
     "price": "价格",
     "your_wallet_address": "您的钱包地址",
     "search": "搜索",
-    "connect_your_wallet_to_swap": "连接您的钱包进行兑换",
-    "connect_your_wallet_to_transfer": "连接您的钱包进行转账",
     "connect_your_wallet_to_limit_order": "导入您的钱包并发送订单",
     "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "下载",
@@ -294,7 +292,8 @@
     "connect_other_wallet": "连接其他钱包",
     "do_you_want_to_connect_other_wallet": "你是否想要连接至其他钱包?",
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "connect_wallet": "Connect Wallet"
   },
   "info": {
     "title": "Kyber测试网络",
