@@ -293,7 +293,7 @@
     "do_you_want_to_connect_other_wallet": "你是否想要连接至其他钱包?",
     "yes": "是",
     "no": "否",
-    "connect_wallet": "Connect Wallet"
+    "connect_wallet": "连接钱包"
   },
   "info": {
     "title": "Kyber测试网络",
