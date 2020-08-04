@@ -23,7 +23,8 @@ import {isMobile} from '../../utils/common'
 import Language from "../../../../lang"
 import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
-import { fetchActiveCampaign } from "../../services/kyberSwapService";
+import { fetchActiveCampaign, fetchSupportedTokens } from "../../services/kyberSwapService";
+import { initTokens } from "../../actions/tokenActions";
 
 @connect((store) => {
   var locale = store.locale
@@ -71,7 +72,6 @@ import { fetchActiveCampaign } from "../../services/kyberSwapService";
     account: store.account,
     translate: getTranslate(store.locale),
     locale: locale,
-    tokens: store.tokens.tokens,
     analytics: store.global.analytics,
     langClass: langClass,
     theme: store.global.theme,
@@ -80,12 +80,16 @@ import { fetchActiveCampaign } from "../../services/kyberSwapService";
 })
 
 export default class Layout extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.idleTime = 0;
-    this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
+    this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;
     this.idleMode = false;
     this.intervalIdle = null;
+    this.state = {
+      tokens: false
+    }
   }
 
   componentWillMount() {
@@ -120,9 +124,9 @@ export default class Layout extends React.Component {
     if (window.kyberBus) {
       window.kyberBus.on('set.theme.light', () => {this.switchTheme('light')});
       window.kyberBus.on('set.theme.dark', () => {this.switchTheme('dark')});
-      window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
-      window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
-      window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
+      window.kyberBus.on('go.to.swap', () => {history.push(this.props.exchangeLink)});
+      window.kyberBus.on('go.to.transfer', () =>{history.push(this.props.transferLink)});
+      window.kyberBus.on('go.to.limit_order', () => {history.push(this.props.orderLink)});
       window.kyberBus.on('go.to.portfolio', () => {history.push(this.props.portfolioLink)});
       window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
@@ -131,6 +135,10 @@ export default class Layout extends React.Component {
   };
 
   initiateData = async () => {
+    const tokens = await fetchSupportedTokens();
+    this.props.dispatch(initTokens(tokens));
+    this.setState({ tokens });
+
     const campaign = await fetchActiveCampaign();
     if (campaign) this.props.dispatch(setCampaign(campaign));
   }
@@ -182,19 +190,22 @@ export default class Layout extends React.Component {
   
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
+
     return (
       <div className={`theme theme--${this.props.theme}__bundle`}>
-        <LayoutView
+        {this.state.tokens && (
+          <LayoutView
             history={history}
             Exchange={Exchange}
             Transfer={Transfer}
-            LimitOrder = {LimitOrder}
+            LimitOrder={LimitOrder}
             supportedLanguages={Language.supportLanguage}
             setActiveLanguage={this.setActiveLanguage}
-            currentLanguage = {currentLanguage}
-            tokens = {this.props.tokens}
-            langClass = {this.props.langClass}
-        />
+            currentLanguage={currentLanguage}
+            tokens={this.state.tokens}
+            langClass={this.props.langClass}
+          />
+        )}
       </div>
     )
   }
