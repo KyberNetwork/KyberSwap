@@ -2,15 +2,19 @@ import BLOCKCHAIN_INFO from "../../../env";
 import { DEFAULT_BPS_FEE } from "./constants"
 
 export async function fetchSupportedTokens() {
-  const endpoint = process.env.integrate ? `${BLOCKCHAIN_INFO.kyberswap_api}/currencies` : `${BLOCKCHAIN_INFO.tracker}/internal/currencies`;
-  const response = await fetch(endpoint);
-  const result = await response.json();
+  try {
+    const endpoint = process.env.integrate ? '/api/currencies' : `${BLOCKCHAIN_INFO.tracker}/internal/currencies`;
+    const response = await fetch(endpoint);
+    const result = await response.json();
 
-  if (result.success) {
-    return filterActiveTokens(result.data);
+    if (result.success) {
+      return filterActiveTokens(result.data);
+    }
+
+    return BLOCKCHAIN_INFO.tokens;
+  } catch (e) {
+    return BLOCKCHAIN_INFO.tokens;
   }
-
-  return BLOCKCHAIN_INFO.tokens;
 }
 
 function filterActiveTokens(tokens) {
