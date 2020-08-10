@@ -141,6 +141,10 @@ export default class Layout extends React.Component {
 
     const campaign = await fetchActiveCampaign();
     if (campaign) this.props.dispatch(setCampaign(campaign));
+
+    if (window.kyberBus) {
+      window.kyberBus.broadcast("bundle.ready");
+    }
   }
   
   scrollToImportAccount = () => {
