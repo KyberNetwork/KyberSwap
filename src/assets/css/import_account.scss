@@ -8,19 +8,8 @@
   &__title {
     font-size: 18px;
     font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+    margin: 0 auto 25px;
     text-align: center;
-    margin: 15px 0 20px;
-
-    &--inactive {
-      max-width: 550px;
-      margin: 0 auto 10px;
-      text-align: center;
-      font-size: 13px;
-    }
 
     &-separator {
       width: 100%;
@@ -29,12 +18,11 @@
     }
 
     &-content {
-      font-size: 12px;
-      width: 140px;
+      color: $text-orange;
+      width: 200px;
       position: relative;
-      top: -9px;
-      margin: 0 auto;
-      font-weight: 400;
+      bottom: 13px;
+      margin: 0 auto -20px;
     }
   }
 
@@ -45,11 +33,9 @@
     max-width: 1550px;
     margin: 0 auto;
 
-    &--animation {
-      @include animation(slideInUp) {
-        animation-duration: 0.3s;
-        animation-timing-function: ease-out;
-      }
+    @include animation(slideInUp) {
+      animation-duration: 0.3s;
+      animation-timing-function: ease-out;
     }
 
     &--mobile {

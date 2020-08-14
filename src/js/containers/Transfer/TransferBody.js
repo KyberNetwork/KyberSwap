@@ -215,9 +215,8 @@ class Transfer extends React.Component {
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
-  acceptTerm = (e) => {
+  acceptTerm = () => {
     this.props.dispatch(globalActions.acceptTermOfService());
-    this.props.dispatch(globalActions.acceptConnectWallet());
   }
 
   clearIsOpenAdvance = () => {
@@ -332,8 +331,6 @@ class Transfer extends React.Component {
           toggleAdvanceContent={this.toggleAdvanceContent}
           isOpenAdvance={this.props.transfer.isOpenAdvance}
           clearIsOpenAdvance={this.clearIsOpenAdvance}
-          isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-          acceptConnectWallet={this.acceptConnectWallet}
           isOnDAPP={this.props.account.isOnDAPP}
           isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
           changeSourceAmount={this.onAmountChange}

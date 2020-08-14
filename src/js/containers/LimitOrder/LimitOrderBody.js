@@ -67,7 +67,7 @@ export default class LimitOrderBody extends React.Component {
         <div className={"limit-order__container limit-order__container--right"}>
           {this.props.account === false &&
             <div className={"limit-order-account"}>
-              <ImportAccount tradeType="limit_order" noTerm />
+              <ImportAccount tradeType="limit_order" isAgreedTermOfService />
             </div>
           }
           
@@ -113,7 +113,7 @@ export default class LimitOrderBody extends React.Component {
           <div className={"limit-order__container limit-order__container--right"}>
             {this.props.account === false &&
               <div className={"limit-order-account"}>
-                <ImportAccount tradeType="limit_order" noTerm />
+                <ImportAccount tradeType="limit_order" isAgreedTermOfService />
               </div>
             }
           </div>
