@@ -29,7 +29,7 @@ const PortfolioView = (props) => {
           <div className={"portfolio__summary"}>
             <div className={"portfolio__account portfolio__item theme__background-2"}>
               {!props.isImported && (
-                <ImportAccount tradeType="portfolio" noTerm={true} />
+                <ImportAccount tradeType="portfolio" isAgreedTermOfService />
               )}
 
               {isOverViewDisplayed && (

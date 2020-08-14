@@ -25,8 +25,6 @@
     "your_wallet_address": "Ваш адрес кошелька",
     "search": "Поиск",
     "download": "Download",
-    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
-    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
     "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Your Wallet",
@@ -293,7 +291,8 @@
     "connect_other_wallet": "Connect other wallet",
     "do_you_want_to_connect_other_wallet": "Do you want to connect other Wallet?",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "connect_wallet": "Connect Wallet"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
