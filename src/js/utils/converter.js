@@ -263,6 +263,8 @@ export function weiToGwei(number) {
 }
 
 export function toT(number, decimal, round) {
+  if (!number) return "0";
+
   BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
   var bigNumber = new BigNumber(number.toString())
   var result
