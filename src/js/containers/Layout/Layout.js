@@ -137,7 +137,18 @@ export default class Layout extends React.Component {
   initiateData = async () => {
     const tokens = await fetchSupportedTokens();
     this.props.dispatch(initTokens(tokens));
-    this.setState({ tokens });
+
+    if (process.env && process.env.integrate) {
+      let intervalCheckingBus = setInterval(() => {
+        if (window.kyberBus) {
+          window.kyberBus.broadcast("bundle.ready");
+          this.setState({ tokens });
+          clearInterval(intervalCheckingBus);
+        }
+      });
+    } else {
+      this.setState({ tokens });
+    }
 
     const campaign = await fetchActiveCampaign();
     if (campaign) this.props.dispatch(setCampaign(campaign));
