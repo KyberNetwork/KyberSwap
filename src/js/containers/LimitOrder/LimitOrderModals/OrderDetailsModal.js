@@ -47,7 +47,7 @@ export default class OrderDetailsModal extends Component {
 
     return (
       <div className="limit-order-modal">
-        <div className="limit-order-modal__body">
+        <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
             { `${side_trade ? side_trade : ""} ${base} Order`}
           </div>
@@ -62,7 +62,7 @@ export default class OrderDetailsModal extends Component {
               <span className={`cell-status cell-status--${order.status}`}>{(order.status)}</span>
             </div>
             <div className={"order-table-info"}>
-              <div className={"order-table-info__header"}>
+              <div className={"order-table-info__header theme__background-33 theme__text-6"}>
                 <div>{"Pair"}</div>
                 <div>{"Price"}</div>
                 <div>{"Amount"}</div>
@@ -78,7 +78,7 @@ export default class OrderDetailsModal extends Component {
                   <div>{rate}</div>
                   <div>{`${amount} ${base}`}</div>
                   <div>{`${total} ${quote}`} </div>
-                  {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${order.receive} ${dest.toUpperCase()}`}</div>}
+                  {status === LIMIT_ORDER_CONFIG.status.FILLED && <div>{`${formatNumber(order.receive, 6)} ${dest.toUpperCase()}`}</div>}
                   <div>{`${formatNumber(multiplyOfTwoNumber(fee, src_amount), 5, '')} ${source.toUpperCase()}`}</div>
                   <div>{`${order.user_address.slice(0, 8)}...${order.user_address.slice(-4)}`}</div>
                   <div className="cell-action">

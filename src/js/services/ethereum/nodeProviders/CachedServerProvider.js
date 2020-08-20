@@ -1,7 +1,7 @@
 import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
-import {isUserLogin} from "../../../utils/common"
+import { isUserLogin } from "../../../utils/common"
 import * as converters from "../../../utils/converter";
 
 export default class CachedServerProvider extends React.Component {
@@ -106,15 +106,34 @@ export default class CachedServerProvider extends React.Component {
     })
   }
 
-  getSourceAmount(sourceTokenSymbol, destTokenSymbol, destAmount) {
+  getReferencePrice(baseSymbol, quoteSymbol = 'ETH') {
+    return new Promise((resolve, rejected) => {
+      fetch(`${this.rpcUrl}/refprice?base=${baseSymbol}&quote=${quoteSymbol}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then(result => {
+          if (result.success && result.value) {
+            resolve(result.value)
+          } else {
+            resolve(0)
+          }
+        })
+        .catch((err) => {
+          rejected(err)
+        })
+    })
+  }
+
+  getSourceAmount(sourceTokenAddr, destTokenAddr, destAmount) {
     return new Promise((resolve, reject) => {
-      this.timeout(this.maxRequestTime, fetch(`${this.rpcUrl}/sourceAmount?source=${sourceTokenSymbol}&dest=${destTokenSymbol}&destAmount=${destAmount}`))
+      this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/quote_amount?quote=${sourceTokenAddr}&base=${destTokenAddr}&base_amount=${destAmount}&type=buy`))
         .then((response) => {
           return response.json();
         })
         .then((result) => {
-          if (result.success) {
-            resolve(result.value);
+          if (!result.error) {
+            resolve(result.data);
           } else {
             reject(new Error("Cannot get source amount"));
           }
@@ -227,35 +246,19 @@ export default class CachedServerProvider extends React.Component {
   }
 
   getUserMaxCap(address) {
-    if (isUserLogin()){
-      return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch("/api/user_stats"))
-          .then((response) => {
-            return response.json()
-          })
-          .then((result) => {
-            resolve(result)
-          })
-          .catch((err) => {
-            console.log(err)
-            rejected(err)
-          })
-      })
-    } else {
-      return new Promise((resolve, rejected) => {
-        this.timeout(this.maxRequestTime, fetch(this.rpcUrl + '/users?address=' + address))
-          .then((response) => {
-            return response.json()
-          })
-          .then((result) => {
-            resolve(result)
-          })
-          .catch((err) => {
-            console.log(err)
-            rejected(err)
-          })
-      })
-    }
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch(`/api/wallet/screening?wallet=${address}`))
+        .then((response) => {
+          return response.json()
+        })
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          console.log(err)
+          rejected(err)
+        })
+    })
   }
 
   getTokenPrice(symbol){
@@ -276,6 +279,30 @@ export default class CachedServerProvider extends React.Component {
           console.log(err)
           rejected(new Error(`Cannot get init token price: ${err.toString}`))
         })
+    })
+  }
+  
+  getExpectedRate(srcToken, destToken, srcAmount) {
+    srcAmount = converters.hexToString(srcAmount);
+
+    return new Promise((resolve, rejected) => {
+      this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/expectedRate?source=${srcToken}&dest=${destToken}&sourceAmount=${srcAmount}`))
+      .then((response) => {
+        return response.json()
+      })
+      .then((result) => {
+        if (result.error) {
+          rejected(new Error("Cannot fetch expected rate from API"))
+        }
+        
+        resolve({
+          expectedPrice: result.expectedRate,
+          slippagePrice: result.slippageRate
+        });
+      })
+      .catch((err) => {
+        rejected(err)
+      })
     })
   }
 

@@ -51,7 +51,7 @@ export default class LimitOrderTable extends Component {
       accessor: item => item,
       Cell: props => this.getDateCell(props.value),
       headerClassName: "cell-flex-start-header cell-date-header",
-      className: "cell-flex-start cell-text-small theme__text-4",
+      className: "cell-flex-start cell-text-small cell-date theme__text-4",
       lineHeight: 35,
       getHeaderProps: (state, rowInfo) => {
         return {
@@ -79,72 +79,68 @@ export default class LimitOrderTable extends Component {
       Header: this.getHeader("price"),
       accessor: item => item,
       Cell: props => this.getPriceCell(props.value),
-      headerClassName: "cell-flex-start-header cell-condition-header",
-      className: "cell-flex-start cell-condition theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end theme__text-4",
     }, {
       id: "amount",
       Header: this.getHeader("amount"),
       accessor: item => item,
       Cell: props => this.getAmountCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-from theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end cell-from theme__text-4",
     }, {
       id: "total",
       Header: this.getHeader("total"),
       accessor: item => item,
       Cell: props => this.getTotalCell(props.value),
-      headerClassName: "cell-flex-start-header",
-      className: "cell-flex-start cell-to theme__text-4",
+      headerClassName: "cell-flex-end-header",
+      className: "cell-flex-end cell-to theme__text-4",
     }, {
       id: "status",
       Header: this.getHeader("status"),
       accessor: item => item,
       Cell: props => this.getStatusCell(props.value),
-      headerClassName: "cell-flex-center-header cell-status-header",
-      className: "cell-flex-center theme__text-4",
+      headerClassName: "cell-flex-end-header cell-status-header",
+      className: "cell-flex-end cell-state theme__text-4",
     }, {
       expander: true,
       show: false
     }];
 
     const {activeOrderTab} = this.props.limitOrder;
-    let widths = [130, 130, 130, 130, 150, 150, 120]
+    let columnWidths = [100, 110, 40, 120, 140, 140, 120];
 
-    if (activeOrderTab === "history"){
+    if (activeOrderTab === "history") {
       desktopColumns.splice(desktopColumns.length-2, 0, {
         id: "receive",
         Header: this.getHeader("received"),
         accessor: item => item,
         Cell: props => this.getReceiveCell(props.value),
-        headerClassName: "theme__background",
+        headerClassName: "cell-flex-end-header theme__background",
+        className: "cell-flex-end theme__text-4",
         maxWidth: 80
-      })
-      widths = [120, 120, 100, 120, 140, 140, 80, 120]
+      });
+  
+      columnWidths = [90, 90, 40, 90, 120, 120, 110, 120];
     }
-
-    for (let i = 0; i < desktopColumns.length ; i++){
-      desktopColumns[i]["width"] = widths[i]
-    }
-
-    // --------------
-    // Mobile columns
-    // --------------
-    const mobileColumns = [
-      {
-        id: "mobile-order",
-        Header: this.getHeader("mobile-order"),
-        accessor: item => item,
-        Cell: props => this.getOrderMobileTableCell(props.value),
-      }
-    ];
-
+    
     if (this.props.screen === "mobile") {
-      return mobileColumns;
+      return [
+        {
+          id: "mobile-order",
+          Header: this.getHeader("mobile-order"),
+          accessor: item => item,
+          Cell: props => this.getOrderMobileTableCell(props.value),
+        }
+      ];
     } else {
-      // Default render desktop version table
+      for (let i = 0; i < desktopColumns.length ; i++) {
+        desktopColumns[i]["width"] = columnWidths[i]
+      }
+      
       return desktopColumns;
     }
-  }
+  };
 
   // --------------
   // Render cell
@@ -233,7 +229,7 @@ export default class LimitOrderTable extends Component {
   getAmountCell = (props) => {
     const { source, dest, min_rate, src_amount, side_trade } = props;
     const amount = side_trade === "buy" ? formatNumber(multiplyOfTwoNumber(src_amount, min_rate), 5) : formatNumber(src_amount, 5)
-    const unit = side_trade === "buy" ? dest.toUpperCase() : source.toUpperCase()
+    const unit = side_trade === "buy" ? dest : source
     return (
       <div>
         <span className="to-number-cell">{amount}</span>{' '}
@@ -258,7 +254,7 @@ export default class LimitOrderTable extends Component {
     const { receive, dest, status} = props;
     return (
       <div>
-        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest.toUpperCase()}` : "-"}</span>
+        <span className="to-number-cell">{status === LIMIT_ORDER_CONFIG.status.FILLED ? `${formatNumber(receive, 5)} ${dest}` : "-"}</span>
       </div>
     )
   };
@@ -552,8 +548,8 @@ export default class LimitOrderTable extends Component {
       return (
         <div>
           <span>{(this.props.translate("limit_order.date") || "Date").toUpperCase()}</span>
-          {this.props.limitOrder.dateSort === "asc" && <img src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
-          {this.props.limitOrder.dateSort === "desc" && <img src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "asc" && <img className="limit-order-table__sort-icon" src={require("../../../assets/img/limit-order/sort-asc-icon.svg")} />}
+          {this.props.limitOrder.dateSort === "desc" && <img className="limit-order-table__sort-icon" src={require("../../../assets/img/limit-order/sort-desc-icon.svg")} />}
         </div>
       )
     } else if (title === "condition") {

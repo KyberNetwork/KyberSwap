@@ -20,96 +20,37 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: ropsten.kyber.network
     region: ap-southeast-1
     acl: public_read
     local_dir: dist/ropsten
     skip_cleanup: true
     on:
-      branch: develop
+      branch: master
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: ropsten.kyber.network
     region: ap-southeast-1
     acl: public_read
     local_dir: dist/ropsten
     upload-dir: swap
     skip_cleanup: true
     on:
-      branch: develop
+      branch: master
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: ropsten.kyber.network
     region: ap-southeast-1
     acl: public_read
     local_dir: dist/ropsten
     upload-dir: transfer
     skip_cleanup: true
     on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
-    region: ap-southeast-1
-    acl: public_read
-    local_dir: dist/ropsten
-    upload-dir: limit_order
-    skip_cleanup: true
-    on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-limit-order.knstats.com
-    region: ap-southeast-1
-    acl: public_read
-    local_dir: dist/dev
-    skip_cleanup: true
-    on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-limit-order.knstats.com
-    region: ap-southeast-1
-    acl: public_read
-    local_dir: dist/dev
-    upload-dir: swap
-    skip_cleanup: true
-    on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-limit-order.knstats.com
-    region: ap-southeast-1
-    acl: public_read
-    local_dir: dist/dev
-    upload-dir: transfer
-    skip_cleanup: true
-    on:
-      branch: develop
-
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-limit-order.knstats.com
-    region: ap-southeast-1
-    acl: public_read
-    local_dir: dist/dev
-    upload-dir: limit_order
-    skip_cleanup: true
-    on:
-      branch: develop
+      branch: master
 
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
@@ -151,11 +92,12 @@ deploy:
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: kyber-swap
     region: ap-southeast-1
-    local_dir: dist
+    local_dir: public
     upload_dir: $TRAVIS_BRANCH
     skip_cleanup: true
     on:
       all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
 
   - provider: script
     script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH

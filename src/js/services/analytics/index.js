@@ -1,5 +1,6 @@
 import React from 'react';
 import Mixpanel from "./mixpanel"
+import GoogleTagmanager from "./googleTagManager"
 
 export default class AnalyticFactory extends React.Component{
   constructor(props) {
@@ -16,6 +17,11 @@ export default class AnalyticFactory extends React.Component{
       switch(worker){
         case "mix":
           var instanceWorker = new Mixpanel()
+          instanceWorker.initService(this.network)
+          this.workers.push(instanceWorker)
+          break
+        case "google":
+          var instanceWorker = new GoogleTagmanager()
           instanceWorker.initService(this.network)
           this.workers.push(instanceWorker)
           break

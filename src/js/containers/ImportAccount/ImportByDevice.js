@@ -5,22 +5,13 @@ import { ImportByDeviceView } from "../../components/ImportAccount"
 import { importNewAccount, importLoading, closeImportLoading, throwError, checkTimeImportLedger, resetCheckTimeImportLedger } from "../../actions/accountActions"
 import { toEther } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
-import bowser from 'bowser'
+import { PAGING } from "../../services/constants";
 
-@connect((store, props) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
+@connect((store) => {
   return {
     ethereumNode: store.connection.ethereum,
     account: store.account,
-    tokens: supportTokens,
-    deviceService: props.deviceService,
-    content: props.content,
     translate: getTranslate(store.locale),
-    screen: props.screen,
     analytics: store.global.analytics,
     theme: store.global.theme
   }
@@ -29,24 +20,19 @@ import bowser from 'bowser'
 export default class ImportByDevice extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       addresses: [],
       currentAddresses: [],
       modalOpen: false,
       isFirstList: true,
+      isLoading: false,
+      selectedPath: props.defaultPath
     }
+    
     this.setDeviceState();
 
-    this.DPATH = [
-      { path: "m/44'/60'/0'/0", desc: 'Jaxx, Metamask, Exodus, imToken, TREZOR (ETH) & Digital Bitbox', defaultType: 'trezor' },
-      { path: "m/44'/60'/0'", desc: 'Ledger (ETH)', defaultType: 'ledger' },
-      { path: "m/44'/61'/0'/0", desc: 'TREZOR (ETC)' },
-      { path: "m/44'/60'/160720'/0'", desc: 'Ledger (ETC)' },
-      { path: "m/0'/0'/0'", desc: 'SingularDTV', notSupport: true },
-      { path: "m/44'/1'/0'/0", desc: 'Network: Testnets' },
-      { path: "m/44'/40'/0'/0", desc: 'Network: Expanse', notSupport: true },
-      { path: 0, desc: this.props.translate("modal.custom_path" || "Your Custom Path"), defaultP: "m/44'/60'/1'/0", custom: false },
-    ]
+    this.DPATH = props.dpaths;
   }
 
   setDeviceState() {
@@ -64,20 +50,20 @@ export default class ImportByDevice extends React.Component {
     }, 10000)
   }
 
-  connectDevice(walletType, selectedPath, dpath) {
+  connectDevice(walletType, dpath = this.props.defaultPath) {
     this.setDeviceState();
+
     if (!this.props.deviceService) {
       this.props.dispatch(throwError("cannot find device service"))
       return
     }
-    this.props.deviceService.getPublicKey(selectedPath, this.state.modalOpen)
+
+    this.props.deviceService.getPublicKey(dpath.value, this.state.modalOpen)
       .then((result) => {
-        if (selectedPath) {
-          this.dPath = (dpath === 0) ? result.dPath : dpath
-        } else {
-          this.dPath = result.dPath
-        }
-        this.generateAddress(result);
+        this.openModal();
+        this.setState({ selectedPath: dpath })
+
+        this.generateAddress(result, dpath);
         this.props.dispatch(closeImportLoading());
       })
       .catch((err) => {
@@ -92,19 +78,29 @@ export default class ImportByDevice extends React.Component {
     this.walletType = walletType;
   }
 
-  generateAddress(data) {
-    this.generator = new AddressGenerator(data);
+  async generateAddress(data, dpath) {
+    this.generator = new AddressGenerator(data, dpath, this.props.deviceService.getPublicKey);
+
     let addresses = [];
     let index = 0;
-    for (index; index < 3; index++) {
+
+    this.setState({ isLoading: true });
+
+    for (index; index < PAGING.ADDRESS; index++) {
       let address = {
-        addressString: this.generator.getAddressString(index),
+        addressString: await this.generator.getAddressString(index),
         index: index,
         balance: -1,
       };
       addresses.push(address);
-      this.addBalance(address.addressString, index);
     }
+
+    this.setState({ isLoading: false });
+
+    addresses.forEach((address, index) => {
+      this.addBalance(address.addressString, index);
+    })
+
     this.addressIndex = index;
     this.currentIndex = index;
 
@@ -112,7 +108,6 @@ export default class ImportByDevice extends React.Component {
       addresses: addresses,
       currentAddresses: addresses
     })
-    if (!this.state.modalOpen) this.openModal();
   }
 
   openModal() {
@@ -123,7 +118,9 @@ export default class ImportByDevice extends React.Component {
     this.setState({
       modalOpen: true,
     })
+
     this.updateBalance();
+
     this.props.analytics.callTrack("trackOpenModalColdWallet", this.walletType);
   }
 
@@ -135,30 +132,38 @@ export default class ImportByDevice extends React.Component {
     this.props.analytics.callTrack("trackClickCloseModal", this.walletType);
   }
 
-  moreAddress() {
+  async moreAddress() {
     let addresses = this.state.addresses,
       i = this.addressIndex,
-      j = i + 3,
+      j = i + PAGING.ADDRESS,
       currentAddresses = [];
+
     if (this.generator) {
+      this.setState({ isLoading: true });
+
       if (this.addressIndex == this.currentIndex) {
         for (i; i < j; i++) {
           let address = {
-            addressString: this.generator.getAddressString(i),
+            addressString: await this.generator.getAddressString(i),
             index: i,
             balance: -1,
           };
           addresses.push(address);
           currentAddresses.push(address);
-          this.addBalance(address.addressString, i);
-
         }
       }
+
+      this.setState({ isLoading: false });
+
+      addresses.forEach((address, index) => {
+        this.addBalance(address.addressString, index);
+      })
+
       this.addressIndex = i;
-      this.currentIndex += 3;
+      this.currentIndex += PAGING.ADDRESS;
       this.setState({
         addresses: addresses,
-        currentAddresses: addresses.slice(this.currentIndex - 3, this.currentIndex)
+        currentAddresses: addresses.slice(this.currentIndex - PAGING.ADDRESS, this.currentIndex)
       })
       if (this.state.isFirstList) {
         this.setState({
@@ -173,13 +178,13 @@ export default class ImportByDevice extends React.Component {
 
   preAddress() {
     let addresses = this.state.addresses;
-    if (this.currentIndex > 3) {
-      this.currentIndex -= 3;
+    if (this.currentIndex > PAGING.ADDRESS) {
+      this.currentIndex -= PAGING.ADDRESS;
       this.setState({
-        currentAddresses: addresses.slice(this.currentIndex - 3, this.currentIndex),
+        currentAddresses: addresses.slice(this.currentIndex - PAGING.ADDRESS, this.currentIndex),
       })
     }
-    if (this.currentIndex <= 3) {
+    if (this.currentIndex <= PAGING.ADDRESS) {
       this.setState({
         isFirstList: true
       })
@@ -188,13 +193,14 @@ export default class ImportByDevice extends React.Component {
   }
 
   getAddress(data) {
-    this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.tokens, this.props.screen))
+    this.props.dispatch(importNewAccount(data.address, data.type, data.path, this.props.ethereumNode, this.props.screen));
     this.closeModal()
   }
 
-  choosePath(selectedPath, dpath) {
+  choosePath(dpath) {
+    this.closeModal();
     this.props.dispatch(importLoading());
-    this.connectDevice(this.walletType, selectedPath, dpath);
+    this.connectDevice(this.walletType, dpath);
   }
 
   getBalance(address) {
@@ -206,25 +212,18 @@ export default class ImportByDevice extends React.Component {
   }
 
   addBalance(address, index) {
-    this.getBalance(address)
-      .then((result) => {
-        let addresses = this.state.addresses;
-        addresses[index].balance = result
-        this.setState({
-          currentList: addresses
-        })
+    this.getBalance(address).then((result) => {
+      let addresses = this.state.addresses;
+      addresses[index].balance = result
+      this.setState({
+        currentList: addresses
       })
+    })
   }
 
   showLoading(walletType) {
-    let browser = bowser.name;
     this.props.dispatch(resetCheckTimeImportLedger())
     if (walletType == 'ledger') {
-      // if (!bowser.chrome) {
-      //   let erroMsg = this.props.translate("error.browser_not_support_ledger", { browser: browser }) || `Ledger is not supported on ${browser}, you can use Chrome instead.`
-      //   this.props.dispatch(throwError(erroMsg));
-      //   return;
-      // }
       this.props.dispatch(importLoading());
       this.connectDevice(walletType);
       this.ledgerLoading = setTimeout(() => {
@@ -245,8 +244,8 @@ export default class ImportByDevice extends React.Component {
         onRequestClose={this.closeModal.bind(this)}
         getPreAddress={() => this.preAddress()}
         getMoreAddress={() => this.moreAddress()}
-        dPath={this.DPATH}
-        currentDPath={this.dPath}
+        allDPaths={this.DPATH}
+        currentDPath={this.state.selectedPath}
         currentAddresses={this.state.currentAddresses}
         walletType={this.walletType}
         getAddress={this.getAddress.bind(this)}
@@ -255,6 +254,7 @@ export default class ImportByDevice extends React.Component {
         translate={this.props.translate}
         analytics={this.props.analytics}
         theme={this.props.theme}
+        isLoading={this.state.isLoading}
       />
     )
   }

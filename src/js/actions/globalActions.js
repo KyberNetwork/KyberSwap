@@ -1,5 +1,3 @@
-import * as converter from "../utils/converter"
-
 export function updateBlock(ethereum, block) {
   return {
     type: "GLOBAL.NEW_BLOCK_INCLUDED_PENDING",
@@ -21,13 +19,6 @@ export function updateBlockFailed(error) {
   }
 }
 
-// export function updateRate(ethereum, source, reserve, ownerAddr) {
-//   return {
-//     type: "GLOBAL.RATE_UPDATED_PENDING",
-//     payload: {ethereum, source, reserve, ownerAddr}
-//   }
-// }
-
 export function updateAllRate(ethereum, tokens) {
   return {
     type: 'GLOBAL.RATE_UPDATE_ALL_PENDING',
@@ -35,17 +26,17 @@ export function updateAllRate(ethereum, tokens) {
   }
 }
 
+export function checkUserEligible(ethereum) {
+  return {
+    type: "GLOBAL.CHECK_USER_ELIGIBLE",
+    payload: { ethereum }
+  }
+}
+
 export function updateAllRateComplete(rates, rateUSD) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
     payload: { rates, rateUSD }
-  }
-}
-
-export function updateAllRateUSD(ethereum) {
-  return {
-    type: 'GLOBAL.UPDATE_RATE_USD_PENDING',
-    payload: { ethereum }
   }
 }
 
@@ -74,24 +65,9 @@ export function acceptTermOfService() {
   }
 }
 
-export function acceptConnectWallet() {
+export function clearSession() {
   return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: true
-  }
-}
-
-export function clearAcceptConnectWallet() {
-  return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: false
-  }
-}
-
-export function clearSession(gasPrice) {
-  return {
-    type: "GLOBAL.CLEAR_SESSION",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION"
   }
 }
 
@@ -109,10 +85,9 @@ export function changeLanguage(ethereum, lang, locale) {
   }
 }
 
-export function clearSessionComplete(gasPrice) {
+export function clearSessionComplete() {
   return {
-    type: "GLOBAL.CLEAR_SESSION_FULFILLED",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
   }
 }
 
@@ -122,21 +97,6 @@ export function goToRoute(route) {
     payload: route
   }
 }
-
-
-// export function updateHistoryExchange(ethereum, page, itemPerPage, isAutoFetch) {
-//   return {
-//     type: "GLOBAL.UPDATE_HISTORY_EXCHANGE",
-//     payload: { ethereum, page, itemPerPage, isAutoFetch }
-//   }
-// }
-
-// export function updateHistory(logs, latestBlock, page, eventsCount, isAutoFetch) {
-//   return {
-//     type: "GLOBAL.UPDATE_HISTORY",
-//     payload: { logs, latestBlock, page, eventsCount, isAutoFetch }
-//   }
-// }
 
 export function checkConnection(ethereum, count, maxCount, isCheck) {
   return {
@@ -206,11 +166,23 @@ export function setAnalyzeError(networkIssues, reserveIssues, txHash) {
   }
 }
 
-
 export function throwErrorMematamask(err) {
   return {
     type: "GLOBAL.THROW_ERROR_METAMASK",
     payload: { err }
+  }
+}
+
+export function throwErrorEligible(err) {
+  return {
+    type: "GLOBAL.THROW_ERROR_ELIGIBLE",
+    payload: { err }
+  }
+}
+
+export function clearErrorEligible(){
+  return {
+    type: "GLOBAL.CLEAR_ERROR_ELIGIBLE"
   }
 }
 
@@ -227,13 +199,6 @@ export function setNotiHandler(notiService) {
     payload: { notiService }
   }
 }
-
-// export function setMaxGasPrice() {
-//   return {
-//     type: "GLOBAL.SET_MAX_GAS_PRICE",
-//   }
-// }
-
 
 export function setNetworkError(error) {
   return {
@@ -254,12 +219,6 @@ export function closeChangeWallet() {
     type: "GLOBAL.CLOSE_CHANGE_WALLET"
   }
 }
-
-// export function updateTokenStatus() {
-//   return {
-//     type: "GLOBAL.UPDATE_TOKEN_STATUS"
-//   }
-// }
 
 export function setOnMobile(isIOS, isAndroid) {
   return {
@@ -298,5 +257,12 @@ export function switchTheme(theme) {
   return {
     type: "GLOBAL.SWITCH_THEME",
     payload: theme
+  }
+}
+
+export function setCampaign(campaign) {
+  return {
+    type: "GLOBAL.SET_CAMPAIGN",
+    payload: campaign
   }
 }

@@ -1,11 +1,11 @@
 import {REHYDRATE} from 'redux-persist/lib/constants'
-import { clearInterval } from 'timers';
 import {cloneAccount} from "../services/accounts"
-
+import {getWallet} from "../services/keys"
 
 const initState = {
   isStoreReady: false,
   account: false,
+  wallet: false,
   loading: false,
   checkTimeImportLedger: false,
   error: {
@@ -20,6 +20,10 @@ const initState = {
     error: '',
     modalOpen: false
   },
+  otherConnect: {
+    error: '',
+    modalOpen: false
+  },
   walletName: '',
   isOnDAPP: false
 }
@@ -31,7 +35,9 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
         var {address, type, keystring, walletType, info, balance, manualNonce, nonce, maxCap, rich } = action.payload.account
         var updatedAccount = cloneAccount(address, type, keystring, walletType, info, balance, nonce, manualNonce, maxCap, rich)
 
-        return {...state, account: updatedAccount}
+        var wallet = getWallet(type)
+
+        return {...state, account: updatedAccount, wallet: wallet}
       }
 
       return {...state}
@@ -46,13 +52,10 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       return {...state, checkTimeImportLedger: false}
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
-      const {account, walletName} = action.payload      
-      return {...state, account: account, loading: false, isStoreReady: true, walletName: walletName}
+      const {account, wallet, walletName} = action.payload
+      return {...state, account: account, wallet: wallet, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
-      return {...state, loading: false}
-    }
-    case "ACCOUNT.CLOSE_LOADING_IMPORT": {
       return {...state, loading: false}
     }
     case "ACCOUNT.THROW_ERROR": { 
@@ -135,6 +138,21 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       newState.promoCode.modalOpen = false
       return newState
     }
+    case "ACCOUNT.OPEN_OTHER_CONNECT_MODAL": {
+      let newState = {...state}
+      let otherConnect = {
+        error: '',
+        modalOpen: true,
+        tradeType: action.payload
+      }
+      newState.otherConnect = otherConnect
+      return newState
+    }
+    case "ACCOUNT.CLOSE_OTHER_CONNECT_MODAL": {
+      let newState = {...state}
+      newState.otherConnect.modalOpen = false
+      return newState
+    }
     case "GLOBAL.SET_BALANCE_TOKEN":{
       let newState = {...state}
       newState.isGetAllBalance = true
@@ -148,6 +166,15 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       let newState = {...state}
       newState.isOnDAPP = true
       return newState
+    }
+    case "ACCOUNT.SET_TOTAL_BALANCE_AND_AVAILABLE_TOKENS": {
+      const { totalBalanceInETH, availableTokens } = action.payload;
+      let newState = {...state};
+      
+      newState.totalBalanceInETH = totalBalanceInETH;
+      newState.availableTokens = availableTokens;
+      
+      return newState;
     }
   }
   return state
