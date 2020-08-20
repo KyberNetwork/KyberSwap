@@ -25,18 +25,17 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-- if browser.device.mobile? || cookies[:is_visited] == 'true' || (request.path.include? "limit_order")
+- if browser.device.mobile? || cookies[:is_visited] == 'true' || (request.path.include? "limit_order") || (request.path.include? "portfolio")
     link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
-    #swap-app onClick="animateSwap()"
+    #swap-app-tmp onClick="animateSwap()"
         div style="text-align:center"
           - if request.path.include? "swap"
               = render "swap/server_rendering/swap_rendering"    
           - elsif request.path.include? "transfer"
               = render "swap/server_rendering/transfer_rendering"    
           - elsif request.path.include? "limit_order"
-              = render "swap/server_rendering/limit_order_rendering"    
-          - else
-              = render "swap/server_rendering/swap_rendering"
+              = render "swap/server_rendering/limit_order_rendering"
+    #swap-app
     script src="/trading_view/charting_library/charting_library.min.js?v=${now}"
     script src="/trading_view/datafeeds/udf/dist/polyfills.js"
     script src="/trading_view/datafeeds/udf/dist/bundle.js"          
@@ -44,16 +43,15 @@ let view = `
     script src="/swap/${buildFolder}/app.min.js?v=${now}"
 - else 
     link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
-    #swap-app
+    #swap-app-tmp
         div style="text-align:center" onClick="openSwap('${buildFolder}', ${now})"
           - if request.path.include? "swap"
               = render "swap/server_rendering/swap_rendering"    
           - elsif request.path.include? "transfer"
               = render "swap/server_rendering/transfer_rendering"    
           - elsif request.path.include? "limit_order"
-              = render "swap/server_rendering/limit_order_rendering"    
-          - else
-              = render "swap/server_rendering/swap_rendering"    
+              = render "swap/server_rendering/limit_order_rendering" 
+    #swap-app  
 `
 
 // let view = `

@@ -9,6 +9,7 @@ $dark-gray: #0B0F1A;
 $black: #2c2c2c;
 $white: #ffffff;
 $white-light: rgba(255, 255, 255, 0.56);
+$blue-light: #1db1ff;
 $accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
 $alert-color: #ff5d00;
 $text-orange: #ff9008;
@@ -16,11 +17,14 @@ $text-orange-light: #f6934e;
 $text-green: #31cb9e;
 $text-green-light: #27a69a;
 $text-blue: #1e89c1;
+$grey-lighter: #e8e9ed;
 $grey-light: #e1e4eb;
 $grey: #aeb6c3;
 $grey-dark: #9ea1aa;
 $grey-darker: #5a5e67;
 $button-background: linear-gradient(178deg, #ffb046 -66%, #f52880 371%) 0 0;
+$green-gradient: linear-gradient(to bottom, #4bdfb4 -27%, #20aa82 115%, #1ea880 115%);
+$red-gradient: linear-gradient(to bottom, #fa6566 -17%, #d84445 122%);
 
 // Dark Theme
 $dark-color-1: #1a1a1a;
@@ -39,7 +43,6 @@ $dark-color-13: #c4c8d2;
 $dark-color-14: #1c2924;
 $dark-color-15: #302121;
 
-
 // Light Theme
 $light-color-1: #f6f7fa;
 $light-color-2: #141927;
@@ -53,7 +56,7 @@ $light-color-9: #fdfae5;
 
 // Paths
 $image-path: '../img/';
-$asset-url: 'https://files.kyber.network/DesignAssets/';
+$asset-url: 'https://files.kyberswap.com/DesignAssets/';
 
 // Breakpoints
 $breakpoints: (

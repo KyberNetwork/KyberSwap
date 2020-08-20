@@ -1,5 +1,4 @@
 import constants from "../services/constants"
-import BLOCKCHAIN_INFO from "../../../env"
 
 export default class Tx {
   constructor(
@@ -31,7 +30,6 @@ export default class Tx {
   sync = (ethereum, tx) => {
     return new Promise((resolve, reject) => {
       ethereum.call("txMined", tx.hash).then((receipt) => {
-        console.log(receipt)
         var newTx = tx.shallowClone()
         newTx.address = receipt.contractAddress
         newTx.gas = receipt.gasUsed

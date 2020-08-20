@@ -23,12 +23,11 @@
     "price": "GIÁ",
     "your_wallet_address": "Địa chỉ ví của bạn",
     "search": "Tìm kiếm",
-    "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
-    "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
     "connect_your_wallet_to_limit_order": "Nhập ví của bạn và tiến hành đặt lệnh",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Ví của bạn",
     "register_beta": "Register Beta",
-    "or_connect_with": "Or Connect with",
+    "or_connect_with": "Connect with",
     "download": "Tải về",
     "enter": "Nhập"
   },
@@ -264,7 +263,10 @@
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
     "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS"
+    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders",
+    "torus_connect_error": "Cannot connect to Torus"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -290,7 +292,8 @@
     "promo_code": "MÃ KHUYẾN MÃI",
     "do_you_want_to_connect_other_wallet": "Bạn có muốn kết nối với ví khác không?",
     "yes": "Có",
-    "no": "Không"
+    "no": "Không",
+    "connect_wallet": "Kết nối ví"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -302,7 +305,9 @@
     "kyber_homepage": "Trang chủ Kyber",
     "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
-    "here": "tại đây"
+    "here": "tại đây",
+    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn.",
+    "slippage_warning": "Mức trượt giá đang cao. Bạn có thể giảm lượng giao dịch hoặc chia nhỏ lệnh của bạn để có tỉ giá tốt hơn"
   },
   "footer": {
     "info": "Thông tin",
@@ -336,9 +341,7 @@
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
     "to_get_started": "để bắt đầu",
-    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ${term}",
-    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}",
-    "description_term_limit_order": "Bằng việc đặt lệnh, bạn đồng ý với ${term}"
+    "description_term": "Bằng việc sử dụng KyberSwap, bạn đồng ý với ${term}"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",
@@ -425,7 +428,7 @@
     "lower_rate": "Tỉ giá bạn đặt thấp hơn <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> so với tỉ giá hiện tại.",
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
     "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ",
-    "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi tài khoản khác. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch.",
+    "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi ${account}. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch.",
     "fetch_fee_err": "Không lấy được phí giao dịch.",
     "view_tx": "Xem giao dịch",
     "rate_warning_title": "Bằng việc tạo lệnh này, bạn sẽ <span class=\"rate-warning-tooltip__title--highlight\">HUỶ</span> những lệnh sau:",
@@ -437,17 +440,37 @@
     "actual_receive_amount": "Lượng token thực lĩnh:",
     "estimated_amount": "Lượng token dự tính:",
     "extra_amount": "Bạn nhận được thêm:",
-    "price": "Giá",
     "amount": "Số lượng",
     "total": "Tổng giá trị",
     "volume": "Lượng giao dịch",
-    "change": "Thay đổi",
     "buy": "Mua ${symbol}",
     "sell": "Bán ${symbol}",
     "type": "Loại",
     "available_balance": "Số dư khả dụng",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Đã nhận"
+    "received": "Đã nhận",
+    "login_buy": "Đăng nhập để Mua",
+    "login_sell": "Đăng nhập để Bán",
+    "free_fee": "Lệnh Limit Order miễn phí (10 lệnh LO mỗi ngày) nếu bạn giữ 2000 KNC trong ví",
+    "hold_knc": "Mua 2000 KNC ngay",
+    "top_token": "Token thay đổi nhiều nhất trong 1 giờ",
+    "24h_change": "Thay đổi 24h",
+    "last_price": "Tỉ giá mới nhất",
+    "24h_high": "Mức cao nhất 24h",
+    "24h_low": "Mức thấp nhất 24h",
+    "24h_volume": "Lượng giao dịch trong 24h",
+    "price": "Giá"
+  },
+  "portfolio": {
+    "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
+    "empty_history": "Bạn chưa có bất kỳ giao dịch nào",
+    "token_approved": "Cho phép sử dụng token",
+    "token_is_approved": "${token} được cho phép sử dụng cho {contract}",
+    "lo_triggered": "Limit Order được khớp",
+    "tx_history": "Lịch sử giao dịch",
+    "supported_tokens": "Các token được hỗ trợ",
+    "interact_contract": "Tương tác",
+    "to_contract": "Chuyển Tới"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -472,5 +495,11 @@
   "off": "GIẢM",
   "learn_more": "Tìm hiểu thêm",
   "received": "Đã nhận",
-  "details": "Chi tiết"
+  "details": "Chi tiết",
+  "change": "Thay đổi",
+  "send": "Gửi",
+  "undefined": "Undefined",
+  "show": "Hiển thị",
+  "failed": "Lỗi",
+  "price": "Giá"
 }

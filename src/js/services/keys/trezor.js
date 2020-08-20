@@ -1,35 +1,25 @@
-import React from 'react';
-
 import * as keyService from "./baseKey"
 import TrezorConnect from 'trezor-connect';
-
 import EthereumTx from "ethereumjs-tx"
-import { numberToHex } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
 import EthereumService from "../ethereum/ethereum"
 import { store } from "../../store"
 import * as converter from "../../utils/converter"
 
-const defaultDPath = "m/44'/60'/0'/0";
-
-export default class Trezor extends React.Component {
-
-  constructor(props) {
-    super(props);
-
+export default class Trezor {
+  constructor() {
     TrezorConnect.manifest({
       email: 'andrew@kyber.network',
       appUrl: 'http://kyberswap.com'
     });
   }
 
-  getPublicKey = (path = defaultDPath) => {
+  getPublicKey = (path) => {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
       TrezorConnect.getPublicKey({ path }).then(function (result) {
         if (result.success) {
           result = { ...result.payload };
-          // result.dPath = path;
           result.dPath = path;
           resolve(result);
         } else {
@@ -46,7 +36,6 @@ export default class Trezor extends React.Component {
 
   async signSignature(message, account) {
     try {
-      // var messageFromEthUtil = ethUtil.toBuffer('0x12345');
       var signature = await TrezorConnect.ethereumSignMessage({
         path: account.keystring,
         message: message,

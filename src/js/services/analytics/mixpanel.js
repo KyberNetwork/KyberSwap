@@ -80,6 +80,16 @@ export default class Mixpanel {
     }
   }
 
+  txMinedStatus(hash, walletType, tradeType, status, address, accountType) {
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track("Swap_Tx_Mined", {hash, walletType, tradeType, status, address, accountType})
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
 
   trackCoinExchange(data) {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
@@ -151,50 +161,10 @@ export default class Mixpanel {
     }
   }
 
-  trackMarketSetting(field, value){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_2_Click_MarketSetting", {field, value})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackChooseGas(type, gas, typeGas){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_3_select_advance_feature_${type}_choose_gas`, {gas: gas, typeGas: typeGas})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSearchETHMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_1_Click_To_Search_ETH_Market")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackChooseTokenOnBalanceBoard(token){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_3_Click_Choose_Token_Balance_Board", {token : token})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickSortBalanceBoard(type, sortType){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_4_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
       }catch(e){
         console.log(e)
       }
@@ -255,16 +225,6 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track("Swap_*_2_Click_Search_Token")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSortETHMarket(field, sortType){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_1_Click_Sort_ETH_Market", {field: field, sortType: sortType})
       }catch(e){
         console.log(e)
       }
@@ -471,10 +431,10 @@ export default class Mixpanel {
     }
   }
 
-  trackClickImportAccount(type){
+  trackClickImportAccount(type, screen){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
-        mixpanel.track(`Step_2_Connect_wallet_${type}`)
+        mixpanel.track(`Step_2_Connect_wallet_${type}_${screen}`)
       }catch(e){
         console.log(e)
       }
@@ -621,26 +581,6 @@ export default class Mixpanel {
     }
   }
 
-  trackClickOpenMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Step_*_Open_Market_Modal")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickCloseMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Step_*_Close_Market_Modal")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackClickShowAccountBalance(tradeType){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
@@ -684,6 +624,16 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_2_Click_Top_Token_${screen}_${symbol}`)
+      }catch(e){
+        console.log(e)
+      }
+    }
+  }
+
+  trackClickTokenInAccountBalance(symbol, screen){
+    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
+      try{
+        mixpanel.track(`Account_balance_Select_Token_${screen}_${symbol}`)
       }catch(e){
         console.log(e)
       }
@@ -802,16 +752,6 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`LimitOrder_Click_Sort_On_Wallet_Panel_${field}`, { typeSort: isDsc ? 'dsc' : 'asc' });
-      }catch(e){
-        console.log(e);
-      }
-    }
-  }
-
-  trackLimitOrderClickChooseSideTrade(sideTrade, base, quote) {
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track(`LimitOrder_Click_Choose_Side_${sideTrade}`, { base: base, quote: quote });
       }catch(e){
         console.log(e);
       }

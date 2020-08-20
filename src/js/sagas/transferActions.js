@@ -169,7 +169,7 @@ export function* verifyTransfer() {
   }
 }
 
-export function* doAfterAccountImported(action){
+function* doAfterAccountImported(action){
   var {account, walletName} = action.payload
   if (account.type === "promo"){
     var state = store.getState()

@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateAllRate, checkConnection, setGasPrice } from "../../actions/globalActions"
+import { updateAllRate, checkConnection, setGasPrice, checkUserEligible } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -35,6 +35,7 @@ export default class EthereumService extends React.Component {
 
   subscribe(callBack) {
     this.fetchGasPrice();
+    this.checkUserEligible();
 
     var callBack_10s = this.fetchData_10s.bind(this)
     callBack_10s()
@@ -87,6 +88,15 @@ export default class EthereumService extends React.Component {
     store.dispatch(setGasPrice())
   }
 
+  checkUserEligible = () => {
+    var state = store.getState()
+    var ethereum = state.connection.ethereum
+    var account = state.account.account
+    if (account.address) {
+      store.dispatch(checkUserEligible(ethereum))
+    }
+  }
+
   checkConnection = () => {
     var state = store.getState()
     var checker = state.global.conn_checker
@@ -100,15 +110,12 @@ export default class EthereumService extends React.Component {
       return
     }
     if (!list[index][fn]) {
-      console.log("Not have " + fn + " in " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
       return
     }
     list[index][fn](...args).then(result => {
-      console.log("Resolve " + fn + "successful in " + list[index].rpcUrl)
       callBackSuccess(result)
     }).catch(err => {
-      console.log(err.message + " -In provider: " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
     })
   }

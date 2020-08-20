@@ -17,12 +17,20 @@
     color: $grey-darker;
   }
 
+  .theme__text-5 {
+    color: $grey;
+  }
+
   .theme__text-6 {
     color: $grey-darker;
   }
 
   .theme__text-7 {
     color: $grey-darker;
+  }
+
+  .theme__text-8 {
+    color: $light-color-2;
   }
 
   .theme__background {
@@ -89,11 +97,27 @@
     background-color: $light-color-9;
   }
 
+  .theme__background-11 {
+    background-color: white;
+  }
+
+  .theme__background-12 {
+    background-color: white;
+  }
+
+  .theme__background-red {
+    background-color: #f6e1e1;
+  }
+
   .theme__border {
     border-color: $grey-light;
   }
 
   .theme__border-2 {
+    border-color: $grey-light;
+  }
+
+  .theme__border-3 {
     border-color: $grey-light;
   }
 
@@ -145,13 +169,15 @@
 
   .theme__search {
     border-color: $dark-color-4;
-    color: $dark-color-8;
+    color: $light-color-2;
   }
 
   .theme__sort {
-    color: $grey-darker;
+    color: $grey-dark;
 
     &.active {
+      color: black;
+
       &.asc:after {
         color: #31cb9e;
       }
@@ -191,7 +217,7 @@
     color: $light-color-2;
 
     &:hover {
-      background: $light-color-3;
+      background: $light-color-1;
     }
   }
 
@@ -246,6 +272,20 @@
 
   .theme__input {
     border-color: $grey-light;
+  }
+
+  .theme__table {
+    &-header {
+      background-color: $grey-lighter;
+    }
+
+    &-item {
+      background-color: $light-color-1;
+
+      &:nth-child(odd) {
+        background-color: white;
+      }
+    }
   }
 }
 

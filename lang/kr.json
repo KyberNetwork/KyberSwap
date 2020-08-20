@@ -23,9 +23,8 @@
     "price": "가격",
     "your_wallet_address": "지갑 주소",
     "search": "찾기",
-    "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
-    "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "다운로드",
     "your_wallet": "월렛",
     "register_beta": "곧 출시",
@@ -38,6 +37,7 @@
     "exchange": "환전",
     "exchange_from": "보내는 곳",
     "exchange_to": "받는 곳",
+    "exchange_receive": "받다",
     "transfer": "송금",
     "transfer_to_address": "주소로 송금하기",
     "amount": "금액",
@@ -264,7 +264,10 @@
     "insufficient_balance": "거래를 위한 잔액이 부족합니다. ",
     "min_converted_amount": "더 큰 금액을 입력하세요. 최소 변환금은 ${minAmount}입니다.",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders",
+    "torus_connect_error": "Cannot connect to Torus"
   },
   "import": {
     "from_metamask": "Metamask",
@@ -290,7 +293,8 @@
     "connect_other_wallet": "다른 지갑에 연결",
     "do_you_want_to_connect_other_wallet": "다른 지갑으로 연결하시겠습니까?",
     "yes": "예",
-    "no": "아니오"
+    "no": "아니오",
+    "connect_wallet": "지갑 연결하기"
   },
   "info": {
     "title": "카이버 테스트넷",
@@ -302,7 +306,9 @@
     "kyber_homepage": "카이버 홈페이지",
     "get_free_kovan": "무료 다운로드",
     "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
-    "here": "여기"
+    "here": "여기",
+    "please_give_feedback": "새로운 기능에 대한 <a target='_blank' href='${link}'>피드백</a>을 주시면, 서비스 개선에 도움이 됩니다. 감사합니다.",
+    "slippage_warning": "슬리피지(손해)가 높습니다. 더 나은 비율을 갖기 위해 교환할 양을 줄이거나 여러번에 나눠서 교환하는 게 좋습니다."
   },
   "footer": {
     "info": "정보",
@@ -336,9 +342,7 @@
     "accept": "시작하려면",
     "terms_and_condition": " 이용 약관 ",
     "to_get_started": "에 동의하십시오!",
-    "description_term_swap": "환전을 하면 ${term}에 동의하는 것입니다.",
-    "description_term_transfer": "송금을 하면 ${term}에 동의하는 것입니다.",
-    "description_term_limit_order": "오더 시 ${term} 자동으로 동의하게 됩니다."
+    "description_term": "카이버스왑을 사용함으로써, ${term}에 동의합니다."
   },
   "landing_page": {
     "title": "분권화된 이더리움 토큰 거래소",
@@ -425,7 +429,7 @@
     "lower_rate": "원하는 비율이 현재 비율보다 <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> 낮습니다.",
     "not_support_promo_code": "프로모션 코드로 주문을 제출할 수 없습니다. 다른 지갑을 이용해주세요.",
     "pair_not_supported": "해당 페어는 현재 시장에서 지원되지 않습니다.",
-    "ineligible_address": "다른 계정에서 해당 주소를 사용 중입니다. 다른 계정으로 주문해주세요.",
+    "ineligible_address": "이 주소는 ${account}에 의해 사용되었습니다. 다른 계정으로 주문해주세요.",
     "fetch_fee_err": "가스비를 가져올 수 없습니다",
     "view_tx": "트랜잭션 보기",
     "rate_warning_title": "해당 주문을 제출하는 동시에 다음의 주문을 <span class=\"rate-warning-tooltip__title--highlight\">취소</span> 합니다:",
@@ -437,17 +441,37 @@
     "actual_receive_amount": "실제로 받는 토큰의 양:",
     "estimated_amount": "예상 토큰의 양:",
     "extra_amount": "추가로 받은 토큰의 양:",
-    "price": "가격",
     "amount": "금액",
     "total": "추정 가치",
     "volume": "볼륨",
-    "change": "변동",
     "buy": "${symbol} 구매",
     "sell": "${symbol} 판매",
     "type": "유형",
     "available_balance": "사용 가능한 잔액",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "받았습니다"
+    "received": "받았습니다",
+    "login_buy": "구매를 위해 로그인하기",
+    "login_sell": "판매를 위해 로그인하기",
+    "free_fee": "2000KNC 이상을 보유하고 있다면, 리밋오더 시 수수료가 없습니다 (하루 10개 오더까지)",
+    "hold_knc": "지금 바로 2000KNC를 소유해보세요",
+    "top_token": "최근 1시간내 최상위 토큰",
+    "24h_change": "24시간 동안 변동",
+    "last_price": "최근 가격",
+    "24h_high": "24시간 내 최고가",
+    "24h_low": "24시간 내 최저가",
+    "24h_volume": "24시간 내 거래량",
+    "price": "가격"
+  },
+  "portfolio": {
+    "error_loading_history": "거래 내역을 불러오던 중 문제가 발생했습니다. 나중에 다시 시도해주세요",
+    "empty_history": "거래내역이 없습니다",
+    "token_approved": "토큰 승인",
+    "token_is_approved": "${contract}를 위한 토큰 ${token}이 승인되었습니다",
+    "lo_triggered": "리밋 오더 발생됨",
+    "tx_history": "거래 내역",
+    "supported_tokens": "지원하는 토큰",
+    "interact_contract": "컨트랙트 상호작용",
+    "to_contract": "컨트랙트로"
   },
   "home": "홈",
   "tracker": "트래커",
@@ -472,5 +496,11 @@
   "off": "할인",
   "learn_more": "더 알아보기",
   "received": "받았습니다",
-  "details": "자세히보기"
+  "details": "자세히보기",
+  "change": "변동",
+  "send": "보내다",
+  "undefined": "Undefined",
+  "show": "보기",
+  "failed": "실패함",
+  "price": "가격"
 }

@@ -28,7 +28,7 @@ const TransactionLoadingView = (props) => {
             </div>
             }
           </div>
-          <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
+          <div className="x" onClick={() => props.makeNewTransaction()}>&times;</div>
           <div className="content with-overlap tx-loading">
               <div className="row">
                 <ul class="broadcast-steps">
@@ -133,7 +133,7 @@ const TransactionLoadingView = (props) => {
           </div>
           }
         </div>
-        <a className="x" onClick={() => props.makeNewTransaction()}>&times;</a>
+        <div className="x" onClick={() => props.makeNewTransaction()}>&times;</div>
         <div className="content with-overlap theme__text-6">
           <div className="row">
             <div class="info tx-title theme__background-2">
@@ -165,16 +165,16 @@ const TransactionLoadingView = (props) => {
             <ul class="broadcast-steps">
               {props.status === "success" &&
                 <li class={props.status}>
-                    {props.type === "swap" &&
-                    <div>
-                      <div className="final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
-                      <div className="content">
-                        <div>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</div>
-                        <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
-                        <div>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</div>
+                    {props.type === "swap" && (
+                      <div>
+                        <div className="final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
+                        <div className="content">
+                          <div>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</div>
+                          <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
+                          <div>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</div>
+                        </div>
                       </div>
-                    </div>
-                    }
+                    )}
                     {props.type === "transfer" &&
                     <div>
                       <div className="final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>
@@ -224,14 +224,14 @@ const TransactionLoadingView = (props) => {
       </div>
       {!isTxFailed && (
         <div className="tx-actions theme__background-2">
-          <a className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
+          <div className={"change-path"} onClick={() => props.makeNewTransaction(true)}>
             {props.type === "swap" ? (props.translate("transaction.transfer") || "Transfer") : (props.translate("transaction.swap") || "Swap") }
-          </a>
-          <a className="new-transaction" onClick={() => props.makeNewTransaction()}>
+          </div>
+          <div className="new-transaction" onClick={() => props.makeNewTransaction()}>
             {props.type === "swap" ?
               props.translate("transaction.new_ex") || "New swap"
               : props.translate("transaction.new_tx") || "New transfer"}
-          </a>
+          </div>
         </div>
       )}
       {isTxFailed && (

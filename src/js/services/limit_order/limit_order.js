@@ -230,7 +230,7 @@ export function getOrdersByIdArr(idArr) {
     })
 }
 
-export function isEligibleAddress(addr) {
+export function getEligibleAccount(addr) {
     return new Promise((resolve, reject) => {
         var path = `/api/orders/eligible_address?user_addr=${addr}`;
         timeout(MAX_REQUEST_TIMEOUT, fetch(path))
@@ -239,8 +239,9 @@ export function isEligibleAddress(addr) {
             })
             .then((result) => {
                 if (result.success) {
-                    const { eligible_address } = result;
-                    resolve(eligible_address ? true : false);
+                    const isEligible = result.eligible_address;
+                    const eligibleAccount = isEligible ? null : result.account;
+                    resolve(eligibleAccount);
                 } else {
                     reject(new Error("Cannot validate eligible address"));
                 }

@@ -1,5 +1,4 @@
 import React from "react"
-import { getTranslate } from 'react-localize-redux'
 import QrReader from "react-qr-reader";
 import { Modal } from '../../components/CommonElement'
 import {checkBrowser, isMobile} from "../../utils/common"
@@ -78,7 +77,7 @@ export default class QRCode extends React.Component {
       <div className="qc-modal">
         {isSupported && (
           <div>
-            <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+            <div className="x" onClick={(e) => this.hideModal(e)}>&times;</div>
             {!this.state.isBlock && (
               <div className="qc-title">
                 <h2>Scan the code</h2>
@@ -98,7 +97,7 @@ export default class QRCode extends React.Component {
 
         {!isSupported && (
           <div>
-            <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+            <div className="x" onClick={(e) => this.hideModal(e)}>&times;</div>
             <div className="content with-overlap qc-code-wrapper">
               {qcReader}
             </div>

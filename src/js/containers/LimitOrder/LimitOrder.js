@@ -10,8 +10,6 @@ import limitOrderServices from "../../services/limit_order";
 import * as common from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
 import { LimitOrderAccount, withSourceAndBalance } from "../../containers/LimitOrder"
-import service from "../../services/limit_order"
-import * as converter from "../../utils/converter";
 
 @connect((store, props) => {
   const account = store.account.account
@@ -19,10 +17,6 @@ import * as converter from "../../utils/converter";
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
-  
-  // const paramsValid = tokens[src].is_quote && ((tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority) || (!tokens[dest].is_quote))
-  // if (!paramsValid) history.push(`/${constants.LIMIT_ORDER_CONFIG.path}`)
-
   const src = props.match.params.source.toUpperCase()
   const dest = props.match.params.dest.toUpperCase()
 
@@ -34,15 +28,44 @@ import * as converter from "../../utils/converter";
 })
 
 export default class LimitOrder extends React.Component {
-  constructor(){
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
       intervalGroup: []
-    }
+    };
+    
     this.LimitOrderAccount = withSourceAndBalance(LimitOrderAccount)
   }
-
-
+  
+  componentDidMount = () => {
+    this.updatePathOrder()
+    this.setIntervalProcess()
+    this.fetchCurrentRateInit()
+    this.fetchListOrders()
+    this.fetchPendingBalance()
+    this.fetchFavoritePairsIfLoggedIn()
+  }
+  
+  componentWillUnmount = () => {
+    for (var i= 0; i<this.state.intervalGroup.length; i++ ){
+      clearInterval(this.state.intervalGroup[i])
+    }
+    this.setState({intervalGroup: []})
+  }
+  
+  setIntervalProcess = () => {
+    this.setInterValGroup(this.fetchCurrentRate, 10000)
+    this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
+    this.setInterValGroup(this.fetchListOrders.bind(this), 10000)
+    this.setInterValGroup(this.fetchPendingBalance.bind(this), 10000)
+  }
+  
+  setInterValGroup = (callback, intervalTime) => {
+    var intevalProcess = setInterval(callback, intervalTime)
+    this.state.intervalGroup.push(intevalProcess)
+  }
+  
   getEthereumInstance = () => {
     var ethereum = this.props.ethereum
     if (!ethereum){
@@ -60,8 +83,8 @@ export default class LimitOrder extends React.Component {
     var isManual = false
 
     var ethereum = this.getEthereumInstance()
+    
     this.props.dispatch(limitOrderActions.updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual));
-
   }
 
   fetchCurrentRateInit = () => {
@@ -76,25 +99,6 @@ export default class LimitOrder extends React.Component {
       return
     }
     this.props.dispatch(limitOrderActions.getPendingBalances(this.props.account.address))
-  }
-
-  setInterValGroup = (callback, intervalTime) => {    
-    var intevalProcess = setInterval(callback, intervalTime)
-    this.state.intervalGroup.push(intevalProcess)
-  }
-
-  setInvervalProcess = () => {
-    this.setInterValGroup(this.fetchCurrentRate, 10000)
-    this.setInterValGroup(this.fetchOpenOrders.bind(this), 10000)
-    this.setInterValGroup(this.fetchListOrders.bind(this), 10000)    
-    this.setInterValGroup(this.fetchPendingBalance.bind(this), 10000)    
-  }
-
-  componentWillUnmount = () => {
-    for (var i= 0; i<this.state.intervalGroup.length; i++ ){
-      clearInterval(this.state.intervalGroup[i])  
-    }
-    this.setState({intervalGroup: []})    
   }
 
   async fetchOpenOrders() {
@@ -139,6 +143,7 @@ export default class LimitOrder extends React.Component {
 
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken}
   }
+  
   async fetchFavoritePairsIfLoggedIn(){
     if (common.isUserLogin()) {
       let res = await limitOrderServices.getFavoritePairs()
@@ -148,58 +153,38 @@ export default class LimitOrder extends React.Component {
 
   updatePathOrder = () => {
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
-
     var tokens = this.props.tokens
     var src = this.props.src
     var dest = this.props.dest
-
-    var currentQuote = sourceTokenSymbol
-
-    
-    if (tokens[src].is_quote && !tokens[dest].is_quote) {      
-      this.props.dispatch(limitOrderActions.setSideTrade("buy"))      
-    }
+    var currentQuote = sourceTokenSymbol;
+    const isSrcAndDestNotQuote = !tokens[src].is_quote && !tokens[dest].is_quote;
+    const isSrcAndDestQuote = tokens[src].is_quote && tokens[dest].is_quote;
+    const isSrcLessPriority = tokens[src].quote_priority < tokens[dest].quote_priority;
+    const isSrcBiggerPriority = tokens[src].quote_priority > tokens[dest].quote_priority;
+    const isSrcEqualPriority = tokens[src].quote_priority === tokens[dest].quote_priority;
 
     if (!tokens[src].is_quote && tokens[dest].is_quote) {
-      this.props.dispatch(limitOrderActions.setSideTrade("sell"))
       currentQuote = destTokenSymbol
     }
     
-    if ((!tokens[src].is_quote && !tokens[dest].is_quote) || (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority === tokens[dest].quote_priority)) {      
-      sourceTokenSymbol = BLOCKCHAIN_INFO.wrapETHToken
-      destTokenSymbol = "KNC"
-      var path = constants.BASE_HOST +  "/limit_order/" + sourceTokenSymbol.toLowerCase() + "-" + destTokenSymbol.toLowerCase();
-      this.props.dispatch(globalActions.goToRoute(path))   
-
+    if (isSrcAndDestNotQuote || (isSrcAndDestQuote && isSrcEqualPriority)) {
+      this.props.dispatch(globalActions.goToRoute(constants.BASE_HOST +  "/limit_order/knc-weth"));
       currentQuote = BLOCKCHAIN_INFO.wrapETHToken
     }
 
-    if (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority > tokens[dest].quote_priority){
-      this.props.dispatch(limitOrderActions.setSideTrade("buy"))      
-    }
-
-    if (tokens[src].is_quote && tokens[dest].is_quote && tokens[src].quote_priority < tokens[dest].quote_priority){
-      this.props.dispatch(limitOrderActions.setSideTrade("sell"))      
+    if (isSrcAndDestQuote && isSrcLessPriority) {
       currentQuote = destTokenSymbol
+    } else if (isSrcAndDestQuote && isSrcBiggerPriority) {
+      this.props.dispatch(globalActions.goToRoute(`${constants.BASE_HOST}/limit_order/${destTokenSymbol.toLowerCase()}-${sourceTokenSymbol.toLowerCase()}`));
+      this.props.dispatch(limitOrderActions.selectToken(destTokenSymbol, destToken, sourceTokenSymbol, sourceToken));
+      this.props.dispatch(limitOrderActions.updateCurrentQuote(sourceTokenSymbol));
+      return;
     }
 
-    this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
+    this.props.dispatch(limitOrderActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken));
     this.props.dispatch(limitOrderActions.updateCurrentQuote(currentQuote))
-  }
-
-  componentDidMount = () => {
-    this.updatePathOrder()
-
-    this.setInvervalProcess()
-
-   
-    this.fetchCurrentRateInit()
-    this.fetchListOrders()
-    this.fetchPendingBalance()
-    this.fetchFavoritePairsIfLoggedIn()
-  }
-
-
+  };
+  
   render() {
     const LimitOrderAccount = this.LimitOrderAccount;
     return (
