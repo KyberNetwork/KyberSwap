@@ -19,6 +19,7 @@ export default class BalancePercentage extends React.Component {
       const totalGas = converters.toT(gasPrice.multipliedBy(gasLimit));
 
       sourceAmount = converters.subOfTwoNumber(sourceAmount, totalGas);
+      sourceAmount = sourceAmount >= 0 ? sourceAmount : 0;
     }
 
     this.props.changeSourceAmount(null, sourceAmount);

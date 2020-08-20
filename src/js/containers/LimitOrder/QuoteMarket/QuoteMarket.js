@@ -144,7 +144,7 @@ export default class QuoteMarket extends React.Component{
   renderTh = () => {
     let headerTitles = [
       { html: this.props.translate("limit_order.pair") || "Pair", field: "base" },
-      { html: this.props.translate("limit_order.price") || "Price", field: "price" },
+      { html: this.props.translate("price") || "Price", field: "price" },
     ];
     const volumeCol = { html: this.props.translate("limit_order.volume") || "Volume", field: "volume" };
     const changeCol = { html: this.props.translate("change") || "Change", field: "change" };

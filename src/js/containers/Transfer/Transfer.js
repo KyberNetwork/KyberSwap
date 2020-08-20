@@ -6,7 +6,6 @@ import * as validators from "../../utils/validators"
 import * as transferActions from "../../actions/transferActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
-import { Market } from "../Market"
 import { hideSelectToken } from "../../actions/utilActions";
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
@@ -123,14 +122,9 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-        <div className={"exchange__container"}>
-          <TransferBody setSrcToken={this.setSrcToken}/>
-
-          <Market
-            screen={"transfer"}
-            setTokens={this.setSrcToken}
-          />
-        </div>
+      <div className={"exchange__container"}>
+        <TransferBody setSrcToken={this.setSrcToken}/>
+      </div>
     )
   }
 }

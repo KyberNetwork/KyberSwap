@@ -1,7 +1,7 @@
 import React from 'react';
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as constants from "../../constants"
-import {isUserLogin} from "../../../utils/common"
+import { isUserLogin } from "../../../utils/common"
 import * as converters from "../../../utils/converter";
 
 export default class CachedServerProvider extends React.Component {
@@ -26,20 +26,6 @@ export default class CachedServerProvider extends React.Component {
         .catch((err) => {
           console.log(err.message)
           rejected(new Error("Cannot get gas price from server"))
-        })
-    })
-  }
-
-  getGasLimit(srcTokenAddress, destTokenAddress, srcAmount) {
-    if (!srcAmount) srcAmount = 0;
-
-    return new Promise((resolve, rejected) => {
-      this.timeout(this.maxRequestTime, fetch( `${BLOCKCHAIN_INFO.tracker}/gas_limit?source=${srcTokenAddress}&dest=${destTokenAddress}&amount=${srcAmount}`))
-        .then((response) => {
-          resolve(response.json())
-        })
-        .catch((err) => {
-          rejected(err)
         })
     })
   }
@@ -112,6 +98,25 @@ export default class CachedServerProvider extends React.Component {
             resolve(result.data)
           } else {
             rejected(new Error("Rate server is not fetching"))
+          }
+        })
+        .catch((err) => {
+          rejected(err)
+        })
+    })
+  }
+
+  getReferencePrice(baseSymbol, quoteSymbol = 'ETH') {
+    return new Promise((resolve, rejected) => {
+      fetch(`${this.rpcUrl}/refprice?base=${baseSymbol}&quote=${quoteSymbol}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then(result => {
+          if (result.success && result.value) {
+            resolve(result.value)
+          } else {
+            resolve(0)
           }
         })
         .catch((err) => {
@@ -278,6 +283,8 @@ export default class CachedServerProvider extends React.Component {
   }
   
   getExpectedRate(srcToken, destToken, srcAmount) {
+    srcAmount = converters.hexToString(srcAmount);
+
     return new Promise((resolve, rejected) => {
       this.timeout(this.maxRequestTime, fetch(`${BLOCKCHAIN_INFO.tracker}/expectedRate?source=${srcToken}&dest=${destToken}&sourceAmount=${srcAmount}`))
       .then((response) => {

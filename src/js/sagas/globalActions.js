@@ -7,6 +7,7 @@ import Language from "../../../lang"
 import * as common from "../utils/common";
 import * as converter from "../utils/converter"
 import { store } from '../store'
+import { convertBuyRate } from "../utils/converter";
 
 export function* getLatestBlock(action) {
   const ethereum = action.payload
@@ -73,29 +74,24 @@ function updateTitleWithRate() {
   const state = store.getState();
   let title = state.global.documentTitle;
   const { pathname } = window.location;
+  const exchangeRate = state.exchange.expectedRate;
 
-  if (common.isAtSwapPage(pathname)) {
+  if (common.isAtSwapPage(pathname) && !state.exchange.isSelectToken) {
     let { sourceTokenSymbol, destTokenSymbol } = common.getTokenPairFromRoute(pathname);
     sourceTokenSymbol = sourceTokenSymbol.toUpperCase();
     destTokenSymbol = destTokenSymbol.toUpperCase();
 
     if (sourceTokenSymbol !== destTokenSymbol) {
+      let expectedRate;
+
       if (sourceTokenSymbol === "ETH") {
-        // 1 token = 1 / rateEth (Eth)
-        const rateEth = converter.convertBuyRate(state.tokens.tokens[destTokenSymbol].rateEth);
-        if (rateEth != 0) {
-          title = `${converter.roundingRateNumber(rateEth)} ${title}`;
-        }
+        expectedRate = exchangeRate ? convertBuyRate(exchangeRate) : 0;
       } else {
-        // 1 src token = rate src token * rateEth dest token
-        const rateSourceToEth = converter.toT(state.tokens.tokens[sourceTokenSymbol].rate);
-        const rateEthToDest = converter.toT(state.tokens.tokens[destTokenSymbol].rateEth);
-        const rate = rateSourceToEth * rateEthToDest;
-        if (rate != 0) {
-          title = `${converter.roundingRateNumber(rate)} ${title}`;
-        }
+        expectedRate = converter.toT(exchangeRate);
       }
-    } 
+
+      title = `${expectedRate ? converter.roundingRateNumber(expectedRate) : ''} ${title}`;
+    }
   }
 
   document.title = title;
