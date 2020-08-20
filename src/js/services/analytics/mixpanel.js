@@ -161,40 +161,10 @@ export default class Mixpanel {
     }
   }
 
-  trackMarketSetting(field, value){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_2_Click_MarketSetting", {field, value})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackChooseGas(type, gas, typeGas){
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track(`Step_3_select_advance_feature_${type}_choose_gas`, {gas: gas, typeGas: typeGas})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSearchETHMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_1_Click_To_Search_ETH_Market")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickSortBalanceBoard(type, sortType){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_4_Click_Sort_Token_Balance_Board", {type: type, sortType: sortType})
       }catch(e){
         console.log(e)
       }
@@ -255,16 +225,6 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track("Swap_*_2_Click_Search_Token")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSortETHMarket(field, sortType){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Swap_*_1_Click_Sort_ETH_Market", {field: field, sortType: sortType})
       }catch(e){
         console.log(e)
       }
@@ -615,26 +575,6 @@ export default class Mixpanel {
     if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
       try{
         mixpanel.track("Step_2_Connect_Other_Wallet")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickOpenMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Step_*_Open_Market_Modal")
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickCloseMarket(){
-    if (typeof mixpanel !== "undefined" && typeof mixpanel.track === 'function'){
-      try{
-        mixpanel.track("Step_*_Close_Market_Modal")
       }catch(e){
         console.log(e)
       }
