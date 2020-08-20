@@ -385,8 +385,8 @@ export default class LimitOrderSubmit extends React.Component {
     return (
       <div className={"limit-order-submit"}>
         <div
-          className={`limit-order-submit__accept-button common__button common__button--${this.props.isBuyForm ? 'green' : 'red'} ${isButtonDisabled ? 'disabled' : ''}`}
-          onClick={this.submitOrder}
+          className={`disabled limit-order-submit__accept-button common__button common__button--${this.props.isBuyForm ? 'green' : 'red'} ${isButtonDisabled ? 'disabled' : ''}`}
+          // onClick={this.submitOrder}
         >
           {this.state.isValidating && (
             <div>Loading...</div>

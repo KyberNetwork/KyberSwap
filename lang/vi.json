@@ -23,8 +23,6 @@
     "price": "GIÁ",
     "your_wallet_address": "Địa chỉ ví của bạn",
     "search": "Tìm kiếm",
-    "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
-    "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
     "connect_your_wallet_to_limit_order": "Nhập ví của bạn và tiến hành đặt lệnh",
     "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Ví của bạn",
@@ -294,7 +292,8 @@
     "promo_code": "MÃ KHUYẾN MÃI",
     "do_you_want_to_connect_other_wallet": "Bạn có muốn kết nối với ví khác không?",
     "yes": "Có",
-    "no": "Không"
+    "no": "Không",
+    "connect_wallet": "Kết nối ví"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
