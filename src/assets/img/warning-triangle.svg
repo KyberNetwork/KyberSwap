@@ -1,21 +1,24 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="12px" height="11px" viewBox="0 0 12 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
     <defs>
-        <path d="M8.9375,3.90156667 L13.0625,11.6932333 C13.5780917,12.6671287 13.1007504,13.4640667 11.9914698,13.4640667 L4.0085302,13.4640667 C2.90195036,13.4640667 2.41973305,12.6712376 2.9375,11.6932333 L7.0625,3.90156667 C7.57809165,2.92767133 8.41973305,2.92356242 8.9375,3.90156667 Z M8,10 C8.368,10 8.66666667,9.70133333 8.66666667,9.33333333 L8.66666667,6 C8.66666667,5.632 8.368,5.33333333 8,5.33333333 C7.632,5.33333333 7.33333333,5.632 7.33333333,6 L7.33333333,9.33333333 C7.33333333,9.70133333 7.632,10 8,10 Z M8,12 C8.368,12 8.66666667,11.7013333 8.66666667,11.3333333 C8.66666667,10.9653333 8.368,10.6666667 8,10.6666667 C7.632,10.6666667 7.33333333,10.9653333 7.33333333,11.3333333 C7.33333333,11.7013333 7.632,12 8,12 Z" id="path-1"></path>
+        <path d="M6.9375,1.90156667 L11.0625,9.69323333 C11.5780917,10.6671287 11.1007504,11.4640667 9.9914698,11.4640667 L2.0085302,11.4640667 C0.901950359,11.4640667 0.419733047,10.6712376 0.9375,9.69323333 L5.0625,1.90156667 C5.57809165,0.927671326 6.41973305,0.923562422 6.9375,1.90156667 Z M6,8 C6.368,8 6.66666667,7.70133333 6.66666667,7.33333333 L6.66666667,4 C6.66666667,3.632 6.368,3.33333333 6,3.33333333 C5.632,3.33333333 5.33333333,3.632 5.33333333,4 L5.33333333,7.33333333 C5.33333333,7.70133333 5.632,8 6,8 Z M6,10 C6.368,10 6.66666667,9.70133333 6.66666667,9.33333333 C6.66666667,8.96533333 6.368,8.66666667 6,8.66666667 C5.632,8.66666667 5.33333333,8.96533333 5.33333333,9.33333333 C5.33333333,9.70133333 5.632,10 6,10 Z" id="path-1"></path>
     </defs>
-    <g id="Limit-Order-14May" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="5--LimitOrder---manage-order---tooltip" transform="translate(-1035.000000, -168.000000)">
-            <rect fill="#FFFFFF" x="0" y="0" width="1440" height="539"></rect>
-            <g id="standard/status/warning" transform="translate(1033.000000, 165.000000)">
+    <g id="KyberSwap.com-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="swap-confirm--warning" transform="translate(-473.000000, -440.000000)">
+            <g id="icon" transform="translate(473.000000, 439.000000)">
                 <mask id="mask-2" fill="white">
                     <use xlink:href="#path-1"></use>
                 </mask>
-                <use id="Combined-Shape" fill="#42526E" fill-rule="evenodd" xlink:href="#path-1"></use>
-                <g id="Yellow-/-Y400" mask="url(#mask-2)" fill="#FF991F" fill-rule="evenodd">
-                    <rect id="Y400" x="0" y="0" width="16" height="16"></rect>
+                <use id="Combined-Shape" fill="#42526E" xlink:href="#path-1"></use>
+                <g id="Yellow-/-Y400" mask="url(#mask-2)" fill="#FF991F">
+                    <g transform="translate(-2.000000, -2.000000)" id="Y400">
+                        <rect x="0" y="0" width="16" height="16"></rect>
+                    </g>
                 </g>
             </g>
         </g>
     </g>
 </svg>
-

@@ -1,4 +1,4 @@
-import { take, put, call, fork, select, takeEvery, takeLatest, all, apply } from 'redux-saga/effects'
+import { put, call, takeEvery } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
@@ -9,66 +9,26 @@ import * as utilActions from '../actions/utilActions'
 import * as constants from "../services/constants"
 import { multiplyOfTwoNumber } from "../utils/converter"
 
-function* selectToken(action) {
-    const { symbol, address, type } = action.payload
-    yield put(limitOrderActions.selectToken(symbol, address, type))
-
-    const state = store.getState();
-    var ethereum = state.connection.ethereum
-    var limitOrder = state.limitOrder
-    var source = limitOrder.sourceToken
-    var dest = limitOrder.destToken
-    var sourceTokenSymbol = limitOrder.sourceTokenSymbol
-    var isManual = true
-    var sourceAmount = limitOrder.sourceAmount
-
-
-    if (type === "source" ){
-      var account = state.account.account
-      if (isUserLogin() && account !== false){
-        yield put(limitOrderActions.fetchFee(account.address, symbol, limitOrder.destTokenSymbol))
-      }
-
-      source = address
-      sourceTokenSymbol = symbol
-    }else{
-      dest = address      
-    }
-    
-    
-    // yield put(utilActions.hideSelectToken())
-  
-    // yield put(actions.checkSelectToken())
-    // yield call(estimateGasNormal)
-    
-    if (ethereum){      
-      yield put(limitOrderActions.updateRate(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual ))
-    }
-  
-    //calculate gas use
-    // yield call(updateGasUsed)
-  }
-
-
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type  } = action.payload;
-  const translate = getTranslate(store.getState().locale)
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol)
+  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, isManual, type } = action.payload;
+
+  const state = store.getState();
+  const translate = getTranslate(state.locale)
+  const tokens = state.tokens.tokens;
 
   try {
-    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
-    var { expectedPrice, slippagePrice } = rate
-    const rateInit = rateZero.expectedPrice.toString();
+    const baseToQuoteRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, sourceToken, destToken, false, sourceTokenSymbol);
+    const quoteToBaseRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, destToken, sourceToken, false, destTokenSymbol);
+    
+    const sellRate = baseToQuoteRate.rateZero.expectedPrice;
+    const buyRate = quoteToBaseRate.rateZero.expectedPrice;
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, lastestBlock, isManual, type, ""))
+    yield put.resolve(limitOrderActions.updateRateComplete(buyRate, sellRate, type))
   } catch(err) {
+    console.log(err);
     if (isManual) {
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
-      return
     }
   }
 }
@@ -132,7 +92,7 @@ function*  fetchOpenOrderStatus() {
   }
 }
 
-function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex, dateSort }) {
+function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pageIndex, dateSort, typeFilter }) {
   if (addressFilter) {
     yield put(limitOrderActions.setAddressFilter(addressFilter));
   }
@@ -151,6 +111,9 @@ function* updateFilter({ addressFilter, pairFilter, statusFilter, timeFilter, pa
   if (dateSort) {
     yield put(limitOrderActions.setOrderDateSort(dateSort));
   }
+  if (typeFilter){
+    yield put(limitOrderActions.setTypeFilter(typeFilter));
+  }
 }
 
 /**
@@ -162,7 +125,6 @@ function* getOrdersByFilter(action) {
   yield* updateFilter(action.payload);
 
   const { limitOrder, tokens } = store.getState();
-
   try {
     if (limitOrder.filterMode === "client") {
       return;
@@ -180,7 +142,7 @@ function* getOrdersByFilter(action) {
     // Only get open + in_progress orders in open tab,
     // And only get invalidated + filled + cancelled orders in history tab
     const listStatus = limitOrder.activeOrderTab === "open" ?
-      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS] 
+      [constants.LIMIT_ORDER_CONFIG.status.OPEN, constants.LIMIT_ORDER_CONFIG.status.IN_PROGRESS]
     : [constants.LIMIT_ORDER_CONFIG.status.FILLED, constants.LIMIT_ORDER_CONFIG.status.CANCELLED, constants.LIMIT_ORDER_CONFIG.status.INVALIDATED];
 
     let statusFilter = listStatus;
@@ -190,7 +152,7 @@ function* getOrdersByFilter(action) {
       });
     }
 
-    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
+    const { orders, itemsCount, pageCount, pageIndex } = yield call(limitOrderServices.getOrdersByFilter, limitOrder.addressFilter, pairAddressFilter, limitOrder.typeFilter, statusFilter, limitOrder.timeFilter, limitOrder.dateSort, limitOrder.pageIndex);
 
     yield put(limitOrderActions.setOrdersCount(itemsCount));
     yield put(limitOrderActions.addListOrder(orders));
@@ -230,7 +192,7 @@ function* fetchPendingBalances(action) {
 
 function validatePendingBalances(currentPendingTxs, newPendingBalances, newPendingTxs) {
   let pendingTxs = [];
-console.log(currentPendingTxs)
+
   newPendingTxs.forEach(newPendingTx => {
     const existingTx = currentPendingTxs.find((currentPendingTx) => {
       return currentPendingTx.tx_hash === newPendingTx.tx_hash;
@@ -252,30 +214,22 @@ function* changeOrderTab(action) {
   const { tab } = action.payload;
 
   yield put(limitOrderActions.changeOrderTabComplete(tab));
-
   
   yield put(limitOrderActions.getOrdersByFilter({
     statusFilter: [],
+    addressFilter: [],
+    pairFilter: [],
     pageIndex: 1
   }));
 }
 
 export function* watchLimitOrder() {
-    yield takeEvery("LIMIT_ORDER.SELECT_TOKEN_ASYNC", selectToken)
-
-    yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending)
-
-    yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee)
-
-    yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport)
-
-    yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus)
-
-    yield takeEvery("LIMIT_ORDER.GET_ORDERS_BY_FILTER", getOrdersByFilter)
-
-    yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter)
-
-    yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances)
-  
-    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab)
+    yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending);
+    yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee);
+    yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", triggerAfterAccountImport);
+    yield takeEvery("LIMIT_ORDER.FETCH_OPEN_ORDER_STATUS", fetchOpenOrderStatus);
+    yield takeEvery("LIMIT_ORDER.GET_ORDERS_BY_FILTER", getOrdersByFilter);
+    yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter);
+    yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances);
+    yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab);
   }

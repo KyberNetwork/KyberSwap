@@ -21,7 +21,6 @@ const fetch = require("node-fetch");
 var fs = require('fs');
 var sass = require('node-sass');
 
-
 var getConfig = env => {
     const outputPath = `dist/${env}`
 
@@ -68,7 +67,6 @@ var getConfig = env => {
                 new TerserPlugin({
                     parallel: true,
                     terserOptions: {
-                        ecma: 6,
                         compress: {
                             drop_console: true,
                             warnings: false
@@ -141,7 +139,7 @@ var getConfig = env => {
 async function getTokenApi(network) {
     var BLOCKCHAIN_INFO = require('./env/config-env/' + (network) + ".json");
     return new Promise((resolve, result) => {
-        fetch(BLOCKCHAIN_INFO.api_tokens, {
+        fetch(`${BLOCKCHAIN_INFO.tracker}/internal/currencies`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -151,13 +149,14 @@ async function getTokenApi(network) {
             return response.json()
         })
             .then((result) => {
+                let tokens = BLOCKCHAIN_INFO.tokens;
                 if (result.success) {
-                    var tokens = {}
+                    tokens = {};
                     result.data.map(val => {
                         tokens[val.symbol] = val
                     })
-                    resolve(tokens)
                 }
+                resolve(tokens)
             }).catch((err) => {
                 console.log(err)
                 var tokens = BLOCKCHAIN_INFO.tokens
@@ -217,6 +216,7 @@ async function main() {
    // await renderLanguage()
 
     var enviroment = process.env.NODE_ENV
+
     await saveBackupTokens(enviroment)
 
     var webpackConfig = await getConfig(enviroment)  

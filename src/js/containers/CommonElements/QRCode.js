@@ -1,5 +1,4 @@
 import React from "react"
-import { getTranslate } from 'react-localize-redux'
 import QrReader from "react-qr-reader";
 import { Modal } from '../../components/CommonElement'
 import {checkBrowser, isMobile} from "../../utils/common"
@@ -66,19 +65,19 @@ export default class QRCode extends React.Component {
   }
 
   isSupported = () => {
-    if (!this.checkWebRTCCompatible() || (this.state.isBlock && this.props.onDAPP)) return false
+    if (!this.checkWebRTCCompatible() || (this.state.isBlock && this.props.onDAPP) || (!!isMobile.iOS() && checkBrowser.isSafari())) return false
     if (this.checkWebRTCCompatible()) return true
   }
 
   render() {
-    var isSupported = this.isSupported()
+    var isSupported = this.isSupported()    
     var qcReader = isSupported ? <QrReader delay={300} onError={this.onError} onScan={this.onScan} style={{ width: "100%" }} /> : <span className="error">Your browser doesn't support scan QR Code</span>
 
     var qcCode = (
       <div className="qc-modal">
         {isSupported && (
           <div>
-            <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+            <div className="x" onClick={(e) => this.hideModal(e)}>&times;</div>
             {!this.state.isBlock && (
               <div className="qc-title">
                 <h2>Scan the code</h2>
@@ -98,7 +97,7 @@ export default class QRCode extends React.Component {
 
         {!isSupported && (
           <div>
-            <a className="x" onClick={(e) => this.hideModal(e)}>&times;</a>
+            <div className="x" onClick={(e) => this.hideModal(e)}>&times;</div>
             <div className="content with-overlap qc-code-wrapper">
               {qcReader}
             </div>

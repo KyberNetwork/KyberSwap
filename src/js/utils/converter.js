@@ -1,9 +1,7 @@
-// in this package, all number are in 18 decimals precision
-
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
 import BLOCKCHAIN_INFO from "../../../env"
-
+import abiDecoder from "abi-decoder"
 
 export function calculateMinAmount(source, rate) {
   var bigSource = new BigNumber(source)
@@ -177,29 +175,20 @@ function merge(left, right, type) {
   return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight))
 }
 
-export function sortEthBalance(tokens) {
-  var sortedTokens = []
-  let removedEth = { ...tokens }
-  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
+export function sortETHBalance(tokens, isDesc, WETHToTop) {
+  var sortedTokens = [];
+  let tokensWithoutETH = { ...tokens };
+  
+  if (WETHToTop && tokensWithoutETH['WETH']) delete tokensWithoutETH['WETH'];
+  if (tokensWithoutETH['ETH']) delete tokensWithoutETH['ETH'];
+  
   if (tokens) {
-    sortedTokens = mergeSort(Object.values(removedEth), 1)
+    sortedTokens = mergeSort(Object.values(tokensWithoutETH), isDesc ? 1 : -1)
   }
-  if (tokens[constants.ETH.symbol]) {
-    sortedTokens.unshift(tokens[constants.ETH.symbol])
-  }
-  return sortedTokens
-}
-
-export function sortASCEthBalance(tokens) {
-  var sortedTokens = []
-  let removedEth = { ...tokens }
-  if (removedEth[constants.ETH.symbol]) delete removedEth[constants.ETH.symbol]
-  if (tokens) {
-    sortedTokens = mergeSort(Object.values(removedEth), -1)
-  }
-  if (tokens[constants.ETH.symbol]) {
-    sortedTokens.unshift(tokens[constants.ETH.symbol])
-  }
+  
+  if (WETHToTop && tokens['WETH']) sortedTokens.unshift(tokens['WETH']);
+  if (tokens['ETH']) sortedTokens.unshift(tokens['ETH']);
+  
   return sortedTokens
 }
 
@@ -333,7 +322,7 @@ export function numberToHexAddress(number) {
 
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
-  return "0x" + (initNumber.pow(255).toString(16))
+  return "0x" + (initNumber.pow(256).minus(1).toString(16))
 }
 
 export function maskNumber() {
@@ -348,6 +337,10 @@ export function biggestNumberDecimal() {
 
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
+}
+
+export function hexToString(hex) {
+  return new BigNumber(hex).toString()
 }
 
 export function hexToBigNumber(hex) {
@@ -392,11 +385,9 @@ export function stringToNumber(str) {
   return bigNumber.toNumber()
 }
 
-
-
 export function getBigNumberValueByPercentage(number, percentage) {
-  if (percentage == 100) return number
-  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100).toFixed(0);
+  if (percentage === 100) return number
+  return stringToBigNumber(number.toString()).multipliedBy(percentage / 100);
 }
 
 export function stringToHex(number, decimal) {
@@ -437,7 +428,7 @@ export function roundingNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
@@ -483,17 +474,13 @@ export function roundingRateNumber(number) {
     result = intPart.substr(0, i);
 
   for (; i < intPart.length; i += SIZE) {
-    result += ',' + intPart.substr(i, SIZE);
+    result +=  intPart.substr(i, SIZE);
   }
   if (arr[1]) {
     result += '.' + arr[1];
   }
   return result;
 }
-
-// export function displayRate(number){
-//   return roundingNumber(number
-// }
 
 export function toPrimitiveNumber(x) {
   var bigNum = new BigNumber(x)
@@ -599,6 +586,19 @@ export function findNetworkName(networkId) {
   }
 }
 
+export function findNetworkCode(networkId) {
+  switch (networkId) {
+    case 1:
+      return "mainnet";
+    case 3:
+      return "ropsten";
+    case 4:
+      return "rinkeby";
+    default:
+      return 'mainnet';
+  }
+}
+
 export function sliceErrorMsg(err) {
   if (err.length > 70) {
     err = err.slice(0, 70) + '...'
@@ -686,14 +686,12 @@ export function getMinrate(rate, minRate) {
 
 
 export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell) {
-  // console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
   var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
 
   var sourceAmountBig = new BigNumber(sourceAmount.toString())
   sourceAmountBig = sourceAmountBig.times(Math.pow(10, decimal))
-
   if (minSourceAllow.comparedTo(sourceAmountBig) === 1) {
     return "0x" + minSourceAllow.toString(16)
   } else {
@@ -720,6 +718,7 @@ export function getSourceAmountZero(sourceTokenSymbol, decimal, rateSell) {
     } else {
       minNumber = Math.pow(10, decimal)
     }
+
     return minNumber.toString()
   }
   var minSourceAllow = minETHAllow.div(rate).times(Math.pow(10, decimal))
@@ -845,7 +844,6 @@ export function calculateContractNonce(contractNonce, address) {
 }
 
 export function findMaxNumber(arr) {
-  console.log(arr)
   if (arr.length === 0) return false
   var maxNum = arr[0]
   for (var i = 1; i < arr.length; i++) {
@@ -856,14 +854,12 @@ export function findMaxNumber(arr) {
   return maxNum
 }
 
-export function displayNumberWithDot(num) {
-  const NUM_DIGIT = 7
-
+export function displayNumberWithDot(num, numDigit = 7) {
   var numDisplay = parseFloat(num)
   numDisplay = isNaN(numDisplay) ? 0 : numDisplay.toFixed(10).replace(/\.?0+$/,"")
   numDisplay = numDisplay.toString()
-  if (numDisplay.length > 7) {
-    numDisplay = numDisplay.substring(0, NUM_DIGIT) + "..."
+  if (numDisplay.length > numDigit) {
+    numDisplay = numDisplay.substring(0, numDigit) + "..."
   }
   return numDisplay
 }
@@ -880,5 +876,59 @@ export function formatNumberByPrecision(number, precision = 4) {
   const amountString = amountBigNumber.toFixed().toString();
   const indexOfDecimal = amountString.indexOf('.');
 
-  return indexOfDecimal !== -1 ? parseFloat(amountString.slice(0, indexOfDecimal + (precision + 1))) : parseFloat(amountString);
+  return indexOfDecimal !== -1 ? amountString.slice(0, indexOfDecimal + (precision + 1)) :amountString;
+}
+
+export function decodeTxInput(input, abi) {
+  abiDecoder.addABI(abi);
+  return abiDecoder.decodeMethod(input);
+}
+
+export function convertToETHBalance(balance, decimals, symbol, rate) {
+  return toT(multiplyOfTwoNumber(toT(balance, decimals), symbol === "ETH" ? "1000000000000000000" : rate));
+}
+
+export function convertTimestampToTime(timestamp) {
+  const date = new Date(timestamp*1000);
+  return `${addZeroToSingleNumber(date.getHours())}:${addZeroToSingleNumber(date.getMinutes())}:${addZeroToSingleNumber(date.getSeconds())}`;
+}
+
+function addZeroToSingleNumber(number) {
+  if (number < 10) number = `0${number}`;
+  return number;
+}
+
+export function splitArrayToChunks(array, chunk = 8){
+  let i,j,temparray;
+  const returnArray = []
+  for (i=0,j=array.length; i<j; i+=chunk) {
+      temparray = array.slice(i,i+chunk);
+      returnArray.push(temparray)
+  }
+  return returnArray
+}
+
+export function formatAddress(address, first = 15, last = -4) {
+  return `${address.slice(0, first)}...${address.slice(last)}`;
+}
+
+export function shortenBigNumber(amount, exponential = 1) {
+  return Number.parseFloat(amount).toExponential(exponential);
+}
+
+export function calculateExpectedRateWithFee(expectedRate, fee) {
+  const pow = Math.pow(10, 18);
+  const feeInPercentage = fee / 10000;
+  const bigExpectedRate = new BigNumber(expectedRate).div(pow);
+  const feeInNumber = multiplyOfTwoNumber(bigExpectedRate, feeInPercentage);
+  const rateWithFee = new BigNumber(subOfTwoNumber(bigExpectedRate, feeInNumber));
+
+  return rateWithFee.times(pow).toString();
+}
+
+export function calculateSrcAmountWithFee(srcAmount, fee) {
+  const feeInPercentage = fee / 10000;
+  const feeInNumber = multiplyOfTwoNumber(srcAmount, feeInPercentage);
+
+  return sumOfTwoNumber(srcAmount, feeInNumber);
 }

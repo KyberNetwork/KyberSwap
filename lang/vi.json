@@ -23,12 +23,11 @@
     "price": "GIÁ",
     "your_wallet_address": "Địa chỉ ví của bạn",
     "search": "Tìm kiếm",
-    "connect_your_wallet_to_swap": "Kết nối ví của bạn để trao đổi",
-    "connect_your_wallet_to_transfer": "Kết nối ví của bạn để chuyển token",
     "connect_your_wallet_to_limit_order": "Nhập ví của bạn và tiến hành đặt lệnh",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Ví của bạn",
     "register_beta": "Register Beta",
-    "or_connect_with": "Or Connect with",
+    "or_connect_with": "Connect with",
     "download": "Tải về",
     "enter": "Nhập"
   },
@@ -136,7 +135,10 @@
     "please_swap_before": "Vui lòng trao đổi token trước",
     "please_swap_and_send_before": "Vui lòng trao đổi token và chuyển về ví cá nhân của bạn trước",
     "limit_order": "Lệnh giao dịch",
-    "rate_label": "Tỉ lệ"
+    "rate_label": "Tỉ lệ",
+    "market_rate": "Tỉ giá thị trường",
+    "tx_fee_warning": "After this swap, you will not have enough ETH as fee for further transactions",
+    "view_on": "Xem trên"
   },
   "modal": {
     "enter_password": "Nhập mật khẩu",
@@ -175,7 +177,11 @@
     "order_confirm": "Xác nhận lệnh",
     "success": "Thành công",
     "keystore_title": "Nhập mật khẩu để mở khóa keystore của bạn",
-    "unlock": "Mở khoá"
+    "unlock": "Mở khoá",
+    "yes": "Có",
+    "no": "Không",
+    "buy": "Mua",
+    "sell": "Bán"
   },
   "error": {
     "metamask_not_installed": "Metamask chưa được cài đặt",
@@ -208,6 +214,8 @@
     "check_right_application_selected": "Kiểm tra lại để chắc chắn bạn đã sử dụng đúng\nứng dụng",
     "network_not_match": "Metamask cần chạy ở <strong>${expectedName}</strong>. </br>Hiện\nđang trên <strong>${currentName}</strong>",
     "network_not_match_unknow": "Metamask cần chạy <strong>${expectedName}</strong>",
+    "network_not_match_wallet_link": "Ví cần chạy ở <strong>${expectedName}</strong>. </br>Hiện\nđang trên <strong>${currentName}</strong>",
+    "network_not_match_unknow_wallet_link": "Ví cần chạy <strong>${expectedName}</strong>",
     "not_supported": "Không hỗ trợ",
     "metamask_not_install": "Không thể kết nối đến Metamask. Hãy chắc chắn rằng Metamask\ncủa bạn đã được cài",
     "browser_not_support_metamask": "Metamask không được hỗ trợ trên trình duyệt <strong>${browser}</strong>.\n</br>Vui lòng chuyển sang <strong>Chrome</strong> hoặc <strong>FireFox</strong>",
@@ -226,7 +234,7 @@
     "issue_ether_amount": "Lỗi do người dùng đã không gửi chính xác số lượng eths",
     "issue_user_cap": "Lỗi do số lượng ban đầu vượt quá giới hạn người dùng",
     "min_rate_too_high": "Tỉ giá của bạn quá cao!",
-    "ledger_global_err": "<div class='text-left'>Không thể kết nối đến Leger của bạn. Kiểm\ntra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>-\nBạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser\nsupport\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
+    "ledger_global_err": "<div class='ledger-error-dest'>Không thể kết nối đến Leger của bạn. Kiểm\ntra lại nếu như:<br/>- Bạn đã kết nối đến Ledger.<br/>- Bạn đã đăng nhập vào Ledger.<br/>-\nBạn đã truy cập vào Ethereum app trên Ledger.<br/>- Bạn đã bật chế độ \"Browser\nsupport\" trên Ledger. Xem hướng dẫn tại  <a href=\"${link}\" target=\"_blank\">đây</a>.</div>",
     "need_to_config_env_ledger": "Bạn phải cài đặt trên thiết bị Linux để truy cập Ledger.\nXem hướng dẫn tại <a href=\"${link}\" target=\"_blank\">đây</a>.",
     "ledger_not_enable_contract": "Kiểm tra lại nếu: </br>- \"Contract Data\" đã được bật\ntrên Ledger của bạn.",
     "invalid_path_or_session_expired": "Không thể lấy địa chỉ từ đường dẫn. Kiểm tra lại\nđường dẫn hoặc đăng nhập lại Ledger của bạn",
@@ -248,13 +256,17 @@
     "required_field": "Mục này cần được điền",
     "source_dest_token": "Vui lòng chọn hai loại token khác nhau",
     "amount_too_small": "Lượng giao dịch quá nhỏ. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối thiểu ${minAmount} ETH.",
-    "amount_too_big": "Lượng giao dịch quá lớn. Lệnh giao dịch chỉ hỗ trợ lượng giao dịch tối đa ${maxAmount} ETH.",
     "rate_is_not_number": "Tỉ giá khớp lệnh không phải là một số",
-    "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% tỉ giá hiện tại",
-    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, vui lòng tăng tỉ giá khớp lệnh.",
+    "rate_too_high": "Tỉ giá khớp lệnh quá cao, chỉ cho phép lớn hơn ${maxRate}% so với tỉ giá hiện tại",
+    "rate_too_low": "Tỉ giá khớp lệnh quá thấp, chỉ cho phép nhỏ hơn ${minRate}% so với tỉ giá hiện tại",
     "insufficient_balance_order": "Tài khoản của bạn không đủ để đặt lệnh. Vui lòng kiểm tra số dư ${tokenSymbol} của bạn và các lệnh đã đặt.",
     "insufficient_balance": "Tài khoản của bạn không đủ để thực hiện giao dịch",
-    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}"
+    "min_converted_amount": "Vui lòng nhập số lớn hơn. Lượng chuyển đổi tối thiểu là ${minAmount}",
+    "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
+    "not_attached_address": "Bạn chưa đính kèm địa chỉ ví của bạn vào tên miền này. Vui lòng hoàn tất tài khoản tại ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders",
+    "torus_connect_error": "Cannot connect to Torus"
   },
   "import": {
     "from_metamask": "Kết nối <br> Metamask",
@@ -280,7 +292,8 @@
     "promo_code": "MÃ KHUYẾN MÃI",
     "do_you_want_to_connect_other_wallet": "Bạn có muốn kết nối với ví khác không?",
     "yes": "Có",
-    "no": "Không"
+    "no": "Không",
+    "connect_wallet": "Kết nối ví"
   },
   "info": {
     "title": "Kyber phiên bản thử nghiệm",
@@ -292,7 +305,9 @@
     "kyber_homepage": "Trang chủ Kyber",
     "get_free_kovan": "Lấy",
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
-    "here": "tại đây"
+    "here": "tại đây",
+    "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn.",
+    "slippage_warning": "Mức trượt giá đang cao. Bạn có thể giảm lượng giao dịch hoặc chia nhỏ lệnh của bạn để có tỉ giá tốt hơn"
   },
   "footer": {
     "info": "Thông tin",
@@ -326,9 +341,7 @@
     "accept": "Chấp nhận",
     "terms_and_condition": " Điều khoản sử dụng ",
     "to_get_started": "để bắt đầu",
-    "description_term_swap": "Bằng việc trao đổi token, bạn đồng ý với ${term}",
-    "description_term_transfer": "Bằng việc chuyển token, bạn đồng ý với ${term}",
-    "description_term_limit_order": "Bằng việc đặt lệnh, bạn đồng ý với ${term}"
+    "description_term": "Bằng việc sử dụng KyberSwap, bạn đồng ý với ${term}"
   },
   "landing_page": {
     "title": "Trao đổi Ethereum tokens",
@@ -345,7 +358,8 @@
     "json": "JSON",
     "ledger": "LEDGER",
     "private_key": "PRIVATE KEY",
-    "promo_code": "MÃ KHUYẾN MÃI"
+    "promo_code": "MÃ KHUYẾN MÃI",
+    "others": "VÍ KHÁC"
   },
   "market": {
     "eth_market": "Thị trường Ethereum",
@@ -393,16 +407,16 @@
     "your_balance": "Tài khoản của bạn:",
     "submit_order": "Đặt lệnh",
     "your_available_balance": "Tài khoản khả dụng cho Limit Order",
-    "eth_not_support": "ETH* được tính bằng cả ETH và WETH",
+    "eth_not_support": "ETH* là tổng của ETH và WETH",
     "canceling_order_message": "Bạn đang hủy lệnh này",
     "fee_info_message": "Bạn sẽ không bị tính phí lúc này. \nBạn chỉ phải trả phí khi giao dịch đã được thực hiện.",
-    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${srcToken}/${destToken} >= ${rate}",
+    "confirm_order_message": "Giao dịch của bạn sẽ được thực hiện khi tỉ lệ ${base} ${compare} <span title=\"${rawRate}\">${rate}</span> ${quote}",
     "fee": "Phí",
     "change_rate": "Thay đổi tỉ lệ",
     "current_rate": "Tỉ giá hiện tại",
     "lower_rate_warning": "Lệnh giao dịch này có tỉ giá thấp hơn một số lệnh trước đó bạn đặt. Những lệnh giao dịch dưới đây sẽ bị hủy khi bạn đặt lệnh này.",
     "wrap_eth_notify": "Bạn không thể đặt lệnh này vì lượng WETH của bạn không đủ, vui lòng chuyển đổi thêm ETH sang WETH.",
-    "empty_order": "Hiện chưa có lệnh đặt nào cả. Bạn có thể đặt lệnh",
+    "empty_order": "Hiện chưa có lệnh đặt nào cả.",
     "you_will_receive": "Bạn sẽ nhận được",
     "submit_successfully": "Lệnh giao dịch của bạn đã được đặt thành công trên server. Bạn có thể kiểm tra lệnh này trên danh sách lệnh giao dịch.",
     "weth_not_supported_tooltip": "Lệnh giao dịch chỉ hỗ trợ những token có trên Kyber. ETH không được hỗ trợ, vui lòng sử dụng WETH.",
@@ -414,7 +428,7 @@
     "lower_rate": "Tỉ giá bạn đặt thấp hơn <span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span> so với tỉ giá hiện tại.",
     "not_support_promo_code": "Bạn không thể đặt lệnh bằng promo code. Vui lòng sử dụng các loại ví khác.",
     "pair_not_supported": "Cặp token này tạm thời không được hỗ trợ",
-    "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi tài khoản khác. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch.",
+    "ineligible_address": "Địa chỉ ví này đã được sử dụng bởi ${account}. Vui lòng sử dụng địa chỉ ví khác để đặt lệnh giao dịch.",
     "fetch_fee_err": "Không lấy được phí giao dịch.",
     "view_tx": "Xem giao dịch",
     "rate_warning_title": "Bằng việc tạo lệnh này, bạn sẽ <span class=\"rate-warning-tooltip__title--highlight\">HUỶ</span> những lệnh sau:",
@@ -422,7 +436,41 @@
     "execute_rate": "Lệnh giao dịch của bạn sẽ được thực hiện khi tỉ giá ${tokenPair} đạt ${executeRate} (cao hơn <span class=\"limit-order__percent limit-order__percent--positive\">1%</span>).",
     "fee_info": "Upon execution, fee is deducted from source token and remaining ${sourceAmount} ${sourceTokenSymbol} is converted to ${destTokenSymbol}",
     "open_orders": "Các lệnh đang mở",
-    "order_history": "Lịch sử giao dịch"
+    "order_history": "Lịch sử giao dịch",
+    "actual_receive_amount": "Lượng token thực lĩnh:",
+    "estimated_amount": "Lượng token dự tính:",
+    "extra_amount": "Bạn nhận được thêm:",
+    "amount": "Số lượng",
+    "total": "Tổng giá trị",
+    "volume": "Lượng giao dịch",
+    "buy": "Mua ${symbol}",
+    "sell": "Bán ${symbol}",
+    "type": "Loại",
+    "available_balance": "Số dư khả dụng",
+    "cancel_error": "Something went wrong with cancel order process.",
+    "received": "Đã nhận",
+    "login_buy": "Đăng nhập để Mua",
+    "login_sell": "Đăng nhập để Bán",
+    "free_fee": "Lệnh Limit Order miễn phí (10 lệnh LO mỗi ngày) nếu bạn giữ 2000 KNC trong ví",
+    "hold_knc": "Mua 2000 KNC ngay",
+    "top_token": "Token thay đổi nhiều nhất trong 1 giờ",
+    "24h_change": "Thay đổi 24h",
+    "last_price": "Tỉ giá mới nhất",
+    "24h_high": "Mức cao nhất 24h",
+    "24h_low": "Mức thấp nhất 24h",
+    "24h_volume": "Lượng giao dịch trong 24h",
+    "price": "Giá"
+  },
+  "portfolio": {
+    "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
+    "empty_history": "Bạn chưa có bất kỳ giao dịch nào",
+    "token_approved": "Cho phép sử dụng token",
+    "token_is_approved": "${token} được cho phép sử dụng cho {contract}",
+    "lo_triggered": "Limit Order được khớp",
+    "tx_history": "Lịch sử giao dịch",
+    "supported_tokens": "Các token được hỗ trợ",
+    "interact_contract": "Tương tác",
+    "to_contract": "Chuyển Tới"
   },
   "home": "Trang chủ",
   "product_feedback": "Phản hồi sản phẩm",
@@ -439,5 +487,19 @@
   "i_understand": "Tôi hiểu",
   "discount": "Discount",
   "net_fee": "Net Fee",
-  "more_info": "More Info"
+  "more_info": "More Info",
+  "ok": "OK",
+  "done": "Hoàn Thành",
+  "error_text": "Lỗi Xảy Ra",
+  "extra": "thêm",
+  "off": "GIẢM",
+  "learn_more": "Tìm hiểu thêm",
+  "received": "Đã nhận",
+  "details": "Chi tiết",
+  "change": "Thay đổi",
+  "send": "Gửi",
+  "undefined": "Undefined",
+  "show": "Hiển thị",
+  "failed": "Lỗi",
+  "price": "Giá"
 }

@@ -1,25 +1,20 @@
-
-
-
-// export function selectTokenAsync(symbol, address, type) {
-//   return {
-//     type: "LIMIT_ORDER.SELECT_TOKEN_ASYNC",
-//     payload: {symbol, address, type }
-//   }
-// }
-
-
-export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type) {
+export function selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken) {
   return {
     type: "LIMIT_ORDER.SELECT_TOKEN",
-    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type }
+    payload: { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken }
   }
 }
 
-export function inputChange(focus, value) {
+export function resetFormInputs() {
   return {
-    type: "LIMIT_ORDER.INPUT_CHANGE",
-    payload: { focus, value }
+    type: "LIMIT_ORDER.RESET_FORM_INPUTS"
+  }
+}
+
+export function setIsFetchingRate(isFetching) {
+  return {
+    type: "LIMIT_ORDER.SET_IS_FETCHING_RATE",
+    payload: isFetching
   }
 }
 
@@ -30,12 +25,11 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateComplete(rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg) {
+export function updateRateComplete(buyRate, sellRate, type, destTokenDecimals) {
   return {
     type: "LIMIT_ORDER.UPDATE_RATE_COMPLETE",
-    payload: { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg }
+    payload: { buyRate, sellRate, type, destTokenDecimals }
   }
-
 }
 
 export function setIsSelectTokenBalance(value) {
@@ -67,30 +61,17 @@ export function throwError(key, msg){
   }
 }
 
-
-export function updateOrderPath(orderPath, currentPathIndex){
-  return {
-    type: "LIMIT_ORDER.UPDATE_ORDER_PATH",
-    payload: { orderPath, currentPathIndex }
-  }
-}
-
-export function resetOrderPath() {
-  return {
-    type: "LIMIT_ORDER.RESET_ORDER_PATH"
-  }
-}
-
-export function  forwardOrderPath() {
-  return {
-    type: "LIMIT_ORDER.FORWARD_ORDER_PATH"
-  }
-}
-
 export function addListOrder(listOrder) {
   return {
     type: "LIMIT_ORDER.ADD_LIST_ORDER",
     payload: listOrder
+  }
+}
+
+export function addListFavoritePairs(listFavoritePairs) {
+  return {
+    type: "LIMIT_ORDER.ADD_LIST_FAVORITE_PAIRS",
+    payload: listFavoritePairs
   }
 }
 
@@ -180,6 +161,13 @@ export function setStatusFilter(statusFilter) {
   }
 }
 
+export function setTypeFilter(typeFilter) {
+  return {
+    type: "LIMIT_ORDER.SET_TYPE_FILTER",
+    payload: { typeFilter }
+  }
+}
+
 export function setTimeFilter(timeFilter) {
   return {
     type: "LIMIT_ORDER.SET_TIME_FILTER",
@@ -242,13 +230,6 @@ export function setRelatedOrders(orders) {
   }
 }
 
-export function setIsDisableSubmit(isDisable) {
-  return { 
-    type: "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT",
-    payload: { isDisable }
-  }
-}
-
 export function setAgreeForceSubmit(isAgree) {
   return {
     type: "LIMIT_ORDER.SET_AGREE_FORCE_SUBMIT",
@@ -274,5 +255,26 @@ export function changeOrderTabComplete(tab) {
   return {
     type: "LIMIT_ORDER.CHANGE_ORDER_TAB_COMPLETE",
     payload: { tab }
+  }
+}
+
+export function updateCurrentQuote(quote) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_CURRENT_QUOTE",
+    payload: { quote }
+  }
+}
+
+export function updateFavorite(base, quote, toFav, isLoggedIn) {
+  return {
+    type: "LIMIT_ORDER.UPDATE_FAVORITE",
+    payload: { base, quote, toFav, isLoggedIn }
+  }
+}
+
+export function toogleQuoteMarket(show){
+  return {
+    type: "LIMIT_ORDER.TOOGLE_QUOTE_MARKET",
+    payload: show
   }
 }

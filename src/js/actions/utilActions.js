@@ -21,10 +21,10 @@ export function toggleNotify(){
   }
 }
 
-export function openInfoModal(title, content){
+export function openInfoModal(title, content) {
   return {
     type: "UTIL.OPEN_INFO_MODAL",
-    payload: {title: title, content: content}
+    payload: { title: title, content: content }
   }
 }
 

@@ -1,24 +1,19 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import * as utilActions from "../../actions/utilActions"
 import * as constants from "../../services/constants"
-import { PostExchangeBtn } from "../../components/Exchange"
 import { getTranslate } from 'react-localize-redux';
-import { getAssetUrl, isUserEurope, getParameterByName } from "../../utils/common";
 import BLOCKCHAIN_INFO from "../../../../env";
-
 import TermAndServices from "../CommonElements/TermAndServices";
-
 import {ApproveZeroModal, ApproveMaxModal, ConfirmModal, BroadCastModal} from "./ExchangeModals"
 
 @connect((store, props) => {
-
   return {
     exchange: store.exchange,
-    tokens: store.tokens.tokens,    
+    tokens: store.tokens.tokens,
     account: store.account.account,
     ethereum: store.connection.ethereum,
     translate: getTranslate(store.locale),
@@ -32,7 +27,7 @@ export default class PostExchange extends React.Component {
     this.state = { form: {} }
   }
 
-  getMaxGasApprove = () => {    
+  getMaxGasApprove = () => {
     var exchange =  this.props.exchange
     var tokens = this.props.tokens
     var sourceSymbol = exchange.sourceTokenSymbol
@@ -51,13 +46,17 @@ export default class PostExchange extends React.Component {
       return
     }
 
+    if (this.props.global.eligibleError) {
+      return
+    }
+
     if (Object.keys(this.props.exchange.errors.sourceAmount).length !== 0) {
       return
     }
     if (Object.keys(this.props.exchange.errors.slippageRate).length !== 0) {
       return
     }
-    
+
     if (this.props.account.maxCap == 0) {
       let titleModal = this.props.translate('transaction.notification') || 'Notification'
       let contentModal = this.props.translate('transaction.not_enable_exchange') || 'Your address is not enabled for exchange'
@@ -104,7 +103,7 @@ export default class PostExchange extends React.Component {
       }
 
       this.props.dispatch(exchangeActions.updateExchangePath(exchangePath, 0))
-      
+
     } catch (err) {
       console.log(err)
       this.setState({
@@ -121,20 +120,21 @@ export default class PostExchange extends React.Component {
       return false
     }
 
-    //check source amount
     var check = true
     var sourceAmount = this.props.exchange.sourceAmount
     var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
     var sourceBalance = this.props.tokens[sourceTokenSymbol].balance
     var sourceDecimal = this.props.tokens[sourceTokenSymbol].decimals
     var rateSourceToEth = this.props.tokens[sourceTokenSymbol].rate
+    var expectedRate = this.props.exchange.expectedRate;
     var destTokenSymbol = this.props.exchange.destTokenSymbol
     var destDecimal = this.props.tokens[destTokenSymbol].decimals
     var maxCap = this.props.account.maxCap
+    const rate = sourceTokenSymbol === 'ETH' ? expectedRate : rateSourceToEth;
 
     if (sourceAmount) {
       var validateWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance, sourceTokenSymbol,
-      sourceAmount, this.props.exchange.gas + this.props.exchange.gas_approve, this.props.exchange.gasPrice)
+        sourceAmount, this.props.exchange.gas, this.props.exchange.gasPrice)
 
       if (validateWithFee) {
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, this.props.translate("error.eth_balance_not_enough_for_fee")))
@@ -142,16 +142,15 @@ export default class PostExchange extends React.Component {
       }
     }
 
-    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rateSourceToEth, destTokenSymbol, destDecimal, maxCap)
-    var sourceAmountErrorKey
+    var validateAmount = validators.verifyAmount(sourceAmount, sourceBalance, sourceTokenSymbol, sourceDecimal, rate, destTokenSymbol, destDecimal, maxCap)
     switch (validateAmount) {
-      case "not a number":        
+      case "not a number":
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_is_not_number")))
         check = false
         break
       case "too high":
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high")))
-        check = false        
+        check = false
         break
       case "too high cap":
         // var maxCap = converters.toEther(this.props.account.maxCap)
@@ -159,15 +158,15 @@ export default class PostExchange extends React.Component {
           maxCap = maxCap * constants.EXCHANGE_CONFIG.MAX_CAP_PERCENT
         }
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_cap", { cap: maxCap })))
-        check = false                
+        check = false
         break
-      case "too small":        
+      case "too small":
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_small", { minAmount: converters.toEther(constants.EXCHANGE_CONFIG.EPSILON)})))
-        check = false        
+        check = false
         break
       case "too high for reserve":
         this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.input, this.props.translate("error.source_amount_too_high_for_reserve")))
-        check = false           
+        check = false
         break
     }
 
@@ -192,12 +191,10 @@ export default class PostExchange extends React.Component {
     }
 
     return (
-
       <div className="exchange-button">
-      <div>
         {this.props.account !== false &&
-          <div>
-            <a className={activeButtonClass + " exchange-button__button"} onClick={this.clickExchange}>
+          <Fragment>
+            <a className={activeButtonClass + " exchange-button__button theme__button"} onClick={this.clickExchange}>
               {this.props.translate("transaction.swap_now") || "Swap Now"}
             </a>
             <TermAndServices tradeType="swap"/>
@@ -205,13 +202,11 @@ export default class PostExchange extends React.Component {
               {this.props.exchange.exchangePath[this.props.exchange.currentPathIndex] === constants.EXCHANGE_CONFIG.exchangePath.approveZero && <ApproveZeroModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
               {this.props.exchange.exchangePath[this.props.exchange.currentPathIndex] === constants.EXCHANGE_CONFIG.exchangePath.approveMax && <ApproveMaxModal getMaxGasApprove= {this.getMaxGasApprove.bind(this)}/>}
               {this.props.exchange.exchangePath[this.props.exchange.currentPathIndex] === constants.EXCHANGE_CONFIG.exchangePath.confirm && <ConfirmModal />}
-              {this.props.exchange.exchangePath[this.props.exchange.currentPathIndex] === constants.EXCHANGE_CONFIG.exchangePath.broadcast && <BroadCastModal />}              
+              {this.props.exchange.exchangePath[this.props.exchange.currentPathIndex] === constants.EXCHANGE_CONFIG.exchangePath.broadcast && <BroadCastModal />}
             </div>
-          </div>
+          </Fragment>
         }
-      </div>            
-    </div>
-
+      </div>
     )
   }
 }
