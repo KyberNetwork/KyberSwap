@@ -1,5 +1,4 @@
 import React from "react"
-import { getTranslate } from 'react-localize-redux'
 import QrReader from "react-qr-reader";
 import { Modal } from '../../components/CommonElement'
 import {checkBrowser, isMobile} from "../../utils/common"

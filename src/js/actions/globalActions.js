@@ -65,20 +65,6 @@ export function acceptTermOfService() {
   }
 }
 
-export function acceptConnectWallet() {
-  return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: true
-  }
-}
-
-export function clearAcceptConnectWallet() {
-  return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: false
-  }
-}
-
 export function clearSession() {
   return {
     type: "GLOBAL.CLEAR_SESSION"
@@ -271,5 +257,12 @@ export function switchTheme(theme) {
   return {
     type: "GLOBAL.SWITCH_THEME",
     payload: theme
+  }
+}
+
+export function setCampaign(campaign) {
+  return {
+    type: "GLOBAL.SET_CAMPAIGN",
+    payload: campaign
   }
 }

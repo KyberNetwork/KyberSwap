@@ -47,7 +47,7 @@ const OrderDetails = (props) => {
             {`${user_address.slice(0, 6)} ... ${user_address.slice(-4)}`}
           </div>
           <div className={"order-item__column"}>
-            <span className={"theme__text-3 order-item__title common__mr-5"}>{props.translate('limit_order.price') || 'Price'}</span>
+            <span className={"theme__text-3 order-item__title common__mr-5"}>{props.translate('price') || 'Price'}</span>
             <span className={"theme__text order-item__value"}>{rate}</span>
           </div>
           <div className={"order-item__column"}>

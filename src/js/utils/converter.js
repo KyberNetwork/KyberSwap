@@ -323,7 +323,7 @@ export function numberToHexAddress(number) {
 
 export function biggestNumber() {
   var initNumber = new BigNumber(2)
-  return "0x" + (initNumber.pow(255).toString(16))
+  return "0x" + (initNumber.pow(256).minus(1).toString(16))
 }
 
 export function maskNumber() {
@@ -338,6 +338,10 @@ export function biggestNumberDecimal() {
 
 export function hexToNumber(hex) {
   return new BigNumber(hex).toNumber()
+}
+
+export function hexToString(hex) {
+  return new BigNumber(hex).toString()
 }
 
 export function hexToBigNumber(hex) {
@@ -683,7 +687,6 @@ export function getMinrate(rate, minRate) {
 
 
 export function calculateMinSource(sourceTokenSymbol, sourceAmount, decimal, rateSell) {
-  // console.log({sourceAmount, decimal, rateSell})
   if ((sourceAmount === "") || isNaN(sourceAmount)) sourceAmount = 0
 
   var minSourceAllow = new BigNumber(getSourceAmountZero(sourceTokenSymbol, decimal, rateSell))
@@ -896,10 +899,37 @@ function addZeroToSingleNumber(number) {
   return number;
 }
 
+export function splitArrayToChunks(array, chunk = 8){
+  let i,j,temparray;
+  const returnArray = []
+  for (i=0,j=array.length; i<j; i+=chunk) {
+      temparray = array.slice(i,i+chunk);
+      returnArray.push(temparray)
+  }
+  return returnArray
+}
+
 export function formatAddress(address, first = 15, last = -4) {
   return `${address.slice(0, first)}...${address.slice(last)}`;
 }
 
 export function shortenBigNumber(amount, exponential = 1) {
   return Number.parseFloat(amount).toExponential(exponential);
+}
+
+export function calculateExpectedRateWithFee(expectedRate, fee) {
+  const pow = Math.pow(10, 18);
+  const feeInPercentage = fee / 10000;
+  const bigExpectedRate = new BigNumber(expectedRate).div(pow);
+  const feeInNumber = multiplyOfTwoNumber(bigExpectedRate, feeInPercentage);
+  const rateWithFee = new BigNumber(subOfTwoNumber(bigExpectedRate, feeInNumber));
+
+  return rateWithFee.times(pow).toString();
+}
+
+export function calculateSrcAmountWithFee(srcAmount, fee) {
+  const feeInPercentage = fee / 10000;
+  const feeInNumber = multiplyOfTwoNumber(srcAmount, feeInPercentage);
+
+  return sumOfTwoNumber(srcAmount, feeInNumber);
 }

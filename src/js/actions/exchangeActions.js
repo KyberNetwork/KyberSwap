@@ -52,13 +52,6 @@ export function throwErrorSlippageRate(key, message) {
   }
 }
 
-export function specifyGas(value) {
-  return {
-    type: "EXCHANGE.SPECIFY_GAS",
-    payload: value
-  }
-}
-
 export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
@@ -93,12 +86,17 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal) {
+export function updateRateExchangeComplete(
+  expectedRateInit, expectedPrice, slippagePrice, isManual,
+  percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+) {
   return {
     type: "EXCHANGE.UPDATE_RATE_COMPLETE",
-    payload: { expectedRateInit, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal }
+    payload: {
+      expectedRateInit, expectedPrice, slippagePrice, isManual,
+      percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+    }
   }
-
 }
 
 export function finishExchange() {
@@ -344,5 +342,12 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
   return {
     type: "EXCHANGE.SAVE_APPROVE_MAX_TX",
     payload: { sourceTokenSymbol, txHash }
+  }
+}
+
+export function setPlatformFee(fee) {
+  return {
+    type: "EXCHANGE.SET_PLATFORM_FEE",
+    payload: fee
   }
 }

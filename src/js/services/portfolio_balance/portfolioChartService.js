@@ -1,7 +1,7 @@
 
 import { TX_TYPES } from "../constants";
 import BLOCKCHAIN_INFO from "../../../../env";
-import { convertTimestampToTime, shortenBigNumber, formatAddress } from "../../utils/converter";
+import { convertTimestampToTime, shortenBigNumber, formatAddress, splitArrayToChunks } from "../../utils/converter";
 import { validateResultObject, returnResponseObject, validateTransferTx, validateSwapTx, validateApproveTx, validateUndefinedTx } from "../portfolioService"
 
 import {getResolutionForTimeRange, getFromTimeForTimeRange, parseTxsToTimeFrame, isEmptyWallet,
@@ -58,8 +58,10 @@ export async function render(ethereum, address, tokens, rangeType) {
     const chartFromTime = getFromTimeForTimeRange(rangeType, now)
 
     const txByResolution = parseTxsToTimeFrame(txs, chartResolution, chartFromTime, now)
+    console.log("******txByResolution*****", txByResolution)
     const arrayTradedTokenSymbols = getArrayTradedTokenSymbols(txs, tokenByAddress, balanceTokens)
     const balanceChange = mappingBalanceChange(txByResolution, balanceTokens, tokenByAddress, tokens, address)
+    console.log("+++++++++++balanceChange +++++++++", balanceChange)
     const priceInResolution = await fetchTradedTokenPrice(chartFromTime, now, chartResolution, arrayTradedTokenSymbols)
     const totalBalance = mappingTotalBalance(balanceChange, priceInResolution)
 
@@ -123,16 +125,25 @@ export async function getBalanceTransactionHistoryByTime(address, from, to) {
     
     return returnResponseObject(txs, result.count, result.in_queue);
   }
-  
 
   export async function fetchTradedTokenPrice(fromTime, toTime, resolution, arrayTradedTokensSymbol){  
-    const arraySymbolParams = arrayTradedTokensSymbol.map(symbol => "&symbol=" + symbol).join("")
-    const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${toTime}&resolution=${resolution}&` + arraySymbolParams);
-    const result = await response.json();
-    if(result.error){
-      return {inQueue: true}
+    const arrayTokensSplited = splitArrayToChunks(arrayTradedTokensSymbol)
+    let summaryData = {}
+
+    const arrayFunc = arrayTokensSplited.map(async arr => {
+      const arraySymbolParams = arr.map(symbol => "&symbol=" + symbol).join("")
+      const response = await fetch(`${BLOCKCHAIN_INFO.tracker}/internal/history_prices?from=${fromTime}&to=${toTime}&resolution=${resolution}&` + arraySymbolParams);
+      return await response.json();
+    })
+
+    const arrayData = await Promise.all(arrayFunc)
+    for(let i=0; i < arrayData.length; i++){
+      if(arrayData[i].error){
+        return {inQueue: true}
+      }
+      summaryData = {...summaryData, ...arrayData[i].data}
     }
   
-    return result.data
+    return summaryData
   
   } 

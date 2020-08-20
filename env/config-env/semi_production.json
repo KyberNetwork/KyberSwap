@@ -13,8 +13,7 @@
         "ws": "wss://mainnet.infura.io/ws"
     },
     "min_accept_amount": 0.5,
-    "api_tokens": "https://api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://staging-kyberswap.knstats.com/api/currencies",
+    "kyberswap_api": "https://staging-kyberswap.knstats.com/api",
     "portfolio_api": "https://staging-portfolio.knstats.com",
     "priority_tokens": [
         "ETH",
@@ -591,5 +590,6 @@
     "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
     "networkId": 1,
     "chainName": "Mainnet",
-    "tracker": "https://api.kyber.network"
+    "tracker": "https://api.kyber.network",
+    "highSlippage": 1
 }

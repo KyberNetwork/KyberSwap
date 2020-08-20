@@ -169,50 +169,12 @@ export default class GoogleTagmanager {
     }
   }
 
-  trackMarketSetting(field, value){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({
-          event: "Swap_*_2_Click_MarketSetting",
-          field, value
-        })
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
   trackChooseGas(type, gas, typeGas){
     if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({
             event: `Step_3_select_advance_feature_${type}_choose_gas`,
             gas: gas, typeGas: typeGas
-        })
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSearchETHMarket(){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({
-          event: "Swap_*_1_Click_To_Search_ETH_Market"
-        })
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickSortBalanceBoard(type, sortType){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({
-          event: "Swap_*_4_Click_Sort_Token_Balance_Board",
-          type: type, sortType: sortType
         })
       }catch(e){
         console.log(e)
@@ -285,19 +247,6 @@ export default class GoogleTagmanager {
     if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({event: "Swap_*_2_Click_Search_Token"})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackSortETHMarket(field, sortType){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({
-          event: "Swap_*_1_Click_Sort_ETH_Market",
-          field: field, sortType: sortType
-        })
       }catch(e){
         console.log(e)
       }
@@ -669,26 +618,6 @@ export default class GoogleTagmanager {
     if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
       try{
         dataLayer.push({event: "Step_2_Connect_Other_Wallet"})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickOpenMarket(){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({event: "Step_*_Open_Market_Modal"})
-      }catch(e){
-        console.log(e)
-      }
-    }
-  }
-
-  trackClickCloseMarket(){
-    if (typeof dataLayer !== "undefined" && typeof dataLayer.push === 'function'){
-      try{
-        dataLayer.push({event: "Step_*_Close_Market_Modal"})
       }catch(e){
         console.log(e)
       }

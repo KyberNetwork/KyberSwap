@@ -1,6 +1,5 @@
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
 initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
@@ -66,7 +65,10 @@ const exchange = (state = initState, action) => {
     }
    
     case "EXCHANGE.UPDATE_RATE_COMPLETE": {
-      const {expectedRateInit, expectedPrice, slippagePrice, percentChange, srcTokenDecimal, destTokenDecimal } = action.payload
+      const {
+        expectedRateInit, expectedPrice, slippagePrice,
+        percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+      } = action.payload
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(expectedRateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? expectedRateInit : expectedPrice
@@ -92,7 +94,9 @@ const exchange = (state = initState, action) => {
         newState.minConversionRate = slippageRate
       }
 
-      newState.isSelectToken = false
+      newState.isSelectToken = false;
+      newState.isRefPriceFromChainLink = isRefPriceFromChainLink;
+
       return newState
     }
     
@@ -335,6 +339,10 @@ const exchange = (state = initState, action) => {
     }
     case "GLOBAL.CLEAR_SESSION_FULFILLED": {
       newState.errors.sourceAmount = {};
+      return newState
+    }
+    case "EXCHANGE.SET_PLATFORM_FEE": {
+      newState.platformFee = action.payload;
       return newState
     }
   }

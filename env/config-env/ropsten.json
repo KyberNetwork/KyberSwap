@@ -13,8 +13,7 @@
         "ws": "wss://ropsten.kyber.network/ws/"
     },
     "min_accept_amount": 0.5,
-    "api_tokens": "https://ropsten-api.kyber.network/internal/currencies",
-    "api_tokens_integrate": "https://dev-userdashboard.knstats.com/api/currencies",
+    "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
     "priority_tokens": [
@@ -41,7 +40,7 @@
         "KNC": {
             "symbol": "KNC",
             "name": "KyberNetwork",
-            "address": "0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6",
+            "address": "0x7b2810576aa1cce68f2b118cef1f36467c648f92",
             "decimals": 18,
             "listing_time": 1578370140,
             "gasApprove": 120000,
@@ -372,9 +371,10 @@
     "enjinx": "https://kyber.enjinx.io/",
     "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
     "kyberswapAddress": "0xa33caaed059f0c574c07136a5da9f28dc2fa27c2",
-    "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
+    "network": "0xd719c34261e099Fdb33030ac8909d5788D3039C4",
     "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",
     "networkId": 3,
     "chainName": "Ropsten",
-    "tracker": "https://ropsten-api.kyber.network"
+    "tracker": "https://ropsten-api.kyber.network",
+    "highSlippage": 1
 }

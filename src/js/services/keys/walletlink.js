@@ -26,7 +26,11 @@ export default class WalletLinkKey extends BaseWallet {
       })
     })
   };
-  
+
+  clearSession = () => {
+    this.walletLink.disconnect();
+  };
+
   getWalletName = () => {
     return 'Wallet Link';
   }

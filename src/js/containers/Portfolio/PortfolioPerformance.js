@@ -15,7 +15,6 @@ import InlineLoading from "../../components/CommonElement/InlineLoading";
     account: store.account,
     address: address.toLowerCase(),
     translate: getTranslate(store.locale),
-    theme: global.theme,
     global: store.global,
     ethereum: ethereum,
     portfolioPerformance: store.account.portfolioPerformance,
@@ -185,8 +184,15 @@ export default class PortfolioPerformance extends React.Component {
             },
             ticks: {
               min: chartData["min" + currentCurrency.toUpperCase()],
-              max: chartData["max" + currentCurrency.toUpperCase()],
               maxTicksLimit: 1,
+              ...(chartData["max" + currentCurrency.toUpperCase()] <= 0 ? {
+                display: false,
+              }
+              :
+              {
+                max: chartData["max" + currentCurrency.toUpperCase()],
+              }
+              ),
               mirror: true,
               labelOffset: -13,
               fontColor: this.theme == "light" ? "#000000" : "#e8e9ed",
