@@ -61,7 +61,7 @@ export default class LimitOrderBody extends React.Component {
       <div className={"limit-order theme__background"}>
         <div className={"limit-order__container limit-order__container--left"}>
           <LimitOrderChart />
-          <LimitOrderNotification translate={this.props.translate} />
+          {/*<LimitOrderNotification translate={this.props.translate} />*/}
           <LimitOrderList srcInputElementRef={this.srcInputElementRef} />
         </div>
         <div className={"limit-order__container limit-order__container--right"}>

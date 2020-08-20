@@ -82,7 +82,7 @@ const LayoutView = (props) => {
   return (
     <ConnectedRouter history={props.history} store ={store}>
       <Fragment>
-        <section id="content" className={`${props.langClass} common__slide-up`}>
+        <section id="content" className={`${props.langClass}`}>
           {!process.env.integrate &&
             <HeaderTransaction/>
           }
