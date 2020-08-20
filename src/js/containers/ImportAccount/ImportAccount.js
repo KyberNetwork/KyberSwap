@@ -2,13 +2,12 @@ import React from "react"
 import { connect } from "react-redux"
 import { ImportAccountView } from '../../components/ImportAccount'
 import { ErrorModal } from "../ImportAccount"
-import { setOnMobile, clearAcceptConnectWallet } from "../../actions/globalActions"
+import { setOnMobile } from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux'
 import {closeOtherConnectModal, importAccountMetamask, setOnDAPP} from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
-import { TermAndServices } from "../../containers/CommonElements";
 import EthereumService from "../../services/ethereum/ethereum";
 import { isUserLogin } from "../../utils/common";
 
@@ -48,10 +47,6 @@ export default class ImportAccount extends React.Component {
       }
     }
   }
-
-  componentWillUnmount = () => {
-    this.props.dispatch(clearAcceptConnectWallet());
-  }
   
   closeModal() {
     this.props.dispatch(closeOtherConnectModal());
@@ -78,27 +73,25 @@ export default class ImportAccount extends React.Component {
   render() {
     return (
       <div id={"import-account"}>
-        {(!this.props.isAgreedTermOfService && this.props.account === false && !this.props.noTerm) &&
+        {(!this.props.account && !this.props.isAgreedTermOfService) &&
           <div className={"exchange-content__accept-term"}>
-            <div className={"accept-button theme__button"} onClick={(e) => this.acceptTerm()}>
-              {this.props.tradeType === "swap" ? this.props.translate("transaction.swap_now") || "Swap Now"
-                : this.props.translate("transaction.transfer_now") || "Transfer Now"}
+            <div className={"accept-button theme__button"} onClick={this.acceptTerm}>
+              {this.props.translate("import.connect_wallet") || "Connect Wallet"}
             </div>
-            <TermAndServices tradeType={this.props.tradeType}/>
           </div>
         }
-        {!this.props.isOnDAPP && <ImportAccountView
-          isAgreedTermOfService={this.props.isAgreedTermOfService}
-          isAcceptConnectWallet={this.props.isAcceptConnectWallet}
-          errorModal={<ErrorModal />}
-          closeModal={this.closeModal.bind(this)}
-          translate={this.props.translate}
-          onMobile={this.props.onMobile}
-          tradeType={this.props.tradeType}
-          isUserLogin={isUserLogin()}
-          viewKyberSwapApp={this.viewKyberSwapApp}
-          noTerm={this.props.noTerm}
-        />}
+        {(!this.props.isOnDAPP && this.props.isAgreedTermOfService) && (
+          <ImportAccountView
+            isAgreedTermOfService={this.props.isAgreedTermOfService}
+            errorModal={<ErrorModal />}
+            closeModal={this.closeModal.bind(this)}
+            translate={this.props.translate}
+            onMobile={this.props.onMobile}
+            tradeType={this.props.tradeType}
+            isUserLogin={isUserLogin()}
+            viewKyberSwapApp={this.viewKyberSwapApp}
+          />
+        )}
       </div>
     )
   }

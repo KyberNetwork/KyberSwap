@@ -331,9 +331,8 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(globalActions.closeChangeWallet())
   };
 
-  acceptTerm = (e) => {
+  acceptTerm = () => {
     this.props.dispatch(globalActions.acceptTermOfService());
-    this.props.dispatch(globalActions.acceptConnectWallet());
   };
 
   selectTokenBalance = () => {
@@ -425,7 +424,6 @@ class ExchangeBody extends React.Component {
           closeChangeWallet={this.closeChangeWallet}
           global={this.props.global}
           acceptTerm={this.acceptTerm}
-          isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
           isAdvanceActive={this.props.exchange.isAdvanceActive}
           toggleAdvanceContent={this.toggleAdvanceContent}
           isOpenAdvance={this.props.exchange.isOpenAdvance}
