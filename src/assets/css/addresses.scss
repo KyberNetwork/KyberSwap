@@ -6,22 +6,20 @@
   }
 }
 .address-list-path {
-  span.hash{
-    color: #222;
-  }
   span.address {
     font-weight: 600;
   }
 
   .column {
     .block-title {
-      font-size: 18px;
-      color: #666666;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.43;
+      color: #222222;
     }
   }
 
   .white {
-    margin-top: 20px;
     .block-title {
       font-size: 16px;
       color: #666666;
@@ -58,10 +56,7 @@
       background-color: transparent;
       transition: background-color 0.1s ease-in-out;
       cursor: pointer;
-      @include clearfix;
-      &:not(:last-child) {
-        border-bottom: 1px solid $k-divider-light;
-      }
+
       .info {
         float: right;
         white-space: nowrap;
@@ -73,14 +68,15 @@
           font-weight: normal;
         }
         .import{
-          font-size: 0.8em;
+          font-size: 12px;
           padding: 5px 15px;
           margin-left: 20px;
-          border: 1px solid #F1C100;
-          color: #666666;
-          text-transform: uppercase;
-          font-weight: 550;
-          border-radius: 3px;
+          color: #ef8102;
+          text-transform: capitalize;
+          font-weight: 600;
+          border-radius: 23px;
+          background-color: #f6f7fa;
+          border: 1px solid #ef8102;
           img {
             width: 6px;
             margin-left: 5px;
@@ -96,12 +92,12 @@
       }
       &:hover{
         .name label{
-          // color: $k-success;
           cursor: pointer;
         }
         .info{
           .import{
-            border: 2px solid #F1C100;
+            background-color: #ef8102;
+            color: white;
           }
         }
       }
@@ -124,48 +120,47 @@
   }
 
   .address-list-navigation {
-    margin: 30px 0 10px;
-    @include clearfix;
-    a {
-      img {
-        height: 25px;
-        width: 25px;
-        padding: 5px;
-        background-color: #F08400;
-        border-radius: 50%;
-      }
-    }
-    a {
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: #F08400;
-      letter-spacing: .5px;
-      transition: background-color .4s ease-in-out;
-      padding: 7px 15px;
-      background-color: #ffffff;
-    }
-    .previous {
-      float: left;
-      img {
-        margin-right: 15px;
-      }
-      &.disabled {
-        img {
-          background-color: #676767;
+    margin: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .address-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      background-color: #f6f7fa;
+      border: 1px solid #999999;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      .address-arrow {
+        background: url($image-path + "v3/dropdown_gray.svg") no-repeat center;
+        background-size: contain;
+        width: 10px;
+        height: auto;
+
+        &-left {
+          transform: rotate(-180deg);
         }
       }
-    }
-    .next {
-      float: right;
-      img {
-        margin-left: 15px;
+
+      &:hover {
+        background-color: #666666;
+        border-color: #666666;
+        border: none;
+        .address-arrow {
+          background-image: url($image-path + "v3/dropdown_white.svg");
+        }
       }
-    }
-    .previous, .next {
-      @include screen-max-width(medium) {
-        span {
-          display: none;
+
+      &.disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.7;
+        &:hover {
+          background-color: #f6f7fa;
         }
       }
     }
@@ -203,7 +198,6 @@
 
   .address-stamp {
     background-color: white;
-    box-shadow: 0 10px 40px 0 rgba($light-gray, .5);
     margin-bottom: 25px;
     position: relative;
     padding: 5px 5px 5px 55px;
@@ -228,7 +222,7 @@
 
   label.address-path-stamp {
     display: block;
-    background-color: $white;
+    background-color: white;
     padding: 12px 10px;
     .name {
       text-transform: none;
@@ -278,8 +272,6 @@
       width: 0;
       height: 0;
       &:checked + .address-path-stamp {
-        background: $accent-gradient;
-        box-shadow: 0 10px 40px 0 rgba($primary-color, .3);
         .submit {
           display: block;
         }
@@ -377,13 +369,12 @@
 }
 
 .address-balance {
-  @include clearfix;
-  justify-content: space-between;  
+  justify-content: space-between;
   .note {
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
-    margin-top: 2em;
+    // margin-top: 2em;
     margin-bottom: 0;
     font-style: normal;
     color: #666;
@@ -392,14 +383,19 @@
     cursor: pointer;
   }
   div {
-    display: flex;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    @include screen-max-width(large) {
+      display: flex;
     justify-content: space-between;
     align-items: center;
+    }
     span {
       font-size: 14px;
       color: #666666;
     }
-    span:nth-child(2) {
+    .balance {
       font-size: 12px;
       color: #ef8102;
       padding-right: 10px;
@@ -409,7 +405,8 @@
       background-color: #EFF1FD;
       line-height: 20px;
       font-weight: 500;
-      margin-left: 5px;
+      display: inline-block;
+      // margin-left: 5px;
     }
   }
   .balance-amount {

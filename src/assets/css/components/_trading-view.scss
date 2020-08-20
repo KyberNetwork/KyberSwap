@@ -1,0 +1,43 @@
+.trading-view {
+  height: 420px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 15px 5px;
+
+    &-pair {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &-title {
+      font-size: 12px;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+
+    &-value {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    &--green {
+      .with-color {
+        color: $text-green !important;
+      }
+    }
+
+    &--red {
+      .with-color {
+        color: $error-color !important;
+      }
+    }
+  }
+
+  @include screen-max-width(medium) {
+    &__header {
+      display: none;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 export default class Account {
-  constructor(address, type, keystring, walletType, balance = 0, nonce = 0, manualNonce = 0) {
+  constructor(address, type, keystring, walletType, info, balance = 0, nonce = 0, manualNonce = 0, maxCap = "infinity", rich= false) {
     this.address = address
     this.type = type
     this.keystring = keystring
@@ -7,12 +7,15 @@ export default class Account {
     this.nonce = nonce
     this.manualNonce = manualNonce
     this.walletType = walletType
+    this.info = info
+    this.maxCap = maxCap
+    this.rich = rich
   }
 
-  shallowClone() {
+  shallowClone() {    
     return new Account(
-      this.address, this.type, this.keystring, this.walletType,
-      this.balance, this.nonce, this.manualNonce, this.event)
+      this.address, this.type, this.keystring, this.walletType, this.info,
+      this.balance, this.nonce, this.manualNonce, this.maxCap, this.rich)
   }
 
   getUsableNonce() {
@@ -26,15 +29,14 @@ export default class Account {
     const _this = account ? account : this
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
-      resolve(acc)
-      // ethereum.call("getBalance", acc.address)
-      // .then((balance) => {
-      //   acc.balance = balance
-      //   resolve(acc)
-      // })
-      // .catch((err) => {
-      //   reject(err)
-      // })
+      ethereum.call("getBalanceAtLatestBlock", acc.address)
+      .then((balance) => {
+        acc.balance = balance
+        resolve(acc)
+      })
+      .catch((err) => {
+        reject(err)
+      })
     })
 
     promise = promise.then((acc) => {

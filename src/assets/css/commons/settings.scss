@@ -1,0 +1,93 @@
+// Colors
+$error-color: #fa6566;
+$base-color: #666;
+$swap-color: #EF8102;
+$color-swap-light: #F2A657;
+$light-gray: #BBDAD5;
+$medium-gray: #262C41;
+$dark-gray: #0B0F1A;
+$black: #2c2c2c;
+$white: #ffffff;
+$white-light: rgba(255, 255, 255, 0.56);
+$blue-light: #1db1ff;
+$accent-gradient: linear-gradient(169deg, #36d9ac, #049696);
+$alert-color: #ff5d00;
+$text-orange: #ff9008;
+$text-orange-light: #f6934e;
+$text-green: #31cb9e;
+$text-green-light: #27a69a;
+$text-blue: #1e89c1;
+$grey-lighter: #e8e9ed;
+$grey-light: #e1e4eb;
+$grey: #aeb6c3;
+$grey-dark: #9ea1aa;
+$grey-darker: #5a5e67;
+$button-background: linear-gradient(178deg, #ffb046 -66%, #f52880 371%) 0 0;
+$green-gradient: linear-gradient(to bottom, #4bdfb4 -27%, #20aa82 115%, #1ea880 115%);
+$red-gradient: linear-gradient(to bottom, #fa6566 -17%, #d84445 122%);
+
+// Dark Theme
+$dark-color-1: #1a1a1a;
+$dark-color-2: #232323;
+$dark-color-3: #363636;
+$dark-color-4: #424242;
+$dark-color-5: #2b2b2b;
+$dark-color-6: #6f6f6f;
+$dark-color-7: #2f2f2f;
+$dark-color-8: #b8babe;
+$dark-color-9: #27303b;
+$dark-color-10: #4c4c4c;
+$dark-color-11: #3a3a3a;
+$dark-color-12: #333333;
+$dark-color-13: #c4c8d2;
+$dark-color-14: #1c2924;
+$dark-color-15: #302121;
+
+// Light Theme
+$light-color-1: #f6f7fa;
+$light-color-2: #141927;
+$light-color-3: #fcfcfc;
+$light-color-4: #e7edf5;
+$light-color-5: #eaebec;
+$light-color-6: #e8f9e8;
+$light-color-7: #FBEAE7;
+$light-color-8: #eaecf2;
+$light-color-9: #fdfae5;
+
+// Paths
+$image-path: '../img/';
+$asset-url: 'https://files.kyberswap.com/DesignAssets/';
+
+// Breakpoints
+$breakpoints: (
+  small: 370px,
+  mid-small: 480px,
+  xxsmall: 530px,
+  medium: 640px,
+  mid-medium: 768px,
+  xxmedium: 850px,
+  large: 1024px,
+  xlarge: 1200px,
+  xxlarge: 1440px,
+);
+
+// Fonts
+$font-roboto: 'Roboto', sans-serif;
+$font-security: 'text-security-disc';
+
+// Widths
+$width-app: 1440px;
+$width-exchange: 880px;
+
+// Mixins
+@mixin screen-max-width($breakpoint) {
+  @media screen and (max-width: calc(#{map-get($breakpoints, $breakpoint)} - 1px)) {
+    @content;
+  }
+}
+
+@mixin screen-min-width($breakpoint) {
+  @media screen and (min-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}

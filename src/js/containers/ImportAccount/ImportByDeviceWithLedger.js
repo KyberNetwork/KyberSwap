@@ -1,38 +1,40 @@
-
 import React from "react"
 import { ImportByDevice } from "../ImportAccount"
 import { Ledger } from "../../services/keys"
-
 import { ImportByLedgerView } from "../../components/ImportAccount"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import * as analytics from "../../utils/analytics"
+import { LEDGER_DERIVATION_PATHS } from "../../services/constants";
 
-@connect((store) => {
+@connect((store, props) => {
   return {
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
-
 export default class ImportByDeviceWithLedger extends React.Component {
-  deviceService = new Ledger()
-  
+  deviceService = new Ledger();
+
   showLoading = (walletType) => {
-    this.refs.child.getWrappedInstance().showLoading(walletType)
-    analytics.trackClickImportAccount(walletType)
+    this.refs.child.showLoading(walletType)
+    this.props.analytics.callTrack("trackClickImportAccount", walletType, this.props.tradeType);
   }
   
   render = () => {
-    var importContent = (
-    <ImportByLedgerView 
-      showLoading={this.showLoading}
-      translate={this.props.translate}
-      />)
-  
     return(
-      <ImportByDevice ref="child"
+      <ImportByDevice
+        ref="child"
+        dpaths={LEDGER_DERIVATION_PATHS}
+        defaultPath={LEDGER_DERIVATION_PATHS[0]}
         deviceService={this.deviceService} 
-        content={importContent}
+        content={(
+          <ImportByLedgerView
+            showLoading={this.showLoading}
+            translate={this.props.translate}
+          />
+        )}
+        screen = {this.props.screen}
       />
     )
   }

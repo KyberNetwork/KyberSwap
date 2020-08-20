@@ -1,30 +1,75 @@
 import * as keyService from "./baseKey"
-import TrezorConnect from "../device/trezor/trezor-connect";
+import TrezorConnect from 'trezor-connect';
 import EthereumTx from "ethereumjs-tx"
-import { numberToHex } from "../../utils/converter"
 import { getTranslate } from 'react-localize-redux'
-
+import EthereumService from "../ethereum/ethereum"
 import { store } from "../../store"
-
-const defaultDPath = "m/44'/60'/0'/0";
+import * as converter from "../../utils/converter"
 
 export default class Trezor {
-  getPublicKey = (path = defaultDPath) => {
+  constructor() {
+    TrezorConnect.manifest({
+      email: 'andrew@kyber.network',
+      appUrl: 'http://kyberswap.com'
+    });
+  }
+
+  getPublicKey = (path) => {
     var translate = getTranslate(store.getState().locale)
     return new Promise((resolve, reject) => {
-      TrezorConnect.getXPubKey(path, (result) => {
-          if (result.success) {
-            result.dPath = path;
-            resolve(result);
-          } else {
-            var err = translate("error.cannot_connect_trezor") || 'Cannot connect to trezor'
-            if (result.toString() == 'Error: Not a valid path.') {
-              err = translate("error.path_not_support_by_trezor") || 'This path not supported by Trezor'
-            }
-            reject(err)
+      TrezorConnect.getPublicKey({ path }).then(function (result) {
+        if (result.success) {
+          result = { ...result.payload };
+          result.dPath = path;
+          resolve(result);
+        } else {
+          var err = translate("error.cannot_connect_trezor") || 'Cannot connect to trezor'
+          if (result.toString() == 'Error: Not a valid path.') {
+            err = translate("error.path_not_support_by_trezor") || 'This path not supported by Trezor'
           }
-      })
+          reject(err)
+        }
+      });
     });
+  }
+
+
+  async signSignature(message, account) {
+    try {
+      var signature = await TrezorConnect.ethereumSignMessage({
+        path: account.keystring,
+        message: message,
+        hex: true
+      });
+      if(signature.payload.error){
+        throw new Error(signature.payload.error)
+        return
+      }
+      signature = "0x" + signature.payload.signature                  
+
+      return signature
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
+
+  async broadCastTx(funcName, ...args) {
+    try {
+      var txRaw = await this.callSignTransaction(funcName, ...args)
+      try {
+        var ethereum = new EthereumService()
+        var txHash = await ethereum.callMultiNode("sendRawTransaction", txRaw)
+        return txHash
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
+
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
   }
 
   callSignTransaction = (funcName, ...args) => {
@@ -38,70 +83,81 @@ export default class Trezor {
           reject(e)
         })
       }).catch(e => {
-          reject(e)
+        reject(e)
       })
     })
   }
 
+  convertTrezorFormat = (param) => {
+    var outputWithFormat = param
+    if (isNaN) {
+      outputWithFormat = converter.toHex(outputWithFormat)
+    }
+    outputWithFormat = outputWithFormat.slice(2)
+    if (outputWithFormat.length % 2) {
+      outputWithFormat = '0' + outputWithFormat
+    }
+    return outputWithFormat
+  }
+
   sealTx = (params) => {
+    console.log(params)
     var address_n = params.address_n
-    var nonce = numberToHex(params.nonce).slice(2);
-    if (nonce.length % 2) {
-      nonce = '0' + nonce
-    }
-    var gasPrice = params.gasPrice.slice(2);
-    if (gasPrice.length % 2) {
-      gasPrice = '0' + gasPrice
-    }
-    var gasLimit = params.gasLimit.slice(2);
-    if (gasLimit.length % 2) {
-      gasLimit = '0' + gasLimit
-    }
+    var nonce = this.convertTrezorFormat(params.nonce)
+
+    var gasPrice = this.convertTrezorFormat(params.gasPrice);
+
+    var gasLimit = this.convertTrezorFormat(params.gasLimit)
+
     var to = params.to.slice(2);
-    var value = params.value.slice(2);
-    if (value.length % 2) {
-      value = '0' + value
-    }
+
+    var value = this.convertTrezorFormat(params.value);
+
     var data = ""
     if (params.data) {
-      data = params.data.slice(2)
-      if (data.length % 2) {
-        data = '0' + data
-      }
+      data = this.convertTrezorFormat(params.data);
     }
 
     var chain_id = params.chainId; // 1 for ETH, 61 for ETC
     return new Promise((resolve, reject) => {
-      TrezorConnect.signEthereumTx(
-        address_n,
-        nonce,
-        gasPrice,
-        gasLimit,
-        to,
-        value,
-        data,
-        chain_id,
-        function (response) {
+      TrezorConnect.ethereumSignTransaction(
+        {
+          path: address_n,
+          transaction: {
+            to,
+            value,
+            data,
+            chainId: chain_id,
+            nonce,
+            gasLimit,
+            gasPrice
+          }
+        })
+        .then(response => {
+          console.log("trezor_response")
+          console.log(response)
           if (response.success) {
-            var v = new Buffer([response.v]);
-            var r = new Buffer(response.r, 'hex');
-            var s = new Buffer(response.s, 'hex');
             var tx = new EthereumTx({
+              from: params.from,
               nonce: params.nonce,
               gasPrice: params.gasPrice,
               gasLimit: params.gasLimit,
               to: params.to,
               value: params.value,
               data: params.data,
-              v: v,
-              r: r,
-              s: s
+              v: response.payload.v,
+              r: response.payload.r,
+              s: response.payload.s
             })
             resolve(tx)
           } else {
-            reject(response.error)
+            reject(response.payload.error)
           }
         })
     })
+  }
+  
+  getWalletName = () => {
+    return 'Trezor';
   }
 }

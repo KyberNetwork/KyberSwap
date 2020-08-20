@@ -1,45 +1,15 @@
-
 import React from 'react';
-// import HttpEthereumProvider from "./httpProvider"
-// import WebsocketEthereumProvider from "./wsProvider"
-import constants from "../constants"
-
-import {
-  updateBlock, updateBlockFailed, updateRate, updateAllRate, updateAllRateUSD,
-  checkConnection, setGasPrice, setMaxGasPrice
-} from "../../actions/globalActions"
+import { updateAllRate, checkConnection, setGasPrice, checkUserEligible } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
-import { updateTx, updateApproveTxsData } from "../../actions/txActions"
-import { updateRateExchange, estimateGas, analyzeError, checkKyberEnable, verifyExchange, caculateAmount, fetchExchangeEnable } from "../../actions/exchangeActions"
-import { estimateGasTransfer, verifyTransfer } from "../../actions/transferActions"
-
 import * as marketActions from "../../actions/marketActions"
-
 import BLOCKCHAIN_INFO from "../../../../env"
 import { store } from "../../store"
-import { setConnection } from "../../actions/connectionActions"
-import { stringToHex } from "../../utils/converter"
-
 import * as providers from "./nodeProviders"
 
 export default class EthereumService extends React.Component {
   constructor(props) {
     super(props)
 
-    // this.listProviders = BLOCKCHAIN_INFO.connections.http.filter(node => {
-    //   console.log
-    //   switch (node.type) {
-    //     case "cached":
-    //       return new providers.CachedServerProvider({ url: node.endPoint })
-    //       break
-    //     case "prune":
-    //       return new providers.PruneProvider({ url: node.endPoint })
-    //       break
-    //     case "none_prune":
-    //       return new providers.NonePruneProvider({ url: node.endPoint })
-    //       break
-    //   }
-    // })
     this.listProviders = []
     for (var node of BLOCKCHAIN_INFO.connections.http) {
       switch (node.type) {
@@ -59,161 +29,33 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  subcribe(callBack) {
-    var callBackAsync = this.fetchData.bind(this)
-    callBackAsync()
-    this.intervalAsyncID = setInterval(callBackAsync, 10000)
-
-    var callBackSync = this.fetchDataSync.bind(this)
-    callBackSync()
-    this.intervalSyncID = setInterval(callBackSync, 3000)
-
-    var callBack5Min = this.fetchData5Min.bind(this)
-    callBack5Min()
-    var interval5Min = setInterval(callBack5Min, 300000)
-
-    // var callBackDay = this.updateTokenStatus.bind(this)
-    // callBackDay()
+  getNumProvider() {
+    return this.listProviders.length
   }
 
-  clearSubcription() {
-    clearInterval(this.intervalID)
-    clearInterval(this.intervalSyncID)
+  subscribe(callBack) {
+    this.fetchGasPrice();
+    this.checkUserEligible();
+
+    var callBack_10s = this.fetchData_10s.bind(this)
+    callBack_10s()
+    this.interval_10s = setInterval(callBack_10s, 10000)
   }
 
+  clearSubscription() {
+    clearInterval(this.interval_10s)
+  }
 
-  //var httpArr = BLOCKCHAIN_INFO.connections.http
-
-
-  // var randomNum = Math.floor((Math.random() * httpArr.length))
-  // this.httpUrl = httpArr[randomNum]
-  // this.wsUrl = BLOCKCHAIN_INFO.connections.ws
-  // this.httpProvider = this.getHttpProvider()
-  // this.wsProvider = false
-
-  //this.initProvider(props.default)
-
-  // initProvider(provider) {
-  //   switch (provider) {
-  //     case "http":
-  //       this.currentProvider = this.httpProvider
-  //       this.currentLabel = "http"
-  //       break
-  //     case "ws":
-  //       this.currentProvider = this.wsProvider
-  //       this.currentLabel = "ws"
-  //       break
-  //     default:
-  //       this.currentProvider = this.httpProvider
-  //       this.currentLabel = "http"
-  //       break
-  //   }
-  // }
-
-  // getWebsocketProvider() {
-  //   return new WebsocketEthereumProvider({
-  //     url: this.wsUrl, failEvent: () => {
-  //       var state = store.getState()
-  //       var ethereum = state.connection.ethereum
-  //       if (ethereum.wsProvider.connection) {
-  //         ethereum.wsProvider.connection = false
-  //         //ethereum.wsProvider.reconnectTime = 0
-  //         store.dispatch(setConnection(ethereum))
-  //       }
-  //     }
-  //   })
-  // }
-
-  // getHttpProvider() {
-  //   return new HttpEthereumProvider({ url: this.httpUrl })
-  // }
-
-  // getProvider() {
-  //   return this.currentProvider
-  // }
-
-  // setProvider(provider) {
-  //   this.currentProvider = provider
-  // }
-
-  // subcribe() {
-  //   //this.currentProvider.clearSubcription()
-  //   //get gas price
-  //   //this.fetchGasPrice()
-  //   this.currentProvider.subcribeNewBlock(this.fetchData.bind(this))
-  // }
-
-  // clearSubcription() {
-  //   this.currentProvider.clearSubcription()
-  // }
-
-  fetchData() {
-    this.checkKyberEnable()
-
-    this.fetchTxsData()
-    this.fetchApproveTxsData()
-
-    this.fetchRateData()
-
+  fetchData_10s() {
     this.fetchAccountData()
     this.fetchTokenBalance()
-
-    this.fetchRateExchange()
-
-    //this.fetchHistoryExchange()
-
     this.checkConnection()
-
-
-    this.fetchMaxGasPrice()
-    this.fetchGasprice()
-    
-
-    this.fetchExchangeEnable()
-    // this.verifyExchange()
-    // this.verifyTransfer()
-
-    this.fetchGasExchange()
-    this.fetchGasTransfer()
-
-    //this.fetMarketData()
-
-    this.fetGeneralInfoTokens()
-
-     //this.testAnalize()
-  // this.testEstimateGas()
+    this.fetchRateData()
+    this.fetchMarketData()
   }
 
-  // updateTokenStatus() {
-  //   store.dispatch(updateTokenStatus())
-  // }
-
-  fetchData5Min(){
-    this.fetchVolumn()
-    this.fetchRateUSD()
-  }
-
-  fetchDataSync() {
-    var state = store.getState()
-    var account = state.account
-    if (account.isGetAllBalance){
-      this.verifyExchange()
-      this.verifyTransfer()
-    }
-  }
-
-  testAnalize() {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(analyzeError(ethereum, "0xcf399849f56c126fa1f0efde76e7e03c7ecbe4dfbffe2e96e7a48fa6e6c02692"))
-  }
-
-  // testEstimateGas() {
-  //   this.call("estimateGasContract")
-  // }
-  
-  fetchVolumn () {
-    store.dispatch(marketActions.getVolumn())
+  fetchMarketData () {
+    store.dispatch(marketActions.fetchMarketData())
   }
   
   fetchRateData() {
@@ -233,56 +75,6 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  fetchRateUSD() {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(updateAllRateUSD(ethereum))
-  }
-
-  fetchTxsData = () => {
-    var state = store.getState()
-    var tx
-    var txs = state.txs
-    var ethereum = state.connection.ethereum
-
-    var account = state.account.account
-    var listToken = {}
-    Object.keys(txs).forEach((hash) => {
-      tx = txs[hash]
-      if (tx.status == "pending") {
-        if (tx.type === "exchange") {
-          var exchange = state.exchange
-          listToken = {
-            source: {
-              symbol: exchange.sourceTokenSymbol,
-              address: exchange.sourceToken
-            },
-            dest: {
-              symbol: exchange.destTokenSymbol,
-              address: exchange.destToken
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        } else {
-          var transfer = state.transfer
-          listToken = {
-            token: {
-              symbol: transfer.tokenSymbol,
-              address: transfer.token
-            }
-          }
-          store.dispatch(updateTx(ethereum, tx, account, listToken))
-        }
-
-      }
-    })
-  }
-
-
-  fetchApproveTxsData = () =>{
-    store.dispatch(updateApproveTxsData())
-  }
-
   fetchAccountData = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
@@ -292,122 +84,17 @@ export default class EthereumService extends React.Component {
     }
   }
 
-  fetchCurrentBlock = () => {
+  fetchGasPrice = () => {
+    store.dispatch(setGasPrice())
+  }
+
+  checkUserEligible = () => {
     var state = store.getState()
     var ethereum = state.connection.ethereum
-    store.dispatch(updateBlock(ethereum))
-  }
-
-  fetchRateExchange = (isManual = false) => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    var source = state.exchange.sourceToken
-    var dest = state.exchange.destToken
-    var sourceAmount = state.exchange.sourceAmount
-
-    var tokens = state.tokens.tokens
-    var sourceDecimal = 18
-    var sourceTokenSymbol = state.exchange.sourceTokenSymbol
-    if (tokens[sourceTokenSymbol]) {
-      sourceDecimal = tokens[sourceTokenSymbol].decimals
-    }
-
-//    var sourceAmountHex = stringToHex(sourceAmount, sourceDecimal)
-
-    // var destTokenSymbol = state.exchange.destTokenSymbol
-    // var rateInit = 0
-    // if (sourceTokenSymbol === 'ETH' && destTokenSymbol !== 'ETH') {
-    //   rateInit = tokens[destTokenSymbol].minRateEth
-    // }
-    // if (sourceTokenSymbol !== 'ETH' && destTokenSymbol === 'ETH') {
-    //   rateInit = tokens[sourceTokenSymbol].minRate
-    // }
-
-    store.dispatch(updateRateExchange(ethereum, source, dest, sourceAmount, sourceTokenSymbol, isManual))
-  }
-
-  // fetchHistoryExchange = () => {
-  //   var state = store.getState()
-  //   var history = state.global.history
-  //   var ethereum = state.connection.ethereum
-  //   store.dispatch(updateBlock(ethereum))
-  //   store.dispatch(updateHistoryExchange(ethereum, history.page, history.itemPerPage, true))
-  // }
-
-  fetchGasprice = () => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    store.dispatch(setGasPrice(ethereum))
-  }
-
-  fetchMaxGasPrice = () => {
-    var state = store.getState()
-    store.dispatch(setMaxGasPrice())
-  }
-
-  fetchGasExchange = () => {
-    var state = store.getState()
     var account = state.account.account
-    if (!account.address) {
-      return
+    if (account.address) {
+      store.dispatch(checkUserEligible(ethereum))
     }
-    var pathname = state.router.location.pathname
-    console.log(pathname)
-    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
-      return
-    }
-    store.dispatch(estimateGas())
-  }
-
-  fetchGasTransfer = () => {
-    var state = store.getState()
-    var account = state.account.account
-    if (!account.address) {
-      return
-    }
-
-    var pathname = state.router.location.pathname
-    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
-      return
-    }
-    store.dispatch(estimateGasTransfer())
-  }
-
-  fetMarketData = () => {
-    store.dispatch(marketActions.getMarketData())
-  }
-
-  fetGeneralInfoTokens() {
-    store.dispatch(marketActions.getGeneralInfoTokens())
-  }
-
-  verifyExchange = () => {
-    var state = store.getState()
-    var account = state.account.account
-    if (!account.address) {
-      return
-    }
-
-    var pathname = state.router.location.pathname
-    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
-      return
-    }
-    store.dispatch(verifyExchange())
-    store.dispatch(caculateAmount())
-  }
-
-  verifyTransfer = () => {
-    var state = store.getState()
-    var account = state.account.account
-    if (!account.address) {
-      return
-    }
-
-    var pathname = state.router.location.pathname
-    if (!pathname.includes(constants.BASE_HOST + "/transfer")) {
-      return
-    }
-    store.dispatch(verifyTransfer())
   }
 
   checkConnection = () => {
@@ -417,39 +104,18 @@ export default class EthereumService extends React.Component {
     store.dispatch(checkConnection(ethereum, checker.count, checker.maxCount, checker.isCheck))
   }
 
-  checkKyberEnable = () => {
-    store.dispatch(checkKyberEnable())
-  }
-
-  fetchExchangeEnable = () => {
-    var state = store.getState()
-    var account = state.account.account
-    if (!account.address) {
-      return
-    }
-
-    var pathname = state.router.location.pathname
-    if (!pathname.includes(constants.BASE_HOST + "/swap")) {
-      return
-    }
-    store.dispatch(fetchExchangeEnable())
-  }
-
   promiseOneNode(list, index, fn, callBackSuccess, callBackFail, ...args) {
     if (!list[index]) {
       callBackFail(new Error("Cannot resolve result: " + fn))
       return
     }
     if (!list[index][fn]) {
-      console.log("Not have " + fn + " in " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
       return
     }
     list[index][fn](...args).then(result => {
-      console.log("Resolve " + fn + "successful in " + list[index].rpcUrl)
       callBackSuccess(result)
     }).catch(err => {
-      console.log(err.message + " -In provider: " + list[index].rpcUrl)
       this.promiseOneNode(list, ++index, fn, callBackSuccess, callBackFail, ...args)
     })
   }
@@ -459,7 +125,6 @@ export default class EthereumService extends React.Component {
       this.promiseOneNode(this.listProviders, 0, fn, resolve, reject, ...args)
     })
   }
-
 
   promiseMultiNode(list, index, fn, callBackSuccess, callBackFail, results, errors, ...args) {
     if (!list[index]) {
@@ -491,10 +156,33 @@ export default class EthereumService extends React.Component {
 
   callMultiNode(fn, ...args) {
     var errors = []
-    var results = []
     return new Promise((resolve, reject) => {
-      this.promiseMultiNode(this.listProviders, 0, fn, resolve, reject, results, errors, ...args)
+      this.listProviders.map(val => {
+        if (!val[fn]) {
+          errors.push({
+            code: 0,
+            msg: "Provider not support this API"
+          })
+          return
+        }
+        val[fn](...args).then(result => {
+          resolve(result)
+        }).catch(err => {
+          console.log(err)
+          errors.push({
+            code: 1,
+            msg: err
+          })          
+          if (errors.length === this.listProviders.length){
+            //find error with code 1
+            for (var i = 0; i<errors.length; i++){
+              if (errors[i].code === 1){
+                reject(errors[i].msg)
+              }
+            }
+          }
+        })
+      })
     })
   }
-
 }

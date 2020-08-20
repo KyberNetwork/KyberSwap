@@ -1,29 +1,31 @@
-
 import Web3 from "web3"
-
-//import DappBrowser from "DappBrowser.js"
+import * as ethUtil from 'ethereumjs-util'
 import * as common from "../../../utils/common"
 import { verifyAccount } from "../../../utils/validators"
-import * as converters from "../../../utils/converter"
+import * as constants from "../../constants"
 
 export default class DappBrowser {
   constructor() {
-    this.web3 = new Web3(Web3.givenProvider)
+    if (window.ethereum) {
+      this.web3 = new Web3(window.ethereum);
+    } else if (window.web3) {
+      this.web3 = new Web3(Web3.givenProvider || window.web3.currentProvider || window.web3.givenProvider);
+    }
   }
 
   getWalletType = () => {
     return "dapp"
   }
+  
+  getWalletName = () => {
+    return 'Dapp';
+  }
 
   getNetworkId = () => {
     return new Promise((resolve, reject) => {
       this.web3.eth.net.getId((error, result) => {
-        // alert(error)
-        // alert(result)
-        //console.log()
-        console.log(result)
         if (error || !result) {
-          var error = new Error("Cannot get network id")
+          error = new Error("Cannot get network id")
           reject(error)
         } else {
           resolve(result)
@@ -32,44 +34,80 @@ export default class DappBrowser {
     })
   }
 
-  getCoinbase() {
+  getCoinbase(isManual = false) {
+    if (window.ethereum && isManual) {
+      return new Promise((resolve, reject) => {
+        window.ethereum.enable().then(() => {
+          this.web3.eth.getAccounts((error, result) => {
+            if (error || result.length === 0) {
+              error = new Error("Cannot get coinbase")
+              reject(error)
+            } else {
+              resolve(result[0])
+            }
+          })
+        }).catch(() => {
+          var error = new Error("Cannot get coinbase")
+          reject(error)
+        })
+      })
+    } else {
       return new Promise((resolve, reject) => {
         this.web3.eth.getAccounts((error, result) => {
-          console.log(error)
-          console.log(result)
           if (error || result.length === 0) {
-            var error = new Error("Cannot get coinbase")
+            error = new Error("Cannot get coinbase")
             reject(error)
           } else {
             resolve(result[0])
           }
         })
       })
-    } 
-
-
+    }
+  }
+  
   setDefaultAddress(address) {
     this.web3.eth.defaultAccount = address
   }
 
-  
-  getWalletId(blockNo){
+  getWalletId() {
+    if (this.web3.kyberID && !verifyAccount(this.web3.kyberID)) {
+      return this.web3.kyberID
+    }
     var refAddr = common.getParameterByName("ref")
-  //  alert(refAddr)
-    
     if (!verifyAccount(refAddr)) {
-    //  alert("xxxx")
       return refAddr
     }
-    if (common.isUserEurope()){
-        return "0x440bBd6a888a36DE6e2F6A25f65bc4e16874faa9" 
-    }
-
-    if (web3.kyberID && !verifyAccount(web3.kyberID)) {
-      return web3Service.web3.kyberID
-    }
-
-    return converters.numberToHexAddress(blockNo)
+    return constants.EXCHANGE_CONFIG.COMMISSION_ADDR
   }
 
+  personalSign = (message, account) => {
+    return new Promise((resolve, reject)=>{
+      this.web3.eth.personal.sign(message, account, (error, result)=>{
+        if(!error){
+          resolve(result)
+        }else{
+          reject(error)
+        }
+      })
+    })
+  }
+
+  async sign(message) {
+    try {
+      var account = await this.getCoinbase(true)
+      
+      let signature = await this.personalSign(message, account);
+      
+      var {v, r, s} = ethUtil.fromRpcSig(signature)
+      r = ethUtil.bufferToHex(r)    
+      s = ethUtil.bufferToHex(s)    
+
+      signature = ethUtil.toRpcSig(v, r, s)
+
+      return signature
+    } catch(err) {
+      console.log(err)
+      throw err
+    }
+  }
 }

@@ -5,12 +5,13 @@ console.log("+++++++++++++++++++++++")
 const fs = require('fs');
 const BUNDLE_NAME = process.env.BUNDLE_NAME || 'bundle'
 const chain = process.env.chain
+const buildFolder = process.env.folder
 
 var chain_folder = ""
-if (chain === 'production'){
+if (buildFolder === 'production'){
   chain_folder = ""
 }else{
-  chain_folder = "_" + chain
+  chain_folder = "_" + buildFolder
 }
 
 const file = `../app/views/swap/_index${chain_folder}.html.slim`
@@ -24,12 +25,33 @@ console.log("bundle name ----------------___++++++", BUNDLE_NAME)
 var now = new Date().getTime()
 
 let view = `
-#swap-app 
-link rel="stylesheet" href="/swap/${chain}/app.bundle.css?v=${now}" type="text/css"
-script src="/trading_view/charting_library/charting_library.min.js"
-script src="/trading_view/datafeeds/udf/dist/polyfills.js"
-script src="/trading_view/datafeeds/udf/dist/bundle.js"
-script src="/swap/${chain}/client.min.js?v=${now}"
+- if browser.device.mobile? || cookies[:is_visited] == 'true' || (request.path.include? "limit_order") || (request.path.include? "portfolio")
+    link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
+    #swap-app-tmp onClick="animateSwap()"
+        div style="text-align:center"
+          - if request.path.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.path.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.path.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering"
+    #swap-app
+    script src="/trading_view/charting_library/charting_library.min.js?v=${now}"
+    script src="/trading_view/datafeeds/udf/dist/polyfills.js"
+    script src="/trading_view/datafeeds/udf/dist/bundle.js"          
+    script src="https://www.google.com/recaptcha/api.js"
+    script src="/swap/${buildFolder}/app.min.js?v=${now}"
+- else 
+    link rel="stylesheet" href="/swap/${buildFolder}/app.css?v=${now}" type="text/css"
+    #swap-app-tmp
+        div style="text-align:center" onClick="openSwap('${buildFolder}', ${now})"
+          - if request.path.include? "swap"
+              = render "swap/server_rendering/swap_rendering"    
+          - elsif request.path.include? "transfer"
+              = render "swap/server_rendering/transfer_rendering"    
+          - elsif request.path.include? "limit_order"
+              = render "swap/server_rendering/limit_order_rendering" 
+    #swap-app  
 `
 
 // let view = `

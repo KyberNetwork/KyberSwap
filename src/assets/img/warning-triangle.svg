@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="11px" viewBox="0 0 12 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6.9375,1.90156667 L11.0625,9.69323333 C11.5780917,10.6671287 11.1007504,11.4640667 9.9914698,11.4640667 L2.0085302,11.4640667 C0.901950359,11.4640667 0.419733047,10.6712376 0.9375,9.69323333 L5.0625,1.90156667 C5.57809165,0.927671326 6.41973305,0.923562422 6.9375,1.90156667 Z M6,8 C6.368,8 6.66666667,7.70133333 6.66666667,7.33333333 L6.66666667,4 C6.66666667,3.632 6.368,3.33333333 6,3.33333333 C5.632,3.33333333 5.33333333,3.632 5.33333333,4 L5.33333333,7.33333333 C5.33333333,7.70133333 5.632,8 6,8 Z M6,10 C6.368,10 6.66666667,9.70133333 6.66666667,9.33333333 C6.66666667,8.96533333 6.368,8.66666667 6,8.66666667 C5.632,8.66666667 5.33333333,8.96533333 5.33333333,9.33333333 C5.33333333,9.70133333 5.632,10 6,10 Z" id="path-1"></path>
+    </defs>
+    <g id="KyberSwap.com-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="swap-confirm--warning" transform="translate(-473.000000, -440.000000)">
+            <g id="icon" transform="translate(473.000000, 439.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Combined-Shape" fill="#42526E" xlink:href="#path-1"></use>
+                <g id="Yellow-/-Y400" mask="url(#mask-2)" fill="#FF991F">
+                    <g transform="translate(-2.000000, -2.000000)" id="Y400">
+                        <rect x="0" y="0" width="16" height="16"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

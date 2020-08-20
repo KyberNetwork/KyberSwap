@@ -1,37 +1,30 @@
-import * as keyService from "./baseKey"
-import EthereumTx from "ethereumjs-tx"
+import { newWeb3Instance } from "../web3"
+import BaseWallet from "./BaseWallet";
 
-export default class Metamask {
-
-  callSignTransaction = (funcName, ...args) => {
-    return new Promise((resolve, reject) => {
-      keyService[funcName](...args).then(result => {
-        const { txParams, keystring, password } = result
-        this.sealTx(txParams, keystring, password).then(result => {
-          resolve(result)
-        }).catch(e => {
-          console.log(e.message)
-          reject(e)
-        })
-      })
-    })
-    // const { txParams, keystring, password } = keyService[funcName](...args)
-    // return this.sealTx(txParams, keystring, password)
+export default class Metamask extends BaseWallet {
+  constructor(props){
+    super(props);
+    this.web3 = newWeb3Instance();
   }
-
-  sealTx = (txParams, web3Service, password) => {
-    txParams.gas = txParams.gasLimit
-    delete(txParams.gasLimit)
-
-    return new Promise((resolve, reject) => {
-      web3Service.web3.eth.sendTransaction(txParams, function(err, transactionHash) {
-        if (!err){
-          resolve(transactionHash)
-        }else{
-          console.log(err)
-          reject(err.message)
-        }
+  
+  getDisconnected() {
+    const web3 = this.web3;
+    
+    return new Promise((resolve) => {
+      web3.getCoinbase().then(address => {
+        var addressInterval = setInterval(function() {
+          web3.getCoinbase().then(updatedAddress => {
+            if (updatedAddress != address){
+              clearInterval(addressInterval)
+              resolve()
+            }
+          })
+        }, 1000)
       })
     })
+  }
+  
+  getWalletName = () => {
+    return this.web3.getWalletName();
   }
 }

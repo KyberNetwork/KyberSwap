@@ -1,312 +1,488 @@
-.exchange-frame {
-  background: #f5f5f5;
-  @include screen-min-width(medium) {
-    padding-top: 40px !important;
+.exchange {
+  &__balance {
+    font-size: 13px;
+    font-weight: 400;
+
+    div:first-child {
+      margin-bottom: 3px;
+    }
+  }
+
+  &__container {
+    max-width: $width-exchange;
+    margin: 0 auto;
+  }
+
+  &__form {
+    padding: 45px;
+    border-radius: 3px;
+    box-shadow: 0 2px 29px -10px rgba(0, 0, 0, 0.49);
+  }
+
+  &__error {
+    color: $error-color;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 10px 0 20px;
+
+    &-item {
+      margin-bottom: 7px;
+      animation: slideUp .3s;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__swap-icon {
+    display: block;
+    margin: 0 auto;
+    width: 19px;
+    height: 24px;
+    background-image: url($image-path + 'exchange/swap-icon.svg');
+    cursor: pointer;
+  }
+
+  @include screen-max-width(xxmedium) {
+    &__swap-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  @include screen-max-width(medium) {
+    &__form {
+      padding: 45px 15px;
+    }
+  }
+}
+
+.exchange__container {
+  .promo-description {
+    margin: 0 auto 10px;
+    font-size: 14px;
+    color: #222222;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+
+    &--icon {
+      margin: auto 15px auto 0;
+    }
+
+    &--message {
+      >div:first-child {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 500px;
+
+        @include screen-max-width(medium) {
+          max-width: 250px;
+        }
+      }
+    }
+
+    &--expired-date {
+      color: #000;
+      font-weight: 700;
+      background-color: #DEEBFF;
+      border-radius: 10px;
+      padding: 3px 10px;
+      line-height: 2;
+    }
+  }
+}
+
+.exchange-header {
+  margin-bottom: 35px;
+  border-radius: 9px 9px 0 0;
+  box-shadow: 0 8px 12px 0 rgba(101, 124, 150, 0.14);
+  background-color: #ffffff;
+}
+
+.exchange-tab {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 600px;
+  position: relative;
+  margin: 0 auto;
+  height: 50px;
+
+  &__item {
+    font-weight: 500;
+    font-size: 14px;
+    color: #666666;
+    text-transform: uppercase;
+    transition: all .3s;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    &--active {
+      font-weight: bold;
+      color: #ef8102;
+      position: relative;
+    }
+
+    &--active:after {
+      content: "";
+      border: solid 1px #ff9008;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      @include animation(underlineOut) {
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+      }
+    }
+
+    &--disabled {
+      color: #666666;
+    }
+
+    &:hover {
+      color: #8e97ad !important;
+    }
   }
 }
 
 #exchange {
+  .exchange-extra-info{
+    margin-top: 25px;
+    .swap-all-des{
+      font-size: 14px;
+    }
+  }
   margin-bottom: 50px;
+}
 
-  @media print, screen and (min-width: 40em) {
-    .medium-5 {
-      width: 45%;
-      padding-right: 0;
-      padding-left: 0;
-    }
-    .medium-2 {
-      width: 10%;
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }  
-  @include screen-max-width(large) {
-    box-shadow: 0 7px 25px #ddd;
-    margin:  0 10px 10px 10px;
-    background: white;
-  }
-  @include screen-max-width(large) {
-    @include screen-min-width(medium){
-      .swap-wrapper{
-        border-left: 1px solid #ddd;
-      }
-    }
-    .exchange-col-1, .exchange-col-2, .exchange-col-3{
-      padding: 1rem;
-    }
-    .exchange-col-1-2{
-      margin-top: 30px
-    }
-    .exchange-wrapper-btn{
-      .button{
-        width: 100%;
-      }
-    }
-    .amount-input{
-      margin-top: 1rem;
-    }
-  } 
-  @include screen-min-width(large) {
-    .balance-wrapper,
-    .exchange-col-1 {
-      box-shadow: $box-shadow-tab;
-    }
+.exchange-market-rate {
+  border-radius: 14px;
+  background-color: #e8eff6;
+  font-size: 10px;
+  font-weight: 600;
+  color: #8690ad;
+  padding: 5px 25px;
+  margin-bottom: 3px;
+  cursor: pointer;
 
-    .balance-wrapper{
-      border: 1px solid #ddd;
-      background: white;
-      position: relative;
-      z-index: 1;
+  &--wrapper {
+    display: flex;
+    justify-content: space-between;
 
-      &::after {
-        content: '';
-        position: absolute;
-        width: 10px;
-        height: 100%;
-        background: $white;
-        top: 0;
-        right: -11px;
-      }
-    }
-    .exchange-wrapper-btn{
-      text-align: center;
-    }
-    .exchange-col-1{
-      padding: 0 3rem;
-      border: 1px solid #ddd;
-      border-left: none;
-      background: white;
-    }
-    .exchange-col-2{
-      padding-left: 20px;
-    }
-    .exchange-col-3{
-      >div{
-        position: relative;
-        .exchange-wrapper-btn{
-          position: absolute;
-          margin-top: -215px;
-          width: 100%;
-        }
-      }
-    }
-    .exchange-col{
-      position: relative;
-      height: 100%;
-    }
-  }
-
-  .exchange-icon{
-    text-align: center;
-    margin-top: 50px;
-    @include screen-max-width(large) {
-      display: none;
-    }    
-  }
-  .main-title  {
-    line-height: 1.2;
-    letter-spacing: -0.1px;
-    font-size: 24px;
-    color: #141927;
-    margin-bottom: 20px;
-    font-weight: 600;
-
-    @include screen-max-width(medium) {
-      display: none;
-    }
-    @include screen-min-width(large) {
-      margin-top: 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-  }
-  .token-input {
-    .info {
-      height: auto;
-      transition: width .4s ease-in-out;
-    }
-    input {
-      transition: width .4s ease-in-out;
-    }
-  }
-  label{
-    margin-bottom: 8px;
-  }
-
-  .accent {
-    margin-top: 35px;
-    line-height: 55px;
-    padding: 0 50px;
-    background: #ef8102;
-    font-size: 20px;
-    font-weight: 600;
-    text-transform: unset;
-    border-radius: 4px;
-    //box-shadow: 0 10px 15px #ccc;
-
-    @include screen-max-width(large) {
-      margin-top: 0;
-    }
-  }
-
-  .token-compare {
-    color: #666666;
-    font-size: 14px;
-    letter-spacing: .5px;
-    text-align: center;
-    margin-bottom: 10px;
-    margin-top: 1rem;
-    font-weight: 600;
-
-    &__separator {
-      margin: 0 15px;
-    }
-
-    @include screen-min-width(large) {
-      width: 450px;
-      margin: 0 auto;
-      margin-top: 1rem;
-    }
-
-    @include screen-max-width(large) {
-      text-align: left;
-
-      &__item {
-        display: block;
-      }
-
-      &__separator {
-        display: none;
-      }
-    }
-  }
-
-  .show-on-choose-token-pair {
-    display: none;
-  }
-  .hide-on-choose-token-pair {
-    display: block;
-  }
-  &.choose-token-pair {
-    .title {
-      &:after {
-        content: 'Select Token Pair';
-        font-size: 14px;
-        margin-left: 20px;
-        color: lighten($dark-gray, 20);
-      }
-    }
-    .token-input {
-      opacity: 0.5;
-      input {
-        width: 0;
-        opacity: 0;
-        padding: 0;
-      }
-      .info {
-        width: 100%;
-        &:before {
-          opacity: 0;
-        }
-      }
-    }
-  }
-  .hide-on-choose-token-pair {
-    display: none;
-  }
-  .show-on-choose-token-pair {
-    display: block;
-  }
-  .token-selector {
-    .dropdown {
-      &.dropdown--active {
-        .focus-item{
-          border-color: #aaa;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
-    }
-    .focus-item {
-      height: 60px;
-      border-radius: 5px;
-      box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-      background-color: #ffffff;
-      border: solid 0.8px rgba(204, 204, 204, 0.72);
-      padding: 8px 12px;
-      align-items: center;
-      font-size: 15px;
-      &.d-flex{
-        justify-content: space-between;
-      }
-      .d-flex{
-        align-items: center;
-        div:nth-child(2) {
-          overflow: hidden;
-          .focus-name {
-            text-overflow: ellipsis;
-            text-transform: initial;
-            overflow: hidden;
-            white-space: nowrap;
-          }          
-        }
-      }
-      .focus-name{
-        color: #222222;
-        font-size: 14px;
-        font-weight: 600;        
-        letter-spacing: -0.4px;
-      }
-      .focus-balance{
-        color: #666666;
-        font-size: 14px;
-        font-weight: 600;
-
-        .token-symbol{
-          margin-left: 5px;
-        }
-      }
-      .icon{
-        margin-right: 10px;
-        img{
-          vertical-align: top;
-        }
-      }
-      i.k-angle {
-        background-image: url(../img/exchange/arrow-down-swap.svg);
-        height: 10px;
-        width: 13px;
-        background-size: 13px 13px;
-      }
-    }
-  }
-  .gas-option {
-    .focus-item {
-      padding-left: 0;
+    .exchange-item-label {
+      margin-bottom: 0 !important;
+      padding: 5px 0;
     }
   }
 }
 
-.swap-navigation{
-  display: flex;
-  align-items: center;
-  max-width: 75rem;
-  margin: 0 auto;
-  @include screen-max-width(medium){
-    display: none;
-  }
-  @include screen-max-width(large){
-    margin: 20px 10px 10px 10px;
-  }
-  >div{
-      margin-right: 10px;
-      a{
-        color: #999999;
+.exchange-rate {
+  min-height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 12px;
+  text-align: right;
+
+  &-container {
+    &__left {
+      @include screen-max-width(large){
+        margin-left: 20px;
+      }
     }
   }
-  .active{
-    a{
-      color: #666666;
-      font-weight: 600;
+
+  &__balance {
+    height: 20px;
+    opacity: 0;
+  }
+
+  @media screen and (max-width: 650px) {
+    &-container {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+.exchange-account {
+  max-width: 1050px;
+  margin: 0 auto;
+  font-size: 13px;
+
+  &__wrapper {
+    &--reimport {
+      position: relative;
+      height: 20px;
+      margin: 0 35px;
+    }
+
+    .reimport-msg {
+      position: relative;
+      max-width: 170px;
+      font-size: 12px;
+      color: #8690ad;
+      font-weight: 500;
+      line-height: 2;
+      width: 100%;
+      margin-left: calc(50% - 85px);
+      text-align: center;
+      top: -20px;
+      background: #eff4fa;
+      cursor: pointer;
+      padding: 7px 0;
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    display: flex;
+    position: relative;
+    margin-bottom: 20px;
+
+    &--animation {
+      @include animation(slideInDown) {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      };
+    }
+
+    &--open {
+      border-bottom: none;
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+
+  &__balance {
+    position: relative;
+  }
+
+  @include screen-max-width(large) {
+    &__content {
+      display: block;
+      border-radius: 0;
+
+      @include screen-min-width(large){
+        padding: 20px 1rem;
+      }
+    }
+
+    &__balance {
+      width: 100%;
+      padding: 1rem;
+      &::after {
+        display: none;
+      }
+    }
+
+    &__adv-config {
+      width: 100%;
+      padding: 0;
+      margin-top: 10px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    &__container {
+      padding-bottom: 5px;
+    }
+
+    &__content {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+.exchange-button {
+  text-align: center;
+  margin: 40px 0 10px;
+
+  &__button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 180px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 3px;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 17px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &.disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+}
+
+.exchange-terms {
+  font-size: 12px;
+  font-style: italic;
+  color: #9ea1aa;
+  padding: 0 5px;
+  line-height: 1.5;
+
+  &__link {
+    color: $text-orange !important;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+.swap-balance-modal{
+  position: relative;
+  z-index: 1;
+
+  @include screen-max-width(large){
+    top: 18px;
+  }
+
+  .dropdown__content {
+    right: 0;
+    width: 180px;
+    top: 25px;
+    position: absolute;
+  }
+  .select-item{
+    background-color: white;
+    box-shadow: 0 6px 26px 0 rgba(1, 1, 1, 0.13);
+    border-radius: 10px;
+    .list-item {
+      padding-top: 10px;
+      >div{
+        padding: 10px 20px;
+        color: #5A5E67;
+        font-weight: normal;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover{
+          background-color: #eee;
+        }
+
+        @include screen-max-width(medium) {
+          text-align: left;
+        }
+      }
+    }
+
+    .checked {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        background: url(../img/exchange/choosed.svg) no-repeat;
+        background-size: contain;
+        left: 8px;
+        width: 15px;
+        height: 15px;
+        top: 13px;
+      }
+    }
+  }
+}
+
+#info_indicator {
+  max-width: 320px;
+  padding: 10px 15px;
+  background-color: #efefef;
+  opacity: 1;
+  box-shadow: 0 10px 20px 0 rgba(135, 135, 135, 0.26), 0 6px 6px 0 rgba(174, 178, 177, 0.26);
+  text-align: left;
+  cursor: pointer;
+
+  .info-indicator {
+    font-size: 12px;
+
+    &__text {
+      color: #666;
+      border-bottom: 1px dashed #c4c4c4;
+      font-style: italic;
+      line-height: 1.6;
+      padding-bottom: 7px;
+      margin-bottom: 10px;
+    }
+
+    &__note {
+      color: $blue-light;
+      line-height: 1.6;
+    }
+  }
+
+  &.__react_component_tooltip.type-light.place-top:after{
+    display: none;
+  }
+}
+
+.network_error{
+  display: flex;
+  margin-bottom: 15px;
+  img{
+    margin-right: 10px
+  }
+}
+
+.token-compare {
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .rate-loading {
+      padding: 0 5px;
+      height: 14px;
+
+      img {
+        height: 14px;
+      }
+    }
+  }
+
+  &__change {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 23px;
+    margin-left: 5px;
+    position: relative;
+    bottom: 1px;
+
+    img {
+      width: 7px;
+      height: auto;
+      margin-left: 2px;
+    }
+
+    &.change-positive {
+      color: #007bde;
+      background-color: #e6f3fd;
+    }
+
+    &.change-negative {
+      background-color: #f6e1e1;
+      color: #ee344e;
+    }
+  }
+
+  &__tooltip {
+    margin-left: 5px;
+    display: flex;
+
+    img {
+      height: 13px;
     }
   }
 }

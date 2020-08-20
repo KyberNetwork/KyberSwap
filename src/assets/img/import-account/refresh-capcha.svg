@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>baseline-refresh-24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Swap--Capcha" transform="translate(-890.000000, -487.000000)">
+            <g id="baseline-refresh-24px" transform="translate(886.000000, 483.000000)">
+                <path d="M22.2464698,7.75164474 C20.3851091,5.89144737 17.830552,4.73684211 14.9935815,4.73684211 C9.31964056,4.73684211 4.73684211,9.32960526 4.73684211,15 C4.73684211,20.6703947 9.31964056,25.2631579 14.9935815,25.2631579 C19.7817715,25.2631579 23.7740693,21.9917763 24.9165597,17.5657895 L22.2464698,17.5657895 C21.1938383,20.5549342 18.3440308,22.6973684 14.9935815,22.6973684 C10.7445443,22.6973684 7.29139923,19.2463816 7.29139923,15 C7.29139923,10.7536184 10.7445443,7.30263158 14.9935815,7.30263158 C17.1245186,7.30263158 19.0243902,8.18782895 20.4107831,9.58618421 L16.2772786,13.7171053 L25.2631579,13.7171053 L25.2631579,4.73684211 L22.2464698,7.75164474 Z" id="Shape" fill="#9EA0AA" fill-rule="nonzero"></path>
+                <polygon id="Shape" points="0 0 30 0 30 30 0 30"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
