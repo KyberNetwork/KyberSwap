@@ -23,8 +23,6 @@
     "price": "가격",
     "your_wallet_address": "지갑 주소",
     "search": "찾기",
-    "connect_your_wallet_to_swap": "환전을 위해 지갑을 연결해주세요",
-    "connect_your_wallet_to_transfer": "송금을 위해 지갑을 연결해주세요",
     "connect_your_wallet_to_limit_order": "거래 전 월렛 가져 오기",
     "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "다운로드",
@@ -295,7 +293,8 @@
     "connect_other_wallet": "다른 지갑에 연결",
     "do_you_want_to_connect_other_wallet": "다른 지갑으로 연결하시겠습니까?",
     "yes": "예",
-    "no": "아니오"
+    "no": "아니오",
+    "connect_wallet": "지갑 연결하기"
   },
   "info": {
     "title": "카이버 테스트넷",

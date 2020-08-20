@@ -7,6 +7,10 @@
     align-items: center;
   }
 
+  &__qr-code {
+    border: 2px solid white;
+  }
+
   &__icon {
     width: 11px;
     margin-right: 5px;

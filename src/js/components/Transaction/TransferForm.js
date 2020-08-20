@@ -48,7 +48,6 @@ const TransferForm = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
-          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )

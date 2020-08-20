@@ -140,7 +140,10 @@ const AccountBalanceLayout = (props) => {
                             <div className="x" onClick={() => props.setIsAddressQROpened(false)}>&times;</div>
                             <div className="title">Scan Address QR</div>
                             <div className="common__text-center">
-                              <QRCode value={props.account.address}/>
+                              <QRCode
+                                value={props.account.address}
+                                className="account-balance__qr-code"
+                              />
                             </div>
                             <div className="content">
                               <div className="button cancel-btn" onClick={() => props.setIsAddressQROpened(false)}>Cancel</div>
