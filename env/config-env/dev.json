@@ -1,0 +1,380 @@
+{
+    "connections": {
+        "http": [
+            {
+                "endPoint": "https://production-cache.kyber.network",
+                "type": "cached"
+            },
+            {
+                "endPoint": "https://production-cache.kyber.network/node",
+                "type": "prune"
+            }            
+        ],
+        "ws": "wss://mainnet.infura.io/ws"
+    },
+    "min_accept_amount": 0.001,
+    "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
+    "portfolio_api": "https://staging-portfolio.knstats.com",
+    "priority_tokens": [
+        "ETH",
+        "DAI",
+        "KNC"
+    ],
+    "limitOrder": {
+        "minSupportOrder": 0.001,
+        "maxPercentTriggerRate": 900,
+        "page_size": 50
+    },
+    "promo_token": "PT",
+    "wrapETHToken": "WETH",
+    "tokens": {
+        "ETH": {
+            "symbol": "ETH",
+            "name": "Ethereum",
+            "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "decimals": 18,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
+        },
+        "KNC": {
+            "symbol": "KNC",
+            "name": "KyberNetwork",
+            "address": "0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6",
+            "decimals": 18,
+            "listing_time": 1578370140,
+            "gasApprove": 120000,
+            "gasLimit": "400000",
+            "sp_limit_order": true
+        },
+        "OMG": {
+            "symbol": "OMG",
+            "name": "OmiseGO",
+            "address": "0x4bfba4a8f28755cb2061c413459ee562c6b9c51b",
+            "decimals": 18,
+            "listing_time": 1580601600,
+            "sp_limit_order": true
+        },
+        "EOS": {
+            "symbol": "EOS",
+            "name": "Eos",
+            "address": "0xd5b4218b950a53ff07985e2d88346925c335eae7",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "ELF": {
+            "symbol": "ELF",
+            "name": "Aelf",
+            "address": "0x9fcc27c7320703c43368cf1a4bf076402cd0d6b4",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "POWR": {
+            "symbol": "POWR",
+            "name": "Power Ledger",
+            "address": "0xa577731515303f0c0d00e236041855a5c4f114dc",
+            "decimals": 6,
+            "sp_limit_order": true
+        },
+        "GTO": {
+            "symbol": "GTO",
+            "name": "Gifto",
+            "address": "0xe55c607d58c53b2b06a8e38f67f4c0fcaeed2c31",
+            "decimals": 5,
+            "sp_limit_order": true
+        },
+        "RDN": {
+            "symbol": "RDN",
+            "name": "Raiden",
+            "address": "0x5422ef695ed0b1213e2b953cfa877029637d9d26",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "APPC": {
+            "symbol": "APPC",
+            "name": "AppCoins",
+            "address": "0x2799f05b55d56be756ca01af40bf7350787f48d4",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "BQX": {
+            "symbol": "BQX",
+            "name": "Ethos",
+            "address": "0x9504a86a881f63da06302fb3639d4582022097db",
+            "decimals": 8,
+            "sp_limit_order": true
+        },
+        "ADX": {
+            "symbol": "ADX",
+            "name": "AdEx",
+            "address": "0x499990db50b34687cdafb2c8dabae4e99d6f38a7",
+            "decimals": 4,
+            "sp_limit_order": true
+        },
+        "AST": {
+            "symbol": "AST",
+            "name": "AirSwap",
+            "address": "0xef06f410c26a0ff87b3a43927459cce99268a2ef",
+            "decimals": 4,
+            "sp_limit_order": true
+        },
+        "RCN": {
+            "symbol": "RCN",
+            "name": "Ripio Credit Network",
+            "address": "0x99338aa9218c6c23aa9d8cc2f3efaf29954ea26b",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "ZIL": {
+            "symbol": "ZIL",
+            "name": "Zilliqa",
+            "address": "0xad78afbbe48ba7b670fbc54c65708cbc17450167",
+            "decimals": 12,
+            "sp_limit_order": true
+        },
+        "LINK": {
+            "symbol": "LINK",
+            "name": "Chain Link",
+            "address": "0xb4f7332ed719eb4839f091eddb2a3ba309739521",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "IOST": {
+            "symbol": "IOST",
+            "name": "IOStoken",
+            "address": "0x27db28a6c4ac3d82a08d490cfb746e6f02bc467c",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "STORM": {
+            "symbol": "STORM",
+            "name": "Storm",
+            "address": "0x8fff7de21de8ad9c510704407337542073fdc44b",
+            "decimals": 18,
+            "listing_time": 1539077021,
+            "sp_limit_order": true
+        },
+        "BBO": {
+            "symbol": "BBO",
+            "name": "BigBom",
+            "address": "0xa94758d328af7ef1815e73053e95b5f86588c16d",
+            "decimals": 18,
+            "listing_time": 9999999999,
+            "sp_limit_order": true
+        },
+        "COFI": {
+            "symbol": "COFI",
+            "name": "ConFi",
+            "address": "0xb91786188f8d4e35d6d67799e9f162587bf4da03",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "BITX": {
+            "symbol": "BITX",
+            "name": "BitScreenerToken",
+            "address": "0x7a17267576318efb728bc4a0833e489a46ba138f",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "MOC": {
+            "symbol": "MOC",
+            "name": "Moss Land",
+            "address": "0x1742c81075031b8f173d2327e3479d1fc3feaa76",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "MAS": {
+            "symbol": "MAS",
+            "name": "MidasProtocol Ropsten",
+            "address": "0xc2c37d1a2cdd601ce665c4a785074670657f83ac",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "KAT": {
+            "symbol": "KAT",
+            "name": "Kambria Token",
+            "address": "0xef75e34c50c1b109fe65ee696f12225de508b9f2",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "UPP": {
+            "symbol": "UPP",
+            "name": "Sentinel Protocol",
+            "address": "0xade0e0ed3ec60c7124ddc88c410af671493dc949",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "SPN": {
+            "symbol": "SPN",
+            "name": "Sapien Network",
+            "address": "0x7f7992a21e333baeeab065d54829122173caceb7",
+            "decimals": 6,
+            "sp_limit_order": true
+        },
+        "HKN": {
+            "symbol": "HKN",
+            "name": "Hacken",
+            "address": "0x4aefa5bded67f5842ade8f025a738cb3363b7499",
+            "decimals": 8,
+            "sp_limit_order": true
+        },
+        "WETH": {
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "address": "0xbca556c912754bc8e7d4aad20ad69a1b1444f42d",
+            "decimals": 18,
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 2
+        },
+        "BAM": {
+            "symbol": "BAM",
+            "name": "Bamboo",
+            "address": "0xe8e692f05ecdd531c4550a93d323939fb826f968",
+            "decimals": 18,
+            "sp_limit_order": true
+        },
+        "SNX": {
+            "symbol": "SNX",
+            "name": "Synthetix Network",
+            "address": "0x013ae307648f529aa72c5767a334ddd37aab43c3",
+            "decimals": 18,
+            "gasLimit": "650000",
+            "sp_limit_order": true
+        },
+        "MYB": {
+            "symbol": "MYB",
+            "name": "MyBit",
+            "address": "0xc68d7c356e1b725f75cbaf1306a2603abd7157ca",
+            "decimals": 18
+        },
+        "SUSD": {
+            "symbol": "SUSD",
+            "name": "Synth sUSD",
+            "address": "0x8ae2a0bfb3315b63ee8e88ac7d3f6b5a68f01cf5",
+            "decimals": 18,
+            "gasLimit": "650000"
+        },
+        "EQUAD": {
+            "symbol": "EQUAD",
+            "name": "Quadrant Protocol",
+            "address": "0x0e953389a6002a2017d686ff9f448a1eab890d7b",
+            "decimals": 18
+        },
+        "BTU": {
+            "symbol": "BTU",
+            "name": "BTU Protocol",
+            "address": "0xfcd404ec70c662128d3a6bd508dfb3e598d79a0c",
+            "decimals": 18
+        },
+        "XD": {
+            "symbol": "XD",
+            "name": "Data Transaction Token",
+            "address": "0xeaf845462e78cfba40a2f11c13154ce5f103eeff",
+            "decimals": 18
+        },
+        "TKN": {
+            "symbol": "TKN",
+            "name": "Monolith",
+            "address": "0xaa15075edf8e33867687428d0e49ae898e5b3513",
+            "decimals": 8
+        },
+        "FRECNX": {
+            "symbol": "FRECNX",
+            "name": "FreldoCoinX",
+            "address": "0xacbdbc20459d98c902e748b09cfbd5dd98b23cf9",
+            "decimals": 18
+        },
+        "RAE": {
+            "symbol": "RAE",
+            "name": "Receive Access Ecosystem",
+            "address": "0xc57115e8b62fad7124dfd69daf1f94b70e07663f",
+            "decimals": 18
+        },
+        "SAN": {
+            "symbol": "SAN",
+            "name": "Santiment network",
+            "address": "0xa9453029f249358fe563f0cdde3e971521d473b5",
+            "decimals": 18
+        },
+        "NEXXO": {
+            "symbol": "NEXXO",
+            "name": "Nexxo",
+            "address": "0x8e7772516a2f5baf09e730714fe04ba2f6b1f6e1",
+            "decimals": 18
+        },
+        "SPIKE": {
+            "symbol": "SPIKE",
+            "name": "Spiking",
+            "address": "0x74f36c172c9fc7952402bbabd10037108390aa8d",
+            "decimals": 10
+        },
+        "EKG": {
+            "symbol": "EKG",
+            "name": "Ekon Gold",
+            "address": "0xf6e55516230e4c2a863936ee02377cc9057b1cbd",
+            "decimals": 18
+        },
+        "DAI": {
+            "symbol": "DAI",
+            "name": "DAI",
+            "address": "0xad6d458402f60fd3bd25163575031acdce07538d",
+            "decimals": 18,
+            "listing_time": 1578393540,
+            "gasApprove": 210000,
+            "gasLimit": "500000",
+            "sp_limit_order": true,
+            "is_quote": true,
+            "quote_priority": 3,
+            "is_gas_fixed": true
+        },
+        "SNT": {
+            "symbol": "SNT",
+            "name": "Status",
+            "address": "0xbf5d8683b9be6c43fca607eb2a6f2626a18837a6",
+            "decimals": 18,
+            "listing_time": 1578466920,
+            "gasApprove": 260000,
+            "gasLimit": "10000000",
+            "quote_priority": 3
+        },
+        "SALT": {
+            "symbol": "SALT",
+            "name": "Salt",
+            "address": "0xb47f1a9b121ba114d5e98722a8948e274d0f4042",
+            "decimals": 8,
+            "listing_time": 1578358800,
+            "sp_limit_order": true
+        },
+        "MANA": {
+            "symbol": "MANA",
+            "name": "Mana",
+            "address": "0x72fd6c7c1397040a66f33c2ecc83a0f71ee46d5c",
+            "decimals": 18,
+            "listing_time": 1578531720,
+            "gasApprove": 80000,
+            "gasLimit": "500000",
+            "sp_limit_order": true,
+            "quote_priority": 2,
+            "is_gas_fixed": true
+        },
+        "TKE": {
+            "symbol": "TKE",
+            "name": "Tokenize Emblem",
+            "address": "0x667102bd3413bfeaa3dffb48fa8288819e480a88",
+            "decimals": 8,
+            "listing_time": 1582800840
+        }
+    },
+    "ethScanUrl": "https://etherscan.io/",
+    "broadcastTx": "https://broadcast.kyber.network/",
+    "enjinx": "https://kyber.enjinx.io/",
+    "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+    "kyberswapAddress": "0x52d35e8f0ffa18337b093aec3dfff40445d8f4f4",
+    "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
+    "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
+    "networkId": 1,
+    "chainName": "Mainnet",
+    "tracker": "https://dev-api.knstats.com",
+    "highSlippage": 1
+}

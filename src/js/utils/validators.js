@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
+import { compareTwoNumber } from "./converter";
 
 export function verifyAccount(addr) {
   var valid = /^0x[0-9a-fA-F]{40}$/.test(addr)
@@ -25,10 +26,6 @@ export function verifyAmount(sourceAmount,
   sourceDecimal,
   rate, destSymbol, destDecimal, maxCap) {
 
-    console.log("validate_amount")
-    console.log(sourceAmount)
-    console.log(balance)
-  //verify number for source amount
   var testAmount = parseFloat(sourceAmount)
   if (isNaN(testAmount)) {
     return "not a number"
@@ -51,7 +48,7 @@ export function verifyAmount(sourceAmount,
   var delta = estimateValue.minus(epsilon).abs()
   var acceptDetal = new BigNumber(constants.EXCHANGE_CONFIG.MIN_ACCEPT_DELTA)
 
-  if (estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
+  if (compareTwoNumber(rateBig, 0) === 1 && estimateValue.isLessThan(epsilon) && !delta.div(epsilon).isLessThan(acceptDetal)) {
     return "too small"
   }
 
@@ -82,20 +79,15 @@ export function verifyAmount(sourceAmount,
   return null
 }
 
-export function verifyBalanceForTransaction(
-  ethBalance, sourceSymbol, sourceAmount,
-  gas, gasPrice
-) {
-
- // console.log({ethBalance, sourceSymbol, sourceAmount, gas, gasPrice})
+export function verifyBalanceForTransaction(ethBalance, sourceSymbol, sourceAmount, gas, gasPrice) {
   var bigEthBalance = new BigNumber(ethBalance.toString())
 
-  //calcualte tx fee
   if (typeof gasPrice === "undefined" || gasPrice === "") gasPrice = 0
+
   var gasPriceBig = new BigNumber(gasPrice.toString())
   var txFee = gasPriceBig.times(1000000000).times(gas)
-
   var totalFee
+
   if (sourceSymbol === "ETH") {
     if (sourceAmount === "") sourceAmount = 0
     var value = new BigNumber(sourceAmount.toString())
@@ -104,7 +96,6 @@ export function verifyBalanceForTransaction(
   } else {
     totalFee = txFee
   }
-
 
   if (totalFee.isGreaterThan(bigEthBalance)) {
     return "not enough"
@@ -147,8 +138,6 @@ export function verifyPassphrase(passphrase, repassphrase) {
 }
 
 export function filterInputNumber(event, value, preVal) {
-//  console.log("filter_input")
-//  console.log({ value, preVal})
   var strRemoveText = value.replace(/[^0-9.]/g, '')
   var str = strRemoveText.replace(/\./g, (val, i) => {
     if (strRemoveText.indexOf('.') != i) val = ''

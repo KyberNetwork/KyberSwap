@@ -1,34 +1,25 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
-import constants from "../../../services/constants"
-
-import { getWallet } from "../../../services/keys"
-
 import { FeeDetail } from "../../../components/CommonElement"
-
 import BLOCKCHAIN_INFO from "../../../../../env"
-
 import * as converter from "../../../utils/converter"
 
-
-@connect((store, props) => {
+@connect((store) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const exchange = store.exchange
   const ethereum = store.connection.ethereum
 
   return {
-    translate, exchange, tokens, account, ethereum
-
+    translate, exchange, tokens, account, ethereum, wallet
   }
 })
-
 export default class ApproveZeroModal extends React.Component {
 
   constructor() {
@@ -83,9 +74,9 @@ export default class ApproveZeroModal extends React.Component {
       isConfirming: true
     })
 
-    //reset        
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
     var password = ""
+    
     try {
       var nonce = this.props.account.getUsableNonce()
       var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.exchange.sourceToken, 0, nonce, this.state.gasLimit,
@@ -112,21 +103,18 @@ export default class ApproveZeroModal extends React.Component {
     }
   }
 
-
-
   errorHtml = () => {
     if (this.state.err) {
-      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+          <div className={'modal-error message-error common__slide-up'}>
             {this.state.err}
           </div>
         </React.Fragment>
       )
-    } else {
-      return ""
     }
+    
+    return ""
   }
 
   closeModal = () => {
@@ -136,45 +124,43 @@ export default class ApproveZeroModal extends React.Component {
 
   contentModal = () => {
     return (
-      <div className="approve-modal">
-        <div className="title">Approve Token</div>
-        <a className="x" onClick={this.closeModal}>&times;</a>
-        <div className="content with-overlap">
-          <div className="row">
-            <div>
+      <div className="approve-modal content-wrapper">
+        <div>
+          <div className="title">Approve Token</div>
+          <div className="x" onClick={this.closeModal}>&times;</div>
+          <div className="content with-overlap">
+            <div className="row">
               <div>
-                <div className="message">
-                  {`You need reset allowance ${this.props.exchange.sourceTokenSymbol} of Kyber Swap with this address`}
-                </div>
-                <div class="info tx-title">
-                  <div className="address-info">
-                    <div>{this.props.translate("modal.address") || "Address"}</div>
-                    <div>{this.props.account.address}</div>
+                <div>
+                  <div className="message">
+                    {`You need reset allowance ${this.props.exchange.sourceTokenSymbol} of Kyber Swap with this address`}
                   </div>
+                  <div class="info tx-title theme__background-222">
+                    <div className="address-info theme__text-7">
+                      <div>{this.props.translate("modal.address") || "Address"}</div>
+                      <div>{this.props.account.address}</div>
+                    </div>
+                  </div>
+                  <FeeDetail
+                    translate={this.props.translate}
+                    gasPrice={this.props.exchange.gasPrice}
+                    gas={this.state.gasLimit}
+                    isFetchingGas={this.state.isFetchGas}
+                  />
                 </div>
-                <FeeDetail
-                  translate={this.props.translate}
-                  gasPrice={this.props.exchange.gasPrice}
-                  gas={this.state.gasLimit}
-                  isFetchingGas={this.state.isFetchGas}
-                />
+                {this.errorHtml()}
               </div>
-              {this.errorHtml()}
-
-
             </div>
-
           </div>
         </div>
-        <div className="overlap">
-          {/* <div>{this.msgHtml()}</div> */}
-          <div className="input-confirm grid-x input-confirm--approve">           
-          <div className="cell medium-8 small-12">{this.msgHtml()}</div> 
-            <div className="cell medium-4 small-12">
-              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")}
-                onClick={this.onSubmit.bind(this)}
-              >{this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}</a>
-
+       
+        <div className="overlap theme__background-2">
+          <div className="input-confirm grid-x input-confirm--approve">
+            <div>{this.msgHtml()}</div>
+            <div>
+              <a className={"button process-submit " + (this.state.isFetchGas || this.state.isConfirming ? "disabled-button" : "next")} onClick={this.onSubmit.bind(this)}>
+                {this.props.translate("modal.approve").toLocaleUpperCase() || "Approve".toLocaleUpperCase()}
+              </a>
             </div>
           </div>
         </div>
@@ -184,10 +170,11 @@ export default class ApproveZeroModal extends React.Component {
 
   render() {
     return (
-      <Modal className={{
-        base: 'reveal medium confirm-modal',
-        afterOpen: 'reveal medium confirm-modal'
-      }}
+      <Modal
+        className={{
+          base: 'reveal medium confirm-modal',
+          afterOpen: 'reveal medium confirm-modal'
+        }}
         isOpen={true}
         onRequestClose={this.closeModal}
         contentLabel="approve token"
@@ -195,7 +182,5 @@ export default class ApproveZeroModal extends React.Component {
         size="medium"
       />
     )
-
-
   }
 }

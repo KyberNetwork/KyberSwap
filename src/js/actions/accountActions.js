@@ -83,6 +83,19 @@ export function closePromoCodeModal() {
   }
 }
 
+export function openOtherConnectModal(tradeType) {
+  return {
+    type: "ACCOUNT.OPEN_OTHER_CONNECT_MODAL",
+    payload: tradeType
+  }
+}
+
+export function closeOtherConnectModal() {
+  return {
+    type: "ACCOUNT.CLOSE_OTHER_CONNECT_MODAL",
+  }
+}
+
 export function throwPromoCodeError(error) {
   return {
     type: "ACCOUNT.PROMO_CODE_ERROR",
@@ -90,17 +103,20 @@ export function throwPromoCodeError(error) {
   }
 }
 
-export function importNewAccount(address, type, keystring, ethereum, tokens, walletType = null, metamask = null, walletName = "", info = null) {
+export function importNewAccount(
+  address, type, keystring, ethereum, walletType = null,
+  metamask = null, walletName = "", info = null, wallet = null
+) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_PENDING",
-    payload: { address, type, keystring, ethereum, tokens, walletType, metamask, walletName, info }
+    payload: { address, type, keystring, ethereum, walletType, metamask, walletName, info, wallet }
   }
 }
 
-export function importNewAccountComplete(account, walletName, isOnMobile = null) {
+export function importNewAccountComplete(account, wallet, walletName, isOnMobile = null) {
   return {
     type: "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED",
-    payload: {account, walletName, isOnMobile}
+    payload: {account, wallet, walletName, isOnMobile}
   }
 }
 
@@ -131,15 +147,22 @@ export function incManualNonceAccount(address) {
   }
 }
 
-export function importAccountMetamask(web3Service, networkId, ethereum, tokens, translate, walletType = null) {
+export function importAccountMetamask(web3Service, networkId, ethereum, translate, walletType = null) {
   return {
     type: "ACCOUNT.IMPORT_ACCOUNT_METAMASK",
-    payload: { web3Service, networkId, ethereum, tokens, translate, walletType }
+    payload: { web3Service, networkId, ethereum, translate, walletType }
   }
 }
 
 export function setOnDAPP() {
   return {
     type: "ACCOUNT.SET_ON_DAPP"
+  }
+}
+
+export function setTotalBalanceAndAvailableTokens(totalBalanceInETH, availableTokens) {
+  return {
+    type: "ACCOUNT.SET_TOTAL_BALANCE_AND_AVAILABLE_TOKENS",
+    payload: { totalBalanceInETH, availableTokens }
   }
 }

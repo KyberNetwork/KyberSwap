@@ -1,8 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
-import * as common from "../utils/common";
 
 var initState = constants.INIT_EXCHANGE_FORM_STATE
 initState.snapshot = constants.INIT_EXCHANGE_FORM_STATE
@@ -25,16 +22,13 @@ const exchange = (state = initState, action) => {
       newState.destAmount = ""
       newState.errors = initState.errors
       newState.advanced = false
-      //newState.gasPrice = initState.gasPrice
       newState.bcError = ""
       newState.step = initState.step
       newState.minConversionRate = newState.slippageRate
-
       newState.isEditRate = false
-      //newState.isEditGasPrice = false
-
       newState.isAnalize = false
       newState.isAnalizeComplete = false
+      
       return newState
     }
     case "EXCHANGE.SELECT_TOKEN_ASYNC": {
@@ -71,57 +65,39 @@ const exchange = (state = initState, action) => {
     }
    
     case "EXCHANGE.UPDATE_RATE_COMPLETE": {
-      const {expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange } = action.payload
+      const {
+        expectedRateInit, expectedPrice, slippagePrice,
+        percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+      } = action.payload
 
       var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(expectedRateInit, 18) : converter.toT(slippagePrice, 18)
       var expectedRate = expectedPrice == "0" ? expectedRateInit : expectedPrice
 
       newState.slippageRate = slippageRate
       newState.expectedRate = expectedRate
-      newState.blockNo = lastestBlock
       newState.percentChange = percentChange
 
       if (newState.sourceAmount !== "") {
-        newState.minDestAmount = converter.calculateDest(newState.sourceAmount, expectedRate).toString(10)
+        newState.minDestAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimal)
       }
 
       //calculate source, dest
       if (newState.inputFocus === 'dest') {
-        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(newState.destAmount, expectedRate, srcTokenDecimal)
       }
 
       if (newState.inputFocus === 'source') {
-        newState.destAmount = converter.calculateDest(newState.sourceAmount, expectedRate, 4)
+        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, destTokenDecimal)
       }
 
       if (!newState.isEditRate) {
         newState.minConversionRate = slippageRate
       }
 
-      newState.isSelectToken = false
-      return newState
-    }
-
-    case "EXCHANGE.UPDATE_RATE_SNAPSHOT_COMPLETE": {
-      var { rateInit, expectedPrice, slippagePrice, rateInitSlippage } = action.payload
-
-
-      var slippageRate = slippagePrice === "0" ? rateInitSlippage : slippagePrice
-      var expectedRate = expectedPrice === "0" ? rateInit : expectedPrice
-
-      newState.snapshot.slippageRate = slippagePrice
-      newState.snapshot.expectedRate = expectedRate
-
-      if (newState.sourceAmount !== "") {
-        newState.snapshot.minDestAmount = converter.calculateDest(newState.snapshot.sourceAmount, expectedRate).toString(10)
-      }
-      if (!newState.isEditRate) {
-        newState.snapshot.minConversionRate = slippageRate
-      }
-      newState.snapshot.isSelectToken = false
+      newState.isSelectToken = false;
+      newState.isRefPriceFromChainLink = isRefPriceFromChainLink;
 
       return newState
-
     }
     
     case "EXCHANGE.FINISH_EXCHANGE": {
@@ -131,25 +107,17 @@ const exchange = (state = initState, action) => {
    
     case "EXCHANGE.CACULATE_AMOUNT": {
       if (state.errors.selectSameToken) return newState
+
+      var { sourceTokenDecimals, destTokenDecimals } = action.payload
+
       if (state.inputFocus == "dest") {
-        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(state.destAmount, state.expectedRate, sourceTokenDecimals)
       } else {
-        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, 4)
+        newState.destAmount = converter.caculateDestAmount(state.sourceAmount, state.expectedRate, destTokenDecimals)
       }
       return newState
     }
-    case "EXCHANGE.CACULATE_AMOUNT_SNAPSHOT": {
-      if (newState.snapshot.errors.selectSameToken) return newState
-      if (newState.snapshot.inputFocus == "dest") {
-        newState.snapshot.sourceAmount = converter.caculateSourceAmount(state.snapshot.destAmount, state.snapshot.expectedRate, 4)
-      } else {
-        newState.snapshot.destAmount = converter.caculateDestAmount(state.snapshot.sourceAmount, state.snapshot.expectedRate, 4)
-      }
-      newState.snapshot.isFetchingRate = false
-      //  console.log("***************")
-      //  console.log(newState)
-      return newState
-    }
+
     case "EXCHANGE.CHANGE_AMOUNT": {
       var { input, value } = action.payload
       if (input === "source") {
@@ -160,24 +128,25 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.INPUT_CHANGE": {
-      let focus = action.payload.focus
-      let value = action.payload.value
+      const { focus, value, sourceTokenDecimals, destTokenDecimals } = action.payload;
+
       if (focus == "source") {
         newState.sourceAmount = value
         newState.errors.sourceAmountError = ""
         newState.errors.ethBalanceError = ""
         if (state.errors.selectSameToken) return newState
-        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, 4)
+        newState.destAmount = converter.caculateDestAmount(value, state.expectedRate, destTokenDecimals)
       }
       else if (focus == "dest") {
         newState.destAmount = value
         newState.errors.destAmountError = ""
         newState.errors.sourceAmountError = ""
         if (state.errors.selectSameToken) return newState
-        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, 4)
+        newState.sourceAmount = converter.caculateSourceAmount(value, state.expectedRate, sourceTokenDecimals)
       }
       return newState
     }
+
     case "EXCHANGE.FOCUS_INPUT": {
       newState.inputFocus = action.payload
       return newState
@@ -228,25 +197,18 @@ const exchange = (state = initState, action) => {
 
       return newState
     }
-    // case "EXCHANGE.SET_CAP_EXCHANGE": {
-    //   newState.maxCap = action.payload.maxCap
-    //   return newState
-    // }
     case "GLOBAL.SET_GAS_PRICE_COMPLETE": {
       if (!newState.isEditGasPrice) {
-        var { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
+        const { safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas } = action.payload
+        let gasPriceSuggest = { ...newState.gasPriceSuggest }
 
-        const gasExchange = common.getGasExchange(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, newState.maxGasPrice);
-
-        var gasPriceSuggest = { ...newState.gasPriceSuggest }
-
-        gasPriceSuggest.superFastGas = Math.round(gasExchange.superFastGas * 10) / 10
-        gasPriceSuggest.fastGas = Math.round(gasExchange.fastGas * 10) / 10
-        gasPriceSuggest.standardGas = Math.round(gasExchange.standardGas * 10) / 10
-        gasPriceSuggest.safeLowGas = Math.round(gasExchange.safeLowGas * 10) / 10
+        gasPriceSuggest.superFastGas = Math.round(superFastGas * 10) / 10
+        gasPriceSuggest.fastGas = Math.round(fastGas * 10) / 10
+        gasPriceSuggest.standardGas = Math.round(standardGas * 10) / 10
+        gasPriceSuggest.safeLowGas = Math.round(safeLowGas * 10) / 10
 
         newState.gasPriceSuggest = { ...gasPriceSuggest }
-        newState.gasPrice = Math.round(gasExchange.defaultGas * 10) / 10
+        newState.gasPrice = Math.round(defaultGas * 10) / 10
 
         newState.selectedGas = selectedGas;
       }
@@ -373,6 +335,14 @@ const exchange = (state = initState, action) => {
       var errors = newState.errors
       delete errors.sourceAmount[key];
       newState.errors = errors
+      return newState
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = {};
+      return newState
+    }
+    case "EXCHANGE.SET_PLATFORM_FEE": {
+      newState.platformFee = action.payload;
       return newState
     }
   }

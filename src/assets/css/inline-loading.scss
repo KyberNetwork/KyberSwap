@@ -1,0 +1,16 @@
+.inline-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__icon {
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+  }
+
+  &__text {
+    font-size: 13px;
+    font-weight: 400;
+  }
+}

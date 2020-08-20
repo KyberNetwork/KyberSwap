@@ -1,8 +1,5 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
 import * as converter from "../utils/converter"
-import BLOCKCHAIN_INFO from "../../../env"
-
 
 var initState = constants.INIT_LIMIT_ORDER_STATE
 initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
@@ -10,91 +7,56 @@ initState.snapshot = constants.INIT_LIMIT_ORDER_STATE
 const limitOrder = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case "LIMIT_ORDER.SELECT_TOKEN_ASYNC": {
-    //   newState.isSelectToken = true
-    //   return newState
-    // }
-
     case "LIMIT_ORDER.SELECT_TOKEN": {
+      const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken } = action.payload;
 
-      var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, type} = action.payload
-      newState.sourceTokenSymbol = sourceTokenSymbol
-      newState.sourceToken = sourceToken
-      newState.destTokenSymbol = destTokenSymbol
-      newState.destToken = destToken
+      newState.sourceTokenSymbol = sourceTokenSymbol;
+      newState.sourceToken = sourceToken;
+      newState.destTokenSymbol = destTokenSymbol;
+      newState.destToken = destToken;
+      newState.sourceAmount = '';
+      newState.destAmount = '';
+      newState.errors.sourceAmount = [];
+      newState.errors.triggerRate = [];
+      newState.selected = true;
 
-      var errors = newState.errors
-      errors.sourceAmount = []
-      errors.triggerRate = []
-      newState.errors = errors
-
-      newState.selected = true
-      newState.isEditRate = false
-      return newState
+      return newState;
     }
 
-    case "LIMIT_ORDER.INPUT_CHANGE": {
-      const {focus, value} = action.payload     
-      switch(focus) {
-        case "source":
-          newState.sourceAmount = value
-          var errors = newState.errors
-          errors.sourceAmount = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(state.triggerRate)
-          newState.destAmount = converter.caculateDestAmount(value, bigRate)
-          break
-        case "dest":
-          newState.destAmount = value
-          var errors = newState.errors
-          errors.triggerRate = []
-          newState.errors = errors
-          newState.triggerRate = converter.caculateTriggerRate(state.sourceAmount, value)  
-          break
-        case "rate": 
-          newState.triggerRate = value
-          var errors = newState.errors
-          errors.triggerRate = []
-          newState.errors = errors
-          var bigRate = converter.roundingRate(value)
-          newState.destAmount = converter.caculateDestAmount(state.sourceAmount, bigRate)  
-          break
-      }
-      return newState
+    case "LIMIT_ORDER.RESET_FORM_INPUTS": {
+      newState.destAmount = "";
+      newState.sourceAmount = "";
+
+      return newState;
     }
+
+    case "LIMIT_ORDER.SET_IS_FETCHING_RATE": {
+      newState.isFetchingRate = action.payload;
+      return newState;
+    }
+
     case "LIMIT_ORDER.FOCUS_INPUT": {
       newState.inputFocus = action.payload;
       return newState;
     }
     case "LIMIT_ORDER.UPDATE_RATE_COMPLETE": {
-      const { rateInit, expectedPrice, slippagePrice, blockNo, isManual, type, errMsg } = action.payload
-
-  
-      if (expectedPrice == "0") {
-        newState.errors.rateSystem = errMsg;
-        // if (rateInit == "0" || rateInit == 0 || rateInit === undefined || rateInit === null) {
-        //   newState.errors.rateSystem = "This token pair is temporarily under maintenance"
-        // } else {
-        //   newState.errors.rateSystem = "Kyber cannot handle your amount at the moment, please reduce your amount"
-        // }
+      const { buyRate, sellRate, type } = action.payload;
+      
+      if (!+buyRate || !+sellRate) {
+        newState.errors.rateSystem = "This token pair is temporarily under maintenance"
       } else {
         newState.errors.rateSystem = ""
       }
-      
+  
+      newState.isSelectToken = false;
+      newState.buyRate = buyRate;
+      newState.sellRate = sellRate;
 
-      var slippageRate = slippagePrice == "0" ? converter.estimateSlippagerate(rateInit, 18) : converter.toT(slippagePrice, 18)
-      var expectedRate = expectedPrice == "0" ? rateInit : expectedPrice
-
-      newState.slippageRate = slippageRate
-      newState.offeredRate = expectedRate
-      newState.blockNo = blockNo
-
-      if(type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken){
-        newState.triggerRate = converter.roundingRateNumber(converter.toT(expectedRate, 18)).replace(/,/g, "");
-        newState.destAmount = converter.caculateDestAmount(newState.sourceAmount, expectedRate, 4)  
+      if (type === constants.LIMIT_ORDER_CONFIG.updateRateType.selectToken) {
+        newState.triggerBuyRate = +buyRate ? converter.roundingRateNumber(converter.divOfTwoNumber(1, converter.toT(buyRate, 18))) : "0";
+        newState.triggerSellRate = converter.roundingRateNumber(converter.toT(sellRate, 18));
       }
-
-      newState.isSelectToken = false
+      
       return newState
     }
 
@@ -124,7 +86,6 @@ const limitOrder = (state = initState, action) => {
 
       return newState
     }
-
     case "LIMIT_ORDER.THROW_ERROR":{
       const { key, msg } = action.payload
       var errors = newState.errors
@@ -132,23 +93,14 @@ const limitOrder = (state = initState, action) => {
       newState.errors = errors
       return newState
     }
-    case "LIMIT_ORDER.UPDATE_ORDER_PATH":{
-      const {orderPath, currentPathIndex} = action.payload
-      newState.orderPath = orderPath
-      newState.currentPathIndex = currentPathIndex
-      return newState
-    }
-    case "LIMIT_ORDER.RESET_ORDER_PATH":{
-      newState.currentPathIndex = -1
-      return newState
-    }
-    case "LIMIT_ORDER.FORWARD_ORDER_PATH":{
-      newState.currentPathIndex += 1
-      return newState
-    }
     case "LIMIT_ORDER.ADD_LIST_ORDER": {
       const listOrder = action.payload;
       newState.listOrder = listOrder;
+      return newState;
+    }
+    case "LIMIT_ORDER.ADD_LIST_FAVORITE_PAIRS": {
+      const listFavoritePairs = action.payload;
+      newState.listFavoritePairs = listFavoritePairs;
       return newState;
     }
     case "LIMIT_ORDER.ADD_NEW_ORDER":{
@@ -211,6 +163,11 @@ const limitOrder = (state = initState, action) => {
       newState.statusFilter = statusFilter;
       return newState;
     }
+    case "LIMIT_ORDER.SET_TYPE_FILTER": {
+      const { typeFilter } = action.payload;
+      newState.typeFilter = typeFilter;
+      return newState;
+    }
     case "LIMIT_ORDER.SET_TIME_FILTER": {
       const { timeFilter } = action.payload;
       newState.timeFilter = timeFilter;
@@ -229,19 +186,12 @@ const limitOrder = (state = initState, action) => {
     case "LIMIT_ORDER.GET_PENDING_BALANCES_COMPLETE": {
       const { pendingBalances, pendingTxs } = action.payload;
       newState.pendingBalances = JSON.parse(JSON.stringify(pendingBalances));
-      // console.log(pendingTxs)
       newState.pendingTxs = JSON.parse(JSON.stringify(pendingTxs));
-      // console.log(newState.pendingTxs)
       return newState;
     }
     case "LIMIT_ORDER.SET_RELATED_ORDERS": {
       const { orders } = action.payload;
       newState.relatedOrders = JSON.parse(JSON.stringify(orders));
-      return newState;
-    }
-    case "LIMIT_ORDER.SET_IS_DISABLE_SUBMIT": {
-      const { isDisable } = action.payload;
-      newState.isDisableSubmit = isDisable;
       return newState;
     }
     case "LIMIT_ORDER.SET_AGREE_FORCE_SUBMIT": {
@@ -274,6 +224,34 @@ const limitOrder = (state = initState, action) => {
 
       newState.selectedGas = selectedGas;
       return newState;
+    }
+
+    case 'LIMIT_ORDER.UPDATE_CURRENT_QUOTE':{
+      const { quote } =  action.payload;
+      newState.currentQuote = quote
+      return newState; 
+    }
+
+    case 'LIMIT_ORDER.UPDATE_FAVORITE':{
+      const { base, quote, toFav, isLoggedIn } =  action.payload;
+      const field = isLoggedIn ? "listFavoritePairs" : "favorite_pairs_anonymous"
+      const index = newState[field].indexOf(base+"_"+quote)
+      if (index == -1){
+        newState[field].push(base+"_"+quote)
+      }else {
+        newState[field].splice(index, 1)
+      }
+      newState[field] = newState[field].slice()
+      return newState; 
+    }
+    case 'LIMIT_ORDER.TOOGLE_QUOTE_MARKET':{
+      newState.mobileState.showQuoteMarket = action.payload
+      return newState
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = [];
+      newState.errors.triggerRate = [];
+      return newState
     }
   }
   return state

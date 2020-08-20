@@ -1,19 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
-    <title>Path</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M943,91 C937.48,91 933,95.48 933,101 C933,106.52 937.48,111 943,111 C948.52,111 953,106.52 953,101 C953,95.48 948.52,91 943,91 Z M944,106 L942,106 L942,104 L944,104 L944,106 Z M944,102 L942,102 L942,96 L944,96 L944,102 Z" id="path-1"></path>
-    </defs>
-    <g id="Swap---Orange" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Swap-2----top" transform="translate(-934.000000, -692.000000)">
-            <g id="Group-3" transform="translate(1.000000, 601.000000)">
-                <mask id="mask-2" fill="white">
-                    <use xlink:href="#path-1"></use>
-                </mask>
-                <use id="icon/alert/error_24px" fill="#EE344E" fill-rule="nonzero" xlink:href="#path-1"></use>
-            </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M-2-2h24v24H-2z"/>
+        <path fill="#FA6566" d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
     </g>
 </svg>
