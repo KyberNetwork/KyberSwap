@@ -6,7 +6,6 @@ import * as converter from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
-import { Market } from "../Market"
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
 
@@ -172,17 +171,12 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-        <div className={"exchange__container"}>
-          <ExchangeBody
-            setSrcAndDestToken={this.setSrcAndDestToken}
-            updateGlobal={this.updateGlobal}
-          />
-
-          <Market
-            screen={"swap"}
-            setTokens={this.setSrcAndDestToken}
-          />
-        </div>
+      <div className={"exchange__container"}>
+        <ExchangeBody
+          setSrcAndDestToken={this.setSrcAndDestToken}
+          updateGlobal={this.updateGlobal}
+        />
+      </div>
     )
   }
 }

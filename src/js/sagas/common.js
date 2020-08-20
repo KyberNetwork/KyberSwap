@@ -32,10 +32,10 @@ export function* handleRequest(sendRequest, ...args) {
     }
 }
 
-export function* getSourceAmount(sourceTokenSymbol, sourceAmount, defaultRate) {
+export function getSourceAmount(sourceTokenSymbol, sourceAmount, defaultRate) {
   var state = store.getState()
   var tokens = state.tokens.tokens
-  var sourceAmountHex = "0x0";
+  let sourceAmountHex;
   
   if (tokens[sourceTokenSymbol]) {
     var decimals = tokens[sourceTokenSymbol].decimals
@@ -99,7 +99,7 @@ export function* getExpectedRateAndZeroRate(
   srcAmount, srcTokenSymbol, destTokenSymbol = null
 ) {
   if (!ethereum) return;
-  
+
   let defaultRate = 0;
   
   if(tokens[srcTokenSymbol].rate == 0) {
@@ -111,17 +111,14 @@ export function* getExpectedRateAndZeroRate(
   }
   
   let refinedSrcAmount = 0;
-  if (srcAmount !== false) refinedSrcAmount = yield call(getSourceAmount, srcTokenSymbol, srcAmount, defaultRate);
-  let zeroSrcAmount = yield call(getSourceAmountZero, srcTokenSymbol, defaultRate);
+  if (srcAmount !== false) refinedSrcAmount = getSourceAmount(srcTokenSymbol, srcAmount, defaultRate);
+  const zeroSrcAmount = getSourceAmountZero(srcTokenSymbol, defaultRate);
+
   let rate, rateZero;
   let rateFunctionName = 'getRateAtLatestBlock';
 
   if (!isProceeding) {
     rateFunctionName = 'getExpectedRate';
-
-    const mask = converters.maskNumber();
-    refinedSrcAmount = converters.sumOfTwoNumber(refinedSrcAmount, mask);
-    zeroSrcAmount = converters.sumOfTwoNumber(zeroSrcAmount, mask);
   }
 
   if (srcAmount !== false) {

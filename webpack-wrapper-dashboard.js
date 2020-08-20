@@ -150,7 +150,7 @@ var getConfig = env => {
 
 async function getTokenApi(network, backupServer = false) {
     var BLOCKCHAIN_INFO = require('./env/config-env/' + (network) + ".json");
-    const url = backupServer ? BLOCKCHAIN_INFO.api_tokens : `${BLOCKCHAIN_INFO.kyberswap_api}/currencies`;
+    const url = backupServer ? `${BLOCKCHAIN_INFO.tracker}/internal/currencies` : `${BLOCKCHAIN_INFO.kyberswap_api}/currencies`;
     return new Promise((resolve, result) => {
         fetch(url, {
             method: 'GET',
