@@ -1,39 +1,26 @@
 import React from "react"
 import { Modal } from "../../../components/CommonElement"
-
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
-import * as accountActions from "../../../actions/accountActions"
 import { goToRoute } from "../../../actions/globalActions"
 import constants from "../../../services/constants"
-
 import * as converter from "../../../utils/converter"
 import { sleep } from "../../../utils/common"
-
-import { getWallet } from "../../../services/keys"
-import { FeeDetail } from "../../../components/CommonElement"
 import { TransactionLoadingView } from "../../../components/Transaction"
-
-
-
-import BLOCKCHAIN_INFO from "../../../../../env"
 
 @connect((store) => {
   return {
     exchange: store.exchange,
     transfer: store.transfer,
-    account: store.exchange,
+    account: store.account,
     translate: getTranslate(store.locale),
     global: store.global,
     tokens: store.tokens.tokens,
     ethereum: store.connection.ethereum
   }
 })
-
 export default class BroadCastModal extends React.Component {
-
-
   constructor() {
     super();
     this.state = {
@@ -46,7 +33,6 @@ export default class BroadCastModal extends React.Component {
       errorTx: {}
     }
   }
-
 
   componentDidMount = () => {
     //update tx
@@ -61,18 +47,21 @@ export default class BroadCastModal extends React.Component {
     try {
       var newTx = await tx.sync(ethereum, tx)
       this.setState({ txStatus: newTx.status })
-      
       switch(newTx.status){
         case "success": 
-          const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
+          const { srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
 
           const tokens = this.props.tokens
           const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
-          const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
+          const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals 
           this.setState({
             sourceAmount: converter.toT(srcAmount, sourceDecimal),
             destAmount: converter.toT(destAmount, destDecimal)
           })
+          if(this.props.account.account){
+            this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "swap", "success", this.props.account.account.address, this.props.account.account.type);
+          }
+          
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
@@ -84,6 +73,10 @@ export default class BroadCastModal extends React.Component {
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
+
+            if(this.props.account.account){
+              this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "swap", "failed", this.props.account.account.address, this.props.account.account.type);
+            }
           }catch(e){
             console.log(e)
           }
@@ -93,33 +86,11 @@ export default class BroadCastModal extends React.Component {
           this.checkTxStatus(ethereum, tx)
           break
       }
-      // if (newTx.status === "success") {
-      //   const { src, dest, srcAmount, destAmount } = await ethereum.call("extractExchangeEventData", newTx.eventTrade)
-
-      //   const tokens = this.props.tokens
-      //   const sourceDecimal = tokens[this.props.exchange.sourceTokenSymbol].decimals
-      //   const destDecimal = tokens[this.props.exchange.destTokenSymbol].decimals
-      //   this.setState({
-      //     sourceAmount: converter.toT(srcAmount, sourceDecimal),
-      //     destAmount: converter.toT(destAmount, destDecimal)
-      //   })
-      //   try{
-      //     var notiService = this.props.global.notiService
-      //     notiService.callFunc("changeStatusTx",newTx)
-      //   }catch(e){
-      //     console.log(e)
-      //   }
-      // }else{
-      //   await sleep(5000)
-      //   this.checkTxStatus(ethereum, tx)
-      // }
-      
     } catch (err) {
       console.log(err)
       await sleep(5000)
       this.checkTxStatus(ethereum, tx)
     }
-
   }
 
   handleCopy() {
@@ -143,7 +114,6 @@ export default class BroadCastModal extends React.Component {
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Transfer");
       this.props.dispatch(goToRoute(transferLink))
       if (window.kyberBus){ window.kyberBus.broadcast('go.to.transfer') }
-      // this.props.history.push(transferLink)
     } else {
       this.props.global.analytics.callTrack("trackClickNewTransaction", "Swap");
     }
@@ -185,12 +155,8 @@ export default class BroadCastModal extends React.Component {
         value, owner, gas_price, source, srcAmount, dest,
         destAddress, maxDestAmount, minConversionRate, walletID, reserves, txHash, transaction
       }
-
-      // console.log("debug_tx")
-      // console.log(input)
+      
       var networkIssues = {}
-      // var reserveIssues = {}
-
       var gasCap = await ethereum.call("wrapperGetGasCap", blockNumber)
 
       if (!input.transaction.status || input.transaction.status == "0x0") {
@@ -198,7 +164,6 @@ export default class BroadCastModal extends React.Component {
           networkIssues["gas_used"] = "Your transaction is run out of gas"
         }
       }
-      // if (input.transaction.gasUsed === input.transaction.gas && !input.transaction.status) networkIssues["gas_used"] = "Your transaction is run out of gas"
 
       if (converter.compareTwoNumber(input.gas_price, gasCap) === 1) {
         networkIssues["gas_price"] = this.props.translate('error.gas_price_exceeded_limit') || "Gas price exceeded max limit"
@@ -236,35 +201,21 @@ export default class BroadCastModal extends React.Component {
       }
 
       //Reserve scops
-      var rates = await ethereum.call("getRateAtSpecificBlock", input.source, input.dest, input.srcAmount, blockNumber)
+      var rates = await ethereum.call("getRateAtLatestBlock", input.source, input.dest, input.srcAmount)
       if (converter.compareTwoNumber(rates.expectedPrice, 0) === 0) {
         var reasons = await ethereum.call("wrapperGetReasons", input.reserves[0], input, blockNumber)
-        ///reserveIssues["reason"] = reasons
         networkIssues["rateError"] = reasons
       } else {
-        //var chosenReserve = yield call([ethereum, ethereum.call("wrapperGetChosenReserve")], input, blockno)
-        // var reasons = yield call([ethereum, ethereum.call("wrapperGetReasons")], chosenReserve, input, blockno)
-        console.log(rates)
-        console.log(input.minConversionRate)
         if (converter.compareTwoNumber(input.minConversionRate, rates.expectedPrice) === 1) {
-          //      reserveIssues["reason"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
-
           networkIssues["rateZero"] = translate('error.min_rate_too_high') || "Your min rate is too high!"
         }
       }
-      console.log("_________________________")
-      //console.log(reserveIssues)
-      console.log(networkIssues)
-      //yield put(globalActions.setAnalyzeError(networkIssues, reserveIssues, input.txHash))
 
       this.setState({
         isDebuging: false,
         isDebugComplete: true,
         errorTx: networkIssues
       })
-
-      // yield put(actions.setAnalyzeError(networkIssues, input.txHash))
-
     } catch (err) {
       console.log(err)
       this.setState({
@@ -301,15 +252,12 @@ export default class BroadCastModal extends React.Component {
         balanceInfo={balanceInfo}
         makeNewTransaction={this.makeNewTransaction}
         translate={this.props.translate}
-        // analyze={this.props.global.analyze}
         address={this.props.account.address}
         isCopied={this.state.isCopied}
         handleCopy={this.handleCopy.bind(this)}
         resetCopy={this.resetCopy.bind(this)}
         analytics={this.props.global.analytics}
-
         debug = {debug}
-
       />
     return (
       <Modal

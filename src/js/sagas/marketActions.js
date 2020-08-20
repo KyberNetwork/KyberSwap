@@ -1,23 +1,15 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import * as marketActions from "../actions/marketActions";
 import { store } from '../store';
-import BLOCKCHAIN_INFO from "../../../env"
-import { sortQuotePriority } from "../utils/sorters";
 
 export function* fetchMarketData() {
   const state = store.getState();
   const ethereum = state.connection.ethereum;
-  const tokens = state.tokens.tokens;
 
   try {
     let marketData = yield call([ethereum, ethereum.call], "getMarketData");
-
-    const marketQuotes = Object.keys(tokens)
-      .filter((key)=> (tokens[key]["is_quote"] && key !== BLOCKCHAIN_INFO.wrapETHToken))
-      .sort((first, second) => {
-        return sortQuotePriority(tokens, first, second);
-      });
-    yield put(marketActions.getMarketInfoSuccess(marketData ? marketData : [], marketQuotes));
+    marketData = marketData.reduce((result, pair) => { Object.assign(result, {[pair.pair]: pair}); return result},{});
+    yield put(marketActions.getMarketInfoSuccess(marketData ? marketData : []));
   } catch(e) {
     console.log(e)
   }

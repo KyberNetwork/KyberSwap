@@ -11,150 +11,121 @@ import {
   LimitOrderListModal
 } from "../LimitOrder"
 
-import { MobileChart } from "./MobileElements"
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
-import * as constants from "../../services/constants";
-import * as limitOrderActions from "../../actions/limitOrderActions";
-import * as globalActions from "../../actions/globalActions";
+import LimitOrderNotification from "./LimitOrderNotification";
+import LimitOrderTopToken from "./LimitOrderTopToken";
 
-@connect((store, props) => {
-  const global = store.global;
-  const account = store.account.account
-  const translate = getTranslate(store.locale)
-  const tokens = store.tokens.tokens
-  const limitOrder = store.limitOrder
-  const ethereum = store.connection.ethereum;
+@connect((store) => {
+  const account = store.account.account;
+  const translate = getTranslate(store.locale);
+  const baseSymbol = store.limitOrder.sourceTokenSymbol;
+  const isOnMobile = store.global.isOnMobile;
 
   return {
-    translate, limitOrder, tokens, account, ethereum, global
+    translate, account, isOnMobile, baseSymbol
   }
 })
 export default class LimitOrderBody extends React.Component {
   constructor(props) {
     super(props);
+    
     this.srcInputElementRef = null;
-    this.submitHandler = null;
     this.LimitOrderForm = withSourceAndBalance(LimitOrderForm);
     this.QuoteMarket = withFavorite(withSourceAndBalance(QuoteMarket));
     this.LimitOrderMobileHeader = withFavorite(LimitOrderMobileHeader)
 
     this.state = {
-      mobileOpenChart: true      
+      mobileOpenChart: false,
+      mobileFormType: 'buy'
     }
   }
 
   toggleMobileChart = () => {
     this.setState({ mobileOpenChart: !this.state.mobileOpenChart })
-  };  
+  };
+  
+  setMobileFormType = (formType) => {
+    this.setState({ mobileFormType: formType })
+  };
 
   setSrcInputElementRef = (element) => {
     this.srcInputElementRef = element;
   };
 
-  setSubmitHandler = (func) => {
-    this.submitHandler = func;
-  };
-
-  setFormType = (type, targetSymbol, quoteSymbol) => {
-    if (this.props.limitOrder.sideTrade === type) return;
-
-    this.props.dispatch(limitOrderActions.setSideTrade(type));
-
-    this.props.dispatch(limitOrderActions.changeFormType(
-      this.props.tokens[this.props.limitOrder.sourceTokenSymbol],
-      this.props.tokens[this.props.limitOrder.destTokenSymbol]
-    ));
-
-    const realQuoteSymbol = quoteSymbol === "ETH*" ? "WETH" : quoteSymbol;
-    const realTargetSymbol = targetSymbol === "ETH*" ? "WETH" : targetSymbol;
-    let path;
-
-    if (type === "buy") {
-      path = constants.BASE_HOST +  "/limit_order/" + realQuoteSymbol.toLowerCase() + "-" + realTargetSymbol.toLowerCase();
-    } else {
-      path = constants.BASE_HOST +  "/limit_order/" + realTargetSymbol.toLowerCase() + "-" + realQuoteSymbol.toLowerCase();
-    }
-
-    this.props.dispatch(globalActions.goToRoute(path))
-    this.props.global.analytics.callTrack("trackLimitOrderClickChooseSideTrade", type, targetSymbol, quoteSymbol)
-  };
-
   desktopLayout = () => {
-    const LimitOrderForm = this.LimitOrderForm
-    const QuoteMarket = this.QuoteMarket
+    const LimitOrderForm = this.LimitOrderForm;
+    const QuoteMarket = this.QuoteMarket;
 
     return (
       <div className={"limit-order theme__background"}>
         <div className={"limit-order__container limit-order__container--left"}>
           <LimitOrderChart />
+          {/*<LimitOrderNotification translate={this.props.translate} />*/}
           <LimitOrderList srcInputElementRef={this.srcInputElementRef} />
         </div>
         <div className={"limit-order__container limit-order__container--right"}>
           {this.props.account === false &&
             <div className={"limit-order-account"}>
-              <ImportAccount
-                tradeType="limit_order"
-                isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-                isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-              />
+              <ImportAccount tradeType="limit_order" isAgreedTermOfService />
             </div>
           }
+          
           <QuoteMarket />
-          <LimitOrderForm
-            setSrcInputElementRef={this.setSrcInputElementRef}
-            submitHandler={this.submitHandler}
-            setSubmitHandler={this.setSubmitHandler}
-            setFormType={this.setFormType}
-          />
+  
+          <div className="common__flexbox-between">
+            <LimitOrderForm formType="buy" />
+            <LimitOrderForm formType="sell" />
+          </div>
+          
+          <LimitOrderTopToken />
         </div>
       </div>
     )
   };
 
   mobileLayout = () => {
-    const LimitOrderForm = this.LimitOrderForm
-    const LimitOrderMobileHeader = this.LimitOrderMobileHeader
+    const LimitOrderForm = this.LimitOrderForm;
+    const LimitOrderMobileHeader = this.LimitOrderMobileHeader;
+    
     return (
-      <div className={"limit-order theme__background"}>
-        <LimitOrderMobileHeader toggleMobileChart = {this.toggleMobileChart}/>
+      <div className={"limit-order limit-order--mobile theme__background"}>
+        <LimitOrderMobileHeader toggleMobileChart={this.toggleMobileChart} />
 
-        {this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
-          <MobileChart
-            toggleMobileChart = {this.toggleMobileChart}
-            setFormType = {this.setFormType}
-          />
+        {this.state.mobileOpenChart && (
+          <LimitOrderChart />
         )}
-
-        {!this.state.mobileOpenChart && !this.props.limitOrder.mobileState.showQuoteMarket && (
-          <div>
-            <div className={"limit-order__container limit-order__container--right"}>
-              <LimitOrderForm
-                setSrcInputElementRef={this.setSrcInputElementRef}
-                submitHandler={this.submitHandler}
-                setSubmitHandler={this.setSubmitHandler}
-                setFormType={this.setFormType}
-              />
-
-              {this.props.account === false &&
-                <div className={"limit-order-account"}>
-                  <ImportAccount
-                    tradeType="limit_order"
-                    isAgreedTermOfService={this.props.global.termOfServiceAccepted}
-                    isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-                  />
-                </div>
-              }
+  
+        <div>
+          <div className="limit-order-form__header theme__background-2 theme__border-2">
+            <div className={`limit-order-form__tab ${this.state.mobileFormType === 'buy' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('buy')}>
+              {this.props.translate("limit_order.buy", { symbol: this.props.baseSymbol })}
             </div>
-            <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef} />
+            <div className={`limit-order-form__tab ${this.state.mobileFormType === 'sell' ? 'limit-order-form__tab--active' : ''}`} onClick={() => this.setMobileFormType('sell')}>
+              {this.props.translate("limit_order.sell", { symbol: this.props.baseSymbol })}
+            </div>
           </div>
-        )}
+          
+          <LimitOrderForm formType={this.state.mobileFormType} isMobile />
+        </div>
+
+        <div>
+          <div className={"limit-order__container limit-order__container--right"}>
+            {this.props.account === false &&
+              <div className={"limit-order-account"}>
+                <ImportAccount tradeType="limit_order" isAgreedTermOfService />
+              </div>
+            }
+          </div>
+          
+          <LimitOrderListModal srcInputElementRef={this.props.srcInputElementRef}/>
+        </div>
       </div>
     )
-  }
+  };
 
   render() {
-    if (this.props.global.isOnMobile) {
+    if (this.props.isOnMobile) {
       return this.mobileLayout()
     } else {
       return this.desktopLayout()

@@ -15,8 +15,8 @@ import { switchTheme } from "../../actions/globalActions";
 
   var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
   var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
-
   var orderLink = constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
+  var portfolioLink = constansts.BASE_HOST + `/portfolio`;
 
   exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
   transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
@@ -25,7 +25,7 @@ import { switchTheme } from "../../actions/globalActions";
   const translate = getTranslate(store.locale)
 
   return {
-    translate, currentLang, exchangeLink, transferLink, orderLink,
+    translate, currentLang, exchangeLink, transferLink, orderLink, portfolioLink,
     page: props.page,
     analytics: store.global.analytics,
     theme: store.global.theme
@@ -54,7 +54,6 @@ export default class HeaderTransaction extends React.Component {
 
     const disabledSwapClass = this.props.page === "exchange" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
     const disabledTransferClass = this.props.page === "transfer" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
-
     const disabledLimitOrderClass = this.props.page === "limit_order" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
 
     return (
@@ -62,12 +61,8 @@ export default class HeaderTransaction extends React.Component {
         <div className="exchange-tab">
           <Link to={this.props.exchangeLink} className={"exchange-tab__item" + disabledSwapClass}>{swap}</Link>          
           <Link to={this.props.transferLink} className={"exchange-tab__item" + disabledTransferClass}>{transfer}</Link>
-          <Link to={this.props.orderLink} className={"exchange-tab__item " + disabledLimitOrderClass}>
-            {order}
-          </Link>
-          <div className="exchange-tab__item--limit-order">
-            {/* <img className="exchange-tab__limit-order-beta" src={require("../../../assets/img/limit-order/beta.svg")}/> */}
-          </div>
+          <Link to={this.props.orderLink} className={"exchange-tab__item " + disabledLimitOrderClass}>{order}</Link>
+          <Link to={this.props.portfolioLink} className={"exchange-tab__item"}>Portfolio</Link>
           <div onClick={this.switchTheme} className={"exchange-tab__item"}>Switch Theme</div>
         </div>
       </div>

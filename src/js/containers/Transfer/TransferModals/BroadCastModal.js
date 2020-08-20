@@ -28,7 +28,7 @@ import BLOCKCHAIN_INFO from "../../../../../env"
   return {
     exchange: store.exchange,
     transfer: store.transfer,
-    account: store.exchange,
+    account: store.account,
     translate: getTranslate(store.locale),
     global: store.global,
     tokens: store.tokens.tokens,
@@ -68,6 +68,11 @@ export default class BroadCastModal extends React.Component {
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
+
+            if(this.props.account.account){
+              this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "transfer", "success", this.props.account.account.address, this.props.account.account.type);
+            }
+            
           }catch(e){
             console.log(e)
           }
@@ -76,6 +81,10 @@ export default class BroadCastModal extends React.Component {
           try{
             var notiService = this.props.global.notiService
             notiService.callFunc("changeStatusTx",newTx)
+
+            if(this.props.account.account){
+              this.props.global.analytics.callTrack("txMinedStatus", newTx.hash, "kyber", "transfer", "failed", this.props.account.account.address, this.props.account.account.type);
+            }
           }catch(e){
             console.log(e)
           }
@@ -126,7 +135,8 @@ export default class BroadCastModal extends React.Component {
     var balanceInfo = {
       amount: this.props.transfer.amount,
       tokenSymbol: this.props.transfer.tokenSymbol,
-      address: this.props.transfer.destAddress
+      address: this.props.transfer.destAddress,
+      destEthName: this.props.transfer.destEthName
     }
 
     var loadingView =

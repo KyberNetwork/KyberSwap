@@ -1,32 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
 import { importAccountMetamask, throwError } from "../../actions/accountActions"
-import { ImportByMetamaskView } from "../../components/ImportAccount"
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as web3Package from "../../services/web3"
 import { getTranslate } from 'react-localize-redux'
 
-@connect((store, props) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
+@connect((store) => {
   return {
-    account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens,
     translate: getTranslate(store.locale),
-    metamask: store.global.metamask,
-    screen: props.screen,
     analytics: store.global.analytics
   }
 })
-
 export default class ImportByMetamask extends React.Component {
-
-  connect = (e) => {   
-    this.props.analytics.callTrack("trackClickImportAccount", "metamask");
+  connect = () => {
+    this.props.analytics.callTrack("trackClickImportAccount", "metamask", this.props.tradeType);
 
     var web3Service = web3Package.newWeb3Instance()
 
@@ -36,20 +24,19 @@ export default class ImportByMetamask extends React.Component {
     }
 
     this.dispatchAccMetamask(web3Service);
-  }
+  };
 
   dispatchAccMetamask(web3Service){
     this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-      this.props.ethereum, this.props.tokens, this.props.translate, this.props.screen))
+      this.props.ethereum, this.props.translate, this.props.screen))
   }
 
   render() {
     return (
-      <ImportByMetamaskView 
-        connect={this.connect}
-        translate={this.props.translate}
-        metamask = {this.props.metamask}
-      />
+      <div className="import-account__block theme__import-button" onClick={() => this.connect()}>
+        <div className="import-account__icon metamask"/>
+        <div className="import-account__name">{this.props.translate("import.from_metamask") || "METAMASK"}</div>
+      </div>
     )
   }
 }

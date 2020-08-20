@@ -3,7 +3,6 @@ import * as common from '../utils/common'
 
 const initState = {
   termOfServiceAccepted: false,
-  isAcceptConnectWallet: false,
   showBalance: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
@@ -18,6 +17,7 @@ const initState = {
   changeWalletType: "",
   isChangingWallet: false,
   network_error: "",
+  eligibleError: '',
   metamask: {
     address: "",
     balance: "",
@@ -31,11 +31,12 @@ const initState = {
   analytics: {
     callTrack: () => { return }
   },
-  documentTitle: "Kyber Network | Instant Exchange | No Fees",
+  documentTitle: "KyberSwap | Instant Exchange | No Fees",
   theme: (() => {
     const cookieTheme = common.getCookie('theme');
-    return cookieTheme ? cookieTheme : 'light';
-  })()
+    return cookieTheme ? cookieTheme : 'dark';
+  })(),
+  campaign: null
 }
 
 const global = (state = initState, action) => {
@@ -69,27 +70,6 @@ const global = (state = initState, action) => {
       newState.isAnalizeComplete = true
       return newState
     }
-
-    // case "GLOBAL.UPDATE_HISTORY_EXCHANGE": {
-    //   var history = { ...state.history }
-    //   const { ethereum, page, itemPerPage, isAutoFetch } = action.payload
-    //   if (!isAutoFetch) {
-    //     history.isFetching = true
-    //   }      
-    //   return Object.assign({}, state, { history: history })
-    //   break
-    // }
-    // case "GLOBAL.UPDATE_HISTORY": {
-    //   const { logs, latestBlock, page, isAutoFetch } = action.payload
-    //   var history = { ...state.history }
-
-    //   if(logs) history.logs = logs      
-    //   history.currentBlock = latestBlock
-    //   history.page = page
-    //   // history.eventsCount = eventsCount
-    //   history.isFetching = false
-    //   return { ...state,  history: {...history} }
-    // }
     case "GLOBAL.CONNECTION_UPDATE_IS_CHECK": {
       var conn_checker = { ...state.conn_checker }
       conn_checker.isCheck = action.payload
@@ -113,6 +93,18 @@ const global = (state = initState, action) => {
       const { err } = action.payload
       var metamask = { error: err }
       return Object.assign({}, state, { metamask: metamask })
+    }
+    case "GLOBAL.THROW_ERROR_ELIGIBLE": {
+      const { err } = action.payload
+      return Object.assign({}, state, { eligibleError: err })
+    }
+    case "GLOBAL.CLEAR_ERROR_ELIGIBLE": {
+      return Object.assign({}, state, { eligibleError: '' })
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      let newState = {...state}
+      newState.eligibleError = '';
+      return newState
     }
     case "GLOBAL.UPDATE_METAMASK_ACCOUNT": {
       const { address, balance } = action.payload
@@ -156,12 +148,6 @@ const global = (state = initState, action) => {
       newState.analytics = action.payload
       return newState
     }
-    case "GLOBAL.SET_ACCEPT_CONNECT_WALLET": {
-      return {
-        ...state,
-        isAcceptConnectWallet: action.payload
-      }
-    }
     case "GLOBAL.SET_DOCUMENT_TITLE": {
       return {
         ...state,
@@ -172,6 +158,12 @@ const global = (state = initState, action) => {
       return {
         ...state,
         theme: action.payload
+      }
+    }
+    case "GLOBAL.SET_CAMPAIGN": {
+      return {
+        ...state,
+        campaign: action.payload
       }
     }
   }

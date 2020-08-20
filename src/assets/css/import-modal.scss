@@ -12,7 +12,6 @@
       font-stretch: normal;
       line-height: normal;
       letter-spacing: normal;
-      color: #141927;
     }
     &.cold-wallet {
       padding-bottom: 30px;
@@ -38,7 +37,6 @@
         &--title {
           font-size: 14px;
           font-weight: bold;
-          color: #141927;
         }
   
         &--choose-path {
@@ -53,7 +51,6 @@
               text-overflow: ellipsis;
               font-size: 14px;
               font-weight: normal;
-              color: #5a5e67;
             }
             div:nth-child(2) {
               padding: 0 10px;
@@ -115,6 +112,7 @@
                 box-shadow: none;
                 height: unset;
                 padding: 0 10px;
+                background: none;
               }
               img {
                 width: 35px;
@@ -132,7 +130,6 @@
         &--title {
           font-size: 14px;
           font-weight: 500;
-          color: #5a5e67;
           margin-bottom: 12px;
         }
   
@@ -154,7 +151,6 @@
               align-items: center;
               .balance {
                 font-size: 14px;
-                color: #5a5e67;
                 text-align: right;
               }
               .import {
@@ -208,14 +204,15 @@
     &--cold-wallet {
       justify-content: space-between !important;
     }
+
     .address-button {
       .address-arrow {
         background-size: contain;
         width: 15px;
         height: 16px;
         opacity: 0.8;
-        background: url($image-path + "icon-back.svg") no-repeat center;
         cursor: pointer;
+
         &-right {
           transform: rotate(180deg);
         }

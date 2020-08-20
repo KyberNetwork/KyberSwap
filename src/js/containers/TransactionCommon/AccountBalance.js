@@ -2,208 +2,201 @@ import React from "react"
 import { connect } from "react-redux"
 import BLOCKCHAIN_INFO from "../../../../env"
 import { AccountBalanceLayout } from '../../components/Exchange'
-import {acceptTermOfService} from "../../actions/globalActions"
 import { getTranslate } from 'react-localize-redux';
-import * as converters from "../../utils/converter"
-
+import * as converts from "../../utils/converter";
 
 @connect((store, props) => {
-  // var location = store.router.location.pathname
-  var sourceActive = 'ETH'
-  sourceActive = store.exchange.sourceTokenSymbol
-  var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])  
+  var isFixedSourceToken = !!(store.account && store.account.account.type ==="promo" && store.tokens.tokens[BLOCKCHAIN_INFO.promo_token])
+  const marketTokens = store.market.tokens;
+  
   return {
     tokens: store.tokens.tokens,
-    exchange: store.exchange,    
-    transfer: store.transfer,
+    marketTokens: marketTokens,
     translate: getTranslate(store.locale),
-    ethereum: store.connection.ethereum,
     showBalance: store.global.showBalance,
-    // location,
     walletType: store.account.account.type,
     account: store.account.account,
     address: store.account.account.address,
-    chooseToken: props.chooseToken,
     sourceActive: props.sourceActive,
     isFixedSourceToken: isFixedSourceToken,
     global: store.global,
-    walletName: props.walletName,
-    isOnDAPP: props.isOnDAPP,
-    limitOrder : store.limitOrder
+    limitOrder : store.limitOrder,
+    isOnMobile: store.global.isOnMobile
   }
 })
-
 export default class AccountBalance extends React.Component {
-  constructor(){
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
       searchWord: "",
-      sortActive: false,
-      sortValueSymbol_DES:  false,
-      sortValuePrice_DES:  true,
-      sortType: 'Eth',
-      sortDESC: true
+      sortType: 'ETH',
+      sortName: '',
+      sortDESC: true,
+      isAddressCopied: false,
+      isAddressQROpened: false
     }
-  }
-
-//   selectBalance = (sourceSymbol) => {
-
-//     this.props.chooseToken(sourceSymbol, this.props.tokens[sourceSymbol].address, this.props.screen === "swap" || this.props.screen === "limit_order" ?"source":"transfer")
-    
-//     var sourceBalance = this.props.tokens[sourceSymbol].balance
-
-//     if (this.props.isLimitOrderTab) {
-//       const tokens = this.props.getFilteredTokens();
-//       const srcToken = tokens.find(token => {
-//         return token.symbol === sourceSymbol;
-//       });
-//       sourceBalance = srcToken.balance;
-//     }
-
-//     var sourceDecimal = this.props.tokens[sourceSymbol].decimals
-//     var amount
-
-//     if (sourceSymbol !== "ETH") {
-//         amount = sourceBalance
-//         amount = converters.toT(amount, sourceDecimal)
-//         amount = amount.replace(",", "")
-//     } else {
-//         var gasLimit
-//         var totalGas
-//         if (this.props.screen === "swap") {
-//             var destTokenSymbol = this.props.exchange.destTokenSymbol
-//             gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.exchange.max_gas
-//             totalGas = converters.calculateGasFee(this.props.exchange.gasPrice, gasLimit) * Math.pow(10, 18)
-//             // amount = (sourceBalance - totalGas) * percent / 100
-//         } else if (this.props.screen === "limit_order") {
-//             const destTokenSymbol = this.props.limitOrder.destTokenSymbol;
-//             gasLimit = this.props.tokens[destTokenSymbol].gasLimit || this.props.limitOrder.max_gas;
-//             totalGas = converters.calculateGasFee(this.props.limitOrder.gasPrice, gasLimit) * Math.pow(10, 18);
-//         } else {
-//             gasLimit = this.props.transfer.gas
-//             totalGas = converters.calculateGasFee(this.props.transfer.gasPrice, gasLimit) * Math.pow(10, 18)
-//             // amount = (sourceBalance - totalGas) * percent / 100
-//         }
-//         amount = sourceBalance - totalGas * 120 / 100
-//         amount = converters.toEther(amount)
-//         amount = converters.roundingNumber(amount).toString(10)
-//         amount = amount.replace(",", "")
-//     }
-
-//     if (amount < 0) amount = 0;
-
-//     if (this.props.screen === "swap" || this.props.screen === "limit_order") {
-//         this.props.dispatch(this.props.changeAmount('source', amount))
-//         this.props.dispatch(this.props.changeFocus('source'));
-//     } else {
-//         this.props.dispatch(this.props.changeAmount(amount))
-//         // this.props.changeFocus()
-//     }
-//     this.props.selectTokenBalance();
-//     this.props.global.analytics.callTrack("trackClickToken", sourceSymbol, this.props.screen);
-// }
-
-  componentDidMount() {
-    if (window.innerWidth < 640) {
-      this.setState({isBalanceActive: false})
-    }
-  }
-
-  acceptTerm = () => {
-    this.props.dispatch(acceptTermOfService())
   }
 
   changeSearchBalance = (e) => {
     var value = e.target.value
     this.setState({searchWord:value})
-  }
+  };
 
-  clickOnInput = (e) => {
+  clickOnInput = () => {
     this.props.global.analytics.callTrack("trackSearchTokenBalanceBoard");
+  };
+
+  setIsAddressCopied = (isCopied) => {
+    this.setState({ isAddressCopied: isCopied });
   }
 
-  // selectToken = (e, symbol, address) => {
-  //   if (this.props.isFixedSourceToken) return
-  //   this.props.chooseToken(symbol, address, "source")
-  //   this.props.global.analytics.callTrack("trackChooseTokenOnBalanceBoard", symbol);
-  // }
-
-  showSort = (e) =>{
-    this.setState({sortActive: true})
+  setIsAddressQROpened = (isOpened) => {
+    this.setState({ isAddressQROpened: isOpened });
   }
-  hideSort = (e) =>{
-    this.setState({sortActive: false})
-  }
-
-  sortSymbol = (e) =>{
-    this.setState({sortType: "Symbol", sortValueSymbol_DES: !this.state.sortValueSymbol_DES})
-    this.hideSort()
-    this.props.global.analytics.callTrack("trackClickSortBalanceBoard", "Symbol", this.state.sortValueSymbol_DES ? "DESC" : "ASC");
-  }
-
-  sortPrice = (e) =>{
-    this.setState({sortType: "Price", sortValuePrice_DES: !this.state.sortValuePrice_DES})
-    this.hideSort()
-    this.props.global.analytics.callTrack("trackClickSortBalanceBoard", "Price", this.state.sortValuePrice_DES ? "DESC" : "ASC");
-  }
-
-  toggleBalanceContent = () => {
-    this.props.onToggleBalanceContent()
-  }
-
-  onSort = (sortType, isDsc) => {
-    console.log("[]",{sortType: sortType, sortDESC: isDsc})
-    this.setState({sortType: sortType, sortDESC: isDsc})
+  
+  onClickSort = (sortType, sortName, isDsc) => {
+    this.setState({
+      sortType: sortType !== false ? sortType : this.state.sortType,
+      sortName: sortName,
+      sortDESC: isDsc
+    });
+    
     this.props.global.analytics.callTrack("trackLimitOrderClickSort", sortType, isDsc ? 'dsc' : 'asc')
-  }
+  };
+  
+  archiveMaintain = (tokens) => {
+    return tokens.filter(t =>  (t.symbol === "ETH" || converts.compareTwoNumber(t.rate, 0)))
+    .concat(tokens.filter(t =>  !(t.symbol === "ETH" || converts.compareTwoNumber(t.rate, 0))))
+  };
+  
+  archiveBalanceZero = (tokens) => {
+    return tokens.filter(t =>  (converts.compareTwoNumber(t.balance, 0)))
+    .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
+  };
+  
+  getChangeByETH = (tokenSymbol) => {
+    let changeByETH = this.props.marketTokens[`ETH_${tokenSymbol}`] ? this.props.marketTokens[`ETH_${tokenSymbol}`].change : 0;
+  
+    if (changeByETH === 0) {
+      const changeFromTokenToETH = this.props.marketTokens[`${tokenSymbol}_ETH`] ? this.props.marketTokens[`${tokenSymbol}_ETH`].change : 0;
+      const changeFromTokenToETHPercent = changeFromTokenToETH / 100;
+      changeByETH = changeFromTokenToETH ? converts.formatNumber((-changeFromTokenToETHPercent / (1 + changeFromTokenToETHPercent)) * 100, 2) : 0;
+    }
+  
+    return changeByETH;
+  };
+  
+  getChangeByUSD = (tokenSymbol) => {
+    return this.props.marketTokens[`USDC_${tokenSymbol}`] ? this.props.marketTokens[`USDC_${tokenSymbol}`].change : 0;
+  };
+  
+  getCustomizedTokens = () => {
+    let tokens = this.props.tokens;
+    let res = [];
+    
+    switch (this.state.sortType) {
+      case "ETH":
+        const WETHToTop = !!this.props.isLimitOrderTab;
+        res = converts.sortETHBalance(tokens, this.state.sortDESC, WETHToTop);
+        break;
+      case "USD":
+        res = Object.keys(tokens).map(key => tokens[key])
+        .sort((a, b) => {
+          return (this.state.sortDESC ? -1 : 1) *
+            (converts.subOfTwoNumber(
+              converts.multiplyOfTwoNumber(converts.toT(a.balance, a.decimals), a.rateUSD),
+              converts.multiplyOfTwoNumber(converts.toT(b.balance, b.decimals), b.rateUSD)
+            ))
+        });
+        break;
+    }
+    
+    switch (this.state.sortName) {
+      case "Name":
+        let ordered = [];
+        if (this.state.sortDESC) {
+          Object.keys(tokens).sort().forEach(function (key) {
+            ordered.push(tokens[key])
+          });
+          res = ordered
+        } else {
+          Object.keys(tokens).sort().reverse().forEach(function (key) {
+            ordered.push(tokens[key])
+          });
+          res = ordered
+        }
+        break;
+      case "Bal":
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {
+          return (this.state.sortDESC ? -1 : 1) *
+            (converts.subOfTwoNumber(converts.toT(a.balance, a.decimals), converts.toT(b.balance, b.decimals)))
+        });
+        break;
+      case "Change":
+        res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {
+          let aChange, bChange;
+          
+          if (this.state.sortType === 'ETH') {
+            aChange = this.getChangeByETH(a.symbol);
+            bChange = this.getChangeByETH(b.symbol);
+          } else {
+            aChange = this.getChangeByUSD(a.symbol);
+            bChange = this.getChangeByUSD(b.symbol);
+          }
+      
+          return (this.state.sortDESC ? -1 : 1) * converts.subOfTwoNumber(aChange, bChange);
+        });
+        break;
+    }
+    
+    res = this.archiveBalanceZero(res);
+    
+    if (!this.props.hideZeroBalance) {
+      res = this.archiveMaintain(res)
+    }
+    
+    return res
+  };
+  
+  isValidPriority = (token) => {
+    const {tokens, limitOrder} = this.props;
+    const quote = tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')];
+    return !("quote_priority" in token) || token.quote_priority < quote.quote_priority;
+  };
+  
   render() {
-    const {tokens, limitOrder} = this.props
-    // var sortValue = this.state.sortType === "Price" ? this.state.sortValuePrice_DES : this.state.sortValueSymbol_DES;
-    var sortValue = this.state.sortDESC
     return (
       <AccountBalanceLayout
         tokens={this.props.tokens}
         translate={this.props.translate}
         sourceActive={this.props.sourceActive}
-        // selectToken={this.selectToken}
         clickOnInput={this.clickOnInput}
-        showBalance = {this.props.showBalance}
         changeSearchBalance = {this.changeSearchBalance}
         searchWord = {this.state.searchWord}
-        walletType = {this.props.walletType}
-        showSort = {this.showSort}
-        hideSort = {this.hideSort}
-        sortActive = {this.state.sortActive}
-        sortSymbol = {this.sortSymbol}
-        sortPrice = {this.sortPrice}
         sortType = {this.state.sortType}
-        sortValue = {sortValue}
-        isBalanceActive={this.props.isBalanceActive}
-        toggleBalanceContent={this.toggleBalanceContent}
+        sortName = {this.state.sortName}
         account={this.props.account}
-        sourceTokenSymbol={this.props.sourceActive}
-        destTokenSymbol={this.props.destTokenSymbol}
-        onToggleBalanceContent={this.onToggleBalanceContent}
         screen = {this.props.screen}
         isFixedSourceToken = {this.props.isFixedSourceToken}
         analytics={this.props.global.analytics}
-        walletName={this.props.walletName}
-        isOnDAPP = {this.props.isOnDAPP}
         selectBalance = {this.props.selectToken}
+        selectBalanceButton={this.props.selectBalanceButton}
         isLimitOrderTab={this.props.isLimitOrderTab}
-        getFilteredTokens={this.props.getFilteredTokens}
-        onSort={this.onSort}
         openReImport={this.props.openReImport}
-        {
-          ...(this.props.isLimitOrderTab && {
-            priorityValid: (t) => {
-              const {sideTrade} = this.props.limitOrder
-              const quote = sideTrade == "buy" ? tokens[limitOrder.sourceTokenSymbol.replace('WETH', 'ETH')] : tokens[limitOrder.destTokenSymbol.replace('WETH', 'ETH')]
-              return !("quote_priority" in t) || t.quote_priority < quote.quote_priority
-            }
-          })
-        }
-
+        onClickSort={this.onClickSort}
+        hideZeroBalance={this.props.hideZeroBalance}
+        show24hChange={this.props.show24hChange}
+        marketTokens={this.props.marketTokens}
+        getCustomizedTokens={this.getCustomizedTokens}
+        isValidPriority={this.isValidPriority}
+        getChangeByETH={this.getChangeByETH}
+        getChangeByUSD={this.getChangeByUSD}
+        isOnMobile={this.props.isOnMobile}
+        isAddressCopied={this.state.isAddressCopied}
+        setIsAddressCopied={this.setIsAddressCopied}
+        isAddressQROpened={this.state.isAddressQROpened}
+        setIsAddressQROpened={this.setIsAddressQROpened}
       />
     )
   }
