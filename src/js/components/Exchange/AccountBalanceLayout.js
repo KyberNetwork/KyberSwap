@@ -3,7 +3,10 @@ import * as converts from "../../utils/converter"
 import { MINIMUM_DISPLAY_BALANCE } from "../../services/constants"
 import BLOCKCHAIN_INFO from "../../../../env"
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
-import { SortableComponent } from "../CommonElement"
+import { Modal, SortableComponent } from "../CommonElement"
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import ReactTooltip from "react-tooltip";
+import QRCode from "qrcode.react";
 
 const AccountBalanceLayout = (props) => {
   const isPortfolio = props.screen === 'portfolio';
@@ -61,9 +64,8 @@ const AccountBalanceLayout = (props) => {
       }
 
       return (
-        <div className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
+        <div key={token.symbol} className={isPortfolio ? "account-balance__token-wrapper theme__token-item" : "account-balance__token-wrapper"}>
           <div
-            key={token.symbol}
             {...(!classBalance.includes('unclickable') && { onClick: (e) => props.selectBalance(props.isLimitOrderTab ? (token.symbol === "ETH" ? "WETH" : token.symbol) : (token.symbol)) })}
             className={"account-balance__token-item" + classBalance}
           >
@@ -104,8 +106,6 @@ const AccountBalanceLayout = (props) => {
     return !isEmpty || props.searchWord ? allBalances : false;
   }
 
-
-
   return (
     <div className={`account-balance common__slide-up account-balance--${props.screen}`}>
       {props.account !== false && (
@@ -119,8 +119,38 @@ const AccountBalanceLayout = (props) => {
                     <div>
                       <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                         onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
-                        {props.account.address.slice(0, 20)}...{props.account.address.slice(-4)}
+                        {props.account.address.slice(0, 10)}...{props.account.address.slice(-4)}
                       </a>
+                      <a data-for='copy-address-tooltip' data-tip="" onClick={() => props.setIsAddressCopied(true)} onMouseLeave={() => props.setIsAddressCopied(false)}>
+                        <CopyToClipboard text={props.account.address}>
+                          <img className="account-balance__icon copy" src={require("../../../assets/img/copy-address.svg")}/>
+                        </CopyToClipboard>
+                        <ReactTooltip id="copy-address-tooltip" className="account-balance__tooltip">
+                          {props.isAddressCopied ? 'Copied!' : 'Copy Address'}
+                        </ReactTooltip>
+                      </a>
+                      <img className="account-balance__icon" onClick={() => props.setIsAddressQROpened(true)} src={require("../../../assets/img/qr-code.svg")}/>
+                      <Modal
+                        className={{ base: 'reveal small', afterOpen: 'reveal small' }}
+                        isOpen={props.isAddressQROpened}
+                        onRequestClose={() => props.setIsAddressQROpened(false)}
+                        contentLabel="Scan Address QR"
+                        content={(
+                          <div className="reimport-modal p-a-20px">
+                            <div className="x" onClick={() => props.setIsAddressQROpened(false)}>&times;</div>
+                            <div className="title">Scan Address QR</div>
+                            <div className="common__text-center">
+                              <QRCode
+                                value={props.account.address}
+                                className="account-balance__qr-code"
+                              />
+                            </div>
+                            <div className="content">
+                              <div className="button cancel-btn" onClick={() => props.setIsAddressQROpened(false)}>Cancel</div>
+                            </div>
+                          </div>
+                        )}
+                      />
                       <span className="account-balance__reimport" onClick={props.openReImport}>
                         {props.translate("change") || "CHANGE"}
                       </span>

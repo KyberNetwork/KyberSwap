@@ -3,7 +3,6 @@ import * as common from '../utils/common'
 
 const initState = {
   termOfServiceAccepted: false,
-  isAcceptConnectWallet: false,
   showBalance: false,
   nodeName: "Infura Kovan",
   nodeURL: "https://kovan.infura.io/0BRKxQ0SFvAxGL72cbXi",
@@ -32,10 +31,10 @@ const initState = {
   analytics: {
     callTrack: () => { return }
   },
-  documentTitle: "Kyber Network | Instant Exchange | No Fees",
+  documentTitle: "KyberSwap | Instant Exchange | No Fees",
   theme: (() => {
     const cookieTheme = common.getCookie('theme');
-    return cookieTheme ? cookieTheme : 'light';
+    return cookieTheme ? cookieTheme : 'dark';
   })(),
   campaign: null
 }
@@ -148,12 +147,6 @@ const global = (state = initState, action) => {
       var newState = { ...state }
       newState.analytics = action.payload
       return newState
-    }
-    case "GLOBAL.SET_ACCEPT_CONNECT_WALLET": {
-      return {
-        ...state,
-        isAcceptConnectWallet: action.payload
-      }
     }
     case "GLOBAL.SET_DOCUMENT_TITLE": {
       return {

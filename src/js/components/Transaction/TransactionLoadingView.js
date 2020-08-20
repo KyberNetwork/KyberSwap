@@ -165,16 +165,16 @@ const TransactionLoadingView = (props) => {
             <ul class="broadcast-steps">
               {props.status === "success" &&
                 <li class={props.status}>
-                    {props.type === "swap" &&
-                    <div>
-                      <div className="final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
-                      <div className="content">
-                        <div>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</div>
-                        <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
-                        <div>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</div>
+                    {props.type === "swap" && (
+                      <div>
+                        <div className="final-status">{ props.translate('transaction.success_swap_msg') || "Successfully swapped" }</div>
+                        <div className="content">
+                          <div>{displayRoundingNumber(props.balanceInfo.sourceAmount)} {props.balanceInfo.sourceTokenSymbol}</div>
+                          <div className={"content__to"}>{props.translate('transaction.to') || "to"}</div>
+                          <div>{displayRoundingNumber(props.balanceInfo.destAmount)} {props.balanceInfo.destTokenSymbol}</div>
+                        </div>
                       </div>
-                    </div>
-                    }
+                    )}
                     {props.type === "transfer" &&
                     <div>
                       <div className="final-status">{ props.translate('transaction.success_transfer_msg') || "Successfully transferred" }</div>

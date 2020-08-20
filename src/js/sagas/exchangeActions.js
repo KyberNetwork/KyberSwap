@@ -10,19 +10,23 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
+import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
+import { fetchPlatformFee } from "../services/kyberSwapService";
+import { calculateFeeByWalletId } from "../utils/common";
 
 function* selectToken(action) {
-  const { sourceTokenSymbol, destTokenSymbol } = action.payload
+  const state = store.getState();
+  const translate = getTranslate(state.locale);
+  const { sourceTokenSymbol, destTokenSymbol } = action.payload;
 
-  if (sourceTokenSymbol === destTokenSymbol){
-    var state = store.getState()
-    var translate = getTranslate(state.locale)
-    yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
-  } else {
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken))
-  }
-  
   yield put(actions.estimateGasNormal(false))
+
+  if (sourceTokenSymbol === destTokenSymbol) {
+    yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
+    return;
+  }
+
+  yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
 }
 
 function* updateRatePending(action) {
@@ -32,13 +36,20 @@ function* updateRatePending(action) {
   const tokens = state.tokens.tokens;
   const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
-  const destAmount = state.exchange.destAmount
+  const destAmount = state.exchange.destAmount;
   const srcTokenAddress = tokens[sourceTokenSymbol].address;
   const destTokenAddress = tokens[destTokenSymbol].address;
 
+  yield put(globalActions.updateTitleWithRate())
+
+  let platformFee = yield call(fetchPlatformFee, sourceToken, destToken);
+  platformFee = calculateFeeByWalletId(platformFee, state.account.type);
+  yield put(actions.setPlatformFee(platformFee))
+
   if (refetchSourceAmount) {
     try {
-     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
+      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
+      sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
     } catch (err) {
       console.log(err);
     }
@@ -47,8 +58,12 @@ function* updateRatePending(action) {
   try {
     const isProceeding = !!state.exchange.exchangePath.length;
     const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol, destTokenSymbol);
-    var { expectedPrice, slippagePrice } = rate
-    var percentChange = 0
+
+    let { expectedPrice, slippagePrice } = rate;
+
+    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+
+    let percentChange = 0
     const expectedRateInit = rateZero.expectedPrice;
     const noExpectedRateInit = expectedRateInit === "0" || expectedRateInit === 0 || expectedRateInit === undefined || expectedRateInit === null;
     let refPrice = expectedRateInit;
@@ -90,6 +105,7 @@ function* updateRatePending(action) {
 
     yield put(actions.estimateGasNormal(calculatedSrcAmount));
     yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
+    yield put(globalActions.updateTitleWithRate())
   } catch(err) {
     console.log(err)
     if(isManual){      
@@ -111,8 +127,7 @@ function* fetchGas() {
   yield put(actions.setEstimateGas(gas, gasApprove))
 }
 
-function* estimateGasNormal(action) {
-  const {srcAmount} = action.payload;
+function* estimateGasNormal() {
   var state = store.getState()
   const exchange = state.exchange
 
@@ -143,7 +158,6 @@ function* getMaxGasApprove() {
 
 function* checkKyberEnable(action) {
   const {ethereum} = action.payload
-  var state = store.getState()
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
     if (enabled){
@@ -233,7 +247,7 @@ function* verifyExchange() {
 
   const account = state.account.account
   var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
-    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+    sourceAmount, exchange.gas, exchange.gasPrice)
 
   if (validateWithFee) {
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))

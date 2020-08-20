@@ -52,13 +52,6 @@ export function throwErrorSlippageRate(key, message) {
   }
 }
 
-export function specifyGas(value) {
-  return {
-    type: "EXCHANGE.SPECIFY_GAS",
-    payload: value
-  }
-}
-
 export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
@@ -349,5 +342,12 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
   return {
     type: "EXCHANGE.SAVE_APPROVE_MAX_TX",
     payload: { sourceTokenSymbol, txHash }
+  }
+}
+
+export function setPlatformFee(fee) {
+  return {
+    type: "EXCHANGE.SET_PLATFORM_FEE",
+    payload: fee
   }
 }
