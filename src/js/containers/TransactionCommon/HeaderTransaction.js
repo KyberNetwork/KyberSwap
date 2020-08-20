@@ -1,117 +1,71 @@
 import React from "react"
 import { connect } from "react-redux"
-//import { ExchangeBody, MinRate } from "../Exchange"
-//import {GasConfig} from "../TransactionCommon"
-//import { AdvanceConfigLayout, GasConfig } from "../../components/TransactionCommon"
-
 import constansts from "../../services/constants"
-//import { TransactionLayout } from "../../components/TransactionCommon"
 import { getTranslate } from 'react-localize-redux'
-
 import * as common from "../../utils/common"
-
-// import * as converter from "../../utils/converter"
-// import * as validators from "../../utils/validators"
-//import * as exchangeActions from "../../actions/exchangeActions"
-//import { default as _ } from 'underscore'
-import { clearSession } from "../../actions/globalActions"
-import * as analytics from "../../utils/analytics"
-
-//import { ImportAccount } from "../ImportAccount"
-
-
 import { Link } from 'react-router-dom'
+import { switchTheme } from "../../actions/globalActions";
 
 @connect((store, props) => {
-    //console.log(props)
-    const langs = store.locale.languages
-    var currentLang = common.getActiveLanguage(langs)
+  const langs = store.locale.languages
+  var currentLang = common.getActiveLanguage(langs)
+  const exchange = store.exchange
+  const transfer = store.transfer
+  const limitOrder = store.limitOrder
 
+  var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
+  var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
+  var orderLink = constansts.BASE_HOST + `/${constansts.LIMIT_ORDER_CONFIG.path}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
+  var portfolioLink = constansts.BASE_HOST + `/portfolio`;
 
+  exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
+  transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
+  orderLink = common.getPath(orderLink, constansts.LIST_PARAMS_SUPPORTED)
 
-    //console.log("currentlang: " + currentLang)
+  const translate = getTranslate(store.locale)
 
-    //const account = store.account.account
-    // if (account === false) {
-    //   console.log("go to exchange")
-    // if (currentLang[0] === 'en') {
-    //   window.location.href = "/swap"  
-    // } else {
-    //   window.location.href = `/swap?lang=${currentLang}`
-    // }
-    // }
-    const exchange = store.exchange
-    const transfer = store.transfer
-    var exchangeLink = constansts.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "_" + exchange.destTokenSymbol.toLowerCase()
-    var transferLink = constansts.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
-
-    exchangeLink = common.getPath(exchangeLink, constansts.LIST_PARAMS_SUPPORTED)
-    transferLink = common.getPath(transferLink, constansts.LIST_PARAMS_SUPPORTED)
-
-    // if (currentLang !== "en"){
-    //     exchangeLink += "?lang=" + currentLang
-    //     transferLink += "?lang=" + currentLang
-    // }
-
-
-    const translate = getTranslate(store.locale)
-    // const tokens = store.tokens.tokens
-    // const exchange = store.exchange
-    // const ethereum = store.connection.ethereum
-
-    return {
-        translate, currentLang, exchangeLink, transferLink,
-        page: props.page
-
-    }
+  return {
+    translate, currentLang, exchangeLink, transferLink, orderLink, portfolioLink,
+    page: props.page,
+    analytics: store.global.analytics,
+    theme: store.global.theme
+  }
 })
 
-
 export default class HeaderTransaction extends React.Component {
-    gotoRoot = (e) => {
-        analytics.trackClickBreadCrumb("Home")
-        if (this.props.currentLang === 'en') {
-            window.location.href = "/"
-        } else {
-            window.location.href = `/?lang=${this.props.currentLang}`
-        }
+  gotoRoot = (e) => {
+    this.props.analytics.callTrack("trackClickBreadCrumb", "Home");
+    if (this.props.currentLang === 'en') {
+      window.location.href = "/"
+    } else {
+      window.location.href = `/?lang=${this.props.currentLang}`
     }
+  }
 
+  switchTheme = () => {
+    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
+    this.props.dispatch(switchTheme(theme));
+  };
 
-    handleEndSession = (e, info) => {
-        this.props.dispatch(clearSession())
-        info === "back" ? analytics.trackClickBack() : analytics.trackClickBreadCrumb(info)
-      }
+  render() {
+    var transfer = this.props.translate("transaction.transfer") || "Transfer"
+    var swap = this.props.translate("transaction.swap") || "Swap"
+    var order = this.props.translate("transaction.limit_order") || "Limit Order"
 
-    render() {
-        var transfer = this.props.translate("transaction.transfer") || "Transfer"
-        var swap = this.props.translate("transaction.swap") || "Swap"
-        return (
-            <div>
-                <div className="swap-navigation">
-                    <div>
-                        <a onClick={(e) => this.gotoRoot(e)}>{this.props.translate("home") || "Home"}</a>
-                    </div>
-                    <div className="seperator">/</div>
-                    <div>
-                        <a onClick={(e) => this.handleEndSession(e, "KyberSwap")}>KyberSwap</a>
-                    </div>
-                    <div className="seperator">/</div>
-                    <div className="active">
-                        <a>{this.props.page === "exchange" ? swap : transfer}</a>
-                    </div>
-                </div>
-                <h1 class="title frame-tab">
-                    <div className="back-home" onClick={(e) => this.handleEndSession(e, "back")}>
-                        <img src={require("../../../assets/img/arrow_left.svg")} className="back-arrow" />
-                        <span>{this.props.translate("transaction.back") || "Back"}</span>
-                    </div>
-                    <div className="switch-button">
-                        <Link to={this.props.exchangeLink} className={this.props.page === "exchange" ? "disable" : ""}>{swap}</Link>
-                        <Link to={this.props.transferLink} className={this.props.page === "transfer" ? "disable" : ""}>{transfer}</Link>
-                    </div>
-                </h1>
-            </div>
-        )
-    }
+    const disabledSwapClass = this.props.page === "exchange" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
+    const disabledTransferClass = this.props.page === "transfer" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
+    const disabledLimitOrderClass = this.props.page === "limit_order" ? " exchange-tab__item--active" : " exchange-tab__item--disabled";
+
+    return (
+      <div className="exchange-header">
+        <div className="exchange-tab">
+          <Link to={this.props.exchangeLink} className={"exchange-tab__item" + disabledSwapClass}>{swap}</Link>          
+          <Link to={this.props.transferLink} className={"exchange-tab__item" + disabledTransferClass}>{transfer}</Link>
+          <Link to={this.props.orderLink} className={"exchange-tab__item " + disabledLimitOrderClass}>{order}</Link>
+          <Link to={this.props.portfolioLink} className={"exchange-tab__item"}>Portfolio</Link>
+          <div onClick={this.switchTheme} className={"exchange-tab__item"}>Switch Theme</div>
+        </div>
+      </div>
+    )
+  }
 }

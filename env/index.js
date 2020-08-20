@@ -1,8 +1,12 @@
 
+
+var env = process.env.env ? process.env.env: "ropsten"
+
+
 var config
-, config_file = ( typeof env !== 'undefined' ? env : process.env.npm_config_chain || 'kovan') + '.json';
+
 try {
-  config = require('./config-env/' + (config_file));
+  config = require('./config-env/' + env + '.json');
   } catch (err) {
   if (err.code && err.code === 'MODULE_NOT_FOUND') {
     console.error('No config file matching ENV=' + env
@@ -12,5 +16,8 @@ try {
     throw err;
 }
 }
+
 module.exports = config;
+
+
 

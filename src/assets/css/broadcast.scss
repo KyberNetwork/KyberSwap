@@ -1,62 +1,55 @@
-.page-3{
-  background-color: $k-primary
-}
-
 .tx-title {
   font-size: 18rem;
-  margin-top: 35px;
-  text-align: center;
+  margin-top: 10px;
+  background-color: #eaecf2;
+  padding: 25px 45px;
+
+  @include screen-max-width(medium) {
+    margin: 0 20px !important;
+    padding: 15px !important;
+  }
 
   .tx-title-text {
-    font-size: 18px;
-    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 9px;
   }
 }
 
 .tx-hash {
   margin-top: 5px;
   position: relative;
+  display: flex;
 
   a {
-    padding: 10px;
-
     &:first-child{
-      width: 100%;
-      border: 1px solid #E5E5E5;
-      padding-right: 50px;
-      color: #666;
-      white-space: nowrap;
-      overflow:hidden !important;
-      text-overflow: ellipsis;
-      border-radius: 4px;
-      font-size: 16px;
+      font-size: 14px;
       text-align: left;
       display: inline-block;
       font-weight: 600;
+      margin-right: 10px;
+
+      @include screen-max-width(medium) {
+        max-width: 300px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     &.copy-tx {
-      padding: 5px 10px;
-      background-color: #F5F5F5;
+      width: 16px;
+      height: 16px;
       border-radius: 6px;
-      position: absolute;
-      right: 5px;
-      top: 5px;
-
-      img {
-        position: relative;
-        bottom: 1px;
-        width: 20px;
-      }
+      cursor: pointer;
     }
   }
+
+  &--error {}
 }
 
-
 .broadcast-animation{
-  //width: 120px;
   height: 120px;
-  //background-color: #243c47;
   padding: 17px;
   border-radius: 50%;
   margin: 0 auto;
@@ -65,10 +58,15 @@
     }
   }
 ul.broadcast-steps {
-  margin: 0;
+  margin: 0 45px;
   padding: 0;
   list-style: none;
   font-size: 0;
+
+  @include screen-max-width(medium) {
+    margin: 0 20px;
+  }
+
   p{
     margin: 40px 0 20px;
     text-align: left;
@@ -88,29 +86,26 @@ ul.broadcast-steps {
       font-size: 1.2rem;
     }
   }
+
   .pending{
-    h4{
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      color: #666;
-      font-size: 16px;
-    }
-    
-    .cssload-container{
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    color: #666;
+    font-size: 13px;
+
+    &--flex-start{
+      justify-content: flex-start;
     }
   }
+
   ul.address-balances{
     display: block;
     width: 90%;
     margin: 20px auto 0;
     border-collapse: collapse;
-    @include breakpoint(medium){
-      width: 75%;
-    }
+
     li{
       border-top: 1px solid #45616f;
       span{
@@ -127,7 +122,6 @@ ul.broadcast-steps {
   }
   > li {
     font-size: 14px;
-    font-weight: bold;    
     display: inline-block;
     background-repeat: no-repeat;
     background-position: top 2px left;
@@ -139,39 +133,57 @@ ul.broadcast-steps {
     }
     &.success {
       text-align: center;
-      margin-top: 20px;
+      // margin-top: 20px;
       font-size: 20px;
       font-weight: normal;
       .title{
-        color: #EF8102;
+        text-align: start;
         font-weight: 500;
       }
       .content{
-        span{
-          margin-left: 5px;
-          strong{
-            font-weight: 600;
-          }
+        font-size: 16px;
+        text-align: start;
+        display: flex;
+        font-weight: 600;
+
+        &__to {
+          margin: 0 8px;
         }
       }
     }
     &.failed {
-      h4{
-        border-bottom: 2px solid #EF8102;
-        color: #666;
-        font-weight: normal;
-        cursor: pointer;
-        margin-top: 10px;
-        display: inline-block;
-        // width: 100%;
+      .description {
+        font-size: 14px;
+        color: #5a5e67;
+        font-weight: 500;
+        text-align: center;
       }
+      
       .list-err {
-        padding-left: 6px;
-        margin-bottom: 15px;
         div {
           margin-top: 5px;
+
           &:first-child.analyze-panel {
-            margin-top: 16px;
+            display: block;
+            margin: 7px 0 0 0;
+            background-color: #FFCDD4;
+            padding: 10px 20px;
+            font-weight: 500;
+            border-radius: 5px;
+            position: relative;
+
+            &::before {
+              content: '';
+              display: block;
+              width: 0;
+              height: 0;
+              border-left: 7px solid transparent;
+              border-right: 7px solid transparent;
+              border-bottom: 7px solid #FFCDD4;
+              position: absolute;
+              top: -7px;
+              left: 20px;
+            }
           }
         }
       }
@@ -181,17 +193,6 @@ ul.broadcast-steps {
           text-decoration: underline;
         }
       }
-      // .reason {
-      //   text-align: center;
-      //   margin-top: 5px;
-      //   color: $white;
-      //   font-weight: normal;
-      // }
-      // img{
-      //   width: 20px;
-      //   vertical-align: baseline;
-      //   margin-right: 5px;
-      // }
     }
   }
   
@@ -203,19 +204,94 @@ ul.broadcast-steps {
     color: #f7f7f7;
     font-weight: normal;
   }
+
+  // Failed footer
+  .failed {
+    &__container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    &__description {
+      margin-left: 7px;
+
+      @include screen-max-width(medium) {
+        max-width: 305px;
+      }
+    }
+
+    &__icon{
+      width: 18px;
+      height: 18px;
+      background-image: url($image-path + 'exchange/error-icon.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &__title {
+      font-size: 14px;
+      color: #5a5e67;
+    }
+
+    &__detail {
+      font-size: 12px;
+      color: #5a5e67;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    &__list-error {
+      margin-top: 8px;
+    }
+  }
 }
 
 .tx-actions{
-  text-align: center;
-  padding: 50px 0;
+  width: 100%;
+  background-color: white;
+  padding: 25px 45px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 
-  @include screen-min-width(medium) {
-    background: #F5F5F5;
+  @include screen-max-width(medium) {
+    padding: 25px 20px;
+    justify-content: space-between;
+  }
+
+  &--error {
+    justify-content: flex-end;
+  }
+
+  .new-transaction,
+  .change-path {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+    min-width: 150px;
+    border-radius: 3px;
+    padding: 14px 30px 14px 30px;
+    color: #fff;
+    background-color: #EF8102;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: center;
+
+    @include screen-max-width(medium) {
+      max-width: 145px;
+      display: block;
+      min-width: 135px;
+    }    
   }
 
   .new-transaction {
-    border-radius: 3px;
-    padding: 14px 70px 14px 30px;
     color: #fff;
     font-size: 14px;
     background-color: #EF8102;
@@ -224,18 +300,19 @@ ul.broadcast-steps {
     cursor: pointer;
     position: relative;
     transition: all .3s;
-    text-transform: uppercase;
 
-    &::after {
-      content: '';
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      margin-left: 10px;
-      top: 50%;
-      border-radius: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.1) url($image-path + 'arrow-right-thick.svg') center center no-repeat;
+    &:hover {
+      background-color: #d67302;
+    }
+  }
+
+  .change-path {
+    background-color: #a2a7b2;
+    color: white;
+    margin-right: 20px;
+
+    &:hover {
+      background-color: #d2d6e1;
     }
   }
 }
@@ -295,4 +372,41 @@ ul.broadcast-steps {
   &:not(.loading){
     list-style-type: disc;
   }
+}
+
+.analyze-link {
+  font-size: 12px;
+  color: #ff9008;
+  font-weight: 500;
+}
+
+.analyze-description {
+  font-style: italic;
+  font-size: 14px;
+  color: #5a5e67;
+  margin-bottom: 8px;
+}
+
+
+.tx-explorer{  
+  display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+
+  width: 350px;
+  margin-top: 15px;
+  @include screen-max-width(medium){
+    width: 100%;
+  }
+  a{
+    margin-left: 15px
+  }
+}
+
+.tx-waiting-text {
+  font-size: 14px;
+  color: #727b8f;
+  font-weight: 500;
+  margin-left: 10px;
 }

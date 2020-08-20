@@ -1,25 +1,76 @@
-.bx-wrapper {
-  position: relative;
-  padding: 0;
-  *zoom: 1;
-  -ms-touch-action: pan-y;
-  touch-action: pan-y;
+.rate-container{
+  padding: 20px 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  &__slider{
+    width: 90%;
+  }
+
+  &__more {
+    padding-right: 1rem;
+
+    a {
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
 }
 
-.bx-wrapper img {
-  max-width: 100%;
-  display: block;
-}
+#rate-bar {
+  min-height: 0px !important;
 
-.bxslider {
-  margin: 0;
-  padding: 0;
-}
+  div.rate {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    display: flex;
+    justify-content: space-between;
+    .rate-item{
+      display: flex !important;
+      &__percent-change{
+        margin-right: 5px;
+      }
+    }
+    .rate-item {
+      display: inline-block;
+      padding-right: 18px;
+      &:focus{
+        outline: none;
+        border: none;
+      }
+      &:not(:last-child) {
+        margin-right:30px;
+      }
+      >div >div {
+        outline: none;
+      }
+      .pair {
+        font-weight: 400;
+      }
+      .value {
+        span {
+          margin-left: 10px;
+        }
+      }
 
-ul.bxslider {
-  list-style: none;
-}
+      .pair, .value, .percent-change {
+        font-size: 12px;
+        font-weight: 400;
+      }
 
-.bx-viewport {
-  -webkit-transform: translateZ(0);
+      .change-positive, .change-negative {
+        height: 22px;
+        width: 12px;
+        background: url($image-path + "v3/ic_arrow_upward.svg") center no-repeat;
+        background-size: contain;
+      }
+      .change-negative {
+        background: url($image-path + "v3/ic_arrow_downward.svg") center no-repeat;
+      }
+    }
+  }
 }

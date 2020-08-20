@@ -1,0 +1,84 @@
+.top-token {
+  text-align: right;
+
+  .top-token-content{
+    width: 70%;
+  }
+
+  &-content{
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+
+    &--bold {
+      .top-token-item {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-item{
+    cursor: pointer;
+    opacity: 0.3;
+
+    &.active{
+      opacity: 1;
+    }
+    &__symbol{
+      text-decoration: underline;
+    }
+    &--deactivated {
+      pointer-events: none;
+    }
+
+    @media screen and (max-width: 320px) {
+      margin-right: 8px;
+    }
+  }
+
+  &-more {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    padding-right: 5px;
+    transition: all .3s;
+  }
+
+  &__arrow {
+    display: inline-block;
+  }
+
+  &-number {
+    font-size: 13px;
+    background-color: #EAEEF5;
+    padding: 2px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &-enter {
+      opacity: 0;
+      transform: rotateX(180deg);
+      -webkit-transform: rotateX(180deg);
+      &-active {
+        opacity: 1;
+        transform: rotateX(0deg);
+        -webkit-transform: rotateX(0deg);
+        transition: all 0.3s ease-out;
+      }
+    }
+
+    &-exit {
+      opacity: 1;
+      transform: rotateX(0deg);
+      -webkit-transform: rotateX(0deg);
+      &-active {
+        opacity: 0;
+        transform: rotateX(180deg);
+        -webkit-transform: rotateX(180deg);
+        transition: all 0.3s ease-in;
+      }
+    }
+  }
+
+}

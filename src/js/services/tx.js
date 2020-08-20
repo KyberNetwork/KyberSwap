@@ -1,5 +1,4 @@
 import constants from "../services/constants"
-import BLOCKCHAIN_INFO from "../../../env"
 
 export default class Tx {
   constructor(
@@ -31,12 +30,16 @@ export default class Tx {
   sync = (ethereum, tx) => {
     return new Promise((resolve, reject) => {
       ethereum.call("txMined", tx.hash).then((receipt) => {
-        console.log(receipt)
         var newTx = tx.shallowClone()
         newTx.address = receipt.contractAddress
         newTx.gas = receipt.gasUsed
         newTx.blockNumber = receipt.blockNumber
         var logs = receipt.logs
+
+        if (!receipt.blockNumber) {
+          resolve(newTx)          
+          return
+        }
         if (newTx.type == "exchange") {
           if (logs.length == 0) {
             newTx.threw = true
@@ -45,8 +48,7 @@ export default class Tx {
           } else {
             var theLog
             for (var i = 0; i < logs.length; i++) {
-              if (logs[i].address.toLowerCase() == BLOCKCHAIN_INFO.network.toLowerCase() &&
-                logs[i].topics[0].toLowerCase() == BLOCKCHAIN_INFO.trade_topic.toLowerCase()) {
+              if (logs[i].topics[0].toLowerCase() == constants.TRADE_TOPIC.toLowerCase()) {
                 theLog = logs[i]
                 newTx.eventTrade = theLog.data
                 break

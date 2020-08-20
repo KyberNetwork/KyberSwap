@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 12</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Limit-Order-6June" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2---LimitOrder---after-login-Copy" transform="translate(-273.000000, -312.000000)">
+            <g id="Group-12" transform="translate(287.000000, 326.000000) rotate(-270.000000) translate(-287.000000, -326.000000) translate(273.000000, 312.000000)">
+                <circle id="Oval" stroke="#ECEEF3" fill="#FFFFFF" cx="14" cy="14" r="13.5"></circle>
+                <g id="thin-0148_arrows_directions_left_right" transform="translate(13.893939, 14.344697) scale(-1, 1) translate(-13.893939, -14.344697) translate(8.060606, 6.761364)" stroke="#EF8102" stroke-width="1.2">
+                    <g id="Group" transform="translate(0.000000, 0.000000)">
+                        <g id="Group-19" transform="translate(1.656011, 6.936364)">
+                            <polyline id="Shape" points="5.340178 0.321151091 8.6870118 3.66502309 5.340178 7.00901727"></polyline>
+                            <path d="M0.0375462155,3.66502309 L8.6870118,3.66502309" id="Shape"></path>
+                        </g>
+                        <g id="Group-2" transform="translate(0.382156, 0.063636)">
+                            <polyline id="Shape" points="3.47390971 6.85519036 0.126953621 3.51119618 3.47390971 0.167324182"></polyline>
+                            <path d="M9.35198712,3.51119618 L0.126953621,3.51119618" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

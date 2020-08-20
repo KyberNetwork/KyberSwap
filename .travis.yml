@@ -14,16 +14,93 @@ script:
 
 install:
   - npm install
-  - npm run build-rinkeby
+  - bash .travis/build_swap.sh
 
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    bucket: dev-swap.knstats.com
+    bucket: ropsten.kyber.network
     region: ap-southeast-1
     acl: public_read
-    local_dir: dist/rinkeby
+    local_dir: dist/ropsten
     skip_cleanup: true
     on:
-      branch: develop
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: ropsten.kyber.network
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/ropsten
+    upload-dir: swap
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: ropsten.kyber.network
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/ropsten
+    upload-dir: transfer
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    upload-dir: swap
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: staging-swap.knstats.com
+    region: ap-southeast-1
+    acl: public_read
+    local_dir: dist/staging
+    upload-dir: transfer
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: kyber-swap
+    region: ap-southeast-1
+    local_dir: public
+    upload_dir: $TRAVIS_BRANCH
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
+
+  - provider: script
+    script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^develop|staging|master$

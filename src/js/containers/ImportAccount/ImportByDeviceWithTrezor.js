@@ -1,37 +1,40 @@
-
 import React from "react"
 import { ImportByDevice } from "../ImportAccount"
 import { Trezor } from "../../services/keys"
-
 import { ImportByTrezorView } from "../../components/ImportAccount"
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
-import * as analytics from "../../utils/analytics"
+import { TREZOR_DERIVATION_PATHS } from "../../services/constants";
 
-@connect((store) => {
+@connect((store, props) => {
   return {
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    screen: props.screen,
+    analytics: store.global.analytics
   }
 })
 export default class ImportByDeviceWithTrezor extends React.Component {
   deviceService = new Trezor()
   
   showLoading = (walletType) => {
-    this.refs.child.getWrappedInstance().showLoading(walletType)
-    analytics.trackClickImportAccount(walletType)
+    this.refs.child.showLoading(walletType)
+    this.props.analytics.callTrack("trackClickImportAccount", walletType, this.props.tradeType);
   }
   
   render = () => {
-    var importContent = (
-    <ImportByTrezorView 
-    showLoading={this.showLoading}
-    translate={this.props.translate}
-    />)
-  
     return(
-      <ImportByDevice ref="child"
+      <ImportByDevice
+        ref="child"
+        dpaths={TREZOR_DERIVATION_PATHS}
+        defaultPath={TREZOR_DERIVATION_PATHS[0]}
         deviceService={this.deviceService} 
-        content={importContent}
+        content={(
+          <ImportByTrezorView
+            showLoading={this.showLoading}
+            translate={this.props.translate}
+          />
+        )}
+        screen={this.props.screen}
       />
     )
   }

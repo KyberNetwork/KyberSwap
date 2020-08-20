@@ -1,19 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 3</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Desktop---Swap-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Swap--Failed" transform="translate(-748.000000, -225.000000)">
-            <g id="Group-3" transform="translate(749.000000, 226.000000)">
-                <ellipse id="Oval" stroke="#F1637D" stroke-width="2" fill="#FFFFFF" cx="51" cy="50" rx="51" ry="50"></ellipse>
-                <g id="baseline-done-24px" transform="translate(19.000000, 17.000000)">
-                    <polygon id="Shape" points="0 0 70 0 70 69 0 69"></polygon>
-                </g>
-                <polygon id="Path" fill="#F1637D" points="55.7154948 71.8333333 49 71.8333333 49 64.3713542 55.7154948 64.3713542"></polygon>
-                <polygon id="Path" fill="#F1637D" points="55.7154948 56.909375 49 56.909375 49 34.5234375 55.7154948 34.5234375"></polygon>
-            </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g fill="none" fill-rule="evenodd">
+        <circle cx="20" cy="20" r="20" fill="#EDEDED"/>
+        <path d="M6 6h28v28H6z"/>
+        <path fill="#F9566D" d="M21.549 27.831h-3v-2.926h3zM21.549 23.2h-3v-12h3z"/>
     </g>
 </svg>
