@@ -1,16 +1,9 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
-
-
 const initState = {
   langModal: false
 }
 
 const utils = (state = initState, action) => {
   switch (action.type) {
-    // case REHYDRATE: {
-    //   newState = initState;
-    //   return {...newState};
-    // }
     case "UTIL.MODAL_OPEN": {
       var newState = { ...state }
       if (!newState[action.payload]) {

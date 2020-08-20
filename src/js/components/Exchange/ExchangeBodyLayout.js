@@ -10,7 +10,7 @@ import { AdvanceAccount } from "../../containers/TransactionCommon";
 import BalancePercentage from "../TransactionCommon/BalancePercentage";
 
 const ExchangeBodyLayout = (props) => {
-  const { isOnMobile } = props.global;
+  const { isOnMobile, campaign } = props.global;
 
   function handleChangeSource(e) {
     var check = filterInputNumber(e, e.target.value, props.input.sourceAmount.value)
@@ -30,6 +30,11 @@ const ExchangeBodyLayout = (props) => {
     errorSource.push(value)
   });
 
+  if(props.global.eligibleError) {
+    errorExchange = true
+    errorSource.push(props.global.eligibleError)
+  }
+
   const errorShow = errorSource.map((value, index) => {
     return <div className={"exchange__error-item"} key={index}>{value}</div>
   });
@@ -42,7 +47,6 @@ const ExchangeBodyLayout = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
-          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
@@ -57,7 +61,12 @@ const ExchangeBodyLayout = (props) => {
   
   return (
     <div className={"exchange__form theme__background-2"}>
-      {/*{(props.sourceTokenSymbol == "RLC" || props.destTokenSymbol == "RLC") && <p className={"text-center"}>Trade and win RLC tokens in our trading contest (ends 22 Dec)! Sign In to your KyberSwap account AND Connect your wallet to participate! Click <a className="exchange-terms__link" href={"/promo/rlc"} target="_blank">here</a> for more details</p>}*/}
+      {(campaign !== null && (props.sourceTokenSymbol === campaign.tokenSymbol || props.destTokenSymbol === campaign.tokenSymbol)) && (
+        <div className="common__text-center">
+          <p className="common__notification theme__border-3 theme__background-11" dangerouslySetInnerHTML={{ __html: campaign.link }}/>
+        </div>
+      )}
+
       <div>
         {props.account && props.account.type === "promo" && props.account.info.description !== ""
           && <div className={"promo-description theme__text-3"}>

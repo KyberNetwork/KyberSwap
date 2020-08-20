@@ -25,12 +25,11 @@
     "your_wallet_address": "Ваш адрес кошелька",
     "search": "Поиск",
     "download": "Download",
-    "connect_your_wallet_to_swap": "Connect your Wallet to Swap",
-    "connect_your_wallet_to_transfer": "Connect your Wallet to Transfer",
     "connect_your_wallet_to_limit_order": "Import your Wallet to Submit Order",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "your_wallet": "Your Wallet",
     "register_beta": "Скоро",
-    "or_connect_with": "Or Connect with",
+    "or_connect_with": "Connect with",
     "enter": "Enter"
   },
   "transaction": {
@@ -39,6 +38,7 @@
     "exchange": "Обмен",
     "exchange_from": "От",
     "exchange_to": "К",
+    "exchange_receive": "Receive",
     "transfer": "Перевод",
     "transfer_to_address": "Перевод на адрес",
     "amount": "количество",
@@ -263,7 +263,10 @@
     "insufficient_balance": "Your balance is insufficient for transaction",
     "min_converted_amount": "Please enter bigger number. Min converted amount is ${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS"
+    "not_attached_address": "You have not attached your address to this domain. Please set up your account properly at ENS",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders",
+    "torus_connect_error": "Cannot connect to Torus"
   },
   "import": {
     "from_metamask": "METAMASK",
@@ -288,7 +291,8 @@
     "connect_other_wallet": "Connect other wallet",
     "do_you_want_to_connect_other_wallet": "Do you want to connect other Wallet?",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "connect_wallet": "Connect Wallet"
   },
   "info": {
     "title": "Тестовая сеть Kyber",
@@ -300,7 +304,9 @@
     "kyber_homepage": "Домашняя страница Kyber",
     "get_free_kovan": "Получить бесплатно",
     "warning": "НЕ отправляйте реальный ETH на любой из адресов выше.<br></br>Они\nявляются исключительно тестовыми!",
-    "here": "здесь"
+    "here": "здесь",
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
+    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
   },
   "footer": {
     "info": "Информация",
@@ -334,9 +340,7 @@
     "accept": "Принять",
     "terms_and_condition": " Условия и положения ",
     "to_get_started": "чтобы начать",
-    "description_term_swap": "By Swapping, you agree to the ${term}",
-    "description_term_transfer": "By Transfering, you agree to the ${term}",
-    "description_term_limit_order": "By Ordering, you agree to the ${term}"
+    "description_term": "By using KyberSwap, you agree to the ${term}"
   },
   "landing_page": {
     "title": "Децентрализованный обмен ETH",
@@ -423,7 +427,7 @@
     "higher_rate": "Your price is ${percentChange}% higher than current Market",
     "lower_rate": "Your price is ${percentChange}% lower than current Market",
     "not_support_promo_code": "You cannot submit order with promo code. Please use other wallets.",
-    "ineligible_address": "This address has been used by another account. Please place order with other address.",
+    "ineligible_address": "This address has been used by ${account}. Please place order with other address.",
     "fetch_fee_err": "Cannot get fee.",
     "view_tx": "View tx",
     "rate_warning_title": "By submitting this order, you also <span class=\"rate-warning-tooltip__title--highlight\">CANCEL</span> the following orders:",
@@ -435,17 +439,37 @@
     "actual_receive_amount": "Actual receive amount:",
     "estimated_amount": "Estimated amount:",
     "extra_amount": "You got extra amount:",
-    "price": "ЦЕНА",
     "amount": "количество",
     "total": "Всего",
     "volume": "Объем",
-    "change": "change",
     "buy": "Buy ${symbol}",
     "sell": "Sell ${symbol}",
     "type": "Type",
     "available_balance": "Available Balance",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "Получил"
+    "received": "Получил",
+    "login_buy": "Login to Buy",
+    "login_sell": "Login to Sell",
+    "free_fee": "No fee for Limit Order (10 LOs per day) If you hold 2000 KNC in your wallet",
+    "hold_knc": "Hold 2000 KNC now",
+    "top_token": "Top Tokens in Last 1 Hour",
+    "24h_change": "24h Change",
+    "last_price": "Last Price",
+    "24h_high": "24h High",
+    "24h_low": "24h Low",
+    "24h_volume": "24h Volume",
+    "price": "ЦЕНА"
+  },
+  "portfolio": {
+    "error_loading_history": "Something wrong loading your history txs, please try again later.",
+    "empty_history": "You do not have any transaction.",
+    "token_approved": "Token Approved",
+    "token_is_approved": "${token} is Approved for ${contract}",
+    "lo_triggered": "Limit Order Triggered",
+    "tx_history": "Transaction History",
+    "supported_tokens": "Supported tokens",
+    "interact_contract": "Interact Contract",
+    "to_contract": "To Contract"
   },
   "home": "Домой",
   "tracker": "Трекер",
@@ -470,5 +494,11 @@
   "off": "OFF",
   "learn_more": "Учить больше",
   "received": "Получил",
-  "details": "Details"
+  "details": "Details",
+  "change": "change",
+  "send": "Send",
+  "undefined": "Undefined",
+  "show": "Show",
+  "failed": "Failed",
+  "price": "ЦЕНА"
 }

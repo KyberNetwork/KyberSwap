@@ -18,16 +18,19 @@ import BLOCKCHAIN_INFO from "../../../../env";
 import constants from "../../services/constants"
 import { TransferAccount } from "../../containers/Transfer"
 
-@connect((store, props) => {
+@connect((store) => {
+  const transfer = store.transfer;
+  const defaultGasLimit = transfer.tokenSymbol === 'ETH' ? transfer.gas : transfer.gas_limit;
+
   return {
-    transfer: store.transfer,
+    transfer: transfer,
     account: store.account,
     tokens: store.tokens.tokens,
     global: store.global,
-    translate: getTranslate(store.locale)
+    translate: getTranslate(store.locale),
+    defaultGasLimit
   }
 })
-
 class Transfer extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +43,7 @@ class Transfer extends React.Component {
 
   componentDidMount = () => {
     if (this.props.global.changeWalletType !== "") this.props.dispatch(globalActions.closeChangeWallet())
-    document.title = "Kyber Network | Instant Exchange | No Fees";
+    document.title = "KyberSwap | Instant Exchange | No Fees";
 
 
     if (Object.keys(this.props.transfer.errors.sourceAmount).length > 0){
@@ -72,23 +75,22 @@ class Transfer extends React.Component {
 
   validateSourceAmount = (value, gasPrice) => {
     if (isNaN(parseFloat(value))) {
-      // this.props.dispatch(transferActions.thowErrorAmount("error.amount_must_be_number"))
-    } else {
+      return;
+    }
 
-      var tokenSymbol = this.props.transfer.tokenSymbol
-      var token = this.props.tokens[tokenSymbol]
+    var tokenSymbol = this.props.transfer.tokenSymbol
+    var token = this.props.tokens[tokenSymbol]
+    var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, token.decimals)
 
-      var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, token.decimals)
-      if (amountBig.isGreaterThan(token.balance)) {
-        this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.input, this.props.translate("error.amount_transfer_too_hign")))
-        return
-      }
+    if (amountBig.isGreaterThan(token.balance)) {
+      this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.input, this.props.translate("error.amount_transfer_too_hign")))
+      return
+    }
 
-      var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance,
-        this.props.transfer.tokenSymbol, this.props.transfer.amount, this.props.transfer.gas, gasPrice)
-      if (testBalanceWithFee) {
-        this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, this.props.translate("error.eth_balance_not_enough_for_fee")))
-      }
+    var testBalanceWithFee = validators.verifyBalanceForTransaction(this.props.tokens['ETH'].balance,
+      this.props.transfer.tokenSymbol, this.props.transfer.amount, this.props.transfer.gas, gasPrice)
+    if (testBalanceWithFee) {
+      this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, this.props.translate("error.eth_balance_not_enough_for_fee")))
     }
   }
 
@@ -146,7 +148,8 @@ class Transfer extends React.Component {
   }
 
   handleScanQRCode = (data) => {
-    this.props.dispatch(transferActions.specifyAddressReceive(data));
+    this.setState({ destAddress: data.trim() });
+    this.props.dispatch(transferActions.clearTransferError())
   }
 
   toggleAdvanceContent = () => {
@@ -212,9 +215,8 @@ class Transfer extends React.Component {
     this.props.global.analytics.callTrack("trackClickChangeWallet")
   }
 
-  acceptTerm = (e) => {
+  acceptTerm = () => {
     this.props.dispatch(globalActions.acceptTermOfService());
-    this.props.dispatch(globalActions.acceptConnectWallet());
   }
 
   clearIsOpenAdvance = () => {
@@ -329,8 +331,6 @@ class Transfer extends React.Component {
           toggleAdvanceContent={this.toggleAdvanceContent}
           isOpenAdvance={this.props.transfer.isOpenAdvance}
           clearIsOpenAdvance={this.clearIsOpenAdvance}
-          isAcceptConnectWallet={this.props.global.isAcceptConnectWallet}
-          acceptConnectWallet={this.acceptConnectWallet}
           isOnDAPP={this.props.account.isOnDAPP}
           isSelectTokenBalance={this.props.transfer.isSelectTokenBalance}
           changeSourceAmount={this.onAmountChange}

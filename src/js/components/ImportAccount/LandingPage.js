@@ -2,32 +2,22 @@ import React from "react"
 import TermAndServices from "../../containers/CommonElements/TermAndServices";
 import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux';
-import config from '../../config';
 import * as web3Package from "../../services/web3"
 import {acceptTermOfService} from "../../actions/globalActions"
 import { importAccountMetamask, setOnDAPP } from "../../actions/accountActions"
 import BLOCKCHAIN_INFO from "../../../../env"
 
-@connect((store, props) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
-
+@connect((store) => {
   return {
     translate: getTranslate(store.locale),
     ethereum: store.connection.ethereum,
-    tokens: supportTokens,
-    tradeType: props.tradeType,
     global: store.global
   }
 })
-
 export default class LandingPage extends React.Component {
-
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
       termAgree: false,
       text: ''
@@ -76,7 +66,7 @@ export default class LandingPage extends React.Component {
       var walletType = web3Service.getWalletType()
       if ((walletType !== "metamask") && (walletType !== "modern_metamask")) {
         this.props.dispatch(importAccountMetamask(web3Service, BLOCKCHAIN_INFO.networkId,
-          this.props.ethereum, this.props.tokens, this.props.translate, walletType))
+          this.props.ethereum, this.props.translate, walletType))
         this.props.dispatch(setOnDAPP())
       }else{
         this.props.dispatch(acceptTermOfService())
@@ -85,7 +75,7 @@ export default class LandingPage extends React.Component {
       this.props.dispatch(acceptTermOfService())
     }
     this.props.global.analytics.callTrack("acceptTerm", this.props.tradeType);
-  }
+  };
 
   render() {
     return (

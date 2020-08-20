@@ -11,7 +11,7 @@ import { getTranslate } from 'react-localize-redux'
 })
 export default class ImportByOther extends React.Component {
   openModal() {
-    this.props.dispatch(openOtherConnectModal());
+    this.props.dispatch(openOtherConnectModal(this.props.tradeType));
   }
 
   render() {
@@ -19,8 +19,8 @@ export default class ImportByOther extends React.Component {
       <Fragment>
         {!this.props.isOnMobile && (
           <div className="import-account__block theme__import-button other" onClick={this.openModal.bind(this)}>
-            <div className="import-account__icon promo-code"/>
-            <span>...</span><div className="import-account__name">{this.props.translate("landing_page.others") || "OTHERS"}</div>
+            <div className="import-account__icon other"/>
+            <div className="import-account__name">{this.props.translate("landing_page.others") || "OTHERS"}</div>
           </div>
         )}
 

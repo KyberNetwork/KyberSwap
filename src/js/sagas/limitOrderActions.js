@@ -1,30 +1,29 @@
-import { put, call, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put, call, takeEvery } from 'redux-saga/effects'
 import * as limitOrderActions from '../actions/limitOrderActions'
 import { store } from '../store'
 import { getTranslate } from 'react-localize-redux';
 import * as common from "./common"
 import limitOrderServices from "../services/limit_order"
 import {isUserLogin} from "../utils/common"
-import  * as converters from "../utils/converter";
 import * as utilActions from '../actions/utilActions'
 import * as constants from "../services/constants"
 import { multiplyOfTwoNumber } from "../utils/converter"
-import EthereumService from "../services/ethereum/ethereum";
 
 function* updateRatePending(action) {
-  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, type } = action.payload;
+  const { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, isManual, type } = action.payload;
 
   const state = store.getState();
   const translate = getTranslate(state.locale)
   const tokens = state.tokens.tokens;
-  const destTokenDecimal = tokens[destTokenSymbol].decimals;
 
   try {
-    const isProceeding = !!state.limitOrder.orderPath.length;
-    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol);
-    const { expectedPrice, slippagePrice } = rate;
+    const baseToQuoteRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, sourceToken, destToken, false, sourceTokenSymbol);
+    const quoteToBaseRate = yield call(common.getExpectedRateAndZeroRate, false, ethereum, tokens, destToken, sourceToken, false, destTokenSymbol);
+    
+    const sellRate = baseToQuoteRate.rateZero.expectedPrice;
+    const buyRate = quoteToBaseRate.rateZero.expectedPrice;
 
-    yield put.resolve(limitOrderActions.updateRateComplete(rateZero.expectedPrice.toString(), expectedPrice, slippagePrice, isManual, type, "", destTokenDecimal))
+    yield put.resolve(limitOrderActions.updateRateComplete(buyRate, sellRate, type))
   } catch(err) {
     console.log(err);
     if (isManual) {
@@ -224,42 +223,6 @@ function* changeOrderTab(action) {
   }));
 }
 
-function* changeFormType(action) {
-  yield put(limitOrderActions.setIsFetchingRate(true));
-  yield put(limitOrderActions.resetFormInputs());
-
-  let state = store.getState();
-  let ethereum = state.connection.ethereum;
-
-  if (!ethereum) ethereum  = new EthereumService();
-
-  const { srcToken, destToken } = action.payload;
-  const srcSymbol = destToken.symbol;
-  const srcAddress = destToken.address;
-  const destSymbol = srcToken.symbol;
-  const destAddress = srcToken.address;
-
-  yield put(limitOrderActions.selectToken(srcSymbol, srcAddress, destSymbol, destAddress, '', false));
-
-  yield call(updateRatePending, { payload: {
-    ethereum: ethereum,
-    sourceTokenSymbol: srcSymbol,
-    sourceToken: srcAddress,
-    destTokenSymbol: destSymbol,
-    destToken: destAddress,
-    sourceAmount: "",
-    isManual: true,
-    type: false
-  }});
-
-  state = store.getState();
-  const limitOrder = state.limitOrder;
-  const expectedRate = converters.roundingRateNumber(converters.toT(limitOrder.offeredRate));
-
-  yield put(limitOrderActions.inputChange("rate", expectedRate, srcToken.decimals, destToken.decimals));
-  yield put(limitOrderActions.setIsFetchingRate(false));
-}
-
 export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.UPDATE_RATE_PENDING", updateRatePending);
     yield takeEvery("LIMIT_ORDER.FETCH_FEE", fetchFee);
@@ -269,5 +232,4 @@ export function* watchLimitOrder() {
     yield takeEvery("LIMIT_ORDER.GET_LIST_FILTER_PENDING", getListFilter);
     yield takeEvery("LIMIT_ORDER.GET_PENDING_BALANCES", fetchPendingBalances);
     yield takeEvery("LIMIT_ORDER.CHANGE_ORDER_TAB", changeOrderTab);
-    yield takeLatest("LIMIT_ORDER.CHANGE_FORM_TYPE", changeFormType);
   }

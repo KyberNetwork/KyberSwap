@@ -1,22 +1,8 @@
 .advance-config {
   font-size: 11px;
 
-  &__gas {
-    border-bottom: 1px solid transparent;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-
-    &--no-border {
-      border: none;
-    }
-  }
-
   &__block {
     margin-top: 10px;
-  }
-
-  &__gas-tooltip{
-    opacity: 1;
   }
 
   &__title {
@@ -38,11 +24,6 @@
     padding-left: 18px;
     cursor: pointer;
     margin-bottom: 0;
-
-    &-percent {
-      position: relative;
-      top: 1px;
-    }
 
     &-container {
       display: flex;
@@ -154,17 +135,25 @@
     line-height: 1.5;
   }
 
+  &__gas {
+    border-bottom: 1px solid transparent;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+
+    &--no-border {
+      border: none;
+    }
+  }
+
   &__gas-amount {
     font-weight: 400;
     font-size: 12px;
-    margin-bottom: 5px;
     color: $grey-dark;
+    margin-bottom: 5px;
   }
 
   &__gas-mode {
     text-transform: uppercase;
-    position: relative;
-    top: 1px;
     font-size: 10px;
     font-weight: 400;
     color: $grey-darker;
@@ -172,8 +161,6 @@
 
   @include screen-max-width(mid-small) {
     &__option {
-      margin-right: 11px;
-
       &-container--rate {
         .advance-config__option:first-child {
           margin-right: 40px;

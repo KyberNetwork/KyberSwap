@@ -1,6 +1,3 @@
-
-// import {getWallet} from "./keys"
-
 export default class Account {
   constructor(address, type, keystring, walletType, info, balance = 0, nonce = 0, manualNonce = 0, maxCap = "infinity", rich= false) {
     this.address = address
@@ -13,7 +10,6 @@ export default class Account {
     this.info = info
     this.maxCap = maxCap
     this.rich = rich
-    // this.wallet = getWallet(type)
   }
 
   shallowClone() {    
@@ -21,12 +17,6 @@ export default class Account {
       this.address, this.type, this.keystring, this.walletType, this.info,
       this.balance, this.nonce, this.manualNonce, this.maxCap, this.rich)
   }
-  
-  // clearSession () {
-  //   if (this.wallet.clearSession) {
-  //     this.wallet.clearSession()
-  //   }
-  // }
 
   getUsableNonce() {
     var nonceFromNode = this.nonce
@@ -39,7 +29,6 @@ export default class Account {
     const _this = account ? account : this
     promise = new Promise((resolve, reject) => {
       const acc = _this.shallowClone()
-      // resolve(acc)
       ethereum.call("getBalanceAtLatestBlock", acc.address)
       .then((balance) => {
         acc.balance = balance
@@ -65,24 +54,6 @@ export default class Account {
         })
       })
     })
-
-    promise = promise.then((acc) => {
-      return new Promise((resolve, reject) => {
-        ethereum.call("getUserMaxCap", acc.address)
-        .then((result) => {
-          acc.maxCap = result.cap
-          acc.rich = result.rich
-          resolve(acc)
-        })
-        .catch((err) => {
-          console.log(err)
-          acc.maxCap = "infinity"
-          acc.rich = false          
-          resolve(acc)
-        })
-      })
-    })
-
     return promise
   }
 

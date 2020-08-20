@@ -106,7 +106,7 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  max-width: 392px;
+  max-width: 600px;
   position: relative;
   margin: 0 auto;
   height: 50px;
@@ -185,69 +185,15 @@
 
 .exchange-rate {
   min-height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 12px;
+  text-align: right;
 
   &-container {
     &__left {
       @include screen-max-width(large){
         margin-left: 20px;
-      }
-
-      .exchange-rate {
-        font-size: 12px;
-        font-weight: 400;
-        margin-top: 12px;
-        text-align: right;
-      }
-
-      .token-compare {
-        &__item {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          .rate-loading{
-            padding: 0 5px;
-            height: 14px;
-
-            img {
-              height: 14px;
-            }
-          }
-        }
-
-        &__change {
-          width: 49px;
-          height: 20px;
-          border-radius: 23px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-left: 5px;
-
-          img {
-            width: 10px;
-            height: auto;
-            margin-left: 2px;
-          }
-
-          &.change-positive {
-            color: #007bde;
-            background-color: #e6f3fd;
-          }
-
-          &.change-negative {
-            background-color: #fff3f3;
-            color: #ee344e;
-
-          }
-        }
-
-        &__tooltip {
-          margin-left: 5px;
-          display: flex;
-          img {
-            height: 13px;
-          }
-        }
       }
     }
   }
@@ -355,7 +301,7 @@
 
 .exchange-button {
   text-align: center;
-  margin: 40px 0;
+  margin: 40px 0 10px;
 
   &__button {
     display: block;
@@ -449,30 +395,94 @@
   }
 }
 
-#info_indicator{
-  max-width: 210px;
-  padding: 10px;
-  font-style: italic;
-  line-height: 2;
-  color: #666;
+#info_indicator {
+  max-width: 320px;
+  padding: 10px 15px;
   background-color: #efefef;
   opacity: 1;
   box-shadow: 0 10px 20px 0 rgba(135, 135, 135, 0.26), 0 6px 6px 0 rgba(174, 178, 177, 0.26);
   text-align: left;
-  p{
-    font-size: 10px;
-    margin-bottom: 0px;
+  cursor: pointer;
+
+  .info-indicator {
+    font-size: 12px;
+
+    &__text {
+      color: #666;
+      border-bottom: 1px dashed #c4c4c4;
+      font-style: italic;
+      line-height: 1.6;
+      padding-bottom: 7px;
+      margin-bottom: 10px;
+    }
+
+    &__note {
+      color: $blue-light;
+      line-height: 1.6;
+    }
   }
+
   &.__react_component_tooltip.type-light.place-top:after{
     display: none;
   }
 }
-
 
 .network_error{
   display: flex;
   margin-bottom: 15px;
   img{
     margin-right: 10px
+  }
+}
+
+.token-compare {
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .rate-loading {
+      padding: 0 5px;
+      height: 14px;
+
+      img {
+        height: 14px;
+      }
+    }
+  }
+
+  &__change {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 23px;
+    margin-left: 5px;
+    position: relative;
+    bottom: 1px;
+
+    img {
+      width: 7px;
+      height: auto;
+      margin-left: 2px;
+    }
+
+    &.change-positive {
+      color: #007bde;
+      background-color: #e6f3fd;
+    }
+
+    &.change-negative {
+      background-color: #f6e1e1;
+      color: #ee344e;
+    }
+  }
+
+  &__tooltip {
+    margin-left: 5px;
+    display: flex;
+
+    img {
+      height: 13px;
+    }
   }
 }

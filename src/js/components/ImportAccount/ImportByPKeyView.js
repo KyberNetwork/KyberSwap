@@ -63,9 +63,9 @@ const ImportByPKeyView = (props) => {
           <div className={"import-modal import-modal__private-key"}>
             <div className="import-modal__header">
               <div className="import-modal__header--title">{ props.translate("import.from_private_key_input_title") || "Enter your Private Key"}</div>
-              <a className="x" onClick={() => {
+              <div className="x" onClick={() => {
                 props.closeParentModal()
-                props.onRequestClose()}}>&times;</a>
+                props.onRequestClose()}}>&times;</div>
             </div>
             <div className="import-modal__body">
               <div className="input-reveal">

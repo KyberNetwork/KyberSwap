@@ -5,9 +5,16 @@ import { Transfer } from "../../containers/Transfer"
 import { LimitOrder } from "../../containers/LimitOrder"
 import constanst from "../../services/constants"
 import history from "../../history"
-import { clearSession, changeLanguage, setOnMobileOnly, initAnalytics, switchTheme } from "../../actions/globalActions"
+import {
+  clearSession,
+  changeLanguage,
+  setOnMobileOnly,
+  initAnalytics,
+  switchTheme,
+  setCampaign
+} from "../../actions/globalActions"
 import { openInfoModal } from "../../actions/utilActions"
-import { createNewConnectionInstance } from "../../actions/connectionActions"
+import { createNewConnectionInstance } from "../../actions/connectionActions";
 import { throttle } from 'underscore';
 import { LayoutView } from "../../components/Layout"
 import { getTranslate } from 'react-localize-redux'
@@ -16,6 +23,8 @@ import {isMobile} from '../../utils/common'
 import Language from "../../../../lang"
 import AnalyticFactory from "../../services/analytics"
 import BLOCKCHAIN_INFO from "../../../../env";
+import { fetchActiveCampaign, fetchSupportedTokens } from "../../services/kyberSwapService";
+import { initTokens } from "../../actions/tokenActions";
 
 @connect((store) => {
   var locale = store.locale
@@ -52,6 +61,7 @@ import BLOCKCHAIN_INFO from "../../../../env";
   var exchangeLink = constanst.BASE_HOST + "/swap/" + exchange.sourceTokenSymbol.toLowerCase() + "-" + exchange.destTokenSymbol.toLowerCase()
   var transferLink = constanst.BASE_HOST + "/transfer/" + transfer.tokenSymbol.toLowerCase()
   var orderLink = constanst.BASE_HOST + `/${constanst.LIMIT_ORDER_CONFIG.path}/` + limitOrder.sourceTokenSymbol.toLowerCase() + "-" + limitOrder.destTokenSymbol.toLowerCase()
+  var portfolioLink = `${constanst.BASE_HOST}/portfolio`;
 
   return {
     ethereumNode: store.connection.ethereum,
@@ -62,21 +72,24 @@ import BLOCKCHAIN_INFO from "../../../../env";
     account: store.account,
     translate: getTranslate(store.locale),
     locale: locale,
-    tokens: store.tokens.tokens,
     analytics: store.global.analytics,
     langClass: langClass,
     theme: store.global.theme,
-    exchangeLink, transferLink, orderLink,
+    exchangeLink, transferLink, orderLink, portfolioLink
   }
 })
 
 export default class Layout extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.idleTime = 0;
-    this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;    // x10 seconds
+    this.timeoutEndSession = constanst.IDLE_TIME_OUT / 10;
     this.idleMode = false;
     this.intervalIdle = null;
+    this.state = {
+      tokens: false
+    }
   }
 
   componentWillMount() {
@@ -91,27 +104,55 @@ export default class Layout extends React.Component {
     this.intervalIdle = setInterval(this.checkTimmer.bind(this), 10000)
     this.props.dispatch(createNewConnectionInstance())
 
-    const analytic = new AnalyticFactory({ listWorker: ['mix'], network: BLOCKCHAIN_INFO.chainName })
+    const analytic = new AnalyticFactory({ listWorker: ['google'], network: BLOCKCHAIN_INFO.chainName })
     this.props.dispatch(initAnalytics(analytic))
   }
 
-  componentDidMount = () => {
+  async componentDidMount() {
     this.props.analytics.callTrack("trackAccessToSwap");
 
     window.addEventListener("beforeunload", this.handleCloseWeb)
     if (isMobile.iOS() || isMobile.Android()) {
       this.props.dispatch(setOnMobileOnly())
     }
+    
+    const accountWallet = this.props.account.wallet;
+    if (accountWallet.needToBeInitiated === true) {
+      accountWallet.initiateWallet();
+    }
 
     if (window.kyberBus) {
       window.kyberBus.on('set.theme.light', () => {this.switchTheme('light')});
       window.kyberBus.on('set.theme.dark', () => {this.switchTheme('dark')});
-      window.kyberBus.on('go.to.swap', () => {console.log('swap'); history.push(this.props.exchangeLink)});
-      window.kyberBus.on('go.to.transfer', () =>{console.log('transfer'); history.push(this.props.transferLink)});
-      window.kyberBus.on('go.to.limit_order', () => {console.log('limit_order'); history.push(this.props.orderLink)});
+      window.kyberBus.on('go.to.swap', () => {history.push(this.props.exchangeLink)});
+      window.kyberBus.on('go.to.transfer', () =>{history.push(this.props.transferLink)});
+      window.kyberBus.on('go.to.limit_order', () => {history.push(this.props.orderLink)});
+      window.kyberBus.on('go.to.portfolio', () => {history.push(this.props.portfolioLink)});
       window.kyberBus.on('wallet.change', this.scrollToImportAccount);
     }
+
+    await this.initiateData();
   };
+
+  initiateData = async () => {
+    const tokens = await fetchSupportedTokens();
+    this.props.dispatch(initTokens(tokens));
+
+    if (process.env && process.env.integrate) {
+      let intervalCheckingBus = setInterval(() => {
+        if (window.kyberBus) {
+          window.kyberBus.broadcast("bundle.ready");
+          this.setState({ tokens });
+          clearInterval(intervalCheckingBus);
+        }
+      });
+    } else {
+      this.setState({ tokens });
+    }
+
+    const campaign = await fetchActiveCampaign();
+    if (campaign) this.props.dispatch(setCampaign(campaign));
+  }
   
   scrollToImportAccount = () => {
     const importAccountBlock = document.getElementById('import-account');
@@ -160,19 +201,22 @@ export default class Layout extends React.Component {
   
   render() {
     var currentLanguage = common.getActiveLanguage(this.props.locale.languages)
+
     return (
       <div className={`theme theme--${this.props.theme}__bundle`}>
-        <LayoutView
+        {this.state.tokens && (
+          <LayoutView
             history={history}
             Exchange={Exchange}
             Transfer={Transfer}
-            LimitOrder = {LimitOrder}
+            LimitOrder={LimitOrder}
             supportedLanguages={Language.supportLanguage}
             setActiveLanguage={this.setActiveLanguage}
-            currentLanguage = {currentLanguage}
-            tokens = {this.props.tokens}
-            langClass = {this.props.langClass}
-        />
+            currentLanguage={currentLanguage}
+            tokens={this.state.tokens}
+            langClass={this.props.langClass}
+          />
+        )}
       </div>
     )
   }

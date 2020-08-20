@@ -23,9 +23,8 @@
     "price": "价格",
     "your_wallet_address": "您的钱包地址",
     "search": "搜索",
-    "connect_your_wallet_to_swap": "连接您的钱包进行兑换",
-    "connect_your_wallet_to_transfer": "连接您的钱包进行转账",
     "connect_your_wallet_to_limit_order": "导入您的钱包并发送订单",
+    "connect_your_wallet_to_portfolio": "Import your Wallet to View Portfolio",
     "download": "下载",
     "your_wallet": "您的钱包",
     "register_beta": "敬请期待",
@@ -264,7 +263,10 @@
     "insufficient_balance": "您的余额不足以支持这笔交易",
     "min_converted_amount": "请输入更大的数字。最小的兑换数量为${minAmount}",
     "not_latest_browser_metamask": "This error may be caused by your browser or Metamask is not the latest version.",
-    "not_attached_address": "您还没有将您的钱包地址附加到此域。请在ENS建立您的账户"
+    "not_attached_address": "您还没有将您的钱包地址附加到此域。请在ENS建立您的账户",
+    "login_to_submit_order": "You must login to KyberSwap account to submit limit orders",
+    "import_to_submit_order": "You must import your wallet to submit limit orders",
+    "torus_connect_error": "Cannot connect to Torus"
   },
   "import": {
     "from_metamask": "连接至<br>Metamask",
@@ -290,7 +292,8 @@
     "connect_other_wallet": "连接其他钱包",
     "do_you_want_to_connect_other_wallet": "你是否想要连接至其他钱包?",
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "connect_wallet": "连接钱包"
   },
   "info": {
     "title": "Kyber测试网络",
@@ -302,7 +305,9 @@
     "kyber_homepage": "Kyber主页",
     "get_free_kovan": "获取免费的",
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
-    "here": "这里"
+    "here": "这里",
+    "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
+    "slippage_warning": "滑点很高。为了得到更好的汇率，您可能需要减少兑换金额或分成多次兑换"
   },
   "footer": {
     "info": "信息",
@@ -335,9 +340,7 @@
     "accept": "接受",
     "terms_and_condition": "条款和条件",
     "to_get_started": "以开始",
-    "description_term_swap": "通过兑换，您同意${term}",
-    "description_term_transfer": "通过转账，您同意${term}",
-    "description_term_limit_order": "提交即代表您同意${term}"
+    "description_term": "通过使用KyberSwap兑换，您同意${term}"
   },
   "landing_page": {
     "title": "以太坊代币的去中心化交易",
@@ -424,7 +427,7 @@
     "lower_rate": "您期望的汇率比当前汇率低<span class=\"limit-order__percent limit-order__percent--negative\">${percentChange}%</span>。",
     "not_support_promo_code": "您不能使用兑奖码下单。请使用其他钱包。",
     "pair_not_supported": "该交易对目前市场并不支持",
-    "ineligible_address": "这个地址已经被另一个账户所使用。请使用其他地址下单。",
+    "ineligible_address": "${account}已使用该地址。请使用其他地址下单。",
     "fetch_fee_err": "无法获取费用",
     "view_tx": "查看交易",
     "rate_warning_title": "通过提交此订单，您将 <span class=\"rate-warning-tooltip__title--highlight\">取消</span> 以下订单：",
@@ -436,17 +439,37 @@
     "actual_receive_amount": "实际接收数量:",
     "estimated_amount": "预计数量:",
     "extra_amount": "您获得了额外的数量:",
-    "price": "价格",
     "amount": "数量",
     "total": "估值",
     "volume": "交易量",
-    "change": "变化",
     "buy": "购买${symbol}",
     "sell": "出售${symbol}",
     "type": "类型",
     "available_balance": "可用余额",
     "cancel_error": "Something went wrong with cancel order process.",
-    "received": "收到"
+    "received": "收到",
+    "login_buy": "登录已进行购买",
+    "login_sell": "登录已进行出售",
+    "free_fee": "如果你有2000个KNC，即可免费使用限价订单(每天最多10个)",
+    "hold_knc": "立即持有2000 KNC",
+    "top_token": "最近1小时的最高代币",
+    "24h_change": "24小时的变化",
+    "last_price": "最近的价格",
+    "24h_high": "24小的最高价格",
+    "24h_low": "24小的最低价格",
+    "24h_volume": "24小时交易量",
+    "price": "价格"
+  },
+  "portfolio": {
+    "error_loading_history": "载入您的历史记录txs时出错，请稍后重试",
+    "empty_history": "您没有任何交易.",
+    "token_approved": "代币已批准",
+    "token_is_approved": "${token}被批准为${contract}",
+    "lo_triggered": "触发限价订单",
+    "tx_history": "交易历史",
+    "supported_tokens": "支持的代币",
+    "interact_contract": "交互合约",
+    "to_contract": "發送到合约"
   },
   "home": "主页",
   "tracker": "跟踪网站",
@@ -471,5 +494,11 @@
   "off": "折扣",
   "learn_more": "学到更多",
   "received": "收到",
-  "details": "Details"
+  "details": "Details",
+  "change": "变化",
+  "send": "发送",
+  "undefined": "未定义",
+  "show": "显示",
+  "failed": "失败",
+  "price": "价格"
 }

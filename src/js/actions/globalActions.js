@@ -26,6 +26,13 @@ export function updateAllRate(ethereum, tokens) {
   }
 }
 
+export function checkUserEligible(ethereum) {
+  return {
+    type: "GLOBAL.CHECK_USER_ELIGIBLE",
+    payload: { ethereum }
+  }
+}
+
 export function updateAllRateComplete(rates, rateUSD) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
@@ -58,24 +65,9 @@ export function acceptTermOfService() {
   }
 }
 
-export function acceptConnectWallet() {
+export function clearSession() {
   return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: true
-  }
-}
-
-export function clearAcceptConnectWallet() {
-  return {
-    type: "GLOBAL.SET_ACCEPT_CONNECT_WALLET",
-    payload: false
-  }
-}
-
-export function clearSession(gasPrice) {
-  return {
-    type: "GLOBAL.CLEAR_SESSION",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION"
   }
 }
 
@@ -93,10 +85,9 @@ export function changeLanguage(ethereum, lang, locale) {
   }
 }
 
-export function clearSessionComplete(gasPrice) {
+export function clearSessionComplete() {
   return {
-    type: "GLOBAL.CLEAR_SESSION_FULFILLED",
-    payload: gasPrice
+    type: "GLOBAL.CLEAR_SESSION_FULFILLED"
   }
 }
 
@@ -182,6 +173,19 @@ export function throwErrorMematamask(err) {
   }
 }
 
+export function throwErrorEligible(err) {
+  return {
+    type: "GLOBAL.THROW_ERROR_ELIGIBLE",
+    payload: { err }
+  }
+}
+
+export function clearErrorEligible(){
+  return {
+    type: "GLOBAL.CLEAR_ERROR_ELIGIBLE"
+  }
+}
+
 export function updateMetamaskAccount(address, balance) {
   return {
     type: "GLOBAL.UPDATE_METAMASK_ACCOUNT",
@@ -253,5 +257,12 @@ export function switchTheme(theme) {
   return {
     type: "GLOBAL.SWITCH_THEME",
     payload: theme
+  }
+}
+
+export function setCampaign(campaign) {
+  return {
+    type: "GLOBAL.SET_CAMPAIGN",
+    payload: campaign
   }
 }

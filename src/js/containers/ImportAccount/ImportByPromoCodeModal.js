@@ -1,25 +1,18 @@
 import React from "react"
 import { connect } from "react-redux"
 import Recaptcha from "react-recaptcha"
-import { importNewAccount, promoCodeChange, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
+import { importNewAccount, openPromoCodeModal, closePromoCodeModal } from "../../actions/accountActions"
 import { addressFromPrivateKey } from "../../utils/keys"
 import { getTranslate } from 'react-localize-redux'
 import * as common from "../../utils/common"
 import { verifyAccount } from "../../utils/validators";
 import { Modal } from '../../components/CommonElement'
-import BLOCKCHAIN_INFO from "../../../../env"
 import { QRCode } from "../CommonElements";
 
 @connect((store) => {
-  var tokens = store.tokens.tokens
-  var supportTokens = []
-  Object.keys(tokens).forEach((key) => {
-    supportTokens.push(tokens[key])
-  })
   return {
     account: store.account,
     ethereum: store.connection.ethereum,
-    tokens: supportTokens,
     translate: getTranslate(store.locale),
     analytics: store.global.analytics,
     global: store.global
@@ -98,16 +91,6 @@ export default class ImportByPromoCodeModal extends React.Component {
           console.log(err)
           reject("Cannot get Promo code")
           this.resetCapcha()
-
-          // resolve({
-          //   privateKey: "41e8ce91af1eb639d2ecb39fe6753ba3bd801dc02d2496ae1e7cd5b7022824b1",
-          //   des_token: "KNC",
-          //   description: "abc",
-          //   type: "swap",
-          //   receiveAddr: "0x3Cf628d49Ae46b49b210F0521Fbd9F82B461A9E1",
-          //   expiredDate: 9959724909
-          // })
-
         })
     })
   }
@@ -179,11 +162,16 @@ export default class ImportByPromoCodeModal extends React.Component {
         receiveAddr: result.receiveAddr,
         expiredDate: result.expiredDate
       }
-      this.props.dispatch(importNewAccount(address,
+      this.props.dispatch(importNewAccount(
+        address,
         "promo",
         privateKey,
         this.props.ethereum,
-        this.props.tokens, null, null, "Promo Code", info))
+        null,
+        null,
+        "Promo Code",
+        info
+      ));
       this.setState({isLoading: false})
     }).catch(error => {
       this.setState({error: error, captchaV: (new Date).getTime()})
@@ -249,9 +237,9 @@ export default class ImportByPromoCodeModal extends React.Component {
                   <div className="error">{this.state.error}</div>
                 )}
               </div>
-              <a className="x" onClick={this.closeModal.bind(this)}>
+              <div className="x" onClick={this.closeModal.bind(this)}>
                 <img src={require("../../../assets/img/v3/Close-3.svg")} />
-              </a>
+              </div>
               <div className="content with-overlap">
                 <div className="row">
                   <div className="column">

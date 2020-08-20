@@ -8,6 +8,7 @@ import constants from "../../services/constants"
 import * as common from "../../utils/common"
 import { store } from '../../store'
 import { HeaderTransaction } from "../../containers/TransactionCommon";
+import Portfolio from "../../containers/Portfolio/Portfolio";
 
 function getAllPathToken(listToken){
   var tokens = []
@@ -28,36 +29,51 @@ function getAllPathToken(listToken){
 }
 
 function getAllPathLimitOrderToken(listToken){
-  var tokens = []
+  let baseTokens = [];
+  let quoteTokens = [];
   const now = common.getNowTimeStamp();
 
   Object.keys(listToken).map(key => {
     const lodListingTime = listToken[key].lod_listing_time;
 
     if (listToken[key].sp_limit_order && (!lodListingTime || now >= lodListingTime)) {
-      tokens.push(key)
+      if (listToken[key].is_quote) {
+        quoteTokens.push(key);
+      }
+      
+      baseTokens.push(key);
     }
-  })
+  });
+  
+  return {
+    baseTokenPath: getValidatedTokenPath(baseTokens),
+    quoteTokenPath: getValidatedTokenPath(quoteTokens)
+  }
+}
 
-  var path = "("
-  for (var i = 0; i< tokens.length ; i++){
-    if (i === tokens.length -1){
+function getValidatedTokenPath(tokens) {
+  let path = "(";
+  
+  for (var i = 0; i < tokens.length ; i++) {
+    if (i === tokens.length -1) {
       path += tokens[i].toLowerCase() + "|" + tokens[i]
-    }else{
+    } else {
       path += tokens[i].toLowerCase() + "|" + tokens[i] + "|"
     }
   }
-  path += ")"
-  return path
+  
+  path += ")";
+  
+  return path;
 }
 
 const LayoutView = (props) => {
-  var listToken = getAllPathToken(props.tokens)
-  var listLimitOrderToken = getAllPathLimitOrderToken(props.tokens)
+  const listToken = getAllPathToken(props.tokens)
+  const { baseTokenPath, quoteTokenPath } = getAllPathLimitOrderToken(props.tokens);
 
-  var defaultPathExchange = constants.BASE_HOST + "/swap/eth-knc"
-  var defaultPathTransfer = constants.BASE_HOST + "/transfer/eth"
-  var defaultPathLimitOrder = constants.BASE_HOST + "/" + constants.LIMIT_ORDER_CONFIG.path + "/weth-knc"
+  let defaultPathExchange = constants.BASE_HOST + "/swap/eth-knc"
+  let defaultPathTransfer = constants.BASE_HOST + "/transfer/eth"
+  let defaultPathLimitOrder = constants.BASE_HOST + "/" + constants.LIMIT_ORDER_CONFIG.path + "/knc-weth"
 
   defaultPathExchange = common.getPath(defaultPathExchange, constants.LIST_PARAMS_SUPPORTED)
   defaultPathTransfer = common.getPath(defaultPathTransfer, constants.LIST_PARAMS_SUPPORTED)
@@ -73,9 +89,10 @@ const LayoutView = (props) => {
           <Switch>
             <Route exact path={constants.BASE_HOST + `/swap/:source${listToken}-:dest${listToken}`} component={props.Exchange} />
             <Route exact path={constants.BASE_HOST + `/transfer/:source${listToken}`} component={props.Transfer} />
+            <Route exact path={constants.BASE_HOST + `/portfolio`} component={Portfolio} />
             <Redirect from={constants.BASE_HOST + "/transfer"} to={defaultPathTransfer} />
             <Redirect from={constants.BASE_HOST + "/transfer/*"} to={defaultPathTransfer} />
-            <Route exact path={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/:source${listLimitOrderToken}-:dest${listLimitOrderToken}`} component={props.LimitOrder} />
+            <Route exact path={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/:source${baseTokenPath}-:dest${quoteTokenPath}`} component={props.LimitOrder} />
             <Redirect from={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}`} to={defaultPathLimitOrder} />
             <Redirect from={constants.BASE_HOST + `/${constants.LIMIT_ORDER_CONFIG.path}/*`} to={defaultPathLimitOrder} />
             <Redirect to={defaultPathExchange} />

@@ -20,6 +20,10 @@ const TransferForm = (props) => {
     isErrorSource = true
     errorSource.push(value)
   })
+  if(props.global.eligibleError) {
+    isErrorSource = true
+    errorSource.push(props.global.eligibleError)
+  }
 
   var errorDestAddr = []
   var isErrorDestAddr = false  
@@ -44,7 +48,6 @@ const TransferForm = (props) => {
           isChangingWallet={props.isChangingWallet}
           closeChangeWallet={props.closeChangeWallet}
           isAgreedTermOfService={props.isAgreedTermOfService}
-          isAcceptConnectWallet={props.isAcceptConnectWallet}
           acceptTerm={props.acceptTerm}
         />
       )
