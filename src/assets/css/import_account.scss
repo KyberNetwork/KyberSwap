@@ -1,4 +1,6 @@
 .import-account {
+  border-radius: 3px;
+
   &__choose-wallet-container {
     padding: 0 1rem 20px;
   }
@@ -6,19 +8,8 @@
   &__title {
     font-size: 18px;
     font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+    margin: 0 auto 25px;
     text-align: center;
-    margin: 30px 0 20px;
-
-    &--inactive {
-      max-width: 550px;
-      margin: 0 auto 10px;
-      text-align: center;
-      font-size: 13px;
-    }
 
     &-separator {
       width: 100%;
@@ -27,12 +18,11 @@
     }
 
     &-content {
-      font-size: 12px;
-      width: 140px;
+      color: $text-orange;
+      width: 200px;
       position: relative;
-      top: -9px;
-      margin: 0 auto;
-      font-weight: 400;
+      bottom: 13px;
+      margin: 0 auto -20px;
     }
   }
 
@@ -43,11 +33,9 @@
     max-width: 1550px;
     margin: 0 auto;
 
-    &--animation {
-      @include animation(slideInUp) {
-        animation-duration: 0.3s;
-        animation-timing-function: ease-out;
-      }
+    @include animation(slideInUp) {
+      animation-duration: 0.3s;
+      animation-timing-function: ease-out;
     }
 
     &--mobile {
@@ -229,6 +217,14 @@
         &.wallet-connect {
           background-position: -31px 5px;
         }
+
+        &.torus {
+          background-position: -23px 3px;
+        }
+
+        &.other {
+          background-position: -31px 9px;
+        }
       }
     }
   }
@@ -278,8 +274,19 @@
 
     &.wallet-connect {
       background-position: 0;
-      //width: 28px;
       background-image: url($image-path + 'import-account/wallets/wallet-connect.svg');
+    }
+
+    &.torus {
+      width: 14px;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/torus.svg');
+    }
+
+    &.other {
+      margin-right: 0;
+      background-position: 0;
+      background-image: url($image-path + 'import-account/wallets/wallet-other.svg');
     }
 
     &.kyberapp {
@@ -290,8 +297,7 @@
   &__name {
     font-size: 12px;
     font-weight: 500;
-    position: relative;
-    top: 1px;
+    text-transform: uppercase;
   }
 
   .column-block {
@@ -492,8 +498,6 @@
 }
 
 .reimport-modal {
-  //padding: 10px;
-
   .title {
     font-size: 18px !important;
     text-align: center;
@@ -505,7 +509,9 @@
     display: flex;
     justify-content: center;
     margin: 50px auto 0;
-    a{
+
+    .confirm-btn,
+    .cancel-btn {
       padding: 10px 35px;
       border-radius: 3px;
       display: flex;
@@ -513,13 +519,21 @@
       color: white;
       font-weight: bold;
       font-size: 14px;
-      &.confirm-btn{
-        background-color: #EF8102;
-        margin-right: 20px;
+      cursor: pointer;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: 0.8;
       }
-      &.cancel-btn{
-        background-color: #a2a7b2;
-      }
+    }
+
+    .confirm-btn {
+      background-color: #EF8102;
+      margin-right: 20px;
+    }
+
+    .cancel-btn {
+      background-color: #a2a7b2;
     }
   }
 }

@@ -10,74 +10,89 @@ import { getTranslate } from 'react-localize-redux';
 import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
+import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
+import { fetchPlatformFee } from "../services/kyberSwapService";
+import { calculateFeeByWalletId } from "../utils/common";
 
 function* selectToken(action) {
-  const { sourceTokenSymbol, destTokenSymbol } = action.payload
+  const state = store.getState();
+  const translate = getTranslate(state.locale);
+  const { sourceTokenSymbol, destTokenSymbol } = action.payload;
 
-  if (sourceTokenSymbol === destTokenSymbol){
-    var state = store.getState()
-    var translate = getTranslate(state.locale)
-    yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
-  } else {
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken))
-  }
-  
   yield put(actions.estimateGasNormal(false))
+
+  if (sourceTokenSymbol === destTokenSymbol) {
+    yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken, translate("error.select_same_token")))
+    return;
+  }
+
+  yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
 }
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type } = action.payload;
+  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount } = action.payload;
   const state = store.getState();
   const translate = getTranslate(state.locale);
   const tokens = state.tokens.tokens;
   const srcTokenDecimal = tokens[sourceTokenSymbol].decimals;
   const destTokenDecimal = tokens[destTokenSymbol].decimals;
-  const destAmount = state.exchange.destAmount
+  const destAmount = state.exchange.destAmount;
+  const srcTokenAddress = tokens[sourceTokenSymbol].address;
+  const destTokenAddress = tokens[destTokenSymbol].address;
+
+  yield put(globalActions.updateTitleWithRate())
+
+  let platformFee = yield call(fetchPlatformFee, sourceToken, destToken);
+  platformFee = calculateFeeByWalletId(platformFee, state.account.type);
+  yield put(actions.setPlatformFee(platformFee))
 
   if (refetchSourceAmount) {
     try {
-     sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", sourceTokenSymbol, destTokenSymbol, destAmount);
+      sourceAmount = yield call([ethereum, ethereum.call], "getSourceAmount", srcTokenAddress, destTokenAddress, destAmount);
+      sourceAmount = calculateSrcAmountWithFee(sourceAmount, platformFee);
     } catch (err) {
       console.log(err);
     }
   }
 
-  var r = tokens[sourceTokenSymbol].rate
-  var defaultRate = 0
-  if(r == 0){
-    if (["ETH", "WETH"].includes(sourceTokenSymbol)){
-      defaultRate = converter.toTWei(1)
-    }else{
-      defaultRate = yield call([ethereum, ethereum.call], "getTokenPrice", sourceTokenSymbol)
+  try {
+    const isProceeding = !!state.exchange.exchangePath.length;
+    const { rate, rateZero } = yield call(common.getExpectedRateAndZeroRate, isProceeding, ethereum, tokens, sourceToken, destToken, sourceAmount, sourceTokenSymbol, destTokenSymbol);
+
+    let { expectedPrice, slippagePrice } = rate;
+
+    expectedPrice = calculateExpectedRateWithFee(expectedPrice, platformFee);
+
+    let percentChange = 0
+    const expectedRateInit = rateZero.expectedPrice;
+    const noExpectedRateInit = expectedRateInit === "0" || expectedRateInit === 0 || expectedRateInit === undefined || expectedRateInit === null;
+    let refPrice = expectedRateInit;
+    let isRefPriceFromChainLink = false;
+
+    if (noExpectedRateInit) {
+      refPrice = 0;
+    } else if (+rateZero.refExpectedPrice) {
+      refPrice = rateZero.refExpectedPrice;
+      isRefPriceFromChainLink = true;
     }
-  }
 
-  var sourceAmoutRefined = yield call(common.getSourceAmount, sourceTokenSymbol, sourceAmount, defaultRate)
-  var sourceAmoutZero = yield call(common.getSourceAmountZero, sourceTokenSymbol, defaultRate)
+    if (refPrice != 0 && +sourceAmount) {
+      percentChange = (refPrice - expectedPrice) / refPrice;
+      percentChange = Math.round(percentChange * 1000) / 10;
 
-  try{
-    var lastestBlock = yield call([ethereum, ethereum.call], "getLatestBlock")
-    var rate = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutRefined, lastestBlock)
-    var rateZero = yield call([ethereum, ethereum.call], "getRateAtSpecificBlock", sourceToken, destToken, sourceAmoutZero, lastestBlock)
-
-    var { expectedPrice, slippagePrice } = rate
-
-    var percentChange = 0
-    var expectedRateInit = rateZero.expectedPrice
-    if(expectedRateInit != 0){
-      percentChange = (expectedRateInit - expectedPrice) / expectedRateInit
-      percentChange = Math.round(percentChange * 1000) / 10    
-      if(percentChange <= 0.1) {
+      if (percentChange < BLOCKCHAIN_INFO.highSlippage) {
         percentChange = 0
       }
-      if(percentChange >= 100){
+
+      if (percentChange >= 100) {
         percentChange = 0
         expectedPrice = 0
         slippagePrice = 0
       }
     }
+
     if (expectedPrice == "0") {
-      if (expectedRateInit == "0" || expectedRateInit == 0 || expectedRateInit === undefined || expectedRateInit === null) {
+      if (noExpectedRateInit) {
         yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.kyber_maintain")))
       } else {
         yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, translate("error.handle_amount")))
@@ -87,9 +102,10 @@ function* updateRatePending(action) {
     }
 
     const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
-    yield put(actions.estimateGasNormal(calculatedSrcAmount));
 
-    yield put(actions.updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal))
+    yield put(actions.estimateGasNormal(calculatedSrcAmount));
+    yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
+    yield put(globalActions.updateTitleWithRate())
   } catch(err) {
     console.log(err)
     if(isManual){      
@@ -111,8 +127,7 @@ function* fetchGas() {
   yield put(actions.setEstimateGas(gas, gasApprove))
 }
 
-function* estimateGasNormal(action) {
-  const {srcAmount} = action.payload;
+function* estimateGasNormal() {
   var state = store.getState()
   const exchange = state.exchange
 
@@ -143,7 +158,6 @@ function* getMaxGasApprove() {
 
 function* checkKyberEnable(action) {
   const {ethereum} = action.payload
-  var state = store.getState()
   try {
     var enabled = yield call([ethereum, ethereum.call], "checkKyberEnable")
     if (enabled){
@@ -167,32 +181,21 @@ function* verifyExchange() {
   var tokens = state.tokens.tokens
   var sourceBalance = 0
   var sourceDecimal = 18
-  var sourceName = "Ether"
   var rateSourceToEth = 0
   if (tokens[sourceTokenSymbol]) {
     sourceBalance = tokens[sourceTokenSymbol].balance
     sourceDecimal = tokens[sourceTokenSymbol].decimals
-    sourceName = tokens[sourceTokenSymbol].name
     rateSourceToEth = tokens[sourceTokenSymbol].rate
   }
-
+  const rate = sourceTokenSymbol === 'ETH' ? expectedRate : rateSourceToEth;
+  
   var destTokenSymbol = exchange.destTokenSymbol
-  var destBalance = 0
   var destDecimal = 18
-  var destName = "Kybernetwork"
   if (tokens[destTokenSymbol]) {
-    destBalance = tokens[destTokenSymbol].balance
     destDecimal = tokens[destTokenSymbol].decimals
-    destName = tokens[destTokenSymbol].name
   }
 
   var sourceAmount = exchange.sourceAmount
-
-  let rate = rateSourceToEth;
-  if (destTokenSymbol === 'ETH') {
-    rate = expectedRate;
-  }
-
   if ( sourceAmount === "") {
     return
   }
@@ -244,7 +247,7 @@ function* verifyExchange() {
 
   const account = state.account.account
   var validateWithFee = validators.verifyBalanceForTransaction(account.balance, sourceTokenSymbol,
-    sourceAmount, exchange.gas + exchange.gas_approve, exchange.gasPrice)
+    sourceAmount, exchange.gas, exchange.gasPrice)
 
   if (validateWithFee) {
     yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.balance, translate("error.eth_balance_not_enough_for_fee")))
@@ -253,68 +256,43 @@ function* verifyExchange() {
   }
 }
 
-
-export function* fetchUserCap(action) {  
-  try{
-    var {ethereum} = action.payload
-    var state = store.getState()
-    var account = state.account.account
-    var address = account.address
-    var enabled = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-    if (!enabled.error && !enabled.kyced && (enabled.rich === true || enabled.rich === 'true')){
-      var translate = getTranslate(state.locale)
-      // var kycLink = "/users/sign_up"
-      var content = translate("error.exceed_daily_volumn") || "You may want to register with us to have higher trade limits."
-      yield put(actions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy, content))
-        
-    }else{
-      yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-    }
-  }catch(e){
-    console.log(e)
-    yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.richGuy))
-  }
-}
-
-export function* doAfterAccountImported(action){
-  var {account, walletName} = action.payload
+function* doAfterAccountImported(action){
+  var { account } = action.payload
+  
   if (account.type === "promo"){
     var state = store.getState()
+    var ethereum = state.connection.ethereum
     var exchange = state.exchange
     var tokens = state.tokens.tokens
-    var ethereum = state.connection.ethereum
-
-    var sourceToken = exchange.sourceTokenSymbol.toLowerCase()
     var promoToken = BLOCKCHAIN_INFO.promo_token
 
     if (promoToken && tokens[promoToken]){
       var promoAddr = tokens[promoToken].address
       var promoDecimal = tokens[promoToken].decimals
-
       var destTokenSymbol = exchange.destTokenSymbol
+      
       if (account.info.destToken && tokens[account.info.destToken.toUpperCase()]){
         destTokenSymbol = account.info.destToken.toUpperCase()
       }
+      
       var destAddress = tokens[destTokenSymbol].address
-      // sourceToken = promoToken.toLowerCase()
-      
-      
-
       var path = constants.BASE_HOST + "/swap/" + promoToken.toLowerCase() + "-" + destTokenSymbol.toLowerCase()
+      
       path = commonUtils.getPath(path, constants.LIST_PARAMS_SUPPORTED)
-      if (window.kyberBus){
+      
+      if (window.kyberBus) {
         window.kyberBus.broadcast('go.to.swap')
       }
+      
       yield put(globalActions.goToRoute(path))
-
       yield put(actions.selectToken(promoToken, promoAddr,destTokenSymbol, destAddress, "promo"))
 
-      try{
+      try {
         var balanceSource = yield call([ethereum, ethereum.call], "getBalanceToken", account.address, promoAddr)
         var balance = converter.toT(balanceSource, promoDecimal)
         yield put(actions.inputChange('source', balance, promoDecimal, destTokenSymbol))
         yield put(actions.focusInput('source'));
-      }catch(e){
+      } catch(e) {
         console.log(e)
       }
 
@@ -330,13 +308,26 @@ export function* doAfterAccountImported(action){
   }
 }
 
+function* fetchMaxGasPrice(action) {
+  const ethereum = action.payload;
+  
+  try {
+    const maxGasPrice = yield call([ethereum, ethereum.call], "getMaxGasPrice");
+    const maxGasPriceGwei = converter.weiToGwei(maxGasPrice);
+  
+    yield put(actions.setMaxGasPriceComplete(maxGasPriceGwei));
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 export function* watchExchange() {
   yield takeEvery("EXCHANGE.UPDATE_RATE_PENDING", updateRatePending)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED", fetchGas)
   yield takeEvery("EXCHANGE.SELECT_TOKEN", selectToken)
   yield takeEvery("EXCHANGE.CHECK_KYBER_ENABLE", checkKyberEnable)
   yield takeEvery("EXCHANGE.VERIFY_EXCHANGE", verifyExchange)
-  yield takeEvery("EXCHANGE.FETCH_USER_CAP", fetchUserCap)
   yield takeEvery("EXCHANGE.ESTIMATE_GAS_USED_NORMAL", estimateGasNormal)
+  yield takeEvery("EXCHANGE.FETCH_MAX_GAS_PRICE", fetchMaxGasPrice)
   yield takeEvery("ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED", doAfterAccountImported)
 }

@@ -45,19 +45,20 @@ export default class ToggleableMenu extends React.Component {
   reImportModal = () => {
     return (
       <div className="reimport-modal p-a-20px">
-        <a className="x" onClick={this.closeReImport}>&times;</a>
+        <div className="x" onClick={this.closeReImport}>&times;</div>
         <div className="title">{this.props.translate("import.do_you_want_to_connect_other_wallet") || "Do you want to connect other Wallet?"}</div>
         <div className="content">
-          <a className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</a>
-          <a className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</a>
+          <div className="button confirm-btn" onClick={this.clearSession}>{this.props.translate("import.yes") || "Yes"}</div>
+          <div className="button cancel-btn" onClick={this.closeReImport}>{this.props.translate("import.no") || "No"}</div>
         </div>
       </div>
     )
   }
+  
   render() {
     return (
         <div className={"limit-order-account"}>
-          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible || (process.env.integrate && this.props.global.isOnMobile) ? "hide" : "")}>Wallet</p>
+          <p onClick={e => this.toggleAdvanceTokeBalance()} className={"right-slide-panel theme__slide-menu " + (this.state.isAdvanceTokenVisible || this.props.global.isOnMobile ? "hide" : "")}>Wallet</p>
           {(this.state.isAdvanceTokenVisible) && <div className="limit-order-account__advance theme__background-7">
             <div className="limit-order-account__advance--bg" onClick={() => this.setState({isAdvanceTokenVisible: false})}> </div>
             <div className="advance-close" onClick={e => this.toggleAdvanceTokeBalance()}>
@@ -82,5 +83,4 @@ export default class ToggleableMenu extends React.Component {
         </div>
       );
   }
-
 }

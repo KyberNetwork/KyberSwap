@@ -4,23 +4,22 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as exchangeActions from "../../../actions/exchangeActions"
 import * as accountActions from "../../../actions/accountActions"
-import { getWallet } from "../../../services/keys"
 import { FeeDetail } from "../../../components/CommonElement"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import * as converter from "../../../utils/converter"
 
-@connect((store, props) => {
+@connect((store) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const exchange = store.exchange
   const ethereum = store.connection.ethereum
 
   return {
-    translate, exchange, tokens, account, ethereum
+    translate, exchange, tokens, account, ethereum, wallet
   }
 })
-
 export default class ApproveZeroModal extends React.Component {
 
   constructor() {
@@ -75,9 +74,9 @@ export default class ApproveZeroModal extends React.Component {
       isConfirming: true
     })
 
-    //reset        
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
     var password = ""
+    
     try {
       var nonce = this.props.account.getUsableNonce()
       var txHash = await wallet.broadCastTx("getAppoveTokenZero", this.props.ethereum, this.props.exchange.sourceToken, 0, nonce, this.state.gasLimit,
@@ -106,17 +105,16 @@ export default class ApproveZeroModal extends React.Component {
 
   errorHtml = () => {
     if (this.state.err) {
-      let metaMaskClass = this.props.account.type === 'metamask' ? 'metamask' : ''
       return (
         <React.Fragment>
-          <div className={'modal-error custom-scroll ' + metaMaskClass}>
+          <div className={'modal-error message-error common__slide-up'}>
             {this.state.err}
           </div>
         </React.Fragment>
       )
-    } else {
-      return ""
     }
+    
+    return ""
   }
 
   closeModal = () => {
@@ -129,7 +127,7 @@ export default class ApproveZeroModal extends React.Component {
       <div className="approve-modal content-wrapper">
         <div>
           <div className="title">Approve Token</div>
-          <a className="x" onClick={this.closeModal}>&times;</a>
+          <div className="x" onClick={this.closeModal}>&times;</div>
           <div className="content with-overlap">
             <div className="row">
               <div>

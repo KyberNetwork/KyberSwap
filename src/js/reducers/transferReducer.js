@@ -1,6 +1,4 @@
-import { REHYDRATE } from 'redux-persist/lib/constants'
 import constants from "../services/constants"
-import { calculateDest } from "../utils/converter"
 
 const initFormState = constants.INIT_TRANSFER_FORM_STATE
 const initState = initFormState
@@ -8,10 +6,6 @@ const initState = initFormState
 const transfer = (state = initState, action) => {
   var newState = { ...state, errors: { ...state.errors } }
   switch (action.type) {
-    // case REHYDRATE: {
-    //   newState = initState;
-    //   return {...newState};
-    // }
     case "TRANSFER.SET_RANDOM_SELECTED_TOKEN":
       var transfer = { ...state }
       var random = action.payload
@@ -46,12 +40,15 @@ const transfer = (state = initState, action) => {
     case "TRANSFER.GO_TO_STEP":
       newState.step = action.payload
       return newState
-    case "TRANSFER.TRANSFER_SPECIFY_ADDRESS_RECEIVE":
-      newState.destAddress = action.payload
-      newState.errors.destAddress = {}
-      newState.errors.sourceAmount = {}
-      // newState.errors.ethBalanceError = ""
-      return newState
+    case "TRANSFER.SET_DEST_ETH_NAME_AND_ADDRESS":
+      const { destEthName, destAddress } = action.payload;
+      newState.destEthName = destEthName;
+      newState.destAddress = destAddress;
+      return newState;
+    case "TRANSFER.CLEAR_TRANSFER_ERROR":
+      newState.errors.destAddress = {};
+      newState.errors.sourceAmount = {};
+      return newState;
     case "TRANSFER.TRANSFER_SPECIFY_AMOUNT":
       newState.amount = action.payload
       newState.errors.destAddress = {}
@@ -193,6 +190,10 @@ const transfer = (state = initState, action) => {
 
     case "TRANSFER.FORWARD_TRANSFER_PATH":{
       newState.currentPathIndex += 1
+      return newState
+    }
+    case "GLOBAL.CLEAR_SESSION_FULFILLED": {
+      newState.errors.sourceAmount = {};
       return newState
     }
   }

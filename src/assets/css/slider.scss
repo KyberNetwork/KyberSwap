@@ -6,10 +6,11 @@
   &__slider{
     width: 90%;
   }
-  &__more{
+
+  &__more {
     padding-right: 1rem;
-    a{
-      color: #666666;
+
+    a {
       font-size: 12px;
       text-decoration: underline;
       cursor: pointer;
@@ -17,6 +18,7 @@
     }
   }
 }
+
 #rate-bar {
   min-height: 0px !important;
 
@@ -56,7 +58,6 @@
       }
 
       .pair, .value, .percent-change {
-        color: #666666;
         font-size: 12px;
         font-weight: 400;
       }

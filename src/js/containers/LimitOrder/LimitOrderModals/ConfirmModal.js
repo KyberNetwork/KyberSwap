@@ -4,29 +4,32 @@ import { connect } from "react-redux"
 import { getTranslate } from 'react-localize-redux'
 import * as limitOrderActions from "../../../actions/limitOrderActions"
 import constants from "../../../services/constants"
-import {getWallet} from "../../../services/keys"
 import limitOrderServices from "../../../services/limit_order";
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import { OrderTableInfo } from "../../../components/CommonElement";
 import createOrderObject from "../../../utils/convert_object";
-import OrderDetails from "../MobileElements/OrderDetails";
 
 @connect((store, props) => {
   const account = store.account.account
+  const wallet = store.account.wallet
   const translate = getTranslate(store.locale)
   const tokens = store.tokens.tokens
   const limitOrder = store.limitOrder
   const ethereum = store.connection.ethereum
   const global = store.global;
+  const formType = props.isBuyForm ? 'buy' : 'sell';
+  const convertedTriggerRate = props.isBuyForm ? converters.divOfTwoNumber(1, props.triggerRate) : props.triggerRate;
 
   return {
-    translate, limitOrder, tokens, account, ethereum, global, isOnDAPP: store.account.isOnDAPP
+    translate, limitOrder, tokens, account, ethereum, global,
+    isOnDAPP: store.account.isOnDAPP, formType, convertedTriggerRate, wallet
   }
 })
 export default class ConfirmModal extends React.Component {
-  constructor(){
-    super()
+  constructor(props) {
+    super(props);
+    
     this.state = {
       err: "",
       isConfirming: false,
@@ -34,24 +37,26 @@ export default class ConfirmModal extends React.Component {
       isFinish: false,
       fee : constants.LIMIT_ORDER_CONFIG.maxFee,
       feeErr: ""
-    }
+    };
+    
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount = () => {
     this.fetchFee()
-  }
+  };
 
-  async fetchFee(){
+  async fetchFee() {
     var userAddr = this.props.account.address
-    var src = this.props.tokens[this.props.limitOrder.sourceTokenSymbol].address
-    var dest = this.props.tokens[this.props.limitOrder.destTokenSymbol].address
-    var srcAmount = this.props.limitOrder.sourceAmount
-    var destAmount = this.props.limitOrder.destAmount
-    try{
+    var src = this.props.sourceToken.address
+    var dest = this.props.destToken.address
+    var srcAmount = this.props.sourceAmount
+    var destAmount = this.props.destAmount
+    
+    try {
       var { fee } = await limitOrderServices.getFee(userAddr, src, dest, srcAmount, destAmount)
       this.setState({isFetchFee : false, fee: fee})
-    }catch(err){
+    } catch(err) {
       console.log(err)
       this.setState({
         isFetchFee : false,
@@ -63,13 +68,13 @@ export default class ConfirmModal extends React.Component {
   async getUserNonce(){
     try{
       var ethereum = this.props.ethereum
-      var nonceServer = await limitOrderServices.getNonce(this.props.account.address, this.props.limitOrder.sourceTokenSymbol, this.props.limitOrder.destTokenSymbol)
-      var concatTokenAddresses = converters.concatTokenAddresses(this.props.limitOrder.sourceToken, this.props.limitOrder.destToken)
+      var nonceServer = await limitOrderServices.getNonce(this.props.account.address, this.props.sourceToken.symbol, this.props.destToken.symbol)
+      var concatTokenAddresses = converters.concatTokenAddresses(this.props.sourceToken.address, this.props.destToken.address)
       var nonceContract = await ethereum.call("getLimitOrderNonce", this.props.account.address, concatTokenAddresses)
       const biggerContractNonce = converters.calculateContractNonce(nonceContract, BLOCKCHAIN_INFO.kyberswapAddress);
-      var minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress)
-      var validNonce = converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
-      return validNonce
+      const minNonce = converters.calculateMinNonce(BLOCKCHAIN_INFO.kyberswapAddress);
+      
+      return converters.findMaxNumber([nonceServer, biggerContractNonce, minNonce])
     } catch(err) {
       console.log(err)
       throw err
@@ -80,43 +85,38 @@ export default class ConfirmModal extends React.Component {
     this.props.global.analytics.callTrack("trackClickConfirmSubmitOrder");
     if(this.state.isFetchFee) return
 
-    var wallet = getWallet(this.props.account.type)
+    const wallet = this.props.wallet;
 
     this.setState({
       isConfirming: true,
       err: ""
     });
 
-    try{
-      var ethereum = this.props.ethereum
-      var user = this.props.account.address.toLowerCase()
-      var nonce = await this.getUserNonce()
-      var srcToken = this.props.limitOrder.sourceToken.toLowerCase()
-      var srcQty = converters.toTWei(this.props.limitOrder.sourceAmount, this.props.tokens[this.props.limitOrder.sourceTokenSymbol].decimals)
-      srcQty = converters.toHex(srcQty)
+    try {
+      const ethereum = this.props.ethereum;
+      const nonce = await this.getUserNonce();
+      const srcTokenAddr = this.props.sourceToken.address;
+      const destTokenAddr = this.props.destToken.address;
+      const srcSymbol = this.props.sourceToken.symbol;
+      const sourceAmount = converters.toHex(converters.toTWei(this.props.sourceAmount, this.props.tokens[srcSymbol].decimals));
+      const destAddress = this.props.account.address.toLowerCase();
+      const minConversionRate = converters.toHex(converters.toTWei(this.props.convertedTriggerRate, 18));
+      const feeInPrecision = converters.toHex(converters.toTWei(this.state.fee, 6));
 
-      var destToken = this.props.limitOrder.destToken.toLowerCase()
-      var destAddress = this.props.account.address.toLowerCase()
-      var minConversionRate = converters.toTWei(this.props.limitOrder.triggerRate, 18)
-      minConversionRate = converters.toHex(minConversionRate)
-
-      var feeInPrecision = this.state.fee
-      feeInPrecision = converters.toTWei(feeInPrecision, 6)
-      feeInPrecision = converters.toHex(feeInPrecision)
-
-      var signData = await ethereum.call("getMessageHash", user, nonce, srcToken, srcQty, destToken, destAddress, minConversionRate, feeInPrecision)
-      var signature = await wallet.signSignature(signData, this.props.account)
-      var newOrder = await limitOrderServices.submitOrder({
+      const signData = await ethereum.call("getMessageHash", destAddress, nonce, srcTokenAddr.toLowerCase(), sourceAmount, destTokenAddr, destAddress, minConversionRate, feeInPrecision);
+      const signature = await wallet.signSignature(signData, this.props.account);
+      
+      const newOrder = await limitOrderServices.submitOrder({
         user_address: this.props.account.address.toLowerCase(),
         nonce: nonce,
-        src_token: this.props.limitOrder.sourceToken,
-        dest_token: this.props.limitOrder.destToken,
-        src_amount: srcQty,
+        src_token: srcTokenAddr,
+        dest_token: destTokenAddr,
+        src_amount: sourceAmount,
         min_rate: minConversionRate,
         dest_address: this.props.account.address,
         fee: feeInPrecision,
         signature: signature,
-        side_trade: this.props.limitOrder.sideTrade
+        side_trade: this.props.formType
       });
 
       if (this.props.limitOrder.filterMode === "client") {
@@ -157,7 +157,7 @@ export default class ConfirmModal extends React.Component {
 
   closeModal = () => {
     if (this.state.isConfirming) return;
-    this.props.dispatch(limitOrderActions.resetOrderPath())
+    this.props.closeModal();
   }
 
   msgHtml = () => {
@@ -171,22 +171,26 @@ export default class ConfirmModal extends React.Component {
   }
 
   contentModal = () => {
-    const isBuySideTrade = this.props.limitOrder.sideTrade === "buy";
-    const srcTokenSymbol = this.props.limitOrder.sourceTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.limitOrder.sourceTokenSymbol;
-    const destTokenSymbol = this.props.limitOrder.destTokenSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.limitOrder.destTokenSymbol;
-    const base = isBuySideTrade ? destTokenSymbol : srcTokenSymbol;
-    const quote = isBuySideTrade ? srcTokenSymbol : destTokenSymbol;
-    const triggerRate = isBuySideTrade ? this.props.limitOrder.triggerBuyRate : this.props.limitOrder.triggerRate;
-    const formattedTriggerRate = converters.displayNumberWithDot(triggerRate, 9);
-    const compareBaseRateWithQuoteRate = isBuySideTrade ? '<=' : '>=';
-    const orderObject = createOrderObject(this.props.limitOrder, this.props.account.address);
+    const isBuyForm = this.props.isBuyForm;
+    const displaySrcSymbol = this.props.sourceToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.sourceToken.symbol;
+    const displayDestSymbol = this.props.destToken.symbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.destToken.symbol;
+    const displayBaseSymbol = isBuyForm ? displayDestSymbol : displaySrcSymbol;
+    const displayQuoteSymbol = isBuyForm ? displaySrcSymbol : displayDestSymbol;
+    const formattedTriggerRate = converters.displayNumberWithDot(this.props.triggerRate, 9);
+    const compareBaseRateWithQuoteRate = isBuyForm ? '<=' : '>=';
+    const orderObject = createOrderObject(
+      this.props.limitOrder,
+      this.props.account.address,
+      this.props.formType,
+      this.props.triggerRate,
+      this.props.sourceAmount
+    );
 
     return (
       <div className={`limit-order-modal ${this.props.global.isOnMobile ? 'limit-order-modal--mobile' : ''}`}>
           <div className="limit-order-modal__body theme__text">
           <div className="limit-order-modal__title">
-            {this.props.translate("modal.order_confirm", {sideTrade: this.props.limitOrder.sideTrade, symbol: base}) ||
-            `Confirm ${["buy", "sell"].includes(this.props.limitOrder.sideTrade) ? (this.props.limitOrder.sideTrade + " ") : ""}${base} Order`}
+            {this.props.translate("modal.order_confirm", { sideTrade: this.props.formType, symbol: displayBaseSymbol })}
           </div>
           <div className="limit-order-modal__close" onClick={this.closeModal}>
             <div className="limit-order-modal__close-wrapper"/>
@@ -194,30 +198,18 @@ export default class ConfirmModal extends React.Component {
           <div className="limit-order-modal__content">
             <div className="limit-order-modal__message limit-order-modal__message--text-small">
               {this.props.translate("limit_order.confirm_order_message", {
-                base: base,
-                quote: quote,
-                rawRate: triggerRate,
+                base: displayBaseSymbol,
+                quote: displayQuoteSymbol,
+                rawRate: this.props.triggerRate,
                 rate: formattedTriggerRate,
                 compare: compareBaseRateWithQuoteRate
-              }) ||
-              `Your transaction will be broadcasted when price of ${base} ${compareBaseRateWithQuoteRate} <span title="">${formattedTriggerRate}</span> ${quote}`
-              }
+              })}
             </div>
 
-            {!this.props.global.isOnMobile && (
-              <OrderTableInfo
-                listOrder = {[orderObject]}
-                translate={this.props.translate}
-              />
-            )}
-
-            {this.props.global.isOnMobile && (
-              <OrderDetails
-                order = {orderObject}
-                isModal = {true}
-                translate={this.props.translate}
-              />
-            )}
+            <OrderTableInfo
+              listOrder={[orderObject]}
+              translate={this.props.translate}
+            />
 
             {this.msgHtml()}
 
@@ -284,7 +276,7 @@ export default class ConfirmModal extends React.Component {
     return (
       <Modal
         className={{
-          base: 'reveal medium confirm-modal',
+          base: 'reveal x-medium confirm-modal',
           afterOpen: 'reveal medium confirm-modal'
         }}
         isOpen={true}

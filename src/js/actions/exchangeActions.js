@@ -52,13 +52,6 @@ export function throwErrorSlippageRate(key, message) {
   }
 }
 
-export function specifyGas(value) {
-  return {
-    type: "EXCHANGE.SPECIFY_GAS",
-    payload: value
-  }
-}
-
 export function seSelectedGas(level) {
   return {
     type: "EXCHANGE.SET_SELECTED_GAS",
@@ -93,12 +86,17 @@ export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSy
   }
 }
 
-export function updateRateExchangeComplete(expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal) {
+export function updateRateExchangeComplete(
+  expectedRateInit, expectedPrice, slippagePrice, isManual,
+  percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+) {
   return {
     type: "EXCHANGE.UPDATE_RATE_COMPLETE",
-    payload: { expectedRateInit, expectedPrice, slippagePrice, lastestBlock, isManual, percentChange, srcTokenDecimal, destTokenDecimal }
+    payload: {
+      expectedRateInit, expectedPrice, slippagePrice, isManual,
+      percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink
+    }
   }
-
 }
 
 export function finishExchange() {
@@ -174,9 +172,9 @@ export function swapToken() {
   }
 }
 
-export function setMaxGasPrice(ethereum) {
+export function fetchMaxGasPrice(ethereum) {
   return {
-    type: "EXCHANGE.SET_MAX_GAS_PRICE",
+    type: "EXCHANGE.FETCH_MAX_GAS_PRICE",
     payload: ethereum
   }
 }
@@ -185,13 +183,6 @@ export function setMaxGasPriceComplete(maxGasPriceGwei) {
   return {
     type: "EXCHANGE.SET_MAX_GAS_PRICE_COMPLETE",
     payload: maxGasPriceGwei
-  }
-}
-
-export function setGasPriceSwapComplete(safeLowGas, standardGas, fastGas, superFastGas, defaultGas, selectedGas) {
-  return {
-    type: "EXCHANGE.SET_GAS_PRICE_SWAP_COMPLETE",
-    payload: { safeLowGas, standardGas, defaultGas, fastGas, superFastGas, selectedGas }
   }
 }
 
@@ -351,5 +342,12 @@ export function saveApproveMaxTx(sourceTokenSymbol, txHash) {
   return {
     type: "EXCHANGE.SAVE_APPROVE_MAX_TX",
     payload: { sourceTokenSymbol, txHash }
+  }
+}
+
+export function setPlatformFee(fee) {
+  return {
+    type: "EXCHANGE.SET_PLATFORM_FEE",
+    payload: fee
   }
 }

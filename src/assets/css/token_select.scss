@@ -18,6 +18,10 @@
         display: none;
       }
     }
+
+    .notifications-toggle:hover {
+      text-decoration: initial;
+    }
   }
 
   .focus-item {
@@ -175,10 +179,9 @@
 
   &__accept-term {
     text-align: center;
-    padding-bottom: 45px;
 
     .accept-button {
-      margin: 0 auto 20px;
+      margin: 0 auto 12px;
       width: 180px;
       height: 45px;
       line-height: 45px;

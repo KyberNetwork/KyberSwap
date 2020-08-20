@@ -113,12 +113,20 @@ $divider-color: darken($title-background-color, 5);
     text-align: center;
   }
 
+  &.small {
+    width: 300px;
+  }
+
   &.tiny {
     width: 450px;
   }
 
   &.medium {
     width: 600px;
+  }
+
+  &.x-medium {
+    width: 700px;
   }
 
   &.large {
@@ -133,18 +141,23 @@ $divider-color: darken($title-background-color, 5);
   }
 
   a {
+    font-size: 14px;
     color: #EF8102;
 
-    &.x {
-      display: block;
-      position: absolute;
-      right: 20px;
-      top: 5px;
-      font-size: 2rem;
-      color: #aaa;
-      z-index: 10;
-      cursor: pointer;
+    &:hover {
+      text-decoration: underline;
     }
+  }
+
+  .x {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    font-size: 2rem;
+    color: #aaa;
+    z-index: 10;
+    cursor: pointer;
   }
 
   .title {
@@ -176,12 +189,10 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .content {
-
-    // Message container: waiting for confirmation
-    .message-waiting {
+    .message-waiting,
+    .message-error {
       padding: 15px 45px;
       font-size: 14px;
-      color: #5a5e67;
 
       @include screen-max-width(medium) {
         padding: 15px 20px;
@@ -221,7 +232,7 @@ $divider-color: darken($title-background-color, 5);
       >div{
         &:first-child{
           font-size: 14px;
-          font-weight: 600;
+          font-weight: 400;
           margin-bottom: 7px;
         }
       }
@@ -315,14 +326,11 @@ $divider-color: darken($title-background-color, 5);
       padding: 0 20px;
     }
   }
-  .amount{
+
+  .amount {
     display: grid;
     grid-template-columns: 1fr 35px 1fr;
     grid-gap: 10px;
-    // justify-content: space-between;
-    background-color: #eaecf2;
-    // box-shadow: 0 1px 5px 0 rgba(142, 142, 142, 0.15);
-    // border: solid 0.8px rgba(204, 204, 204, 0.72);
     border-radius: 4px;
     padding: 5px 35px;
 
@@ -335,7 +343,6 @@ $divider-color: darken($title-background-color, 5);
       padding: 10px;
 
       .item-icon {
-        // margin: 5px 0;
         display: flex;
         justify-content: center;
       }
@@ -355,7 +362,6 @@ $divider-color: darken($title-background-color, 5);
       }
       .rc-info {
         font-size: 20px;
-        // font-weight: 600;
         letter-spacing: -0.5px;
         display: flex;
         flex-wrap: wrap;
@@ -550,7 +556,6 @@ $divider-color: darken($title-background-color, 5);
       margin-bottom: 25px;
       font-size: 14px;
       font-weight: 600;
-      color: #141927;
       padding: 0 45px;
 
       @include screen-max-width(medium) {
@@ -587,7 +592,6 @@ $divider-color: darken($title-background-color, 5);
   padding-bottom: 0 !important;
   background-color: #f6f7fa !important;
   border-radius: 3px;
-  //overflow-y: auto;
 
   @include screen-max-width(medium) {
     border-radius: 0;
@@ -629,20 +633,19 @@ $divider-color: darken($title-background-color, 5);
     line-height: 0.75;
   }
 
-  .recap-transfer{
+  .recap-transfer {
     display: flex;
     margin: 10px 0;
     font-size: 18px;
     font-weight: 600;
     color: #999;
 
-    > div {
-      margin-right: 5px;
+    &__to {
+      margin: 0 8px;
+    }
 
-      strong {
-        letter-spacing: -0.1px;
-        color: #141927;
-      }
+    &__dest {
+      font-weight: bold;
     }
   }
 
@@ -747,7 +750,6 @@ $divider-color: darken($title-background-color, 5);
       font-size: 1rem;
       margin-top: 0;
       margin-bottom: 1rem;
-      opacity: 0.77;
 
       .row {
         &:first-child {
@@ -763,6 +765,7 @@ $divider-color: darken($title-background-color, 5);
       @include screen-max-width(medium){
         margin-top: 20px;
       }
+
       .font-w-b{
         font-size: 1rem;
         line-height: 1.03;
@@ -803,7 +806,6 @@ $divider-color: darken($title-background-color, 5);
           padding: 0 20px;
         }
         .amount {
-          background-color: white;
           border-radius: 0;
         }
       }
@@ -888,15 +890,16 @@ $divider-color: darken($title-background-color, 5);
     }
   }
 
-  .approve-modal{
-    .title{
-      padding-left: 50px;
+  .approve-modal {
+    .title {
       margin-top: 40px;
       text-align: left;
+
       @include screen-max-width(medium) {
         padding-left: 20px;
       }
     }
+
     .message{
       font-size: 14px;
       margin: 1rem 45px 25px;
@@ -1032,7 +1035,7 @@ $divider-color: darken($title-background-color, 5);
   }
 
   .final-status {
-    text-align: center;
+    text-align: left;
     font-size: 14px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -1304,11 +1307,15 @@ $divider-color: darken($title-background-color, 5);
   }
 }
 
+.modal-message {
+  font-size: 14px;
+  padding: 15px 0 10px;
+}
 
 .modal-error {
-  font-size: 0.9em;
-  color: $alert-color;
-  padding: 20px 45px 10px;
+  font-size: 14px;
+  color: $error-color;
+  padding: 15px 0 10px;
 
   &.metamask {
     height: 65px;
@@ -1344,7 +1351,7 @@ $divider-color: darken($title-background-color, 5);
     img {
       margin-right: 5px;
       position: relative;
-      bottom: 2px;
+      bottom: -2px;
     }
 
     span {
@@ -1437,5 +1444,34 @@ $divider-color: darken($title-background-color, 5);
         }
       }
     }
+  }
+}
+
+.modal-content {
+  padding: 0 45px;
+
+  &__title {
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  &__text-warning {
+    font-size: 14px;
+    padding: 10px 16px;
+    font-weight: 400;
+    border-radius: 3px;
+    color: $error-color;
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+
+  .token-compare__item {
+    font-size: 16px;
+    position: relative;
+    bottom: 5px;
+  }
+
+  @include screen-max-width(medium) {
+    padding: 0 20px;
   }
 }

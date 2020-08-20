@@ -16,13 +16,16 @@ var getConfig = env => {
     var chain 
     switch(env){
         case "staging_limit_order":
-            chain = "production"
+            chain = "staging_limit_order"
             break
         case "production":
             chain = "production"
             break
         case "staging":
             chain = "staging"
+            break
+        case "semi_production":
+            chain = "semi_production"
             break
         case "ropsten":
             chain = "ropsten"
@@ -145,10 +148,11 @@ var getConfig = env => {
     }
 };
 
-async function getTokenApi(network) {
+async function getTokenApi(network, backupServer = false) {
     var BLOCKCHAIN_INFO = require('./env/config-env/' + (network) + ".json");
+    const url = backupServer ? `${BLOCKCHAIN_INFO.tracker}/internal/currencies` : `${BLOCKCHAIN_INFO.kyberswap_api}/currencies`;
     return new Promise((resolve, result) => {
-        fetch(BLOCKCHAIN_INFO.api_tokens, {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -156,25 +160,25 @@ async function getTokenApi(network) {
             },
         }).then((response) => {
             return response.json()
+        }).then((result) => {
+            let tokens = BLOCKCHAIN_INFO.tokens;
+            if (result.success) {
+                tokens = {};
+                result.data.map(val => {
+                    tokens[val.symbol] = val
+                })
+            }
+            resolve(tokens)
+        }).catch(async (err) => {
+            console.log(err)
+            let tokens = BLOCKCHAIN_INFO.tokens;
+            if (!backupServer) {
+              tokens = await getTokenApi(network, true);
+            }
+            resolve(tokens)
         })
-            .then((result) => {
-                if (result.success) {
-                    var tokens = {}
-                    result.data.map(val => {
-                        tokens[val.symbol] = val
-                    })
-                    resolve(tokens)
-                }
-            }).catch((err) => {
-                console.log(err)
-                var tokens = BLOCKCHAIN_INFO.tokens
-                resolve(tokens)
-            })
     })
-
 }
-
-
 
 var webpack = require('webpack');
 

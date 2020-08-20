@@ -6,10 +6,8 @@ import * as converter from "../../utils/converter"
 import * as exchangeActions from "../../actions/exchangeActions"
 import EthereumService from "../../services/ethereum/ethereum"
 import constants from "../../services/constants"
-import { Market } from "../Market"
 import * as globalActions from "../../actions/globalActions";
 import * as common from "../../utils/common";
-import service from "../../services/limit_order"
 
 @connect((store, props) => {
   const account = store.account.account
@@ -23,7 +21,6 @@ import service from "../../services/limit_order"
     params: {...props.match.params},
   }
 })
-
 export default class Exchange extends React.Component {
   constructor(props){
     super(props)
@@ -98,15 +95,9 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.estimateGasNormal(false))
   }
 
-  async fetchMaxGasPrice(){
-    var ethereum = this.getEthereumInstance()
-    try{
-      var gasPrice = await ethereum.call("getMaxGasPrice")
-      var maxGasPriceGwei = converter.weiToGwei(gasPrice)
-      this.props.dispatch(exchangeActions.setMaxGasPriceComplete(maxGasPriceGwei))
-    }catch(err){
-      console.log(err)
-    }
+  fetchMaxGasPrice() {
+    const ethereum = this.getEthereumInstance();
+    this.props.dispatch(exchangeActions.fetchMaxGasPrice(ethereum));
   }
 
   verifyExchange = () => {
@@ -120,7 +111,7 @@ export default class Exchange extends React.Component {
     this.props.dispatch(exchangeActions.caculateAmount(sourceTokenDecimals, destTokenDecimals))
   }
 
-  setInvervalProcess = () => {
+  setIntervalProcess = () => {
     this.setInterValGroup( this.checkKyberEnable, 10000)
     this.setInterValGroup( this.fetchRateExchange, 10000)
     this.setInterValGroup( this.fetchGasExchange, 10000)
@@ -147,7 +138,7 @@ export default class Exchange extends React.Component {
   }
 
   componentDidMount = () =>{
-    this.setInvervalProcess()
+    this.setIntervalProcess()
 
     var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
 
@@ -180,17 +171,12 @@ export default class Exchange extends React.Component {
 
   render() {
     return (
-        <div className={"exchange__container"}>
-          <ExchangeBody
-            setSrcAndDestToken={this.setSrcAndDestToken}
-            updateGlobal={this.updateGlobal}
-          />
-
-          <Market
-            screen={"swap"}
-            setTokens={this.setSrcAndDestToken}
-          />
-        </div>
+      <div className={"exchange__container"}>
+        <ExchangeBody
+          setSrcAndDestToken={this.setSrcAndDestToken}
+          updateGlobal={this.updateGlobal}
+        />
+      </div>
     )
   }
 }

@@ -55,7 +55,7 @@
       display: flex;
       align-items: center;
 
-      a {
+      .currency-item {
         font-size: 14px;
         font-weight: 500;
         border-bottom: solid 2px transparent;
@@ -68,7 +68,6 @@
         }
 
         &.active {
-          //color: $light-color-2 !important;
           border-bottom-color: #EF8102;
           cursor: initial;
         }
@@ -120,12 +119,12 @@
         right: 15px;
       }
 
-      input {
+      &__input {
         width: 250px;
         max-width: 100%;
         outline: none;
         padding: 10px 50px 10px 10px;
-        border: 1px solid #e1e4eb;
+        border: 1px solid;
       }
     }
 
@@ -166,8 +165,6 @@
             box-shadow: none;
             padding: 10px 0;
             border-radius: 3px;
-            background-color: #e1e4eb;
-            color: black;
             margin-bottom: 15px;
 
             .rt-th-img {
@@ -234,14 +231,6 @@
             border: 1px solid transparent;
             cursor: pointer;
             transition: all .3s;
-
-            &:hover {
-              border-color: #e1e4eb;
-              background-color: white;
-              .rt-td{
-                color: black;
-              }
-            }
 
             div.rt-td {
               padding-top: 5px;
@@ -352,8 +341,14 @@
         }
       }
     }
+
     @media only screen and (max-width: 1023px) {
       padding: 0 0 0 0;
+    }
+
+    @include screen-max-width(medium) {
+      padding-bottom: 15px;
+      margin: 0;
     }
   }
 

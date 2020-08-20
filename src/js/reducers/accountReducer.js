@@ -1,9 +1,6 @@
 import {REHYDRATE} from 'redux-persist/lib/constants'
-import { clearInterval } from 'timers';
 import {cloneAccount} from "../services/accounts"
-
 import {getWallet} from "../services/keys"
-
 
 const initState = {
   isStoreReady: false,
@@ -56,14 +53,9 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
     }
     case "ACCOUNT.IMPORT_NEW_ACCOUNT_FULFILLED": {
       const {account, wallet, walletName} = action.payload
-          
-
       return {...state, account: account, wallet: wallet, loading: false, isStoreReady: true, walletName: walletName}
     }
     case "ACCOUNT.CLOSE_LOADING_IMPORT":{
-      return {...state, loading: false}
-    }
-    case "ACCOUNT.CLOSE_LOADING_IMPORT": {
       return {...state, loading: false}
     }
     case "ACCOUNT.THROW_ERROR": { 
@@ -150,7 +142,8 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       let newState = {...state}
       let otherConnect = {
         error: '',
-        modalOpen: true
+        modalOpen: true,
+        tradeType: action.payload
       }
       newState.otherConnect = otherConnect
       return newState
@@ -173,6 +166,15 @@ const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
       let newState = {...state}
       newState.isOnDAPP = true
       return newState
+    }
+    case "ACCOUNT.SET_TOTAL_BALANCE_AND_AVAILABLE_TOKENS": {
+      const { totalBalanceInETH, availableTokens } = action.payload;
+      let newState = {...state};
+      
+      newState.totalBalanceInETH = totalBalanceInETH;
+      newState.availableTokens = availableTokens;
+      
+      return newState;
     }
   }
   return state

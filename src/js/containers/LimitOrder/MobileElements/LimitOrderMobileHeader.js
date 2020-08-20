@@ -9,24 +9,21 @@ import BLOCKCHAIN_INFO from "../../../../../env";
 import { withFavorite, withSourceAndBalance } from "../index";
 import {formatNumber, sumOfTwoNumber} from "../../../utils/converter";
 
-@connect((store, props) => {
+@connect((store) => {
   const translate = getTranslate(store.locale);
   const global = store.global;
   const tokens = store.tokens.tokens;
   const limitOrder = store.limitOrder;
-  const baseSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.destTokenSymbol : limitOrder.sourceTokenSymbol;
-  const quoteSymbol = limitOrder.sideTrade === 'buy' ? limitOrder.sourceTokenSymbol : limitOrder.destTokenSymbol;
+  const baseSymbol = limitOrder.sourceTokenSymbol;
+  const quoteSymbol = limitOrder.destTokenSymbol;
+  const marketTokens = store.market.tokens;
 
-  const pairToken = store.market.tokens.find(token => {
-    return token.pair === `${quoteSymbol}_${baseSymbol}`;
-  });
+  const pairToken = marketTokens[`${quoteSymbol}_${baseSymbol}`];
 
   let pairVolume = pairToken ? formatNumber(pairToken.volume, 3, ',') : '---';
 
   if (quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken) {
-    const ethPairToken = store.market.tokens.find(token => {
-      return token.pair === `ETH_${baseSymbol}`;
-    });
+    const ethPairToken = marketTokens[`ETH_${baseSymbol}`];
     pairVolume = pairToken || ethPairToken ? formatNumber(sumOfTwoNumber(pairToken.volume, ethPairToken.volume), 3, ',') : '---'
   }
 
@@ -51,9 +48,7 @@ export default class LimitOrderMobileHeader extends React.Component {
     const QuoteMarket = this.QuoteMarket;
     const isFav = this.props.favorite_pairs.includes(`${this.props.baseSymbol}_${this.props.quoteSymbol}`);
     const pairBuyPrice = this.props.pairToken ? formatNumber(this.props.pairToken.buy_price, 6) : '---';
-    // const pairUSDBuyPrice = pairBuyPrice && this.props.tokens[this.props.baseSymbol] ? this.props.tokens[this.props.baseSymbol].rateUSD : 0;
     const pairChange = this.props.pairToken ? this.props.pairToken.change : '---';
-
     const displayQuoteSymbol = this.props.quoteSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.quoteSymbol;
     const displayBaseSymbol = this.props.baseSymbol === BLOCKCHAIN_INFO.wrapETHToken ? 'ETH*' : this.props.baseSymbol;
 
@@ -78,9 +73,14 @@ export default class LimitOrderMobileHeader extends React.Component {
           </div>
 
           <div className={"limit-order-header__column"}>
-            <div className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
-                 onClick={() => this.props.onFavoriteClick(this.props.baseSymbol, this.props.quoteSymbol, !isFav)} />
-            <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart}/>
+            <div
+              className={`limit-order-header__star ${ isFav ? 'limit-order-header__star--active' : ''}`}
+              onClick={() => this.props.onFavoriteClick(this.props.baseSymbol, this.props.quoteSymbol, !isFav)}
+            />
+            
+            {!this.props.limitOrder.mobileState.showQuoteMarket && (
+              <div className={"limit-order-header__chart"} onClick={this.props.toggleMobileChart} />
+            )}
           </div>
         </div>
 
