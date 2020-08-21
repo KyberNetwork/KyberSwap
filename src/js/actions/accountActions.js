@@ -9,7 +9,7 @@ export function updateAccount(ethereum, account) {
 export function updateTokenBalance(ethereum, address, tokens){
   return {
     type: "ACCOUNT.UPDATE_TOKEN_BALANCE",
-    payload: { ethereum, address, tokens, test: 1 }
+    payload: { ethereum, address, tokens }
   }
 }
 
