@@ -112,7 +112,9 @@ const INIT_EXCHANGE_FORM_STATE = {
   isOpenAdvance: false,
   isSelectTokenBalance: false,
   isRefPriceFromChainLink: false,
-  platformFee: DEFAULT_BPS_FEE
+  platformFee: DEFAULT_BPS_FEE,
+  reserveRoutingEnabled: null,
+  reserveRoutingTouched: false
 }
 
 const TRANSFER_CONFIG = {

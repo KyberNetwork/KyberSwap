@@ -1,9 +1,10 @@
 import BLOCKCHAIN_INFO from "../../../env";
 import { DEFAULT_BPS_FEE } from "./constants"
 
-export async function fetchSwapHint(src, dst, amount) {
+export async function fetchSwapHint(src, dst, amount = null) {
   try {
-    const response = await fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/swap_hint?src=${src}&dst=${dst}&amount=${amount}`);
+    const endpoint = `${BLOCKCHAIN_INFO.kyberswap_api}/swap_hint?src=${src}&dst=${dst}${amount ? `&amount=${amount}` : ''}`;
+    const response = await fetch(endpoint);
     const result = await response.json();
 
     if (!result.success || !result.hint) {

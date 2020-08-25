@@ -287,5 +287,11 @@
       }
     }
   }
+
+  .theme__checkbox {
+    .common__checkbox-checkmark::after {
+      border-color: white;
+    }
+  }
 }
 

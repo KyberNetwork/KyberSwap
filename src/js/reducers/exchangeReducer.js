@@ -345,6 +345,14 @@ const exchange = (state = initState, action) => {
       newState.platformFee = action.payload;
       return newState
     }
+    case "EXCHANGE.SET_RESERVE_ROUTING_ENABLED": {
+      const { isEnabled, isTouched } = action.payload;
+
+      newState.reserveRoutingEnabled = isEnabled;
+      newState.reserveRoutingTouched = isTouched;
+
+      return newState
+    }
   }
   return state
 }
