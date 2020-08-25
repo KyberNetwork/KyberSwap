@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
+import ReactTooltip from "react-tooltip";
 
 export default class AdvanceConfigLayout extends Component {
   render() {
@@ -37,6 +38,24 @@ export default class AdvanceConfigLayout extends Component {
               </div>
             </div>
             {this.props.minConversionRate}
+            {this.props.reserveRoutingEnabled !== null && (
+              <label className="common__checkbox advance-config__checkbox theme__border-2 theme__checkbox">
+                <div className="common__checkbox-text">
+                  <span>{this.props.translate("info.reserve_routing")}</span>
+                  <span data-tip={this.props.translate("info.reserve_routing_explain")} data-for="reserve-routing-tooltip">
+                    <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
+                  </span>
+                  <ReactTooltip place="top" id="reserve-routing-tooltip" type="light"/>
+                </div>
+                <input
+                  type="checkbox"
+                  className="common__checkbox-input"
+                  checked={this.props.reserveRoutingEnabled}
+                  onChange={this.props.toggleReserveRouting}
+                />
+                <span className="common__checkbox-checkmark"/>
+              </label>
+            )}
           </div>
         </SlideDownContent>
       </SlideDown>

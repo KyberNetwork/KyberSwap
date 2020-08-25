@@ -50,18 +50,6 @@
     width: 0;
     height: 0;    
   }
-
-  .__react_component_tooltip{
-    z-index: 1 !important;
-    background-color: #FFCAD1;
-    width: 100% !important;
-    max-width: 200px;
-
-    >div {
-      color: #222;
-      font-size: 11px;
-    }
-  }
   
   &__radio {
     position: absolute;
@@ -157,6 +145,37 @@
     font-size: 10px;
     font-weight: 400;
     color: $grey-darker;
+  }
+
+  &__checkbox {
+    border-top: 1px solid transparent;
+    margin-top: 15px;
+
+    .common__checkbox-text {
+      margin-top: 16px;
+
+      > span {
+        margin-right: 7px;
+      }
+
+      img {
+        top: 2px;
+        position: relative;
+      }
+    }
+  }
+
+  .__react_component_tooltip {
+    opacity: 1;
+    z-index: 1 !important;
+    width: 100% !important;
+    max-width: 300px;
+    box-shadow: 0 0 3px $grey;
+
+    > div {
+      color: #222;
+      font-size: 11px;
+    }
   }
 
   @include screen-max-width(mid-small) {

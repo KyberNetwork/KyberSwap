@@ -133,9 +133,9 @@ export default class ConfirmModal extends React.Component {
   }
   
   async getGasSwap() {
-    const {
+    let {
       ethereum, sourceToken, sourceAmount, destToken, maxDestAmount,
-      slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee
+      slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee, swapHint
     } = this.getFormParams()
     
     const gasPrice = this.props.exchange.gasPrice;
@@ -147,12 +147,12 @@ export default class ConfirmModal extends React.Component {
     const srcAmountNumber = this.props.exchange.sourceAmount;
 
     let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
-    let swapHint = await fetchSwapHint(sourceToken, destToken, srcAmountNumber);
+    this.setState({ gasLimit: gas });
 
-    this.setState({
-      gasLimit: gas,
-      swapHint: swapHint
-    });
+    if (this.props.exchange.reserveRoutingEnabled) {
+      swapHint = await fetchSwapHint(sourceToken, destToken, srcAmountNumber);
+      this.setState({ swapHint: swapHint });
+    }
 
     try {
       if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
@@ -487,6 +487,7 @@ export default class ConfirmModal extends React.Component {
                     translate={this.props.translate}
                     gasPrice={this.props.exchange.snapshot.gasPrice}
                     gas={this.state.gasLimit}
+                    reserveRoutingEnabled={this.props.exchange.reserveRoutingEnabled}
                   />
                   {warningLowFee && (
                     <div className={"tx-fee-warning theme__background-10"}>

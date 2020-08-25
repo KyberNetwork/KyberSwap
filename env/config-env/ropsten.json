@@ -26,6 +26,7 @@
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
+    "autoEnableRRThreshold": 1,
     "wrapETHToken": "WETH",
     "tokens": {
         "ETH": {

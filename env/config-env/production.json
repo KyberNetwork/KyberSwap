@@ -36,6 +36,7 @@
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
+    "autoEnableRRThreshold": 20,
     "promo_token": "PT",
     "wrapETHToken": "WETH",
     "tokens": {

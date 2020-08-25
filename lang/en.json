@@ -44,7 +44,7 @@
     "amount": "amount",
     "select_token": "Select token",
     "advanced": "Advanced",
-    "transaction_fee": "Transaction Fee",
+    "transaction_fee": "Max Transaction Fee",
     "address_balance": "Address Balance",
     "balance": "Balance",
     "password_needed_exchange": "Password is needed for every exchange transaction",
@@ -310,7 +310,10 @@
     "warning": "DO NOT send real ethers or tokens to any of the addresses above.<br></br>They\nare testnet addresses only!",
     "here": "here",
     "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
-    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate."
+    "slippage_warning": "Slippage is high. You may want to reduce your swap amount and do multiple swaps for a better rate.",
+    "reserve_routing": "Use reserve routing to enjoy gas savings",
+    "reserve_routing_used": "Reserve routing is used in this transaction to reduce gas costs",
+    "reserve_routing_explain": "Reduce gas costs by routing your trade to predefined reserves. This is the default option for all trades approximately <20 ETH"
   },
   "footer": {
     "info": "Info",

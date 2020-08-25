@@ -307,7 +307,10 @@
     "warning": "Không nên chuyển bất kỳ ether nào cho các địa chỉ phía trên.</br>Các địa\nchỉ trên chỉ sử dụng trong môi trường thử nghiệm và chúng tôi có khả năng không\nsử dụng trong phiên bản chính thức.",
     "here": "tại đây",
     "please_give_feedback": "Hãy cho chúng tôi <a target='_blank' href='${link}'>ý kiến phản hồi</a> về những tính năng mới để chúng tôi có thể cải thiện chất lượng dịch vụ tốt hơn. Cảm ơn.",
-    "slippage_warning": "Mức trượt giá đang cao. Bạn có thể giảm lượng giao dịch hoặc chia nhỏ lệnh của bạn để có tỉ giá tốt hơn"
+    "slippage_warning": "Mức trượt giá đang cao. Bạn có thể giảm lượng giao dịch hoặc chia nhỏ lệnh của bạn để có tỉ giá tốt hơn",
+    "reserve_routing": "Sử dụng Reserve routing để giảm thiểu phí gas",
+    "reserve_routing_used": "Reserve routing is used in this transaction to reduce gas costs",
+    "reserve_routing_explain": "Giảm phí gas bằng cách giao dịch với các quỹ được chọn trước. Đây là tùy chọn mặc định cho các giao dịch < 20 ETH"
   },
   "footer": {
     "info": "Thông tin",

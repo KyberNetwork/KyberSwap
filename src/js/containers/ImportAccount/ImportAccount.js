@@ -10,6 +10,7 @@ import * as web3Package from "../../services/web3"
 import { isMobile } from '../../utils/common'
 import EthereumService from "../../services/ethereum/ethereum";
 import { isUserLogin } from "../../utils/common";
+import TermAndServices from "../CommonElements/TermAndServices";
 
 @connect((store) => {
   return {
@@ -78,6 +79,7 @@ export default class ImportAccount extends React.Component {
             <div className={"accept-button theme__button"} onClick={this.acceptTerm}>
               {this.props.translate("import.connect_wallet") || "Connect Wallet"}
             </div>
+            <TermAndServices tradeType="swap"/>
           </div>
         }
         {(!this.props.isOnDAPP && this.props.isAgreedTermOfService) && (

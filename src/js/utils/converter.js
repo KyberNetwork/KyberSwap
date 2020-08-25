@@ -934,3 +934,8 @@ export function calculateSrcAmountWithFee(srcAmount, fee) {
 
   return sumOfTwoNumber(srcAmount, feeInNumber);
 }
+
+export function calculateEthEquivalent(srcAmount, srcRate) {
+  const rateBig = toTWei(srcRate);
+  return toEther(calculateDest(srcAmount, rateBig));
+}
