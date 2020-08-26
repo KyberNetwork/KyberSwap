@@ -156,7 +156,9 @@ export function checkAutoEnableReserveRouting(swapHint, srcSymbol, srcAmount, sr
   let autoEnableReserveRouting = null;
 
   if (swapHint !== '0x') {
-    const isSrcEth = srcSymbol === 'ETH' || srcSymbol === 'WETH';
+    autoEnableReserveRouting = true;
+
+   /* const isSrcEth = srcSymbol === 'ETH' || srcSymbol === 'WETH';
     const isSrcValid = srcAmount && (srcSymbol === 'ETH' || srcRate);
     autoEnableReserveRouting = true;
 
@@ -167,7 +169,7 @@ export function checkAutoEnableReserveRouting(swapHint, srcSymbol, srcAmount, sr
         const amountInEth = calculateEthEquivalent(srcAmount, srcRate);
         autoEnableReserveRouting = amountInEth < autoEnableRRThreshold;
       }
-    }
+    }*/
   }
 
   return autoEnableReserveRouting;

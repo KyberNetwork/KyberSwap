@@ -16,7 +16,13 @@ export default class AdvanceConfigLayout extends Component {
         <SlideDownContent>
           <div className="advance-config theme__text-4">
             <div className={`advance-config__gas ${this.props.type === 'transfer' ? 'advance-config__gas--no-border' : ''} theme__border-2`}>
-              <div className="advance-config__title">{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</div>
+              <div className="advance-config__title">
+                {this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)
+                <span className="common__info-icon" data-tip={this.props.translate("info.gas_fee")} data-for="gas-fee-info">
+                  <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
+                </span>
+                <ReactTooltip place="top" id="gas-fee-info" type="light"/>
+              </div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (

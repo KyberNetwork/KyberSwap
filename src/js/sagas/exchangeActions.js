@@ -32,10 +32,13 @@ function* selectToken(action) {
 
   yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
 
+  const swapHint = yield call(fetchSwapHint, sourceToken, destToken);
+
   if (!state.exchange.reserveRoutingTouched) {
-    const swapHint = yield call(fetchSwapHint, sourceToken, destToken);
     const autoEnableReserveRouting = checkAutoEnableReserveRouting(swapHint, sourceTokenSymbol, srcAmount, srcRate, BLOCKCHAIN_INFO.autoEnableRRThreshold);
     yield put(actions.setReserveRoutingEnabled(autoEnableReserveRouting));
+  } else if (swapHint === '0x') {
+    yield put(actions.setReserveRoutingEnabled(null));
   }
 }
 
