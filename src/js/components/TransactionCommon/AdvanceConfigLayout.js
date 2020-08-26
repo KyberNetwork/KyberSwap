@@ -48,7 +48,7 @@ export default class AdvanceConfigLayout extends Component {
               <label className="common__checkbox advance-config__checkbox theme__border-2 theme__checkbox">
                 <div className="common__checkbox-text">
                   <span>{this.props.translate("info.reserve_routing")}</span>
-                  <span data-tip={this.props.translate("info.reserve_routing_explain")} data-for="reserve-routing-tooltip">
+                  <span className="common__info-icon" data-tip={this.props.translate("info.reserve_routing_explain")} data-for="reserve-routing-tooltip">
                     <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
                   </span>
                   <ReactTooltip place="top" id="reserve-routing-tooltip" type="light"/>
