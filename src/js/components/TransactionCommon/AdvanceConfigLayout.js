@@ -21,7 +21,7 @@ export default class AdvanceConfigLayout extends Component {
                 <span className="common__info-icon" data-tip={this.props.translate("info.gas_fee")} data-for="gas-fee-info">
                   <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
                 </span>
-                <ReactTooltip place="top" id="gas-fee-info" type="light"/>
+                <ReactTooltip className="common__tooltip" place="top" id="gas-fee-info" type="light"/>
               </div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
@@ -51,7 +51,7 @@ export default class AdvanceConfigLayout extends Component {
                   <span className="common__info-icon" data-tip={this.props.translate("info.reserve_routing_explain")} data-for="reserve-routing-tooltip">
                     <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
                   </span>
-                  <ReactTooltip place="top" id="reserve-routing-tooltip" type="light"/>
+                  <ReactTooltip className="common__tooltip" place="top" id="reserve-routing-tooltip" type="light"/>
                 </div>
                 <input
                   type="checkbox"

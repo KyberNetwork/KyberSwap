@@ -12,7 +12,7 @@ const FeeDetail = (props) => {
         <span className="common__info-icon" data-tip={props.translate("info.max_gas_fee")} data-for="max-gas-info">
           <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
         </span>
-        <ReactTooltip place="top" id="max-gas-info" type="light"/>
+        <ReactTooltip className="common__tooltip" place="top" id="max-gas-info" type="light"/>
       </div>
       <div className={"total-fee"}>
         <span className={"total-fee__number theme__text"}>{totalGas.toString()} ETH</span>

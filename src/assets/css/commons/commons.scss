@@ -368,6 +368,22 @@
       vertical-align: initial;
     }
   }
+
+  &__tooltip {
+    opacity: 1;
+    z-index: 1 !important;
+    width: 100% !important;
+    max-width: 250px;
+    box-shadow: 0 0 3px $grey;
+    height: auto;
+    white-space: initial;
+    padding: 10px 16px;
+
+    > div {
+      color: #222;
+      font-size: 11px;
+    }
+  }
 }
 
 .text-center {
