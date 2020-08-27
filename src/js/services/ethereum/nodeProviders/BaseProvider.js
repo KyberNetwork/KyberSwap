@@ -158,7 +158,7 @@ export default class BaseProvider {
 
   exchangeData(
     sourceToken, sourceAmount, destToken, destAddress,
-    maxDestAmount, minConversionRate, walletId, platformFee
+    maxDestAmount, minConversionRate, walletId, platformFee, hint
   ) {
     if (!this.rpc.utils.isAddress(walletId)) {
       walletId = "0x" + Array(41).join("0")
@@ -166,7 +166,7 @@ export default class BaseProvider {
 
     const data = this.networkContract.methods.tradeWithHintAndFee(
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, walletId, platformFee, '0x'
+      maxDestAmount, minConversionRate, walletId, platformFee, hint
     ).encodeABI();
 
     return new Promise((resolve) => {

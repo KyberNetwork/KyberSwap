@@ -126,47 +126,22 @@ class ExchangeBody extends React.Component {
     this.props.global.analytics.callTrack("trackChooseToken", "to", symbol);
   }
 
-  dispatchUpdateRateExchange = (sourceAmount, refetchSourceAmount) => {
-    var sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
-    
-    if (sourceTokenSymbol === "ETH") {
-      if (parseFloat(sourceAmount) > constants.ETH.MAX_AMOUNT) {
-        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
-        return
-      }
-    } 
-
-    var sourceToken = this.props.exchange.sourceToken
-    var destToken = this.props.exchange.destToken
-    var destTokenSymbol = this.props.exchange.destTokenSymbol
-
-    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount,constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
-  }
-
-  dispatchEstimateGasNormal = () => {
-    this.props.dispatch(exchangeActions.estimateGasNormal(false))
-  }
-
-  lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)
-  lazyEstimateGas = debounce(this.dispatchEstimateGasNormal, 500)
-
   validateRateAndSource = (sourceValue, refetchSourceAmount = false) => {
     this.lazyUpdateRateExchange(sourceValue, refetchSourceAmount)
   }
 
   changeSourceAmount = (e, amount) => {
-    var value 
-    if(e){
-      value = e.target.value
-    }else{
-      value = amount
-    }
-    if (value < 0) return
+    let value = amount;
+
+    if (e) value = e.target.value;
+    if (value < 0) return;
+
     this.props.dispatch(exchangeActions.inputChange('source', value, this.props.sourceToken.decimals, this.props.destToken.decimals));
 
-    this.lazyEstimateGas()
+    this.lazyEstimateGas();
+    this.lazyEnableReserveRouting();
 
-    this.validateRateAndSource(value)
+    this.validateRateAndSource(value);
   }
 
   changeDestAmount = (e, amount) => {
@@ -322,10 +297,16 @@ class ExchangeBody extends React.Component {
         translate={this.props.translate}
         isAdvanceActive={this.props.exchange.isAdvanceActive}
         minConversionRate={minConversionRate}
+        reserveRoutingEnabled={this.props.exchange.reserveRoutingEnabled}
+        toggleReserveRouting={this.toggleReserveRouting}
         type="exchange"
       />
     )
   };
+
+  toggleReserveRouting = () => {
+    this.props.dispatch(exchangeActions.setReserveRoutingEnabled(!this.props.exchange.reserveRoutingEnabled, true));
+  }
 
   closeChangeWallet = () => {
     this.props.dispatch(globalActions.closeChangeWallet())
@@ -349,6 +330,46 @@ class ExchangeBody extends React.Component {
       roundingValue: converters.roundingNumber(converters.toT(token.balance, token.decimals))
     }
   };
+
+  dispatchUpdateRateExchange = (sourceAmount, refetchSourceAmount) => {
+    const sourceTokenSymbol = this.props.exchange.sourceTokenSymbol
+
+    if (sourceTokenSymbol === "ETH") {
+      if (parseFloat(sourceAmount) > constants.ETH.MAX_AMOUNT) {
+        this.props.dispatch(exchangeActions.throwErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate, this.props.translate("error.handle_amount")))
+        return
+      }
+    }
+
+    const sourceToken = this.props.exchange.sourceToken
+    const destToken = this.props.exchange.destToken
+    const destTokenSymbol = this.props.exchange.destTokenSymbol
+
+    this.props.dispatch(exchangeActions.updateRate(this.props.ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, true, refetchSourceAmount, constants.EXCHANGE_CONFIG.updateRateType.changeAmount));
+  }
+
+  dispatchEstimateGasNormal = () => {
+    this.props.dispatch(exchangeActions.estimateGasNormal(false))
+  }
+
+  dispatchEnableReserveRouting = () => {
+    const exchange = this.props.exchange;
+    if (exchange.reserveRoutingEnabled === null || exchange.reserveRoutingTouched) return;
+
+    const srcToken = this.props.sourceToken;
+    const srcSymbol = srcToken.symbol;
+    const srcAmount = exchange.sourceAmount;
+    const srcRate = srcToken.rate;
+    const autoEnableRRThreshold = BLOCKCHAIN_INFO.autoEnableRRThreshold;
+
+    const reserveRoutingEnabled = validators.checkAutoEnableReserveRouting(true, srcSymbol, srcAmount, srcRate, autoEnableRRThreshold);
+
+    this.props.dispatch(exchangeActions.setReserveRoutingEnabled(reserveRoutingEnabled));
+  }
+
+  lazyUpdateRateExchange = debounce(this.dispatchUpdateRateExchange, 500)
+  lazyEstimateGas = debounce(this.dispatchEstimateGasNormal, 500);
+  lazyEnableReserveRouting = debounce(this.dispatchEnableReserveRouting, 500);
 
   render() {
     var tokenDest = {}

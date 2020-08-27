@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
-import { compareTwoNumber } from "./converter";
+import { compareTwoNumber, calculateEthEquivalent } from "./converter";
 
 export function verifyAccount(addr) {
   var valid = /^0x[0-9a-fA-F]{40}$/.test(addr)
@@ -150,4 +150,27 @@ export function filterInputNumber(event, value, preVal) {
 
   if (preVal === str) return false
   return true
+}
+
+export function checkAutoEnableReserveRouting(swapHint, srcSymbol, srcAmount, srcRate, autoEnableRRThreshold) {
+  let autoEnableReserveRouting = null;
+
+  if (swapHint !== '0x') {
+    autoEnableReserveRouting = true;
+
+   /* const isSrcEth = srcSymbol === 'ETH' || srcSymbol === 'WETH';
+    const isSrcValid = srcAmount && (srcSymbol === 'ETH' || srcRate);
+    autoEnableReserveRouting = true;
+
+    if (isSrcValid) {
+      autoEnableReserveRouting = srcAmount < autoEnableRRThreshold;
+
+      if (!isSrcEth) {
+        const amountInEth = calculateEthEquivalent(srcAmount, srcRate);
+        autoEnableReserveRouting = amountInEth < autoEnableRRThreshold;
+      }
+    }*/
+  }
+
+  return autoEnableReserveRouting;
 }

@@ -263,6 +263,8 @@ export function weiToGwei(number) {
 }
 
 export function toT(number, decimal, round) {
+  if (!number) return "0";
+
   BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
   var bigNumber = new BigNumber(number.toString())
   var result
@@ -931,4 +933,9 @@ export function calculateSrcAmountWithFee(srcAmount, fee) {
   const feeInNumber = multiplyOfTwoNumber(srcAmount, feeInPercentage);
 
   return sumOfTwoNumber(srcAmount, feeInNumber);
+}
+
+export function calculateEthEquivalent(srcAmount, srcRate) {
+  const rateBig = toTWei(srcRate);
+  return toEther(calculateDest(srcAmount, rateBig));
 }

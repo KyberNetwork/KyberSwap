@@ -14,6 +14,7 @@ import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
 import { getBigNumberValueByPercentage } from "../../../utils/converter";
 import { fetchGasLimit } from "../../../services/cachedServerService";
+import { fetchSwapHint } from "../../../services/kyberSwapService";
 
 @connect((store) => {
   const account = store.account.account
@@ -41,7 +42,8 @@ export default class ConfirmModal extends React.Component {
       slippageRate: 0,
       expectedRate: 0,
       startTime: 0,
-      isConfirmingTx: false
+      isConfirmingTx: false,
+      swapHint: '0x'
     };
     
     this.confirmingTimer = null;
@@ -121,18 +123,19 @@ export default class ConfirmModal extends React.Component {
     const slippagePercentage = 100 - (this.props.exchange.customRateInput.value || 3);
     const platformFee = converters.toHex(this.props.exchange.platformFee);
     const walletId = getReferAddress(this.props.account.type);
+    const swapHint = this.state.swapHint;
 
     return {
       formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceDecimal, sourceAmount, destToken,
       destAddress, maxDestAmount, slippageRate, walletId, nonce, gas, gasPrice, keystring, type, destAmount,
-      destTokenSymbol, platformFee, slippagePercentage
+      destTokenSymbol, platformFee, slippagePercentage, swapHint
     }
   }
   
   async getGasSwap() {
-    const {
+    let {
       ethereum, sourceToken, sourceAmount, destToken, maxDestAmount,
-      slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee
+      slippageRate, walletId, destTokenSymbol,sourceTokenSymbol, platformFee, swapHint
     } = this.getFormParams()
     
     const gasPrice = this.props.exchange.gasPrice;
@@ -146,6 +149,11 @@ export default class ConfirmModal extends React.Component {
     let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
     this.setState({ gasLimit: gas });
 
+    if (this.props.exchange.reserveRoutingEnabled) {
+      swapHint = await fetchSwapHint(sourceToken, destToken, srcAmountNumber);
+      this.setState({ swapHint: swapHint });
+    }
+
     try {
       if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
         this.setState({isFetchGas: false});
@@ -155,7 +163,7 @@ export default class ConfirmModal extends React.Component {
 
       var data = await ethereum.call(
         "exchangeData", sourceToken, sourceAmount, destToken, this.props.account.address,
-        maxDestAmount, slippageRate, walletId, platformFee
+        maxDestAmount, slippageRate, walletId, platformFee, swapHint
       );
       
       var value = '0x0'
@@ -221,12 +229,12 @@ export default class ConfirmModal extends React.Component {
       var {
         formId, address, ethereum, sourceToken, sourceTokenSymbol, sourceAmount,
         destToken, destAddress,maxDestAmount, slippageRate, walletId, nonce, gas,
-        gasPrice, keystring, type, destAmount, destTokenSymbol, platformFee
+        gasPrice, keystring, type, destAmount, destTokenSymbol, platformFee, swapHint
       } = this.getFormParams()
       var callFunc = sourceTokenSymbol === "ETH" ? "etherToOthersFromAccount" : "tokenToOthersFromAccount"
       var txHash = await wallet.broadCastTx(
         callFunc, formId, ethereum, address, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-        slippageRate, walletId, nonce, gas, gasPrice, keystring, type, password, platformFee
+        slippageRate, walletId, nonce, gas, gasPrice, keystring, type, password, platformFee, swapHint
       )
       
       //submit hash to broadcast server
@@ -479,6 +487,7 @@ export default class ConfirmModal extends React.Component {
                     translate={this.props.translate}
                     gasPrice={this.props.exchange.snapshot.gasPrice}
                     gas={this.state.gasLimit}
+                    reserveRoutingEnabled={this.props.exchange.reserveRoutingEnabled}
                   />
                   {warningLowFee && (
                     <div className={"tx-fee-warning theme__background-10"}>

@@ -351,3 +351,10 @@ export function setPlatformFee(fee) {
     payload: fee
   }
 }
+
+export function setReserveRoutingEnabled(isEnabled, isTouched = false) {
+  return {
+    type: "EXCHANGE.SET_RESERVE_ROUTING_ENABLED",
+    payload: { isEnabled, isTouched }
+  }
+}

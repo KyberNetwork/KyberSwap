@@ -11,13 +11,17 @@ import { store } from '../store'
 import BLOCKCHAIN_INFO from "../../../env"
 import * as commonUtils from "../utils/common"
 import { calculateExpectedRateWithFee, calculateSrcAmountWithFee } from "../utils/converter";
-import { fetchPlatformFee } from "../services/kyberSwapService";
+import { fetchPlatformFee, fetchSwapHint } from "../services/kyberSwapService";
 import { calculateFeeByWalletId } from "../utils/common";
+import { checkAutoEnableReserveRouting } from "../utils/validators";
 
 function* selectToken(action) {
+  const { sourceTokenSymbol, destTokenSymbol, sourceToken, destToken } = action.payload;
   const state = store.getState();
   const translate = getTranslate(state.locale);
-  const { sourceTokenSymbol, destTokenSymbol } = action.payload;
+  const tokens = state.tokens.tokens;
+  const srcRate = tokens[sourceTokenSymbol] ? tokens[sourceTokenSymbol].rate : 0;
+  const srcAmount = state.exchange.sourceAmount;
 
   yield put(actions.estimateGasNormal(false))
 
@@ -27,6 +31,15 @@ function* selectToken(action) {
   }
 
   yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
+
+  const swapHint = yield call(fetchSwapHint, sourceToken, destToken);
+
+  if (!state.exchange.reserveRoutingTouched) {
+    const autoEnableReserveRouting = checkAutoEnableReserveRouting(swapHint, sourceTokenSymbol, srcAmount, srcRate, BLOCKCHAIN_INFO.autoEnableRRThreshold);
+    yield put(actions.setReserveRoutingEnabled(autoEnableReserveRouting));
+  } else if (swapHint === '0x') {
+    yield put(actions.setReserveRoutingEnabled(null));
+  }
 }
 
 function* updateRatePending(action) {

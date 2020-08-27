@@ -1,7 +1,6 @@
 import { put, call, fork, takeEvery } from 'redux-saga/effects'
 import EthereumService from "../services/ethereum/ethereum"
 import { setConnection } from "../actions/connectionActions"
-import { initTokens } from "../actions/tokenActions"
 import { delay } from 'redux-saga'
 import { store } from "../store"
 import * as globalActions from "../actions/globalActions"

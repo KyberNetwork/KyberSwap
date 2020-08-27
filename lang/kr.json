@@ -308,7 +308,13 @@
     "warning": "위의 주소 있는 주소들에게 실제 이더나 토큰을 보내지 마십시오. <br> </ br> 그들은 testnet 주소입니다!",
     "here": "여기",
     "please_give_feedback": "새로운 기능에 대한 <a target='_blank' href='${link}'>피드백</a>을 주시면, 서비스 개선에 도움이 됩니다. 감사합니다.",
-    "slippage_warning": "슬리피지(손해)가 높습니다. 더 나은 비율을 갖기 위해 교환할 양을 줄이거나 여러번에 나눠서 교환하는 게 좋습니다."
+    "slippage_warning": "슬리피지(손해)가 높습니다. 더 나은 비율을 갖기 위해 교환할 양을 줄이거나 여러번에 나눠서 교환하는 게 좋습니다.",
+    "reserve_routing": "가스비 절약을 위해 리저브 라우팅을 사용하세요",
+    "reserve_routing_used": "가스비 절감을 위해 당 거래에서는 리저브 라우팅이 사용됩니다.",
+    "reserve_routing_explain": "미리 지정된 리저브로 거래를 라우팅하여 가스비를 절감하세요.",
+    "reserve_routing_explain_2": "미리 지정된 리저브로 거래를 라우팅하여 가스비를 절감하세요. 20이더 미만의 거래는 해당 옵션이 기본적으로 적용됩니다.",
+    "gas_fee": "가스비는 블록체인에서 거래를 채굴하기 위해 (카이버 스왑이 아닌) 채굴자에게 지불되는 비용입니다. 보통 가스의 가격은 원하는 거래 속도에 비례하여 반영됩니다.",
+    "max_gas_fee": "The actual cost of the transaction is generally lower than the maximum estimated cost"
   },
   "footer": {
     "info": "정보",
