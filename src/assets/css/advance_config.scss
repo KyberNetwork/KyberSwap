@@ -150,32 +150,7 @@
   &__checkbox {
     border-top: 1px solid transparent;
     margin-top: 15px;
-
-    .common__checkbox-text {
-      margin-top: 16px;
-
-      > span {
-        margin-right: 7px;
-      }
-
-      img {
-        top: 2px;
-        position: relative;
-      }
-    }
-  }
-
-  .__react_component_tooltip {
-    opacity: 1;
-    z-index: 1 !important;
-    width: 100% !important;
-    max-width: 300px;
-    box-shadow: 0 0 3px $grey;
-
-    > div {
-      color: #222;
-      font-size: 11px;
-    }
+    padding-top: 13px;
   }
 
   @include screen-max-width(mid-small) {
