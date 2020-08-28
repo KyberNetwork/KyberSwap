@@ -307,7 +307,13 @@
     "warning": "请不要发送以太或代币到以上的任何地址.<br></br>他们都是测试网络的地址！",
     "here": "这里",
     "please_give_feedback": "Please give us <a target='_blank' href='${link}'>feedback</a> on our new features so that we can serve you better",
-    "slippage_warning": "滑点很高。为了得到更好的汇率，您可能需要减少兑换金额或分成多次兑换"
+    "slippage_warning": "滑点很高。为了得到更好的汇率，您可能需要减少兑换金额或分成多次兑换",
+    "reserve_routing": "使用储备库路由来节省gas费用",
+    "reserve_routing_used": "在该笔交易中使用储备库路由来降低gas费用",
+    "reserve_routing_explain": "通过将您的交易发送到预定义的储备库来降低gas费用。",
+    "reserve_routing_explain_2": "通过将您的交易发送到预定义的储备库来降低gas费用。这是所有小于20 ETH交易的默认选项",
+    "gas_fee": "燃料费用费是您支付给矿工（而不是支付给KyberSwap）以在区块链上进行交易的费用。燃料的价格通常反映了您希望一笔交易的开采速度有多快。",
+    "max_gas_fee": "The actual cost of the transaction is generally lower than the maximum estimated cost"
   },
   "footer": {
     "info": "信息",

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SlideDown, { SlideDownContent } from "../CommonElement/SlideDown";
+import ReactTooltip from "react-tooltip";
 
 export default class AdvanceConfigLayout extends Component {
   render() {
@@ -15,7 +16,13 @@ export default class AdvanceConfigLayout extends Component {
         <SlideDownContent>
           <div className="advance-config theme__text-4">
             <div className={`advance-config__gas ${this.props.type === 'transfer' ? 'advance-config__gas--no-border' : ''} theme__border-2`}>
-              <div className="advance-config__title">{this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)</div>
+              <div className="advance-config__title">
+                {this.props.translate("transaction.gas_fee") || "GAS fee"} (Gwei)
+                <span className="common__info-icon" data-tip={this.props.translate("info.gas_fee")} data-for="gas-fee-info">
+                  <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
+                </span>
+                <ReactTooltip className="common__tooltip" place="top" id="gas-fee-info" type="light"/>
+              </div>
               <div className="advance-config__option-container">
                 {gasOptions.map((item, index) => {
                   return (
@@ -37,6 +44,24 @@ export default class AdvanceConfigLayout extends Component {
               </div>
             </div>
             {this.props.minConversionRate}
+            {this.props.reserveRoutingEnabled !== null && (
+              <label className="common__checkbox advance-config__checkbox theme__border-2 theme__checkbox">
+                <div className="common__checkbox-text">
+                  <span>{this.props.translate("info.reserve_routing")}</span>
+                  <span className="common__info-icon" data-tip={this.props.translate("info.reserve_routing_explain")} data-for="reserve-routing-tooltip">
+                    <img src={require('../../../assets/img/common/blue-indicator.svg')} alt=""/>
+                  </span>
+                  <ReactTooltip className="common__tooltip" place="top" id="reserve-routing-tooltip" type="light"/>
+                </div>
+                <input
+                  type="checkbox"
+                  className="common__checkbox-input"
+                  checked={this.props.reserveRoutingEnabled}
+                  onChange={this.props.toggleReserveRouting}
+                />
+                <span className="common__checkbox-checkmark"/>
+              </label>
+            )}
           </div>
         </SlideDownContent>
       </SlideDown>

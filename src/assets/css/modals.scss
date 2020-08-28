@@ -222,13 +222,14 @@ $divider-color: darken($title-background-color, 5);
       font-size: 14px;
       line-height: 1.7;
     }
-    .gas-configed{
+    .gas-configed {
       max-width: 100%;
       white-space: nowrap;
       text-align: left;
       font-size: 0.8rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
+
       >div{
         &:first-child{
           font-size: 14px;
@@ -236,6 +237,7 @@ $divider-color: darken($title-background-color, 5);
           margin-bottom: 7px;
         }
       }
+
       .total-fee {
         font-size: 16px;
         color: #141927;
@@ -257,6 +259,30 @@ $divider-color: darken($title-background-color, 5);
           &__formula {
             display: block;
           }
+        }
+      }
+
+      .fee-info {
+        font-size: 13px;
+        font-weight: 400;
+        padding: 5px 15px 5px 35px;
+        color: #4e9336;
+        background-color: #e0f4e2;
+        border-radius: 3px;
+        margin-top: 20px;
+        display: inline-block;
+        white-space: initial;
+        position: relative;
+
+        &::before {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 4px;
+          left: 12px;
+          width: 16px;
+          height: 16px;
+          background-image: url($image-path + 'icons/saving.svg');
         }
       }
     }

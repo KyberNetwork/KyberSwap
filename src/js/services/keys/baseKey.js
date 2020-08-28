@@ -44,12 +44,12 @@ export const sendTokenFromAccount = (
 
 export const etherToOthersFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee
+  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee, swapHint
 ) => {
   return new Promise((resolve) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, walletId, platformFee
+      maxDestAmount, minConversionRate, walletId, platformFee, swapHint
     ).then(result => {
         const txParams = {
           from: account,
@@ -107,12 +107,12 @@ export const getAppoveTokenZero = (ethereum, sourceToken, sourceAmount, nonce, g
 
 export const tokenToOthersFromAccount = (
   id, ethereum, account, sourceToken, sourceAmount, destToken, destAddress, maxDestAmount,
-  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee
+  minConversionRate, walletId, nonce, gas, gasPrice, keystring, accountType, password, platformFee, swapHint
 ) => {
   return new Promise((resolve) => {
     ethereum.call("exchangeData",
       sourceToken, sourceAmount, destToken, destAddress,
-      maxDestAmount, minConversionRate, walletId, platformFee
+      maxDestAmount, minConversionRate, walletId, platformFee, swapHint
     ).then(result => {
       const txParams = {
         from: account,
