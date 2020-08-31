@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://ropsten-parity.knstats.com",
+                "endPoint": "https://dev-ethereum.knstats.com/v1/ropsten/node",
                 "type": "prune"
             }
         ],
