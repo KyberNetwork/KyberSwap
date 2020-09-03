@@ -188,7 +188,7 @@ class Transfer extends React.Component {
         translate={this.props.translate}
         isAdvanceActive={this.props.transfer.isAdvanceActive}
         toggleAdvanceContent={this.toggleAdvanceContent}
-        reserveRoutingEnabled={false}
+        reserveRoutingEnabled={null}
         type="transfer"
       />
     )
