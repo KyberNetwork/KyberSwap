@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://dev-ethereum.knstats.com/v1/ropsten/node",
+                "endPoint": "https://ethereum.kyber.network/v1/ropsten/node",
                 "type": "prune"
             }
         ],
