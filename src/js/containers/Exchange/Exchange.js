@@ -137,15 +137,12 @@ export default class Exchange extends React.Component {
     return {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceTokenDecimals, destTokenDecimals}
   }
 
-  componentDidMount = () =>{
+  componentDidMount = () => {
     this.setIntervalProcess()
 
-    var {sourceTokenSymbol, sourceToken, destTokenSymbol, destToken} = this.getTokenInit()
+    const { sourceTokenSymbol, sourceToken, destTokenSymbol, destToken } = this.getTokenInit()
 
-    if ((sourceTokenSymbol !== this.props.exchange.sourceTokenSymbol) ||
-      (destTokenSymbol !== this.props.exchange.destTokenSymbol) ){
-      this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
-    }
+    this.props.dispatch(exchangeActions.selectToken(sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, "default"));
   }
 
   updateGlobal = (srcSymbol, srcAddress, destSymbol, destAddress, srcAmount = null) => {
