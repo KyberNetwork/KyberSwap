@@ -155,7 +155,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     try {
-      if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
+      if (swapHint === '0x' && (srcToken.is_gas_fixed || desToken.is_gas_fixed)) {
         this.setState({isFetchGas: false});
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
         return;
