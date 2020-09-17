@@ -152,25 +152,6 @@ export function filterInputNumber(event, value, preVal) {
   return true
 }
 
-export function checkAutoEnableReserveRouting(swapHint, srcSymbol, srcAmount, srcRate, autoEnableRRThreshold) {
-  let autoEnableReserveRouting = null;
-
-  if (swapHint !== '0x') {
-    autoEnableReserveRouting = true;
-
-   /* const isSrcEth = srcSymbol === 'ETH' || srcSymbol === 'WETH';
-    const isSrcValid = srcAmount && (srcSymbol === 'ETH' || srcRate);
-    autoEnableReserveRouting = true;
-
-    if (isSrcValid) {
-      autoEnableReserveRouting = srcAmount < autoEnableRRThreshold;
-
-      if (!isSrcEth) {
-        const amountInEth = calculateEthEquivalent(srcAmount, srcRate);
-        autoEnableReserveRouting = amountInEth < autoEnableRRThreshold;
-      }
-    }*/
-  }
-
-  return autoEnableReserveRouting;
+export function checkAutoEnableReserveRouting(swapHint) {
+  return swapHint !== '0x' ? true : null;
 }
