@@ -310,8 +310,7 @@
     "slippage_warning": "Mức trượt giá đang cao. Bạn có thể giảm lượng giao dịch hoặc chia nhỏ lệnh của bạn để có tỉ giá tốt hơn",
     "reserve_routing": "Sử dụng Reserve routing để giảm thiểu phí gas",
     "reserve_routing_used": "Reserve routing is used in this transaction to reduce gas costs",
-    "reserve_routing_explain": "Giảm phí gas bằng cách giao dịch với các quỹ được chọn trước. Đây là tùy chọn mặc định cho tất cả các giao dịch",
-    "reserve_routing_explain_2": "Giảm phí gas bằng cách giao dịch với các quỹ được chọn trước. Đây là tùy chọn mặc định cho các giao dịch < 20 ETH",
+    "reserve_routing_explain": "Giảm phí gas bằng cách giao dịch với các quỹ được chọn trước. Đây là tùy chọn mặc định cho các giao dịch < 20 ETH",
     "gas_fee": "Phí gas là phí bạn phải trả cho miner (không phải KyberSwap) để họ xác nhận giao dịch của bạn trên blockchain. Phí gas bạn chọn sẽ ảnh hưởng đến tốc độ giao dịch.",
     "max_gas_fee": "The actual cost of the transaction is generally lower than the maximum estimated cost"
   },

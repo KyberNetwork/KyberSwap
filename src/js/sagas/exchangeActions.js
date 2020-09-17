@@ -19,8 +19,6 @@ function* selectToken(action) {
   const { sourceTokenSymbol, destTokenSymbol, sourceToken, destToken } = action.payload;
   const state = store.getState();
   const translate = getTranslate(state.locale);
-  const tokens = state.tokens.tokens;
-  const srcRate = tokens[sourceTokenSymbol] ? tokens[sourceTokenSymbol].rate : 0;
   const srcAmount = state.exchange.sourceAmount;
 
   yield put(actions.estimateGasNormal(false))
@@ -32,14 +30,9 @@ function* selectToken(action) {
 
   yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.sameToken));
 
-  const swapHint = yield call(fetchSwapHint, sourceToken, destToken);
-
-  if (!state.exchange.reserveRoutingTouched) {
-    const autoEnableReserveRouting = checkAutoEnableReserveRouting(swapHint, sourceTokenSymbol, srcAmount, srcRate, BLOCKCHAIN_INFO.autoEnableRRThreshold);
-    yield put(actions.setReserveRoutingEnabled(autoEnableReserveRouting));
-  } else if (swapHint === '0x') {
-    yield put(actions.setReserveRoutingEnabled(null));
-  }
+  const swapHint = yield call(fetchSwapHint, sourceToken, destToken, srcAmount);
+  const isEnableReserveRouting = checkAutoEnableReserveRouting(swapHint);
+  yield put(actions.setReserveRoutingEnabled(isEnableReserveRouting));
 }
 
 function* updateRatePending(action) {
@@ -121,7 +114,7 @@ function* updateRatePending(action) {
     yield put(globalActions.updateTitleWithRate())
   } catch(err) {
     console.log(err)
-    if(isManual){      
+    if(isManual){
       yield put(utilActions.openInfoModal(translate("error.error_occurred") || "Error occurred",
       translate("error.node_error") || "There are some problems with nodes. Please try again in a while."))
     }

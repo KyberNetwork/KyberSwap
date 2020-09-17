@@ -15,6 +15,7 @@ import { debounce } from 'underscore';
 import BLOCKCHAIN_INFO from "../../../../env";
 import ReactTooltip from 'react-tooltip';
 import { ExchangeAccount } from "../../containers/Exchange"
+import { fetchSwapHint } from "../../services/kyberSwapService";
 
 @connect((store) => {
   const ethereum = store.connection.ethereum
@@ -139,7 +140,7 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.inputChange('source', value, this.props.sourceToken.decimals, this.props.destToken.decimals));
 
     this.lazyEstimateGas();
-    this.lazyEnableReserveRouting();
+    this.lazyEnableReserveRouting(value);
 
     this.validateRateAndSource(value);
   }
@@ -298,6 +299,7 @@ class ExchangeBody extends React.Component {
         isAdvanceActive={this.props.exchange.isAdvanceActive}
         minConversionRate={minConversionRate}
         reserveRoutingEnabled={this.props.exchange.reserveRoutingEnabled}
+        reserveRoutingChecked={this.props.exchange.reserveRoutingChecked}
         toggleReserveRouting={this.toggleReserveRouting}
         type="exchange"
       />
@@ -305,7 +307,7 @@ class ExchangeBody extends React.Component {
   };
 
   toggleReserveRouting = () => {
-    this.props.dispatch(exchangeActions.setReserveRoutingEnabled(!this.props.exchange.reserveRoutingEnabled, true));
+    this.props.dispatch(exchangeActions.setReserveRoutingEnabled(true, !this.props.exchange.reserveRoutingChecked));
   }
 
   closeChangeWallet = () => {
@@ -352,17 +354,12 @@ class ExchangeBody extends React.Component {
     this.props.dispatch(exchangeActions.estimateGasNormal(false))
   }
 
-  dispatchEnableReserveRouting = () => {
-    const exchange = this.props.exchange;
-    if (exchange.reserveRoutingEnabled === null || exchange.reserveRoutingTouched) return;
+  dispatchEnableReserveRouting = async (srcAmount) => {
+    const srcAddress = this.props.sourceToken.address;
+    const destAddress = this.props.destToken.address;
 
-    const srcToken = this.props.sourceToken;
-    const srcSymbol = srcToken.symbol;
-    const srcAmount = exchange.sourceAmount;
-    const srcRate = srcToken.rate;
-    const autoEnableRRThreshold = BLOCKCHAIN_INFO.autoEnableRRThreshold;
-
-    const reserveRoutingEnabled = validators.checkAutoEnableReserveRouting(true, srcSymbol, srcAmount, srcRate, autoEnableRRThreshold);
+    const swapHint = await fetchSwapHint(srcAddress, destAddress, srcAmount)
+    const reserveRoutingEnabled = validators.checkAutoEnableReserveRouting(swapHint);
 
     this.props.dispatch(exchangeActions.setReserveRoutingEnabled(reserveRoutingEnabled));
   }

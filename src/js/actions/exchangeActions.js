@@ -352,9 +352,9 @@ export function setPlatformFee(fee) {
   }
 }
 
-export function setReserveRoutingEnabled(isEnabled, isTouched = false) {
+export function setReserveRoutingEnabled(isEnabled, isChecked = null) {
   return {
     type: "EXCHANGE.SET_RESERVE_ROUTING_ENABLED",
-    payload: { isEnabled, isTouched }
+    payload: { isEnabled, isChecked }
   }
 }
