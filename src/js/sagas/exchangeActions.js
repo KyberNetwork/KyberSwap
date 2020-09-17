@@ -36,7 +36,10 @@ function* selectToken(action) {
 }
 
 function* updateRatePending(action) {
-  var { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount } = action.payload;
+  var {
+    ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol,
+    destToken, sourceAmount, isManual, refetchSourceAmount
+  } = action.payload;
   const state = store.getState();
   const translate = getTranslate(state.locale);
   const tokens = state.tokens.tokens;
@@ -107,7 +110,14 @@ function* updateRatePending(action) {
       yield put(actions.clearErrorSourceAmount(constants.EXCHANGE_CONFIG.sourceErrors.rate))
     }
 
-    const calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
+    let calculatedSrcAmount = refetchSourceAmount ? converter.caculateSourceAmount(destAmount, expectedPrice, srcTokenDecimal) : state.exchange.sourceAmount;
+
+    if (refetchSourceAmount) {
+      calculatedSrcAmount = calculatedSrcAmount ? calculatedSrcAmount : state.exchange.sourceAmount;
+      const swapHint = yield call(fetchSwapHint, srcTokenAddress, destTokenAddress, calculatedSrcAmount);
+      const reserveRoutingEnabled = validators.checkAutoEnableReserveRouting(swapHint);
+      yield put(actions.setReserveRoutingEnabled(reserveRoutingEnabled));
+    }
 
     yield put(actions.estimateGasNormal(calculatedSrcAmount));
     yield put(actions.updateRateExchangeComplete(refPrice, expectedPrice, slippagePrice, isManual, percentChange, srcTokenDecimal, destTokenDecimal, isRefPriceFromChainLink))
