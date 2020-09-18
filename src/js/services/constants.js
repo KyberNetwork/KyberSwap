@@ -114,7 +114,7 @@ const INIT_EXCHANGE_FORM_STATE = {
   isRefPriceFromChainLink: false,
   platformFee: DEFAULT_BPS_FEE,
   reserveRoutingEnabled: null,
-  reserveRoutingTouched: false
+  reserveRoutingChecked: true
 }
 
 const TRANSFER_CONFIG = {

@@ -79,10 +79,16 @@ export function setRandomExchangeSelectedToken(random) {
   }
 }
 
-export function updateRate(ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual = false, refetchSourceAmount = false, type = null) {
+export function updateRate(
+  ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken,
+  sourceAmount, isManual = false, refetchSourceAmount = false, type = null
+)  {
   return {
     type: "EXCHANGE.UPDATE_RATE_PENDING",
-    payload: { ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken, sourceAmount, isManual, refetchSourceAmount, type }
+    payload: {
+      ethereum, sourceTokenSymbol, sourceToken, destTokenSymbol, destToken,
+      sourceAmount, isManual, refetchSourceAmount, type
+    }
   }
 }
 
@@ -352,9 +358,9 @@ export function setPlatformFee(fee) {
   }
 }
 
-export function setReserveRoutingEnabled(isEnabled, isTouched = false) {
+export function setReserveRoutingEnabled(isEnabled, isChecked = null) {
   return {
     type: "EXCHANGE.SET_RESERVE_ROUTING_ENABLED",
-    payload: { isEnabled, isTouched }
+    payload: { isEnabled, isChecked }
   }
 }

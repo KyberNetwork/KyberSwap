@@ -310,7 +310,6 @@
     "reserve_routing": "Use reserve routing to enjoy gas savings",
     "reserve_routing_used": "Reserve routing is used in this transaction to reduce gas costs",
     "reserve_routing_explain": "Reduce gas costs by routing your trade to predefined reserves. This is the default option for all trades",
-    "reserve_routing_explain_2": "Reduce gas costs by routing your trade to predefined reserves. This is the default option for all trades <20 ETH",
     "gas_fee": "Gas fee is the fee you pay to the miner (not to KyberSwap) to mine your transaction on blockchain. The price of gas generally reflect how fast you want a transaction mined.",
     "max_gas_fee": "The actual cost of the transaction is generally lower than the maximum estimated cost"
   },

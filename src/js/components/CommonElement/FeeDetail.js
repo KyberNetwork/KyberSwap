@@ -18,7 +18,7 @@ const FeeDetail = (props) => {
         <span className={"total-fee__number theme__text"}>{totalGas.toString()} ETH</span>
         <span className={"total-fee__formula theme__text-6"}>{props.gasPrice} Gwei (Gas Price) * {props.gas} (Gas Limit)</span>
       </div>
-      {props.reserveRoutingEnabled && (
+      {(props.reserveRoutingEnabled && props.reserveRoutingChecked) && (
         <div className="fee-info">{props.translate("info.reserve_routing_used")}</div>
       )}
     </div>

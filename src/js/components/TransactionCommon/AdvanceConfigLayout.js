@@ -56,7 +56,7 @@ export default class AdvanceConfigLayout extends Component {
                 <input
                   type="checkbox"
                   className="common__checkbox-input"
-                  checked={this.props.reserveRoutingEnabled}
+                  checked={this.props.reserveRoutingChecked}
                   onChange={this.props.toggleReserveRouting}
                 />
                 <span className="common__checkbox-checkmark"/>
