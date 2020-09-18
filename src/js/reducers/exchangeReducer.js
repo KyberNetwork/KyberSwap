@@ -346,10 +346,10 @@ const exchange = (state = initState, action) => {
       return newState
     }
     case "EXCHANGE.SET_RESERVE_ROUTING_ENABLED": {
-      const { isEnabled, isTouched } = action.payload;
+      const { isEnabled, isChecked } = action.payload;
 
       newState.reserveRoutingEnabled = isEnabled;
-      newState.reserveRoutingTouched = isTouched;
+      if (isChecked !== null) newState.reserveRoutingChecked = isChecked;
 
       return newState
     }

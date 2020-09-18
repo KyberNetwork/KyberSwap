@@ -149,13 +149,13 @@ export default class ConfirmModal extends React.Component {
     let gas = await fetchGasLimit(srcToken, desToken, maxGasLimit, srcAmountNumber);
     this.setState({ gasLimit: gas });
 
-    if (this.props.exchange.reserveRoutingEnabled) {
+    if (this.props.exchange.reserveRoutingEnabled && this.props.exchange.reserveRoutingChecked) {
       swapHint = await fetchSwapHint(sourceToken, destToken, srcAmountNumber);
       this.setState({ swapHint: swapHint });
     }
 
     try {
-      if (srcToken.is_gas_fixed || desToken.is_gas_fixed) {
+      if (swapHint === '0x' && (srcToken.is_gas_fixed || desToken.is_gas_fixed)) {
         this.setState({isFetchGas: false});
         this.validateEthBalance(ethBalance, sourceTokenSymbol, sourceAmount, gas, gasPrice);
         return;
@@ -488,6 +488,7 @@ export default class ConfirmModal extends React.Component {
                     gasPrice={this.props.exchange.snapshot.gasPrice}
                     gas={this.state.gasLimit}
                     reserveRoutingEnabled={this.props.exchange.reserveRoutingEnabled}
+                    reserveRoutingChecked={this.props.exchange.reserveRoutingChecked}
                   />
                   {warningLowFee && (
                     <div className={"tx-fee-warning theme__background-10"}>
