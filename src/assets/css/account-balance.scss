@@ -1,8 +1,4 @@
 .account-balance {
-  &__content{
-    margin-right: -20px;
-  }
-
   &__address {
     align-items: center;
   }
@@ -70,9 +66,22 @@
     }
   }
 
+  .balance-header {
+    padding: 0 15px;
+  }
+
+  &__search-panel {
+    padding: 0 15px;
+    margin-top: 10px;
+
+    &.common__flexbox {
+      padding: 0;
+    }
+  }
+
   &__sort-panel {
     font-size: 14px;
-    margin: 20px -20px 0 -20px;
+    margin: 20px 0 0;
     padding: 10px 20px;
     cursor: pointer;
     display: flex;
@@ -103,7 +112,7 @@
     flex-wrap: wrap;
     align-items: center;
     margin: 10px 0;
-    padding: 0 15px 0 0;
+    padding: 10px 15px;
     overflow: auto;
     max-height: 70vh;
 
@@ -130,13 +139,15 @@
     }
   }
 
-  &__token-wrapper{
+  &__token-wrapper {
     margin-bottom: 20px;
     cursor: pointer;
     font-size: 14px;
-    // width: 100%;
     position: relative;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__item-hover-overlay{

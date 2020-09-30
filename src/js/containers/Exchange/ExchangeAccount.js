@@ -69,23 +69,21 @@ export default class ExchangeAccount extends React.Component {
   }
 
   render() {
-    if (this.props.account === false) {
-      return  null
-    } else {
-      return (
-        <ToggleableMenu
-          clearSession={this.clearSession}>
-            <AccountBalance
-              sourceActive={this.props.exchange.sourceTokenSymbol}
-              destTokenSymbol={this.props.exchange.destTokenSymbol}
-              isBalanceActive={this.props.exchange.isAdvanceActive}
-              walletName={this.props.account.walletName}
-              screen="swap"
-              isOnDAPP={this.props.account.isOnDAPP}
-              selectToken={this.selectToken}
-            />
-        </ToggleableMenu>
-      );
-    }
+    return (
+      <ToggleableMenu
+        clearSession={this.clearSession}>
+        <AccountBalance
+          sourceActive={this.props.exchange.sourceTokenSymbol}
+          destTokenSymbol={this.props.exchange.destTokenSymbol}
+          isBalanceActive={this.props.exchange.isAdvanceActive}
+          walletName={this.props.account.walletName}
+          screen="swap"
+          isOnDAPP={this.props.account.isOnDAPP}
+          selectToken={this.selectToken}
+          hideZeroBalance={true}
+          hideSearch={true}
+        />
+      </ToggleableMenu>
+    );
   }
 }

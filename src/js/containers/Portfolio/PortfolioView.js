@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import ImportAccount from "../ImportAccount/ImportAccount";
 import { AccountBalance } from "../TransactionCommon";
 import PortfolioTxHistory from "./PortfolioTxHistory";

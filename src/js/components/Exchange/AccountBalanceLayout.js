@@ -7,6 +7,7 @@ import { Modal, SortableComponent } from "../CommonElement"
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ReactTooltip from "react-tooltip";
 import QRCode from "qrcode.react";
+import { formatNumber, multiplyOfTwoNumber } from "../../utils/converter";
 
 const AccountBalanceLayout = (props) => {
   const isPortfolio = props.screen === 'portfolio';
@@ -115,7 +116,7 @@ const AccountBalanceLayout = (props) => {
               <div className="balance-header">
                 <div className="slide-down__trigger-container">
                   <div className={"account-balance__address"}>
-                    <div className="account-balance__address-text">{props.translate("address.your_wallet") || "Wallet"}</div>
+                    <div className="account-balance__address-text">{props.translate("address.your_wallet") || "My Wallet"}</div>
                     <div>
                       <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                         onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
@@ -155,6 +156,17 @@ const AccountBalanceLayout = (props) => {
                         {props.translate("change") || "CHANGE"}
                       </span>
                     </div>
+
+                    <div className="account-balance__total theme__text-9">
+                      {props.sortType === "ETH" && (
+                        <span>Total: {formatNumber(props.totalBalanceInETH, 6)} ETH</span>
+                      )}
+
+                      {props.sortType === "USD" && (
+                        <span>Total: {formatNumber(multiplyOfTwoNumber(props.totalBalanceInETH, props.rateETHInUSD), 6)} USD</span>
+                      )}
+                    </div>
+
                     {props.isLimitOrderTab &&
                       <div className="account-balance__address-text">
                         {props.translate("limit_order.your_available_balance") || "Tokens Available for Limit Order"}
@@ -166,24 +178,26 @@ const AccountBalanceLayout = (props) => {
             )}
 
             <div className="account-balance__control-panel">
-              <div className={`account-balance__search-panel ${props.hideZeroBalance ? 'common__flexbox' : ''}`}>
-                {props.hideZeroBalance && (
-                  <div className="account-balance__text-panel">All Tokens</div>
-                )}
+              {!props.hideSearch && (
+                <div className={`account-balance__search-panel ${props.hideZeroBalance ? 'common__flexbox' : ''}`}>
+                  {props.hideZeroBalance && (
+                    <div className="account-balance__text-panel">All Tokens</div>
+                  )}
 
-                {!isHideAllInfo && (
-                  <div className="account-balance__content-search-container">
-                    <input
-                      className="account-balance__content-search theme__search"
-                      type="text"
-                      placeholder={props.translate("address.search") || "Search by Name"}
-                      onClick={props.clickOnInput}
-                      onChange={(e) => props.changeSearchBalance(e)}
-                      value={props.searchWord}
-                    />
-                  </div>
-                )}
-              </div>
+                  {!isHideAllInfo && (
+                    <div className="account-balance__content-search-container">
+                      <input
+                        className="account-balance__content-search theme__search"
+                        type="text"
+                        placeholder={props.translate("address.search") || "Search by Name"}
+                        onClick={props.clickOnInput}
+                        onChange={(e) => props.changeSearchBalance(e)}
+                        value={props.searchWord}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
               {!isHideAllInfo && (
                 <div className="account-balance__sort-panel theme__background-4">

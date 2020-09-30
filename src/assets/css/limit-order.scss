@@ -398,23 +398,140 @@
     font-weight: 600;
   }
 
-  .right-slide-panel{
+  .right-slide-panel {
     position: fixed;
     right: 0;
     top: 100px;
     z-index: 99;
     border-radius: 3px 0 0 3px;
     font-size: 13px;
-    padding: 10px 18px;
     cursor: pointer;
     box-shadow: 0 2px 15px -6px rgba(0, 0, 0, 1);
 
-    &:before{
-      content: '\2190';
-      font-size: 15px;
-      margin-right: 5px;
-      position: relative;
-      top: 1px;
+    &__more {
+      padding: 10px 18px;
+
+      &:before {
+        content: '\2190';
+        color: $text-orange;
+        font-size: 15px;
+        margin-right: 5px;
+        position: relative;
+        top: 1px;
+      }
+    }
+
+    &__trending {
+      padding: 10px 18px;
+
+      &:before {
+        content: '';
+        margin-right: 7px;
+        width: 11px;
+        height: 16px;
+        display: inline-block;
+        background-image: url($image-path + 'icons/trending.svg');
+        position: relative;
+        top: 2px;
+      }
+    }
+
+    &__wallet {
+      padding: 10px 10px 10px 18px;
+
+      > div:first-child {
+        &::before {
+          content: '';
+          background-color: $text-orange;
+          width: 7px;
+          height: 7px;
+          display: inline-block;
+          margin-right: 5px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    &__tokens {
+      padding: 20px 10px 10px 18px;
+      max-height: 300px;
+      overflow: hidden;
+
+      .rate-item {
+        margin-bottom: 13px;
+        margin-right: 0;
+        padding-right: 0;
+        color: #9ea1aa;
+
+        .pair {
+          &--new {
+            display: inline-block;
+
+            span {
+              position: relative;
+
+              &::after {
+                content: 'new';
+                font-size: 10px;
+                font-weight: 500;
+                color: #fa6566;
+                position: absolute;
+                top: -4px;
+                right: -24px;
+              }
+            }
+          }
+        }
+
+        &__percent-change {
+          width: 14px;
+          height: 14px;
+          margin-right: 7px;
+        }
+      }
+    }
+  }
+
+  .right-slide-unlocked {
+    .right-slide-panel__tokens {
+      max-height: 480px;
+      background-color: transparent !important;
+      overflow: auto;
+
+      .rate-item {
+        margin-bottom: 20px;
+
+        &.positive .percent-change {
+          color: #31cb9e;
+        }
+
+        &.negative .percent-change {
+          color: #fa6566;
+        }
+
+        .pair {
+          width: 40%;
+        }
+
+        .value {
+          width: 40%;
+        }
+
+        .percent-change {
+          width: 20%;
+        }
+
+        &__container {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        &__percent-change {
+          display: none;
+        }
+      }
     }
   }
 
@@ -511,7 +628,6 @@
     top: 0;
     right: 0;
     height: 100%;
-    padding: 10px 20px;
     box-shadow: -4px 2px 34px 0 rgba(0, 0, 0, 0.38);
     background-color: #ffffff;
 
@@ -537,27 +653,36 @@
     }
 
     .advance-close {
-      font-size: 26px;
       cursor: pointer;
-      position: absolute;
-      right: 0;
-      top: 0;
-      padding: 10px 15px;
-      z-index: 99999;
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      padding: 10px 20px;
+      font-size: 14px;
 
       &:before{
         content:'\2192';
         color: #ff9008;
+        margin-left: 5px;
       };
     }
     
     .account-balance {
-      &__address div{
-        margin-bottom: 20px;
+      &__address div {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
       }
 
       &__address-text {
         font-weight: 500;
+        margin-bottom: 15px !important;
+      }
+
+      &__total {
+        font-size: 14px;
       }
 
       &__address-eth-balance {
@@ -574,14 +699,25 @@
       &__address-link {
         font-size: 12px;
         font-weight: 300;
+
+        &::before {
+          content: '';
+          background-color: $text-orange;
+          width: 7px;
+          height: 7px;
+          display: inline-block;
+          margin-right: 5px;
+          border-radius: 50%;
+        }
       }
 
       &__reimport {
         font-size: 12px;
         font-weight: 500;
-        color: $text-blue;
+        color: $text-orange;
         padding-left: 5px;
         cursor: pointer;
+        text-transform: uppercase;
       }
 
       &__content-search-container {
