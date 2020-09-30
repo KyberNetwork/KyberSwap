@@ -49,6 +49,8 @@ export default class TransferAccount extends React.Component {
               isOnDAPP={this.props.account.isOnDAPP}
               walletName={this.props.account.walletName}
               selectToken={this.props.selectToken}
+              hideZeroBalance={true}
+              hideSearch={true}
             />
         </ToggleableMenu>
       );

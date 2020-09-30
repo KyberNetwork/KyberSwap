@@ -3,7 +3,7 @@ import * as converter from "../utils/converter"
 
 function initState (tokens = BLOCKCHAIN_INFO.tokens) {
   let wrapperTokens = {}
-  var timeStampNew = Math.floor(new Date().getTime() /1000) - 604800
+  var timeStampNew = Math.floor(new Date().getTime() /1000) - 60480000
 
   Object.keys(tokens).forEach((key) => {
     wrapperTokens[key] = {

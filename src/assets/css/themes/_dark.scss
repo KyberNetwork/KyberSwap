@@ -33,6 +33,10 @@
     color: $light-color-7;
   }
 
+  .theme__text-9 {
+    color: white;
+  }
+
   .theme__background {
     background-color: $dark-color-1;
   }
@@ -162,7 +166,12 @@
   }
 
   .theme__slide-menu {
-    background-color: $dark-color-6;
+    background-color: black;
+    color: white;
+  }
+
+  .theme__slide-panel {
+    background-color: #1e1e1e;
     color: white;
   }
 

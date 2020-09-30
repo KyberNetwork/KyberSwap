@@ -17,6 +17,8 @@ import * as converts from "../../utils/converter";
     walletType: store.account.account.type,
     account: store.account.account,
     address: store.account.account.address,
+    totalBalanceInETH: store.account.totalBalanceInETH,
+    rateETHInUSD: store.tokens.tokens.ETH.rateUSD,
     sourceActive: props.sourceActive,
     isFixedSourceToken: isFixedSourceToken,
     global: store.global,
@@ -197,6 +199,9 @@ export default class AccountBalance extends React.Component {
         setIsAddressCopied={this.setIsAddressCopied}
         isAddressQROpened={this.state.isAddressQROpened}
         setIsAddressQROpened={this.setIsAddressQROpened}
+        hideSearch={this.props.hideSearch}
+        totalBalanceInETH={this.props.totalBalanceInETH}
+        rateETHInUSD={this.props.rateETHInUSD}
       />
     )
   }

@@ -113,16 +113,18 @@ export default class LimitOrderAccount extends React.Component {
     } else {
       return (
         <ToggleableMenu
-          clearSession={this.clearSession}>
-            <AccountBalance
-              isLimitOrderTab={true}
-              getFilteredTokens={this.getFilteredTokens}
-              sourceActive={this.props.limitOrder.sourceTokenSymbol}
-              isOnDAPP={this.props.account.isOnDAPP}
-              walletName={this.props.walletName}
-              screen="limit_order"
-              selectToken={this.selectToken}
-            />
+          clearSession={this.clearSession}
+          hideTrending={true}
+        >
+          <AccountBalance
+            isLimitOrderTab={true}
+            getFilteredTokens={this.getFilteredTokens}
+            sourceActive={this.props.limitOrder.sourceTokenSymbol}
+            isOnDAPP={this.props.account.isOnDAPP}
+            walletName={this.props.walletName}
+            screen="limit_order"
+            selectToken={this.selectToken}
+          />
         </ToggleableMenu>
       );
     }
