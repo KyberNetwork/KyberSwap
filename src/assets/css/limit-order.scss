@@ -454,7 +454,7 @@
 
     &__tokens {
       padding: 20px 10px 10px 18px;
-      max-height: 300px;
+      max-height: 295px;
       overflow: hidden;
 
       .rate-item {
@@ -494,9 +494,13 @@
 
   .right-slide-unlocked {
     .right-slide-panel__tokens {
-      max-height: 480px;
+      max-height: 255px;
       background-color: transparent !important;
       overflow: auto;
+
+      &.full-height {
+        max-height: 70vh;
+      }
 
       .rate-item {
         margin-bottom: 20px;

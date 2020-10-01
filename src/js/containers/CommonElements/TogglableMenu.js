@@ -4,6 +4,7 @@ import { Modal } from "../../components/CommonElement"
 import { getTranslate } from "react-localize-redux";
 import { formatAddress, formatNumber } from "../../utils/converter";
 import { sortBy, filter, map } from "underscore";
+import BLOCKCHAIN_INFO from "../../../../env"
 
 @connect((store) => {
   const translate = getTranslate(store.locale);
@@ -91,13 +92,13 @@ export default class ToggleableMenu extends React.Component {
     const maxTrendingTokens = 10;
 
     let newListingTokens = filter(this.props.tokens, token => {
-      const marketToken = this.props.marketTokens[`USDT_${token.symbol}`];
+      const marketToken = this.props.marketTokens[`${BLOCKCHAIN_INFO.indexForTrending}_${token.symbol}`];
       return token.isNew && marketToken && marketToken.buy_price !== "0";
     }).slice(0, maxTrendingTokens);
     newListingTokens = map(newListingTokens, token => {
-      const usdtPair = `USDT_${token.symbol}`;
-      const marketToken = this.props.marketTokens[usdtPair];
-      token.pair = usdtPair;
+      const indexPair = `${BLOCKCHAIN_INFO.indexForTrending}_${token.symbol}`;
+      const marketToken = this.props.marketTokens[indexPair];
+      token.pair = indexPair;
       token.change = marketToken.change;
       token.buy_price = marketToken.buy_price;
       return token;
@@ -108,13 +109,15 @@ export default class ToggleableMenu extends React.Component {
 
     if (remainingSlots) {
       topGainers = filter(this.props.marketTokens, token => {
-        return token.pair.indexOf('USDT') !== -1;
+        return token.pair.indexOf(BLOCKCHAIN_INFO.indexForTrending) !== -1 && token.change !== "0";
       });
       topGainers = sortBy(topGainers, token => {
         return -token.change;
       }).slice(0, remainingSlots);
     }
 
+    console.log(newListingTokens);
+    console.log(topGainers);
     const trendingTokens = newListingTokens.concat(topGainers);
 
     this.setState({ trendingTokens: trendingTokens });
@@ -137,7 +140,7 @@ export default class ToggleableMenu extends React.Component {
           <div className={`change-${this.getChangeClass(token.change)} rate-item__percent-change`}/>
           <div className="rate-item__container">
             <div className={`pair ${token.isNew ? 'pair--new' : ''}`}>
-              <span>{token.pair.replace("USDT_", '')}</span>
+              <span>{token.pair.replace(`${BLOCKCHAIN_INFO.indexForTrending}_`, '')}</span>
             </div>
             <div className="value up">${formatNumber(token.buy_price, 4)}</div>
             <div className="percent-change">{token.change}%</div>
@@ -148,9 +151,12 @@ export default class ToggleableMenu extends React.Component {
   }
   
   render() {
+    const showTrending = !this.props.hideTrending && this.state.trendingTokens.length !== 0;
+    const showRightSidePanel = this.props.address || showTrending;
+
     return (
         <div className={"limit-order-account"}>
-          <div onClick={this.toggleAdvanceTokeBalance} className={"right-slide-panel " + (this.state.isAdvanceTokenVisible || this.props.global.isOnMobile ? "hide" : "")}>
+          <div onClick={this.toggleAdvanceTokeBalance} className={"right-slide-panel " + (this.state.isAdvanceTokenVisible || this.props.global.isOnMobile || !showRightSidePanel ? "hide" : "")}>
             <div className="right-slide-panel__more theme__slide-menu">More</div>
 
             {this.props.address && (
@@ -164,7 +170,7 @@ export default class ToggleableMenu extends React.Component {
               </div>
             )}
 
-            {!this.props.hideTrending && (
+            {showTrending && (
               <Fragment>
                 <div className="right-slide-panel__trending theme__slide-panel">Trending</div>
                 <div className="right-slide-panel__tokens theme__background-5">
@@ -174,7 +180,7 @@ export default class ToggleableMenu extends React.Component {
             )}
           </div>
 
-          {(this.state.isAdvanceTokenVisible) && (
+          {this.state.isAdvanceTokenVisible && (
             <div className="limit-order-account__advance theme__background-7">
               <div className="limit-order-account__advance--bg" onClick={() => this.setState({ isAdvanceTokenVisible: false })}/>
               <div className="advance-close theme__slide-menu" onClick={this.toggleAdvanceTokeBalance}>
@@ -196,12 +202,15 @@ export default class ToggleableMenu extends React.Component {
                 </div>
               </div>
 
-              {React.cloneElement(this.props.children, { openReImport: this.openReImport })}
+              {React.cloneElement(this.props.children, {
+                openReImport: this.openReImport,
+                fullHeightTokenList: !showTrending
+              })}
 
-              {!this.props.hideTrending && (
+              {showTrending && (
                 <div className="right-slide-unlocked">
                   <div className="right-slide-panel__trending theme__slide-panel">Trending</div>
-                  <div className="right-slide-panel__tokens theme__background-5">
+                  <div className={`right-slide-panel__tokens theme__background-5 ${!this.props.address ? 'full-height' : ''}`}>
                     {this.renderTrendingTokens()}
                   </div>
                 </div>

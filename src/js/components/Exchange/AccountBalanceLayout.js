@@ -248,7 +248,7 @@ const AccountBalanceLayout = (props) => {
             <div className="account-balance__content">
               <div>
                 <div className="balances custom-radio">
-                  <div className={`account-balance__token-list ${isHideAllInfo ? 'account-balance__token-list--empty' : ''}`}>
+                  <div className={`account-balance__token-list ${props.fullHeightTokenList ? 'full-height' : ''} ${isHideAllInfo ? 'account-balance__token-list--empty' : ''}`}>
                     {!isHideAllInfo ? allBalances : '-- % --'}
                   </div>
                 </div>

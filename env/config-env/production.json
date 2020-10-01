@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://production-cache.kyber.network/node",
+                "endPoint": "https://eth-mainnet.alchemyapi.io/v2/XfDpvmN43dUbswu08rtszlC6PkqWqV3L",
                 "type": "prune"
             }            
         ],
@@ -37,6 +37,7 @@
         "page_size": 50
     },
     "promo_token": "PT",
+    "indexForTrending": "USDT",
     "wrapETHToken": "WETH",
     "tokens": {
         "ETH": {
