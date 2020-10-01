@@ -37,6 +37,7 @@
         "page_size": 50
     },
     "promo_token": "PT",
+    "indexForTrending": "USDT",
     "wrapETHToken": "WETH",
     "tokens": {
         "ETH": {

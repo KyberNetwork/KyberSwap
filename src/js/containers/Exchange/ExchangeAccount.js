@@ -71,7 +71,8 @@ export default class ExchangeAccount extends React.Component {
   render() {
     return (
       <ToggleableMenu
-        clearSession={this.clearSession}>
+        clearSession={this.clearSession}
+      >
         <AccountBalance
           sourceActive={this.props.exchange.sourceTokenSymbol}
           destTokenSymbol={this.props.exchange.destTokenSymbol}

@@ -114,7 +114,11 @@
     margin: 10px 0;
     padding: 10px 15px;
     overflow: auto;
-    max-height: 70vh;
+    max-height: 290px;
+
+    &.full-height {
+      max-height: 70vh;
+    }
 
     &::-webkit-scrollbar-track {
       border-radius: 8px;

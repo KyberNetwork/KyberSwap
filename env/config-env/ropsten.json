@@ -16,6 +16,7 @@
     "kyberswap_api": "https://dev-userdashboard.knstats.com/api",
     "portfolio_api": "https://dev-portfolio.knstats.com",
     "promo_token": "OMG",
+    "indexForTrending": "DAI",
     "priority_tokens": [
         "ETH",
         "DAI",

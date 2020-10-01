@@ -202,6 +202,7 @@ export default class AccountBalance extends React.Component {
         hideSearch={this.props.hideSearch}
         totalBalanceInETH={this.props.totalBalanceInETH}
         rateETHInUSD={this.props.rateETHInUSD}
+        fullHeightTokenList={this.props.fullHeightTokenList}
       />
     )
   }
