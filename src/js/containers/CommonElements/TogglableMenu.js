@@ -24,7 +24,7 @@ export default class ToggleableMenu extends React.Component {
     super(props);
 
     this.state = {
-      isAdvanceTokenVisible: true,
+      isAdvanceTokenVisible: false,
       isReimport: false,
       trendingTokens: []
     }
