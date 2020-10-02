@@ -73,8 +73,7 @@ export default class AccountBalance extends React.Component {
   };
   
   archiveBalanceZero = (tokens) => {
-    return tokens.filter(t =>  (converts.compareTwoNumber(t.balance, 0)))
-    .concat(tokens.filter(t =>  !(converts.compareTwoNumber(t.balance, 0))))
+    return tokens.filter(t => +t.balance !== 0)
   };
   
   getChangeByETH = (tokenSymbol) => {
@@ -96,7 +95,7 @@ export default class AccountBalance extends React.Component {
   getCustomizedTokens = () => {
     let tokens = this.props.tokens;
     let res = [];
-    
+
     switch (this.state.sortType) {
       case "ETH":
         const WETHToTop = !!this.props.isLimitOrderTab;
@@ -113,7 +112,7 @@ export default class AccountBalance extends React.Component {
         });
         break;
     }
-    
+
     switch (this.state.sortName) {
       case "Name":
         let ordered = [];
@@ -138,7 +137,7 @@ export default class AccountBalance extends React.Component {
       case "Change":
         res = Object.keys(tokens).map(key => tokens[key]).sort((a, b) => {
           let aChange, bChange;
-          
+
           if (this.state.sortType === 'ETH') {
             aChange = this.getChangeByETH(a.symbol);
             bChange = this.getChangeByETH(b.symbol);
@@ -146,18 +145,18 @@ export default class AccountBalance extends React.Component {
             aChange = this.getChangeByUSD(a.symbol);
             bChange = this.getChangeByUSD(b.symbol);
           }
-      
+
           return (this.state.sortDESC ? -1 : 1) * converts.subOfTwoNumber(aChange, bChange);
         });
         break;
     }
-    
+
     res = this.archiveBalanceZero(res);
-    
+
     if (!this.props.hideZeroBalance) {
       res = this.archiveMaintain(res)
     }
-    
+
     return res
   };
   
@@ -199,7 +198,6 @@ export default class AccountBalance extends React.Component {
         setIsAddressCopied={this.setIsAddressCopied}
         isAddressQROpened={this.state.isAddressQROpened}
         setIsAddressQROpened={this.setIsAddressQROpened}
-        hideSearch={this.props.hideSearch}
         totalBalanceInETH={this.props.totalBalanceInETH}
         rateETHInUSD={this.props.rateETHInUSD}
         fullHeightTokenList={this.props.fullHeightTokenList}

@@ -82,7 +82,6 @@ export default class ExchangeAccount extends React.Component {
           isOnDAPP={this.props.account.isOnDAPP}
           selectToken={this.selectToken}
           hideZeroBalance={true}
-          hideSearch={true}
         />
       </ToggleableMenu>
     );
