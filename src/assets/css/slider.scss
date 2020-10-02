@@ -29,48 +29,53 @@
     font-size: 0;
     display: flex;
     justify-content: space-between;
-    .rate-item{
-      display: flex !important;
-      &__percent-change{
-        margin-right: 5px;
-      }
-    }
-    .rate-item {
-      display: inline-block;
-      padding-right: 18px;
-      &:focus{
-        outline: none;
-        border: none;
-      }
-      &:not(:last-child) {
-        margin-right:30px;
-      }
-      >div >div {
-        outline: none;
-      }
-      .pair {
-        font-weight: 400;
-      }
-      .value {
-        span {
-          margin-left: 10px;
-        }
-      }
+  }
+}
 
-      .pair, .value, .percent-change {
-        font-size: 12px;
-        font-weight: 400;
-      }
+.rate-item {
+  padding-right: 18px;
+  display: flex !important;
 
-      .change-positive, .change-negative {
-        height: 22px;
-        width: 12px;
-        background: url($image-path + "v3/ic_arrow_upward.svg") center no-repeat;
-        background-size: contain;
-      }
-      .change-negative {
-        background: url($image-path + "v3/ic_arrow_downward.svg") center no-repeat;
-      }
+  &__percent-change {
+    margin-right: 5px;
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
+
+  &:not(:last-child) {
+    margin-right: 30px;
+  }
+
+  > div > div {
+    outline: none;
+  }
+
+  .pair {
+    font-weight: 400;
+  }
+
+  .value {
+    span {
+      margin-left: 10px;
     }
+  }
+
+  .pair, .value, .percent-change {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .change-positive, .change-negative {
+    height: 22px;
+    width: 12px;
+    background: url($image-path + "v3/ic_arrow_upward.svg") center no-repeat;
+    background-size: contain;
+  }
+
+  .change-negative {
+    background: url($image-path + "v3/ic_arrow_downward.svg") center no-repeat;
   }
 }
