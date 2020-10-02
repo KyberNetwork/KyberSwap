@@ -5,6 +5,7 @@ import { getTranslate } from "react-localize-redux";
 import { formatAddress, formatNumber } from "../../utils/converter";
 import { sortBy, filter, map } from "underscore";
 import BLOCKCHAIN_INFO from "../../../../env"
+import * as globalActions from "../../actions/globalActions";
 
 @connect((store) => {
   const translate = getTranslate(store.locale);
@@ -64,8 +65,9 @@ export default class ToggleableMenu extends React.Component {
   }
 
   clearSession = () => {
-    this.closeReImport();
+    this.setState({ isReImport: false, isAdvanceTokenVisible: false });
     this.props.clearSession();
+    this.props.dispatch(globalActions.acceptTermOfService());
   }
 
   reImportModal = () => {
@@ -116,8 +118,6 @@ export default class ToggleableMenu extends React.Component {
       }).slice(0, remainingSlots);
     }
 
-    console.log(newListingTokens);
-    console.log(topGainers);
     const trendingTokens = newListingTokens.concat(topGainers);
 
     this.setState({ trendingTokens: trendingTokens });
@@ -138,7 +138,7 @@ export default class ToggleableMenu extends React.Component {
       return (
         <div className={`rate-item ${this.getChangeClass(token.change)}`} key={index}>
           <div className={`change-${this.getChangeClass(token.change)} rate-item__percent-change`}/>
-          <div className="rate-item__container">
+          <div className="rate-item__container theme__text-3">
             <div className={`pair ${token.isNew ? 'pair--new' : ''}`}>
               <span>{token.pair.replace(`${BLOCKCHAIN_INFO.indexForTrending}_`, '')}</span>
             </div>

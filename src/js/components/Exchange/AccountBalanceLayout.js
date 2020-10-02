@@ -117,7 +117,7 @@ const AccountBalanceLayout = (props) => {
                 <div className="slide-down__trigger-container">
                   <div className={"account-balance__address"}>
                     <div className="account-balance__address-text">{props.translate("address.your_wallet") || "My Wallet"}</div>
-                    <div>
+                    <div className="common__flexbox-normal">
                       <a className="account-balance__address-link theme__text-3" target="_blank" href={BLOCKCHAIN_INFO.ethScanUrl + "address/" + props.account.address}
                         onClick={(e) => { props.analytics.callTrack("trackClickShowAddressOnEtherescan"); e.stopPropagation(); }}>
                         {props.account.address.slice(0, 10)}...{props.account.address.slice(-4)}
@@ -178,26 +178,24 @@ const AccountBalanceLayout = (props) => {
             )}
 
             <div className="account-balance__control-panel">
-              {!props.hideSearch && (
-                <div className={`account-balance__search-panel ${props.hideZeroBalance ? 'common__flexbox' : ''}`}>
-                  {props.hideZeroBalance && (
-                    <div className="account-balance__text-panel">All Tokens</div>
-                  )}
+              <div className={`account-balance__search-panel ${isPortfolio ? 'common__flexbox' : ''}`}>
+                {isPortfolio && (
+                  <div className="account-balance__text-panel">All Tokens</div>
+                )}
 
-                  {!isHideAllInfo && (
-                    <div className="account-balance__content-search-container">
-                      <input
-                        className="account-balance__content-search theme__search"
-                        type="text"
-                        placeholder={props.translate("address.search") || "Search by Name"}
-                        onClick={props.clickOnInput}
-                        onChange={(e) => props.changeSearchBalance(e)}
-                        value={props.searchWord}
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
+                {!isHideAllInfo && (
+                  <div className="account-balance__content-search-container">
+                    <input
+                      className="account-balance__content-search theme__search"
+                      type="text"
+                      placeholder={props.translate("address.search") || "Search by Name"}
+                      onClick={props.clickOnInput}
+                      onChange={(e) => props.changeSearchBalance(e)}
+                      value={props.searchWord}
+                    />
+                  </div>
+                )}
+              </div>
 
               {!isHideAllInfo && (
                 <div className="account-balance__sort-panel theme__background-4">

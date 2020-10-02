@@ -453,9 +453,9 @@
     }
 
     &__tokens {
-      padding: 20px 10px 10px 18px;
-      max-height: 295px;
-      overflow: hidden;
+      padding: 10px 30px 10px 18px;
+      max-height: 288px;
+      overflow: auto;
 
       .rate-item {
         margin-bottom: 13px;
@@ -494,6 +494,7 @@
 
   .right-slide-unlocked {
     .right-slide-panel__tokens {
+      padding: 20px 10px 10px 18px;
       max-height: 255px;
       background-color: transparent !important;
       overflow: auto;
@@ -519,10 +520,12 @@
 
         .value {
           width: 40%;
+          text-align: center;
         }
 
         .percent-change {
           width: 20%;
+          text-align: right;
         }
 
         &__container {
@@ -535,6 +538,10 @@
         &__percent-change {
           display: none;
         }
+      }
+
+      @include screen-max-width(medium) {
+        max-height: 180px;
       }
     }
   }
