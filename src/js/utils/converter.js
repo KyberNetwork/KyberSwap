@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import constants from "../services/constants"
 import BLOCKCHAIN_INFO from "../../../env"
 import abiDecoder from "abi-decoder"
+import { sortBy } from 'underscore'
 
 export function calculateMinAmount(source, rate) {
   var bigSource = new BigNumber(source)
@@ -178,17 +179,19 @@ function merge(left, right, type) {
 export function sortETHBalance(tokens, isDesc, WETHToTop) {
   var sortedTokens = [];
   let tokensWithoutETH = { ...tokens };
-  
+
   if (WETHToTop && tokensWithoutETH['WETH']) delete tokensWithoutETH['WETH'];
   if (tokensWithoutETH['ETH']) delete tokensWithoutETH['ETH'];
-  
+
   if (tokens) {
-    sortedTokens = mergeSort(Object.values(tokensWithoutETH), isDesc ? 1 : -1)
+    sortedTokens = sortBy(Object.values(tokensWithoutETH), (token) => {
+      return isDesc ? -token.balanceInETH : token.balanceInETH;
+    });
   }
-  
+
   if (WETHToTop && tokens['WETH']) sortedTokens.unshift(tokens['WETH']);
   if (tokens['ETH']) sortedTokens.unshift(tokens['ETH']);
-  
+
   return sortedTokens
 }
 

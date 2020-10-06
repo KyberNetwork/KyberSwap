@@ -35,23 +35,21 @@ export default class TransferAccount extends React.Component {
   }
 
   render() {
-    if (this.props.account === false) {
-      return  null
-    } else {
-      return (
-        <ToggleableMenu
-          clearSession={this.clearSession}>
-            <AccountBalance
-              sourceActive={this.props.transfer.tokenSymbol}
-              destTokenSymbol='ETH'
-              isBalanceActive={this.props.transfer.isAdvanceActive}
-              screen="transfer"
-              isOnDAPP={this.props.account.isOnDAPP}
-              walletName={this.props.account.walletName}
-              selectToken={this.props.selectToken}
-            />
-        </ToggleableMenu>
-      );
-    }
+    return (
+      <ToggleableMenu
+        clearSession={this.clearSession}
+      >
+        <AccountBalance
+          sourceActive={this.props.transfer.tokenSymbol}
+          destTokenSymbol='ETH'
+          isBalanceActive={this.props.transfer.isAdvanceActive}
+          screen="transfer"
+          isOnDAPP={this.props.account.isOnDAPP}
+          walletName={this.props.account.walletName}
+          selectToken={this.props.selectToken}
+          hideZeroBalance={true}
+        />
+      </ToggleableMenu>
+    );
   }
 }

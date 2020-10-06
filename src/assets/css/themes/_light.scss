@@ -33,6 +33,10 @@
     color: $light-color-2;
   }
 
+  .theme__text-9 {
+    color: $light-color-2;
+  }
+
   .theme__background {
     background-color: $light-color-1;
   }
@@ -163,6 +167,11 @@
   }
 
   .theme__slide-menu {
+    background-color: $grey-light;
+    color: $grey-darker;
+  }
+
+  .theme__slide-panel {
     background-color: $light-color-1;
     color: $grey-darker;
   }
