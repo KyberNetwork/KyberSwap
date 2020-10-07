@@ -6,6 +6,7 @@ import { formatAddress, formatNumber } from "../../utils/converter";
 import { sortBy, filter, map } from "underscore";
 import BLOCKCHAIN_INFO from "../../../../env"
 import * as globalActions from "../../actions/globalActions";
+import { findTokenBySymbol } from "../../utils/common";
 
 @connect((store) => {
   const translate = getTranslate(store.locale);
@@ -111,7 +112,12 @@ export default class ToggleableMenu extends React.Component {
 
     if (remainingSlots) {
       topGainers = filter(this.props.marketTokens, token => {
-        return token.pair.indexOf(BLOCKCHAIN_INFO.indexForTrending) !== -1 && token.change !== "0";
+        if (+token.change <= 0 || token.pair.indexOf(BLOCKCHAIN_INFO.indexForTrending) === -1) return false;
+
+        const tokenSymbol = token.pair.split('_')[1];
+        const alreadyList = findTokenBySymbol(newListingTokens, tokenSymbol);
+
+        return !alreadyList;
       });
       topGainers = sortBy(topGainers, token => {
         return -token.change;
