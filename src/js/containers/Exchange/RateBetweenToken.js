@@ -84,7 +84,7 @@ export default class RateBetweenToken extends React.Component {
           data-tip={`
             <div class="info-indicator">
               <div class="info-indicator__text">There is a ${change}% difference between the estimated price for your swap amount and the reference price.</div>
-              <div class="info-indicator__note">Note: Estimated price depends on your swap amount. Reference price is from Chainlink and Kyber Network.</div>
+              <div class="info-indicator__note">Note: Estimated price depends on your swap amount. Reference price is from Chainlink, Band protocol and Kyber Network.</div>
             </div>
           `}
           data-for="info_indicator"

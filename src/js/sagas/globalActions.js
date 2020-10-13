@@ -180,34 +180,12 @@ export function* changelanguage(action) {
   }
 }
 
-export function* checkUserEligible(action) {  
-  try{
-    var {ethereum} = action.payload
-    var state = store.getState()
-    var account = state.account.account
-    var address = account.address
-    var result = yield call([ethereum, ethereum.call], "getUserMaxCap", address)
-
-    if(result.success && result.eligible){
-      yield put(actions.clearErrorEligible())
-    } else {
-      yield put(actions.throwErrorEligible(result.message))
-    }
-
-  }catch(e){
-    console.log(e)
-    yield put(actions.clearErrorEligible())
-  }
-}
-
-
 export function* watchGlobal() {
   yield takeEvery("GLOBAL.NEW_BLOCK_INCLUDED_PENDING", getLatestBlock)
   yield takeEvery("GLOBAL.GO_TO_ROUTE", goToRoute)
   yield takeEvery("GLOBAL.CLEAR_SESSION", clearSession)
   yield takeEvery("GLOBAL.CHANGE_LANGUAGE", changelanguage)
   yield takeEvery("GLOBAL.CHECK_CONNECTION", checkConnection)
-  yield takeEvery("GLOBAL.CHECK_USER_ELIGIBLE", checkUserEligible)
   yield takeEvery("GLOBAL.SET_GAS_PRICE", setGasPrice)
   yield takeEvery("GLOBAL.RATE_UPDATE_ALL_PENDING", updateAllRate)
   yield takeEvery("GLOBAL.UPDATE_TITLE_WITH_RATE", updateTitle)

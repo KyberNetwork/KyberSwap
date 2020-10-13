@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateAllRate, checkConnection, setGasPrice, checkUserEligible } from "../../actions/globalActions"
+import { updateAllRate, checkConnection, setGasPrice } from "../../actions/globalActions"
 import { updateAccount, updateTokenBalance } from "../../actions/accountActions"
 import * as marketActions from "../../actions/marketActions"
 import BLOCKCHAIN_INFO from "../../../../env"
@@ -35,7 +35,6 @@ export default class EthereumService extends React.Component {
 
   subscribe(callBack) {
     this.fetchGasPrice();
-    this.checkUserEligible();
 
     var callBack_10s = this.fetchData_10s.bind(this)
     callBack_10s()
@@ -86,15 +85,6 @@ export default class EthereumService extends React.Component {
 
   fetchGasPrice = () => {
     store.dispatch(setGasPrice())
-  }
-
-  checkUserEligible = () => {
-    var state = store.getState()
-    var ethereum = state.connection.ethereum
-    var account = state.account.account
-    if (account.address) {
-      store.dispatch(checkUserEligible(ethereum))
-    }
   }
 
   checkConnection = () => {
