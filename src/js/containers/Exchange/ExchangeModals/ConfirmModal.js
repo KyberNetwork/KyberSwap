@@ -14,7 +14,7 @@ import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
 import { getBigNumberValueByPercentage } from "../../../utils/converter";
 import { fetchGasLimit } from "../../../services/cachedServerService";
-import { fetchSwapHint } from "../../../services/kyberSwapService";
+import { checkEligibleAddress, fetchSwapHint } from "../../../services/kyberSwapService";
 
 @connect((store) => {
   const account = store.account.account
@@ -38,6 +38,7 @@ export default class ConfirmModal extends React.Component {
       restrictError: '',
       isFetchGas: true,
       isFetchRate: true,
+      isNotEligible: true,
       gasLimit: 0,
       slippageRate: 0,
       expectedRate: 0,
@@ -59,12 +60,18 @@ export default class ConfirmModal extends React.Component {
       startTime: Math.round(new Date().getTime())
     })
 
+    this.checkUserEligible();
     this.getLatestRate()
     this.getGasSwap()
   }
   
   componentWillUnmount() {
     clearTimeout(this.confirmingTimer);
+  }
+
+  async checkUserEligible() {
+    let isValidEligible = await checkEligibleAddress(this.props.account.address);
+    this.setState({ isNotEligible: !isValidEligible });
   }
   
   async getLatestRate() {
@@ -210,9 +217,10 @@ export default class ConfirmModal extends React.Component {
   
   async onSubmit() {
     const wallet = this.props.wallet;
+    const isNotValid = this.state.isNotEligible || this.state.restrictError || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate;
     var password = ""
     
-    if (this.state.restrictError || this.state.isConfirmingTx || this.state.isFetchGas || this.state.isFetchRate) return
+    if (isNotValid) return
     
     this.setState({
       err: "",
@@ -446,7 +454,8 @@ export default class ConfirmModal extends React.Component {
   
   contentModal = () => {
     const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
-    
+    const isNotValid = this.state.isNotEligible || this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx;
+
     return (
       <div className="theme__text">
         <div className="x" onClick={this.closeModal}>
@@ -510,7 +519,7 @@ export default class ConfirmModal extends React.Component {
                 {this.props.translate("modal.cancel" || "Cancel")}
               </div>
               <div
-                className={"button process-submit " + (this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx ? "disabled-button" : "next")}
+                className={"button process-submit " + (isNotValid ? "disabled-button" : "next")}
                 onClick={this.onSubmit.bind(this)}>{this.props.translate("modal.confirm") || "Confirm"}</div>
             </div>
           </div>

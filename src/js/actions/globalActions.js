@@ -26,13 +26,6 @@ export function updateAllRate(ethereum, tokens) {
   }
 }
 
-export function checkUserEligible(ethereum) {
-  return {
-    type: "GLOBAL.CHECK_USER_ELIGIBLE",
-    payload: { ethereum }
-  }
-}
-
 export function updateAllRateComplete(rates, rateUSD) {
   return {
     type: 'GLOBAL.ALL_RATE_UPDATED_FULFILLED',
@@ -170,19 +163,6 @@ export function throwErrorMematamask(err) {
   return {
     type: "GLOBAL.THROW_ERROR_METAMASK",
     payload: { err }
-  }
-}
-
-export function throwErrorEligible(err) {
-  return {
-    type: "GLOBAL.THROW_ERROR_ELIGIBLE",
-    payload: { err }
-  }
-}
-
-export function clearErrorEligible(){
-  return {
-    type: "GLOBAL.CLEAR_ERROR_ELIGIBLE"
   }
 }
 
