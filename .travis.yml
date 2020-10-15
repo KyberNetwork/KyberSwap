@@ -132,4 +132,6 @@ jobs:
       deploy:
         - provider: script
           script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
-      if: branch = develop OR branch = staging OR branch = master
+          on:
+            all_branches: true
+            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
