@@ -31,14 +31,6 @@ jobs:
           local_dir: public
           upload_dir: $TRAVIS_BRANCH
           skip_cleanup: true
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
-        - provider: script
-          script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
       if: branch = master
     - stage: build
       script: npm run build_auto_ropsten
@@ -51,14 +43,6 @@ jobs:
           local_dir: public
           upload_dir: $TRAVIS_BRANCH
           skip_cleanup: true
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
-        - provider: script
-          script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
       if: branch = master OR branch = develop
     - stage: build
       script: npm run build_auto_staging_limit_order
@@ -71,14 +55,6 @@ jobs:
           local_dir: public
           upload_dir: $TRAVIS_BRANCH
           skip_cleanup: true
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
-        - provider: script
-          script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
       if: branch = staging
     - stage: build
       script: npm run build_auto_dev
@@ -91,14 +67,6 @@ jobs:
           local_dir: public
           upload_dir: $TRAVIS_BRANCH
           skip_cleanup: true
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
-        - provider: script
-          script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH =~ ^develop|staging|master$
       if: branch = develop
     - stage: build
       script: npm run build-ropsten
@@ -111,8 +79,6 @@ jobs:
           acl: public_read
           local_dir: dist/ropsten
           skip_cleanup: true
-          on:
-            branch: master
         - provider: s3
           access_key_id: $AWS_ACCESS_KEY_ID
           secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -122,8 +88,6 @@ jobs:
           local_dir: dist/ropsten
           upload-dir: swap
           skip_cleanup: true
-          on:
-            branch: master
         - provider: s3
           access_key_id: $AWS_ACCESS_KEY_ID
           secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -133,8 +97,6 @@ jobs:
           local_dir: dist/ropsten
           upload-dir: transfer
           skip_cleanup: true
-          on:
-            branch: master
       if: branch = master
     - stage: build
       script: npm run build-staging
@@ -147,8 +109,6 @@ jobs:
           acl: public_read
           local_dir: dist/staging
           skip_cleanup: true
-          on:
-            branch: master
         - provider: s3
           access_key_id: $AWS_ACCESS_KEY_ID
           secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -158,8 +118,6 @@ jobs:
           local_dir: dist/staging
           upload-dir: swap
           skip_cleanup: true
-          on:
-            branch: master
         - provider: s3
           access_key_id: $AWS_ACCESS_KEY_ID
           secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -169,6 +127,9 @@ jobs:
           local_dir: dist/staging
           upload-dir: transfer
           skip_cleanup: true
-          on:
-            branch: master
       if: branch = master
+    - stage: deploy to user-dashboard
+      deploy:
+        - provider: script
+          script: bash .travis/awx_job_launch.sh $TRAVIS_BRANCH
+      if: branch = develop OR branch = staging OR branch = master
