@@ -8,6 +8,7 @@ import constants from "../../../services/constants"
 import * as converters from "../../../utils/converter"
 import BLOCKCHAIN_INFO from "../../../../../env"
 import { getAssetUrl } from "../../../utils/common"
+import { fetchSwapHint } from "../../../services/kyberSwapService";
 
 @connect((store) => {
     const account = store.account.account
@@ -128,12 +129,13 @@ export default class WrapETHModal extends React.Component {
             var type = this.props.account.type
             var password = ""
 
+            const swapHint = await fetchSwapHint(sourceToken, destToken, this.state.amountConvert);
             await wallet.broadCastTx(
               "etherToOthersFromAccount", formId, ethereum, address, sourceToken, sourceAmount, destToken,
               destAddress, maxDestAmount, minConversionRate, blockNo, nonce, gas, gasPrice,
-              keystring, type, password, '0x0'
+              keystring, type, password, '0x0', swapHint
             )
-            
+
             this.props.dispatch(accountActions.incManualNonceAccount(this.props.account.address))
             
             this.props.goToNextPath();
