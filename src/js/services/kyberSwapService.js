@@ -78,3 +78,17 @@ export async function fetchPlatformFee(srcAddress, destAddress) {
     return DEFAULT_BPS_FEE;
   }
 }
+
+export async function checkEligibleAddress(address) {
+  try {
+    const response = await fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/wallet/screening?wallet=${address}`);
+    const result = await response.json();
+
+    const isValid = result && result.success === true;
+    if (!isValid) return false;
+
+    return result.eligible;
+  } catch (e) {
+    return false;
+  }
+}
