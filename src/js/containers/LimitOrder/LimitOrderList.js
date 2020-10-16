@@ -55,7 +55,7 @@ export default class LimitOrderList extends React.Component {
       let className = item === activeOrderTab ? "limit-order-list__tab--active theme__sort active" : "theme__sort";
 
       return (
-        <div key={item} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
+        <div key={index} className={`limit-order-list__tab ${className}`} onClick={e => this.onChangeOrderTab(item)}>
           {item === "open" && 
             (this.props.translate("limit_order.open_orders") || "Open Orders")}
           {item === "history" && 
@@ -73,7 +73,7 @@ export default class LimitOrderList extends React.Component {
             <div>
               <div className="title">{this.props.translate("limit_order.order_list_title") || "Your Limit Orders"}</div>
               <div className={"limit-order-list--title-faq"}>
-                <a href="/faq#I-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit" target="_blank" rel="noreferrer noopener">
+                <a href="https://support.kyberswap.com/support/solutions/articles/47001142527-i-submitted-the-limit-order-but-it-was-not-triggered-even-though-my-desired-price-was-hit-" target="_blank" rel="noreferrer noopener">
                   {this.props.translate("limit_order.wonder_why_order_not_filled")}
                 </a>
               </div>

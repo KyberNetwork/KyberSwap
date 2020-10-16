@@ -1,6 +1,4 @@
-import { divOfTwoNumber } from "./converter";
-
-export default function createOrderObject(rawOrder, userAddress, formType, triggerRate, sourceAmount) {
+export default function createOrderObject(rawOrder, userAddress, formType, triggerRate, sourceAmount, fee) {
   let order = {};
 
   order.side_trade = formType;
@@ -8,7 +6,7 @@ export default function createOrderObject(rawOrder, userAddress, formType, trigg
   order.dest = rawOrder.destTokenSymbol;
   order.min_rate = triggerRate;
   order.src_amount = sourceAmount;
-  order.fee = divOfTwoNumber(rawOrder.orderFeeAfterDiscount, 100);
+  order.fee = fee;
   order.user_address = userAddress;
   order.status = '';
 
