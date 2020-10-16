@@ -13,7 +13,6 @@ import {
 
 import { ImportAccount } from "../ImportAccount";
 import LimitOrderMobileHeader from "./MobileElements/LimitOrderMobileHeader";
-import LimitOrderNotification from "./LimitOrderNotification";
 import LimitOrderTopToken from "./LimitOrderTopToken";
 
 @connect((store) => {

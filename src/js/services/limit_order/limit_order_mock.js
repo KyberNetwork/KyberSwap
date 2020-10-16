@@ -178,7 +178,6 @@ export function submitOrder(order) {
     })
 }
 
-
 export function cancelOrder(order) {
     return new Promise((resolve, reject) => {
         const target = data.filter(item => item.id === order.id);
@@ -198,25 +197,46 @@ export function cancelOrder(order) {
     })
 }
 
-
 export function getNonce(userAddr, source, dest) {
     return new Promise((resolve, rejected) => {
         resolve(1)
     })
 }
 
-
 export function getFee(userAddr, src, dest, src_amount, dst_amount) {
     return new Promise((resolve, rejected) => {
-        resolve({
-          success: true,
-          fee: 0.0036,
-          discount_percent: 10,
-          non_discounted_fee: 0.004
+        timeout(MAX_REQUEST_TIMEOUT, fetch(`${BLOCKCHAIN_INFO.kyberswap_api}/orders/fee?user_addr=${userAddr}&src=${src}&dst=${dest}&src_amount=${src_amount}&dst_amount=${dst_amount}`))
+          .then((response) => {
+              return response.json()
+          }).then((result) => {
+            if (result.success) {
+                if (validateGetFeeResult(result)) {
+                    resolve(result);
+                } else {
+                    rejected("There is something wrong with rate API")
+                }
+            } else {
+                rejected(result.message)
+            }
+
         })
+          .catch((err) => {
+              rejected(new Error(`Cannot get user fee: ${err.toString()}`))
+          })
     })
 }
 
+function validateGetFeeResult(result) {
+    let nonDiscountFee = result.non_discounted_fee;
+    let fee = result.fee;
+    let discountPercent = result.discount_percent;
+
+    if (typeof nonDiscountFee !== 'number' || typeof fee !== 'number' || typeof discountPercent !== 'number' || fee > nonDiscountFee) {
+        return false
+    }
+
+    return true
+}
 
 export function getOrdersByIdArr(idArr) {
     return new Promise((resolve, rejected) => {
