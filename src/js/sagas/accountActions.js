@@ -110,7 +110,6 @@ export function* importNewAccount(action) {
     }
 
     yield put(actions.importNewAccountComplete(account, wallet, walletName));
-    yield put(globalActions.checkUserEligible(ethereum));
 
     if (global.isChangingWallet) yield put(closeChangeWallet());
 

@@ -183,7 +183,8 @@ export default class ConfirmModal extends React.Component {
       this.props.account.address,
       this.props.formType,
       this.props.triggerRate,
-      this.props.sourceAmount
+      this.props.sourceAmount,
+      this.state.fee
     );
 
     return (

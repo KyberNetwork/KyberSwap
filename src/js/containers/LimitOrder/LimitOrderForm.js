@@ -7,6 +7,8 @@ import * as constants from "../../services/constants"
 import { LimitOrderCompareRate, LimitOrderSubmit, LimitOrderFee } from "../LimitOrder";
 import { ForceCancelOrderModal } from "../LimitOrder/LimitOrderModals";
 import * as converters from "../../utils/converter";
+import { debounce } from 'underscore';
+import limitOrderServices from "../../services/limit_order";
 
 @connect((store, props) => {
   const account = store.account.account;
@@ -40,7 +42,9 @@ import * as converters from "../../utils/converter";
 export default class LimitOrderForm extends React.Component {
   constructor(props) {
     super(props);
-    
+
+    this.lazyFetchingFee = debounce(this.fetchFee, 500);
+
     this.state = {
       formType: 'buy',
       rate: 'Loading...',
@@ -48,7 +52,8 @@ export default class LimitOrderForm extends React.Component {
       destAmount: '',
       priceErrors: [],
       amountErrors: [],
-      cancelOrderModal: false
+      cancelOrderModal: false,
+      fee: constants.LIMIT_ORDER_CONFIG.maxFee,
     }
   }
   
@@ -67,6 +72,22 @@ export default class LimitOrderForm extends React.Component {
       this.setState({ rate: this.props.limitOrder.triggerSellRate })
     } else if (isTokenChanged || isFormTypeChanged) {
       this.resetFormState();
+    }
+  }
+
+  async fetchFee() {
+    try {
+      const { fee } = await limitOrderServices.getFee(
+        this.props.account.address,
+        this.props.sourceToken.address,
+        this.props.destToken.address,
+        this.state.srcAmount,
+        this.state.destAmount
+      );
+
+      this.setState({ fee: fee })
+    } catch (e) {
+      console.log(e);
     }
   }
   
@@ -146,6 +167,8 @@ export default class LimitOrderForm extends React.Component {
     const destAmount = converters.caculateDestAmount(value, bigRate, destDecimals);
 
     this.setState({ destAmount: destAmount });
+
+    this.lazyFetchingFee();
   };
   
   handleDestAmountChanged = (e, value) => {
@@ -162,6 +185,8 @@ export default class LimitOrderForm extends React.Component {
     const srcAmount = converters.caculateSourceAmount(value, bigRate, srcDecimals);
     
     this.setState({ srcAmount: srcAmount });
+
+    this.lazyFetchingFee();
   };
   
   getMaxGasApprove = () => {
@@ -356,8 +381,8 @@ export default class LimitOrderForm extends React.Component {
           sourceAmount={this.state.srcAmount}
           destAmount={this.state.destAmount}
           srcTokenSymbol={this.props.srcTokenSymbol}
-          destTokenSymbol={this.props.destTokenSymbol}
           quoteSymbol={displayQuoteSymbol}
+          fee={this.state.fee}
         />
         
         <LimitOrderSubmit

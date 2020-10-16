@@ -17,7 +17,6 @@ const initState = {
   changeWalletType: "",
   isChangingWallet: false,
   network_error: "",
-  eligibleError: '',
   metamask: {
     address: "",
     balance: "",
@@ -93,13 +92,6 @@ const global = (state = initState, action) => {
       const { err } = action.payload
       var metamask = { error: err }
       return Object.assign({}, state, { metamask: metamask })
-    }
-    case "GLOBAL.THROW_ERROR_ELIGIBLE": {
-      const { err } = action.payload
-      return Object.assign({}, state, { eligibleError: err })
-    }
-    case "GLOBAL.CLEAR_ERROR_ELIGIBLE": {
-      return Object.assign({}, state, { eligibleError: '' })
     }
     case "GLOBAL.CLEAR_SESSION_FULFILLED": {
       let newState = {...state}
