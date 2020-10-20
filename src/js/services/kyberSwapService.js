@@ -85,10 +85,10 @@ export async function checkEligibleAddress(address) {
     const result = await response.json();
 
     const isValid = result && result.success === true;
-    if (!isValid) return false;
+    if (!isValid) return true;
 
     return result.eligible;
   } catch (e) {
-    return false;
+    return true;
   }
 }

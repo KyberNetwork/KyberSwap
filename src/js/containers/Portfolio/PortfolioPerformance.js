@@ -77,13 +77,9 @@ export default class PortfolioPerformance extends React.Component {
   }
 
   async fetchChartData(address, ethereum, tokens){
-    console.log("_____________________________ call fetchChartData")
     if(!ethereum || !address || !tokens) return
     this.renderedAtInnitTime = true
-
-
     const chartData = await portfolioChartService.render(ethereum, address.toLowerCase(), tokens, this.state.selectedTimeRange)
-    console.log("=#############====chartData", chartData)
 
     if (!chartData || chartData.isError) {
       this.clearFetchingInterval();

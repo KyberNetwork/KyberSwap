@@ -9,16 +9,34 @@ export default class PortfolioEquity extends React.Component {
   }
   
   componentDidMount() {
+    this.renderEquityChart();
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (this.props.theme !== prevProps.theme) {
+      if (this.props.theme === 'dark') {
+        this.chart.options.legend.labels.fontColor = 'white';
+      } else {
+        this.chart.options.legend.labels.fontColor = 'black';
+      }
+  
+      this.chart.update();
+    } else if (this.props.totalBalanceInETH !== prevProps.totalBalanceInETH) {
+      this.renderEquityChart(true);
+    }
+  }
+
+  calculateDisplayedTokens() {
     const tokenSymbols = [];
     const tokenValues = [];
     const tokenDisplay = 5;
-    
+
     this.props.availableTokens.forEach((token, index) => {
       if (token.balanceInETH < MINIMUM_DISPLAY_BALANCE) return;
-  
+
       let tokenSymbol = token.symbol;
       let tokenValue = +((token.balanceInETH / this.props.totalBalanceInETH) * 100).toFixed(2);
-      
+
       if (index >= tokenDisplay) {
         tokenValue = tokenValues[tokenDisplay] ? tokenValues[tokenDisplay] + tokenValue : tokenValue;
         tokenValue = +(tokenValue).toFixed(2);
@@ -29,7 +47,13 @@ export default class PortfolioEquity extends React.Component {
         tokenValues.push(tokenValue);
       }
     });
-    
+
+    return { tokenSymbols, tokenValues };
+  }
+
+  renderEquityChart(needUpdate = false) {
+    const { tokenSymbols, tokenValues } = this.calculateDisplayedTokens();
+
     this.chart = new Chart(this.props.equityChart.current, {
       type: 'pie',
       data: {
@@ -51,7 +75,7 @@ export default class PortfolioEquity extends React.Component {
         },
         tooltips: {
           callbacks: {
-            label: function(tooltipItem, data) {
+            label: function (tooltipItem, data) {
               return data.labels[tooltipItem.index];
             }
           }
@@ -59,18 +83,8 @@ export default class PortfolioEquity extends React.Component {
         responsive: false
       }
     });
-  }
-  
-  componentDidUpdate(prevProps) {
-    if (this.props.theme !== prevProps.theme) {
-      if (this.props.theme === 'dark') {
-        this.chart.options.legend.labels.fontColor = 'white';
-      } else {
-        this.chart.options.legend.labels.fontColor = 'black';
-      }
-  
-      this.chart.update();
-    }
+
+    if (needUpdate) this.chart.update();
   }
   
   render() {

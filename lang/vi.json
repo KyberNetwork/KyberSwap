@@ -470,7 +470,7 @@
     "error_loading_history": "Có lỗi xảy ra khi tải lịch sử giao dịch của bạn, hãy thử lại sau",
     "empty_history": "Bạn chưa có bất kỳ giao dịch nào",
     "token_approved": "Cho phép sử dụng token",
-    "token_is_approved": "${token} được cho phép sử dụng cho {contract}",
+    "token_is_approved": "${token} được cho phép sử dụng cho ${contract}",
     "lo_triggered": "Limit Order được khớp",
     "tx_history": "Lịch sử giao dịch",
     "supported_tokens": "Các token được hỗ trợ",
