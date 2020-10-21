@@ -51,8 +51,10 @@ export default class PortfolioEquity extends React.Component {
     return { tokenSymbols, tokenValues };
   }
 
-  renderEquityChart(needUpdate = false) {
+  renderEquityChart(reRender = false) {
     const { tokenSymbols, tokenValues } = this.calculateDisplayedTokens();
+
+    if (reRender) this.chart.destroy();
 
     this.chart = new Chart(this.props.equityChart.current, {
       type: 'pie',
@@ -83,8 +85,6 @@ export default class PortfolioEquity extends React.Component {
         responsive: false
       }
     });
-
-    if (needUpdate) this.chart.update();
   }
   
   render() {

@@ -12,7 +12,7 @@ const PortfolioView = (props) => {
   const isOverViewDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.overview : props.isImported;
   const isBalanceDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.balance : props.isImported;
   const isHistoryDisplayed = props.isOnMobile ? props.isImported && props.mobileTab === PORTFOLIO_TAB.history : props.isImported;
-  const isEquityDisplayed = props.account.availableTokens && props.account.availableTokens.length > 0;
+  const isEquityDisplayed = props.account.availableTokens && props.account.availableTokens.length > 0 && props.account.totalBalanceInETH !== 0;
 
   return (
     <div className={`portfolio theme__text ${props.isImported ? '' : 'portfolio--not-imported'}`}>
