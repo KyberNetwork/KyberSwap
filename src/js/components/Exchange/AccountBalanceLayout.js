@@ -43,13 +43,12 @@ const AccountBalanceLayout = (props) => {
       var searchWord = props.searchWord.toLowerCase()
       var symbolL = token.symbol.toLowerCase()
       let classBalance = "";
-      const noBalance = balance == 0;
       const isValidRate = token.symbol === "ETH" || converts.compareTwoNumber(token.rate, 0);
       const balanceInETH = converts.formatNumber(token.balanceInETH || 0, 6);
       const balanceInUSD = converts.toT(converts.multiplyOfTwoNumber(balance, token.rateUSD), "0", 2);
-      const hideZeroBalance = props.hideZeroBalance && (noBalance || balanceInETH < MINIMUM_DISPLAY_BALANCE);
+      const noBalance = balance == 0;
 
-      if (!symbolL.includes(searchWord) || hideZeroBalance) return null;
+      if (!symbolL.includes(searchWord) || noBalance) return null;
       isEmpty = false;
 
       if (token.symbol === props.sourceActive) classBalance += " active";
@@ -78,7 +77,7 @@ const AccountBalanceLayout = (props) => {
               </div>
             </div>
             {
-              (isValidRate) ?
+              (+balanceInETH >= MINIMUM_DISPLAY_BALANCE) ?
                 (<div className="account-balance__token-row stable-equivalent">{
                   props.sortType === "ETH" ? `${balanceInETH} E` : `${balanceInUSD}$`
                 }</div>) :
@@ -98,7 +97,6 @@ const AccountBalanceLayout = (props) => {
           {!props.isOnMobile && <div class="account-balance__item-hover-overlay">
             {token.symbol !== "PT" && <button className="buy" onClick={(e) => props.selectBalanceButton("buy", token.symbol)}>BUY</button>}
             <button className="sell" onClick={(e) => props.selectBalanceButton("sell", token.symbol)}>SELL</button>
-            {/* <button className="transfer" onClick={(e) => props.selectBalanceButton("transfer", token.symbol)}>TRANSFER</button> */}
           </div>}
         </div>
       )

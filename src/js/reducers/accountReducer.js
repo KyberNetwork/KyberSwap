@@ -25,7 +25,8 @@ const initState = {
     modalOpen: false
   },
   walletName: '',
-  isOnDAPP: false
+  isOnDAPP: false,
+  totalBalanceInETH: 0
 }
 
 const account = (state= JSON.parse(JSON.stringify(initState)), action) => {
