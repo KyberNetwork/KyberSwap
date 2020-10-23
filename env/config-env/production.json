@@ -32,7 +32,7 @@
         "KNC"
     ],
     "limitOrder": {
-        "minSupportOrder": 0.1,
+        "minSupportOrder": 1,
         "maxPercentTriggerRate": 900,
         "page_size": 50
     },
