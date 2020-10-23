@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   account: persistReducer({
     key: 'account',
     storage: session,
-    blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'otherConnect', 'walletName', 'error', 'wallet']
+    blacklist:['loading', 'checkTimeImportLedger', 'pKey', 'promoCode', 'otherConnect', 'walletName', 'error', 'wallet', 'totalBalanceInETH']
   }, account),
   limitOrder: persistReducer({
     key: 'limitOrder',
