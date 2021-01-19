@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://geth.knstats.com",
+                "endPoint": "https://dev-ethereum.knstats.com",
                 "type": "prune"
             }
         ],
