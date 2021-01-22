@@ -1,4 +1,4 @@
-import { fork, all, takeEvery, select } from 'redux-saga/effects'
+import { fork, all } from 'redux-saga/effects'
 import { watchAccount } from './accountActions';
 import { watchGlobal } from './globalActions';
 import { watchExchange } from './exchangeActions';

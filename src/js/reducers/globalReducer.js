@@ -35,7 +35,8 @@ const initState = {
     const cookieTheme = common.getCookie('theme');
     return cookieTheme ? cookieTheme : 'dark';
   })(),
-  campaign: null
+  campaign: null,
+  gasWarningThreshold: null
 }
 
 const global = (state = initState, action) => {
@@ -156,6 +157,12 @@ const global = (state = initState, action) => {
       return {
         ...state,
         campaign: action.payload
+      }
+    }
+    case "GLOBAL.SET_GAS_WARNING_THRESHOLD": {
+      return {
+        ...state,
+        gasWarningThreshold: action.payload
       }
     }
   }

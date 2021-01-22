@@ -26,10 +26,14 @@ const rootReducer = combineReducers({
     storage: storage,
     whitelist: ['favorite_pairs_anonymous']
   }, limitOrder),
+  global: persistReducer({
+    key: 'global',
+    storage: storage,
+    whitelist: ['gasWarningThreshold']
+  }, global),
   locale: localizeReducer,
   router: routerReducer,
-
-  exchange, transfer, txs, utils, tokens, market, connection, global
+  exchange, transfer, txs, utils, tokens, market, connection
 })
 
 export default rootReducer
