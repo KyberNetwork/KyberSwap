@@ -1,10 +1,7 @@
 import React from "react"
-import { calculateGasFee } from "../../utils/converter"
 import ReactTooltip from "react-tooltip";
 
 const FeeDetail = (props) => {
-  const totalGas = +calculateGasFee(props.gasPrice, props.gas);
-
   return (
     <div className="gas-configed theme__text-4">
       <div className={"title-fee theme__text-5"}>
@@ -15,7 +12,7 @@ const FeeDetail = (props) => {
         <ReactTooltip className="common__tooltip" place="top" id="max-gas-info" type="light"/>
       </div>
       <div className={"total-fee"}>
-        <span className={"total-fee__number theme__text"}>{totalGas.toString()} ETH</span>
+        <span className={"total-fee__number theme__text"}>{props.totalGas.toString()} ETH</span>
         <span className={"total-fee__formula theme__text-6"}>{props.gasPrice} Gwei (Gas Price) * {props.gas} (Gas Limit)</span>
       </div>
       {(props.reserveRoutingEnabled && props.reserveRoutingChecked) && (

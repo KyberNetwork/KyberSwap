@@ -246,3 +246,10 @@ export function setCampaign(campaign) {
     payload: campaign
   }
 }
+
+export function setGasWarningThreshold(value) {
+  return {
+    type: "GLOBAL.SET_GAS_WARNING_THRESHOLD",
+    payload: value
+  }
+}
