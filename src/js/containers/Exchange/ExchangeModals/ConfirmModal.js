@@ -12,7 +12,7 @@ import Tx from "../../../services/tx"
 import * as accountActions from '../../../actions/accountActions'
 import * as converters from "../../../utils/converter";
 import { RateBetweenToken } from "../../../containers/Exchange/index";
-import { getBigNumberValueByPercentage } from "../../../utils/converter";
+import { calculateGasFee, getBigNumberValueByPercentage } from "../../../utils/converter";
 import { fetchGasLimit } from "../../../services/cachedServerService";
 import { checkEligibleAddress, fetchSwapHint } from "../../../services/kyberSwapService";
 
@@ -453,8 +453,10 @@ export default class ConfirmModal extends React.Component {
   }
   
   contentModal = () => {
+    const warningGasPrice = this.props.exchange.snapshot.gasPrice > this.props.global.gasWarningThreshold;
     const warningLowFee = this.props.exchange.sourceTokenSymbol === 'ETH' && converter.compareTwoNumber(0.01, converter.subOfTwoNumber(converter.toT(this.props.tokens['ETH'].balance), this.props.exchange.sourceAmount)) === 1;
     const isNotValid = this.state.isNotEligible || this.state.restrictError || this.state.isFetchGas || this.state.isFetchRate || this.state.isConfirmingTx;
+    const totalGas = +calculateGasFee(this.props.exchange.snapshot.gasPrice, this.state.gasLimit);
 
     return (
       <div className="theme__text">
@@ -485,6 +487,13 @@ export default class ConfirmModal extends React.Component {
                       </div>
                     </div>
                   )}
+                  {warningGasPrice && (
+                    <div className="modal-content common__mt-15">
+                      <div className="modal-content__text-warning theme__warning">
+                        High network congestion. Please double check gas fee (~{totalGas} ETH) before confirmation.
+                      </div>
+                    </div>
+                  )}
                   {!this.state.isFetchRate && converter.compareTwoNumber(this.state.slippageRate, this.state.expectedRate) === 1 && (
                     <div className="modal-content common__mt-15">
                       <div className="modal-content__text-warning theme__background-red">
@@ -493,6 +502,7 @@ export default class ConfirmModal extends React.Component {
                     </div>
                   )}
                   <FeeDetail
+                    totalGas={totalGas}
                     translate={this.props.translate}
                     gasPrice={this.props.exchange.snapshot.gasPrice}
                     gas={this.state.gasLimit}
