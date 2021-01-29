@@ -1,9 +1,9 @@
 import React from "react"
-import { calculateGasFee } from "../../utils/converter"
 import ReactTooltip from "react-tooltip";
+import { calculateGasFee } from "../../utils/converter";
 
 const FeeDetail = (props) => {
-  const totalGas = +calculateGasFee(props.gasPrice, props.gas);
+  const totalGas = props.totalGas ? props.totalGas : +calculateGasFee(props.gasPrice, props.gas);
 
   return (
     <div className="gas-configed theme__text-4">
