@@ -6,7 +6,7 @@
                 "type": "cached"
             },
             {
-                "endPoint": "https://production-cache.kyber.network/node",
+                "endPoint": "https://ethereum.kyber.network/v1/mainnet/geth?appId=prod-kyberswap",
                 "type": "prune"
             }            
         ],
