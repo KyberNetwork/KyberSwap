@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import Resolution from '@unstoppabledomains/resolution'
 import * as validators from "../../utils/validators"
 import * as converters from "../../utils/converter"
 import * as transferActions from "../../actions/transferActions"
@@ -22,15 +23,15 @@ import TermAndServices from "../CommonElements/TermAndServices";
 export default class PostTransfer extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       isValidating: false
     }
   }
-  
+
   async clickTransfer() {
     this.props.global.analytics.callTrack("trackClickTransferButton");
-    
+
     if (this.props.account === false) {
       this.props.dispatch(transferActions.openImportAccount())
       return
@@ -43,15 +44,15 @@ export default class PostTransfer extends React.Component {
     if (Object.keys(this.props.transfer.errors.sourceAmount).length !== 0) {
       return
     }
-    
+
     if (Object.keys(this.props.transfer.errors.destAddress).length !== 0) {
       return
     }
-  
+
     this.setState({isValidating: true});
-    
+
     const isTransferValid = await this.validateTransfer();
-  
+
     this.setState({isValidating: false});
 
     if (isTransferValid) {
@@ -64,17 +65,17 @@ export default class PostTransfer extends React.Component {
     var check = true
     var checkNumber = true
     const destAddress = this.props.destAddress.trim();
-  
+
     this.props.dispatch(transferActions.setDestEthNameAndAddress(destAddress, ''));
-    
+
     if (!destAddress) {
       this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.dest_address")))
       return false;
     }
-    
+
     if (validators.verifyAccount(destAddress) !== null) {
       let resolvedAddress = await this.resolveEthNameToAddress(destAddress);
-      
+
       if (resolvedAddress === constants.GENESIS_ADDRESS) {
         this.props.dispatch(transferActions.throwErrorDestAddress(constants.TRANSFER_CONFIG.addressErrors.input, this.props.translate("error.not_attached_address")))
         check = false
@@ -102,26 +103,30 @@ export default class PostTransfer extends React.Component {
     if (!checkNumber) {
       return false
     }
-    
+
     var amountBig = converters.stringEtherToBigNumber(this.props.transfer.amount, this.props.tokens[this.props.transfer.tokenSymbol].decimals)
-    
+
     if (amountBig.isGreaterThan(this.props.tokens[this.props.transfer.tokenSymbol].balance)) {
       this.props.dispatch(transferActions.throwErrorAmount(constants.TRANSFER_CONFIG.sourceErrors.balance, this.props.translate("error.amount_transfer_too_hign")))
       check = false
     }
-    
+
     return check
   }
-  
+
   async resolveEthNameToAddress(destAddress) {
     let resolvedAddress = null;
-  
+
     try {
-      resolvedAddress = await this.props.ethereum.call("getAddressFromEthName", destAddress);
+      if (/^.+\.(crypto|zil)$/.test(destAddress)) {
+        resolvedAddress = await new Resolution().addr(destAddress, this.props.transfer.tokenSymbol)
+      } else {
+        resolvedAddress = await this.props.ethereum.call("getAddressFromEthName", destAddress);
+      }
     } catch (e) {
       console.log(e);
     }
-    
+
     return resolvedAddress
   }
 
