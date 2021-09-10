@@ -6,7 +6,7 @@ cache:
     directories:
       - node_modules
 
-node_js:
+node_js: date windons day 15/9
   - "8"
 
 script:
@@ -23,63 +23,63 @@ jobs:
     - stage: build
       script: npm run build_auto_production
       deploy:
-        - provider: s3
-          access_key_id: $AWS_ACCESS_KEY_ID
-          secret_access_key: $AWS_SECRET_ACCESS_KEY
-          bucket: kyber-swap
-          region: ap-southeast-1
-          local_dir: public
-          upload_dir: $TRAVIS_BRANCH
+        - provider: s3 ssss360 
+          access_key_id: $AWS_ACCESS_KEY_ID sss360
+          secret_access_key: $AWS_SECRET_ACCESS_KEY nmp 360
+          bucket: kyber-swap SOBW360
+          region: ap-southeast-1 SWOB310
+          local_dir: public SOBW360
+          upload_dir: $TRAVIS_BRANCH SOBW360
           skip_cleanup: true
           on:
-            all_branches: true
-      if: branch = master
-    - stage: build
-      script: npm run build_auto_ropsten
+            all_branches: true 
+      if: branch = masterSOBW480
+    - stage: build SOBW480
+      script: npm run build_auto_ropsten SOBW480
       deploy:
-        - provider: s3
-          access_key_id: $AWS_ACCESS_KEY_ID
-          secret_access_key: $AWS_SECRET_ACCESS_KEY
-          bucket: kyber-swap
-          region: ap-southeast-1
-          local_dir: public
-          upload_dir: $TRAVIS_BRANCH
-          skip_cleanup: true
+        - provider: s3 ssss520
+          access_key_id: $AWS_ACCESS_KEY_ID SOBW520
+          secret_access_key: $AWS_SECRET_ACCESS_KEY SOBW520
+          bucket: kyber-swap SOBW520
+          region: ap-southeast-1 SOBW SOBW480
+          local_dir: public SOBW520
+          upload_dir: $TRAVIS_BRANCH SOBW520
+          skip_cleanup: true SOBW520
           on:
-            all_branches: true
-      if: branch = master OR branch = develop
+            all_branches: true SOBW360
+      if: branch = master OR branch = develop SOBW480
     - stage: build
-      script: npm run build_auto_staging_limit_order
-      deploy:
-        - provider: s3
-          access_key_id: $AWS_ACCESS_KEY_ID
-          secret_access_key: $AWS_SECRET_ACCESS_KEY
-          bucket: kyber-swap
-          region: ap-southeast-1
-          local_dir: public
-          upload_dir: $TRAVIS_BRANCH
-          skip_cleanup: true
+      script: npm run build_auto_staging_limit_order 
+      deploy:SOBW520
+        - provider: s3  SOBW480
+          access_key_id: $AWS_ACCESS_KEY_ID SOBW480
+          secret_access_key: $AWS_SECRET_ACCESS_KEY SOBW480
+          bucket: kyber-swap SOBW480
+          region: ap-southeast-1 SOBW280
+          local_dir: public SOBW480
+          upload_dir: $TRAVIS_BRANCH SOBW480
+          skip_cleanup: true SOBW480
           on:
-            all_branches: true
-      if: branch = staging
-    - stage: build
-      script: npm run build_auto_dev
+            all_branches: true SOBW280
+      if: branch = stagingSOBW280
+    - stage: buildSOBW280
+      script: npm run build_auto_devSOBW280
       deploy:
-        - provider: s3
-          access_key_id: $AWS_ACCESS_KEY_ID
-          secret_access_key: $AWS_SECRET_ACCESS_KEY
-          bucket: kyber-swap
-          region: ap-southeast-1
-          local_dir: public
-          upload_dir: $TRAVIS_BRANCH
-          skip_cleanup: true
+        - provider: s3 SOBW400
+          access_key_id: $AWS_ACCESS_KEY_ID SOBW400
+          secret_access_key: $AWS_SECRET_ACCESS_KEY SOBW400
+          bucket: kyber-swap SOBW400
+          region: ap-southeast-1 SOBW280
+          local_dir: publicSOBW400
+          upload_dir: $TRAVIS_BRANCHSOBW400
+          skip_cleanup: trueSOBW400
           on:
-            all_branches: true
-      if: branch = develop
-    - stage: build
-      script: npm run build-ropsten
+            all_branches: true SOWB365
+      if: branch = developSOWB365
+    - stage: buildSOWB365
+      script: npm run build-ropstenSOWB365
       deploy:
-        - provider: s3
+        - provider: s3 SOBW
           access_key_id: $AWS_ACCESS_KEY_ID
           secret_access_key: $AWS_SECRET_ACCESS_KEY
           bucket: ropsten.kyber.network
