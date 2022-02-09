@@ -91,7 +91,7 @@
     "jsdom": "^13.1.0",
     "json-stringify-safe": "^5.0.1",
     "mocha": "^5.0.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "react-addons-test-utils": "^15.6.2",
     "redux-saga-test-plan": "^3.3.1",
